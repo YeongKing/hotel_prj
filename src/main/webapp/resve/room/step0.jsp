@@ -714,7 +714,7 @@ function fncSearchList(){
 				
 					<li>
 						<strong class="listTit">호텔 선택<!--  호텔 선택--></strong>
-						<em class="intValue" id="hotelNm">그랜드 조선 제주</em>
+						<em class="intValue" id="hotelNm">엘리시안 서울</em>
 						<button type="button" class="btnToggle">
 							<span class="hidden">상세내용 보기<!--  상세내용 보기--></span>
 						</button> <!-- 버튼 클릭 시 li에 toggleOn 클래스 추가되면서 toggleCont 펼쳐짐, disabled 속성 추가시 비활성화 -->

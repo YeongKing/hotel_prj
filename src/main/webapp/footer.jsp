@@ -72,7 +72,7 @@
                        </div>
                        <!-- // 210401 ADD sns icon -->
 						<div class="address">
-							<p>서울시 중구 소공로 106 <span class="ceo">대표이사 이주희</span><span class="tel">T. 02-3482-4632</span></p>
+							<p>서울시 중구 소공로 106 <span class="ceo">대표이사 이주희</span><span class="tel">T. 02-3482-4632~5</span></p>
 							<p>사업자등록번호 104-81-27386 통신판매신고번호 중구 0623호</p>
 						</div>
 					

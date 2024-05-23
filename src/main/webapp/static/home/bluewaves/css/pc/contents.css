@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+/* Rooms */
+.txtImgGuide{ margin-top:10px;font-size:14px;text-align:right; }
+
+.txtImgGuide02 { background:#f9f9f9; padding:8px 16px 0 0; font-size:14px; text-align:right;line-height:1.45;letter-spacing: -.025em;}
+
+
+/* Main Popup */
+
+.mainPopupWrap{ position:fixed;width:680px;height:684px; top:50%; left:50%; transform:translate(-50%,-50%); background-color:#fff; z-index:999999;}
+.mainPopupWrap .popupImgMap{width:100%;}
+.mainPopupWrap area{ cursor: pointer;}
+
+/* FACILITES */
+table + .txtGuide2{margin-top:15px; text-align: right;}
+p.txtGuide2, .txtGuide2 li{position:relative;color:#888;padding-left:16px;font:16px gothamL, notokrL, playfair;letter-spacing:-.01em}
+p.txtGuide2:before, .txtGuide2 li:before{content:'＊';vertical-align:middle;left:0;top:4px;font:600 15px gothamL} /* font 수정 yjs */
+.txtGuide2 li + li{margin-top:6px}
+
+/* FACILITES */
+p.listDep3, ul.listDep3 li{position:relative;padding-left:12px;font-size:16px}
+p.listDep3:before, ul.listDep3 li:before{content:'';display:block;position:absolute;left:0;top:15px;width:5px;height:1px;}
+p.listDep3 em, ul.listDep3 li em{color:#989442;font-family:gothamL}
+p.listDep3, ul.listDep3 li > .listDep3{margin-top:7px}
+p.listDep3 p.txtGuide, p.listDep3 .txtGuide li, ul.listDep3 p.txtGuide, ul.listDep3 .txtGuide li{margin-top:10px}
+
+/* Dining(.contInfo 공통) */
+.bcontInfo{display:flex;flex-flow:row wrap;padding:32px 38px;margin:35px 0 0;background:#f9f9f9}
+.bcontInfo:after{content:'';display:block;clear:both}
+.bcontInfo .contInfoHalf{flex:50%}
+.bcontInfo .contInfoHalf:nth-of-type(3), .bcontInfo .contInfoHalf:nth-of-type(4){margin-top:40px}
+.bcontInfo .contInfoHalf .titDep3{text-transform:uppercase;font-family:gothamL}
+.bcontInfo ul{display:table;table-layout:fixed;width:100%}
+.bcontInfo li{display:table-row}
+.bcontInfo li .tit, .contInfo li .txt{display:table-cell;padding:.3em 0;font:400 18px/1.5 gothamL,notokrL;letter-spacing:.01em;text-transform:uppercase}
+.bcontInfo .txtGuide{margin-top:10px}
+.bcontInfo.type01 li .tit{width:36%}
+.bcontInfo.type02 li .tit{width:25%}
+.bcontInfo + .txtGuide{margin-bottom:70px;}
+
+/* facilites pool */
+td.noLeftLine{border-left: 0px !important;}

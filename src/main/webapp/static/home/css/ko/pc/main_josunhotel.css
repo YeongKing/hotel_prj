@@ -1,0 +1,2233 @@
+@charset "utf-8"; .mainWrapper .header {
+    background: transparent
+}
+
+.mainWrapper .header .headArea {
+    background: transparent
+}
+
+.mainWrapper .header .logo {
+    left: 50%;
+    top: 20px;
+    margin-left: -175px;
+    width: 350px;
+    height: 60px;
+    background: url(../../../images/ko/pc/common/bg_logo_shinsegae.png) no-repeat 0 0
+}
+
+.mainWrapper .header .logo a {
+    width: 350px;
+    height: 60px
+}
+
+.mainWrapper .header .btnMenu {
+    background-position: 0 0
+}
+
+.mainWrapper .header.gnbOn {
+    background: #fff
+}
+
+.mainWrapper .header.gnbOn .btnMenu, .mainWrapper .header.type02 .btnMenu {
+    background-position: -35px 0
+}
+
+.mainWrapper .header.gnbOn .logo, .mainWrapper .header.type02 .logo {
+    background-position: 0 -60px
+}
+
+.mainWrapper .header.gnbOn .topUtil .hotelFind:after {
+    background: url(../../../images/ko/pc/common/ico_search_black_11x11.png) no-repeat 0 0
+}
+
+.mainWrapper .gnbUtil > ul > li > a {
+    color: #fff
+}
+
+.mainWrapper .gnbUtil .dropdown_list .dropdown_value input[type="text"] {
+    color: #fff
+}
+
+.mainWrapper .gnbUtil .dropdown_list .dropdown_value .btn_opener:after {
+    background: url(../../../images/ko/pc/common/ico_dropdown_white_8x4.png) no-repeat
+}
+
+.mainWrapper .gnbUtil .dropdown_list.active .dropdown_value .btn_opener:after {
+    background-position: -8px 0
+}
+
+.mainWrapper .gnbUtil > ul > li .hotelFind:after {
+    background: url(../../../images/ko/pc/common/ico_search_white_11x11.png) no-repeat 0 0;
+}
+
+.mainWrapper .gnbUtil .dropdown_list .item_list {
+    background: #fff;
+    border-color: #fff
+}
+
+.mainWrapper .gnbUtil .dropdown_list .item_list a {
+    color: #000
+}
+
+.mainWrapper .gnbUtil .dropdown_list .item_list a:hover {
+    color: #bbb
+}
+
+.mainWrapper .gnbUtil > .resvBtn .dropdown_list {
+    background: transparent !important
+}
+
+.mainWrapper .gnbUtil > .resvBtn .dropdown_list .dropdown_value input[type="text"] {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff !important
+}
+
+.mainWrapper .gnbUtil > .resvBtn .dropdown_list.active .item_list {
+    border-color: #fff
+}
+
+.mainWrapper .header.gnbOn .gnbUtil > .resvBtn .dropdown_list .dropdown_value input[type="text"] {
+    background: transparent;
+    border: 1px solid #000;
+    color: #000 !important
+}
+
+.mainWrapper .header.gnbOn .gnbUtil > .resvBtn .dropdown_list.active .item_list {
+    border-color: #000
+}
+
+.mainWrapper .header.gnbOn .gnbUtil .dropdown_list .item_list a {
+    color: #000
+}
+
+.mainWrapper .topUtil {
+    position: absolute;
+    left: 110px
+}
+
+.mainWrapper .topUtil .hotelFind {
+    color: #fff
+}
+
+.mainWrapper .topUtil .hotelFind:after {
+    background: url(../../../images/ko/pc/common/ico_search_white_11x11.png) no-repeat 0 0
+}
+
+.mainWrapper .langArea .dropdown_list .dropdown_value input[type="text"] {
+    color: #fff
+}
+
+.mainWrapper .langArea .dropdown_list .dropdown_value .btn_opener:after {
+    background: url(../../../images/ko/pc/common/ico_lang_white.png) no-repeat 0 0
+}
+
+.mainWrapper .langArea .dropdown_list .item_list a {
+    color: #fff
+}
+
+.mainWrapper .container {
+    padding-top: 0;
+    overflow: hidden
+}
+
+.mainWrapper .inner {
+    padding: 0
+}
+
+.mainWrapper .header.type02 {
+    background: #fff
+}
+
+.mainWrapper .header.type02 .topUtil .hotelFind:after {
+    background: url(../../../images/ko/pc/common/ico_search_black_11x11.png) no-repeat 0 0
+}
+
+.mainWrapper .header.type02 .langArea .dropdown_list .dropdown_value input[type="text"] {
+    color: #000
+}
+
+.mainWrapper .header.type02 .langArea .dropdown_list .dropdown_value .btn_opener:after {
+    background: url(../../../images/ko/pc/common/ico_lang_black.png) no-repeat 0 0
+}
+
+.mainWrapper .header.type02 .langArea .dropdown_list .item_list a {
+    color: #000
+}
+
+.mainWrapper .header.type02 .gnbUtil > .resvBtn .dropdown_list {
+    background: #fff !important
+}
+
+.mainWrapper .header.type02 .gnbUtil > .resvBtn .dropdown_list .dropdown_value input[type="text"] {
+    background: transparent;
+    border: 1px solid #000;
+    color: #000 !important
+}
+
+.mainWrapper .header.type02 .gnbUtil > .resvBtn .dropdown_list.active .item_list {
+    border-color: #000
+}
+
+.mainWrapper .header.type04 {
+    background: transparnet;
+}
+
+.mainIndicator {
+    display: none;
+    position: fixed;
+    left: 50px;
+    top: 50%;
+    z-index: 9;
+    height: 280px;
+    margin-top: -120px
+}
+
+.mainIndicator ul {
+    position: relative;
+    height: 280px;
+    width: 150px
+}
+
+.mainIndicator ul:before {
+    content: '';
+    display: block;
+    background: #000;
+    opacity: .3;
+    width: 2px;
+    /*height:280px*/
+    height: 240px;
+}
+
+.mainIndicator ul > li {
+    position: absolute;
+    left: 15px;
+    height: 40px;
+    line-height: 40px
+}
+
+.mainIndicator ul > li a {
+    display: block;
+    position: relative;
+    font: 400 12px/38px gothamB;
+    color: #ccc;
+    opacity: 0
+}
+
+.mainIndicator ul:hover > li a, .mainIndicator ul[tabindex="0"] > li a {
+    opacity: 1;
+    -webkit-transition: opacity .3s ease-in-out;
+    -moz-transition: opacity .3s ease-in-out;
+    -ms-transition: opacity .3s ease-in-out;
+    -o-transition: opacity .3s ease-in-out;
+    transition: opacity .3s ease-in-out
+}
+
+.mainIndicator ul > li.on a {
+    font: 600 12px/38px gothamM;
+    opacity: 1;
+    color: #000
+}
+
+.mainIndicator ul > li.on a:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -15px;
+    top: 0;
+    width: 2px;
+    height: 40px;
+    background: #000
+}
+
+.mainIndicator ul > li.indicator01 {
+    top: 0
+}
+
+.mainIndicator ul > li.indicator02 {
+    top: 40px
+}
+
+.mainIndicator ul > li.indicator03 {
+    top: 80px
+}
+
+.mainIndicator ul > li.indicator04 {
+    top: 120px
+}
+
+.mainIndicator ul > li.indicator05 {
+    top: 160px
+}
+
+.mainIndicator ul > li.indicator06 {
+    top: 200px
+}
+
+.mainIndicator ul > li.indicator07 {
+    top: 240px
+}
+
+.mainIndicator.type02 ul:before {
+    background: #fff
+}
+
+.mainIndicator.type02 ul > li.on a {
+    color: #fff
+}
+
+.mainIndicator.type02 ul > li.on a:before {
+    background: #fff
+}
+
+/* 인디케이터(20200825) */
+.mainIndicator ul > li a:hover {
+    color: #000
+}
+
+.mainIndicator ul > li.on a:hover {
+    color: #000
+}
+
+.mainIndicator.type02 ul > li a:hover {
+    color: #fff
+}
+
+.mainIndicator.type02 ul > li.on a:hover {
+    color: #fff
+}
+
+[class^="mainArea"] {
+    position: relative;
+    height: 100vh;
+    z-index: 98
+}
+
+/* 최소 사이즈 */
+[class^="mainArea"] .etc {
+    margin-top: 20px;
+    font: 500 14px/1.8 gothamM;
+    color: #ba998c;
+    text-transform: uppercase
+}
+
+[class^="mainArea"][tabindex="0"]:focus {
+    outline: none
+}
+
+[class^="mainArea"] .btnSwipe {
+    position: absolute;
+    top: 50%;
+    margin-top: -33px;
+    width: 66px;
+    height: 66px;
+    background: url(../../../images/ko/pc/common/btn_swipe_66x66.png) no-repeat;
+    z-index: 2
+}
+
+[class^="mainArea"] .btnPrev {
+    left: -142px;
+    background-position: 0 0
+}
+
+[class^="mainArea"] .btnNext {
+    left: 1239px;
+    background-position: -66px 0
+}
+
+.scrollmagic-pin-spacer {
+    z-index: 1;
+    overflow: hidden
+}
+
+/*.mainArea01{min-height:auto}*/
+[class^="mainArea"] [class^="contents"] {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    height: 100vh;
+    overflow: hidden
+}
+
+[class^="mainArea"] [class^="contents"] .mainBg img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%)
+}
+
+[class^="mainArea"] [class^="contents"] .mainTxt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0
+}
+
+[class^="mainArea"] [class^="contents"] .mainTxt strong {
+    display: block;
+    color: #fff;
+    font: 400 60px playfair;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    width: 100%;
+    text-align: center
+}
+
+.mainArea01 .contents01 {
+    top: 0;
+    z-index: 1
+}
+
+.icon-scroll {
+    position: absolute;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-bottom: 25px;
+    left: 50%;
+    bottom: 20px;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.icon-scroll .txt-scroll {
+    font: 13px 'gothamL', sans-serif;
+    color: #fff;
+}
+
+.icon-scroll .ico-scroll {
+    display: block;
+    margin-top: 8px;
+}
+
+.icon-scroll .arrows-scroll span {
+    position: absolute;
+    display: block;
+    bottom: 0;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    margin-left: -6px;
+    border-left: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-animation: scrollDown 2s infinite;
+    animation: scrollDown 2s infinite;
+    opacity: 0;
+    box-sizing: border-box;
+}
+
+.icon-scroll .arrows-scroll span:nth-of-type(1) {
+    -webkit-animation-delay: .3s;
+    animation-delay: .3s;
+}
+
+.icon-scroll .arrows-scroll span:nth-of-type(2) {
+    bottom: 7px;
+    -webkit-animation-delay: .15s;
+    animation-delay: .15s;
+}
+
+.icon-scroll .arrows-scroll span:nth-of-type(3) {
+    bottom: 14px;
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+}
+
+@-webkit-keyframes scrollDown {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes scrollDown {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.revArea.cts01 {
+    top: 50%;
+    left: 50%;
+    width: 1400px;
+    margin: 55px 0 0 -700px
+}
+
+.revArea.cts02 {
+    bottom: 40px;
+    left: 50%;
+    width: 1400px;
+    margin: 0 0 0 -700px
+}
+
+.mainArea02 .contents02 {
+    top: 0;
+    z-index: 1
+}
+
+.mainArea02 .contents02 .swipeWrapArea {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -300px 0 0 -580px
+}
+
+.mainArea02 .contents02 .swipeWrap {
+    width: 2544px;
+    overflow: visible
+}
+
+.mainArea02 .contents02 .swipeWrap .swipeCont {
+    width: 2544px;
+    overflow: hidden;
+    z-index: 1
+}
+
+.mainArea02 .contents02 .swipeSlide {
+    margin-right: 220px
+}
+
+.mainArea02 .contents02 .swipeSlide:last-child {
+    margin-right: 0
+}
+
+.mainArea02 .contents02 .swipeSlide .homeBox {
+    opacity: .5
+}
+
+.mainArea02 .contents02 .swipeSlide .homeBox .cont {
+    opacity: 0
+}
+
+.mainArea02 .contents02 .swipeSlide.on .homeBox {
+    opacity: 1
+}
+
+.mainArea02 .contents02 .swipeSlide.on .homeBox .cont {
+    opacity: 1
+}
+
+.mainArea02 .contents02 .homeBox {
+    width: 1162px;
+    background: #fff;
+    height: 600px;
+    padding: 77px 70px 0;
+    text-align: center
+}
+
+.mainArea02 .contents02 .homeBox .tit , .mainArea02 .contents02 .homeBox .sTit {
+    display: block
+}
+
+.mainArea02 .contents02 .homeBox .tit {
+    font: 400 60px playfair
+}
+
+.mainArea02 .contents02 .homeBox .sTit {
+    font: 400 20px gothamM;
+    margin-top: 10px
+}
+
+.mainArea02 .contents02 .homeBox .txt01 {
+    font-size: 25px;
+    margin-top: 30px
+}
+
+.mainArea02 .contents02 .homeBox .txt02 {
+    font-size: 20px;
+    margin: 3px 0 40px
+}
+
+.mainArea02 .contents02 .homeBox .hList {
+    margin: 25px auto 0
+}
+
+.mainArea02 .contents02 .homeBox .hList > li {
+    position: relative;
+    display: inline-block;
+    width: 160px;
+    margin: 45px 58px 0
+}
+
+.mainArea02 .contents02 .homeBox .hList > li > a {
+    display: block;
+    height: 96px;
+    text-indent: -99999px;
+    overflow: hidden;
+    opacity: .45
+}
+
+.mainArea02 .contents02 .homeBox .hList > li > a:before {
+    content: '';
+    display: block;
+    width: 160px;
+    height: 96px
+}
+
+.mainArea02 .contents02 .homeBox .hList > li > a:hover {
+    opacity: 1
+}
+
+.mainArea02 .contents02 .homeBox .hList > li.hType01 > a:before {
+    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN01.png) center no-repeat
+}
+
+/*서울웨스틴조선호텔*/
+.mainArea02 .contents02 .homeBox .hList > li.hType02 > a:before {
+    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN02.png) center no-repeat
+}
+
+/*그랜드조선부산*/
+.mainArea02 .contents02 .homeBox .hList > li.hType03 > a:before {
+    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN03.png) center no-repeat
+}
+
+/*부산웨스틴조선호텔*/
+.mainArea02 .contents02 .homeBox .hList > li.hType04 > a:before {
+    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN04.png) center no-repeat
+}
+
+/*포포인츠서울역*/
+.mainArea02 .contents02 .homeBox .hList > li.hType05 > a:before {
+    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN05.png) center no-repeat
+}
+
+/*레스케이프호텔*/
+.mainArea02 .contents02 .homeBox .hList > li.hType06 > a:before {
+    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN06.png) center no-repeat
+}
+
+/*포포인츠서울명동*/
+.mainArea02 .contents02 .homeBox .hList > li.hType07 > a:before {
+    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN07.png) center no-repeat
+}
+
+/*그랜드조선제주*/
+.mainArea02 .contents02 .homeBox .hList > li.hType08 > a:before {
+    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN08.png) center no-repeat
+}
+
+/*그래비티서울판교*/
+.mainArea02 .contents02 .homeBox .hList > li.hType09 > a:before {
+    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN09.png) center no-repeat
+}
+
+/* 조선팰리스서울강남 */
+.mainArea02 .contents02 .homeBox .hList > li.hType10 > a:before {
+    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN10.png) center no-repeat
+}
+
+/* 파라스파라 서울 */
+.mainArea02 .contents02 .homeBox .hList > li.hType11 > a:before {
+    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN11.png) center no-repeat
+}
+
+/* 코랄로 조선 */
+.mainArea02 .contents02 .homeBox .hList.lg7 > li {
+    margin: 45px 28px 0
+}
+
+.mainArea02 .contents02 .homeBox .hList.lg8 > li {
+    margin: 45px 33px 0
+}
+
+.mainArea02 .contents02 .homeBox .hList.lg9 {
+    margin: 25px -22px 0
+}
+
+.mainArea02 .contents02 .homeBox .hList.lg9 > li {
+    margin: 45px 15px 0
+}
+
+.mainArea02 .contents02 .homeBox .hList.lg11 {
+    margin: 20px 15px 0
+}
+
+.mainArea02 .contents02 .homeBox .hList.lg11 li {
+    margin: 40px 0 0
+}
+
+.mainArea02 .contents02 .homeboxBg ul > li {
+    /*position:absolute;left:0;top:0;right:0;bottom:0;*/
+    opacity: 0;
+    transition: 1s;
+    width: 100vw;
+    height: 100vh
+}
+
+.mainArea02 .contents02 .homeboxBg ul > li.on {
+    opacity: 1
+}
+
+.mainArea02 .contents02 .homeboxBg ul > li img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%)
+}
+
+.revArea {
+    position: fixed;
+    width: 1400px;
+    z-index: 99999
+}
+
+.revArea .tit {
+    position: absolute;
+    left: 30px;
+    top: 10px;
+    font: 400 14px/1 gothamM;
+    color: #b3b3b3;
+    letter-spacing: -1px
+}
+
+.revArea > .selectGroup {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.revArea > .selectGroup .tit {
+    left: 20px
+}
+
+.revArea .selectGroup .selectWrap {
+    height: 64px;
+    background: transparent
+}
+
+.revArea .selectGroup .selectWrap .ui-selectmenu-button {
+    border-bottom: 0;
+    font: 600 20px gothamB;
+    padding-left: 20px;
+    height: 64px;
+    background: transparent;
+    color: #fff;
+    padding-top: 30px
+}
+
+.revArea .selectGroup .selectWrap .ui-selectmenu-button:after {
+    content: '';
+    right: 20px;
+    top: inherit;
+    bottom: 13px;
+    width: 15px;
+    height: 8px;
+    margin: 0;
+    background: url(../../../images/ko/pc/common/ico_toggle_w_15x8.png) no-repeat 0 0
+}
+
+.revArea .selectGroup .selectWrap .ui-selectmenu-button-open {
+    background: #fff;
+    color: #000;
+    padding-top: 0
+}
+
+.revArea .selectGroup .selectWrap .ui-selectmenu-button-open:after {
+    background-position: -15px 0;
+    top: 50%;
+    margin-top: -4px
+}
+
+.revArea .selectGroup .selectWrap .ui-selectmenu-menu {
+    border-color: #fff
+}
+
+/* 20200827 (line-bug) lsm */
+.revArea .selectGroup .selectWrap .selectWrap .ui-menu-item {
+    font-size: 17px
+}
+
+.revArea .selectRoom {
+    padding-left: 205px
+}
+
+.revArea .selectRoom > div {
+    position: relative;
+    float: left;
+    height: 64px
+}
+
+.revArea .selectRoom > div > a {
+    display: block;
+    padding: 0 30px;
+    height: 64px
+}
+
+.revArea .selectRoom:after {
+    content: '';
+    display: block;
+    clear: both
+}
+
+.revArea .selectRoom .roomWrap dl > * {
+    display: inline-block
+}
+
+.revArea .btnSearch {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 168px;
+    height: 64px;
+    font: 500 20px gothamM;
+    border: 2px solid #fff;
+    background: transparent;
+    color: #fff
+}
+
+.revArea .selectRoom .selectHotel {
+    width: 380px
+}
+
+.revArea .selectRoom .selectHotel .hotelName, .revArea .selectRoom .chkInout .date {
+    position: absolute;
+    left: 30px;
+    bottom: 10px;
+    width: 100%;
+    font: 600 20px/1 gothamB, notokrR;
+    color: #fff;
+    text-transform: uppercase
+}
+
+.revArea .selectRoom .selectHotel:before, .revArea .selectRoom .chkInout:before, .revArea .selectRoom > .roomWrap:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 64px;
+    background: #fff;
+    opacity: .2
+}
+
+.revArea .selectRoom .chkInout {
+    width: 380px
+}
+
+.revArea .selectRoom .chkInout .date {
+    bottom: 6px
+}
+
+.revArea .selectRoom .chkInout .date em {
+    font: 400 20px notokr gothamM
+}
+
+.revArea .selectRoom .chkInout .date span {
+    margin: 0 5px
+}
+
+.revArea .selectRoom .chkInout > a {
+    display: block;
+    height: 64px
+}
+
+.revArea .selectRoom .roomWrap .rBox {
+    position: relative;
+    display: inline-block;
+    min-width: 43px;
+    margin-left: 19px;
+    text-align: center
+}
+
+.revArea .selectRoom .roomWrap .rBox:first-child {
+    margin: 0
+}
+
+.revArea .selectRoom .roomWrap .rBox .tit {
+    position: inherit;
+    left: inherit;
+    top: inherit
+}
+
+.revArea .selectRoom .roomWrap .rBox > span {
+    display: block;
+    font: 600 20px/1 gothamB;
+    color: #fff;
+    padding-top: 4px
+}
+
+.revArea .selectRoom .roomWrap a {
+    display: block;
+    height: 64px
+}
+
+.revArea .mainHotel, .revArea .mainCalendar, .revArea .mainRoom {
+    display: none;
+    position: absolute;
+    left: -585px;
+    bottom: 84px;
+    background: #fff;
+    width: 1400px;
+    height: 525px;
+    padding: 70px 0;
+    border-bottom: 1px solid #ccc
+}
+
+.revArea .mainHotel {
+    left: -205px;
+    padding: 0 128px 0
+}
+
+.revArea .mainHotel:before {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    margin-right: -4px;
+    vertical-align: middle
+}
+
+.revArea .mainHotel .hotelSelect {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1144px;
+    position: absolute;
+    top: 50px;
+    justify-content: center;
+}
+
+.revArea .mainHotel .hotelSelect li {
+    width: 25%;
+}
+
+.revArea .mainHotel .hotelSelect > li > a {
+    display: block;
+    background-position: top center;
+    background-size: 276px;
+    background-repeat: no-repeat;
+    border: 1px solid #ccc;
+    margin: 10px 5px 0;
+    text-align: center;
+    padding: 73px 5px 0px;
+    position: relative;
+    height: 128px;
+}
+
+/* 210511 수정 */
+.revArea .mainHotel .hotelSelect > li > a span {
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 73px;
+    width: 87%;
+    line-height: 1.4;
+}
+
+.revArea .mainHotel .hotelSelect > li.on > a, .revArea .mainHotel .hotelSelect > li > a:hover {
+    background-color: #999;
+    border-color: #999;
+    color: #fff;
+}
+
+/* 210511 수정 */
+.revArea .mainHotel .hotelSelect > li .hotelLogo {
+    display: block
+}
+
+/* 210511 추가 */
+.revArea .mainHotel .hotelSelect > li > a .hotelTit.on {
+    font-size: 16px;
+}
+
+.revArea .mainHotel .hotelSelect > li > a.js-active:hover .hotelTit::after {
+    content: '';
+    display: inline-block;
+    margin-left: 8px;
+    margin-bottom: 2px;
+    width: 8px;
+    height: 8px;
+    border-color: #fff;
+    border-style: solid;
+    border-width: 1px 1px 0 0;
+    transform: rotate(45deg);
+}
+
+.revArea .mainHotel .hotelSelect > li.palace > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_palace.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.westinSeoul > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_westin_seoul.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.westinBusan > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_westin_busan.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.grandBusan > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_grand_busan.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.grandJeju > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_grand_jeju.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.lescape > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_lescape.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.gravityPangyo > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_gravity_pangyo.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.sheratonSeoulstation > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_sheraton_seoul.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.sheratonMyeongdong > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_sheraton_md.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.paraspara > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_paraspara.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.corallo > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_corallo.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.palace > a:hover, .revArea .mainHotel .hotelSelect > li.palace.on > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_palace_on.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.westinSeoul > a:hover, .revArea .mainHotel .hotelSelect > li.westinSeoul.on > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_westin_seoul_on.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.westinBusan > a:hover, .revArea .mainHotel .hotelSelect > li.westinBusan.on > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_westin_busan_on.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.grandBusan > a:hover, .revArea .mainHotel .hotelSelect > li.grandBusan.on > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_grand_busan_on.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.grandJeju > a:hover, .revArea .mainHotel .hotelSelect > li.grandJeju.on > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_grand_jeju_on.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.lescape > a:hover, .revArea .mainHotel .hotelSelect > li.lescape.on > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_lescape_on.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.gravityPangyo > a:hover, .revArea .mainHotel .hotelSelect > li.gravityPangyo.on > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_gravity_pangyo_on.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.sheratonSeoulstation > a:hover, .revArea .mainHotel .hotelSelect > li.sheratonSeoulstation.on > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_sheraton_seoul_on.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.sheratonMyeongdong > a:hover, .revArea .mainHotel .hotelSelect > li.sheratonMyeongdong.on > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_sheraton_md_on.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.paraspara > a:hover, .revArea .mainHotel .hotelSelect > li.paraspara.on > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_paraspara_on.png")
+}
+
+.revArea .mainHotel .hotelSelect > li.corallo > a:hover, .revArea .mainHotel .hotelSelect > li.corallo.on > a {
+    background-image: url("../../../images/ko/pc/HUMA/select_logo_corallo_on.png")
+}
+
+/* // 210511 추가 */
+.revArea .btnClose {
+    position: absolute;
+    top: 12px;
+    right: 13px;
+    overflow: hidden;
+    text-indent: -9999px;
+    width: 50px;
+    height: 50px;
+    z-index: 999;
+    background: url(../../../images/ko/pc/common/btn_close_25x25.png) no-repeat 50% 50%
+}
+
+.revArea .mainCalendar .calendarS .calWrap {
+    margin: 0 auto;
+    width: 910px
+}
+
+.revArea .mainCalendar .calendarS .calWrap .calMonth {
+    margin-bottom: 15px;
+    font: 500 26px/1.2 gothamM
+}
+
+.revArea .mainCalendar .calendarS .calInner {
+    width: 378px
+}
+
+.revArea .mainCalendar .calendarS .calInner .calendar {
+    width: 378px
+}
+
+.revArea .mainCalendar .calendarS .calInner .calendar th {
+    font: 500 16px gothamM
+}
+
+.revArea .mainCalendar .calendarS .calInner .calendar td.ui-datepicker-today {
+    background: none
+}
+
+.revArea .mainCalendar .calendarS .calInner .calendar td.ui-datepicker-today a {
+    background: #f0f0f0;
+    border-radius: 100%
+}
+
+.revArea .mainCalendar .calendarS .calInner .calendar td {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px
+}
+
+.revArea .mainCalendar .calendarS .calInner .calendar td a {
+    display: block;
+    position: inherit;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0;
+    font-size: 18px;
+    margin: 0 auto
+}
+
+.revArea .mainCalendar .calendarS .calInner .calendar td.revOn a {
+    background: #ba998c !important
+}
+
+.revArea .mainCalendar .calInner .calendar td.revOn:before {
+    display: none !important
+}
+
+.revArea .mainCalendar .calInner .calendar td.revOn + td.revIng:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -50%;
+    top: 5px;
+    width: 100%;
+    height: 40px;
+    background: #d6c2ba
+}
+
+.revArea .mainCalendar .calInner .calendar td.revIng:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -50%;
+    top: 5px;
+    width: 100%;
+    height: 40px;
+    background: #d6c2ba
+}
+
+.revArea .mainCalendar .calInner .calendar td.revOff:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -50%;
+    top: 5px;
+    width: 100%;
+    height: 40px;
+    background: #d6c2ba
+}
+
+.revArea .mainCalendar .calInner .calendar td.revOff:first-child:before {
+    left: 0;
+    width: 50%
+}
+
+.revArea .mainCalendar .calendarS .calInner .calendar td.revIng a {
+    background: #d6c2ba
+}
+
+.revArea .mainCalendar .calendarS .calInner .calendar td.revOff a, .revArea .mainCalendar .calendarS .calInner .calendar td.revOff a:hover {
+    background: #ba998c !important
+}
+
+.revArea .mainCalendar .calendarS .calInner .calendar td.ui-state-disabled:before {
+    display: none
+}
+
+.revArea .mainCalendar .calendarS .calInner .calendar td.ui-datepicker-other-month + td.revIng:before {
+    left: 0;
+    width: 50%
+}
+
+.revArea .mainCalendar .calendarS .calInner .calendar td:last-child.revOn:after {
+    top: 50% !important;
+    margin-top: -20px;
+    height: 40px !important;
+    background: #d6c2ba
+}
+
+.revArea .mainRoom {
+    left: -965px;
+    padding: 120px 220px
+}
+
+.revArea .mainRoom .roomContainer {
+    padding: 0
+}
+
+.revArea .mainRoom .roomContainer .txtGuide {
+    position: absolute;
+    right: 0;
+    bottom: 155px
+}
+
+.revArea .mainRoom .roomContainer .txtGuide.gjb {
+    right: 40px
+}
+
+.revArea .mainRoom .roomContainer .txtGuide li {
+    display: block
+}
+
+.revArea .mainRoom .roomContainer .btnSC {
+    position: absolute;
+    right: 25px;
+    bottom: 80px
+}
+
+.revArea .mainRoom .roomInner {
+    position: relative;
+    padding-left: 130px
+}
+
+.revArea .mainRoom .roomSel {
+    width: 700px
+}
+
+.revArea .mainRoom .roomSel+.roomSel {
+    margin: 40px 0 0
+}
+
+.revArea .mainRoom .roomTit {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -18px;
+    width: 130px;
+    text-align: left;
+    font-size: 24px;
+    font-weight: 500
+}
+
+.revArea .mainRoom .numPeople {
+    width: 230px
+}
+
+.revArea .mainRoom .numPeople+.numPeople {
+    margin-left: 40px
+}
+
+.revArea .selectDining {
+    display: none;
+    padding-left: 205px
+}
+
+.revArea .diningBar {
+    position: relative
+}
+
+.revArea .diningBar > a {
+    display: block;
+    position: relative;
+    height: 64px;
+    padding-right: 168px
+}
+
+.revArea .diningBar .diningInfor {
+    position: absolute;
+    left: 30px;
+    bottom: 4px
+}
+
+.revArea .diningBar .diningInfor span {
+    display: inline-block;
+    position: relative;
+    font: 600 20px/1 gothamB, notokrR;
+    text-transform: uppercase;
+    color: #fff
+}
+
+.revArea .diningBar .diningInfor span+span {
+    margin-left: 30px
+}
+
+.revArea .diningBar .diningInfor span+span:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -15px;
+    top: 4px;
+    width: 1px;
+    height: 16px;
+    background: #929292
+}
+
+.revArea .diningSelection {
+    display: none;
+    position: absolute;
+    left: -205px;
+    bottom: 84px;
+    background: #fff;
+    width: 1400px;
+    height: 525px;
+    padding: 62px 100px 0;
+    border-bottom: 1px solid #ccc
+}
+
+.revArea .diningSelectCont {
+    position: relative;
+    padding-top: 110px
+}
+
+.revArea .diningSelectCont:after {
+    content: '';
+    display: block;
+    clear: both
+}
+
+.revArea .diningSelectCont .intInner {
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+.revArea .diningSelectCont .lCont {
+    float: left;
+    width: 385px
+}
+
+.revArea .diningSelectCont .lCont .duobuleSelect>div+div {
+    margin-left: 24px
+}
+
+.revArea .diningSelectCont .lCont .imgArea {
+    width: 385px;
+    overflow: hidden
+}
+
+.revArea .diningSelectCont .lCont .imgArea img {
+    width: 100%
+}
+
+.revArea .diningSelectCont .rCont {
+    overflow: hidden;
+    padding-left: 50px
+}
+
+.revArea .diningSelectCont .rCont .roomIntro {
+    position: relative;
+    min-height: 265px
+}
+
+.revArea .diningSelectCont .rCont .roomIntro .name {
+    font: 400 36px/1 gothamB;
+    text-transform: uppercase
+}
+
+.revArea .diningSelectCont .rCont .roomIntro .txt {
+    margin-top: 15px
+}
+
+.revArea .diningSelectCont .rCont .roomIntro .info {
+    position: absolute;
+    left: 0;
+    bottom: 0
+}
+
+.revArea .diningSelectCont .rCont .roomIntro .info em {
+    display: inline-block;
+    position: relative;
+    top: -1px;
+    width: 62px;
+    font-size: 17px
+}
+
+.revArea .diningSelectCont .rCont .roomIntro .info span {
+    color: #000;
+    font-size: 17px
+}
+
+.revArea .selectMembership {
+    display: none;
+    padding-left: 205px
+}
+
+.revArea .membershipBar {
+    height: 64px;
+    border-left: 1px solid #ccc;
+    padding: 0 30px
+}
+
+.revArea .membershipBar .btnArea {
+    position: absolute;
+    right: 22px;
+    top: 15px;
+    margin: 0
+}
+
+.revArea .membershipBar .btnSC {
+    height: 64px;
+    line-height: 64px;
+    min-width: 168px;
+    font-size: 16px;
+    background: transparent !important;
+    border: 2px solid rgba(255, 255, 255, .5);
+    color: #fff;
+}
+
+.revArea .membershipSelection {
+    position: absolute;
+    left: 0;
+    bottom: 84px;
+    background: #fff;
+    width: 1400px;
+    height: 525px;
+    padding: 62px 100px 0;
+    border-bottom: 1px solid #ccc
+}
+
+.revArea .membershipSelection > .txt {
+    font: 500 30px notokrR
+}
+
+.revArea .membershipSelection > .txt span {
+    font: 400 30px gothamB
+}
+
+.revArea .membershipInfo {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    margin-top: 35px
+}
+
+.revArea .membershipInfo > li {
+    display: table-cell;
+    position: relative;
+    vertical-align: top;
+    width: 100%
+}
+
+.revArea .membershipInfo > li > * {
+    display: block
+}
+
+.revArea .membershipInfo > li > .thum {
+    width: 261px;
+    overflow: hidden
+}
+
+.revArea .membershipInfo > li > .membershipTit {
+    font-size: 17px;
+    font-weight: 600;
+    margin-top: 20px
+}
+
+.revArea .membershipInfo > li > .benefit {
+    font-size: 17px;
+    color: #666
+}
+
+.revArea .btnPromo {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    color: #fff
+}
+
+.revArea .btnPromo:before {
+    vertical-align: 1px;
+    width: 10px;
+    height: 10px;
+    background: url(../../../images/ko/pc/common/ico_up_white_10x10.png) no-repeat 0 0
+}
+
+.revArea .promCode {
+    float: none !important;
+    position: absolute !important;
+    right: 0;
+    bottom: inherit;
+    top: -58px;
+    text-align: right;
+    margin-top: 3px;
+    width: auto !important;
+    background: none !important;
+}
+
+.revArea .promCode .selectWrap .ui-selectmenu-button span {
+    vertical-align: top
+}
+
+.revArea .promCode .promInt {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 532px;
+    height: 52px;
+    background: #fff;
+    z-index: 2
+}
+
+.revArea .promCode .promInt > * {
+    vertical-align: middle
+}
+
+.revArea .promCode .promInt .selectWrap {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 50px
+}
+
+.revArea .promCode .promInt .selectWrap .ui-selectmenu-button {
+    font-size: 16px;
+    border-bottom: 0;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px
+}
+
+.revArea .promCode .promInt .selectWrap .ui-selectmenu-button:after {
+    right: 30px
+}
+
+.revArea .promCode .promInt .selectWrap:after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    right: -2px;
+    top: 50%;
+    margin-top: -7px;
+    width: 1px;
+    height: 14px;
+    background: #ccc
+}
+
+.revArea .promCode .promInt .selectWrap .ui-selectmenu-menu {
+    border-top: 1px solid #000;
+    left: -1px !important
+}
+
+.revArea .promCode .promInt input {
+    position: absolute;
+    left: 240px;
+    top: 0;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    border-bottom: 0
+}
+
+.revArea .promCode .promInt .btnLine {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 52px;
+    line-height: 52px;
+    background: #fff;
+    width: 65px
+}
+
+.revArea .promCode .promInt .btnLine:after {
+    display: none
+}
+
+.mainArea03 {
+    background: url(../../../images/ko/pc/HUMA/bg_main02.jpg) no-repeat 50% 50%;
+    background-size: cover
+}
+
+.mainArea03 .inner {
+    position: absolute;
+    left: 0;
+    top: 99px;
+    width: 100%;
+    background: #fff;
+    height: 490px;
+    text-align: center
+}
+
+.mainArea03 .inner .titDep1 {
+    display: block;
+    margin-top: 110px
+}
+
+.mainArea03 .inner .txt {
+    font-size: 26px;
+    margin: 15px 0 40px
+}
+
+.mainArea04, .mainArea06 {
+    background: #fff;
+    z-index: 99
+}
+
+.mainArea04 .inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1400px;
+    height: 535px;
+    margin: -270px 0 0 -700px
+}
+
+.mainArea04 .inner .icoArr {
+    font: 400 16px gothamM;
+    margin-left: 130px
+}
+
+.mainArea04 .inner .swipeWrapArea {
+    position: relative;
+    margin-top: 30px
+}
+
+.mainArea04 .inner .swipeWrap {
+    width: 1170px;
+    margin: 0 auto
+}
+
+.mainArea04 .inner .swipeCont {
+    margin-left: 15px
+}
+
+.mainArea04 .inner .thum {
+    position: relative;
+    width: 360px;
+    height: 249px;
+    overflow: hidden
+}
+
+.mainArea04 .inner .thum img {
+    width: 360px;
+    height: 249px
+}
+
+.mainArea04 .inner .thum a {
+    color: #fff
+}
+
+.mainArea04 .inner .thum .hoverCont {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 360px;
+    height: 250px
+}
+
+.mainArea04 .inner .thum .hoverCont a {
+    opacity: 0
+}
+
+.mainArea04 .inner .thum:hover {
+    cursor: pointer
+}
+
+.mainArea04 .inner .thum:hover .hoverCont, .mainArea04 .inner .thum .hoverCont[tabindex="0"] {
+    display: block;
+    background: #797864;
+    opacity: .8;
+    z-index: 1
+}
+
+.mainArea04 .inner .thum:hover .hoverCont a, .mainArea04 .inner .thum .hoverCont a:focus {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -30px 0 0 -96px;
+    border: 1px solid #fff;
+    background: transparent;
+    z-index: 1
+}
+
+.mainArea04 .inner .thum .hoverCont.on a {
+    opacity: 1
+}
+
+.mainArea04 .inner .swipeSlide:last-child {
+    margin: 0
+}
+
+.mainArea04 .inner .swipeSlide > * {
+    display: block
+}
+
+.mainArea04 .inner .swipeSlide .tit {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font: 400 26px playfair;
+    margin-top: 20px;
+    height: 70px;
+    width: 360px;
+    word-break: break-word
+}
+
+.mainArea04 .inner .swipeSlide .txt {
+    font-size: 16px;
+    color: #333;
+    margin-top: 7px;
+    width: 360px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+.mainArea04 .inner .swipeSlide .date {
+    font: 400 16px gothamL;
+    color: #333;
+    margin-top: 5px
+}
+
+.mainArea04 .inner .locationTag {
+    display: inline-block;
+    position: relative;
+    margin-top: 40px
+}
+
+.mainArea04 .inner .btnPrev {
+    left: 0
+}
+
+.mainArea04 .inner .btnNext {
+    right: 0;
+    left: inherit
+}
+
+.mainArea04 .inner .locationTag.FPBSS, .mainArea04 .inner .locationTag.FPBSM {
+    padding: .5em;
+}
+
+.mainArea05 {
+    background: #fff
+}
+
+.mainArea05 .contBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -265px 0 0 -460px;
+    z-index: 1
+}
+
+.mainArea05 .txtArea {
+    text-align: center;
+    color: #fff
+}
+
+.mainArea05 .txtArea .txt {
+    font-size: 20px;
+    margin: 25px 0 70px
+}
+
+.mainArea05 .obList {
+    position: relative;
+    width: 920px
+}
+
+.mainArea05 .obList {
+    width: 919px
+}
+
+.mainArea05 .obList > ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    height: 280px;
+    /*border-right:1px solid rgba(255, 255, 255, .2);*/
+    /*border-bottom:1px solid rgba(255, 255, 255, .2);*/
+}
+
+.mainArea05 .obList > ul li {
+    position: relative;
+    float: left;
+    width: 25%;
+    height: 140px;
+    border-left: 1px solid rgba(255, 255, 255, .2);
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
+}
+
+.mainArea05 .obList > ul li:nth-child(-n+4) {
+    border-top: 1px solid rgba(255, 255, 255, .2);
+}
+
+.mainArea05 .obList > ul li:nth-child(4n), .mainArea05 .obList > ul li:last-child {
+    border-right: 1px solid rgba(255, 255, 255, .2)
+}
+
+.mainArea05 .obList > ul li > a {
+    display: block;
+    position: relative;
+    text-align: center;
+    padding: 100px 0 20px;
+    height: 140px
+}
+
+.mainArea05 .obList > ul li > a em {
+    opacity: 0
+}
+
+.mainArea05 .obList > ul li.on > a em, .mainArea05 .obList > ul li > a:hover em {
+    position: absolute;
+    left: 0;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    color: #bbb;
+    font-size: 14px;
+    z-index: 10;
+    opacity: 1
+}
+
+.mainArea05 .obList > ul li > a em:after {
+    content: '';
+    display: block;
+    width: 68px;
+    height: 1px;
+    background: #bbb;
+    margin: 0 auto;
+    opacity: 0
+}
+
+.mainArea05 .obList > ul li.on, .mainArea05 .obList ul > li:hover {
+    text-indent: inherit;
+    background: rgba(0, 0, 0, .3)
+}
+
+.mainArea05 .obList > ul li.on a em, .mainArea05 .obList > ul li.on a em:after, .mainArea05 .obList ul > li a:hover em:after {
+    opacity: 1
+}
+
+.mainArea05 .obList > ul li:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 30px;
+    margin-left: -80px;
+    width: 160px;
+    height: 70px;
+    opacity: .6
+}
+
+.mainArea05 .obList > ul li.on:before, .mainArea05 .obList > ul li:hover:before {
+    top: 20px;
+    opacity: 1
+}
+
+.mainArea05 .obList > ul li.obList01:before {
+    background: url(../../../images/ko/pc/HUMA/img_oblist_logo01.png) no-repeat
+}
+
+.mainArea05 .obList > ul li.obList02:before {
+    background: url(../../../images/ko/pc/HUMA/img_oblist_logo02.png) no-repeat
+}
+
+.mainArea05 .obList > ul li.obList03:before {
+    background: url(../../../images/ko/pc/HUMA/img_oblist_logo03.png) no-repeat
+}
+
+.mainArea05 .obList > ul li.obList04:before {
+    background: url(../../../images/ko/pc/HUMA/img_oblist_logo04.png) no-repeat
+}
+
+.mainArea05 .obList > ul li.obList05:before {
+    background: url(../../../images/ko/pc/HUMA/img_oblist_logo05.png) no-repeat
+}
+
+.mainArea05 .obList > ul li.obList06:before {
+    background: url(../../../images/ko/pc/HUMA/img_oblist_logo06.png) no-repeat
+}
+
+.mainArea05 .obList > ul li.obList07:before {
+    background: url(../../../images/ko/pc/HUMA/img_oblist_logo07.png) no-repeat
+}
+
+.mainArea05 .obList > ul li.obList08:before {
+    background: url(../../../images/ko/pc/HUMA/img_oblist_logo08.png) no-repeat
+}
+
+.mainArea05 .obList > ul li.obList09:before {
+    background: url(../../../images/ko/pc/HUMA/img_oblist_logo09.png) no-repeat
+}
+
+/*.mainArea05 .obList > ul li.obList09{position:absolute;right:0;top:0;width:184px;height:280px;border:1px solid rgba(255, 255, 255, .2);border-left:0}
+.mainArea05 .obList > ul li.obList09:before{left:50%;top:100px;margin-left:-17px;width:34px;height:30px;background:url(../../../images/ko/pc/HUMA/ico_eshop.png) no-repeat}
+.mainArea05 .obList > ul li.obList09 a span{display:block;position:absolute;left:0;top:150px;width:100%;font:400 18px gothamM;color:#fff;opacity:.6}
+.mainArea05 .obList > ul li.obList09.on a span, .mainArea05 .obList .obList09 a:hover span{opacity:1}
+.mainArea05 .obList > ul li.obList09 > a{padding:0;height:280px}*/
+.mainArea05 .obBg > li {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    transition: 1.5s;
+    opacity: 0
+}
+
+.mainArea05 .obBg > li.on {
+    opacity: 1
+}
+
+.mainArea05 .obBg img {
+    width: 100%
+}
+
+.mainArea06 .inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1160px;
+    margin: -245px 0 0 -580px;
+    text-align: center
+}
+
+.mainArea06 .brandList {
+    border-top: 1px solid #ccc;
+    padding-top: 40px;
+    margin-top: 40px
+}
+
+.mainArea06 .brandList > li {
+    float: left;
+    width: 160px;
+    margin: 40px 0 0 40px
+}
+
+.mainArea06 .brandList > li:nth-child(6n+1) {
+    margin-left: 0
+}
+
+/* .mainArea07 {background:url(../../../images/ko/pc/HUMA/bg_main04_01.jpg) no-repeat; background-size:cover;z-index:99} */
+.mainArea07 {
+    background: #f5f5f5;
+}
+
+.mainArea07 .inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1400px;
+    height: 700px;
+    margin: -320px 0 0 -700px;
+}
+
+.mainArea07 .inner .icoArr {
+    font: 400 16px gothamM;
+    margin-left: 130px
+}
+
+.mainArea07 .inner .swipeWrapArea {
+    position: relative;
+    margin-top: 30px
+}
+
+.mainArea07 .inner .swipeWrap {
+    width: 1170px;
+    margin: 0 auto
+}
+
+.mainArea07 .inner .swipeCont {
+    margin-left: 15px
+}
+
+.mainArea07 .inner .thum {
+    position: relative;
+    width: 360px;
+    height: 290px;
+    overflow: hidden
+}
+
+.mainArea07 .inner .thum img {
+    width: 360px;
+    height: 290px
+}
+
+.mainArea07 .inner .thum a {
+    color: #fff
+}
+
+.mainArea07 .inner .thum .hoverCont {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 360px;
+    height: 290px
+}
+
+.mainArea07 .inner .thum .hoverCont a {
+    opacity: 0
+}
+
+.mainArea07 .inner .thum:hover {
+    cursor: pointer
+}
+
+.mainArea07 .inner .thum:hover .hoverCont, .mainArea07 .inner .thum .hoverCont[tabindex="0"] {
+    display: block;
+    background: #555;
+    opacity: .8;
+    z-index: 1
+}
+
+.mainArea07 .inner .thum:hover .hoverCont a, .mainArea07 .inner .thum .hoverCont a:focus {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -30px 0 0 -96px;
+    border: 1px solid #fff;
+    background: transparent;
+    z-index: 1
+}
+
+.mainArea07 .inner .thum .hoverCont.on a {
+    opacity: 1
+}
+
+.mainArea07 .inner .swipeSlide:last-child {
+    margin: 0
+}
+
+.mainArea07 .inner .swipeSlide > * {
+    display: block
+}
+
+.mainArea07 .inner .swipeSlide .comment {
+    font-size: 16px;
+    color: #333;
+    margin-top: 7px;
+    width: 360px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    font-family: gothamL, notokrL;
+}
+
+.mainArea07 .inner .swipeSlide .tit {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    height: 70px;
+    width: 360px;
+    word-break: break-word;
+    padding-bottom: 20px;
+    position: relative;
+    font-family: 'playfair','notokrL';
+    font-size: 26px;
+    line-height: 1.2
+}
+
+.mainArea07 .inner .swipeSlide .tit::after {
+    display: block;
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 1.5px;
+    background: #000;
+    bottom: 7px;
+    left: 0
+}
+
+.mainArea07 .inner .swipeSlide .txt {
+    font-size: 16px;
+    color: #333;
+    margin-top: 7px;
+    width: 360px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    font-family: gothamL, notokrL;
+    /* white-space: nowrap; */
+}
+
+.mainArea07 .inner .swipeSlide .date {
+    font: 400 16px gothamL;
+    color: #333;
+    margin-top: 5px
+}
+
+.mainArea07 .inner .locationTag {
+    display: inline-block;
+    position: relative;
+    margin-top: 40px
+}
+
+.mainArea07 .inner .btnPrev {
+    left: 0
+}
+
+.mainArea07 .inner .btnNext {
+    right: 0;
+    left: inherit
+}
+
+.mainArea07 .inner .titDep1 {
+    font: 500 40px playfair;
+    padding-bottom: 20px;
+    letter-spacing: 10px;
+    display: block;
+    text-align: center;
+}
+
+.mainArea07 .inner .txt {
+    text-align: center;
+}
+
+/* main lounge 전용 swiper 추가 */
+.swiperLoungeWrap {
+    position: relative;
+    margin-top: 30px
+}
+
+.swiper-lounge.swiper-container {
+    overflow: hidden;
+    width: 1170px;
+    margin: 0 auto
+}
+
+.swiper-lounge .swiper-wrapper {
+    margin-left: 15px
+}
+
+.swiper-lounge .swiper-slide:last-child {
+    margin: 0
+}
+
+.swiper-lounge .swiper-slide > * {
+    display: block
+}
+
+.swiper-lounge .swiper-slide .comment {
+    font-size: 16px;
+    color: #333;
+    margin-top: 7px;
+    width: 360px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    font-family: gothamL, notokrL;
+}
+
+.swiper-lounge .swiper-slide .tit {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    height: 70px;
+    width: 360px;
+    word-break: break-word;
+    padding-bottom: 20px;
+    position: relative;
+    font-family: 'playfair','notokrL';
+    font-size: 26px;
+    line-height: 1.2
+}
+
+.swiper-lounge .swiper-slide .tit::after {
+    display: block;
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 1.5px;
+    background: #000;
+    bottom: 7px;
+    left: 0
+}
+
+.swiper-lounge .swiper-slide .txt {
+    font-size: 16px;
+    color: #333;
+    margin-top: 7px;
+    width: 360px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    font-family: gothamL, notokrL;
+    /* white-space: nowrap; */
+}
+
+.swiper-lounge .swiper-slide .date {
+    font: 400 16px gothamL;
+    color: #333;
+    margin-top: 5px
+}
+
+.swiper-lounge .swipBtn {
+    position: absolute;
+    top: 50%;
+    margin-top: -33px;
+    width: 66px;
+    height: 66px;
+    background: url(../../../images/ko/pc/common/btn_swipe_66x66.png) no-repeat;
+    z-index: 2;
+    text-indent: -9999px;
+}
+
+.swiper-lounge .swiper-button-prev {
+    left: 0;
+    background-position: 0 0
+}
+
+.swiper-lounge .swiper-button-next {
+    right: 0px;
+    background-position: -66px 0
+}

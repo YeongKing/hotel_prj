@@ -1,0 +1,2681 @@
+@charset "utf-8";
+
+html[lang=ko] .upper{text-transform:uppercase} /* 일부 대문자 처리시 class 추가 */
+
+/* 입력폼 리스트 */
+.intList > li .tit{display:inline-block;position:relative}
+.intList > li .tit label{display:inline-block;font-family:gothamM,notokrM;font-size:14px;line-height:1;color:#333;text-transform:uppercase}
+.intList > li .essential{display:inline-block;width:6px;height:6px;text-indent:-9999px;overflow:hidden;position:relative;padding-right:4px;vertical-align:2px}
+.intList > li .essential:after{content:'';display:inline-block;position:absolute;right:0;top:50%;margin-top:-4px;width:6px;height:6px;background:url(../../../images/ko/pc/common/ico_essential.png) no-repeat 0 0}
+.intList > li .intWrap+.intInner{margin-top:3px}
+.intList > li .intInner{display:inline-block;position:relative}
+.intList > li .intInner > span{position:relative;display:inline-block}
+.intList > li .intInner .alertMessage{display:none;position:absolute;top:-32px;left:0;width:600px;background:#fff;color:#b01414;font:500 14px/32px notokrR;margin:0}
+.intList > li.error .errorFocus input, .intList > li.error .errorFocus .ui-selectmenu-button{border-bottom:1px solid #b01414 !important}
+.intList > li.error label{color:#b01414}
+.intList > li.error .essential:after{background-position:-6px 0}
+.intList > li .duobuleInp span+span,
+.intList > li .duobuleSelect div+div{margin-left:14px}
+.intList > li .phoneInp .selectWrap{margin-right:20px;vertical-align:middle}
+.intList > li .phoneInp .dash{position:relative;display:inline-block;width:49px}
+.intList > li .phoneInp .dash:after{content:'';position:absolute;left:50%;top:50%;width:13px;height:1px;margin-left:-7px;background:#000}
+.intList > li .emailInp .dash{display:inline-block;padding:0 13px}
+.intList > li .emailInp .selectWrap{display:inline-block;margin-left:18px;vertical-align:middle}
+.intList > li .intArea+button{margin-left:20px}
+.intList > li+li{margin-top:30px}
+.intList > li .txtGuide{margin-top:14px}
+
+/* 예약 */
+.promCode{position:relative;text-align:right;margin:-40px 0 20px;padding-right:20px}
+.promCode .selectWrap .ui-selectmenu-button span{vertical-align:top;text-transform:uppercase}
+.promCode .btnPromo{height:50px;line-height:50px;font-family:notokrL;min-width:162px}
+.promCode .promInt{display:none;position:absolute;right:20px;top:0;border:1px solid #000;width:445px;height:52px;background:#fff;z-index:2}
+.promCode .promInt > *{vertical-align:middle}
+.promCode .promInt .selectWrap{position:absolute;left:0;top:0;height:50px;width:180px !important}
+.promCode .promInt .selectWrap .ui-selectmenu-button{font-size:16px;border-bottom:0;height:50px;line-height:50px;padding-left:20px}
+.promCode .promInt .selectWrap .ui-selectmenu-button:after{right:30px}
+.promCode .promInt .selectWrap:after{content:'';display:inline-block;position:absolute;right:-2px;top:50%;margin-top:-7px;width:1px;height:14px;background:#ccc}
+.promCode .promInt .selectWrap .ui-selectmenu-menu{border-top:1px solid #000;left:-1px !important}
+.promCode .promInt input{position:absolute;left:190px;top:0;height:50px;line-height:50px;font-size:16px;border-bottom:0}
+.promCode .promInt .btnLine{position:absolute;left:400px;top:15px}
+
+.rsvList > li{padding:21px 20px 22px;border-top:1px solid #ccc}
+.rsvList > li .listTit{font:400 22px gothamB,notokrL}
+.rsvList > li .intValue{position:absolute;right:76px;top:19px;font-size:22px;font-family:gothamL,notokrL;letter-spacing:-.04em} /* 호텔명/날짜/인원 */
+.rsvList > li .intValue strong{letter-spacing:initial}
+.rsvList > li .intValue em{display:inline-block;margin-right:3px;font:500 26px/1.8 playfair;font-feature-settings:'lnum','pnum';letter-spacing:.075em}
+.rsvList > li .intValue span:before{content:'';display:inline-block;position:relative;top:3px;width:1px;height:22px;background:#ccc;margin:0 13px 0 15px}
+.rsvList > li .intValue.pay{font:26px playfair;font-feature-settings:'lnum','pnum';letter-spacing:.075em} /* 우측(금액) */
+.rsvList > li .intValue.pay .unit{display:inline-block;margin-left:6px;font:16px gothamL,notokrL;letter-spacing:initial;font-style:normal;vertical-align:2px}
+.rsvList > li .opValue{margin-left:24px;font:22px/1 gothamL,notokrL;letter-spacing:-.01em} /* 상세(인원) */
+.rsvList > li .commlist dd > .vBar{margin-left:15px}
+.rsvList > li .hotelSel .frmList .frmRadio label{/*width:265px;max-width:265px*/width:447px;max-width:447px }
+.rsvList > li .hotelSel .frmList.threeColumns li{width:447px}
+.rsvList > li .hotelSel .frmList.threeColumns .frmRadio label{width:447px;max-width:none}
+.rsvList > li .hotelSel .txtGuide{text-align:right;margin-top:15px}
+.rsvList > li .hotelSel .txtGuide:before{position:inherit;margin-right:5px;top:1px}
+.rsvList > li:last-child{border-bottom:1px solid #ccc}
+.rsvList > li:last-child.toggleOn{border-bottom:0}
+.rsvList > li.toggleOn{border-top:1px solid #000}
+.rsvList > li .btnToggle{position:absolute;right:18px;top:24px;width:28px;height:28px;overflow:hidden;text-indent:-9999px}
+.rsvList > li .btnToggle:before{content:'';display:block;width:28px;height:15px;padding:6px 0 7px;background:url(../../../images/ko/pc/common/ico_toggle.png) no-repeat 0 5px}
+.rsvList > li.toggleOn .btnToggle:before{background-position:-28px 5px}
+.rsvList > li:last-child .toggleInner{padding-bottom:0}
+.rsvList .roomTit{font-family:gothamB;font-size:22px}
+
+.selResult{background:#f9f9f9;margin-bottom:100px}
+.selResult .inner{padding:42px 0}
+.selResult .infoArea{position:relative}
+.selResult .infoArea:after{content:'';display:block;clear:both}
+.selResult .infoArea dl{float:left}
+.selResult .infoArea dl dt{font-family:gothamM,notokrM;font-size:14px;padding-bottom:5px}
+.selResult .infoArea dl dd{font-size:20px;font-family:gothamL,notokrL}
+.selResult .infoArea dl.dlType01{padding-right:110px}
+.selResult .infoArea dl.dlType02{padding-right:110px}
+.selResult .infoArea dl.dlType02 dt{padding-bottom:2px}
+.selResult .infoArea dl.dlType02 dd span:before{content:'';display:inline-block;position:relative;top:2px;width:1px;height:18px;background:#ccc;margin:0 15px}
+.selResult .infoArea dl.dlType03{text-align:center;padding-right:70px}
+.selResult .infoArea dl.dlType03:last-child{padding-right:0}
+.selResult .btnSC{position:absolute;right:0;top:50px}
+.selResult .icoArr.btnM::after{right:20px;width:7px;height:13px;background: url(../../../images/ko/pc/common/ico_arr_7x13.png) no-repeat 0 0}
+
+.joinBanner{padding:30px 0 0;font-weight:600;}
+.joinBanner .btnLine{margin-left:20px}
+/* 2100511 추가 */
+.joinBanner .bannerTit{min-width:230px;margin-right:50px;display:inline-block;background-color:#b6a29a;text-align:center;color:#fff;font-size:17px;}
+/* // 2100511 */
+.roomContainer .roomList > li{border-bottom:1px solid #ccc;padding:71px 0}
+.roomContainer .roomList > li:last-child{border-bottom:0;padding-bottom:0}
+.roomContainer .roomList > li .toggleCont .toggleInner{padding:0}
+.roomContainer .roomList > li .titDep3{font-size:22px;font-family:playfair;font-weight:500;margin-bottom:24px}
+.roomContainer .roomList > li .roomDetail-reference{width:100%;margin-bottom:24px;text-align:right;}
+.roomContainer .roomList > li .roomDetail-reference .badge-info{margin-right:6px;}
+.roomContainer .roomIntro{position:relative;padding-left:585px;min-height:352px}
+.roomContainer .roomIntro .roomName{display:block;font-size:40px;padding-top:50px;margin-bottom:14px;font-family:playfair;font-weight:500;line-height:1;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.roomContainer .roomIntro .roomBenefit{display:-webkit-box;max-height:60px;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.roomContainer .roomIntro .btnView{margin-top:10px}
+.roomContainer .roomIntro .btnView .icoArr{font-size:14px;min-width:auto;padding:0}
+.roomContainer .roomIntro .btnView .icoArr:after{content:'';display:block;width:100%;height:1px;background:#000;transform:inherit;top:inherit}
+.roomContainer .roomIntro .date{position:absolute;left:585px;bottom:78px;font-family:gothamL,notokrL;font-size:20px}
+.roomContainer .roomIntro .priceWrap{position:absolute;left:585px;bottom:-7px}
+.roomContainer .roomIntro .priceWrap > *{display:block}
+.roomContainer .roomIntro .priceWrap .price{font-size:40px;font-family:playfair;font-feature-settings:'lnum','pnum'}
+.roomContainer .roomIntro .priceWrap .price em{display:inline-block;vertical-align:6px;font-size:24px;font-family:gothamL,notokrL;letter-spacing:-1px;margin-left:3px}
+.roomContainer .roomIntro .priceWrap .day{font-size:16px;font-family:gothamL,notokrL;letter-spacing:-1px}
+.roomContainer .roomIntro .thum{position:absolute;left:0;top:0}
+.roomContainer .roomIntro .thum img{width:508px}
+.roomContainer .roomIntro .thum .badge-lg{width:100px;height:100px;font:300 18px/1 'notokrL'}
+.roomContainer .roomIntro .thum .badge-lg b{font:500 26px/1.35 'notokrM'}
+.roomContainer .roomIntro .hoverCont{position:absolute;left:0;right:0;top:0;bottom:0;width:508px;opacity:0}
+.roomContainer .roomIntro .hoverCont .btnSC{display:block;position:absolute;left:50%;top:50%;-webkit-transform:translate(-50%, -50%);-moz-transform:translate(-50%, -50%);-o-transform:translate(-50%, -50%);-ms-transform:translate(-50%, -50%);transform:translate(-50%, -50%);border:1px solid #fff;color:#fff;background:transparent;color:#fff}
+.roomContainer .roomIntro .hoverCont.on{opacity:1;background-color:rgba(121, 120, 100, .9);text-align:center;z-index:1}
+.roomContainer .btnRsv{position:absolute;right:0;bottom:0;background:#000;color:#fff;padding:13px 132px 13px 25px}
+.roomContainer .btnRsv:after{content:'';display:block;position:absolute;right:25px;top:50%;margin-top:-5px;width:18px;height:10px;background:url(../../../images/ko/pc/common/ico_toggle_w_18x10.png) no-repeat 0 0}
+.roomContainer .toggleOn .btnRsv:After{background-position:-18px 0}
+.roomContainer .roomIntro .keyword{position:absolute;left:585px;top:0}
+.roomContainer .roomDetail{padding-top:70px}
+.roomContainer .roomDetail+.roomDetail{padding-top:40px}
+.roomContainer .roomDetail .roomDetailTit{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end;width:100%;}
+.roomContainer .optionList li{display:table;width:100%;position:relative;height:90px}
+.roomContainer .optionList li:after{content:'';display:block;clear:both}
+.roomContainer .optionList li .roomInfor{display:table-cell;position:relative;width:1167px;padding:40px 30px 35px;border-left:1px solid #ccc;border-top:1px solid #ccc}
+.roomContainer .optionList li:last-child{border-bottom:1px solid #ccc}
+.roomContainer .optionList li .titArea{position:absolute;left:75px;top:30px}
+.roomContainer .optionList li .titArea > *{display:inline-block;vertical-align:middle}
+.roomContainer .optionList li .tit{font-family:gothamM}
+.roomContainer .optionList li .badge-info{margin-left:12px;}
+.roomContainer .optionList li .infor{font-size:17px;color:#666;margin-left:10px}
+.roomContainer .optionList li .btnRoominfor{display:inline-block;vertical-align:middle;width:25px;height:25px;overflow:hidden;text-indent:-9999px;color:transparent}
+.roomContainer .optionList li .btnRoominfor:before{content:'';display:block;width:25px;height:25px;background:url(../../../images/ko/pc/HURE/ico_room_infor.png) no-repeat 50% 50%}
+.roomContainer .optionList li .price{position:absolute;right:30px;top:30px;font-family:gothamL,notokrL;font-size:16px;width:170px;text-align:right}
+.roomContainer .optionList li .price em{font-size:20px;vertical-align:-2px;margin-right:7px}
+.roomContainer .optionList li .price:before{content:'';display:inline-block;position:absolute;left:0;top:10px;width:1px;height:16px;background:#ccc}
+.roomContainer .optionList li button{position:absolute;right:300px;top:38px}
+.roomContainer .optionList li button+button{position:absolute;right:215px}
+.roomContainer .optionList li .btnBook{display:table-cell;vertical-align:middle;width:233px;height:100%;border-left:1px solid #ccc;border-top:1px solid #ccc;border-right:1px solid #ccc}
+.roomContainer .optionList li .btnBook span{display:block;text-align:center}
+.roomContainer .optionList li:before{content:'';display:block;position:absolute;left:30px;top:50%;width:31px;height:26px;margin-top:-13px;background:url(../../../images/ko/pc/HURE/ico_bed_view.png) no-repeat}
+.roomContainer .optionList li.type01:before{background-position:0 0}
+.roomContainer .optionList li.type02:before{background-position:0 -26px}
+.roomContainer .optionList li.type03:before{background-position:0 -52px}
+.roomContainer .optionList li .roomBenefit{width:730px;max-height:54px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-top:25px;padding-left:46px}
+
+.roomContainer .optionList.type02 li:before{display:none}
+.roomContainer .optionList.type02 li .titArea{left:30px}
+.roomContainer .optionList.type02 li .date{font-family:gothamL}
+.roomContainer .optionList.type02 li .roomBenefit{padding-left:0}
+
+.keyword > span{display:inline-block;margin:0 5px 5px 0;padding:3px 10px 4px;font:400 14px/1.5 gothamL,notokrL;text-transform:uppercase;border:1px solid #000;vertical-align:top}
+.rsvInfo{border-top:1px solid #000;border-bottom:1px solid #ccc;padding:40px 20px 50px}
+
+.commWrap{position:relative;display:table;width:100%;table-layout:fixed}
+.commWrap .commlist{display:table-cell;vertical-align:top;padding:0 100px 0 0}
+.commWrap .commlist dt{color:#989442;padding-bottom:7px;font-family:gothamB,notokrR}
+.commWrap .commlist dd + dd{margin-top:4px}
+.commWrap .commlist dd .txt, .commWrap .commlist dd .thum{display:block;margin-bottom:4px;overflow:hidden;font-family:gothamL, notokrL/*;text-transform:uppercase*/} /* 대문자 아닌 케이스 포함 */
+.commWrap .commlist dd .thum{width:280px;overflow:hidden;margin:12px 0 0;text-align:center;}
+.commWrap .commlist dd .thum img{width:60%}
+.commWrap .commlist dd+dt{padding-top:30px}
+.commWrap + .commWrap{margin-top:36px}
+.commWrap .commlist dd .txt.pdtopAdd {padding-top:8px;}
+
+.infoData li{margin-top:6px}
+.infoData li:after{content:'';display:block;clear:both}
+.infoData li span{font-family:gothamL}
+.infoData li .lfData{float:left}
+.infoData li .rtData{float:right;text-align:right}
+
+.rsvList + .total, .rsvList + h3 + .total{margin-top:-1px}
+.total{background:#f9f9f9;text-align:center;padding:34px 0 40px;border-top:1px solid #ccc}
+.total .totalWrap{display:inline-block;position:relative;vertical-align:top;padding-top:33px}
+.total .totalWrap:first-child:before{display:none}
+.total .totalWrap:before, .total .totalWrap.sum:after, .total .totalWrap.type02:before, .total .totalWrap.type02:after{content:'';display:block;position:absolute;width:13px;height:1px;background:#000}
+.total .totalWrap:before{left:-32px;top:46px}
+.total .totalWrap.sum:after{left:-26px;top:40px;width:1px;height:13px}
+.total .totalWrap.type02:before{right:-7px;top:42px}
+.total .totalWrap.type02:after{left:-32px;top:48px}
+.total .totalWrap .tit{display:block;position:absolute;left:0;top:0;color:#888;font-size:16px;line-height:1.1;letter-spacing:-.025em}
+.total .totalWrap .pay{display:inline-block;font:16px/1 gothamB,notokrL;letter-spacing:-.025em}
+.total .totalWrap .pay em{display:inline-block;font:500 26px/1 playfair;margin-right:2px;letter-spacing:.075em;font-feature-settings:'lnum','pnum'}
+.total .totalWrap .pay em .increase{color:#989442}
+.total .totalWrap.type02{position:relative;top:1px;padding-top:23px;margin-left:20px}
+.total .totalWrap.type02 .tit{line-height:1}
+.total .totalWrap.type02 .pay{font-size:26px;padding-right:20px}
+.total .totalWrap.type02 .pay em{font-size:42px;vertical-align:-5px}
+.total .totalWrap + .totalWrap{margin-left:42px}
+.total .pointNone .totalWrap.type02{display:block;padding:37px 30px 37px 20px}
+.total .pointNone .totalWrap.type02 .pay{position:absolute;right:30px;top:30px}
+.total+.txtGuide{margin-top:15px}
+.total.noMember .totalWrap:before, .total.noMember .totalWrap:after{display:none}
+.total .pointNone .totalWrap .tit{font-size:22px}
+
+.promotion{margin-top:170px}
+.promotion .swipeWrap{width:1455px !important}
+.promotion .promList > li:first-child{margin-left:0}
+.promotion .promList > li{float:left;vertical-align:top}
+.promotion .promList > li a{width:427px}
+.promotion .promList > li a,
+.promotion .promList > li > div{display:block;position:relative;padding-top:296px}
+.promotion .promList > li .tit{display:block;font-size:28px;padding-top:17px;font-weight:500;font-family:playfair, notokrR;font-feature-settings:'lnum','pnum';text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.promotion .promList > li .txt{padding-top:1px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.promotion .promList > li .date{font-family:gothamL,notokrL;/*font-weight:600;*/font-size:14px;padding-top:27px;color:#333}
+.promotion .promList > li .date span{display:block;font-weight:500}
+.promotion .promList > li .date span+span{margin-top:-2px}
+.promotion .promList > li .date span em{font-family:notokrL;margin-right:10px}
+.promotion .promList > li .thum{position:absolute;left:0;top:0;/*height:296px;overflow:hidden*/}
+.promotion .promList > li .thum img{width:100%}
+.promotion .promList > li .keyword{margin-top:19px}
+.promotion .promList > li .price{display:block;font:400 16px gothamL,notokrL;padding-top:5px}
+.promotion .promList > li .price em{display:inline-block;vertical-align:-3px;font:500 26px playfair;letter-spacing:2px;margin-right:3px;font-feature-settings:'lnum','pnum'}
+
+.swipeWrapArea{position:relative}
+.promotion .swipeWrap{width:1400px}
+.promotion .swipeWrapArea .btnSwipe{position:absolute;top:-53px;width:18px;height:18px;background:url(../../../images/ko/pc/common/btn_swipe_18x18.png) no-repeat;z-index:1}
+.promotion .swipeWrapArea .btnPrev{right:40px;background-position:0 0;left:inherit;}
+.promotion .swipeWrapArea .btnNext{right:0;background-position:-18px 0;left:inherit;}
+.promotion .swipeWrapArea .btnNext:before{content:'';display:block;position:absolute;left:-12px;top:1px;width:1px;height:16px;background:#ccc}
+
+.swipeWrapArea .indicator{text-align:center;margin-top:60px}
+.swipeWrapArea .indicator .num{position:relative;display:inline-block;padding:10px;color:transparent;font-size:0;vertical-align:middle}
+.swipeWrapArea .indicator .num:after{content:'';display:inline-block;position:absolute;top:50%;left:50%;width:10px;height:10px;margin:-5px 0 0 -5px;background:#ccc;border-radius:5px}
+.swipeWrapArea .indicator .on:after{background:#000}
+
+.revNumber{display:block;font-size:38px;text-align:center}
+.revNumber em{margin-left:15px;color:#989442;font-size:38px;font-family:playfair;font-feature-settings:'lnum','pnum'}
+.revNumber+.pageGuide{text-align:center}
+
+.layerPop .printLayer .commWrap .commlist{padding:0 50px 0 0}
+.layerPop .printLayer .commWrap .commlist dd .thum{width:220px}
+.layerPop .printLayer .topArea .topInner{padding:87px 0 80px}
+
+/* 회원특가상품 Layer Popup */
+.layerPop .specialPrice{width:1080px;padding-bottom:0;text-align:center}
+.layerPop .specialPrice .compTit{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.layerPop .specialPrice .desc{font-size:20px}
+.layerPop .specialPrice .desc b{color:#989442;font-family:gothamM}
+.layerPop .specialPrice .btmGuide{margin-top:70px;padding:28px 0;font-size:17px;text-align:left;border-top:1px solid #eee}
+.layerPop .specialPrice .btmGuide .icoArr{margin-left:15px;font-size:16px;font-family:notokrR}
+
+
+/* 비교함 */
+.comparison{display:none;position:fixed;left:0;right:0;bottom:0;background:#807f6c;z-index:999}
+.comparison .btnArea{margin:0;background:#72715c}
+.comparison .btnArea .btnComp{font-size:16px;color:#fff;height:50px;line-height:50px}
+.comparison .btnArea .btnComp:after{content:'';display:inline-block;vertical-align:middle;margin-left:15px;width:11px;height:7px;background:url(../../../images/ko/pc/common/ico_comparison.png) no-repeat -11px 0}
+.comparison .btnArea .btnComp.on:after{background-position:0 0}
+.comparison .compCont{display:table;position:relative;width:1400px;margin:0 auto}
+.comparison .compInner{padding:40px 0}
+.comparison .compList{display:table-cell;width:1050px}
+.comparison .compList > li{display:table-cell;vertical-align:top;position:relative;width:350px;border-left:1px solid #666654}
+.comparison .compList > li .compWrap{position:relative;width:220px;margin:0 auto;color:#fff;padding-top:152px}
+.comparison .compList > li .compWrap .tit{width:220px;font-weight:400;display:inline-block;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;font-family:gothamL;margin-bottom:-15px}
+.comparison .compList > li .compWrap .txt{font-size:15px;color:#d9d9d3;padding-top:10px}
+.comparison .compList > li .compWrap .thum{position:absolute;left:50%;top:0;margin-left:-110px;width:220px;height:152px;overflow:hidden}
+.comparison .compList > li .compWrap .thum img{width:100%}
+.comparison .compList > li .compWrap.noCont .thum:before{content:'';display:block;position:absolute;left:0;top:0;z-index:-1;width:220px;height:152px;background:url(../../../images/ko/pc/HURE/bg_comparison.png) no-repeat 0 0}
+.comparison .compList > li .btnDel{position:absolute;right:64px;top:0;width:32px;height:32px;overflow:hidden}
+.comparison .compList > li .btnDel:before{content:'';display:block;width:32px;height:32px;background:url(../../../images/ko/pc/common/btn_del.gif) no-repeat 0 0}
+.comparison .compList > li:last-child{border-right:1px solid #666654}
+.comparison .btnWrap{display:table-cell;width:349px;text-align:left;vertical-align:middle;border-right:1px solid #666654;padding:0 93px}
+.comparison .btnWrap .btnSC{display:block;margin:0 auto 5px}
+.comparison .btnWrap .txtGuide{display:inline-block;color:#d9d9d3;font-size:16px}
+
+.compTit{font:500 34px/1.32 gothamB,notokrR;text-align:center;margin-bottom:32px;letter-spacing:-.025em;text-transform:uppercase}
+.compLayer .compList02:after{content:'';display:block;clear:both}
+.compLayer .compList02 li{float:left;width:280px}
+.compLayer .compList02 li+li{margin-left:40px}
+.compLayer .compList02 li > dl{position:relative;width:280px}
+.compLayer .compList02 li > dl .tit{font-size:20px;padding-top:210px;font-family:gothamL;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.compLayer .compList02 li > dl .thum{position:absolute;left:0;top:0;width:280px}
+.compLayer .compList02 li > dl .thum img{width:100%}
+.compLayer .compList02 li > dl .txt{font-size:16px;display:-webkit-box;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:1;-webkit-box-orient:vertical}
+.compLayer .compList02 li > dl .date{font-size:14px;font-family:gothamL,notokrL;color:#666;padding:30px 0 5px}
+.compLayer .compList02 li > dl .price{font-size:16px;font-family:gothamB,notokrM}
+.compLayer .compList02 li > dl .price em{display:inline-block;vertical-align:-3px;font-family:playfair;font-size:26px;font-weight:500;margin-right:3px;font-feature-settings:'lnum','pnum'}
+.compLayer .compList02 li > dl .benefit{font-size:16px;display:-webkit-box;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:3;-webkit-box-orient:vertical;height:80px;margin-top:20px}
+.compLayer .compList02 li > dl .benefit strong{display:none;font-size:14px;;font-family:gothamL,notokrL;color:#989442;padding:20px 0 5px}
+.compLayer .compList02 li > dl .btnM{display:block;min-width:auto;margin-top:30px}
+.compLayer .compList02 li > dl .btnDel{position:absolute;right:0;top:0;width:32px;height:32px;overflow:hidden;font:0/0 Roboto, notokrL}
+.compLayer .compList02 li > dl .btnDel:before{content:'';display:block;position:absolute;right:0;top:0;width:32px;height:32px;background:url(../../../images/ko/pc/common/btn_del.gif) no-repeat 0 0}
+.compLayer .txtGuide > .btnArr{margin-left:8px}
+
+/* 예약 옵션 선택*/
+.addOption+.addOption{margin-top:8px}
+.addOption{position:relative;padding-right:200px;min-height:35px}
+.addOption .txt{display:inline-block;vertical-align:middle}
+.addOption .price{display:inline-block;position:relative;padding-left:16px;margin-left:13px;font-family:gothamL,notokrL;vertical-align:middle}
+.addOption .price:before{content:'';position:absolute;top:50%;left:0;width:1px;height:16px;margin-top:-8px;background:#ccc}
+.addOption .numPeople{position:absolute;right:0;top:0;float:none;padding:0;border-bottom:0;width:170px}
+.addOption .numPeople span{width:100px}
+.addOption .numPeople button[disabled]{cursor:default;background:#f9f9f9}
+
+.rsvRoomWrap .frmList > li:nth-child(4n + 1){margin:8px 0 0 0} /* 4개 기준 HURE1300M.html yjs */
+.rsvRoomWrap .frmList .frmCheck label, .frmList .frmRadio label{width:209px;max-width:209px;vertical-align:top}
+.rsvRoomWrap .txtGuide, .rsvRoomWrap .txtReference{margin-top:14px}
+.rsvRoomWrap .txtGuide + .side{top:-7px}
+.rsvRoomWrap{min-height:800px}
+.rsvRoomWrap .lCont{width:900px}
+.rsvRoomWrap .lCont .intWrap{margin-top:42px}
+.rsvRoomWrap .rCont{position:absolute;top:0;right:0;width:400px}
+.rsvRoomWrap .titDep2{margin-bottom:10px;font-family:playfair;font-feature-settings:'lnum','pnum';font-weight:500;font-size:40px}
+.rsvRoomWrap .titDep2 + .subTxt{font-size:18px;font-family:gothamL;margin-bottom:40px}
+.rsvRoomWrap .toggleInner>.opTit:first-child{padding-top:0}
+.rsvRoomWrap .titDep3+.opTit{padding-top:12px}
+.rsvRoomWrap .opTit{display:block;font:500 14px gothamB,notokrM;padding:40px 0 12px}
+.rsvRoomWrap .categoryTxt{font-family:gothamL,notokrL;margin-bottom:30px}
+.rsvRoomWrap .priceView{padding:21px 0;background:#f9f9f9}
+.rsvRoomWrap .priceView:after{content:'';display:block;clear:both}
+.rsvRoomWrap .priceView li{position:relative;width:50%;font-size:18px;float:left;text-align:center}
+.rsvRoomWrap .priceView li+li:before{content:'';position:absolute;top:50%;left:0;width:1px;height:16px;margin-top:-8px;background:#ccc}
+.rsvRoomWrap .priceView li span{display:inline-block;margin-left:20px;font-family:gothamL}
+.rsvRoomWrap .priceView li span em{color:#989442;font-weight:500;letter-spacing:-1px}
+.rsvRoomWrap .frmList{margin-bottom:20px}
+.rsvRoomWrap .caInputBox{padding:15px 15px 15px 0;border-bottom:1px solid #ccc;width:100%;height:50px}
+.rsvRoomWrap textarea{width:100%;height:110px;padding:2px 15px 15px 0;border:none;border-bottom:1px solid #ccc}
+.rsvRoomWrap textarea+.txtGuide{margin-top:8px}
+.rsvRoomWrap .rCont .toggleList > li .toggleCont .toggleInner{padding:13px 0 0;font-family:gothamL}
+.rsvRoomWrap .rCont .listTit{font-size:16px;color:#989442;vertical-align:top}
+.rsvRoomWrap .rCont .listTit .price{display:block;color:#000;font-size:22px;line-height:1;padding-bottom:12px;margin-top:-4px;font-family:gothamL}
+.rsvRoomWrap .rCont .listTit .price em{display:inline-block;vertical-align:-5px;font-size:36px;font-family:playfair;margin-right:3px;font-feature-settings:'lnum','pnum';letter-spacing:.075em}
+.rsvRoomWrap .rCont .rsvList > li{padding:34px 40px 28px;border-left:1px solid #ccc;border-right:1px solid #ccc}
+.rsvRoomWrap .rCont .rsvList > li .btnToggle{top:53px;right:40px}
+.rsvRoomWrap .rCont .rsvList > li.toggleOn{border-left:1px solid #000;border-right:1px solid #000}
+.rsvRoomWrap .rCont .rsvList > li.toggleOn:after{content:'';position:absolute;left:0;bottom:-1px;height:1px;width:100%;background:#000;z-index:1}
+
+.rsvRoomWrap .rCont .optionTotal.scrollWrap{background:none;height:auto;max-height:400px;margin:0;padding:0;margin-right:0 !important;padding-right:0 !important;overflow-y:hidden !important}
+.rsvRoomWrap .rCont .designScroll{overflow:inherit !important}
+.rsvRoomWrap .rCont .designScroll .scrollbar-wrap{right:-24px}
+
+.rsvRoomWrap .rCont .optionTotal .infoData+.infoData{margin-top:25px;padding-top:25px;border-top:1px dashed #ccc}
+.rsvRoomWrap .rCont .optionTotal .infoData>li:first-child{margin-top:0}
+.rsvRoomWrap .rCont .optionTotal li+li{margin-top:8px}
+.rsvRoomWrap .rCont .totalCont .totalPrice{position:relative;padding:81px 0 27px}
+.rsvRoomWrap .rCont .totalCont .totalPrice.type02{padding:120px 0 31px}
+.rsvRoomWrap .rCont .totalCont .totalPrice .txt{font-size:22px}
+.rsvRoomWrap .rCont .totalCont .totalPrice .price{position:absolute;bottom:14px;right:0;font-weight:600;font-size:26px;font-family:gothamL,notokrL}
+.rsvRoomWrap .rCont .totalCont .totalPrice .price em{display:inline-block;vertical-align:-4px;font-weight:500;font-size:40px;font-family:playfair;margin-right:3px;font-feature-settings:'lnum','pnum';letter-spacing:-.02em}
+.rsvRoomWrap .rCont .totalCont .totalPrice .subTxt{position:absolute;top:37px;right:0;font-size:18px}
+.rsvRoomWrap .rCont .totalCont .totalPrice .saleTxt{position:absolute;top:70px;right:0;font-size:18px;color:#989442}
+.rsvRoomWrap .rCont .totalCont .totalPrice .saleTxt span{font-family:gothamL}
+.rsvRoomWrap .rCont .totalCont .btnArea{margin-top:0;display:table;width:100%;table-layout:fixed}
+.rsvRoomWrap .rCont .totalCont .btnArea div{position:relative;display:table-cell;vertical-align:middle}
+.rsvRoomWrap .rCont .totalCont .btnArea div+div:after{content:'';position:absolute;top:50%;left:0;margin-top:-10px;width:1px;height:20px;background:#808080;z-index:99}
+.rsvRoomWrap .rCont .totalCont .btnArea .btnSC{margin:0;padding:0;width:100%;background:#000;color:#fff;font-size:18px;display:block;min-width:auto}
+.rsvRoomWrap .rCont .totalCont .btnArea + .frm{margin:20px 0 0 20px;}
+.rsvRoomWrap .intList+.txtGuide{margin-top:20px}
+.rsvRoomWrap .titArea .opTit+.side{top:30px}
+.rsvRoomWrap .titArea .opTit+.side .btnLine+.btnLine{margin-left:15px}
+/*.rsvRoomWrap .side{top:-5px}*/
+
+.layerPop .dateSelectArea{position:relative;width:760px}
+.layerPop .dateSelectArea .btnLine{position:absolute;top:60px;right:0}
+.layerPop .dateSelectArea .tit{display:block;font-size:34px;text-align:center;margin-bottom:44px}
+.layerPop .dateSelectArea .sideTxtArea{margin-top:5px}
+.layerPop .dateSelectArea .selectList{border:1px solid #ccc}
+.layerPop .dateSelectArea .selectList li{padding:26px 35px;line-height:32px}
+.layerPop .dateSelectArea .selectList li:after{content:'';display:block;clear:both}
+.layerPop .dateSelectArea .selectList li+li{border-top:1px solid #ccc}
+.layerPop .dateSelectArea .selectList .date{display:inline-block;float:left;text-align:center;font-family:gothamL}
+.layerPop .dateSelectArea .selectList .numPeople{margin-left:54px}
+.layerPop .dateSelectArea .selectList .numPeople span{padding:0 33px}
+.layerPop .dateSelectArea .selectList .applyBtn{position:relative;padding-left:22px;margin-left:25px;font-size:15px}
+.layerPop .dateSelectArea .selectList .applyBtn:before{content:'';display:block;position:absolute;left:0;top:50%;width:14px;height:11px;margin-top:-5px;background:url(../../../images/ko/pc/HURE/ico_btn_apply.png) 0 0 no-repeat}
+.layerPop .dateSelectArea .total{padding:40px 0;text-align:center;font-size:18px}
+.layerPop .dateSelectArea .total>div{position:relative;display:inline-block}
+.layerPop .dateSelectArea .total>div+div{margin-left:72px}
+.layerPop .dateSelectArea .total>div+div:before,
+.layerPop .dateSelectArea .total>div+div:after{content:'';display:block;position:absolute;background:#000}
+.layerPop .dateSelectArea .total>div+div:before{width:1px;height:13px;left:-38px;top:14px}
+.layerPop .dateSelectArea .total>div+div:after{width:13px;height:1px;left:-44px;top:20px}
+.layerPop .dateSelectArea .total>div:last-child span{padding-left:0}
+.layerPop .dateSelectArea .total>div:last-child:before{width:13px;height:1px;left:-44px;top:22px}
+.layerPop .dateSelectArea .total>div:last-child:after{top:17px}
+.layerPop .dateSelectArea .total span{font-family:playfair;font-size:26px;padding-left:30px}
+.layerPop .dateSelectArea .total span em{color:#989442}
+.layerPop .dateSelectArea .total .won{font-size:16px;font-family:gothamL,notokrL;color:#000;margin-left:7px}
+.layerPop .dateSelectArea .btnArea{margin-top:0}
+.layerPop .dateSelectArea table+.btnArea{margin-top:50px}
+.layerPop .dateSelectArea .guidTxt{padding:50px 0;font-size:20px;font-weight:500;text-align:center}
+
+/* 예약 고객 정보 입력*/
+.pointGuideBox{position:relative; padding:20px 33px 30px;background:#f9f9f9}
+.pointGuideBox .frm{position:absolute;top:26px;right:34px}
+.pointGuideBox .usePoint,
+.pointGuideBox .havePoint{position:relative;display:inline-block;padding-right:30px;height:44px;line-height:44px}
+.pointGuideBox .usePoint:after,
+.pointGuideBox .havePoint:after{content:'';position:absolute;top:50%;right:0;width:22px;height:22px;background:url(../../../images/ko/pc/HURE/ico_point_symbol.png) 100% 50% no-repeat;margin-top:-11px}
+.pointGuideBox .usePoint{border-bottom:1px solid #000}
+.pointGuideBox .havePoint{position:relative;margin-left:60px}
+.pointGuideBox .havePoint:before{content:'';position:absolute;top:50%;left:0;margin:-9px 0 0 -30px;display:block;width:1px;height:19px;background:#ccc}
+.pointGuideBox .usePoint input{border-bottom:none;height:auto;background:none;padding:0 0 6px 0}
+.pointGuideBox .usePoint .point,
+.pointGuideBox .havePoint .point{width:190px;font-size:20px;text-align:right;font-family:gothamL}
+.pointGuideBox .havePoint .point{width:auto}
+.pointGuideBox .txtGuide,
+.notiContainer .toggleList+.txtGuide{margin-top:20px}
+.notiContainer{margin-top:70px}
+.notiContainer .titDep3{margin-top:70px}
+
+/* toggle(약관) : .toggleList.agreeCont(addClass) H:69px*/
+.toggleList.agreeCont{border-top:1px solid #000}
+.nonToggle + .toggleList.agreeCont{border-top-color:#ccc}
+.toggleList.agreeCont > li{padding:0;border-bottom:1px solid #ccc}
+.toggleList.agreeCont .btnToggle{position:absolute;right:20px;top:23px;width:18px;height:20px;overflow:hidden;text-indent:-9999px}
+.toggleList.agreeCont .btnToggle:before{content:'';display:block;width:18px;height:10px;padding:5px 0;background:url(../../../images/ko/pc/common/ico_toggle_18x10.png) no-repeat 0 5px}
+.toggleList.agreeCont .toggleOn .btnToggle:before{background-position:-18px 5px}
+.toggleList.agreeCont .frm.type02{padding:18px 20px 19px}
+.toggleList.agreeCont .toggleCont .toggleInner{padding:25px;background:#f9f9f9}
+.toggleList.agreeCont .notiTxt{font-size:16px;color:#666;margin-bottom:15px}
+.toggleList.agreeCont .notiTxt+.notiTxt{margin-top:20px}
+.toggleList.agreeCont .notiTxt+table{margin-top:23px}
+.toggleList.agreeCont .frmWrap+.tblH{margin-top:23px}
+.toggleList.agreeCont .frmWrap .frm+.frm{margin-left:30px}
+.toggleList.agreeCont .frmWrap .frm label{color:#666;font-size:16px}
+.toggleList.agreeCont .frmWrap .frm label:before{top:0}
+
+.toggleList .designScroll{position:relative}
+.toggleList.agreeCont .scrollWrap{color:#666;font:16px gothamL, notokrL;padding-right:15px !important;max-height:250px;overflow: hidden}
+.toggleList.agreeCont .scrollbar-wrap{right:0}
+.scrollbar{background:#aaa}
+.designScroll .scrollbar-wrap{z-index:1} /* (공통)20200622 */
+
+/* layer > (기본 스크롤) H:750px */
+.layerCont .scrollWrap{margin:0;padding:0;height:465px;padding-right:8px !important;overflow-y:auto}
+.layerCont .scrollbar-wrap{/*top:95px;*/right:-58px}/* 통합멤버십(포인트) */
+
+/* layer > (아래버튼 없는 경우) H:750px (+ 561) 객실 */
+.layerCont .scrollArea{position:relative;height:561px}
+.layerCont .scrollArea .designScroll{height:561px}
+.layerCont .scrollArea .scrollWrap{height:561px}
+.layerCont .scrollArea .tabRoomInfo{margin:22px 0 35px}
+.layerCont .scrollArea .tabRoomInfo:last-of-type{margin-bottom:14px}
+
+/* layer > toggle(약관) > scrollWrap */
+.layerCont .toggleList.agreeCont .scrollbar-wrap{top:25px;right:0}
+
+/* layer > tab > scrollWrap */
+.layerCont .tabCont .scrollWrap{height:494px;padding-right:inherit} /* 메뉴판 */
+.layerCont .tabInner .scrollWrap{height:397px} /* 마이페이지(리워드) */
+
+/* 메뉴판(스크립트 처리용) */
+.layerCont .menuPanArea .scrollbar-wrap{margin-top:-48px;padding:0}
+
+/* layer > 약관(border/scoll삭제:통합) */
+.layerCont .toggleList.agreeCont{border:0}
+.layerCont .toggleList.agreeCont > li{border:0}
+.layerCont .toggleList.agreeCont .frm.type02{padding:0 0 20px 1px}
+.layerCont .toggleList.agreeCont .btnToggle{display:none}
+.layerCont .toggleList.agreeCont .toggleInner{padding:0;background:#fff}
+.layerCont .toggleList.agreeCont .toggleInner .scrollWrap{height:auto;max-height:none}
+.layerCont .toggleList.agreeCont .toggleInner .designScroll{height:100% !important}
+.layerCont .toggleList.agreeCont .toggleInner .scrollbar-wrap{display:none}
+
+.multiSelect .ui-menu-item-wrapper span, .selectWrap .ui-selectmenu-button span{display:inline-block;font-family:gothamL,notokrL;color:#333;vertical-align:middle}
+.multiSelect .ui-menu-item-wrapper .tit, .selectWrap .ui-selectmenu-button .tit{font-family:notokrL;font-size:14px;color:#777;margin-right:15px}
+.multiSelect .ui-menu-item-wrapper .roomNumber:after, .selectWrap .ui-selectmenu-button .roomNumber:after{content:'';display:inline-block;width:1px;height:16px;background:#ccc;margin:0 20px}
+
+/* 인쇄하기 btn */
+.btnPrint{position:absolute;top:10px;right:0;padding:5px 0;text-align:center;border:1px solid #000;width:120px;font-size:16px}
+
+/* ACTIVITY */
+.amountInfo:after,
+.amountInfo li:after{content:'';display:block;clear:both}
+.amountInfo{padding:28px 20px;border-top:1px solid #000;border-bottom:1px solid #ccc}
+.amountInfo li+li{margin-top:30px}
+.amountInfo .tit{float:left;font-size:22px}
+.amountInfo .pay{float:right;font-size:20px}
+.amountInfo .pay em{font-size:26px}
+
+.roomSelectCon .tit{font-weight:600;color:#333;margin-bottom:8px}
+.roomSelectCon .titDep3{margin-top:70px}
+.roomSelectCon .rSelect li:first-child{margin-top:28px}
+.roomSelectCon .rSelect li{margin-top:20px}
+.roomSelectCon .rSelect .frm input[type=radio]:checked+label{border:1px solid #000}
+.roomSelectCon .rSelect .frm{position:relative;display:block}
+.roomSelectCon .rSelect .frm label{display:block;padding:30px 550px 30px 105px;border:1px solid #ccc}
+.roomSelectCon .rSelect .frm label:before{left:40px;top:50%;margin-top:-13px}
+.roomSelectCon .rSelect .frm .date span{font-size:18px;color:#000;font-family:gothamL}
+.roomSelectCon .rSelect .frm .date span+span{position:relative;padding-left:20px}
+.roomSelectCon .rSelect .frm .date span+span:before{content:'';position:absolute;left:10px;top:50%;margin-top:-6px;width:1px;height:16px;background:#ccc}
+.roomSelectCon .rSelect .frm .sTxt{display:block;margin-top:6px;font-size:14px;color:#777}
+.roomSelectCon .rSelect .frm .numCont{position:absolute;top:50%;right:40px;margin-top:-16px;text-align:right}
+.roomSelectCon .rSelect .frm .numCont .numPeople{margin-left:40px}
+
+.userInfo .title{display:block;font-size:30px;color:#222;margin:120px 0 50px}
+.userInfo .intList{margin-top:40px}
+
+.notiCont{padding-top:25px;border-top:1px solid #000}
+
+.rCont .totalInfo{padding:40px;border:1px solid #000}
+.rCont .totalInfo li .txt{font-size:17px;float:left}
+.rCont .totalInfo li .pay{font-family:gothamL,notokrL;font-size:18px;float:right}
+.rCont .totalInfo li:after{content:'';display:block;clear:both}
+.rCont .totalInfo li+li{margin-top:20px}
+.rCont .totalInfo .infoData{margin-top:25px;padding-top:25px;border-top:1px dashed #ccc}
+
+.frm.ico02 input[type=checkbox]+label:before{background-position:0 -13px;width:26px;height:26px;top:0}
+.frm.ico02 input[type=checkbox]:checked+label:before{background-position:-26px -13px}
+
+.activityWrap .avList{margin-left:-55px}
+.activityWrap .avList li{position:relative;padding:580px 0 120px;display:inline-block;width:430px;float:left;margin-left:55px}
+.activityWrap .avList li:nth-child(3n+2){margin-top:100px;margin-bottom:-100px}
+.activityWrap .avList li:after{content:'';display:block;clear:both}
+.activityWrap .avList .txtCont .category{display:inline-block;font-size:14px;font-family:gothamL,notokrL;margin-top:35px;border:1px solid #000;padding:1px 9px 2px 9px}
+.activityWrap .avList .txtCont .tit{display:block;font-size:36px;font-weight:600;margin:8px 0 0;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.activityWrap .avList .txtCont .date{display:block;font-size:18px;font-family:gothamL}
+.activityWrap .avList .thum{position:absolute;left:0;top:0;cursor:pointer}
+.activityWrap .avList .hoverCont{position:absolute;left:0;right:0;top:0;bottom:0;width:430px;opacity:0}
+.activityWrap .avList .hoverCont .btnCont{position:absolute;left:50%;top:50%;-webkit-transform:translate(-50%, -50%);-moz-transform:translate(-50%, -50%);-o-transform:translate(-50%, -50%);-ms-transform:translate(-50%, -50%);transform:translate(-50%, -50%)}
+.activityWrap .avList .hoverCont .btnSC{display:block;border:1px solid #e7c2a3;color:#e7c2a3;background:transparent;color:#e7c2a3}
+.activityWrap .avList .hoverCont .btnSC+.btnSC{margin-top:12px}
+.activityWrap .avList .hoverCont.on{opacity:1;background-color:rgba(44, 74, 66, .8);text-align:center;z-index:1}
+.activityWrap .avList+.btnArea{margin-top:70px}
+.activityWrap .avList+.btnArea a{font-family:gothamL,notokrL;font-weight:400}
+.activityWrap .notiArea:after{content:'';display:block;clear:both}
+.activityWrap .notiArea .lCont{float:left;width:680px}
+.activityWrap .notiArea .rCont{float:right;width:680px}
+.activityWrap .notiArea .lCont .titDep3:first-child,
+.activityWrap .notiArea .rCont .titDep3:first-child{margin-top:0}
+.activityWrap .notiArea .titDep3{display:block;padding-bottom:20px;margin-bottom:30px;border-bottom:1px solid #000;margin-top:70px}
+.activityWrap .notiArea .dtInfo li{margin-top:20px;position:relative;padding-left:106px}
+.activityWrap .notiArea .dtInfo .tit{position:absolute;top:0;left:0;font-size:18px}
+.activityWrap .notiArea .dtInfo .txt{font-size:18px;font-weight:400;font-family:gothamL}
+
+.swipeWrap+.cautionBox{margin-top:120px}
+.cautionBox+.btnArea{margin-top:80px}
+.titDep2+.sTit{display:inline-block;font-size:18px;font-family:gothamL,notokrL;margin:15px 0 11px}
+.activityTbCont{margin-bottom:100px}
+.activityTbCont .titDep2{margin-bottom:0}
+
+.sortBtn{width:1400px;margin:0 auto 40px}
+.sortBtn li{float:left;color:#ccc;font-size:20px;font-family:gothamB,notokrM}
+.sortBtn li+li:before{content:'';display:inline-block;width:1px;height:14px;margin:0 20px;background:#ccc}
+.sortBtn li.on{color:#333;font-family:gothamM,notokrM}
+.sortBtn:after{content:'';display:block;clear:both}
+.topArea + .sortBtn{margin:-10px auto 40px}
+
+.topViewCont{position:relative;overflow:hidden;margin-top:-150px}
+.topViewCont + .inner.propertyWrap{margin-top:80px}
+.topContainer{padding-top:80px}
+.topViewCont .img{height:100vh}
+/*.topViewCont .img:after{content:'';display:block;width:100%;height:100vh;opacity:0.5;background:#000}*/
+.topViewCont img{position:absolute;top:50%;left:50%;min-width:100%;min-height:100%;transform:translate(-50%, -50%);width:auto}
+.topViewCont .txtCont{position:absolute;top:50%;left:50%;text-align:center;transform:translate(-50%, -50%);width:1400px}
+.topViewCont .txtCont .tit{font:400 80px playfair, notokrR;letter-spacing:-1px;color:#fff}
+.topViewCont .txtCont .txt{margin-top:35px;font-size:20px;font-family:gothamL,notokrL;color:#fff}
+.topViewCont .txtCont .category span{display:inline-block;font-family:gothamL,notokrL;color:#fff;letter-spacing:3px;text-transform:uppercase}
+.topViewCont .txtCont .category span+span:before{content:'';display:inline-block;vertical-align:middle;width:2px;height:2px;background:#fff;margin:0 10px}
+.topViewCont button{position:absolute;bottom:75px;left:50%;margin-left:-32px;background:url(../../../images/ko/pc/common/btn_view_more.png) no-repeat 0 0;width:65px;height:45px}
+
+/* 갤러리 슬라이드 */
+.activityWrap .gallery{margin-top:180px}
+.gallery .videoWrap{background:#000;width:100%;height:970px}
+.gallery .videoWrap video{height:100%}
+
+
+/* 갤러리 슬라이드 레이어팝업 */
+.layerCont.layGallery .swipeWrap{width:925px}
+.layerCont.layGallery .swipeWrap img{width:100%}
+.layerCont.layGallery .btnSwipe{top:auto;bottom:0}
+.layerCont.layGallery .numPaging{margin-top:10px}
+
+/* 다이닝 예약 */
+.diningContainer .intList > li textarea{width:100%;height:160px;padding:10px 15px;border:1px solid #ccc}
+.diningContainer .btnArea{margin-top:50px}
+.diningContainer .intInner{width:100%}
+.diningContainer .rsvList > li .intValue span:first-child:before{display:none}
+.diningContainer .calContainer.calSingle .prevMonth, .diningContainer .calContainer.calSingle .nextMonth{top:19px}
+
+
+.diningSelectCont{position:relative;padding-top:110px}
+.diningSelectCont:after{content:'';display:block;clear:both}
+.diningSelectCont .intInner{position:absolute;top:0;left:0}
+.diningSelectCont .lCont{float:left;width:508px}
+.diningSelectCont .lCont .indicator{margin-top:25px}
+.diningSelectCont .lCont .duobuleSelect>div+div{margin-left:72px}
+.diningSelectCont .rCont{float:right;width:777px;min-height:251px}
+.diningSelectCont .rCont .roomIntro{position:relative;min-height:352px}
+.diningSelectCont .rCont .roomIntro .btnSC{position:absolute;right:0;bottom:0}
+.diningSelectCont .rCont .roomIntro .name{font:500 36px/1 gothamB;text-transform:uppercase}
+.diningSelectCont .rCont .roomIntro .txt{margin-top:18px}
+.diningSelectCont .rCont .roomIntro .info{position:absolute;left:0;bottom:0;width:550px}
+.diningSelectCont .rCont .roomIntro .info li{position:relative;padding-left:63px;font-size:16px}
+.diningSelectCont .rCont .roomIntro .info li:first-child{margin-top:0}
+.diningSelectCont .rCont .roomIntro .info em{position:absolute;top:0;left:0;font-size:17px}
+.diningSelectCont .rCont .roomIntro .info span{font-family:gothamL;color:#333;font-size:18px}
+/*.diningSelectCont .rCont .btnArea{position:absolute;left:575px;bottom:52px;margin:0;text-align:left}*/
+.diningSelectCont .rCont .tit:first-child,
+.diningSelectCont .rCont .defaultTxt+.tit{margin-top:7px}
+.diningSelectCont .rCont .tit{display:block;margin:60px 0 10px;font-size:20px;font-weight:500}
+.diningSelectCont .timeSel .frmList .frmRadio label{width:189px;max-width:189px;padding:12px 15px;text-transform:uppercase}
+.diningSelectCont .timeSel .frmList input[disabled]+label{color:#ccc}
+.diningSelectCont .swipeWrap{overflow:hidden;width:508px}
+.diningSelectCont .swipeWrap.gallery .btnPrev{left:20px}
+.diningSelectCont .swipeWrap.gallery .btnNext {right:20px}
+.diningSelectCont .notiTxt{position:relative;display:inline-block;margin-top:30px;margin-left:40px;padding-left:13px}
+.diningSelectCont .notiTxt:before{content:'';position:absolute;top:50%;left:0;margin-top:-3px;width:6px;height:6px;background:#b8b8ad;border-radius:50%}
+.diningSelectCont .calNotiCont{margin-top:35px;padding:22px 30px 26px;background:#f9f9f9;display:none}
+.diningSelectCont .calNotiCont .tit{margin-bottom:10px}
+.diningSelectCont .calNotiCont .tit+.txt{margin-top:6px}
+.diningSelectCont .calNotiCont .txt{font-family:gothamL}
+.diningSelectCont .calNotiCont .txt span+span:before{content:'';display:inline-block;width:1px;height:19px;background:#ccc;margin:0 10px;vertical-align:middle}
+.diningSelectCont .txtGuide{margin-top:11px}
+.calContainer .calWrap .calMonth{font-family:gothamB;font-weight:600}
+.diningSelectCont.calCont{padding-top:20px}
+.diningSelectCont.calCont .lCont{min-height:645px}
+.diningSelectCont.calCont .btnArea{margin-top:40px}
+.diningSelectCont.calCont .rCont.default{position:relative}
+.diningSelectCont.calCont .rCont.default:before{content:'';position:absolute;display:block;background:#fff;opacity:0.8;width:100%;height:100%;z-index:10}
+.diningSelectCont.calCont .rCont.default .defaultTxt{display:block;position:absolute;top:290px;left:50%;margin-left:-170px;background:#f9f9f9;font-size:18px;color:#000;padding:12px 39px;z-index:20}
+.diningSelectCont.calCont .rCont .defaultTxt{display:none}
+
+.addCont .totalTxt{padding-top:35px;margin-top:26px;border-top:1px solid #ccc}
+.addCont .totalTxt:after{content:'';display:block;clear:both}
+.addCont .totalTxt .txt{float:left;font:400 24px/40px notokrL;vertical-align:-8px}
+.addCont .totalTxt .price{float:right;font-size:40px;line-height:40px;font-family:playfair;font-feature-settings:'lnum','pnum'}
+.addCont .totalTxt .price em{font-size:20px;font-family:gothamB;vertical-align:8px;margin:0 20px 0 10px}
+
+.addDiningOption {margin-top:27px}
+
+/* 멤버십 예약 */
+.userInfo .titleCont{position:relative;margin:60px 0 40px}
+.userInfo .titleCont .frm{position:absolute;top:0;right:0}
+.roomContainer.type02{padding-bottom:0}
+.roomContainer.type02 .roomSel{width:625px}
+.roomContainer.type02 .numPeople{width:300px}
+.roomContainer.type02 .txtGuide{position:static;margin-top:18px}
+.roomContainer.type02 .txtGuide li{margin-left:0}
+.roomContainer.type02+.btnArea{margin-top:60px}
+.notiTxtCont{padding:27px;background:#f9f9f9;text-align:center}
+
+/* My Page(공통) */
+.fileUpload label{margin-left:20px}
+input[type="file"]:focus + label[for="uploadBtn"]{outline:1px solid #000}
+input[type="file"]{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+abbr[title="Josun Point"], abbr[title="Point"]{display:inline-block;margin:0 2px 0 5px;vertical-align:2px;font:600 14px/1.5 playfair;text-decoration:none}
+.listDep1 abbr[title="Josun Point"]{margin-left:0;font:16px gothamL;vertical-align:inherit}
+.hBar{display:inline-block;margin:0 20px;font-size:30px;vertical-align:middle}
+.vBar{position:relative;margin-left:12px;padding-left:15px}
+.vBar:before{content:'';display:inline-block;position:absolute;top:50%;transform:translateY(-50%);left:0;width:1px;height:15px;background:#ccc}
+.btnLine.more{font:500 17px/1.3 gothamL,notokrR;letter-spacing:-.01em}
+.btnPrint.small{top:0;padding:6px 0;font-size:16px}
+.swipeWrapArea .swiper-button-disabled{cursor:default}
+.mypage h2.titDep1{text-transform:capitalize}
+.txtGuide abbr{margin-left:0;font:18px/1 gothamL,notokrL;vertical-align:-1px}
+
+.pointTxt{color:#989442}
+
+/* My Page(LNB) */
+.lnbArea{position:absolute;top:0;left:0;width:300px;padding:52px 35px 44px;background:#f9f9f9}
+.lnbArea .name{margin-bottom:21px;font:500 32px/1 notokrR;letter-spacing:-.025em}
+.lnbArea .info{margin-bottom:40px}
+.lnbArea .info a{display:block;margin-bottom:3px;letter-spacing:-.01em;}
+.lnbArea .info a .tit{display:inline-block;width:72px;color:#000;font:400 18px/1.5 gothamL,notokrL}
+.lnbArea .info a .txt{position:relative;color:#989442;font:500 18px/1.5 gothamM,notokrR;word-break:break-all}
+.lnbArea .info a .txt:after{content:'';position:absolute;left:0;bottom:-1px;background:#989442;width:100%;height:1px}
+.lnbArea .lnb{margin-left:2px}
+.lnbArea .lnb li{font:500 22px/1 notokrR;letter-spacing:-.025em}
+.lnbArea .lnb li > ul{margin:16px 0 37px}
+.lnbArea .lnb li:last-child > ul{margin:14px 0 0}
+.lnbArea .lnb li > ul li a{font:400 18px/38px gothamL, notokrL;letter-spacing:-.01em}
+.lnbArea .lnb li > ul li.on a{font-weight:600}
+
+/* My Page(searchBox) */
+.searchBox{margin:35px auto;padding:8px 30px 26px;background:#f9f9f9}
+.searchBox .selectWrap{vertical-align:top}
+.searchBox .selectWrap, .searchBox .selectWrap .ui-selectmenu-button, .searchBox .intArea input{background-color:transparent}
+.searchBox .searchOp{position:relative;margin-bottom:30px;z-index:20}
+.searchBox .period{display:inline-block;margin-left:30px}
+.searchBox .intArea{display:inline-block}
+.searchBox .intArea input{border-color:#000}
+.searchBox .frmList.periodOp{position:absolute;top:20px;right:0}
+.searchBox .frmList.periodOp > span{margin:0 0 0 -5px}
+.searchBox .frmList.periodOp .frmRadio label{width:64px;max-width:inherit;height:36px;padding:5px 0;font-size:.75em}
+.searchBox .frmList.periodOp .frmRadio input[type=radio]:checked+label{z-index:3}
+.searchBox .txtGuide:before{content:'';display:block;margin:35px 0 16px;width:100%;height:1px;background:#ddd}
+.searchBox .txtGuide .btnLine{margin-left:8px;color:#000;vertical-align:top}
+.searchBox .txtGuide .btnLine:after{margin-top:-2px}
+.searchBox .btnWrap{text-align:center}
+.searchBox .btnM{background:transparent}
+.searchBox .selectWrap+.period{margin:0 28px}
+.period input{background:url(../../../images/ko/pc/common/ico_diary.png) no-repeat right 50%;cursor:pointer}
+
+/* 마이페이지 >  메인(account/membership/point/coupon) */
+.btnArr{position:relative;padding-right:16px;font-size:16px;font-family:notokrR;letter-spacing:-.025em}
+.btnArr:after{content:'';display:block;position:absolute;right:0;top:50%;transform:translateY(-50%);width:8px;height:14px;background:url(../../../images/ko/pc/common/ico_arr_7x13.png) no-repeat 0 0;margin-top:1px}
+.myAccountBox{border:1px solid #000}
+.myAccountBox.point{border-color:#ccc}
+.myAccountInfo{display:table;width:100%;table-layout:fixed;padding:33px 0 34px}
+.myAccountInfo dl{display:table-cell;vertical-align:top;padding:0 39px 0 37px}
+.myAccountInfo dl + dl{border-left:1px solid #ccc}
+.myAccountInfo dt{padding-bottom:17px;font:500 16px notokrR;letter-spacing:-.025em;position:relative}
+.point .myAccountInfo dt{padding-bottom:5px}
+.myAccountInfo dt > .side{top:-3px}
+.myAccountInfo dd{position:relative;display:block;padding-left:1px;overflow:hidden}
+.myAccountInfo dd span{position:relative;padding-right:29px;font:500 36px playfair, notokrR;letter-spacing:.05em;font-feature-settings:'lnum','pnum'}
+.myAccountInfo dd span.accountNum{padding:0}
+.myAccountInfo dd span.usablePoint{color:#989442}
+.myAccountInfo dd span.expirePoint{color:#000}
+.myAccountInfo dd span.usablePoint:after, .myAccountInfo dl dd span.expirePoint:after{content:'Josun Point';font-size:0;position:absolute;top:50%;right:0;width:22px;height:22px;margin-top:-7px}
+.myAccountInfo dd span.usablePoint:after{background:url(../../../images/ko/pc/common/ico_point_symbol-gold.png) 100% 50% no-repeat}
+.myAccountInfo dd span.expirePoint:after{background:url(../../../images/ko/pc/common/ico_point_symbol-black.png) 100% 50% no-repeat}
+.myAccountInfo dd .txtGuide{position:absolute;top:16px;right:0}
+
+.myAccountTxt{position:relative;padding:27px 38px 25px;background:#f9f9f9}
+.myAccountTxt .tit{display:block;margin-bottom:5px;font:18px notokrR;letter-spacing:-.01em}
+.myAccountTxt .description{color:#666;font:16px notokrL;letter-spacing:-.01em}
+.myAccountTxt .btnM{position:absolute;right:38px;top:50%;transform:translateY(-50%);min-width:inherit;width:120px;height:40px;line-height:36px;font-size:16px;padding:0 15px;background:transparent}
+
+.myCouponBox{display:table;width:100%;table-layout:fixed;padding:49px 0 39px;border-bottom:1px solid #ccc}
+.myCouponBox dl{display:table-cell;vertical-align:top;padding:0 40px;text-align:center}
+.myCouponBox dl + dl{border-left:1px solid #ccc}
+.myCouponBox dt{padding-bottom:6px;font:400 16px/1 notokrL}
+.myCouponBox dd{font:600 35px notokrM}
+.myCouponBox dd a em{position:relative}
+.myCouponBox dd a em:after{content:'';position:absolute;bottom:3px;left:0;width:100%;height:1px;background:#000}
+.myCouponBox dd a em.pointTxt:after{background:#989442}
+.myCouponBox dd em{font:500 36px playfair, notokrR;font-feature-settings:'lnum','pnum'}
+/* 마이페이지 > 메인(클럽조선 회원정보) */
+.myReserveBox {position:relative}
+.myReserveBox .myReserveList{border-top:1px solid #ccc}
+.myReserveBox .myReserveList li{border: 1px solid #ccc;border-top:0}
+.myReserveBox .myReserveList li a{display:block}
+.myReserveInfo{padding:30px}
+.myReserveInfo dl{text-align:right}
+.myReserveInfo dt{float:left;font:500 18px/1.8 gothamM,notokrR;letter-spacing:-.01em}
+.myReserveInfo dd{position:relative;display:inline-block;font:500 18px gothamL,notokrR;vertical-align:1px}
+.myReserveInfo dd + dd{padding-right:0;font:400 17px notokrL;letter-spacing:-.01em}
+.myReserveInfo dd + dd:before{content:'';display:inline-block;position:absolute;top:6px;left:-3px;width:1px;height:16px;background:#ccc}
+.myReserveBox .tit{display:block;padding:70px 0 20px;font:500 24px notokrR;letter-spacing:-.02em}
+.myReserveBox .txtGuide{position:absolute;top:75px;right:70px}
+.myReserveBox .btnLine{position:absolute;top:78px;right:0}
+/* 마이페이지 > 메인(유료멤버십 혜택 안내) */
+.myMembershipArea h4.titDep3{display:block;font:500 24px gothamB,notokrR;letter-spacing:-.025em}
+.myMembershipArea .tit{display:block;margin-bottom:15px;font:600 36px gothamB,notokrM;letter-spacing:-.02em;text-align:center}
+.myMembershipArea .description{display:block;margin-bottom:70px;font:400 18px gothamL,notokrL;letter-spacing:-.01em;text-align:center}
+.myMembershipArea .swipeWrap{width:1000px}
+.myMembershipArea .swipeWrapArea .btnSwipe{display:block;position:absolute;top:200px;z-index:2;text-indent:-9999px;overflow:hidden;width:36px;height:70px;background:url(../../../images/ko/pc/common/btn_swiperL.png) no-repeat}
+.myMembershipArea .swipeWrapArea .btnSwipe.swiper-button-disabled{z-index:-1}
+.myMembershipArea .swipeWrapArea .btnPrev{left:0;top:172px;background-position:0 0}
+.myMembershipArea .swipeWrapArea .btnNext{right:0;top:172px;background-position:-37px 0;left:inherit;}
+.myMembershipArea .swipeWrapArea .btnPrev.swiper-button-disabled{background-position:0 -74px}
+.myMembershipArea .swipeWrapArea .btnNext.swiper-button-disabled{background-position:-37px -74px}
+.myMembershipList{position:relative;display:block;margin:13px 0 65px;text-align:center}
+
+.myMembershipList .titArea{text-align:center}
+.myMembershipList .tit{display:inline-block}
+.myMembershipList .icoAdd{position:relative;display:inline-block;margin-left:6px;padding:2px 7px 3px 22px;font:400 14px/1.8 gothamL,notokrL;letter-spacing:-.01em;border:1px solid #000;border-radius:5px;vertical-align:super}
+.myMembershipList .icoAdd::before, .myMembershipList .icoAdd::after{content:'';position:absolute;width:7px;height:1px;top:14px;left:10px;background-color:#000}
+.myMembershipList .icoAdd::before{transform:rotate(90deg)}
+.myMembershipList .icoAdd::after{transform:rotate(0deg)}
+.myMembershipList .membershipCash{width:100%;margin-bottom:17px;border-bottom:1px solid #eee}
+.myMembershipList .membershipCash dt{padding:4px 0 12px}
+.myMembershipList .membershipCash dd{padding-bottom:20px}
+
+.myMembershipInfo{position:relative;width:773px;height:323px;display:flex;align-items:center; padding-left:0;margin:1px auto;}
+.myMembershipInfo .thum {width:401px; position:relative;}
+.myMembershipInfo .thum img {box-shadow:15px 15px 40px rgba(0 0 0 / 6%)}
+.myMembershipInfo .btnArea{text-align:left; margin-top:40px;margin-left:-13px;}
+.myMembershipInfo .bill{display:table}
+.myMembershipInfo .bill > *{display:table-cell;vertical-align:middle}
+.myMembershipInfo .bill .price{display:inline-block;vertical-align:1px;font:500 34px/1 playfair, notokrR;margin-right:3px;letter-spacing:1px;font-feature-settings:'lnum','pnum'}
+.myMembershipInfo .bill .unit{font:500 20px/1 gothamL,notokrR}
+.myMembershipInfo .bill i{margin-left:12px;color:#888;font:400 18px/1 gothamL,notokrL}
+.myMembershipInfo .bill + .listDep1{margin-top:11px;text-align:left}
+.myMembershipInfo .bill + .listDep1 >li + li{margin-top:3px;font-family:gothamL,notokrL;text-transform:uppercase}
+
+.clubList .myMembershipInfo{width:926px}
+.clubList .myMembershipInfo .btnArea {margin-top:20px;}
+.clubList .membershipCash dl{width:150px !important}
+.clubList .membershipCash dl:last-of-type{width:auto !important}
+.clubList .membershipCash:nth-of-type(2) > dl{width:55px;padding-right:95px}
+.clubList .membershipCash:nth-of-type(2) > dl > *{text-align:center}
+.clubList .membershipCash:nth-of-type(2) > dl:last-of-type{padding-right:117px}
+
+.myMembershipInfo .subAdd , .cashInner .subAdd {position:absolute; left:50%; transform:translateX(-50%); bottom:-53px;display:inline-block;padding:9px 28px;font:400 14px/1 gothamL,notokrL;letter-spacing:-.01em;border:1px solid #000;border-radius:5px;vertical-align:top}
+
+/* 마이페이지 > 멤버십구매내역(20200604 new) */
+.membershipCashList{border-top:1px solid #000;}
+.membershipCashList .noData{margin:-1px 0;background:#fff}
+.membershipCashList li{padding-left:205px}
+.membershipCashList li:first-of-type .cashInner{border-top:0}
+.membershipCashList li:last-of-type .cashInner{border-bottom:1px solid #ccc;}
+.cashInner{position:relative;padding:60px 20px 64px 0;border-top:1px solid #ccc}
+.cashInner .thum{position:absolute;top:60px;left:-185px}
+.cashInner .thum.vertical {top:30px;}
+.cashInner .titArea{margin-bottom:9px; display:flex; justify-content:space-between; align-items:center;}
+.cashInner .titArea .addRefund {height:45px; line-height:42px;}
+.cashInner .tit{font:600 30px/1 gothamB,notokrM;letter-spacing:-.01em}
+.cashInner .icoAdd{position:relative;display:inline-block;margin-left:6px;padding:2px 7px 3px 22px;font:400 14px/1.8 gothamL,notokrL;letter-spacing:-.01em;border:1px solid #000;border-radius:5px;vertical-align:top}
+.cashInner .icoAdd::before, .cashInner .icoAdd::after{content:'';position:absolute;width:7px;height:1px;top:14px;left:7px;background-color:#000}
+.cashInner .icoAdd::before{transform:rotate(90deg)}
+.cashInner .icoAdd::after{transform:rotate(0deg)}
+.cashInner .txt{margin-bottom:15px;font-family:gothamL,notokrL}
+.membershipCashWrap{display:flex;flex-flow:row;/*margin-top:52px*/}
+.membershipCashWrap::after{content:'';display:block;clear:both}
+.membershipCash{/*float:left;*/display:table}
+.membershipCash:first-of-type > dl{width:160px}
+.membershipCash:first-of-type > dl:last-of-type{width:190px}
+.membershipCash:nth-of-type(2) > dl{width:105px;padding-right:50px}
+.membershipCash:nth-of-type(2) > dl:last-of-type{width:55px;padding-right:0}
+.membershipCash:nth-of-type(2) > dl > *{text-align:center}
+.membershipCash dl{display:table-cell}
+.membershipCash dt{padding-bottom:13px;color:#aaa;font:500 14px/1 notokrR;letter-spacing:-.1em;text-align:left}
+.membershipCash dt i{margin-left:2px;font-style:normal;font-weight:400}
+.membershipCash dd{font:500 20px/1 gothamL,notokrR;letter-spacing:-.01em;text-align:left}
+.membershipCash dd a em{text-decoration:underline}
+.membershipCash dd em{font:500 20px/1 gothamM,notokrR}
+.membershipCash dd .unit{font-weight:500;font-size:16px}
+/* 마이페이지 > 멤버십구매내역 > 유료멤버십혜택안내(20200604 new) */
+.membershipCashList +  h4.titDep3{margin-bottom:28px;font-size:24px}
+.membershipCashList.benetfit .cashInner{padding:56px 20px 58px 0}
+.membershipCashList.benetfit .myMembershipInfo .tit{font:400 20px/1 gothamL,notokrL;vertical-align:top}
+.membershipCashList.benetfit .myMembershipInfo{width:auto;height:auto;padding-left:0}
+.membershipCashList.benetfit .myMembershipInfo .bill .price{font-size:28px}
+.membershipCashList.benetfit .myMembershipInfo .bill .unit{font-size:18px}
+.membershipCashList.benetfit .myMembershipInfo .bill + .listDep1{margin-top:16px}
+.membershipCashList.benetfit .myMembershipInfo .bill + .listDep1 li+li{margin-top:3px}
+.membershipCashList.benetfit .myMembershipInfo .btnArea{position:static;margin-top:29px;text-align:left}
+
+.mbshipListBtnArea {display:flex; justify-content:space-between; margin-top:40px;}
+.mbshipListBtnArea .addRefund {padding-right:0; border-bottom:1px solid #000;}
+.mbshipListBtnArea .addRefund:after {display:none;}
+
+/* 클럽조선 회원정보(추가) */
+.myReserveBox.type02{padding:20px 30px 20px 28px;background:#f9f9f9}
+.myReserveBox.type02 .myReserveList, .myReserveBox.type02 .myReserveList li{border:0}
+.myReserveBox.type02 .myReserveInfo{padding:13px 0}
+.myReserveBox.type02 .btnLine{position:static;top:initial;right:initial;vertical-align:2px}
+.myReserveBox.type02 .myReserveInfo dt + dd{padding-right:14px}
+.myReserveBox.type02 .myReserveInfo dt + dd + dd{padding-left:14px}
+.myReserveBox.type02 .myReserveInfo dt + dd > .btnLine{margin-right:-14px}
+
+.myWatchArea h4.titDep3{display:block;font:500 24px notokrR;letter-spacing:-.025em}
+.myWatchArea .locationTag{top:0;left:0}
+.myWatchList{display:table;table-layout:fixed;margin:0 -25px}
+.myWatchList > li{display:table-cell;width:350px;vertical-align:top;padding:0 25px}
+.myWatchList > li a{display:block;position:relative;max-width:300px;padding-top:208px}
+.myWatchList > li a .tit{display:block;margin-top:20px;padding-bottom:12px;font:500 26px/1 playfair, notokrR;height:24px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.myWatchList > li a .txt{margin-bottom:17px;font-size:16px;display:block;height:28px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.myWatchList > li a .date{font-family:gothamL,notokrL;font-weight:600;font-size:14px;padding-top:3px}
+.myWatchList > li a .thum{position:absolute;left:0;top:0}
+.myWatchList > li a .thum img{width:100%}
+
+.myPoint.tblH .date{font-family:gothamL,notokrL}
+.myPoint.tblH .pointTxt{color:#b01414}
+.myPoint.tblH td a{color:#b01414;text-decoration:underline}
+
+/* My Page(예약내역List) */
+.listBox{position:relative;margin:60px 0 0}
+.listBox .countList .count{display:block;padding:15px 0 20px;font:500 22px/32px gothamB,notokrM;letter-spacing:-.01em}
+.listBox .countList .count em{font-weight:600}
+.listBox .countList .selectWrap{position:absolute;top:0;right:0}
+.listBox .countList .selectWrap .ui-selectmenu-button{border:0;font-size:16px}
+.listBox .countList .selectWrap .ui-selectmenu-button-open{border-bottom:1px solid #000}
+.listBox .countList .selectWrap .ui-menu-item{font-size:16px}
+
+/* My Page > cardList(공통) 포인트/예약확인 */
+.cardList{width:100%;margin-bottom:75px}
+.cardList li{position:relative;float:left;width:50%}
+.cardList li.noData{float:none;width:100%}
+.cardList li .cardInner{display:block;position:relative;padding:31px 30px 36px;margin:0 5px 10px 0;border:1px solid #ccc;height:264px}
+.cardList li:nth-child(2n) .cardInner{margin:0 0 10px 5px}
+.cardList li .cardInner .status{display:block;color:#989442;font:500 14px gothamM,notokrR;letter-spacing:-.01em;text-transform:uppercase;}
+/*221125 no_show / 방문완료*/
+.cardList li .cardInner .status.st02 {color:#aaa;}
+/*221125 취소*/
+.cardList li .cardInner .status.st03 {color:#b01414;}
+/* // 221125 상태디자인 추가*/
+.cardList li .cardInner .keyword{display:block;color:#989442;font:500 14px/1.5 notokrR;letter-spacing:-.01em}
+.cardList li .cardInner .tit{display:block;margin-bottom:7px;font:500 20px/1.8 gothamM,notokrR;letter-spacing:-.025em;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.cardList li .cardInner .info{margin-bottom:2px;color:#666;font:400 17px/1.5 gothamL,notokrL;letter-spacing:-.01em;display:-webkit-box;max-height:50px;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.cardList li .cardInner .info + .info{margin-top:0}
+.cardList li .cardInner .number{margin-bottom:4px;color:#666;font:400 17px/1.5 gothamL,notokrL;letter-spacing:-.01em}
+.cardList li .cardInner .info + .number{margin-bottom:34px}
+.cardList li .cardInner .number em{margin-left:5px;font-size:18px}
+.cardList li .cardInner .date{font:400 18px gothamL,notokrL;letter-spacing:-.01em;position:absolute;bottom:36px}
+.cardList li .cardInner .tit+.date{margin-top:30px}
+.cardList li .cardInner .period{color:#666;font:400 17px gothamL,notokrL;letter-spacing:-.01em;height:25px;overflow:hidden}
+.cardList li .cardInner .period em{font-size:18px}
+.cardList li .cardInner .couponInfo{color:#666;font:400 16px notokrL;letter-spacing:-.01em;position:absolute;bottom:36px}
+.cardList li .cardInner .couponInfo.offline{color:#aaa}
+.cardList li .btnAddfile{position:absolute;right:30px;bottom:45px}
+.cardList.expiration li .cardInner > .keyword, .cardList.expiration li .cardInner > .tit, .cardList.expiration li .cardInner > p{color:#aaa}
+.cardList.expiration .locationTag{top:-1px;right:-1px}
+/* 쿠폰(타이틀변경) */
+.cardList.coupon li .cardInner .tit{display:-webkit-box;height:72px;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:normal;word-break:break-all}
+
+/* My Page > myContents(list) */
+.listAllChk{position:relative;margin:33px 0 0}
+.listAllChk .frm label{font-size:18px}
+.chkDelete{position:absolute;top:0;right:0}
+.watchList > li{border-top:1px solid #ccc;padding:70px 0}
+.watchList > li:first-child{margin-top:-35px;border-top:0}
+.watchListCont{position:relative}
+.watchListCont .frm{position:absolute;top:0}
+.watchListCont .frm label .hidden{position:static}
+.watchListCont .roomIntro{position:relative;margin-left:40px;padding-left:583px;min-height:352px}
+.watchListCont .roomIntro .keyword > span{vertical-align:top}
+.watchListCont .roomIntro .roomName{display:block;font:500 40px playfair;max-height:73px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.watchListCont .roomIntro .roomBenefit{display:-webkit-box;max-height:65px;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.watchListCont .roomIntro .thum{position:absolute;left:0;top:0;width:508px;height:352px}
+.watchListCont .roomIntro .thum img{width:100%}
+.watchListCont .roomIntro .date{display:block;margin-top:24px;font:20px gothamL}
+.watchListCont .roomIntro .date span{display:block;font:17px/32px notokrL}
+.watchListCont .roomIntro .date span em{margin-left:12px;font:18px gothamL}
+.watchListCont .btnBottom{position:absolute;left:584px;bottom:0}
+.watchListCont .locationTag{left:40px}
+.watchListCont.expiration .roomIntro > *{color:#aaa}
+.watchListCont.expiration .roomIntro > * span{color:#aaa;border-color:#aaa}
+.watchListCont.expiration .roomIntro .btnBottom{font-size:17px}
+
+/* My Page > myContents(list) */
+.mypage .myContents{position:relative;min-height:900px;margin-left:400px}
+.mypage .myContents.noMember{margin-left:0}
+.mypage .myContents > h3.titDep2{line-height:1;letter-spacing:-.01em}
+.myContents .pageGuide{margin:-15px 0 45px;font-size:18px}
+.myContents h4.titDep3{margin:74px 0 24px;font:500 24px gothamB,notokrR;letter-spacing:-.025em}
+.myContents .frmInfo + .txtGuide{margin-top:20px}
+.cautionBox{padding:34px 40px;border:1px solid #eee}
+.cautionBox .tit{display:block;margin-bottom:12px;font:500 20px/1 notokrR;letter-spacing:-.01em}
+.myContents .intArea input[value]{font-family:gothamL,notokrL}
+.myContents .defaultTit{display:inline-block;color:#333;font:500 14px/1 gothamM,notokrR;text-transform: uppercase}
+.myContents .defaultInfo{padding:9px 13px 0 0;color:#000;font-family:gothamL,notokrL;vertical-align:middle}
+.myContents .defaultInfo p + p{margin-top:5px}
+.myContents .defaultInfo + .txtGuide{margin-top:9px}
+.myContents .cardInfoBox{position:relative}
+.myContents .cardInfoBox .side{top:0}
+.myContents .cardInfo{position:relative;margin:15px auto;padding:19px 0;background:#f9f9f9;text-align:center}
+.myContents .cardInfo span{font:400 17px/1 gothamL,notokrL;letter-spacing:-.01em}
+.myContents .frmList.type03 li{margin:8px 0 0 2px}
+.myContents .frmList.type03 label{width:327px;max-width:inherit}
+.myContents .toggleList .btnLine.reset{position:absolute;top:26px;right:76px}
+.addItemArea{position:relative}
+.addItemArea.disabled .addItemDimmed{display:block}
+.addItemDimmed{display:none;position:absolute;top:0;bottom:0;left:0;right:0;background:#fff;opacity:.8;z-index:999}
+.addItemDimmed .txt{position:absolute;top:50%;left:50%;transform:translateX(-50%) translateY(-50%);padding:.75em 2.72em;font-size:17px;background:#f3f3f3;text-align:center}
+.addItemArea.disabled .side{background:#fff;opacity:.2}
+.cautionBox.ssg-dfs {margin-top: 40px;}
+.txtCl-link {color: #008bd3;}
+
+.myContents .side{position:absolute;top:-45px;right:0;background:none}
+.myContents .side-randing{position:absolute;top:-4px;right:0}
+.myContents .btnIcon.delete{position:absolute;top:20px;right:20px}
+.myContents .addItem{position:relative;padding:30px 40px 45px;background:#f9f9f9}
+.myContents .addItem + .addItem{margin-top:10px}
+.myContents .addItem .intList > li + li{margin-top:10px}
+.myContents .addItem .intInner{margin-top:5px}
+.myContents .addItem input[type="text"]{height:50px;background:transparent;border-bottom-color:#000}
+.myContents .addItem .frm + .frm{margin-left:20px}
+.myContents .addItem .intArea + .intArea{margin-left:25px}
+.myContents .toggleList.rsvList li:first-of-type{border-top-color:#000}
+.myContents .tabFaqType .toggleList.rsvList li:first-of-type{border-top-color:#fff}
+.myContents .frmList.snsLogin{margin:-8px 0 12px}
+.myContents .frmList.snsLogin li{margin:5px 0 8px 2px}
+.myContents .frmList.snsLogin > li:nth-child(5n + 1){margin-left:0}
+.myContents .frmList.snsLogin .frmCheck{display:inline-block;position:relative}
+.myContents .frmList.snsLogin .frmCheck label{width:194px;max-width:inherit;padding:60px 52px 74px 52px;text-align:center;color:#666;font-family:notokrL;height:auto;line-height:inherit}
+.myContents .frmList.snsLogin .frmCheck input[type=checkbox]:checked label{color:#000}
+.myContents .frmList.snsLogin .frmCheck label:before{content:'';display:block;position:absolute;top:inherit;left:50%;transform:translateX(-50%);bottom:34px;width:54px;height:1px;background:#000}
+.myContents .frmList.snsLogin .frmCheck label:after{content:'연결하기';display:block;position:absolute;left:50%;transform:translateX(-50%);bottom:33px;width:56px;height:24px;font:14px notokrL;letter-spacing:-.025em;background:transparent;font-size:14px}
+.myContents .frmList.snsLogin .frmCheck input[type=checkbox]:checked+label:after{content:'해지하기'}
+.myContents .frmList.snsLogin .frmCheck input[type=checkbox]:checked+label{background-repeat:no-repeat;background-position:50% 34px}
+.myContents .frmList.snsLogin .frmCheck label{background-repeat:no-repeat;background-position:50% 34px}
+.myContents .frmList.snsLogin .frmCheck.google label{background-image:url(../../../images/ko/pc/HULO/ico_sns-google.png)}
+.myContents .frmList.snsLogin .frmCheck.naver label{background-image:url(../../../images/ko/pc/HULO/ico_sns-naver.png)}
+.myContents .frmList.snsLogin .frmCheck.facebook label{background-image:url(../../../images/ko/pc/HULO/ico_sns-facebook.png)}
+.myContents .frmList.snsLogin .frmCheck.kakao label{background-image:url(../../../images/ko/pc/HULO/ico_sns-kakao.png)}
+.myContents .frmList.snsLogin .frmCheck.apple label{background-image:url(../../../images/ko/pc/HULO/ico_sns-apple.png)}
+
+/* My Page > myContents(상세) */
+.myContents h2.titDep2{font:40px/.68 playfair,notokrL}
+.myContents .categoryTxt{font-family:gothamL,notokrL;margin:-11px 0 21px}
+.myContents .categoryTxt em{margin-left:5px;font-size:20px}
+.myContents .titDep2+.categoryTxt{margin-top:0}
+.myContents h3.titDep3{margin:76px 0 28px;font:500 24px gothamB, notokrR;letter-spacing:-.025em}
+.myContents .reserveInfo{padding:46px 20px 53px;border-top:1px solid #000;border-bottom:1px solid #ccc}
+.myContents .reserveInfo.cardList{margin-bottom:-10px;padding-bottom:0;border:0}
+.myContents .reserveInfo .titDep4{display:block;margin-bottom:12px;color:#989442;font-family:gothamB, notokrR;letter-spacing:-.01em}
+.myContents .reserveInfo .commlist{padding:0 20px 0 0}
+.myContents .reserveInfo .commlist .txt{display:block;margin-top:6px;overflow:hidden;font-family:gothamL,notokrL, playfair}
+.myContents .reserveInfo .commWrap + h4.titDep4{margin-top:30px}
+.myContents .reserveInfo .info{display:block;margin-top:15px;overflow:hidden}
+.myContents .reserveInfo .info .txt{margin-top:6px;overflow:hidden;font-family:gothamL,notokrL, playfair;white-space:nowrap}
+.myContents .reserveInfo .info + .titDep4{margin-top:40px}
+
+/* My Page(layer공통추가) */
+.layerCont .compSubTit{display:block;margin-bottom:12px;font:500 24px gothamB, notokrR;letter-spacing:-.01em}
+.layerCont .listDep1 li+li{margin-top:2px}
+.layerCont .listDep1 + .compSubTit, .layerCont .frmInfo + .compSubTit{margin-top:38px}
+.layerCont .listDep1 + .txtGuide{margin-top:9px}
+.layerCont .compTit + .tabToggle{margin-top:39px}
+.layerCont .membershipConsult .titDep3{margin-top:45px}
+.layerCont .membershipConsult .compDesc{margin-bottom:50px;color:#666;text-align:center}
+.layerCont .btnArea{margin-top:46px}
+.layerCont .tabCont .compSubTit{margin:41px 0 12px}
+.layerCont .tabCont .noticeArea{margin-top:47px}
+/* My Page(datepicker공통) */
+.datepicker-wrapper .ui-datepicker{display:none;position:absolute;margin-top:-1px;padding:28px 24px 27px;border:1px solid #000;background:#fff;z-index:2}
+.datepicker-wrapper .ui-datepicker .ui-datepicker-header{width:294px !important;margin-bottom:12px;text-align:center}
+.datepicker-wrapper .ui-datepicker .ui-datepicker-header .calMonth{font:500 21px/1 gothamM,notokrM;letter-spacing:-.05em}
+.datepicker-wrapper .ui-datepicker .btnMonth{display:block;position:absolute;top:200px;text-indent:-9999px;overflow:hidden;width:10px;height:18px;background:url(../../../images/ko/pc/common/ico_calendar_single.png) no-repeat}
+.datepicker-wrapper .ui-datepicker .prevMonth{top:35px;left:50%;margin-left:-92px;background-position:0 0}
+.datepicker-wrapper .ui-datepicker .nextMonth{top:35px;right:50%;margin-right:-92px;background-position:-10px 0}
+.datepicker-wrapper .ui-datepicker .calendar{margin:0 auto;padding:0;border:0;width:294px}
+.datepicker-wrapper .ui-datepicker .calendar th, .datepicker-wrapper .ui-datepicker .calendar td{text-align:center}
+.datepicker-wrapper .ui-datepicker .calendar th{width:41px;height:35px;color:#000;font:400 14px gothamL}
+.datepicker-wrapper .ui-datepicker .calendar th.fRed{color:red}
+.datepicker-wrapper .ui-datepicker .calendar td{position:relative;width:41px;height:41px;font:400 16px gothamL}
+.datepicker-wrapper .ui-datepicker .calendar td .default{color:#bbb}
+.datepicker-wrapper .ui-datepicker .calendar td a{display:table-cell;position:relative;vertical-align:middle;width:35px;padding:8px 0;color:#000;text-align:center;font-size:16px}
+.datepicker-wrapper .ui-datepicker .calendar td.ui-datepicker-today a{background:#f0f0f0;border-radius:100%}
+.datepicker-wrapper .ui-datepicker .calendar td.ui-datepicker-today a em{overflow:hidden;font:0/0 Roboto, notokrL}
+.datepicker-wrapper .ui-datepicker .calendar td.sel a{color:#fff;background:#006633 !important;border-radius:100%}
+.datepicker-wrapper .ui-datepicker .calendar td.fRed a.ui-state-default{color:red}
+.datepicker-wrapper .ui-datepicker .calendar td.fRed.sel a.ui-state-active{color:#fff}
+/* My Page > layerPop */
+.layerPop .reserveOpArea{position:relative;width:760px}
+.layerPop .reserveOpArea  strong.tit{display:block;font:500 34px/1.25 notokrR;text-align:center;margin-bottom:40px}
+.layerPop .reserveOpArea .frmList.type03 li{margin:8px 0 0 3px}
+.layerPop .reserveOpArea .frmList.type03 label{width:247px;max-width:inherit}
+.layerPop .reserveOpArea .frmList.type03{margin-bottom:20px}
+.layerPop .reserveOpArea .txtConfirm{margin:-2px 0 13px;font:500 20px/1 notokrR;letter-spacing:-.01em}
+.layerPop .reserveOpArea .txtAlert{margin:45px 0 21px;font:500 20px/1 gothamB, notokrR;letter-spacing:-.015em}
+.layerPop .reserveOpArea .txtAlert em{color:#989442}
+.layerPop .reserveOpArea .reserveList{margin-bottom:50px;padding:16px 20px 22px;text-align:center;background-color:#f9f9f9}
+.layerPop .reserveOpArea .reserveList span{font:400 16px/30px notokrL;letter-spacing:-.01em}
+.layerPop .reserveOpArea .reserveList span + span::before{content:'';display:inline-block;position:relative;top:4px;width:1px;height:20px;background:#ccc;margin:0 16px}
+.layerPop .reserveOpArea .total{margin-top:30px}
+.layerPop .pointArea{position:relative;width:740px}
+.layerPop .pointArea .txtBox{background:#fff}
+.layerPop .pointArea strong.tit{display:block;font-size:34px;font-weight:600;text-align:center;margin-bottom:25px}
+.layerPop .pointArea .intInner .alertMessage{top:-25px}
+.layerPop .printLayer .myContents .titDep2:first-child{padding-top:40px;line-height:1}
+.layerPop .txtBox .fileUpload{margin-bottom:15px}
+
+/* My Page > 관심리스트 > 예약하기(layer) - 공통 */
+.reservationLayer{display:block}
+.reservationArea{position: relative;padding:2.14% 3.57%;background:#f9f9f9;border:1px solid #000;margin-top:70px}
+.reservationArea .infoArea{display:table;position:relative;width:78.5%}
+.reservationArea .infoArea dl{display:table-cell}
+.reservationArea .infoArea dl dt{font-family:gothamL,notokrL;font-weight:500;font-size:14px;padding-bottom:5px}
+.reservationArea .infoArea dl dd, .reservationArea .infoArea dl dd *{font-size:21px;font-family:gothamL}
+.reservationArea .infoArea dl.dlType01{width:45.9%}
+.reservationArea .infoArea dl.dlType02{width:10%;text-align:center}
+.reservationArea .infoArea dl.dlType02 dt{padding-bottom:8px}
+.reservationArea .intArea{display:inline-block}
+.reservationArea .intArea input{padding-right:0;height:40px;background-color:transparent;border-color:transparent}
+.reservationArea .intDiary{display:inline-block}
+.reservationArea .hBar{margin:0 5px;font-size:20px}
+.reservationArea .icoArr{position:absolute;right:50px;top:32px;height:50px;line-height:50px;min-width:162px;text-align:left}
+.reservationArea .frmList.btnDiary{position:absolute;top:30px;right:30px}
+.reservationArea .frmList.btnDiary > span{margin:0 0 0 -5px}
+
+.rsvLayer{width:1200px}
+.rsvLayer .inner{width:auto;padding:30px 0}
+.rsvLayer .selResult{padding:0 50px;margin-bottom:50px}
+.rsvLayer .selResult .infoArea{display:table;position:relative;width:800px}
+.rsvLayer .selResult .infoArea dl{display:table-cell;padding-right:0}
+.rsvLayer .selResult .infoArea dl.dlType02{width:400px}
+.rsvLayer .selResult .infoArea dl.dlType03{width:90px}
+.rsvLayer .selResult .btnSC{min-width:162px;text-align:left;top:40px}
+.rsvLayer .rsvCont:after{content:'';display:block;clear:both}
+.rsvLayer .rsvCont .leftCont{float:left;width:500px}
+.rsvLayer .rsvCont .rightCont{float:right}
+.rsvLayer .rsvCont .roomTit{text-align:left;font:500 14px gothamM}
+.rsvLayer .rsvCont .roomSel{display:block}
+.rsvLayer .rsvCont .roomSel+.roomSel{margin:35px 0 0}
+.rsvLayer .rsvCont .numPeople span{padding:0 33px}
+.rsvLayer .roomContainer{padding-bottom:0}
+
+/* Special offer */
+.searchBox.package{margin:0 auto 120px}
+.searchBox.package .inner{padding:30px 0 20px}
+.searchBox.package .period:first-child{margin-left:0}
+.searchBox.package .intDiary{margin:0}
+.searchBox.package .intWord{display:inline-block;position:absolute;right:0;top:0}
+.searchBox.package .intWord .btnSC{margin-left:35px;vertical-align:bottom;background:transparent}
+.searchBox.package .keywordList{position:relative;overflow:hidden;height:92px;z-index:1;margin-top:30px}
+.searchBox.package .frmList{margin:0}
+.searchBox.package .frmList > li:nth-child(6n + 1){margin-left:0}
+.searchBox.package .frmList .frmCheck label{background:#f9f9f9;min-width:227px;padding:0 35px 0 15px;overflow:hidden;height:50px;line-height:50px}
+.searchBox.package .btnMore02{font:400 14px gothamM}
+.searchBox.package .btnMore02:after{content:'';display:inline-block;vertical-align:middle;margin-left:5px;width:14px;height:8px;background:url(../../../images/ko/pc/common/ico_toggle_14x8.png) no-repeat 0 0}
+.searchBox.package .btnMore02.open:after{background-position:-14px 0}
+.searchBox.package .searchOp{margin-bottom:0}
+
+.boxtypeList > li{display:inline-block;position:relative;width:680px;margin-left:34px;vertical-align:top;padding-bottom:80px}
+.boxtypeList > li:nth-child(2n+1){margin-left:0}
+.boxtypeList > li > a{display:block}
+.boxtypeList > li dl{position:relative;padding:550px 0 250px}
+.boxtypeList > li dl dt{font:500 40px playfair, notokrR;width:100%;height:55px;overflow:hidden;text-overflow:ellipsis;word-break:break-word;white-space:nowrap;font-feature-settings:'lnum','pnum'}
+.boxtypeList > li dl dd.thum{display:block;position:absolute;left:0;top:0;overflow:hidden;height:470px}
+.boxtypeList > li dl dd.thum img{width:680px}
+/*.boxtypeList > li dl dd.thum:hover img{-webkit-transform:scale(1.1);-moz-transform:scale(1.1);-o-transform:scale(1.1);transform:scale(1.1);transition:transform .35s;-o-transition:transform .35s;-moz-transition:transform .35s;-webkit-transition:transform .35s}*/
+.boxtypeList > li dl dd.keyword{position:absolute;left:0;top:505px}
+.boxtypeList > li dl dd.keyword .locationTag{position:static;min-width:130px;padding-left:0;padding-right:0;border:1px solid transparent;box-sizing: border-box;}
+.boxtypeList > li dl dd.txt{position:absolute;left:0;top:615px;display:-webkit-box;max-height:60px;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.boxtypeList > li dl dd.date{position:absolute;left:0;top:720px;color:#333}
+.boxtypeList > li dl dd.date div > *{display:inline-block;vertical-align:middle}
+.boxtypeList > li dl dd.date div+div{margin-top:-4px}
+.boxtypeList > li dl dd.date span{width:82px;font-size:17px}
+.boxtypeList > li dl dd.date em{font-family:gothamL}
+.boxtypeList > li dl dd.pay{position:absolute;lefT:0;bottom:0;font-size:24px;font-family:gothamL}
+.boxtypeList > li dl dd.pay em{display:inline-block;vertical-align:-5px;font-size:40px;font-family:playfair;margin-right:3px;font-feature-settings:'lnum','pnum'}
+.boxtypeList > li .btn{position:absolute;right:0;bottom:90px}
+.boxtypeList.eventType > li dl{position:relative;padding:495px 0 190px}
+.boxtypeList.eventType > li dl dd.txt{top:560px}
+.boxtypeList.eventType > li dl dd.date{top:660px}
+.boxtypeList.eventType > li .btn{bottom:95px}
+.boxtypeList.type02 > li dl{padding-bottom:165px}
+.boxtypeList.type02 > li .btn{bottom:65px}
+.boxtypeList > li dl dd.keyword .locationTag.FPBSS,
+.boxtypeList > li dl dd.keyword .locationTag.FPBSM {padding:3px 10px 4px;}
+
+
+.frm.frmBm{margin-right:7px}
+.frm.frmBm label{display:inline-block;padding:0;text-indent:-9999px;width:50px;height:50px;vertical-align:middle;border:1px solid #ccc}
+.frm.frmBm input[type=checkbox]+label:before{position:absolute;left:12px;top:15px;width:24px;height:20px;background:url(../../../images/ko/pc/common/ico_bookmark.png) no-repeat 0 0}
+/*.frm.frmBm input[type=checkbox]:checked+label{border-color:#006633;background:#006633}*/
+.frm.frmBm input[type=checkbox]:checked+label:before{background-position:-24px 0}
+.frm.frmBm02 label{border:1px solid rgba(0,0,0,.2);min-width:190px;height:60px;line-height:60px;box-sizing:border-box;padding:0 22px 0 63px;font-size:18px;text-align:left;color:#000 !important}
+.frm.frmBm02 input[type=checkbox]+label:before{left:30px;top:20px;width:24px;height:20px;background:url(../../../images/ko/pc/common/ico_bookmark.png) no-repeat 0 0}
+.frm.frmBm02 input[type=checkbox]:checked+label{color:#fff;border:1px solid rgba(0,0,0)}
+.frm.frmBm02 input[type=checkbox]:checked+label:before{background-position:-24px 0}
+
+.noticeArea{border:1px solid #eee;padding:35px 35px 40px 40px}
+.noticeArea .titDep3{margin-bottom:11px;font-family:notokrR;font-weight:400}
+.noticeArea .listDep1{color:#666}
+.noticeArea .revInquiry{border-top:1px solid #eee;margin-top:30px;padding-top:30px}
+.noticeArea .revInquiry > *{display:inline-block;vertical-align:middle;margin:0}
+.noticeArea .revInquiry span{position:relative;font-size:16px;margin-left:30px;color:#666}
+.noticeArea .revInquiry span em{font-family:gothamL,notokrL;margin-left:10px}
+.noticeArea .revInquiry span+span:before{content:'';display:block;position:absolute;left:-16px;top:5px;width:1px;height:16px;background:#ccc}
+
+.rsvInfor{background:#f9f9f9;margin-bottom:90px;width:100%}
+.rsvInfor .inner{position:relative;padding:30px 0;min-height:120px}
+.rsvInfor .inner .txt{font-family:gothamM,notokrM;font-size:22px}
+.rsvInfor .inner .txt.type02{padding-right:200px}
+.rsvInfor dl:after{content:'';display:block;clear:both}
+.rsvInfor dl > dt{float:left;width:105px;font-family:notokrM}
+.rsvInfor dl > dd{font-family:gothamL,notokrL;overflow:hidden}
+.rsvInfor .btnArea{position:absolute;right:-8px;top:30px;margin:0}
+.rsvInfor .btnArea .typeShare{font-size:17px}
+.rsvInfor .btnArea > *{vertical-align:middle}
+.rsvInfor .btnArea .callTxt{display:inline-block;margin:0 7px 0 27px}
+.rsvInfor .btnArea .callTxt .tit{display:block;font-size:14px;color:#333;font-family:gothamL,notokrL;font-weight:600}
+.rsvInfor .btnArea .callTxt .num{display:block;font-size:20px;font-family:gothamL,notokrL;text-align:left;margin-top:5px;text-align:center}
+.rsvInfor .btnArea .btnSC.btnTrans{border-color:#ccc}
+/*.rsvInfor .btnArea .btnSC + .btnSC, .rsvInfor .btnArea .btnSC + .frmBm02{margin:0 8px} 삭제 yjs - 추가시 BSSO1120M.html */
+.rsvInfor .txt{position:absolute;left:0;top:50%;transform:translateY(-50%)}
+.rsvInfor .txt > strong + span{display:block}
+.rsvInfor.event dl > dt{width:110px}
+.rsvInfor+.businessArea {padding-top:0}
+
+.packageCont01{border-top:1px solid #000;padding-bottom:20px}
+.packageCont01 > li{display:table;table-layout:fixed;width:100%;border-bottom:1px solid #ccc}
+.packageCont01 > li > *{display:table-cell;vertical-align:top;padding:50px 50px;box-sizing:border-box}
+.packageCont01 > li .tit{font:500 36px playfair;width:27%}
+.packageCont01 > li .priceInfor{background:#f9f9f9;width:44%}
+.packageCont01 > li .priceInfor div > *{display:inline-block;vertical-align:middle}
+.packageCont01 > li .priceInfor div:after{content:'';display:block;clear:both}
+.packageCont01 > li .priceInfor div+div{margin-top:22px}
+.packageCont01 > li .day{font:500 18px/60px gothamB,notokrR;text-transform:uppercase}
+.packageCont01 > li .price{float:right;text-align:right;font:400 24px gothamL}
+.packageCont01 > li .price em{display:inline-block;vertical-align:-5px;font:400 36px playfair;margin-right:5px;font-feature-settings:'lnum','pnum'}
+
+.packageCont02{margin-bottom:120px}
+.packageCont02 > li{padding:70px 0;border-bottom:1px solid #ccc}
+.packageCont02 > li:first-child{padding-top:0}
+.packageCont02 > li:last-child{padding-bottom:0;border-bottom:0}
+.packageCont02 li > dl{position:relative;padding-left:470px;min-height:274px}
+.packageCont02 li > dl dt{font:500 40px/1.2 gothamB, notokrR;padding-bottom:15px;letter-spacing:-.01em;text-transform:uppercase}
+.packageCont02 li > dl dd.thum{position:absolute;left:0;top:0}
+.packageCont02 li > dl dd.thum img{width:395px}
+.packageCont02 li > dl dd .listDep1 li{color:#333}
+.packageCont02 li > dl dd .btnArea{position:absolute;right:0;bottom:0;margin:0}
+.packageCont02 li > dl dd .inforTit{display:inline-block;width:70px;font:400 17px notokrL}
+.packageCont02 li > dl dd .inforTxt{font:400 18px gothamL}
+.packageCont02 li > dl dd .txtGuide{margin-top:10px}
+.packageCont02 li > dl dd.txtArea .txt+.listDep1{margin-top:40px}
+.packageCont02 li .sInfo{position:absolute;left:467px;bottom:0;padding-right:100px}
+.packageCont02 li .sInfo li{position:relative;padding-left:100px;color:#333}
+.packageCont02 li .sInfo li+li{margin-top:5px}
+.packageCont02 li .sInfo .tit{position:absolute;top:0;left:0;font-size:17px;font-weight:500}
+.packageCont02 li .sInfo .txt{font-family:gothamL}
+
+
+[class^="packageCont"] + [class^="packageCont"]{margin-top:90px;}
+.packageCont03 {padding-bottom:20px;}
+.packageCont03 .titDep2, .packageCont04 .titDep2{font:600 34px gothamB, notokrR;text-align:center}
+.service-items{width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-ms-flex-wrap:wrap;flex-wrap:wrap;}
+.packageCont03 .titDep2 + .service-items{margin-top:75px;}
+.service-items .service-item{position:relative;width:16.666%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}
+.service-items .service-item::after{content:'';display:block;position:absolute;width:1px;height:79px;top:10px;right:0;background:#d0d0d0;/*transform:translateY(-50%);*/}
+.service-items .service-item:last-child::after{display:none;}
+.service-item .service-icon{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;position:relative;width:60px;height:60px;}
+.service-item .service-icon img{display:block;max-width:100%;}
+.service-item .service-desc{margin-top:32px;font:600 16px notokrM;}
+
+.packageCont04 {padding-bottom:20px;}
+.packageCont04 .subTitDep2{font:400 24px playfair;color:#666;}
+.packageCont04 .cont-desc{margin-top:35px;text-align:center;white-space:pre-line;color:#666;font-size:18px;}
+
+.packageCont05{border-top:1px solid #000;padding-bottom:20px}
+.packageCont05 > li{display:table;table-layout:fixed;width:100%;}
+.packageCont05 > li > *{display:table-cell;vertical-align:top;box-sizing:border-box}
+.packageCont05 > li .tit{width:245px;padding:50px 35px 0 45px;font:500 28px playfair, notokrR;}
+.packageCont05 > li .guideTxt{padding:50px 50px 0 35px;white-space:pre-line;color:#666;}
+.packageCont05 > li:first-child .tit, .packageCont05 > li:first-child .guideTxt{padding-top:60px;}
+.packageCont06{position:relative;background:#f9f9f9;padding:65px 25px 65px 50px}
+.packageCont06::before, .packageCont06::after{content:'';display:block;position:absolute;top:0;bottom:0;width:5000px;height:inherit;background:#f9f9f9;}
+.packageCont06::before{left:-5000px;}
+.packageCont06::after{right:-5000px;}
+.packageCont06 .service-container{display:-webkit-box;display:-ms-flexbox;display:flex;}
+.packageCont06 .service-label{margin:50px 0 15px;font:500 28px playfair,gothamB,notokrR;}
+.packageCont06 .service-label:first-child{margin-top:0;}
+.packageCont06 .service-list{}
+.packageCont06 .service-list > li {position:relative;white-space:pre-line;padding-left:22px;color:#666;}
+.packageCont06 .service-list > li::before{content:'';display:block;position:absolute;left:11px;top:.9em;width:3px;height:3px;background:#666;border-radius:50%;}
+
+[class^="packageCont"] + .packageCont07{margin-top:100px}
+.packageCont07 {padding-bottom:40px;}
+.packageCont07 img{display:block;width:100%;}
+
+/* (20200803) new design */
+.packageCont22{margin-bottom:120px}
+.packageCont22 > li{padding:62px 0 70px;border-bottom:1px solid #ccc}
+.packageCont22 > li:first-child{padding-top:0}
+.packageCont22 > li:last-child{padding-bottom:0;border-bottom:0}
+.packageCont22 li > dl{position:relative;padding-left:434px;min-height:274px}
+.packageCont22 li > dl dt{padding-bottom:7px;font:500 36px/1.2 gothamB,notokrR;letter-spacing:-.01em}
+.packageCont22 li > dl dd.thum{position:absolute;left:0;top:8px}
+.packageCont22 li > dl dd.thum img{width:385px}
+.packageCont22 li > dl dd.txtArea > .txt{margin-bottom:63px;font:400 18px/1.8 gothamL,notokrL;text-transform:uppercase}
+.packageCont22 li .sInfo{display:table;padding-right:100px}
+.packageCont22 li .sInfo li{display:table-row;margin-bottom:15px;font:500 17px gothamL,notokrL}
+.packageCont22 li .sInfo .tit, .packageCont22 li .sInfo .txt{display:table-cell}
+.packageCont22 li .sInfo .txt{line-height:1.8}
+.packageCont22 li .sInfo .tit{padding:5px 30px 5px 0}
+.packageCont22 li .txtGuide{margin-top:10px}
+
+/* 211018 패키지 상세 - 패키지 종류 추가 */
+.packageList > li {padding:70px 0;border-bottom:1px solid #ccc;}
+.packageList > li:first-child{padding-top:0;}
+.packageList .package-container{display:-webkit-box;display:-ms-flexbox;display:flex}
+.packageList .package-container .package-pic{position:relative;width:450px}
+.packageList .package-container .package-pic img{width:100%;}
+.badge-lg{position:absolute;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:106px;height:106px;top:0;right:0;background:#a2664e;color:#fff;letter-spacing:.1em;font:300 20px/1 'notokrL';text-align:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+.badge-lg b{display:block;margin-left:4px;letter-spacing:.25em;font:500 28px/1.35 'notokrM';}
+
+.packageList .package-container .package-pic + .package-content{margin-left:50px;}
+.packageList .package-content{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;width:calc(100% - 500px)}
+.packageList .package-container .package-body{width:100%;height:100%;margin-top:25px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack: justify;-ms-flex-pack: justify;justify-content: space-between}
+.packageList .package-container .package-section{display:-webkit-box;display:-ms-flexbox;display:flex}
+.packageList .package-container .package-section:first-child{padding-bottom:12px;max-width:620px;}
+.packageList .package-container .package-section.column{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}
+.packageList .package-container .package-section.bottom{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end}
+.package-content .package-head .package-tit{margin-bottom:15px;font:400 36px/1 'notokrR';}
+.package-content .package-head .package-label{font: 500 20px/1.8 'notokrM';}
+.package-tit .package-tit-item {position:relative;display:inline-block;padding:0 18px;font:inherit}
+.package-tit .package-tit-item:first-child{padding-left:0;}
+.package-tit .ft-gotham{font:400 32px/1 'gothamB';}
+.package-tit .package-tit-item::after{content:'';display:block;position:absolute;right:0;bottom:0;width:1px;height:0.83em;background:#000;}
+.package-tit .package-tit-item:last-child::after{display:none;}
+.package-desc{font:300 18px/1 'notokrL';color:#333;}
+.package-desc .package-desc-item{position:relative;display:inline-block;padding:0 18px; color:inherit;font:inherit;}
+.package-desc .package-desc-item:first-child{padding-left:0;}
+.package-desc .package-desc-item::after{content:'';display:block;position:absolute;right:0;bottom:0;width:1px;height:1em;background:#333;}
+.package-desc .package-desc-item:last-child::after{display:none;}
+.list-middot > li{position:relative;padding-left:16px;}
+.list-middot > li::before{content:'';display:block;position:absolute;left:0;top:.8em;width:3px;height:3px;background:#000;border-radius:50%;}
+.packageList .price{font:400 40px 'playfair';-webkit-font-feature-settings: 'lnum','pnum';font-feature-settings: 'lnum','pnum';}
+.packageList .price-unit{display:inline-block;margin-left:5px;font:400 24px 'gothamL';}
+.msg-reference{color:#666;}
+.packageList .msg-reference{margin-top:1em;}
+.msg-reference::before{content:'\203B';display:inline-block;margin-right:3px;color:#666;}
+.packageList .btn-group{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end}
+.packageList .package-content .btn-group{margin-top:18px;}
+.packageList .btn-group .btn-detail{width:50px;height:50px;margin-right:8px;background:transparent url("../../../images/ko/pc/common/ico_detail_23x22.png") center center / 23px no-repeat;border:1px solid #4b4b4b;font:400 17px 'gothamL';color:transparent;text-indent:-9999px;}
+.packageList .toggleOn .btn-group .active{background:#a2664e !important;border:1px solid #a2664e; }
+
+/* 221006 패키지 상세 - 공통혜택 */
+.packageCont08{margin-bottom:120px}
+.packageCont08 > li{padding:70px 0;border-bottom:1px solid #ccc}
+.packageCont08 > li:first-child{padding-top:0}
+.packageCont08 > li:last-child{padding-bottom:0;border-bottom:0}
+.packageCont08 li > dl{position:relative;padding-left:500px;min-height:274px}
+.packageCont08 li > dl dt{font:500 40px/1.2 gothamB, notokrR;padding-bottom:15px;letter-spacing:-.01em;text-transform:uppercase}
+.packageCont08 li > dl dd.thum{position:absolute;left:0;top:0}
+.packageCont08 li > dl dd.thum img{width:450px}
+.packageCont08 li > dl dd .listDep1 li{color:#333}
+.packageCont08 li > dl dd .btnArea{position:absolute;right:0;bottom:0;margin:0}
+.packageCont08 li > dl dd .inforTit{display:inline-block;width:70px;font:400 17px notokrL}
+.packageCont08 li > dl dd .inforTxt{font:400 18px gothamL}
+.packageCont08 li > dl dd .txtGuide{margin-top:10px}
+.packageCont08 li > dl dd.txtArea .txt+.listDep1{margin-top:40px}
+.packageCont08 li .sInfo{position:absolute;left:500px;bottom:0;padding-right:100px}
+.packageCont08 li .sInfo li{position:relative;padding-left:100px;color:#333}
+.packageCont08 li .sInfo li+li{margin-top:5px}
+.packageCont08 li .sInfo .tit{position:absolute;top:0;left:0;font-size:17px;font-weight:500}
+.packageCont08 li .sInfo .txt{font-family:gothamL}
+
+/* package detail view */
+.packageList .detail-view{padding:80px 145px 0;margin-top:40px;border:1px solid #be9483;font-size:16px;}
+.detail-view [class^="packageCont"] + [class^="packageCont"]{margin-top:20px;}
+.detail-view [class^="packageCont"]{padding-bottom:60px;}
+.detail-view [class^="packageCont"]:not(.packageCont06):last-child{padding-bottom:80px;}
+.detail-view .packageCont06 {padding:50px 25px 55px 35px}
+.detail-view .packageCont06::before, .detail-view .packageCont06::after{width:145px}
+.detail-view .packageCont06::before{left:-145px;}
+.detail-view .packageCont06::after{right:-145px;}
+.detail-view .packageCont06 + .titDep2{margin-top:60px;}
+.detail-view .titDep2{margin-top:20px;font-size:28px;}
+.detail-view .titDep2:first-child{margin-top:0;}
+.detail-view .packageCont03 .titDep2, .packageList .detail-view .packageCont04 .titDep2{font-size:28px;}
+.detail-view .packageCont04 .subTitDep2{font-size:19px;}
+.detail-view .packageCont04 .cont-desc{font-size:16px;}
+.detail-view .packageCont05 > li .tit{width:200px;padding:40px 25px 0 35px;font-size:24px;}
+.detail-view .packageCont05 > li .guideTxt{padding:40px 25px 0 25px}
+.detail-view .packageCont05 > li:first-child .tit, .detail-view .packageCont05 > li:first-child .guideTxt{padding-top:50px;}
+
+.detail-view .packageCont06 .service-label{margin-top:36px;margin-bottom:10px;font-size:24px;}
+.detail-view .packageCont06 .service-label:first-child{margin-top:0}
+.detail-view .service-item .service-icon{-webkit-transform:scale(.88);-ms-transform:scale(.88);transform:scale(.88);}
+.detail-view .service-item .service-desc{margin-top:25px;font-size:13px;}
+
+.detail-view .packageCont03 .titDep2 + .service-items{margin-top:35px;}
+.detail-view .service-items .service-item::after{height:63px}
+.detail-view .packageCont04 .cont-desc{margin-top:25px;}
+.detail-view [class^="packageCont"] + .packageCont07{margin-top:50px}
+
+.packageList .detail-view-bottom{display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end;margin-top:43px;}
+.packageList .detail-view-bottom .price{margin-right:20px;}
+/* // 211018 패키지 상세 - 패키지 종류 추가 */
+
+
+/* hub 객실상세 layer (20200803) new design */
+.layerPop .tabCont + .titDep2{margin-top:40px}
+.layerPop .packageCont22{margin-bottom:0;border-top:1px solid #000;border-bottom:1px solid #ccc}
+.layerPop .packageCont22 > li{padding:46px 0 60px}
+.layerPop .packageCont22 li > dl{padding-left:0;min-height:auto}
+.layerPop .packageCont22 li > dl dt{padding-bottom:15px;font-size:30px}
+.layerPop .packageCont22 li > dl dd.txtArea > .txt{margin-bottom:0} /* txt만 사용하는 경우, li 여백과 중복(변경) */
+.layerPop .packageCont22 li > dl dd.txtArea > .txt + .sInfo{margin-top:33px} /* txt만 사용하는 경우, li 여백과 중복(변경) */
+.layerPop .packageCont22 li > dl dd .btnArea{position: absolute;right:9px;bottom:0}
+.layerPop .packageCont22 + .noticeArea{margin-top:50px;margin-right:17px}
+
+/* 객실 */
+.propertyList{overflow:hidden}
+.propertyList .infoCont .category{margin-top:-15px}
+.propertyList .infoCont .category span{display:inline-block;font-size:14px;color:#7db2a6;font-family:gothamM;text-transform:uppercase;/*padding:3px 8px*/} /* yjs padding 삭제 */
+.propertyList .infoCont .category+.tit{margin:10px 0 0}
+.propertyList .infoCont .txtCategory{display:block;font-family:gothamM;font-size:14px;margin:-7px 0 24px}
+.propertyList .infoCont .tit{display:block;font-size:54px;line-height:1;font-family:playfair;font-weight:500;font-feature-settings:'lnum','pnum';color:#fff;margin:-10px 0 4px}
+.propertyList .infoCont .txt{margin-top:12px;display:-webkit-box;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:2;-webkit-box-orient:vertical;color:#fff;/*padding-right:100px*/}
+.propertyList .infoCont .btn{margin:43px 0 70px}
+.propertyList .infoCont .btn .btnSC{background:transparent !important;border:1px solid rgba(255, 255, 255, .8);margin-right:8px}
+.propertyList .infoCont .btn .btnSC:before{display:none}
+.propertyList .infoCont .btn .btnSC:hover{color:#fff !important}
+.propertyList .infoCont .btn a{font-family:gothamL}
+.propertyList .infoCont .btn a+a{margin:0 8px 0 0}
+.propertyList .infoCont .frm.frmBm label{box-sizing:border-box;border:1px solid rgba(255, 255, 255, .2)}
+.propertyList .infoCont .frm.frmBm input[type=checkbox]:checked+label{background:none;border:1px solid rgba(255,255,255)}
+.propertyList > li{position:relative;padding-bottom:100px}
+.propertyList > li:last-child{padding-bottom:180px}
+.propertyList > li .inner{padding:90px 0 0}
+.propertyList > li .inner:after{content:'';display:block;position:absolute;top:0;width:3000px;height:100%;background:#fff}
+.propertyList > li:before{content:'';display:block;position:absolute;left:0;top:0;width:100%;height:860px}
+.propertyList > li:nth-child(odd):before{background:#164438}
+.propertyList > li:nth-child(odd) .inner:after{right:-3000px}
+.propertyList > li:nth-child(odd) .infoCont .txtCategory{color:#7db2a6}
+.propertyList > li:nth-child(odd) .infoCont .frm.frmBm input[type=checkbox]+label:before{background-position:-48px 0}
+.propertyList > li:nth-child(odd) .infoCont .frm.frmBm input[type=checkbox]:checked+label:before{background-position:-72px 0}
+.propertyList > li:nth-child(even) .infoCont .btn .btnSC{background:transparent !important;border:1px solid #000;color:#000 !important}
+.propertyList > li:nth-child(even) .infoCont .frm.frmBm label{box-sizing:border-box;border:1px solid rgba(0, 0, 0, .2)}
+.propertyList > li:nth-child(even) .infoCont .frm.frmBm input[type=checkbox]:checked+label{border:1px solid rgba(0,0,0)}
+.propertyList > li:nth-child(even) .infoCont .frm.frmBm input[type=checkbox]+label:before{background-position:0 0}
+.propertyList > li:nth-child(even) .infoCont .frm.frmBm input[type=checkbox]:checked+label:before{background-position:-24px 0}
+.propertyList > li:nth-child(even):before{background:#e5cfc7}
+.propertyList > li:nth-child(even) .inner:after{left:-3000px}
+.propertyList > li:nth-child(even) .infoCont .txtCategory{color:#99726b}
+.propertyList > li:nth-child(even) .infoCont{padding-left:100px}
+.propertyList > li:nth-child(even) .category span{color:#99726b}
+.propertyList > li:nth-child(even) .tit, .propertyList > li:nth-child(even) .txt{color:#000}
+.propertyList > li.noData:before{display:none}
+.propertyList+.btnArea{margin-bottom:180px}
+.propertyWrap .ppGallery+.btnArea{margin-top:40px}
+.propertyWrap .ppGallery+.btnArea a{border-color:#ccc}
+.propertyWrap .tblV + h2.hidden + .ppGallery{margin-top:100px}
+.btnArea.full{background:#f9f9f9;padding:30px 0;margin:0 0 80px}
+.btnArea.full > *{vertical-align:middle}
+.btnArea+.propertyWrap{padding-top:14px}
+
+.toggleCont .subFrmCont{padding-left:53px}
+.toggleCont .subFrmCont .txt{color:#000}
+.toggleCont .subFrmCont .intBox+.txtGuide{margin-top:15px}
+.toggleCont .subFrmCont .intBox{display:table;width:100%}
+.toggleCont .subFrmCont .frm{display:table-cell;vertical-align:top}
+
+/*.topArea+.inner .promCode{position:absolute;top:-70px;right:0}*/
+
+/* 버튼 타입 */
+.btnSC[class*="type"]{background:transparent;border-color:#ccc}
+.btnSC[class*="type"] span{position:relative;display:inline-block;padding-left:34px}
+.btnSC[class*="type"] span:before{content:'';width:24px;height:24px;position:absolute;top:50%;transform:translateY(-50%);left:0;background:url(../../../images/ko/pc/common/ico_btns.png) 0 0}
+.btnSC.typeShare span:before{background-position:0 0}
+.btnSC.typeInterest span:before{background-position:-24px 0}
+
+.propertyInfo{margin-bottom:92px}
+.propertyInfo li{width:33.33%;float:left}
+.propertyInfo li:nth-child(3n+1){clear:left}
+.propertyInfo li dl{padding-top:52px}
+.propertyInfo li:nth-child(1) dl, .propertyInfo li:nth-child(2) dl, .propertyInfo li:nth-child(3) dl{padding-top:0}
+.propertyInfo li dl dt{margin-bottom:5px;font-family:gothamM,notokrM;font-size:14px;text-transform:uppercase}
+.propertyInfo li dl dd{padding-right:30px;font-size:18px;font-family:gothamL,notokrL;letter-spacing:-.01em;display:-webkit-box;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-transform:uppercase}
+/*.propertyInfo.type01, .propertyInfo.type02{margin:73px 0}*/
+.propertyInfo.type02 li{width:50%;float:left}/* [float] Our Business */
+.propertyInfo.type02 li+li+li dl{padding-top:55px !important}
+.propertyInfo.type02 li:nth-child(2n+1){clear:left}
+.propertyInfo.type02 li:nth-child(3n+1){clear:none}
+.propertyInfo.type03{padding:35px 30px 40px;background:#f9f9f9;margin:0}
+.propertyInfo.type03::after{content:'';display:block;clear:both}
+.propertyInfo.type03 dl{width:66%;float:left}
+.propertyInfo.type03 dl:first-child{width:34%}
+.propertyInfo.type03 dl:first-child dd ul > li{width:100%;float:none}
+.propertyInfo.type03 dl dt{font-family:gothamL,notokrL;font-size:20px;font-weight:500}
+.propertyInfo.type03 dl dd{margin-top:0;letter-spacing:-.01em}
+.propertyInfo.type03 dl dd ul > li{width:33%;float:left;margin-top:10px}
+.propertyInfo.type03 dl dd.txtGuide{font-size:16px;color:#888}
+.propertyInfo.type03.halfType{margin:0 0 55px;padding:30px 38px 35px}
+.propertyInfo.type03.halfType dl{width:50%;display:inline-block;vertical-align:top;float:inherit}
+.propertyInfo.type03.halfType dl:nth-child(2n+2){width:48%;padding-left:2%}
+.propertyInfo.type03.halfType dl dt{font-weight:600;font-size:22px;text-transform:uppercase}
+.propertyInfo.type03.halfType dl dd{text-transform:uppercase}
+.propertyInfo.type03.halfType dl:not(:first-child):not(:nth-child(2)){margin-top:20px}
+.propertyInfo.type04 li dl dt{font-size:20px}
+
+.tabRoomInfo{padding:26px 40px 30px;margin-top:35px;background:#f9f9f9;font-family:gothamL,notokrL}
+.tabRoomInfo:after{content:'';display:block;clear:both}
+.tabRoomInfo li{float:left;width:33.33%;padding:7px 0 0 60px;font-size:18px}
+.tabRoomInfo li:nth-child(3n+1){padding-left:0}
+.tabRoomInfo + .txtGuide{margin-top:20px}
+.tabRoomInfo .titDep3{margin-top:14px}
+
+.defaultSvCont{border-top:1px solid #000;border-bottom:1px solid #ccc;padding:53px 52px}
+.defaultSvCont:after{content:'';display:block;clear:both}
+.defaultSvCont li{width:33.33%;float:left;padding-left:60px}
+.defaultSvCont li:first-child{padding-left:0}
+.defaultSvCont li .tit{display:block;font-size:30px;font-family:playfair;font-weight:500}
+.defaultSvCont li .txtCont{margin-top:10px}
+.defaultSvCont li .txt{font-size:17px;color:#666;line-height:30px}
+.defaultSvCont li .btnLine{color:#000;margin-left:8px}
+
+.packageCont02+.titDep2{margin-top:70px;padding-top:75px;border-top:1px solid #ccc}
+
+/* 안내사항 */
+.notiBox{margin-top:80px;padding:31px 40px 26px;border:1px solid #eee}
+.notiBox .tit{font-size:20px}
+.notiBox .listDep1{margin-top:4px}
+.notiBox .sNotiCont{border-top:1px solid #eee;padding-top:27px;margin-top:40px}
+.notiBox .sNotiCont .tit{margin-right:23px;vertical-align:middle}
+.notiBox .sNotiCont span{font-size:16px;color:#666;vertical-align:middle}
+.notiBox .sNotiCont span+span:before{content:'';display:inline-block;width:1px;height:16px;background:#ccc;margin:0 20px 2px 25px;vertical-align:middle}
+.notiBox+.btnArea{margin-top:80px}
+
+/* 통합 멤버십 */
+.membership .pageGuide{margin:17px 0}
+.membership h3.titDep2{margin-bottom:9px;font-family:gothamB}
+.membership h3.titDep2 + .txt{margin-bottom:9px;letter-spacing:-.01em}
+.membership .prevBfBtn {margin-bottom:50px;font-size:16px;}
+.membershipFree{display:table;table-layout:fixed;width:100%;padding:60px 40px;border-top:1px solid #000;border-bottom:1px solid #ccc}
+.membershipFree > *{display:table-cell;vertical-align:middle}
+.membershipFree dl:first-of-type{width:445px;vertical-align:top}
+.membershipFree dl{width:685px}
+.membershipFree dt{margin-bottom:16px;font:500 30px gothamL;text-transform:uppercase} /* 폰트 변경 YJS */
+.membershipFree dd{margin-bottom:6px;color:#666;font:400 17px gothamL,notokrL}
+.membershipFree dd abbr{font-weight:400;font-family:gothamL;font-size:17px;vertical-align:0;margin-left:0}
+.membershipFree dd button{margin-left:8px}
+.membershipBox{display:table;table-layout:fixed;width:calc(100% + 24px);margin:-12px -12px -12px;border-spacing:12px}
+.membershipCard{display:table-cell;padding:43px 40px 40px;background-color:#f8f8f8}
+.membershipCard > *{display:block}
+.membershipCard .thum{margin-bottom:82px; text-align:center;position:relative;}
+.membershipCard .thum img {max-width:203px;}
+.membershipCard .thum .premierInfo {position:absolute; bottom:-60px; left:50%; transform:translateX(-50%);  color:#888; font:300 16px notokrL;padding-left:15px; letter-spacing:0.05em; text-transform:uppercase; text-align:center; width:calc(100% + 15px)}
+.membershipCard .thum .premierInfo:before {content:'*'; font:300 16px notokrL; color:#888; position:absolute; top:4px; left:0;}
+
+.membershipCard .tit{margin-bottom:8px;font:600 20px gothamL,notokrM}
+.membershipCard .txt{margin-bottom:31px;font:600 18px gothamB,notokrM}
+.membershipCard .txt em{display:inline-block;vertical-align:-2px;font:500 28px playfair,gothamB,notokrR;font-feature-settings:'lnum','pnum';letter-spacing:.055em}
+.membershipCard .txt i{margin-left:1px;color:#888;font:400 16px notokrL;letter-spacing:-.01em;font-style:normal}
+.membershipCard dl{display:block;margin-top:37px}
+.membershipCard dt{margin-bottom:19px;color:#989442;font:500 14px gothamB,notokrR}
+.membershipCard dd{position:relative;padding-left:10px;margin-bottom:7px;color:#666;font:400 16px gothamL,notokrL;letter-spacing:-.01em}
+.membershipCard dd::before{content:'';display:inline-block;position:absolute;left:0;top:11px;width:3px;height:3px;margin-right:5px;background-color:#000;border-radius:50%}
+.membershipCard .lineBox{background:transparent;border-color:#ccc}
+
+.membershipBox.MoreBtn {margin-top:8px;}
+.membershipBox.MoreBtn .membershipCard {padding:0; background:#fff;}
+.membershipBox.MoreBtn .membershipCard .lineBox {font-size:16px;} 
+
+/* 통합멤버십(상세) */
+.membershipView{position:relative;height:900px;background:#000}
+.membershipView.premier{background:#304f5f}
+.membershipView.gold{background:#6c5340}
+.membershipView.platinum{background:#505861}
+.membershipView.black{background:#383840}
+.membershipView .titDep1{margin-bottom:26px;color:#fff;font:500 80px playfair,gothamM,notokrR;text-align:center}
+.membershipView .pageGuide{color:#fff;font:400 20px gothamL,notokrL;letter-spacing:-.015em;text-align:center;margin:inherit}
+.membershipView .pageGuide em{font:400 22px gothamM}
+.membershipView .img{display:block;width:915px;margin:0 auto;padding-right:617px;}
+.membershipView .img > img{width:100%;max-width:298px;}
+.membershipView .benetfitPrev{position:absolute;top:380px;left:50.3%;width:500px;display:flex;flex-flow:row wrap}
+.membershipView .topArea .topInner{padding:91px 0 63px}
+.benetfitPrevList{width:200px;margin:0 50px 14px 0;padding:17px 0 29px;border-top:1px solid #bcbcbc}
+.benetfitPrevList .tit{display:block;color:#eee;font:400 18px notokrL;letter-spacing:-.075em}
+.benetfitPrevList .tax{display:block;margin-bottom:11px;color:#fff;font:500 36px playfair,gothamB,notokrR;letter-spacing:.075em;font-feature-settings:'lnum','pnum'}
+.benetfitPrevList .tax .unit{display:inline-block;margin-left:4px}
+.benetfitPrevList .tax .unit.type01{font:400 36px playfair} /* 영문 */
+.benetfitPrevList .tax .unit.type02{font:400 20px gothamL,notokrL} /* % */
+.benetfitPrevList .tax .txt{color:#fff;font:30px notokrR;letter-spacing:-.04em}
+.benetfitPrevList .txt{display:block;color:#aaa;font:400 16px gothamL,notokrL}
+.membershipView .premierInfo {position:absolute;top:715px;left:50.3%;color:#f9f9f9;font:400 16px notokrL;text-transform:uppercase;}
+.membershipView.black .benetfitPrevList {width:206px; margin:0 44px 14px 0;}
+
+.membership .rsvInfor{margin-bottom:59px !important}
+.membership .rsvInfor .btnArea{right:-8px}
+.membership .rsvInfor .btnArea a{margin:0 8px}
+.myMembershipTit{position:absolute;top:52px;left:0;font:30px notokrR;letter-spacing:-.025em}
+.myMembershipBtn{position:absolute;top:120px;left:3px}
+.myMembership{position:relative;margin:0 0 120px 360px}
+.myMembership .rsvList > li{min-height:181px;padding:56px 20px 60px;border-top:0;border-bottom:1px solid #eee}
+.myMembership .rsvList > li.toggleOn{border-top:0}
+.myMembership .rsvList > li .btnToggle{right:-15px;top:50%;transform:translateX(-50%);margin-top:-14px;z-index:2}
+.myMembership .rsvList > li .toggleInner{padding:0 0 0 365px}
+
+.myMembership .basicInfor{position:relative;display:table;width:100%;min-height:74px}
+.myMembership .benetfitTit, .myMembership .benetfitPrev, .myMembership .btnToggle{display:table-cell}
+.myMembership .benetfitTit{width:365px}
+.myMembership .benetfitPrev{width:635px}
+
+.myMembership .benetfitTit .tit{font:400 26px/1.33 notokrL;letter-spacing:-.01em}
+.myMembership .benetfitTit .tit em{color:#989442;font-weight:600}
+.myMembership .benetfitTit .tit span + em{margin-left:8px}
+.myMembership .benetfitTit .opValue{display:block;font:400 26px notokrL;letter-spacing:-.01em;margin-left:0}
+.myMembership .benetfitTit .opValue em{color:#989442;font:500 28px gothamB,notokrR}
+
+.myMembership .benetfitPrev{font:400 18px gothamL,notokrL;letter-spacing:-.01em;vertical-align:top}
+.myMembership .benetfitPrev li{margin-bottom:4px}
+.benetfitViewTit{display:block;margin:47px 0 18px;font:500 22px notokrM}
+.benetfitViewTit + .benetfitViewTit{margin-top:-20px !important}
+.toggleInner > .benetfitView:first-child > .benetfitViewTit{margin-top:0}
+.toggleInner > .benetfitView:first-child > .benetfitViewTit.mt-50{margin-top:32px}
+.benetfitView .tit{display:block;margin:45px 0 5px;color:#333;font-weight:600;font-size:18px}
+.benetfitView .sTit{display:block;margin:28px 0 12px;color:#333;font:16px notokrR}
+/*.benetfitView + .benetfitViewTit{margin-top:50px}*/
+.benetfitView .listDep1 + .tblH.capBlock{margin-top:60px}
+.benetfitView .tblH.capBlock caption{margin-bottom:15px;font-family:notokrM}
+.benetfitView .tblH + .benetfitViewTit{margin-top:50px}
+.benetfitView > .txt{margin-top:-10px}
+.benetfitView > .txt + .tblH{margin-top:42px}
+
+.myMembership .rsvList .listTxt li{font-size:18px;font-family:gothamL;color:#888}
+.myMembership .rsvList .dcInfo{margin:20px 0 20px;background:#f9f9f9;padding:20px 0 20px;display:table;table-layout:fixed;width:100%}
+.myMembership .rsvList .dcInfo:after{display:none}
+.myMembership .rsvList .dcInfo span{font-family:gothamL;font-size:17px}
+.myMembership .rsvList .dcInfo strong{font-family:gothamL;font-size:17px;font-weight:600;margin-left:10px}
+.myMembership .rsvList .dcInfo li{position:relative;display:table-cell;text-align:center}
+.myMembership .rsvList .dcInfo li+li:before{content:'';width:1px;height:14px;background:#ccc;position:absolute;top:50%;margin-top:-7px;left:0}
+.myMembership .rsvList .dcInfo+.benetfitView .tit:first-child{margin-top:64px}
+
+.myMembership+.cautionBox{margin-top:80px}
+
+.layerCont .membershipInfoArea{width:800px;border-top:1px solid #000}
+.layerCont .membershipInfo{position:relative;padding:40px 20px;border-bottom:1px solid #ccc}
+.layerCont .membershipInfo .tit{margin-bottom:10px;display:block;font:500 24px notokrM;letter-spacing:-.01em}
+.layerCont .membershipInfo .txt{display:block;color:#666;font:400 16px notokrL;letter-spacing:-.01em}
+.layerCont .membershipInfo .btnSC{position:absolute;right:0;top:50%;transform:translateY(-50%)}
+.layerCont .membershipConsult{position:relative;width:940px}
+.layerCont .membershipConsult .intWrap + .intInner > .frmList.check{margin-top:0}
+.layerCont .membershipConsult .frmList .frmRadio label{width:176px;padding:12px 15px}
+.layerCont .membershipConsult .customScrollBox > .titDep3:first-child{margin-top:10px}
+.layerCont .membershipConsult .customScrollBox [class^="listWith"] > li:before{top:4px}
+.layerCont .customScrollBox [class^="listWith"] > li:before{padding-top:2px}
+
+.intBox{padding:16px 0 5px 0}
+.membership .intBox{height:60px;padding:16px 13px 17px 0}
+.intBox .frm + .frm{margin-left:18px}
+.intBox + .intInner + .intInner.duobuleInp .alertMessage{top:-152px}
+
+/* 통합 멤버십 뉴스 */
+.cardList.newsInfo li .cardInner .status{font-size:18px;margin-bottom:5px}
+.cardList.newsInfo li .cardInner .tit{font-size:24px}
+.cardList.newsInfo li .cardInner .date{font-size:20px}
+
+.mbsDetailCont{margin-top:90px}
+.detailView>.tit{font-size:50px}
+.detailView .infoData{margin-top:25px}
+.detailView .infoData:after{content:'';display:block;clear:both}
+.detailView .infoData li{float:left;font-size:20px;margin:0;font-family:gothamL}
+.detailView .infoData li+li:before{display:inline-block;content:'';width:1px;height:18px;background:#ccc;margin:0 20px;vertical-align:middle}
+.detailView .txtBox{margin-top:37px;font-size:18px;text-align:left;padding:60px 0;border-top:1px solid #000;border-bottom:1px solid #ccc;background:transparent}
+.detailView .shortList li{padding:21px 0;border-bottom:1px solid #ccc}
+.detailView .shortList li span{display:inline-block;width:68px}
+.detailView .btnArea{margin-top:80px}
+
+.boxtypeList .locationTag{top:0;left:0}
+
+/* 통합 멤버십 이벤트 */
+.detailView.event>.tit{font-size:54px;font-family:playfair,gothamL,notokrL}
+.detailView.event .txt{margin-top:50px}
+.detailView.event .btnArr{display:inline-block;margin-top:15px}
+
+/* 미팅룸 */
+.topArea+.btnArea{width:1400px;text-align:right;margin:0 auto 40px}
+.meetingCont .btnBarArea{margin-bottom:0}
+.meetingCont .promotion{margin-top:100px}
+.meetingTbl th,.meetingTbl td{font-family:gothamL,notokrL;font-size:17px}
+.meetingTbl .classType,.meetingTbl .shapeType,.meetingTbl .roundType,.meetingTbl .theaterType{padding-top:66px}
+.meetingTbl .classType:after,.meetingTbl .shapeType:after,.meetingTbl .roundType:after,.meetingTbl .theaterType:after{content:'';position:absolute;top:20px;left:50%;margin-left:-15px;background:url(../../../images/ko/pc/common/bg_table_type.png) no-repeat;width:34px;height:30px}
+.meetingTbl th{position:relative}
+.meetingTbl .classType:after{background-position:0 0}
+.meetingTbl .roundType:after{background-position:0 -30px}
+.meetingTbl .theaterType:after{background-position:0 -60px}
+.meetingTbl .shapeType:after{background-position:0 -90px}
+.promotion.meetingType .promList>li a .tit{font-size:21px}
+
+.intList > li .selectInp .intArea{margin-left:20px}
+input.attendees{text-align:right;padding-right:24px;font-size:18px;width:166px}
+.attValue{position:absolute;bottom:17px;right:0}
+
+.dateList>li{position:relative;padding-left:85px;margin-top:17px}
+.dateList>li:after{content:'';display:block;clear:both}
+.dateList>li+li{margin-top:13px}
+.dateList>li .tit{position:absolute;top:16px;left:0;font-size:16px;color:#006633}
+.dateList .period{float:left;width:220px}
+.dateList .selectArea{float:left;width:344px;margin-left:30px}
+
+.tableTypeInp{margin-top:7px}
+.tableTypeInp .classType:after,.tableTypeInp .shapeType:after,.tableTypeInp .roundType:after,.tableTypeInp .theaterType:after{content:'';position:absolute;top:20px;left:50%;margin-left:-15px;background:url(../../../images/ko/pc/common/bg_table_type.png) no-repeat;width:34px;height:30px}
+.tableTypeInp li{position:relative}
+.tableTypeInp .classType:after{background-position:0 0}
+.tableTypeInp .roundType:after{background-position:0 -30px}
+.tableTypeInp .theaterType:after{background-position:0 -60px}
+.tableTypeInp .shapeType:after{background-position:0 -60px}
+
+.layerCont .membershipConsult .frmList.tableTypeInp li label{padding:54px 0 18px;width:298px;max-width:inherit}
+
+.intWrap label[for="uploadBtn"]{margin:0}
+
+.intInner .btnAddfile{margin-top:7px}
+.intInner .selectArea{display:table;table-layout:fixed}
+.intInner .selectArea>*{display:table-cell}
+.intInner .selectArea .intArea+.hBar{padding:0 25px;width:60px;box-sizing:border-box}
+.intInner .intArea>textarea{margin-top:7px}
+
+.intDel{position:relative;display:inline-block}
+.intDel .btnDel{display:none;position:absolute;top: 50%;right:0;background:url(../../../images/ko/pc/common/btn_close_14x14.png) no-repeat 50% 50%;color:transparent;width:14px;height:14px;margin-top:-7px;line-height:0}
+
+.layerCont .meetingCont{width:940px}
+.layerPop .meetingCont .btnArea{margin-top:50px}
+
+.weddingArea .businessRoomList{margin-top:60px}
+.weddingArea .swipeWrap{margin-top:100px}
+.weddingArea .propertyIntro{padding-left:0}
+.weddingArea .propertyIntro .tit{position:inherit;width:100%}
+.weddingArea .btnArea{margin-top:80px}
+
+/* 부대시설 */
+.fcWrap{padding-top:95px}
+.fcWrap>.propertyInfo{margin-bottom:90px}
+.fcWrap>.propertyInfo:first-child{margin-top:0}
+.propertyInfo.fcNotiCont dt{font-size:20px}
+.tabCont .propertyInfo{margin-top:80px}
+.swipeWrap+.promotion,
+.fcNotiCont+.promotion{margin:0}
+.swipeWrap+.promotion .titDep2{margin:90px 0 23px}
+.promotion.type02 .promList > li a .tit{font-size:20px}
+.titDep2+.fcNotiCont{margin-top:0}
+.tabRoomInfo .txtGuide{margin-top:20px}
+.tabRoomInfo+.side{margin-top:10px;text-align:right}
+.fcWrap .promotion.type02 .promList > li .tit{font-size:20px;font-family:notokrM, gothamM;text-transform:uppercase}
+.fcWrap .promotion.type02 .promList > li a, .fcWrap .promotion.type02 .promList > li > div{padding-top:290px}
+.fcWrap .promotion.type02 .promList > li .txt{padding-top:5px}
+
+/* 부대시설(시설안내) txt:전체출력 */
+.promotion.type02 .swipeWrap{height:505px !important}
+.promotion.type02 .promList > li .tit{width:430px}
+.promotion.type02 .promList > li .txt{width:430px;height:auto}
+.promotion.type02 .promList .swipeWrap.swipeGroup{height:auto !important}
+.propertyInfo.fcNotiCont dd{-webkit-line-clamp:inherit}
+
+/* Our Bussiness */
+.txtGuide.inline-block{display:inline-block}
+.businessArea .tabType01{margin-top:80px}
+.businessArea{padding-top:73px}
+
+.businessArea .gallery + .propertyIntro{margin-top:73px}
+.businessArea .gallery + .hidden + .propertyIntro{margin-top:73px}
+.propertyIntro{position:relative;display:block;padding-left:715px}
+.propertyIntro .tit{position:absolute;top:0;left:0;width:50%;font:500 30px/1.5 gothamB,notokrM;letter-spacing:-.025em}
+.propertyIntro .txt{font:400 18px/1.8 gothamL,notokrL;letter-spacing:-.025em}
+.propertyIntro .txt + .txt{margin-top:35px}
+
+.businessRoomList{width:1400px;margin:80px 0 0;display:flex;flex-wrap:wrap}
+.businessRoomList > li{float:left;width:50%;flex:1 1 50%}
+.businessRoomList > li:nth-child(odd) .info{padding-right:20px}
+.businessRoomList > li:nth-child(even) .info{padding-left:20px}
+.businessRoomList > li:nth-child(n+3) .info{margin-top:80px}
+.businessRoomList > li .info{display:block;position:relative;width:700px}
+.businessRoomList > li .tit{display:block;font-size:24px;padding-top:21px;font-family:gothamM,notokrR;text-transform:uppercase;letter-spacing:-0.01em}
+.businessRoomList > li .txt{display:block;padding-top:18px;font-family:gothamL,notokrL;}
+.businessRoomList > li .txt .listDep1{margin-top:50px}
+.businessRoomList > li .inforList{margin-top:60px}
+.businessRoomList > li .inforList > li{position:relative;font-size:17px;padding-left:60px}
+.businessRoomList > li .inforList > li .sTit{position:absolute;left:0;top:0}
+.businessRoomList > li .thum.line{border:1px solid #ccc}
+
+.layerPop .agreeBox .frm.type02{margin-bottom:20px}
+.layerPop .agreeBox + .agreeBox{margin-top:40px}
+.layerPop textarea{height:115px;border:0;border-bottom:1px solid #ccc}
+.intArea.price input[type=text]{padding-right:45px}
+.intArea.price i.unit{font-style:normal;margin-left:-40px}
+
+/* tab추가(공통) */
+.tabArea{position:relative}
+.tabArea .tabType04{position:absolute;top:65px;left:-2px;width:380px}
+.tabArea .tabType04 li+li{margin-top:20px}
+.tabArea .tabType04 li.on a{color:#000;font-weight:600}
+.tabArea .tabType04 li a{font-family:notokrL;font-size:30px;color:#aaa}
+.tabArea .tabCont{margin-left:380px;padding-top:60px}
+.tabArea .myMembership{min-height:auto;margin-left:0;margin-top:-60px}
+.tabArea .tabCont .txtArea .hTxt{font-size:24px;font-family:gothamB,notokrR;font-weight:500;line-height:40px}
+.tabArea .tabCont .txtArea .tit{display:block;margin:35px 0 10px}
+.tabArea .tabCont .txtArea .txt{font-size:18px;color:#333}
+
+/* layer > tab(공통) */
+.tabType03{position:relative;width:100%}
+.tabType03 li{float:left;width:229px;margin:0 8px 8px 0;border:1px solid #ccc}
+.tabType03 li:nth-child(4n+4){margin-right:0}
+.tabType03 li a{display:block;height:50px;color:#666;text-align:center;font:400 16px/50px gothamL,notokrL;letter-spacing:.025em}
+.tabType03 li a:hover{text-decoration:none}
+.tabType03 li.on{border:1px solid #000;background:#f9f9f9}
+.tabType03 li.on a{color:#000}
+
+/* 메뉴판(layer) 공통 */
+.layerCont .menuPanArea{position:relative;width:940px}
+.layerCont .side{position:absolute;top:0;right:0}
+.layerCont .side button + button{margin-left:6px}
+/*.menuPanArea .tabCont{padding-top:55px}*/
+.menuPanView .menuPan{margin-top:60px}
+.menuPanView .menuPan.type02{margin-bottom:70px}
+.menuPanView .notiBox > .origin{position:relative;margin-bottom:30px}
+.menuPan .menuList{margin-bottom:10px}
+.menuPan .tit{display:block;margin:10px 0 15px;color:#989442;font:600 20px/1.5 playfair,gothamM,notokrM;font-feature-settings:'lnum','pnum';text-align:center}
+.menuPan .txt{font:400 18px/1.5 gothamL,notokrL}
+.menuPan .bill{font:400 18px/1.5 gothamL,notokrL}
+.menuPan .txtGuide{margin-top:10px;text-align:center}
+.menuPan .txtGuide::before{display:none}
+.menuPan .txtGuide span:first-child::before{content:'＊';margin-right:4px;font-size:10px}
+.menuPan.type01 .menuList{display:table;table-layout:fixed;width:100%}
+.menuPan.type01 .menuList li{display:table-row}
+.menuPan.type01 .menuList .txt{display:table-cell;width:65%;padding:.4em 0 1.6em;letter-spacing:.025em;vertical-align:top}
+.menuPan.type01 .menuList .txt em{display:block}
+.menuPan.type01 .menuList .txt .txtGuide{display:block;font-size:.8em;color:#333;text-align:left}
+.menuPan.type01 .menuList .bill{display:table-cell;text-align:right;vertical-align:top}
+.menuPan.type02 .menuList{display:block}
+.menuPan.type02 .menuList .txt{display:block;padding:.4em 0 1.2em;text-align:center;letter-spacing:.025em}
+.menuPan.type02 .bill{display:block;text-align:center}
+.menuPan.type03 .tit span + span::before{content:'/';padding:0 .4em}
+.menuPan.type03 .menuList{display:block}
+.menuPan.type03 .menuList .txt{display:block;padding:.4em 0 .5em;text-align:center;letter-spacing:-.01em}
+.menuPan.type03 .menuList .txt span[lang=ko]{display:block}
+.menuPan.type03 .menuList .txt span[lang=zh] + span[lang=en]::before{content:'/';padding:0 .2em}
+.menuPan.type03 .menuList .txt span[lang=ja] + span[lang=en]::before{content:'/';padding:0 .2em}
+.menuPan.type03 .menuList .txt span[lang=en] + span[lang=ja]::before{content:'/';padding:0 .2em}
+.menuPan.type03 .bill{display:block;text-align:center}
+
+.menuPan{padding-right:17px} /* scrollWrap 영향, 글자잘림 방지 */
+.menuPanArea .notiBox{margin-right:17px} /* scrollWrap 영향, 글자잘림 방지 */
+
+@media print{
+   .menuPanView .menuPan{page-break-before: always;padding-top:50px}
+}
+
+/* Dining(공통) */
+.tblV.tcenter th{text-align:center}
+.tblV.tcenter th[scope=rowgroup]{border-right:1px solid #ccc}
+/* Dining(.category.type02 추가) */
+.propertyList .infoCont .category.type02 + .tit{margin:11px 0 13px}
+.propertyList .infoCont .category.type02 + .tit + .txt{margin-top:0}
+.propertyList .infoCont .category.type02 span{font-family:gothamM;border:0;padding:0;text-transform:uppercase}
+.propertyList > li:nth-child(odd) .category.type02 span{color:#7db2a6}
+.propertyList > li:nth-child(even) .category.type02 span{color:#99726b}
+/* Dining(.contInfo 공통) */
+.contInfo{display:flex;flex-flow:row wrap;padding:32px 38px;margin:35px 0 70px;background:#f9f9f9}
+.contInfo:after{content:'';display:block;clear:both}
+.contInfo .contInfoHalf{flex:50%}
+.contInfo .contInfoHalf:nth-of-type(3), .contInfo .contInfoHalf:nth-of-type(4){margin-top:40px}
+.contInfo .contInfoHalf .titDep3{text-transform:uppercase;font-family:gothamL}
+.contInfo ul{display:table;table-layout:fixed;width:100%}
+.contInfo li{display:table-row}
+.contInfo li .tit, .contInfo li .txt{display:table-cell;padding:.3em 0;font:400 18px/1.5 gothamL,notokrL;letter-spacing:.01em;text-transform:uppercase}
+.contInfo .txtGuide{margin-top:10px}
+.contInfo.type01 li .tit{width:36%}
+.contInfo.type02 li .tit{width:25%}
+
+/* About(공통) */
+.about .pageGuide{font-family:gothamL, notokrL}
+.visualBox{position:relative;margin-bottom:90px;overflow:hidden}
+.visualBox .inner{padding-bottom:0}
+.visualBox .bg{position:absolute;left:15%;z-index:-1;width:100%;height:100%}
+/*.visualBox + .inner.tabArea{margin-top:100px}*/
+/* About(.propertyIntro.type02 소개) */
+.propertyIntro.type02{padding-left:745px}
+.propertyIntro.type02 .txt{display:table;table-layout:fixed;width:100%}
+.propertyIntro.type02 .txt dl{display:table-cell;position:relative}
+.propertyIntro.type02 .txt dl:first-of-type{width:230px}
+.propertyIntro.type02 .txt dl:nth-of-type(2){width:180px}
+.propertyIntro.type02 .txt dt{position:absolute;bottom:0;color:#666;font:400 16px/1.5 notokrL;letter-spacing:-.01em}
+.propertyIntro.type02 .txt dd{padding-bottom:30px;font:36px/1.5 playfair,gothamM,notokrL;font-feature-settings:'lnum','pnum';letter-spacing:.075em}
+.propertyIntro.type02 .txt dd .unit{font-weight:600}
+/* About(.businessRoomList 소개/ci) */
+.businessRoomList.type02{margin-top:135px}
+.businessRoomList.type02 > li:nth-child(odd) .info{padding-right:45px}
+.businessRoomList.type02 > li:nth-child(even) .info{padding-left:45px}
+.businessRoomList.type02 .tit{font-size:30px}
+.businessRoomList.type02 .ciImg{display:table-cell;width:655px;height:250px;background:#f9f9f9;text-align:center;vertical-align:middle}
+.ciTit{margin:95px 0 23px;font:500 26px gothamB;text-transform:uppercase}
+.ciTit + .businessRoomList.type02{margin-top:0}
+/* About(.businessRoomList 주요활동) */
+.tabArea .tabCont.activities{margin-left:486px}
+.tabCont.activities .tabInner > .txt{font-size:20px;line-height:1.75}
+.tabCont.activities .businessRoomList{width:912px;margin:72px 0 0}
+.tabCont.activities .businessRoomList > li:nth-child(odd) .info{padding-right:29px}
+.tabCont.activities .businessRoomList > li:nth-child(even) .info{padding-left:29px}
+.tabCont.activities .businessRoomList > li .tit{padding-top:18px;font-size:20px;line-height:1.62}
+.tabCont.activities .businessRoomList > li:nth-child(n+3) .info{margin-top:74px}
+.tabCont.activities .businessRoomList > li .info{width:427px}
+/* About(연혁) */
+.about .tabArea .tabType04 li+li{margin-top:27px}
+.about .tabArea .tabType04 li a{font-family:gothamB,notokrR;line-height:1.33}
+.about .tabArea .tabType04 li.on a{font-weight:600}
+.historyList li{margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid #ccc}
+.historyList li:last-child{margin-bottom:0}
+.historyList dl{display:block;position:relative;padding-left:140px}
+.historyList dt{position:absolute;top:0;left:0;font:500 18px/1.8 gothamM,notokrR}
+.historyList dd > ul li{margin-bottom:0;padding-bottom:0;border:0}
+.historyList dd + dd{margin-top:22px}
+.historyList .tit{margin-right:20px;font:500 18px/1.5 gothamM,notokrR}
+/* About(오시는길) */
+.about .mapArea + .titDep2{margin:75px 0 20px;font-size:36px}
+.about .mapArea + .titDep2 + .txt{font:400 20px/1.5 gothamL,notokrL}
+.about .mapArea + .titDep2 + .txt + .toggleList{margin-top:70px}
+.locationInfo{padding:2em 0}
+.locationInfo .tit{display:block;margin-bottom:10px;font-weight:600}
+.locationInfo .txt + .tit{margin-top:40px}
+.locationInfo li .listDep2{margin-bottom:20px}
+/* About(주요활동) */
+.traceArea{position:relative;margin-top:115px}
+.traceTit{position:absolute;top:0;left:0;width: 360px}
+.traceTit .tit{display:block;margin-bottom:22px;font:500 30px/1 notokrM}
+.traceTit .txt{margin-bottom:70px;font-size:20px}
+.traceArea .historyList{margin-left:485px;min-height:400px}
+.traceArea .historyList .title{display:block;font:600 30px/1 gothamM,notokrR}
+.traceArea .historyList dl{padding-left:0}
+.traceArea .historyList dt{position: static;float:left;width:75px;padding-top:25px}
+.traceArea .historyList dd{padding-left:75px;padding-top:25px}
+.traceArea .historyList dd + dd{margin-top:0;padding-top:5px}
+.grayBox{margin-bottom:100px;background:#f9f9f9}
+.grayBox .inner{padding:30px 0}
+.grayBox .tit{display:block;margin:78px 0 0;font:500 30px notokrM}
+.grayBox .txt{margin-top:14px;font-size:20px}
+.grayBox .propertyInfo{margin-top:39px}
+.grayBox .propertyInfo li dl{padding-top:36px}
+.grayBox .propertyInfo li dl dt{margin-bottom:4px;font-size:20px}
+.grayBox .propertyInfo li dl dd{text-transform:uppercase}
+/* About(ci) */
+.cardList.ci li{width:100%}
+.cardList.ci li .cardInner{position:relative;display:table;width:100%;height:0;min-height:320px;margin:0;padding:30px;border:1px solid #e5e5e5;text-align:center}
+.cardList.ci li .cardInner .tit{display:table-row;text-align:left}
+.cardList.ci li .cardInner .img{display:table-row;vertical-align:middle}
+.cardList.ci li + li{margin-top:40px}
+.cardList.ci li .cardInner::after{display:none}
+/* About(Social) */
+.cardList.type03.socialList{margin:0}
+.cardList.type03.socialList li .cardInner{padding:0;height:242px}
+.socialList .place{display:block;height:180px;padding:2.2em 0;color:#888;font-weight:600;text-align:center;border-bottom:1px solid #ddd}
+.socialList .place img{display:block;margin:0 auto}
+.socialList .link{display:table;table-layout:fixed;width:100%}
+.socialList .link a{position:relative;display:table-cell;padding:30px 15px;background-repeat:no-repeat;background-position:50% 50%}
+.socialList .link a + a::before{content:'';display:inline-block;position:absolute;top:50%;transform:translateY(-50%);left:0;width:1px;height:16px;background:#ccc}
+.socialList .link a.youtube{background-image:url(../../../images/ko/pc/HUAB/ico_sns-youtube.png)}
+.socialList .link a.facebook{background-image:url(../../../images/ko/pc/HUAB/ico_sns-facebook.png)}
+.socialList .link a.instagram{background-image:url(../../../images/ko/pc/HUAB/ico_sns-instagram.png)}
+.socialList .link a.kakao{background-image:url(../../../images/ko/pc/HUAB/ico_sns-kakao.png)}
+
+.cardList.type03{margin:100px 0 90px}
+.cardList.type03 li{width:33.3333%}
+.cardList.type03 li .cardInner{height:197px;margin:0 10px 10px 0;padding:25px 30px 30px}
+.cardList.type03 li:nth-child(2n) .cardInner{margin:0 10px 10px 0}
+.cardList.type03 li:nth-child(3n+3) .cardInner{margin:0 0 10px 0}
+.cardList.type03 li .cardInner .tit{margin-bottom:5px}
+.cardList.type03 li .cardInner .txt{line-height:1.88}
+
+.cardList.type04.socialList{margin:0}
+.cardList.type04.socialList li {width: 700px}
+.cardList.type04.socialList li:last-child {margin: 0}
+.cardList.type04.socialList li .cardInner{padding:0;margin: 0 0 10px;height:242px}
+.cardList.type04.socialList li:last-child .cardInner{border-left: none;}
+.cardList.type04.socialList .place{display:block;height:242px;padding:95px 0;color:#888;font-weight:600;text-align:center;border-bottom:none;}
+.cardList.type04.socialList .place img{display:block;margin:0 auto}
+.cardList.type04.socialList .link a{position:relative;display:table-cell;padding:120px 15px;}
+
+/* About(채용) */
+.recruitInfo{margin-top:70px}
+.recruitInfo .tit{display:block;margin-bottom:15px;font:500 30px notokrM}
+.recruitInfo .txt{margin-bottom:70px;font-size:20px}
+
+/* 티저 객실 상세보기 레이어팝업 */
+.detailCont{position:relative;width:940px}
+.detailCont .txtCont p{font-size:18px;line-height:32px;text-align:center}
+.detailCont .imgCont{margin-top:53px}
+.detailCont .imgCont img{width:100%}
+.detailCont .imgCont + .txtGuide{margin-top:12px}
+.detailCont .propertyInfo{margin-top:55px;margin-bottom:75px}
+.layerCont .h750 .scrollWrap{height:560px}
+
+/* 티저(비회원 예약확인) */
+.reservation .loginFrm{display:inline-block}
+.reservation .loginFrm input{width:420px;height:60px;background-color:#f9f9f9}
+.reservation .loginFrm .alertMessage{position:absolute;top:-32px;left:0}
+.reservation .loginFrm + .loginFrm, .reservation .loginFrm + button{margin-left:6px}
+.reservation .loginFrm + button{width:190px;min-width:inherit}
+
+/* 호텔소개 */
+.abHotelInner{padding-bottom:120px}
+.aboutHotel{background:#f9f9f9;padding:120px 0}
+.aboutHotel .businessRoomList{margin:0 auto}
+
+.businessRoomList.type03 > li:first-child{width:100%;flex:100%;margin-bottom:80px}
+.businessRoomList.type03 > li:nth-child(odd) .info{padding-left:45px;padding-right:0}
+.businessRoomList.type03 > li:nth-child(even) .info{padding-right:45px;padding-left:0}
+.businessRoomList.type03 > li:first-child .info{position:relative;padding:0 180px;text-align:center;margin:0 auto;width:auto}
+.businessRoomList.type03 > li:first-child .info::before{content:'';display:block;width:1px;height:100px;margin:-10px auto 40px;background:#000}
+.businessRoomList.type03 .tit{font-size:30px}
+.businessRoomList.type03 p.txt{font-weight:600}
+.businessRoomList.type03 > li:nth-child(n+3) .info{margin-top:200px}
+.topInner.type02{padding:120px 0 50px}
+.topInner.type02:after{content:'';display:block;clear:both}
+.topInner.type02 .titDep1{font-size:30px;font-family:gothamM;float:left}
+.topInner.type02 .infoTxt{float:left;font-size:20px;font-family:gothamL;padding:3px 0 0 28px;letter-spacing:-0.5px;line-height:1.6;}
+.topInner.type02 .infoTxt span:before{content:'';display:inline-block;vertical-align:-2px;width:1px;height:18px;background:#aaa;margin:0 19px 0 13px}
+.mapArea+.toggleList{margin-top:75px}
+
+.aboutTour{margin-top:120px}
+.aboutTour.promotion .swipeWrap{width:1400px !important}
+.aboutTour .titDep2{font-family:gothamM;font-weight:normal}
+.aboutTourCont:after{content:'';display:block;clear:both}
+.aboutTourCont li{float:left;width:655px}
+.aboutTourCont li+li{float:right}
+.aboutTourCont .txtCont{display: inline-block}
+.aboutTourCont .tit{display:block;margin-top:68px;font-size:20px;font-weight:600}
+.aboutTourCont .txt{font-size:18px;margin-top:7px}
+
+.aboutTour .brandSignatureList{}
+.aboutTour .brandSignatureList .info .thum, .aboutTour .brandSignatureList2 .info .thum{display:block;position:relative;margin-bottom:17px}
+.aboutTour .brandSignatureList li:nth-of-type(3), .aboutTour .brandSignatureList li:nth-of-type(5) {margin:0 0 0 90px}
+.aboutTour .brandSignatureList li:nth-of-type(4), .aboutTour .brandSignatureList li:nth-of-type(6){margin:-406px 0 0 0}
+
+
+/* 호텔소개 - 갤러리 */
+.aboutGallery li{width:427px;float:left;margin-left:59px}
+.aboutGallery li:nth-child(3n+1){margin-left:0}
+.aboutGallery li:nth-child(1n+4){margin-top:60px}
+.aboutGallery .thum{cursor:pointer}
+.aboutGallery .thum button{width:100%;height:100%}
+.aboutGallery .hoverCont{position:absolute;left:0;right:0;top:0;bottom:0;width:427px;opacity:0}
+.aboutGallery .hoverCont .gName{display:block;font-size:18px;font-family:gothamB;color:#e7c2a3;position:absolute;left:50%;top:50%;-webkit-transform:translate(-50%, -50%);-moz-transform:translate(-50%, -50%);-o-transform:translate(-50%, -50%);-ms-transform:translate(-50%, -50%);transform:translate(-50%, -50%);text-transform:uppercase}
+.aboutGallery .hoverCont.on{opacity:1;background-color:rgba(44, 74, 66, .8);text-align:center;z-index:1}
+
+/* Brand(공통) */
+.brandIntro{width:1400px;margin:0 auto 67px}
+.brandIntro .tit{display:block;padding:143px 0 13px;font:24px/1.62 gothamM,notokrM;letter-spacing:-.01em}
+.brandSlogan > * {color:#ba998c}
+.brandSlogan .tit{position:relative;display:block;font:500 110px/1.46 playfair;text-transform:capitalize}
+.brandSlogan .tit::before, .brandSlogan .tit::after{content:'';position:absolute;height:3px;background:#ba998c}
+.brandSlogan .tit::before{width:888px;right:0;top:92px}
+.brandSlogan .tit::after{width:805px;left:0;bottom:-69px}
+.brandSlogan .txt{display:block;padding:51px 0 13px;text-align:right}
+.brandStory{position:relative}
+.brandStory::before{content:'';display:block;position:absolute;left:0;top:0;width:100%;height:860px;background:#296658}
+.brandStory .inner{padding:106px 0 103px}
+.brandStory.propertyList .infoCont .tit{font:500 30px/1.62 gothamM,notokrR;letter-spacing:-.01em}
+.brandStory.propertyList .infoCont .txt{display:block;margin-bottom:63px;padding-right:0}
+/* Brand(SIGNATURE) */
+.brand .titDep3{margin-bottom:54px;font:500 30px/1.8 gothamM,notokrR;letter-spacing:-.01em}
+/*.brandSignatureList{column-width:655px;column-gap: 90px;-webkit-column-width:655px;-webkit-column-gap: 90px}*/
+/*.brandSignatureList{display:flex;width:655px;height:1860px;flex-flow:column wrap}*/
+.brandSignatureList li{float:left;width:655px}
+.brandSignatureList li:nth-child(even){margin-left:90px}
+.brandSignatureList li:nth-of-type(3){margin-top:-260px}
+.brandSignatureList li:nth-of-type(5){margin-top:-165px}
+
+.brandSignatureList li:last-child .info{margin-bottom:0}
+.brandSignatureList .info {display:inline-block;margin-bottom:114px;width:655px;vertical-align:top}
+.brandSignatureList .info figure{position:relative;margin:0 0 22px;width:575px}
+.brandSignatureList .info .tit{display:block;margin-bottom:5px;font:500 20px/1.8 gothamM, notokrR;letter-spacing:-1px;text-transform:uppercase}
+.brandSignatureList .info .txt{display:block;width:655px;font-family:gothamL,'notokrL';}
+.brandSignatureList figure.thum > figcaption{position:absolute;top:0;right:-34px;transform:rotate(90deg) translateX(100%);transform-origin:right top;-ms-transform:rotate(90deg) translateX(100%);-ms-transform-origin:right top;/* IE 9 */color:#c28168;font:400 14px gothamL;letter-spacing:.2em}
+
+.brandSignatureList2 {display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;}
+.brandSignatureList2 li {-webkit-box-flex:1;-ms-flex:1 1 40%;flex:1 1 40%;}
+.brandSignatureList2 li:nth-child(even) {margin-left:40px;}
+.brandSignatureList2 .info {display:inline-block;margin-bottom:114px;width:680px;vertical-align:top}
+.brandSignatureList2 .info figure{position:relative;margin:0 0 22px;width:575px}
+.brandSignatureList2 .info .tit{display:block;margin-bottom:5px;font:500 20px/1.8 gothamM, notokrR;letter-spacing:-1px;text-transform:uppercase}
+.brandSignatureList2 .info .txt{display:block;width:680px;font-family:gothamL,'notokrL';}
+
+.btnHotelGo{position:fixed;bottom:40px;right:40px;font:14px/1 notokrM;padding:16px 20px 18px;background:#fff;border-radius:30px;box-shadow:0px 5px 10px 0px rgba(0, 0, 0, 0.15);z-index: 10}
+.btnHotelGo:hover{background:#72715c;color:#fff}
+.btnHotelGo:hover .btnArr:after{width:8px;height:14px;background:url(../../../images/ko/pc/common/ico_arr_white_7x13.png) no-repeat 0 0}
+/* Brand(그랜드 조선 제주) */
+/* Brand(레스케이프 호텔) */
+.brand.escape .brandSlogan>* {color:#b79d59}
+.brand.escape .brandSlogan .tit::before, .brand.escape .brandSlogan .tit::after{background:#b79d59}
+.brand.escape .brandSlogan .tit::before{width:360px}
+.brand.escape .brandSlogan .tit::after{width:1145px}
+.brand.escape .brandSignatureList figure.thum > figcaption{color:#b79d59}
+.brand.escape .brandStory::before{background:#b79d59}
+.brand.escape .brandSignatureList li:nth-of-type(3){margin-top:-226px}
+.brand.escape .brandSignatureList li:nth-of-type(5){margin-top:-258px}
+
+/* Brand(서울 웨스틴조선호텔) */
+.brand.wstSeoul .brandSlogan>* {color:#6d494d}
+.brand.wstSeoul .brandSlogan .tit::before, .brand.wstSeoul .brandSlogan .tit::after{background:#6d494d}
+.brand.wstSeoul .brandSlogan .tit::before{width:0}
+.brand.wstSeoul .brandSlogan .tit::after{width:242px;left:inherit;right:234px;bottom:70px;position:absolute}
+.brand.wstSeoul .brandSlogan .txt{position:absolute;right:0;bottom:223px}
+.brand.wstSeoul .brandSignatureList figure.thum > figcaption{color:#676c72}
+.brand.wstSeoul .brandStory::before{background:#676c72}
+.brand.wstSeoul .brandSignatureList li:nth-of-type(3){margin-top:-258px}
+
+/* Brand(부산 웨스틴조선호텔) */
+.brand.wstBusan .brandSlogan>* {color:#374767}
+.brand.wstBusan .brandSlogan .tit::before, .brand.wstBusan .brandSlogan .tit::after{background:#374767}
+.brand.wstBusan .brandSlogan .tit::before{width:527px}
+.brand.wstBusan .brandSlogan .tit::after{width:805px}
+.brand.wstBusan .brandSignatureList figure.thum > figcaption{color:#676c72}
+.brand.wstBusan .brandStory::before{background:#676c72}
+.brand.wstBusan .brandSignatureList li:nth-of-type(3){margin-top:-258px}
+
+/* Brand(포포인츠 바이 쉐라톤 서울 남산) */
+.brand.ppSeoul .brandSlogan>* {color:#6da4ab}
+.brand.ppSeoul .brandSlogan .tit::before, .brand.ppSeoul .brandSlogan .tit::after{background:#6da4ab}
+.brand.ppSeoul .brandSlogan .tit{letter-spacing:-1px}
+.brand.ppSeoul .brandSlogan .tit::before{width:175px}
+.brand.ppSeoul .brandSlogan .tit::after{width:875px}
+.brand.ppSeoul .brandSignatureList figure.thum > figcaption{color:#6da4ab}
+.brand.ppSeoul .brandStory::before{background:#00465d}
+.brand.ppSeoul .brandSignatureList li:nth-of-type(3){margin-top:-228px}
+
+/* Brand(포포인츠 바이 쉐라톤 서울 명동) */
+.brand.ppMyeongdong .brandSlogan>* {color:#3b90c6}
+.brand.ppMyeongdong .brandSlogan .tit::before, .brand.ppMyeongdong .brandSlogan .tit::after{background:#3b90c6}
+.brand.ppMyeongdong .brandSlogan .tit{letter-spacing:-1px}
+.brand.ppMyeongdong .brandSlogan .tit::before{width:325px}
+.brand.ppMyeongdong .brandSlogan .tit::after{width:505px}
+.brand.ppMyeongdong .brandSignatureList figure.thum > figcaption{color:#3b90c6}
+.brand.ppMyeongdong .brandStory::before{background:#1d5172}
+.brand.ppMyeongdong .brandSignatureList li:nth-of-type(3){margin-top:-228px}
+
+/* Brand(그래비티 판교) */
+.brand.gravity .brandSlogan>* {color:#000}
+.brand.gravity .brandSlogan .tit::before, .brand.gravity .brandSlogan .tit::after{background:#000}
+.brand.gravity .brandSlogan .tit{letter-spacing:-1px}
+.brand.gravity .brandSlogan .tit::before{width:200px}
+.brand.gravity .brandSlogan .tit::after{width:840px}
+.brand.gravity .brandSignatureList figure.thum > figcaption{color:#000}
+.brand.gravity .brandStory::before{background:#000}
+.brand.gravity .brandSignatureList li:nth-of-type(3){margin-top:-322px}
+.brand.gravity .brandSignatureList li:nth-of-type(5){margin-top:-322px}
+
+/* Brand(조선 팰리스 서울 강남) */
+.brand.palace .brandSlogan>* {color:#c0a75a}
+.brand.palace .brandSlogan .tit::before, .brand.palace .brandSlogan .tit::after{background:#c0a75a}
+.brand.palace .brandSlogan .tit{letter-spacing:-1px}
+.brand.palace .brandSlogan .tit::before{width:286px}
+.brand.palace .brandSlogan .tit::after{width:1207px}
+.brand.palace .brandSignatureList figure.thum > figcaption{color:#d19dae}
+.brand.palace .brandStory::before{background:#c0a75a}
+.brand.palace .brandSignatureList li:nth-of-type(3){margin-top:-322px}
+.brand.palace .brandSignatureList li:nth-of-type(5){margin-top:-322px}
+
+/* Brand(파라스파라 서울) */
+.brand.ppj .brandSlogan>* {color:#000}
+.brand.ppj .brandSlogan .tit::before, .brand.ppj .brandSlogan .tit::after{background:#000}
+.brand.ppj .brandSlogan .tit{letter-spacing:-0.03em; font-size:100px; }
+.brand.ppj .brandSlogan .tit::before{width:940px; top:82px;}
+.brand.ppj .brandSlogan .tit::after{width:850px}
+.brand.ppj .brandSignatureList figure.thum > figcaption{color:#000}
+.brand.ppj .brandStory::before{background:#48655B}
+.brand.ppj .brandSignatureList li:nth-of-type(3){margin-top:-322px}
+.brand.ppj .brandSignatureList li:nth-of-type(5){margin-top:-322px}
+
+/* Brand(양양호텔) */
+.brand.corallo .brandSlogan>* {color:#E1625E}
+.brand.corallo .brandSlogan .tit::before, .brand.corallo .brandSlogan .tit::after{background:#E1625E}
+.brand.corallo .brandSlogan .tit{letter-spacing:-1px; font-size:100px; }
+.brand.corallo .brandSlogan .tit::before{width:200px; top:82px;}
+.brand.corallo .brandSlogan .tit::after{width:990px}
+.brand.corallo .brandSignatureList figure.thum > figcaption{color: #E1625E}
+.brand.corallo .brandStory::before{background: #E1625E}
+.brand.corallo .brandSignatureList li:nth-of-type(3){margin-top:-322px}
+.brand.corallo .brandSignatureList li:nth-of-type(5){margin-top:-322px}
+
+
+/* 고객센터 */
+textarea.noLine{height:115px;border:0;border-bottom:1px solid #ccc}
+.fileUpload{position:relative}
+.fileUpload>.btnSC.btnM{position:absolute;top:5px}
+.ctmService .lnb.ctmType li.on a{font:600 18px/38px gothamL}
+.ctmService .lnb.ctmType li a{font:400 18px/38px gothamL}
+.ctmService .txtBox{position:relative;background:#f9f9f9;padding:40px 30px}
+.ctmService .txtBox .txt{font:400 18px/1 notokrL}
+.ctmService .txtBox button,
+.ctmService .txtBox a{position:absolute;top:50%;right:30px;margin-top:-25px;padding: 0 60px 0 20px}
+.ctmService .txtBox button.icoArr::after,
+.ctmService .txtBox a.icoArr::after{content:'';display:block;position:absolute;right:20px;top:50%;transform:translateY(-50%);width:7px;height:13px;background:url(../../../images/ko/pc/common/ico_arr_7x13.png) no-repeat 0 0;margin-top:0}
+.ctmService .txtBox+.frmInfo{margin-top:65px}
+.ctmService .selectWrapBox .selectWrap+.selectWrap{margin-left:25px}
+.ctmService .searchBox+.tabType01{margin-top:80px}
+.ctmService .searchBox .selectWrap+.intWord{margin:0 0 0 40px;display:inline-block}
+
+.tabFaqType{margin-top:35px}
+.tabFaqType .toggleList .titArea{display:table;width:100%;padding:19px 20px 20px}
+.tabFaqType .toggleList > li{padding:0}
+.tabFaqType .toggleList > li .toggleCont .toggleInner{background:#f9f9f9;padding:55px 105px 55px 172px;font-size:16px}
+.tabFaqType .toggleList .titArea{padding:19px 20px 20px 0}
+.tabFaqType .toggleList .titArea .listTit{display:table-cell;width:145px;padding:0 20px;text-align:center;box-sizing:border-box;font-size:18px}
+.tabFaqType .toggleList .titArea .opValue{display:table-cell;width:auto;font-size:18px;line-height:inherit;padding:0 50px 0 25px;word-break:break-all}
+.boldTxt{font-weight:600;text-decoration: underline}
+.tabFaqType .rsvList > li.toggleOn{border-top-color:#ccc}
+
+.shareLayer{width:700px}
+.shareLayer .shareCont{margin:0 auto;width:400px}
+.shareLayer .shareCont ul{display:table;width:100%;table-layout:fixed}
+.shareLayer .shareCont ul > li{display:table-cell;width:100%;text-align:center}
+.shareLayer .shareCont ul > li > a{display:block;font-size:16px}
+.shareLayer .shareCont ul > li > a:before{content:'';display:block;width:66px;height:66px;margin:0 auto 10px;background:url(../../../images/ko/pc/common/ico_share.png) no-repeat 0 0}
+.shareLayer .shareCont ul > li.kakao > a:before{background-position:0 0}
+.shareLayer .shareCont ul > li.email > a:before{background-position:-66px 0}
+.shareLayer .shareCont ul > li.url > a:before{background-position:-132px 0}
+
+/* josun junior */
+.juniorCont{margin-top:110px}
+.juniorCont .inner{padding-bottom:0}
+.juniorCont .propertyInfo{margin:75px 0 0}
+.juniorCont .propertyInfo li{width:482px}
+.juniorCont .propertyInfo li:last-child{width:428px}
+.juniorCont .propertyInfo li:last-child dl{padding-right:0}
+.juniorCont .propertyInfo li dl{padding:0 60px 0 0}
+.juniorCont .propertyInfo li dl dt{font-size:20px}
+.juniorCont .propertyInfo li dl dd{text-overflow:initial;-webkit-line-clamp:inherit}
+.juniorCont .propertyInfo li dl dd .txtGuide{margin-top:10px}
+.juniorCont .grayBox{margin-top:120px}
+.juniorCont .grayBox .inner{padding-bottom:120px}
+.juniorCont .grayBox .tit{margin-bottom:15px}
+.juniorCont .pdb180{padding-bottom:180px}
+
+/* csr hotline 제보 추가 */
+.subject{display:inline-block;}
+.subject + .subject{margin-left:25px;}
+.noLine.type2{height:180px;}
+.frmInfo.tip{margin-bottom:42px;}
+.f40{font-size:40px;font-weight:bold;text-align:center;letter-spacing:-.05em}
+.txtResult02{padding:50px 0 10px;font-size:30px;font-weight:bold;line-height:50px;letter-spacing:-.025em;text-align:center}
+.txtBox02{background-color:#f9f9f9; padding:40px 30px; text-align:center;}
+.txtBox02 .txtResult{padding:50px 0 10px;font-size:30px;font-weight:600;line-height:50px;letter-spacing:-.025em;text-align:center}
+.txtBox02 .txtGuide02{position:relative;display:inline-block;color:#444;padding-left:16px;font:16px gothamL, notokrL, playfair;letter-spacing:-.01em;margin-top:25px;}
+p.txtGuide02:before{content:'＊';position:absolute;left:0;top:4px;font:600 15px gothamL}
+.txtGuide02 li + li{margin-top:6px}
+.btnArea.tip{margin:42px 0 50px}
+
+.tipView_list_wrap{}
+.tipView_list{}
+.tipView_list > li{width:100%; border-bottom:1px solid #ccc; padding:70px 0 60px}
+.tip-left{display:inline-block; width:330px; padding:0 0 0 54px; vertical-align:top}
+.tip-left h4{font-size:32px;font-weight:600;}
+.tip-right{display:inline-block;}
+.tip-info{display:inline-block;width:80px;font-weight:600;}
+.txtGuide.tip{margin-top:32px;}
+
+.btnArr_wrap{margin:32px 0 0 0;}
+.btnArr_wrap .btnArr + .btnArr{margin-left:25px;}
+
+/* offers 추가 */
+.josunOffers-hub .mainArea06{background:#efefef;}
+.josunOffers-hub .inner{}
+.josunOffers-hub .inner .icoArr{font:400 16px gothamM;margin-left:130px}
+.josunOffers-hub .inner .swipeWrapArea{position:relative;margin-top:30px}
+.josunOffers-hub .inner .swipeWrap{width:1170px;margin:0 auto}
+.josunOffers-hub .inner .swipeCont{margin-left:15px}
+.josunOffers-hub .inner .thum{position:relative;width:360px;height:249px;overflow:hidden}
+.josunOffers-hub .inner .thum img{width:360px;height:249px}
+.josunOffers-hub .inner .thum a{color:#fff}
+.josunOffers-hub .inner .thum .hoverCont{position:absolute;left:0;top:0;width:360px;height:250px}
+.josunOffers-hub .inner .thum .hoverCont a{opacity:0}
+.josunOffers-hub .inner .thum:hover{cursor:pointer}
+.josunOffers-hub .inner .thum:hover .hoverCont, .josunOffers-wb .inner .thum .hoverCont[tabindex="0"] {display:block;background:#797864;opacity:.8;z-index:1}
+.josunOffers-hub .inner .thum:hover .hoverCont a, .josunOffers-wb .inner .thum .hoverCont a:focus{position:absolute;left:50%;top:50%;margin:-30px 0 0 -96px;border:1px solid #fff;background:transparent;z-index:1}
+.josunOffers-hub .inner .thum .hoverCont.on a{opacity:1}
+.josunOffers-hub .inner .swipeSlide:last-child{margin:0}
+.josunOffers-hub .inner .swipeSlide > *{display:block}
+.josunOffers-hub .inner .swipeSlide .tit{display:-webkit-box;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:2;-webkit-box-orient:vertical;font:400 26px playfair;margin-top:20px;height:70px;width:360px;word-break:break-word}
+.josunOffers-hub .inner .swipeSlide .txt{font-size:16px;color:#333;margin-top:7px;width:360px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap}
+.josunOffers-hub .inner .swipeSlide .date{font:400 16px gothamL;color:#333;margin-top:5px}
+.josunOffers-hub .inner .locationTag{display:inline-block;position:relative;margin-top:40px}
+.josunOffers-hub .inner .btnPrev{left:0}
+.josunOffers-hub .inner .btnNext{right:0;left:inherit}
+
+.etc{margin-top:20px;font:500 14px/1.8 gothamM;color:#ba998c;text-transform:uppercase}
+[tabindex="0"]:focus{outline:none}
+.btnSwipe{position:absolute;top:50%;margin-top:-33px;width:66px;height:66px;background:url(../../../images/ko/pc/common/btn_swipe_66x66.png) no-repeat;z-index:2}
+.btnPrev{left:0px;background-position:0 0}
+.btnNext{left:0px;background-position:-66px 0}
+
+/* ESG */
+.tabCont.esgArea {padding-top:55px; margin-left:486px;}
+.tabCont.esgArea .tabInner .tabTit {font:500 40px gothamM,notokrM; text-align:center; margin-bottom:60px;}
+.tabCont.esgArea .tabInner .tabTit.left {text-align:left;}
+.tabCont.esgArea .tabInner .tabTit.smBot {margin-bottom:20px;}
+.tabCont.esgArea .tabInner > .tit, .tabCont.esgArea .anInfo > .tit {font:500 30px gothamM, notokrM; display:block; text-align:center; margin-bottom:20px;}
+.tabCont.esgArea .tabInner > .tit.left, .tabCont.esgArea .anInfo >.tit.left{text-align:left;}
+.tabCont.esgArea .tabInner > .tit.green {color:#008e6d;padding-top:20px;}
+.tabCont.esgArea .tabInner > .txt {font-size:20px; line-height:1.75;}
+.tabCont.esgArea .centerimg {text-align:center;}
+.tabCont.esgArea .centerimg.echo {padding-top:60px;}
+.tabCont.esgArea .centerimg.ethics {padding:80px 0 50px  }
+.tabCont.esgArea .missionList{padding:0px 0 0 25px; display:flex;flex-wrap:wrap}
+.tabCont.esgArea .missionList .list {margin-right:30px}
+.tabCont.esgArea .missionList .list:last-child {margin-right:0;}
+.tabCont.esgArea .anInfo {padding-top:87px;}
+.tabCont.esgArea .anInfo.nopdtop {padding-top:0}
+.tabCont.esgArea .anInfo.subTXT {padding-top:72px;}
+.tabCont.esgArea .anInfo.subTXT .tit {font-size:20px; margin-bottom:15px;}
+.tabCont.esgArea .missionList .txt {margin:30px auto 0; }
+.tabCont.esgArea .missionList .txt.t01{width:160px}
+.tabCont.esgArea .missionList .txt.t02{width:235px}
+.tabCont.esgArea .missionList .txt.t03{width:200px}
+.tabCont.esgArea .missionList .txt li {font-size:20px; line-height:1.75;}
+.tabCont.esgArea .bottom_ms {display:inline-block; width:100%; padding:15px 0; border:1px solid #b2b2b2;margin-top:50px;}
+.tabCont.esgArea .bottom_ms li {font-size:20px; line-height:1.75; text-align:center; width:50%; float:left;}
+.tabCont.esgArea .bottom_ms li + li {border-left:1px solid #b2b2b2;}
+.tabCont.esgArea .businessRoomList {margin:0px 0 0; width:912px;}
+.tabCont.esgArea .businessRoomList.margintop {margin-top:50px;}
+.tabCont.esgArea .businessRoomList > li:nth-child(n+3) .info {margin-top:0;}
+.tabCont.esgArea .businessRoomList > li:nth-child(odd) .info,.tabCont.esgArea .businessRoomList > li:nth-child(even) .info {padding:0;}
+.tabCont.esgArea .businessRoomList > li:nth-child(3),.tabCont.esgArea .businessRoomList > li:nth-child(4) {margin-top:50px;}
+.tabCont.esgArea .businessRoomList .thum {width:100%; height:296px; background:#eee; display:inline-block;}
+.tabCont.esgArea .businessRoomList > li .info{width:427px}
+.tabCont.esgArea .businessRoomList > li:nth-child(odd) .info{padding-right:29px}
+.tabCont.esgArea .businessRoomList > li:nth-child(even) .info{padding-left:29px}
+.tabCont.esgArea .businessRoomList > li .tit {font-size:20px; font-weight:500;padding-top:15px; font-family:gothamM,notokrM; text-transform:initial;}
+.tabCont.esgArea .businessRoomList > li .txt {padding-top:5px;}
+.tabCont.esgArea .businessRoomList .dotTxt {padding-top:8px !important ;}
+.tabCont.esgArea .businessRoomList .dotTxt li {position:relative; padding-left:12px; line-height:1.6; margin-bottom:10px;}
+.tabCont.esgArea .businessRoomList .dotTxt li:before {content:''; display:inline-block; width:5px; height:1px; background:#666; position:absolute; top:14px;left:0; }
+.tabCont.esgArea .dotList .list p {font-size:18px; font-weight:400; font-family:notokrR;}
+.tabCont.esgArea .dotList .list .sub {padding-left:17px;padding-top:4px;}
+.tabCont.esgArea .dotList .list .sub li {color:#666666; font-size:18px; font-weight:300;}
+.tabCont.esgArea .dotList .list + .list {padding-top:35px;}
+.tabCont.esgArea .dotList.dot01 .list + .list {padding-top:25px;}
+.tabCont.esgArea .dotList.dot02 {padding-top:50px;}
+.tabCont.esgArea .dotList.dot01 .list {display:flex; }
+.tabCont.esgArea .dotList.dot01 .list p.li01{width:240px;}
+.tabCont.esgArea .dotList.dot01 .list p.li02{width:240px;}
+.tabCont.esgArea .dotList.dot01 .list p.li03{width:205px;}
+.tabCont.esgArea .martopNone {margin-top:0 !important}
+.tabCont.esgArea .traceArea {margin-top:80px}
+.tabCont.esgArea .traceArea .historyList {margin-left:0}
+.tabCont.esgArea .traceArea .historyList dt {font:500 18px/1.8 gothamM,notokrM}
+.tabCont.esgArea table {width:915px;}
+.tabCont.esgArea table tr:nth-child(1) td {border-top:1px solid #000}
+.tabCont.esgArea .tblH tbody tr td {border-left:0;}
+.tabCont.esgArea#tab05 .moretop {padding-top:120px;}
+.esgNewsList .titDep1 {font:400 60px playfair,notokrR;}
+.esgNewsList .aboutGallery .titArea {margin:20px 0 0;}
+.esgNewsList .aboutGallery .titArea h1 {font:500 20px gothamM, notokrR;line-height:1;width:100%; overflow:hidden;text-overflow:ellipsis;word-break:break-word;white-space:nowrap;font-feature-settings:'lnum','pnum'}
+.esgNewsList .aboutGallery .titArea p {padding-top:20px;font:300 18px notokrL;width:100%;line-height:1;overflow:hidden;text-overflow:ellipsis;word-break:break-word;white-space:nowrap;font-feature-settings:'lnum','pnum'}
+.esgNewsList .aboutGallery .thum {cursor:auto;}
+.layerCont .esgPopupArea{position:relative;width:1080px}
+.layerCont .esgPopupArea .compTit {margin-bottom:10px;}
+.layerCont .esgPopupArea .compTxt {font-size:20px; text-align:center;margin-bottom:60px;}
+.layerCont .esgPopupArea .scrollbar-wrap{margin-top:145px;padding:0}
+.layerCont .esgPopupArea table tr:nth-child(1) td {border-top:1px solid #000}
+.layerCont .esgPopupArea table tr td {padding:14px 16px;}
+.tabType04 button.esgnews {font-size:30px; color:#aaa; line-height:1.3; font-family:gothamB,notokrR}
+.tabCont.esgArea .divideLine {border-top:1px solid #ccc; margin-top:87px;}
+/* 230216 ESG 게시판 고도화 */
+.esgNewsList .topArea .topInner {padding:90px 0 82px}
+.esgNewsList .aboutGallery .thum {position:relative;}
+.esgNewsList .aboutGallery .thum .esgBadge {position:absolute; top:0; left:0;} 
+.esgBadge {display:inline-block;font-size:14px; min-width:116px; height:30px;text-align:center;color:#fff; line-height:29px;}
+.esgBadge.E01 {background:#005217;}/*친환경*/
+.esgBadge.E02 {background:#bb1b23 ;} /*사회공헌*/
+.esgBadge.E03 {background:#015dac;} /*가치소비여행*/
+.esgBadge.E04 {background:#000;} /*윤리경영*/
+.detailView .esgBadge {margin-bottom:10px;}
+.detailView>.tit.esg {position:relative;padding-right:100px;word-break:keep-all;}
+.detailView>.tit.esg .detailDate {position:absolute; right:0; top:34px; font-family:'gothamL'; font-size:20px;}
+
+
+/* 221019 쓱데이 이벤트 팝업 */
+.layerPop.ssgdayevent .layerCont {padding:70px;width:700px;}
+.layerPop.ssgdayevent .txtConfirm {width:100%; text-align:center;display:block;font:500 20px notokrR;letter-spacing:-.01em; line-height:1.5;}
+.layerPop.ssgdayevent .txt {text-align:center;margin-top:10px;}
+.layerPop.ssgdayevent .tit {display:block;font:500 34px/1.25 notokrR;text-align:center;margin-bottom:30px}
+.layerPop.ssgdayevent .ssgdaybtn {background-color:#ff7373 !important; color:#fff !important; border-color:#ff7373; font-weight:bold;}
+.layerPop.ssgdayevent .ssgdaybtn:hover{color:#ff7373 !important}
+.layerPop.ssgdayevent .aniTxt1, .ssgdayevent .aniTxt2, .ssgdayevent .aniTxt3 {
+	opacity:0;
+	-webkit-animation:subTitAni 0.5s ease-in-out both;
+    -moz-animation:subTitAni 0.5s ease-in-out both;
+    -ms-animation:subTitAni 0.5s ease-in-out both;
+    -o-animation:subTitAni 0.5s ease-in-out both;
+    animation:subTitAni 0.5s ease-in-out both;
+}    
+.layerPop.ssgdayevent .aniTxt2{
+	-webkit-animation-delay:0.3s;
+    -moz-animation-delay:0.3s;
+    -ms-animation-delay:0.3s;
+    -o-animation-delay:0.3s;
+    animation-delay:0.3s;
+}
+.layerPop.ssgdayevent .aniTxt3{
+	-webkit-animation-delay:0.6s;
+    -moz-animation-delay:0.6s;
+    -ms-animation-delay:0.6s;
+    -o-animation-delay:0.6s;
+    animation-delay:0.6s;
+}
+
+@-webkit-keyframes subTitAni {
+    from{
+        opacity: 0;
+        visibility: hidden;
+        transform:translateY(30px);
+    }
+    to{
+        opacity: 1;
+        visibility: visible;
+        transform:translateY(0);
+    }
+}
+@-moz-keyframes subTitAni {
+    from{
+        opacity: 0;
+        visibility: hidden;
+        transform:translateY(30px);
+    }
+    to{
+        opacity: 1;
+        visibility: visible;
+        transform:translateY(0);
+    }
+}
+@-ms-keyframes subTitAni {
+    from{
+        opacity: 0;
+        visibility: hidden;
+        transform:translateY(30px);
+    }
+    to{
+        opacity: 1;
+        visibility: visible;
+        transform:translateY(0);
+    }
+}
+@-o-keyframes subTitAni {
+    from{
+        opacity: 0;
+        visibility: hidden;
+        transform:translateY(30px);
+    }
+    to{
+        opacity: 1;
+        visibility: visible;
+        transform:translateY(0);
+    }
+}
+@keyframes subTitAni {
+    from{
+        opacity: 0;
+        visibility: hidden;
+        transform:translateY(30px);
+    }
+    to{
+        opacity: 1;
+        visibility: visible;
+        transform:translateY(0);
+    }
+}
+
+/* 221123 식음예약페이지*/
+.drDining_st01.diningContainer {padding:30px 20px 0; border-top:1px solid #000;}
+.drDining_st01 .rCont .roomIntro .txt {padding-bottom:130px;}
+.drDining_st01 .rCont .roomIntro .info {position:relative;}
+.drDining_st01 .rCont .btnSC {margin-top:40px;}
+.drDining_st01 .listTit{font:400 22px gothamB,notokrL;padding-bottom:50px;display:block;}
+.drDining_st01 .selectWrap .ui-selectmenu-button{border:1px solid #ccc;padding:0 15px;height:50px;line-height:48px;font-size:16px}
+.drDining_st01 .selectWrap .ui-selectmenu-button:after {right:15px;}
+
+.drDining_st02 .lCont {min-height:540px !important;}
+.drDining_st02 .rCont {width:798px;}
+.drDining_st02 .chkValue{font-size:22px;font-family:gothamL,notokrL;letter-spacing:-.04em; border-bottom:1px solid #000;padding-bottom:5px;margin-bottom:70px;text-transform:uppercase;}
+.drDining_st02 .chkValue span {font-size:40px ;font-family: playfair, notokr;font-weight:400;}
+.drDining_st02 .chkValue span:first-child:before {display:none;}
+.drDining_st02 .chkValue span:before{content:'';display:inline-block;position:relative;top:3px;width:1px;height:35px;background:#000;margin:0 13px 0 15px}
+.drDining_st02 .calContainer.calSingle .calendar td.promotion a:after {display:none;}
+.drDining_st02 .calInner .calendar td.ui-datepicker-today a {background:#f9f9f9;}
+.drDining_st02 .selectWrap .ui-selectmenu-button{border:1px solid #ccc;padding:0 15px;height:50px;line-height:48px;font-size:16px}
+.drDining_st02 .selectWrap .ui-selectmenu-button:after {right:15px;}
+.drDining_st02 .tit {font-weight:400;color:#333;}
+.drDining_st02 .timeTit {font-size:17px; color:#333;font-weight:400; margin:24px 0 10px;display:block;}
+.drDining_st02 .timeSel .frmList .frmRadio label {font-size:17px; color:#000;width:152px;max-width:152px;height:45px;line-height:1; border-color:#000;}
+.drDining_st02 .frmList .frmRadio input[type=radio]:checked+label {background-color:#000;color:#fff;}
+.drDining_st02 .timeSel .frmList input[disabled]+label {background:#f9f9f9;border-color:#f0f0f0;color:#bbb;}
+.drDining_st02 .timeSel .frmList input[disabled]:checked+label {background:#f9f9f9;border-color:#f0f0f0;color:#bbb;}
+.drDining_st02 .emptyTime {font-size:17px;width:295px;height:45px;line-height:45px; text-align:center; background:#f9f9f9;border:1px solid #f0f0f0;color:#bbb;margin:18px 0 0 3px;} 
+.drDining_st02 .timeGuideWrap {text-align:right;padding-top:30px;}
+.drDining_st02 .timeGuideWrap li {display:inline-block;padding-left:26px;margin-left:24px;position:relative;}
+.drDining_st02 .timeGuideWrap li:before {content:''; display:block; width:15px; height:15px; position:absolute; left:0; top:9px; border:1px solid #fff;}
+.drDining_st02 .timeGuideWrap li.tg01:before {background:#000; border-color:#000;}
+.drDining_st02 .timeGuideWrap li.tg02:before {background:#f4f4f4; border-color:#f0f0f0;}
+.drDining_st02 .timeGuideWrap li.tg03:before {background:#fff; border-color:#000;}
+.drDining_st02 .selectInfoWrap {padding-top:60px;}
+.drDining_st02 .colorBox {background:#f9f9f9;  padding:67px 35px;margin-top:10px;}
+.drDining_st02 .selectInfo {display:flex;justify-content:center;}
+.drDining_st02 .selectInfo div + div {padding-left:24px;margin-left:25px;position:relative;}
+.drDining_st02 .selectInfo div + div:before {content:""; display:block; width:1px;height:18px; background:#ccc; position:absolute; bottom:10px; left:0;}
+.drDining_st02 .selectInfo p {color:#333; font:17px notokrM; padding-bottom:10px;}
+.drDining_st02 .selectInfo em {font-size:20px; font-family:gothamL,notokrL;}
+.drDining_st02 .manualInfoWrap {border-top:1px solid #ddd; margin-top:20px;padding-top:25px; text-align:center;}
+.drDining_st02 .manualInfoWrap .txtWrap {display:inline-block; text-align:left;}
+.drDining_st02 .manualInfoWrap strong {color:#989442;font-size:17px; line-height:30px;display:inline-block; font-family:notokrR;}
+.drDining_st02 .manualInfoWrap .order_txt {font-size:16px; line-height:1; font-weight:300;margin-top:15px;}
+.drDining_st02 .manualInfoWrap .txtGuide {margin-top:5px;}
+.drDining_st02 .btnArea {margin-top:120px;}
+.drDining_st02 .allTimeSwitch {display:block;height:29px; line-height:29px;float:right;}
+.drDining_st02 .allTimeSwitch span {display:inline-block; vertical-align:middle;font-size:17px;}
+.drDining_st02 .allTimeSwitch [type="checkbox"] {
+  appearance: none;
+  position: relative;
+  border: max(2px, 0.1em) solid #bbb;
+  border-radius: 1.25em;
+  width: 46px;
+  height: 27px;
+  background:#bbb;
+  margin-top:3px;
+  cursor:pointer;
+}
+.drDining_st02 .allTimeSwitch [type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  transform: scale(0.8);
+  background-color: #fff;
+  transition: left 250ms linear;
+}
+.drDining_st02 .allTimeSwitch [type="checkbox"]:checked {background-color: #000;border-color: #000;}
+.drDining_st02 .allTimeSwitch [type="checkbox"]:checked::before {background-color: #fff; left: 18px;}
+.drDining_st02 .allTimeSwitch [type="checkbox"]:focus-visible {
+  outline-offset: max(2px, 0.1em);
+  outline: max(2px, 0.1em) solid #000;}
+
+.drDining_st02 .groupPerson {text-align:center;padding:120px 0;}
+.drDining_st02 .groupPerson .txt {color:#666; font-size:17px; display:inline-block; background:#f3f3f3; padding:15px 30px;}
+
+.drDining_st03 .rsvRoomWrap {position:relative;}
+.drDining_st03 .chkValue{font-size:22px;font-family:gothamL,notokrL;letter-spacing:-.04em;text-transform:uppercase;}
+.drDining_st03 .chkValue span {font-size:40px ;font-family: playfair, notokr;font-weight:400;}
+.drDining_st03 .chkValue span:first-child:before {display:none;}
+.drDining_st03 .chkValue span:before{content:'';display:inline-block;position:relative;top:3px;width:1px;height:35px;background:#000;margin:0 13px 0 15px}
+.drDining_st03 .chkValue_prev {border-bottom:1px solid #000;margin-bottom:90px;display:inline-block; width:100%;padding-bottom:20px;}
+.drDining_st03 .chkValue_prev .leftInfo {float:left;}
+.drDining_st03 .chkValue_prev .rightInfo {float:right;}
+.drDining_st03 .leftInfo span {color:#333;display:inline-block;padding-right:16px; margin-right:16px;position:relative; font-family:gothamL, notokrL}
+.drDining_st03 .leftInfo span:last-child {padding-right:0;margin-right:0;}
+.drDining_st03 .leftInfo span:after {content:''; display:inline-block; width:1px;height:17px; background:#333; position:absolute; right:0; top:8px;}
+.drDining_st03 .leftInfo span:last-child:after {display:none;}
+.drDining_st03 .rightInfo strong {font-size:22px; font-weight:300;display:inline-block; vertical-align:top;padding-top:3px;}
+.drDining_st03 .rightInfo .chkTime {display:inline-block; width:105px; height:45px; background:#000; color:#fff;font-size:17px; font-family:gothamL;text-align:center; line-height:45px;margin-left:10px;}
+.drDining_st03 .rsvRoomWrap .lCont {padding:0 20px;}
+.drDining_st03 .rsvRoomWrap .rCont .totalCont .totalPrice {padding:40px 0 30px}
+.drDining_st03 .addOption .numPeople button[disabled] {background-color:#fff;}
+.drDining_st03 .addOption .numPeople button.btnDown[disabled]:before {background:url(../../../images/ko/pc/common/ico_down_disabled.png) no-repeat 50% 50%}
+.drDining_st03 .addOption .numPeople button.btnUp[disabled]:before {background:url(../../../images/ko/pc/common/ico_up_disabled.png) no-repeat 50% 50%}
+.drDining_st03 .listTit {color:#333;font-size:20px;font-family:notokrM}
+.drDining_st03 .intWrap.top {margin-top:10px;}
+.drDining_st03 .rsvDingList + .rsvDingList {margin-top:50px;}
+.drDining_st03 .rsvRoomWrap .lCont .intWrap {margin-top:22px;}
+.drDining_st03 .verifiCode {margin-top:20px;}
+.drDining_st03 .verifiCode .intArea{position:relative;}
+.drDining_st03 .verifiCode .intArea .vertifiTime {position:absolute; right:0; top:0; font-family:gothamL;}
+.drDining_st03 .verifiCode .btnArea {margin-top:0; vertical-align:bottom;}
+.drDining_st03 .verifiCodeBtn {width:150px; height:45px; line-height:45px; margin-left:15px;min-width:150px;padding:0;font-size:17px;}
+.drDining_st03 .intList > li .txtGuide + .txtGuide {margin-top:5px;}
+.drDining_st03 .intList > li .intInner.requestArea {display:block;}
+.drDining_st03 .intList > li .intInner.requestArea input {width:100%; font-size:16px;}
+.drDining_st03 .notiContainer {margin-top:52px;}
+.drDining_st03 .notiContainer .titDep3 {margin-top:50px;}
+.drDining_st03 .boxNotice {padding:40px; border:1px solid #eee; margin-top:70px;}
+.drDining_st03 .boxNotice .titDep3 {margin-top:0;}
+.drDining_st03 .boxNotice li{position:relative; padding-left:10px; color:#666; font-size:16px; margin-top:3px;}
+.drDining_st03 .boxNotice li:before {content:'';display:block;width:3px; height:3px; border-radius:50%; background:#000;position:absolute; left:0; top:14px;}
+.drDining_st03 .visitorWrap {margin-top:50px;}
+.drDining_st03 .toggleListAll li{border-bottom:0;}
+.drDining_st03 .toggleListAll .clickBtn {position:relative; cursor:pointer; padding:18px 20px 19px;border-bottom:1px solid #ccc;}
+.drDining_st03 .toggleListAll .btnToggle{position:relative;right:auto;top:auto;width:100%;height:auto;overflow:visible;text-indent:0}
+.drDining_st03 .toggleListAll .btnToggle:before {display:none;}
+.drDining_st03 .toggleListAll .clickBtn:before{content:'';position:absolute;right:20px;top:23px;display:block;width:18px;height:10px;padding:5px 0;background:url(../../../images/ko/pc/common/ico_toggle_18x10.png) no-repeat 0 5px}
+.drDining_st03 .toggleListAll .toggleOn .clickBtn:before{background-position:-18px 5px}
+.drDining_st03 .toggleListAll > li .toggleCont input[type=text] {height:60px;padding:8px 13px 8px 0;padding:7px 13px 9px 0\0IE;color:#000;border:solid #ccc;border-width:0 0 1px 0;vertical-align:middle;font-size:18px;font-family:gothamL,notokrL}
+.drDining_st03 .toggleListAll .intList > li .requestArea input {font-size:16px;}
+.drDining_st03 .frm.type03 .label{display:inline-block;position:relative;font-size:18px;padding-left:33px;font-family: gothamL,notokrL;text-transform:uppercase}
+.drDining_st03 .frm.type03 .label:before{content:'';display:block;position:absolute;left:0;top:9px;width:18px;height:13px;background:url(../../../images/ko/pc/common/spr_form.png) no-repeat;background-position:0 0}
+.drDining_st03 .frm.type03 input[type=checkbox]:checked+.label:before {background-position:-18px 0}
+.drDining_st03 .rev_member_info {font-family:gothamL, notokrL;color:#222;}
+.drDining_st03 .toggleList > li .toggleCont .selectWrap {height:60px;}
+.drDining_st03 .toggleList > li .toggleCont .selectWrap .ui-selectmenu-button {height:60px; border:0; border-bottom:1px solid #000}
+
+/*비회원/영문회원 추가*/
+.drDining_st03 .emailInp.eng input[type=text] {height:50px;}
+.drDining_st03 .emailInp.eng .btnArea {margin-top:0;}
+.drDining_st03 .emailInp.eng .verifiCodeBtn {width:160px; height:50px; line-height:50px;margin:0; margin-left:15px;min-width:150px;padding:0;font-size:17px;} 
+.drDining_st03 .emailInp.eng .selectWrap {height:50px;}
+.drDining_st03 .emailInp.eng .selectWrap .ui-selectmenu-button {height:50px; line-height:48px;}
+.drDining_st03 .verifiCode.eng  .verifiCodeBtn {width:160px; height:50px; line-height:50px;margin:0; margin-left:15px;min-width:150px;padding:0;font-size:17px;}
+.drDining_st03 .visitorWrap.eng {margin-top:40px;}
+/* // 비회원/영문회원 추가*/
+
+.drDining_st04.commWrap .commlist {padding:0;}
+
+.drDiningMypage h2.titDep2 {font:40px/.68 playfair,notokrL;margin-bottom:36px;}
+.drDiningMypage h3.titDep3 {position:relative; }
+.drDiningMypage h3.titDep3.line {border-bottom:1px solid #000; padding-bottom:30px;}
+.drDiningMypage .btnModify{position:absolute;top:10px;right:0;padding:5px 0;text-align:center;border:1px solid #000;background:#000;color:#fff;width:120px;font-size:16px;top:8px;}
+.drDiningMypage .btnPrint {font-size:17px;top:-3px;}
+.drDiningMypage .btnModify, .drDiningMypage .btnPrint {height:40px; line-height:1;}
+.drDiningMypage .total{border-top:0;border-bottom:1px solid #ccc;}
+
+.layerPop .drDiningCancel .total {border-top:0;}
+.drDiningCancel .cancelArea {margin-top:40px;}
+.drDiningCancel .cancelArea .canceltxt {color:#aaa;font-size:16px; line-height:24px;padding-top:5px;}
+.drDiningCancel .cancelArea input {width:100%;}
+
+.drDiningMypage .intList > li .intInner.requestArea {display:block;}
+.drDiningMypage .intList > li .intInner.requestArea input {width:100%; font-size:16px;}
+.drDiningMypage.myContents .reserveInfo .titDep4 {text-transform:uppercase;}
+.drDiningMypage.myContents .reserveInfo .titDep4.st02 {color:#aaa;}
+.drDiningMypage.myContents .reserveInfo .titDep4.st03 {color:#b01414;}
+
+/* 221129 식음예약페이지 - 비회원로그인*/
+.loginFrm3 {position:relative; margin-bottom:27px;}
+.drDiningPhBtn {font-size:17px; height:65px;width:220px;margin-left:4px;}
+.drLoginCode .vertifiTime {position:absolute; top:16px; right:16px;font-family:gothamL;}
+.drLoginCode {display:none;} 
+.drLoginCode.ok {display:block;}
+
+/* 221220 식음예약페이지 - 테이블/메뉴/세트선택 팝업*/
+.diningSelectPop .layerCont {width:1080px; left:50%; top:50%; transform:translate(-50%, -50%); padding:50px 50px 70px 70px;margin:0 !important;}
+.diningSelectPop .compTit {text-align:left; position:relative;margin-right:20px;}
+.diningSelectPop .rightInfo {position:absolute; top:-6px; right:0;}
+.diningSelectPop .rightInfo strong {font-size:16px; font-weight:300;font-family:'notokrL';display:inline-block;}
+.diningSelectPop .rightInfo .chkTime {display:inline-block; width:105px; height:45px; background:#000; color:#fff;font-size:17px; font-family:gothamL;text-align:center; line-height:45px;margin-left:10px;}
+.diningSelectPop .btnArea a {width:140px; height:50px;font-size:17px; line-height:48px;}
+.diningSelectPop .btnArea {margin-top:40px;}
+.diningSelectPop .compLayer {padding:20px 0 10px; }
+.diningSelectPop .dnSelectBox + .dnSelectBox {margin-top:50px;}
+.diningSelectPop .dnSelectBox .boxTit {font-size:24px; font-family:'notokrR';margin-bottom:30px;}
+.diningSelectPop .dnSelectBox .boxTit.sSelects {margin-bottom:0;}
+.diningSelectPop .frmList .frmRadio label {width:227px;max-width:227px;padding:10px;}
+.diningSelectPop .frmList input[disabled]+label {background:#f9f9f9;border-color:#f0f0f0;color:#bbb;}
+.diningSelectPop .frmList input[disabled]:checked+label {background:#f9f9f9 !important;border-color:#f0f0f0 !important;color:#bbb !important;}
+.diningSelectPop .menuSelcet {display:table; width:100%;}
+.diningSelectPop .menuSelcet li {display:inline-block; width:50%; vertical-align:middle;padding-bottom:20px;}
+.diningSelectPop .menuSelcet li:nth-child(2n){padding-left:15px;}
+.diningSelectPop .menuSelcet li:nth-child(2n+1){padding-right:15px;}
+.diningSelectPop .menuSelcet_li {display:flex; align-items:center;justify-content:space-between}
+.diningSelectPop .menuSelcet.type02 .txt {width:165px; line-height:25px; letter-spacing:-1px;position:relative;padding-right:15px;vertical-align:middle;}
+.diningSelectPop .menuSelcet.type02 .txt:after {content:'';position:absolute;top:50%;right:0;width:1px;height:16px;margin-top:-8px;background:#ccc}
+.diningSelectPop .menuSelcet.type02 .numPeople {width:115px;}
+.diningSelectPop .menuSelcet.type02 .numPeople span {width:53px;padding:0;font-size:20px;}
+.diningSelectPop .menuSelcet.type02 li {vertical-align:top;}
+.diningSelectPop .menuSelcet.type02 .menuSelcet_li {height:50px;}
+.diningSelectPop .menuSelcet.type02.badge_all li {padding-top:10px;}
+.diningSelectPop .menuSelcet.type02 .add_Description {color:#888; font-size:14px;line-height:18px;margin-bottom:15px;letter-spacing:-0.01em;
+overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height:36px;
+  }
+.diningSelectPop .menuSelcet_li .price{display:inline-block;font-family:gothamL,notokrL; width:calc(100% - 315px); text-align:right;letter-spacing:-0.8px;}
+.diningSelectPop .numPeople button:before {width:32px; height:32px;}
+.diningSelectPop .tblV {padding-bottom:15px;border-top:0;}
+.diningSelectPop .tblV tr th,.diningSelectPop  .tblV tr td {font-size:18px;padding:15px 0;line-height:1;border-bottom:0;}
+.diningSelectPop .tblV tr td.person {text-align:center;border-left:0;}
+.diningSelectPop .tblV tr td.price {text-align:right;border-left:0;}
+.diningSelectPop .tblV tr th, .diningSelectPop .tblV tr td {border-top:1px solid #ddd;}
+.diningSelectPop .total {padding:40px 0 30px;}
+.diningSelectPop .dnSelectScroll {max-height:calc(80vh - 180px); overflow:hidden; overflow-y:scroll;padding-right:20px;}
+.diningSelectPop .dnSelectScroll::-webkit-scrollbar {width: 3px;}
+.diningSelectPop .dnSelectScroll::-webkit-scrollbar-thumb {background-color: #aaa;}
+.diningSelectPop .frm.type02 label {padding-left:36px;}
+.diningSelectPop .frm.type02 label:before {width:26px; height:26px;top:50%;transform:translateY(-50%);}
+.diningSelectPop .frm input[type=radio]+label:before {background:url(../../../images/ko/pc/common/dnpop_check_off.png) no-repeat;}
+.diningSelectPop .frm input[type=radio]:checked+label:before {background:url(../../../images/ko/pc/common/dnpop_check_on.png) no-repeat;}
+.diningSelectPop .menuSelcet.type01 .txt {width:280px; line-height:25px; letter-spacing:-1px;position:relative;padding-right:16px;margin-right:13px;vertical-align:middle}
+.diningSelectPop .menuSelcet.type01 .txt:after {content:'';position:absolute;top:50%;right:0;width:1px;height:16px;margin-top:-8px;background:#ccc}
+.diningSelectPop .manualInfoWrap {padding-bottom:50px;}
+.diningSelectPop .manualInfoWrap strong {color:#989442;font-size:17px; line-height:30px;display:inline-block; font-family:notokrR;}
+.diningSelectPop .manualInfoWrap .order_txt {font-size:16px; line-height:1; font-weight:300;margin-top:15px;}
+.diningSelectPop .manualInfoWrap .txtGuide {margin-top:8px;}
+
+.topArea .manualInfoWrap {margin-top:20px;text-align:center;}
+.topArea .manualInfoWrap strong {color:#989442;font-size:20px; line-height:30px;display:inline-block; font-family:notokrR;}
+.topArea .manualInfoWrap .order_txt {line-height:1; font-weight:300;margin-top:15px;}
+.topArea .manualInfoWrap .txtGuide {margin-top:5px;display:inline-block;}
+
+.diningSelectPop .menuSelcet.type02 .badge_type {position:absolute; top:-23px; left:0;background:#989442; color:#fff; display:inline-block; min-width:33px; padding:0 10px; height:20px; line-height:20px; font-size:14px; text-align:center;letter-spacing:0;}
+.diningSelectPop .menuSelcet .badge_txt {position:absolute; top:-23px; left:0; color:#989442; display:inline-block; height:20px; line-height:20px; font-size:14px;letter-spacing:0;}
+.diningSelectPop .menuSelcet.badge_all li {padding-top:20px;}
+.diningSelectPop .dnSelectBox.addMenu {margin-top:30px; background:#f9f9f9;padding:30px;}
+.diningSelectPop .addMenu .menuSelcet.type02 .txt {font-size:16px;width:150px; padding-right:10px;}
+.diningSelectPop .addMenu .menuSelcet_li .price {font-size:16px;width:calc(100% - 292px);}
+.diningSelectPop .addMenu .numPeople button {width:29px; height:29px;}
+.diningSelectPop .addMenu .numPeople button:before {width:29px; height:28px;}
+.diningSelectPop .addMenu .menuSelcet.type02 .numPeople span {font-size:18px;width:47px;}
+.diningSelectPop .addMenu .menuSelcet.type02 .numPeople {width:105px;}
+.diningSelectPop .addMenu .menuSelcet.type02 .badge_type {background:#888;}
+.diningSelectPop .addMenu .boxTit {font-size:18px;margin-bottom:20px;}
+.diningSelectPop .numPeople.type02 button[disabled] {background:transparent;}
+.diningSelectPop .numPeople.type02 button[disabled]:before {opacity:0.2;}
+
+.diningSelectPop .ico_ampersand {background:url(../../../images/ko/pc/common/ico_ampersand.png) no-repeat; background-size:contain; display:inline-block; width:15px; height:14px; padding-right:3px;}
+.diningSelectPop .dnSelectBox .smallTxt {font-size:16px; color:#888; display:inline-block; padding-left:15px;font-family:'notokrL';}
+
+.verifiCodeAddcont .verifiCode {margin-top:20px;}
+.verifiCodeAddcont .verifiCode .intArea{position:relative;}
+.verifiCodeAddcont .verifiCode .intArea .vertifiTime {position:absolute; right:0; top:0; font-family:gothamL;}
+.verifiCodeAddcont .verifiCode .btnArea {margin-top:0; vertical-align:bottom;}
+.verifiCodeAddcont .verifiCodeBtn {margin-left:15px;}
+
+/*멤버십 정보 확인 및 환불 동의 - 팝업*/
+.membershiprefund {width:940px;}
+.membershiprefund .scrollbar-wrap {right:6px;}
+.membershiprefund .toggleList.agreeCont {margin-top:14px;}
+.membershiprefund .toggleList.agreeCont .frm.type02 {padding:18px 10px 19px;}
+.membershiprefund .toggleList.agreeCont .btnToggle{right:10px;}
+.membershiprefund .toggleList.agreeCont .btnToggle {display:block;}
+.membershiprefund .toggleList.agreeCont .toggleInner {padding:25px; background:#f9f9f9;}
+.membershiprefund .toggleList.agreeCont > li {border-bottom:1px solid #ccc;}
+.membershiprefund .txtGuide.top {margin-top:14px;}
+.membershiprefund .refundReason {margin-top:60px;}
+.membershiprefund .refundReason .titDep3 {font-size:16px; margin-bottom:10px;}
+.membershiprefund .refundReason .titDep2 {font-size:20px;margin:0px 0 15px; color:#333; font-family:notokrM;font-weight:500; margin-bottom:20px;}
+.membershiprefund .refundReason .titDep2 span {display:block;color:#888;font:16px gothamL, notokrL, playfair;}
+.membershiprefund .refundReason li + li {margin-top:5px;}
+.membershiprefund .refundReason .refundEtcArea {display:none; width:100%; height:100px; margin-top:20px; border:1px solid #ccc;}
+.membershiprefund .refundReason .refundEtcArea:focus {border-color:#000;}
+.membershiprefund .refundReason .refundEtcArea.open {display:block;}
+
+#couponRmLayerPop .layerCont .scrollWrap {max-height:465px; height:auto;}
+.cardList li .cardInner .btnArr + .btnArr {margin-left:15px;}
+
+

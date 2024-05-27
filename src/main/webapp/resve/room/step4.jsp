@@ -424,10 +424,10 @@
 		<h2 class="titDep2">예약 정보</h2>
 		<div class="commWrap rsvInfo">
 			<dl class="commlist">
-				<dt>그랜드 조선 제주</dt>
+				<dt>엘리시안 서울</dt>
 				<dd>
 					<span class="txt">
-						제주특별자치도 서귀포시 중문관광로 72번길 60
+						서울특별시 중문관광로 72번길 60
 					</span>
 					<span class="thum">
 						<img src="http://localhost/hotel_prj/static/home/images/ko/pc/HOTEL/img_visual_jjchosun.png" alt="그랜드 조선 제주 전경 이미지">

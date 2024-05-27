@@ -1134,7 +1134,7 @@
 				<div class="infoArea">
 					<dl class="dlType01">
 						<dt>HOTEL</dt>
-						<dd>그랜드 조선 제주</dd>
+						<dd>엘리시안 서울</dd>
 					</dl>
 					<dl class="dlType02">
 						<dt>DATE</dt>
@@ -1162,7 +1162,7 @@
 				<ul class="tabType01">
 					
 					
-					<li id="tab1" class="on"><a href="#none" onclick="fncViewTab(1);">상품으로 보기 6</a></li>
+					<li id="tab1" class="on"><a href="#none" onclick="fncViewTab(1);">상품으로 보기 0</a></li>
 					<li id="tab2" ><a href="#none" onclick="fncViewTab(2);">객실로 보기 12</a></li>
 					<li id="tab3" ><a href="#none" onclick="fncViewTab(3);">회원 전용 0</a></li>
 				</ul>
@@ -1214,12 +1214,7 @@
 			<div class="roomContainer" id="roomContainer3" style="display:none;">
 				<h3 class="hidden">회원 전용</h3>
 				
-					<div class="joinBanner">
-						<div>
-							<span class="bannerTit">클럽조선 리워드 헤택<!-- 클럽조선 리워드 헤택 --></span>멤버십 가입을 하시면 투숙 시, 할인 바우처를 발급해드립니다.<!-- 멤버십 가입을 하시면 투숙 시, 할인 바우처를 발급해드립니다. -->
-							<a href="https://josunhotel.com/identify/identifyIntro.do" class="btnLine" target="_blank">멤버십 가입하기</a>
-						</div>
-					</div>
+
 				
 				<ul class="toggleList roomList" id="mberOnlyList">
 					<li class="noData" >
@@ -1238,12 +1233,6 @@
 			<div class="roomContainer" id="roomContainer1" >
 				<h3 class="hidden">상품으로 보기</h3>
 				
-					<div class="joinBanner">
-						<div>
-							<span class="bannerTit">클럽조선 리워드 헤택<!-- 클럽조선 리워드 헤택 --></span>멤버십 가입을 하시면 투숙 시, 할인 바우처를 발급해드립니다.<!-- 멤버십 가입을 하시면 투숙 시, 할인 바우처를 발급해드립니다. -->
-							<a href="https://josunhotel.com/identify/identifyIntro.do" class="btnLine" target="_blank">멤버십 가입하기</a>
-						</div>
-					</div>
 				
 				<ul class="toggleList roomList" id="productList">
 					<li class="noData" style="display:none;">
@@ -2939,12 +2928,6 @@
 			<div class="roomContainer" id="roomContainer2" style="display:none;">
 				<h3 class="hidden">객실로 보기</h3>
 				
-				<div class="joinBanner">
-					<div>
-						<span class="bannerTit">클럽조선 리워드 헤택<!-- 클럽조선 리워드 헤택 --></span>멤버십 가입을 하시면 투숙 시, 할인 바우처를 발급해드립니다.<!-- 멤버십 가입을 하시면 투숙 시, 할인 바우처를 발급해드립니다. -->
-						<a href="https://josunhotel.com/identify/identifyIntro.do" class="btnLine" target="_blank">멤버십 가입하기</a>
-					</div>
-				</div>
 				
 				<ul class="toggleList roomList" id="roomList">
 					<li class="noData" style="display:none;">
@@ -2979,7 +2962,7 @@
 									
 										
 										
-											<img src="/util/file/download.do?fileSn=553735&sysCode=GJJ" alt="디럭스 트윈">										
+											<img src="http://localhost/hotel_prj/util/file/DELUXE_TWIN_Mountain.jpg" alt="디럭스 트윈">										
 										
 									
 								</dd>
@@ -2991,7 +2974,7 @@
 									<div class="roomDetail">
 										<div class="roomDetailTit">
 											<h4 class="titDep3">OFFERS</h4>
-											<p class="roomDetail-reference"><span class="badge-info reward">리워드 혜택</span>표시는 회원전용 상품입니다.</p>
+											
 										</div>
 										<ul class="optionList type02">
 											
@@ -3030,75 +3013,6 @@
 													
 												</li>
 											
-												<li id="room_0_1">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">Mindful Stay - Basic Package.</strong>
-															
-														</div>
-														<p class="roomBenefit">리사이클링 한정판 굿즈와 함께, 지속 가능한 가치 있는 쉼의 여정을 즐겨보세요..</p>
-														
-														
-														<div class="date">
-															2024.04.22 - 2024.11.30
-														</div>
-														<span class="price" data-krw="217500" data-jpy="25000" data-usd="160" data-cnh="1163" data-eur="147">
-															<em>217,500</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1980937','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','0','1','DST','41MINDRO','1980937');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DST','41MINDRO','1980937');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_0_2">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">BED &amp; BREAKFAST</strong>
-															
-														</div>
-														<p class="roomBenefit">본관 1박 + 조식 2인</p>
-														
-														
-														<div class="date">
-															2020.12.01 - 2024.12.31
-														</div>
-														<span class="price" data-krw="230000" data-jpy="26400" data-usd="169" data-cnh="1229" data-eur="156">
-															<em>230,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('371799','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','0','2','DST','31BFRB1N','371799');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DST','31BFRB1N','371799');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
 											
 										</ul>
 									</div>

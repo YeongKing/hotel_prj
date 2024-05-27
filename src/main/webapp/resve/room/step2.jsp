@@ -637,7 +637,7 @@
 				<div class="infoArea">
 					<dl class="dlType01">
 						<dt>HOTEL</dt>
-						<dd>그랜드 조선 제주</dd>
+						<dd>엘리시안 서울</dd>
 					</dl>
 					<dl class="dlType02">
 						<dt>DATE</dt>

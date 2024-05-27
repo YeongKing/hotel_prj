@@ -16,7 +16,7 @@
   <meta name="format-detection" content="telephone=no">
     <meta name="naver-site-verification" content="7cc31c414eda7a3ea7b7a0bbb9c0a5c624370a87"/>
 
-  <title>엘리시안호텔 공식 사이트 | JOSUN HOTELS &amp; RESORTS Official Website</title>
+  <title>엘리시안호텔 공식 사이트 | ELYSIAN HOTELS &amp; RESORTS Official Website</title>
   <meta name="keywords" content="조선호텔앤리조트, 신세계조선, 조선호텔, 웨스틴조선, 웨스틴조선호텔, 그랜드조선, 그랜드조선호텔,  레스케이프, 레스케이프호텔, 포포인츠, 포포인츠바이쉐라톤">
   <meta name="description" content="조선호텔앤리조트는 고품격 라이프 스타일을 제안하는 서비스 전문 기업입니다. 호텔뿐 아니라 외식 사업, 오피스 빌딩 위탁 운영 등 품격 있는 서비스와 시설을 제공합니다.">
   <meta property="og:title" content="조선호텔앤리조트 공식 사이트 | JOSUN HOTELS &amp; RESORTS Official Website">
@@ -27,8 +27,9 @@
   <meta property="og:site_name" content="Josun Hotels & Resorts"/>
 
   <script type="text/javascript" nonce="a6d9132286844ba792abb3d5626" src="//local.adguard.org?ts=1716279030894&amp;type=content-script&amp;dmn=localhost&amp;url=http%3A%2F%2Flocalhost%2Fhotel_prj%2Fjosun%2Findex.jsp&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script>
-<script type="text/javascript" nonce="a6d9132286844ba792abb3d5626" src="//local.adguard.org?ts=1716279030894&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><link rel="canonical" href="https://josunhotel.com/intro.do"/>
-  <link rel="shortcut icon" type="text/css" href="static/home/images/ko/pc/common/favicon.ico" >
+  <script type="text/javascript" nonce="a6d9132286844ba792abb3d5626" src="//local.adguard.org?ts=1716279030894&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><link rel="canonical" href="https://josunhotel.com/intro.do"/>
+  <link rel="shortcut icon" type="image/x-icon" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico" >
+  <link rel="icon" type="image/x-icon" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico" >
   <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
   <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_new.css" rel="stylesheet" type="text/css">
   

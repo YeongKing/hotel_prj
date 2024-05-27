@@ -329,7 +329,7 @@ view-source:https://www.josunhotel.com/join/joinIntro.do
 
 	
 	<!--S header  -->
-<jsp:include page="/user/footer.jsp"></jsp:include>
+<jsp:include page="/user/header.jsp"></jsp:include>
 <!--E header  -->
 	
 	

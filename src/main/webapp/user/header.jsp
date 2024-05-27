@@ -5,7 +5,7 @@
 			<div class="header"> <!-- 메뉴 열리면 gnbOn 클래스 추가 -->
 			<!-- header type02 추가 되는 경우 mainArea02, mainArea03, mainArea05  -->
 			<div class="headArea">
-				<strong class="logo"><a href="http://localhost/hotel_prj/index.jsp">JOSUN HOTELS & RESORTS</a></strong>
+				<strong class="logo"><a href="/hotel_prj/index.jsp">JOSUN HOTELS & RESORTS</a></strong>
 				<button type="button" class="btnMenu">메뉴 열기</button> <!-- 클릭하면 menuOn 클래스 추가, 메뉴 닫기 텍스트 변경 -->
 				<!-- 20200709 수정 / gnbUtil 안에 있던 호텔찾기, 다국어 영역 위치 변경  -->
 				<div class="topUtil">
@@ -206,21 +206,21 @@
 																					
 											
 												
-													<li><a href="/user/mypage/main.jsp">MY PAGE</a>
+													<li><a href="/hotel_prj/user/mypage/main.jsp">MY PAGE</a>
 													
 													
 													</li>
 												
 											
 												
-													<li><a href="/user/cnfirm/mber/room/reserveList.jsp">예약확인</a>
+													<li><a href="/hotel_prj/user/cnfirm/mber/room/reserveList.jsp">예약확인</a>
 													
 													
 													</li>
 												
 											
 												
-													<li><a href="/user/mypage/myInfoForm.jsp">개인정보관리</a>
+													<li><a href="/hotel_prj/user/mypage/myInfoForm.jsp">개인정보관리</a>
 													
 													
 													</li>
@@ -425,9 +425,9 @@
 				<div class="gnbUtil">
 					
 						<ul>
-							<li><a href="/user/login/loginForm.jsp" id="login">로그인</a></li>
-							<li><a href="/user/identify/identifyIntro.jsp" id="join">회원가입</a></li>
-							<li><a href="/user/cnfirm/mber/room/reserveList.jsp" id="confirmReserv">예약확인</a></li>
+							<li><a href="/hotel_prj/user/login/loginForm.jsp" id="login">로그인</a></li>
+							<li><a href="/hotel_prj/user/identify/identifyIntro.jsp" id="join">회원가입</a></li>
+							<li><a href="/hotel_prj/user/cnfirm/mber/room/reserveList.jsp" id="confirmReserv">예약확인</a></li>
 						</ul>
 					
 					
@@ -439,11 +439,11 @@
 								<button type="button" aria-label="목록열기" class="btn_opener"></button>
 							</div>
 							<ul class="item_list" role="listbox">
-								<li role="option"><a href="/user/resve/room/step0.jsp" id="roomSearchGNB">ROOM</a></li>
+								<li role="option"><a href="/hotel_prj/user/resve/room/step0.jsp" id="roomSearchGNB">ROOM</a></li>
                                 
-      								<li role="option"><a href="/user/resve/dining/resveForm.jsp?searchSysCode=TWC&searchDiningCode=003" id="diningSearchGNB">DINING</a></li>                             
+      								<li role="option"><a href="/hotel_prj/user/resve/dining/resveForm.jsp?searchSysCode=TWC&searchDiningCode=003" id="diningSearchGNB">DINING</a></li>                             
                                 
-								<li role="option"><a href="/user/mypage/myCouponaForm.do">MEMBERSHIP</a></li>
+								<li role="option"><a href="/hotel_prj/user/mypage/myCouponaForm.do">MEMBERSHIP</a></li>
 							</ul>
 						</div>
 					</div>

@@ -327,7 +327,7 @@ view-source:https://www.josunhotel.com/login/regiSnsMembForm.do
 
 
 <!--S header  -->
-<jsp:include page="/user/footer.jsp"></jsp:include>
+<jsp:include page="/user/header.jsp"></jsp:include>
 <!--E header  -->
 
 

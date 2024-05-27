@@ -2,4 +2,4 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0;url=/user/index.jsp">
+<meta http-equiv="refresh" content="0;url=/hotel_prj/user/index.jsp">

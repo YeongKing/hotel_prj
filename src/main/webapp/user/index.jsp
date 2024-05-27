@@ -37,9 +37,6 @@
   
   
   <link href="/hotel_prj/static/home/css/ko/pc/main_josunhotel.css" rel="stylesheet" type="text/css">
-  
-  
-  
 
   <link href="/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css"> 
   <link href="/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css"> 

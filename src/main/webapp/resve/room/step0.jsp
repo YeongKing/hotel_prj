@@ -169,7 +169,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Hotel",
-  "name": "조선호텔앤리조트",
+  "name": "엘리시안서울",
   "url": "https://josunhotel.com/",
   "image": [
     "https://www.josunhotel.com/revolution/content/fileImage.do?fileId=426021&cntntsSn=426020",
@@ -674,46 +674,16 @@ function fncSearchList(){
 		<div class="topArea">
 			<div class="topInner">
 				<h2 class="titDep1">Booking</h2>
-				<p class="pageGuide">조선호텔앤리조트의 다양하고 감각적인 인테리어와 특별한 여유를<br> 느낄 수 있는 객실에서 잊을 수 없는 여행의 경험을 선사합니다.</p> 
+				<p class="pageGuide">엘리시안호텔의 다양하고 감각적인 인테리어와 특별한 여유를<br> 느낄 수 있는 객실에서 잊을 수 없는 여행의 경험을 선사합니다.</p> 
 			</div>
 		</div>
 		<!-- //topArea -->
 		<div class="inner">
-			<div class="promCode">
-				<button type="button" class="btnSC btnPromo">프로모션 코드</button>
-				<div class="promInt">
-					<div class="selectWrap" style="width:150px;">
-						<select data-height="150px" data-msg="Code Type" id="promoType" title="Code Type 선택">
-						  
-                              
-                              
-                                  
-                                  <option value="promotionCode"
-                                      
-                                  >
-                                      PROMOTION
-                                  </option>
-                              
-                                  
-                                  <option value="companyCode"
-                                      
-                                  >
-                                      COMPANY
-                                  </option>
-                              
-						</select>
-					</div>
-
-					<input type="text" id="promoCode" name="" value="" placeholder="프로모션 코드 입력" title="프로모션 코드 입력" style="width:210px" onkeyup="this.value=this.value.replace(/[^a-z]/gi, '').toUpperCase();">
-					<button type="button" class="btnLine">닫기</button>
-
-				</div>
-			</div>
 			
 			<ul class="toggleList rsvList checkDate">
 				
 					<li>
-						<strong class="listTit">호텔 선택<!--  호텔 선택--></strong>
+						<strong class="listTit">호텔명<!--  호텔 선택--></strong>
 						<em class="intValue" id="hotelNm">엘리시안 서울</em>
 						<button type="button" class="btnToggle">
 							<span class="hidden">상세내용 보기<!--  상세내용 보기--></span>
@@ -838,7 +808,7 @@ function fncSearchList(){
 								<div class="roomWrap">
 									<div class="roomSel on">
 										<div class="roomInner">
-											<strong class="roomTit">객실1</strong>
+											<strong class="roomTit">객실</strong>
 											<div class="numWrap" data-roomNum="1">
 												<div class="numPeople" data-target="adult">
 													<input type="hidden" name="adltCntArr" value="2"/>

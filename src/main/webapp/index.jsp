@@ -1439,44 +1439,15 @@ function closeHubPopup(){
 							<div class="selectHotel">
 								<a href="#none">
 									<strong class="tit">HOTEL</strong>
-									<span class="hotelName" id="hotelName">그랜드 조선 제주</span>
+									<span class="hotelName" id="hotelName">엘리시안 서울</span>
 								</a>
 								<div class="mainHotel clearCont">
 									<ul class="hotelSelect">
-										<li data-code="JPY" data-nm="조선 팰리스" class="palace">
-											<a href="https://www.marriott.co.kr/hotels/travel/sellc-josun-palace-a-luxury-collection-hotel-seoul-gangnam" id="hotel_select_JPY" target="_blank" class=""><span class="hotelTit">조선 팰리스</span></a>
+
+										<li data-code="GJJ" class="grandJeju on" data-nm="엘리시안 서울" class="grandJeju">
+											<a href="#none" id="hotel_select_GJJ"><span class="hotelTit">엘리시안 서울</span></a>
 										</li>
-										<li data-code="TWC" data-nm="웨스틴 조선 서울" class="westinSeoul">
-											<a href="https://www.marriott.co.kr/hotels/travel/selwi-the-westin-chosun-seoul" id="hotel_select_TWC" target="_blank" class=""><span class="hotelTit">웨스틴 조선 서울</span></a>
-										</li>
-										<li data-code="TWCB" data-nm="웨스틴 조선 부산" class="westinBusan">
-											<a href="https://www.marriott.co.kr/hotels/travel/puswi-the-westin-chosun-busan" id="hotel_select_TWCB" target="_blank" class=""><span class="hotelTit">웨스틴 조선 부산</span></a>
-										</li>
-										<li data-code="GJB"  data-nm="그랜드 조선 부산" class="grandBusan">
-											<a href="#none" id="hotel_select_GJB"><span class="hotelTit">그랜드 조선 부산</span></a>
-										</li>
-										<li data-code="GJJ" class="grandJeju on" data-nm="그랜드 조선 제주" class="grandJeju">
-											<a href="#none" id="hotel_select_GJJ"><span class="hotelTit">그랜드 조선 제주</span></a>
-										</li>
-										<li data-code="LESCAPE" data-nm="레스케이프 호텔" class="lescape">
-											<a href="https://lescapehotel.com/main" id="hotel_select_LESCAPE" target="_blank"><span class="hotelTit">레스케이프 호텔</span></a>
-										</li>
-										<li data-code="GRAVITY" data-nm="그래비티 서울 판교" class="gravityPangyo">
-											<a href="https://www.marriott.co.kr/hotels/travel/selay-gravity-seoul-pangyo-autograph-collection" id="hotel_select_GRP" target="_blank" class=""><span class="hotelTit longTxt">그래비티 서울 판교</span></a>
-										</li>
-										<li data-code="FPBSS" data-nm="포포인츠 바이 쉐라톤 조선 서울역" class="sheratonSeoulstation">
-											<a href="https://www.marriott.co.kr/hotels/travel/selfp-four-points-seoul-namsan" id="hotel_select_FPBSS" target="_blank" class=""><span class="hotelTit longTxt">포포인츠 바이 쉐라톤 조선 서울역</span></a>
-										</li>
-										<li data-code="FPBSM" data-nm="포포인츠 바이 쉐라톤 조선, 서울 명동" class="sheratonMyeongdong">
-											<a href="https://www.marriott.co.kr/hotels/travel/selfd-four-points-seoul-myeongdong" id="hotel_select_FPBSM" target="_blank" class=""><span class="hotelTit longTxt">포포인츠 바이 쉐라톤 조선, 서울 명동</span></a>
-										</li>
-										
-											<li data-code="PPJ" data-nm="파라스파라 서울" class="paraspara">
-												<a href="https://www.paraspara.co.kr/" id="hotel_select_PPJ" target="_blank" class=""><span class="hotelTit longTxt">파라스파라 서울</span></a>
-											</li>
-											<li data-code="YYH" data-nm="코랄로 바이 조선" class="corallo">
-												<a href="https://www.coralloyangyang.com/#" id="hotel_select_YYH" target="_blank" class=""><span class="hotelTit longTxt">코랄로 바이 조선</span></a>
-											</li>
+
 										
 
 									</ul>
@@ -1531,48 +1502,11 @@ function closeHubPopup(){
 													</div>
 												</div>
 											</div>
-											<div class="roomSel"> <!-- 객실 추가 시 클래스 on 추가 -->
-												<div class="roomInner">
-													<strong class="roomTit">객실2</strong>
-													<div class="numWrap" data-roomNum="2">
-														<div class="numPeople" data-target="adult">
-															<input type="hidden" name="adltCntArr" value="0"/>
-															<button type="button" class="btnDown blank">인원 수 감소</button>
-															<span>성인 <em>0</em></span>
-															<button type="button" class="btnUp">인원 수 증가</button> <!-- 인원 수 0 일 경우 감소 쪽에 blank 클래스 추가 -->
-														</div>
-														<div class="numPeople" data-target="child">
-															<input type="hidden" name="chldCntArr" value="0"/>
-															<button type="button" class="btnDown blank">인원 수 감소</button>
-															<span>어린이 <em>0</em></span>
-															<button type="button" class="btnUp">인원 수 증가</button>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="roomSel">
-												<div class="roomInner">
-													<strong class="roomTit">객실3</strong>
-													<div class="numWrap" data-roomNum="3">
-														<div class="numPeople" data-target="adult">
-															<input type="hidden" name="adltCntArr" value="0"/>
-															<button type="button" class="btnDown blank">인원 수 감소</button>
-															<span>성인 <em>0</em></span>
-															<button type="button" class="btnUp">인원 수 증가</button>
-														</div>
-														<div class="numPeople" data-target="child">
-															<input type="hidden" name="chldCntArr" value="0"/>
-															<button type="button" class="btnDown blank">인원 수 감소</button>
-															<span>어린이 <em>0</em></span>
-															<button type="button" class="btnUp">인원 수 증가</button>
-														</div>
-													</div>
-												</div>
-											</div>
+
 										</div>
 										<!-- //roomWrap -->
 										<ul class="txtGuide">
-											<li>최대 3개 객실 예약 가능</li>
+
 											<li id="ageTxtGuide">어린이 기준 : 37개월 ~ 12세</li>
 										</ul>
 										<button type="button" class="btnSC btnL">확인<!-- 확인 --></button>

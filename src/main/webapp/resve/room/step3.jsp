@@ -1365,12 +1365,7 @@ function fncGoResv(){
 			                                <span class="frm">
 												<input type="radio" id="cardType01" name="cardType2" value="cardtp01"><label for="cardType01">개인</label>
 											</span>
-                                            <span class="frm">
-												<input type="radio" id="cardType02" name="cardType2" value="cardtp02"><label for="cardType02">법인(기명)</label>
-											</span>
-                                            <span class="frm">
-												<input type="radio" id="cardType03" name="cardType2" value="cardtp03"><label for="cardType03">법인(무기명)</label>
-											</span>
+
                                         </div>
                                     </div>
                                     <span class="alertMessage">신용카드 타입을 선택해 주세요.</span>
@@ -1503,7 +1498,6 @@ function fncGoResv(){
                             </div>
                         </li>
 					</ul>
-					<p class="txtGuide">예약 접수 확인 용도이며, 온라인 예약 시 직접 결제가 이루어지지 않습니다.</p>
 					<p class="txtGuide">객실 재판매 행위는 법적 제재를 받을 수 있습니다.</p>
 					
 					<div class="notiContainer">

@@ -17,6 +17,8 @@
     <meta name="naver-site-verification" content="7cc31c414eda7a3ea7b7a0bbb9c0a5c624370a87"/>
 
   <title>엘리시안호텔 공식 사이트 | ELYSIAN HOTELS &amp; RESORTS Official Website</title>
+
+
   <meta name="keywords" content="조선호텔앤리조트, 신세계조선, 조선호텔, 웨스틴조선, 웨스틴조선호텔, 그랜드조선, 그랜드조선호텔,  레스케이프, 레스케이프호텔, 포포인츠, 포포인츠바이쉐라톤">
   <meta name="description" content="조선호텔앤리조트는 고품격 라이프 스타일을 제안하는 서비스 전문 기업입니다. 호텔뿐 아니라 외식 사업, 오피스 빌딩 위탁 운영 등 품격 있는 서비스와 시설을 제공합니다.">
   <meta property="og:title" content="조선호텔앤리조트 공식 사이트 | JOSUN HOTELS &amp; RESORTS Official Website">
@@ -300,7 +302,7 @@ jQuery(function(){
 
 	handleActiveAnchor(".js-active", "메리어트 사이트로 이동"); //메리어트 사이트로 이동
 
-	var defaultHotelCode = "GJJ";
+	var defaultHotelCode = "ELS";
 
     //조선 라운지 섹션별도 스와이프
     var swipeLounge = new Swiper('.swiper-lounge', {
@@ -315,18 +317,6 @@ jQuery(function(){
     });
 
 	jQuery(document).ready(function(){
-
-		// 서브 팝업 닫기 버튼 이벤트
-		/*
-		jQuery("#subBannerCloseBtn").on("click", function(){
-			var sysCode = jQuery("#sysCode").val();
-			var isTodayClose = jQuery("#subBannerBtn").is(":checked");
-			if(isTodayClose){
-				setCookie(sysCode+"_popUp","done", 1);
-			}
-			jQuery(".mainPopLayer").remove();
-		});
-		*/
 
 
 
@@ -384,7 +374,7 @@ jQuery(function(){
 
 			// ============== 객실 및 인원 선택 초기화 start ==================
 
-			if(hotlSysCode == "GJB" || hotlSysCode == "GJJ"){
+			if(hotlSysCode == "ELS"||hotlSysCode == "GJB" || hotlSysCode == "GJJ"){
 				jQuery(".hotelSelect li").removeClass("on");
 				jQuery(this).addClass("on");
 				jQuery("#hotlSysCode").val(hotlSysCode);
@@ -435,44 +425,16 @@ jQuery(function(){
 			var maxAdlt = jQuery("#maxAdlt").val();
 			var maxChld = jQuery("#maxChld").val();
 
-            //2022-09-19 호텔별 최대 인원 수 변경
-            if(hotlSysCodeValue == "GJJ"){
-                maxAdlt = 6;
-                maxChld = 4;
-            }
-
-			if(roomNum != "1" && jQuery(".roomSel:eq("+parseInt(roomNum-2)+") input[name='adltCntArr']").val() == "0"){
-				//alert("이전객실부터 선택하셈");
-				return false;
-			}
 
 			//인원 추가
 			if(appendYn){
-				//객실 1이 아니고 성인 0명인 경우에 어린이 증가 시
-				if(roomNum != "1" && target == "child" && jQuery("input[name='adltCntArr']:eq("+parseInt(roomNum-1)+")").val() < 1){
-					peopleCnt = parseInt(peopleCnt);
-				//현재 인원에  + 1시켜주기
-				}else{
+
 					if(target == "child" && parseInt(peopleCnt)< maxChld ){
 						peopleCnt = parseInt(peopleCnt) + 1;
 					}else if(target == "adult" && parseInt(peopleCnt)< maxAdlt){
 						peopleCnt = parseInt(peopleCnt) + 1;
 					}
-				}
 
-                //2022-09-19 수정 , GJJ일 경우 최대 투숙인원 변경
-				if (hotlSysCodeValue == "GJJ") {
-					var adltCntValue = target == "adult" ? peopleCnt : jQuery("input[name='adltCntArr']:eq("+parseInt(roomNum-1)+")").val();
-					var chldCntValue = target == "child" ? peopleCnt : jQuery("input[name='chldCntArr']:eq("+parseInt(roomNum-1)+")").val();
-					var totalCntValue = parseInt(adltCntValue) + parseInt(chldCntValue);
-
-					//alert(hotlSysCode + ", " + adltCntValue + ", " + chldCntValue);
-
-                    if(totalCntValue > 8) {
-                        alert("온라인상 선택가능한 인원 수 이상 투숙하시는 경우에는 유선으로 문의 부탁드립니다.\n(그랜드 조선 제주 예약실 : 1811-0511)"); 
-                        return false;
-                    }
-				}
 
 			//인원 감소
 			}else{
@@ -729,6 +691,12 @@ function fncSelectDining(){
 function fncSearchList(resveType){
 	//validation check
 	if(resveType == "R"){
+
+		alert("선택된 호텔코드 : "+$("#hotlSysCode").val() + "\n" + 
+				"체크인 날짜 : " +$("#ckinDate").val() + "\n" +
+				"체크아웃 날짜 : " + $("#ckoutDate").val() + "\n" +
+				"어른 : " +  $("#adultCntText").text() + "\n" +
+				"어린이 : " +  $("#childCntText").text());
 		if(jQuery("#hotlSysCode").val() == ""){
 			// 호텔 시스템 코드 없음
 			alert("호텔을 선택해주세요."); 
@@ -740,11 +708,11 @@ function fncSearchList(resveType){
 			return false;
 		}
 
-		jQuery("#mainResveForm").attr("action", "resve/room/step1.jsp");
+		jQuery("#mainResveForm").attr("action", "http://localhost/hotel_prj/resve/room/step1.jsp");
 		jQuery("#mainResveForm").submit();
 	}else if(resveType == "D"){
 
-		jQuery("#mainDiningForm").attr("action", "/resve/dining/step0.do");
+		jQuery("#mainDiningForm").attr("action", "http://localhost/hotel_prj/resve/dining/step0.do");
 		jQuery("#mainDiningForm").submit();
 	}
 }
@@ -1427,13 +1395,13 @@ function closeHubPopup(){
 
 				<div class="selectInner">
 					<form id="mainResveForm" name="mainResveForm" method="post" >
-						<input type="hidden" name="sysCode" id="sysCode" value="JOSUNHOTEL"/>
-						<input type="hidden" name="hotlSysCode" id="hotlSysCode" value="GJJ" /> 	
+						<input type="hidden" name="sysCode" id="sysCode" value="ELYSIANYHOTEL"/>
+						<input type="hidden" name="hotlSysCode" id="hotlSysCode" value="ELS" /> 	
 						<input type="hidden" name="ckinDate" id="ckinDate" value="" /> 				
 						<input type="hidden" name="ckoutDate" id="ckoutDate" value="" /> 			
 						<input type="hidden" name="night" id="night" value="" />					
 						<input type="hidden" name="roomCnt" id="roomCnt" value="1" />				
-						<input type="hidden" id="maxAdlt" value="3" />				
+						<input type="hidden" id="maxAdlt" value="6" />				
 						<input type="hidden" id="maxChld" value="2" />				
 						<div class="selectRoom" role="area">
 							<div class="selectHotel">
@@ -1444,8 +1412,15 @@ function closeHubPopup(){
 								<div class="mainHotel clearCont">
 									<ul class="hotelSelect">
 
-										<li data-code="GJJ" class="grandJeju on" data-nm="엘리시안 서울" class="grandJeju">
-											<a href="#none" id="hotel_select_GJJ"><span class="hotelTit">엘리시안 서울</span></a>
+										<li data-code="ELS" class="eysianSeoul on" data-nm="엘리시안 서울" class="elysianSeoul">
+											<a href="#none" id="hotel_select_ELS"><span class="hotelTit">엘리시안 서울</span></a>
+										</li>
+
+										<li data-code="GJB"  data-nm="그랜드 조선 부산" class="grandBusan">
+											<a href="#none" id="hotel_select_GJB"><span class="hotelTit">그랜드 조선 부산</span></a>
+										</li>
+										<li data-code="GJJ" class="grandJeju" data-nm="그랜드 조선 제주" class="grandJeju">
+											<a href="#none" id="hotel_select_GJJ"><span class="hotelTit">그랜드 조선 제주</span></a>
 										</li>
 
 										
@@ -1485,7 +1460,7 @@ function closeHubPopup(){
 										<div class="roomWrap">
 											<div class="roomSel on">
 												<div class="roomInner">
-													<strong class="roomTit">객실1</strong>
+													<strong class="roomTit">객실</strong>
 														<div class="numWrap" data-roomNum="1">
 														<div class="numPeople" data-target="adult">
 															<input type="hidden" name="adltCntArr" value="2"/>
@@ -1516,22 +1491,7 @@ function closeHubPopup(){
 								<!-- //mainRoom -->
 							</div>
 							<button type="button" class="btnSC btnSearch" onclick="fncSearchList('R');">SEARCH</button>
-							<div class="promCode">
-								<button type="button" class="btnSC btnPromo">프로모션 코드<!-- 프로모션 코드 --></button>
-								<div class="promInt">
-									<div class="selectWrap" style="width:215px;">
-										<select data-height="150px" data-msg="Code Type" data-direction="up" id="promoType">
-                                            
-                                                <option value="promotionCode">PROMOTION</option>
-                                            
-                                                <option value="companyCode">COMPANY</option>
-                                            
-										</select>
-									</div>
-									<input type="text" placeholder="프로모션 코드 입력" title="프로모션 코드 입력" style="width:240px" id="promoCode" onkeyup="this.value=this.value.replace(/[^a-z]/gi, '').toUpperCase();">
-									<button type="button" class="btnLine">확인<!-- 확인 --></button>
-								</div>
-							</div>
+							
 						</div>
 					</form>
 					<!-- //ROOM 선택 일 경우 -->

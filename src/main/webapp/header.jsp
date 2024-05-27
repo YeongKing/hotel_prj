@@ -64,22 +64,7 @@
                                                                 
 																    <li><a href="/about/hotel.do">기업소개</a></li>
                                                                 
-															
-                                                                
-																    <li><a href="/about/history.do">연혁</a></li>
-                                                                
-															
-                                                                
-																    <li><a href="/about/awards.do">수상내역</a></li>
-                                                                
-															
-                                                                
-																    <li><a href="/about/esg.do">ESG경영</a></li>
-                                                                
-															
-                                                                
-																    <li><a href="/about/accounts.do">결산공고</a></li>
-                                                                
+														
 															
                                                                 
 																    <li><a href="/about/location.do">오시는길</a></li>
@@ -134,80 +119,12 @@
 																					
 											
 												
-													<li><a href="/hotel/JosunPalace.do">조선 팰리스</a>
+													<li><a href="http://localhost/hotel_prj/index.jsp">엘리시안 서울</a>
 													
 													
 													</li>
 												
-											
-												
-													<li><a href="/hotel/westinSeoul.do">웨스틴 조선 서울</a>
-													
-													
-													</li>
-												
-											
-												
-													<li><a href="/hotel/westinBusan.do">웨스틴 조선 부산</a>
-													
-													
-													</li>
-												
-											
-												
-													<li><a href="/hotel/grandBusan.do">그랜드 조선 부산</a>
-													
-													
-													</li>
-												
-											
-												
-													<li><a href="/hotel/grandJeju.do">그랜드 조선 제주</a>
-													
-													
-													</li>
-												
-											
-												
-													<li><a href="/hotel/lescape.do">레스케이프 호텔</a>
-													
-													
-													</li>
-												
-											
-												
-													<li><a href="/hotel/pangyo.do">그래비티 서울 판교</a>
-													
-													
-													</li>
-												
-											
-												
-													<li><a href="/hotel/fpbsSeoul.do">포포인츠 바이 쉐라톤 조선 서울역</a>
-													
-													
-													</li>
-												
-											
-												
-													<li><a href="/hotel/fpbsMyeongdong.do">포포인츠 바이 쉐라톤 조선, 서울 명동</a>
-													
-													
-													</li>
-												
-											
-												
-													<li><a href="/hotel/parasparaSeoul.do">파라스파라 서울</a>
-													
-													
-													</li>
-												
-											
-												
-													<li><a href="/hotel/Corallo.do">코랄로 바이 조선</a>
-													
-													
-													</li>
+										
 												
 											
 										</ul>
@@ -296,35 +213,7 @@
 												
 											
 												
-													<li><a href="/mypage/myPointForm.do">MY POINT</a>
-													
-													
-													</li>
-												
-											
-												
-													<li><a href="/mypage/myCouponaForm.do">MY COUPON</a>
-													
-													
-													</li>
-												
-											
-												
-													<li><a href="/mypage/myGoodsForm.do">멤버십확인</a>
-													
-													
-													</li>
-												
-											
-												
 													<li><a href="/cnfirm/mber/room/reserveList.do">예약확인</a>
-													
-													
-													</li>
-												
-											
-												
-													<li><a href="/mber/interest/roomList.do">관심리스트</a>
 													
 													
 													</li>
@@ -452,11 +341,7 @@
 													</li>
 												
 											
-												
-													<li><a href="/customer/giftCard.do">GIFT CARD</a>
-													
-													
-													</li>
+
 												
 											
 										</ul>
@@ -540,7 +425,6 @@
 				<div class="gnbUtil">
 					
 						<ul>
-							<li><a href="/hotel_prj/membership/ed2_product.do" id="membership">멤버십</a></li>
 							<li><a href="/hotel_prj/login/loginForm.jsp" id="login">로그인</a></li>
 							<li><a href="/hotel_prj/identify/identifyIntro.jsp" id="join">회원가입</a></li>
 							<li><a href="/hotel_prj/login/noMbrLoginForm.do" id="confirmReserv">예약확인</a></li>

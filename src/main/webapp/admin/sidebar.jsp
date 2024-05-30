@@ -48,76 +48,76 @@
 		<ul class="menu">
 			<li class="sidebar-title">Menu</li>
 			
-				<li class="sidebar-item ">
-				<a href="/hotel_prj/admin/dashboard/dashboard.jsp" class='sidebar-link'>
-					<i class="bi bi-grid-fill"></i>
-		 			<span>DashBoard</span>
-				</a>
-				</li>
-	            
-	            <li class="sidebar-item ">
-				<a href="/hotel_prj/admin/member/member.jsp" class='sidebar-link'>
-	  				<i class="bi bi-people-fill"></i>
-	  				<span>회원 관리</span>
-				</a>
-	            </li>
-	            
-	            <li class="sidebar-item has-sub">
-				<a href="#" class='sidebar-link'>
-	  				<i class="bi bi-calendar2-check-fill"></i>
-	  				<span>예약 관리</span>
-				</a>
+			<li class="sidebar-item db ">
+			<a href="/hotel_prj/admin/dashboard/dashboard.jsp" class='sidebar-link'>
+				<i class="bi bi-grid-fill"></i>
+				<span>DashBoard</span>
+			</a>
+			</li>
+			
+			<li class="sidebar-item mm ">
+			<a href="/hotel_prj/admin/member/member.jsp" class='sidebar-link'>
+				<i class="bi bi-people-fill"></i>
+				<span>회원 관리</span>
+			</a>
+			</li>
+			
+			<li class="sidebar-item has-sub rem ">
+			<a href="#" class='sidebar-link'>
+				<i class="bi bi-calendar2-check-fill"></i>
+				<span>예약 관리</span>
+			</a>
+			
+			<ul class="submenu ">
+				<li class="submenu-item rrm ">
 				
-				<ul class="submenu ">
-					<li class="submenu-item ">
-					
-					<a href="/hotel_prj/admin/resve/room_resve.jsp" class="submenu-link">
-					<i class="bi bi-dot"></i>
-					객실 예약 관리</a>
-					</li>
-					
-					<li class="submenu-item ">
-					<a href="/hotel_prj/admin/resve/dining_resve.jsp" class="submenu-link">
-					<i class="bi bi-dot"></i>
-					다이닝 예약 관리</a>
-					</li>
-				</ul>
+				<a href="/hotel_prj/admin/resve/room_resve.jsp" class="submenu-link">
+				<i class="bi bi-dot"></i>
+				객실 예약 관리</a>
 				</li>
 				
-				<li class="sidebar-item ">
-				<a href="/hotel_prj/admin/room/room.jsp" class='sidebar-link'>
-	  				<i class="bi bi-house-door-fill"></i>
-	  				<span>객실 관리</span>
-				</a>
-	            </li>
+				<li class="submenu-item drm ">
+				<a href="/hotel_prj/admin/resve/dining_resve.jsp" class="submenu-link">
+				<i class="bi bi-dot"></i>
+				다이닝 예약 관리</a>
+				</li>
+			</ul>
+			</li>
+			
+			<li class="sidebar-item rom ">
+			<a href="/hotel_prj/admin/room/room.jsp" class='sidebar-link'>
+				<i class="bi bi-house-door-fill"></i>
+				<span>객실 관리</span>
+			</a>
+			</li>
 
-				<li class="sidebar-item ">
-				<a href="/hotel_prj/admin/dining/dining.jsp" class='sidebar-link'>
-	  				<i class="bi bi-cup-hot-fill"></i>
-	  				<span>다이닝 관리</span>
-				</a>
-	            </li>
-	            
-	            <li class="sidebar-item ">
-				<a href="/hotel_prj/admin/board/event/event.jsp" class='sidebar-link'>
-	  				<i class="bi bi-balloon-fill"></i>
-	  				<span>이벤트 관리</span>
-				</a>
-	            </li>
-	            
-	            <li class="sidebar-item ">
-				<a href="/hotel_prj/admin/board/qna/qna.jsp" class='sidebar-link'>
-	  				<i class="bi bi-bookmark-check-fill"></i>
-	  				<span>자주찾는질문</span>
-				</a>
-	            </li>
-	            
-	            <li class="sidebar-item ">
-				<a href="/hotel_prj/admin/board/notice/notice.jsp" class='sidebar-link'>
-	  				<i class="bi bi-clipboard-minus-fill"></i>
-	  				<span>공지사항 관리</span>
-				</a>
-	            </li>
+			<li class="sidebar-item dm ">
+			<a href="/hotel_prj/admin/dining/dining.jsp" class='sidebar-link'>
+				<i class="bi bi-cup-hot-fill"></i>
+				<span>다이닝 관리</span>
+			</a>
+			</li>
+			
+			<li class="sidebar-item em ">
+			<a href="/hotel_prj/admin/board/event/event.jsp" class='sidebar-link'>
+				<i class="bi bi-balloon-fill"></i>
+				<span>이벤트 관리</span>
+			</a>
+			</li>
+			
+			<li class="sidebar-item qm ">
+			<a href="/hotel_prj/admin/board/qna/qna.jsp" class='sidebar-link'>
+				<i class="bi bi-bookmark-check-fill"></i>
+				<span>자주찾는질문</span>
+			</a>
+			</li>
+			
+			<li class="sidebar-item nm ">
+			<a href="/hotel_prj/admin/board/notice/notice.jsp" class='sidebar-link'>
+				<i class="bi bi-clipboard-minus-fill"></i>
+				<span>공지사항 관리</span>
+			</a>
+			</li>
 		</ul>
 	</div>
 </div>

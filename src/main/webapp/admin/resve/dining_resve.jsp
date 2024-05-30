@@ -27,7 +27,24 @@
 </style>
 <script type = "text/javascript">
 	$(function() {
+		$(".sidebar-item.rem").addClass("active");
+		$(".submenu-item.drm").addClass("active");
+		
+		$(document).on('click', '.sidebar-item', function() {
+	        // 모든 .sidebar-item 요소에서 active 클래스를 제거합니다.
+	        $(".sidebar-item").removeClass("active");
 
+	        // 클릭된 요소에만 active 클래스를 추가합니다.
+	        $(this).addClass("active");
+	    });
+	    
+	    $(document).on('click', '.submenu-item', function() {
+	        // 모든 .sidebar-item 요소에서 active 클래스를 제거합니다.
+	        $(".submenu-item").removeClass("active");
+
+	        // 클릭된 요소에만 active 클래스를 추가합니다.
+	        $(this).addClass("active");
+	    });
 	}); // ready
 </script>
 </head>

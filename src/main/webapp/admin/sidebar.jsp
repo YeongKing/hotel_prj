@@ -70,7 +70,6 @@
 			
 			<ul class="submenu ">
 				<li class="submenu-item rrm ">
-				
 				<a href="/hotel_prj/admin/resve/room_resve.jsp" class="submenu-link">
 				<i class="bi bi-dot"></i>
 				객실 예약 관리</a>
@@ -84,7 +83,7 @@
 			</ul>
 			</li>
 			
-			<li class="sidebar-item rom ">
+			<li class="sidebar-item rm ">
 			<a href="/hotel_prj/admin/room/room.jsp" class='sidebar-link'>
 				<i class="bi bi-house-door-fill"></i>
 				<span>객실 관리</span>

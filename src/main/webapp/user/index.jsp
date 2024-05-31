@@ -708,11 +708,11 @@ function fncSearchList(resveType){
 			return false;
 		}
 
-		jQuery("#mainResveForm").attr("action", "/user/resve/room/step1.jsp");
+		jQuery("#mainResveForm").attr("action", "/hotel_prj/user/resve/room/step1.jsp");
 		jQuery("#mainResveForm").submit();
 	}else if(resveType == "D"){
 
-		jQuery("#mainDiningForm").attr("action", "/user/resve/dining/step0.jsp");
+		jQuery("#mainDiningForm").attr("action", "/hotel_prj/user/resve/dining/step0.jsp");
 		jQuery("#mainDiningForm").submit();
 	}
 }

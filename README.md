@@ -40,3 +40,6 @@
 ## 📚 API
 - 포트원(결제) : [https://portone.gitbook.io/docs/api/api](https://portone.gitbook.io/docs/api/api)
 - Chart.js(차트) : [https://www.chartjs.org/docs/latest/](https://www.chartjs.org/docs/latest/)
+
+## 💾 Docs
+- [UseCase Diagram](https://github.com/YeongKing/hotel_prj/docs/UseCase.png)

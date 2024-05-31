@@ -24,18 +24,20 @@
 <!-- jQuery CDN E -->
 
 <style type = "text/css">
+	
 </style>
+
 <script type = "text/javascript">
 	$(function() {
-		$(".sidebar-item.rom").addClass("active");
+		$(".sidebar-item.rm").addClass("active");
 		
 		$(document).on('click', '.sidebar-item', function() {
-	        // 모든 .sidebar-item 요소에서 active 클래스를 제거합니다.
+	        // 모든 .sidebar-item 요소에서 active 클래스 제거
 	        $(".sidebar-item").removeClass("active");
 	
-	        // 클릭된 요소에만 active 클래스를 추가합니다.
+	        // 클릭된 요소에만 active 클래스 추가
 	        $(this).addClass("active");
-	    });
+		});
 	}); // ready
 </script>
 </head>

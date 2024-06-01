@@ -726,9 +726,9 @@ abbr[title="Josun Point"], abbr[title="Point"]{display:inline-block;margin:0 2px
 .myReserveInfo dd{position:relative;display:inline-block;font:500 18px gothamL,notokrR;vertical-align:1px}
 .myReserveInfo dd + dd{padding-right:0;font:400 17px notokrL;letter-spacing:-.01em}
 .myReserveInfo dd + dd:before{content:'';display:inline-block;position:absolute;top:6px;left:-3px;width:1px;height:16px;background:#ccc}
-.myReserveBox .tit{display:block;padding:70px 0 20px;font:500 24px notokrR;letter-spacing:-.02em}
-.myReserveBox .txtGuide{position:absolute;top:75px;right:70px}
-.myReserveBox .btnLine{position:absolute;top:78px;right:0}
+.myReserveBox .tit{display:block;padding:0px 0 20px;font:500 24px notokrR;letter-spacing:-.02em}
+.myReserveBox .txtGuide{position:absolute;top:0px;right:70px}
+.myReserveBox .btnLine{position:absolute;top:3px;right:0}
 /* 마이페이지 > 메인(유료멤버십 혜택 안내) */
 .myMembershipArea h4.titDep3{display:block;font:500 24px gothamB,notokrR;letter-spacing:-.025em}
 .myMembershipArea .tit{display:block;margin-bottom:15px;font:600 36px gothamB,notokrM;letter-spacing:-.02em;text-align:center}

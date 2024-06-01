@@ -31,7 +31,7 @@
     overflow: hidden;
     width: 350px;
     height: 24px;
-    background: url(../../../images/ko/pc/common/bg_logo_shinsegae02.png) no-repeat 0 0
+    background: url(../../../images/ko/pc/common/bg_logo_header.png) no-repeat 0 0
 }
 
 .header .logo a {
@@ -602,20 +602,20 @@
 .footer .footArea {
     position: relative;
     width: 1400px;
-    height: 370px;
+    height: 300px;
     margin: 0 auto;
-    padding: 150px 0 0 280px
+    padding: 80px 0 0 280px
 }
 
 .footer .footArea .logo {
     display: inline-block;
     position: absolute;
     left: 0;
-    top: 156px;
+    top: 90px;
     text-indent: -9999px;
     overflow: hidden;
-    width: 130px;
-    height: 64px;
+    width: 300px;
+    height: 100px;
     background: url(../../../images/ko/pc/common/bg_logo_footer.png) no-repeat 0 0
 }
 
@@ -623,6 +623,10 @@
     display: block;
     height: 64px
 }
+
+.footer .footArea .footCenter {
+	margin-left: 150px;
+} 
 
 .footer .footArea .infoPolicy a {
     display: inline-block;
@@ -733,15 +737,15 @@
     display: -ms-flexbox;
     display: flex;
     position: absolute;
-    right: 7px;
-    top: 210px;
+    right: 100px;
+    top: 120px;
     z-index: 1;
 }
 
 .footer .snsArea > div {
-    width: 36px;
-    min-width: 36px;
-    height: 36px;
+    width: 150px;
+    min-width: 150px;
+    height: 50px;
     margin-left: 24px;
 }
 
@@ -758,20 +762,8 @@
     cursor: pointer;
 }
 
-.footer .snsArea > div.icoJosun {
-    background: transparent url("../../../images/ko/pc/common/ico_sns_josun.png") center center/100% no-repeat
-}
-
-.footer .snsArea > div.icoKakao {
-    background: transparent url("../../../images/ko/pc/common/ico_sns_kakao.png") center center/100% no-repeat
-}
-
-.footer .snsArea > div.icoInsta {
-    background: transparent url("../../../images/ko/pc/common/ico_sns_insta.png") center center/100% no-repeat
-}
-
-.footer .snsArea > div.icoYoutube {
-    background: transparent url("../../../images/ko/pc/common/ico_sns_youtube.png") center center/100% no-repeat
+.footer .snsArea > div.icoGithub {
+    background: transparent url("../../../images/ko/pc/common/ico_sns_github.png") center center/100% no-repeat
 }
 
 /* // 210401 footer sns icon  */
@@ -780,7 +772,7 @@
     min-width: 230px;
     position: absolute;
     right: 0;
-    top: 140px;
+    top: 80px;
     z-index: 999
 }
 

@@ -16,7 +16,7 @@
   <meta name="format-detection" content="telephone=no">
     <meta name="naver-site-verification" content="7cc31c414eda7a3ea7b7a0bbb9c0a5c624370a87"/>
 
-  <title>엘리시안호텔 공식 사이트 | ELYSIAN HOTELS &amp; RESORTS Official Website</title>
+  <title>엘리시안호텔 공식 사이트 | ELYSIAN HOTEL Official Website</title>
 
 
   <meta name="keywords" content="조선호텔앤리조트, 신세계조선, 조선호텔, 웨스틴조선, 웨스틴조선호텔, 그랜드조선, 그랜드조선호텔,  레스케이프, 레스케이프호텔, 포포인츠, 포포인츠바이쉐라톤">

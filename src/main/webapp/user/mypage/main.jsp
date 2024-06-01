@@ -205,7 +205,7 @@
 
 <!--(페이지 URL)-->
 <head>
-<script type="text/javascript" src="/static/home/js/home.js"></script> 
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script> 
 </head>
  
 <script type="text/javascript">

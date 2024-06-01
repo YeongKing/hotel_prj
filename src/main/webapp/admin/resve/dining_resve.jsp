@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    info = "관리자 객실 예약 관리" %>
+    info = "관리자 다이닝 예약 관리" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -24,10 +24,29 @@
 <!-- jQuery CDN E -->
 
 <style type = "text/css">
+	
 </style>
+
 <script type = "text/javascript">
 	$(function() {
+		$(".sidebar-item.rem").addClass("active");
+		$(".submenu-item.drm").addClass("active");
+		
+		$(document).on('click', '.sidebar-item', function() {
+	        // 모든 .sidebar-item 요소에서 active 클래스 제거
+	        $(".sidebar-item").removeClass("active");
 
+	        // 클릭된 요소에만 active 클래스 추가
+	        $(this).addClass("active");
+	    });
+	    
+	    $(document).on('click', '.submenu-item', function() {
+	        // 모든 .sidebar-item 요소에서 active 클래스 제거
+	        $(".submenu-item").removeClass("active");
+
+	        // 클릭된 요소에만 active 클래스 추가
+	        $(this).addClass("active");
+	    });
 	}); // ready
 </script>
 </head>

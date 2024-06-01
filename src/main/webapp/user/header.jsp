@@ -2,13 +2,12 @@
  pageEncoding="UTF-8" 
  info="" %>
 
-<div class="header"> <!-- 메뉴 열리면 gnbOn 클래스 추가 -->
+<div class="header">
 <!-- header type02 추가 되는 경우 mainArea02, mainArea03, mainArea05  -->
 	<div class="headArea">
 	<strong class="logo"><a href="/hotel_prj/index.jsp">ELYSIAN HOTEL Official Website</a></strong>
 	<button type="button" class="btnMenu">메뉴 열기</button> <!-- 클릭하면 menuOn 클래스 추가, 메뉴 닫기 텍스트 변경 -->
 				
-		<!-- //20200709 수정 -->
 		<div class="allMenu"> <!-- 화면 높이값 계산 height:적용, body:overflow:hidden -->
 		<div class="inner">
 
@@ -80,7 +79,6 @@
 			<li><a href="/hotel_prj/user/cnfirm/mber/room/reserveList.jsp" id="confirmReserv">예약확인</a></li>
 		</ul>
 					
-		<!-- 20200723 수정 / 버튼에서 드롭다운으로 변경 -->
 		<div class="resvBtn">
 		<div class="dropdown_list" aria-expanded="false">
 		<div class="dropdown_value">
@@ -95,7 +93,6 @@
 		</ul>
 		</div>
 		</div>
-		<!-- //20200723 수정 -->
 		</div>
 		<!-- //gnbUtil -->
 	</div>

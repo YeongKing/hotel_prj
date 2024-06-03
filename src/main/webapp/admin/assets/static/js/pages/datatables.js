@@ -1,7 +1,7 @@
 let jquery_datatable = $("#table1").DataTable({
     responsive: true,
     dom:
-		"<'ro w'<'col-11'f><'col-1'l>>" +
+		"<'row'<'col-11'f><'col-1'l>>" +
 		"<'row dt-row'<'col-sm-12'tr>>" +
 		"<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
     language: {

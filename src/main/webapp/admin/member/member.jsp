@@ -29,6 +29,9 @@
 <!-- jQuery CDN E -->
 
 <style type="text/css">
+#table1_wrapper {
+	width:1470px;
+}
 </style>
 
 

@@ -39,6 +39,9 @@
 	display: grid;
 	grid-template-columns: 5% 45% 10% 10% 10% 10% 10%;
 }
+#table1_wrapper {
+	width:1470px;
+}
 </style>
 
 <script type="text/javascript">

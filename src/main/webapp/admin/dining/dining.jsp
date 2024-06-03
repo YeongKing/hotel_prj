@@ -16,6 +16,8 @@
 <link rel="stylesheet" crossorigin href="/hotel_prj/admin/assets/compiled/css/app.css">
 <link rel="stylesheet" crossorigin href="/hotel_prj/admin/assets/compiled/css/app-dark.css">
 <link rel="stylesheet" crossorigin href="/hotel_prj/admin/assets/compiled/css/iconly.css">
+<link rel="stylesheet" href="/hotel_prj/admin/assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" crossorigin="" href="/hotel_prj/admin/assets/compiled/css/table-datatable-jquery.css">
 
 <!-- jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -41,7 +43,17 @@
   max-width: 90%;
 }
 
+.addDining{
+	display: flex; 
+	justify-content: flex-end;
+	padding-bottom: 30px;
+	padding-right: 10px;
+}
 
+.buttons{
+	display: flex; 
+	padding-top: 30px;
+}
 </style>
 
 <script type="text/javascript">
@@ -70,7 +82,7 @@
 			<section class="row">
 				<div class="card">
 	                <div class="card-header">
-	                    <h5 class="card-title">jQuery Datatable</h5>
+	                    <h5 class="card-title">Dining Search</h5>
 	                </div>
 	                <div class="card-body">
 	                    <div class="table-responsive">
@@ -120,24 +132,21 @@
 	                                </tr>
 	                            </tbody>
 	                        </table>
+	                        <div class="addDining">
+	                        <a href="#" class="btn btn-info" id="addDiningBtn">다이닝 등록</a>
+	                    	</div>
 	                    </div>
 	                </div>
 	            </div>
 			</section>
 		</div>
 
-<!-- 모달창 -->
-<div class="modal fade text-left modal-borderless" id="diningDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+<!-- 등록 모달창 start -->
+<div class="modal fade text-left modal-borderless" id="addDiningModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">다이닝 상세 조회</h5>
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-danger" onclick="deleteDiningDetail()">
-                        <i class="bx bx-x d-block d-sm-none"></i> 
-                        <span class="d-none d-sm-block">계정삭제</span>
-                    </button>
-                </div>
+                <h5 class="modal-title">다이닝 등록</h5>
             </div>
             <form id="diningDetailForm" action="#" class="form px-5" data-parsley-validate>
                 <div class="row">
@@ -205,7 +214,7 @@
                                     <button class="btn btn-primary" type="button" id="inputGroupFileAddon04">Upload</button>
                                 </div>
                             </div>
-						                            <div class="buttons">
+						    <div class="buttons">
                                 <button type="button" class="btn icon icon-left btn-success">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
                                         <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
@@ -221,6 +230,113 @@
         </div>
     </div>
 </div>
+<!-- 등록 모달창 end -->
+
+<!-- 수정 모달창 start -->
+<div class="modal fade text-right modal-borderless" id="diningDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">다이닝 수정</h5>
+            </div>
+            <form id="diningDetailForm" action="#" class="form px-5" data-parsley-validate>
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div>
+                            <div class="form-group">
+                                <label for="diningId">매장아이디</label>
+                                <input type="text" class="form-control" id="diningId" placeholder="Dining01" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="diningName">매장명</label>
+                                <input type="text" class="form-control" id="diningName" placeholder="Enter dining name">
+                            </div>
+                            <div class="form-group">
+                                <label for="diningType">매장구분</label>
+                                <select class="form-select" id="diningType">
+                                    <option>양식</option>
+                                    <option>중식</option>
+                                    <option>일식</option>
+                                    <option>다이닝바</option>
+                                    <option>베이커리</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="hallTable">홀테이블</label>
+                                <input type="text" class="form-control" id="hallTable" placeholder="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="roomTable">룸테이블</label>
+                                <input type="text" class="form-control" id="roomTable" placeholder="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="openTime">영업시작시간</label>
+                                <input type="text" class="form-control" id="openTime" placeholder="00:00">
+                            </div>
+                            <div class="form-group">
+                                <label for="closeTime">영업종료시간</label>
+                                <input type="text" class="form-control" id="closeTime" placeholder="00:00">
+                            </div>
+                            <div class="form-group">
+                                <label for="location">위치</label>
+                                <input type="text" class="form-control" id="location">
+                            </div>
+                            <div class="form-group">
+                                <label for="deposit">예약금</label>
+                                <input type="text" id="deposit" class="form-control" placeholder="0">
+                                <p><small class="text-muted">인당</small></p>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+						<div class="form-group">
+   							 <label for="diningDescription">레스토랑설명</label>
+   							 <textarea class="form-control" id="diningDescription" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
+   							 
+     						 <label for="diningDescription">코스설명</label>
+   							 <textarea class="form-control" id="diningDescription1" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea> 							 	 
+						</div>
+						                            <div class="form-group">
+                                <label for="diningImg">매장 대표 이미지</label>
+                                <div class="input-group">
+                                    <input type="file" class="form-control" id="diningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                    <button class="btn btn-primary" type="button" id="inputGroupFileAddon04">Upload</button>
+                                </div>
+                            </div>
+						    <div class="buttons">
+                                    <a href="#" class="btn icon icon-left btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>수정</a>
+                                	<a href="#" class="btn icon icon-left btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>삭제</a>
+                            </div>
+						
+						
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 수정 모달창 end -->
+<!-- 삭제 확인 모달 -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">삭제 확인</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                삭제하시겠습니까?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">예</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 		<!-- footer -->
 		<jsp:include page="/admin/footer.jsp"></jsp:include>
@@ -238,13 +354,19 @@ $(document).ready(function() {
 	});
 
     
+	//다이닝 등록 번호 클릭시
+	$("#addDiningBtn").click(function(){
+       
+       // Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
+       $('#addDiningModal').modal('show');
+	})
+	
     
     // 테이블의 다이닝번호 클릭시
     $(".diningNumber").click( function(){
     	
    
-    	alert("d");
-;
+    	
        /*  var userId = $(this).text();
         var userName = $(this).closest('tr').find('.userName').text(); // 같은 행(row) 내에서 .userName을 찾아 텍스트를 가져옴
         var userPhone = $(this).closest('tr').find('.userPhone').text(); // 같은 행(row) 내에서 .userName을 찾아 텍스트를 가져옴
@@ -268,7 +390,23 @@ $(document).ready(function() {
         $('#diningDetail').modal('show');
     });
 
-    
+	  // 삭제 버튼 클릭시
+    $(".btn-danger").click(function(){
+        // Bootstrap 모달 메소드를 사용하여 확인 모달을 보여줍니다.
+        $('#confirmDeleteModal').modal('show');
+    });
+
+    // 확인 모달에서 예 버튼 클릭시
+    $("#confirmDeleteBtn").click(function(){
+        // 여기서 실제 삭제 작업을 수행합니다.
+        // 예를 들어, AJAX를 사용하여 서버에 삭제 요청을 보낼 수 있습니다.
+        // 성공적으로 삭제한 후 모달을 닫습니다.
+        $('#confirmDeleteModal').modal('hide');
+        $('#diningDetail').modal('hide');
+
+        // 예시로 alert를 사용합니다.
+        alert("삭제되었습니다.");
+    });
 
 });//ready
 </script>

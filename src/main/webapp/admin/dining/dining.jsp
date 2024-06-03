@@ -35,6 +35,13 @@
   margin: 0;
   padding: 0;
 }
+
+
+.modal-xl {
+  max-width: 90%;
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -119,97 +126,101 @@
 			</section>
 		</div>
 
-		<!-- 모달창 -->
-		<div class="modal fade text-left modal-borderless modal-full"  id="diningDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-scrollable" role="document">
-				<div class="modal-content">
-					<div class="modal-header" >
-						<h5 class="modal-title">다이닝 상세 조회</h5>
-						<div class="d-flex justify-content-end">
-							<button type="button" class="btn btn-danger" onclick="deleteDiningDetail()">
-								<i class="bx bx-x d-block d-sm-none"></i> 
-								<span class="d-none d-sm-block">계정삭제</span>
-							</button>
+<!-- 모달창 -->
+<div class="modal fade text-left modal-borderless" id="diningDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">다이닝 상세 조회</h5>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-danger" onclick="deleteDiningDetail()">
+                        <i class="bx bx-x d-block d-sm-none"></i> 
+                        <span class="d-none d-sm-block">계정삭제</span>
+                    </button>
+                </div>
+            </div>
+            <form id="diningDetailForm" action="#" class="form px-5" data-parsley-validate>
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div>
+                            <div class="form-group">
+                                <label for="diningId">매장아이디</label>
+                                <input type="text" class="form-control" id="diningId" placeholder="Dining01" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="diningName">매장명</label>
+                                <input type="text" class="form-control" id="diningName" placeholder="Enter dining name">
+                            </div>
+                            <div class="form-group">
+                                <label for="diningType">매장구분</label>
+                                <select class="form-select" id="diningType">
+                                    <option>양식</option>
+                                    <option>중식</option>
+                                    <option>일식</option>
+                                    <option>다이닝바</option>
+                                    <option>베이커리</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="hallTable">홀테이블</label>
+                                <input type="text" class="form-control" id="hallTable" placeholder="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="roomTable">룸테이블</label>
+                                <input type="text" class="form-control" id="roomTable" placeholder="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="openTime">영업시작시간</label>
+                                <input type="text" class="form-control" id="openTime" placeholder="00:00">
+                            </div>
+                            <div class="form-group">
+                                <label for="closeTime">영업종료시간</label>
+                                <input type="text" class="form-control" id="closeTime" placeholder="00:00">
+                            </div>
+                            <div class="form-group">
+                                <label for="location">위치</label>
+                                <input type="text" class="form-control" id="location">
+                            </div>
+                            <div class="form-group">
+                                <label for="deposit">예약금</label>
+                                <input type="text" id="deposit" class="form-control" placeholder="0">
+                                <p><small class="text-muted">인당</small></p>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+						<div class="form-group">
+   							 <label for="diningDescription">레스토랑설명</label>
+   							 <textarea class="form-control" id="diningDescription" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
+   							 
+     						 <label for="diningDescription">코스설명</label>
+   							 <textarea class="form-control" id="diningDescription1" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea> 							 	 
 						</div>
-					</div>
-					<form id="diningDetailForm" action="#" class="form px-5" data-parsley-validate>
-		                <div class="row">
-		                <div class="col-12 col-md-20">
-		                    <div>
-		                        <div class="form-group">
-		                            <label for="disabledInput">매장아이디</label>
-		                            <input type="text" class="form-control" id="diningId" placeholder="Dining01" disabled="">
-		                        </div>
-		                        <div class="form-group">
-		                            <label for="basicInput">매장명</label>
-		                            <input type="text" class="form-control" id="diningName" placeholder="Enter email">
-		                        </div>
-		                        <div class="form-group">
-		                            <label for="basicInput">매장구분</label>
-		                            <fieldset class="form-group">
-		                            <select class="form-select" id="diningType">
-		                           		<option>양식</option>
-		                            	<option>중식</option>
-		                            	<option>일식</option>
-		                            	<option>다이닝바</option>
-		                            	<option>베이커리</option>
-		                            </select>
-		                            </fieldset>
-		                        </div>
-
-		                        <div class="form-group">
-		                            <label for="basicInput">홀테이블</label>
-		                            <input type="text" class="form-control" id="hallTable" placeholder="0">
-		                        </div>
-
-		                        <div class="form-group">
-		                            <label for="basicInput">룸테이블</label>
-		                            <input type="text" class="form-control" id="roomTable" placeholder="0">
-		                        </div>
-		                        <div class="form-group">
-		                            <label for="basicInput">영업시작시간</label>
-		                            <input type="text" class="form-control" id="openTime" placeholder="00:00">
-		                        </div>
-		                        <div class="form-group">
-		                            <label for="basicInput">영업종료시간</label>
-		                            <input type="text" class="form-control" id="closeTime" placeholder="00:00">
-		                        </div>
-		                        <div class="form-group">
-		                            <label for="basicInput">위치</label>
-		                            <input type="text" class="form-control" id="location">
-		                        </div>
-
-		                        <div class="form-group">
-		                            <label for="helperText">예약금</label>
-		                            <input type="text" id="deposit" class="form-control" placeholder="0">
-		                            <p><small class="text-muted">인당</small></p>
-		                        </div>
-		                        <div class="form-group">
-		                            <label for="disabledInput">매장 대표 이미지</label>
-		                   			<fieldset>
-		                    		 	<div class="input-group">
-		                     		 		<input type="file" class="form-control" id="diningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-		                    		 		<button class="btn btn-primary" type="button" id="inputGroupFileAddon04">Upload</button>
-		                    			</div>
-		                    		  </fieldset>
-		                 		</div>
-		                 		<div class="buttons">
-		                 		<a href="#" class="btn icon icon-left btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> 저장</a>
-		                 		</div>
-		                    </div>
-		                </div>
-		                <div class="col-12 col-md-20">
-		                    
-		                    <div class="form-group">
-		                        <label for="helperText">레스토랑설명</label>
-		                        <textarea class="form-control" id="diningDescription" rows="20"></textarea>
-		                    </div>
-		                </div>
-		                </div>
-	            	</form>
-				</div>
-			</div>
-		</div>
+						                            <div class="form-group">
+                                <label for="diningImg">매장 대표 이미지</label>
+                                <div class="input-group">
+                                    <input type="file" class="form-control" id="diningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                    <button class="btn btn-primary" type="button" id="inputGroupFileAddon04">Upload</button>
+                                </div>
+                            </div>
+						                            <div class="buttons">
+                                <button type="button" class="btn icon icon-left btn-success">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                        <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg> 저장
+                                </button>
+                            </div>
+						
+						
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 		<!-- footer -->
 		<jsp:include page="/admin/footer.jsp"></jsp:include>

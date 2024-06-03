@@ -1,13 +1,14 @@
 let jquery_datatable = $("#table1").DataTable({
     responsive: true,
     dom:
-		"<'row'<'col-11'f><'col-1'l>>" +
+		"<'row'<'col-sm-12 col-md-11'f><'col-sm-12 col-md-1'l>>" +
 		"<'row dt-row'<'col-sm-12'tr>>" +
 		"<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
     language: {
         emptyTable: "데이터가 없습니다.",
-        lengthMenu: "보기_MENU_",
-        search: "검색",
+        zeroRecords: "데이터가 없습니다.",
+        lengthMenu: "_MENU_개",
+        search: "검색 ",
         searchPlaceholder: "검색어를 입력하세요.",
         paginate: {
             "next": "다음",

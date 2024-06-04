@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" info="관리자 다이닝 관리"%>
+	pageEncoding="UTF-8" info="관리자 회원 관리"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -9,406 +9,26 @@
 <title>엘리시안 호텔 관리자 페이지</title>
 
 <!-- favicon S -->
-<link rel="shortcut icon"
-	href="/hotel_prj/admin/assets/static/images/logo/favicon.ico"
-	type="image/x-icon">
+<link rel="shortcut icon"href="/hotel_prj/admin/assets/static/images/logo/favicon.ico" type="image/x-icon">
 <!-- favicon E -->
 
+
+<link rel="stylesheet" href="/hotel_prj/admin/assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" crossorigin="" href="/hotel_prj/admin/assets/compiled/css/table-datatable-jquery.css">
+
 <!-- template css S -->
-<link rel="stylesheet" crossorigin
-	href="/hotel_prj/admin/assets/compiled/css/app.css">
-<link rel="stylesheet" crossorigin
-	href="/hotel_prj/admin/assets/compiled/css/app-dark.css">
-<link rel="stylesheet" crossorigin
-	href="/hotel_prj/admin/assets/compiled/css/iconly.css">
+<link rel="stylesheet" crossorigin href="/hotel_prj/admin/assets/compiled/css/app.css">
+<link rel="stylesheet" crossorigin href="/hotel_prj/admin/assets/compiled/css/app-dark.css">
+<link rel="stylesheet" crossorigin href="/hotel_prj/admin/assets/compiled/css/iconly.css">
 <!-- template css E -->
 
 <!-- jQuery CDN S -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN E -->
 
 <style type="text/css">
-#table1_wrapper {
-	width:1470px;
-}
+
 </style>
-
-
-</head>
-<body>
-	<script src="/hotel_prj/admin/assets/static/js/initTheme.js"></script>
-
-	<!-- app S -->
-	<div id="app">
-		<!-- sidebar S -->
-		<jsp:include page="/admin/sidebar.jsp"></jsp:include>
-		<!-- sidebar E -->
-
-		<!-- main S -->
-		<div id="main">
-
-			<!-- header S -->
-			<jsp:include page="/admin/header.jsp"></jsp:include>
-			<!-- header E -->
-
-			<div class="page-heading">
-				<div class="page-title">
-					<div class="row">
-						<div class="col-12 col-md-6 order-md-1 order-last">
-							<h3>회원 관리</h3>
-							<p class="text-subtitle text-muted">Powerful interactive
-								tables with datatables (jQuery required).</p>
-						</div>
-						<div class="col-12 col-md-6 order-md-2 order-first">
-							<nav aria-label="breadcrumb"
-								class="breadcrumb-header float-start float-lg-end">
-								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-									<li class="breadcrumb-item active" aria-current="page">DataTable
-										jQuery</li>
-								</ol>
-							</nav>
-						</div>
-					</div>
-				</div>
-
-				<div class="page-content mb-3">
-					<!-- Basic Tables start -->
-					<section class="section">
-						<div class="card">
-							<div class="card-body">
-								<div class="table-responsive">
-									<table class="table" id="table1">
-										<thead>
-											<tr>
-												<th>번호</th>
-												<th>아이디</th>
-												<th>이름</th>
-												<th>전화번호</th>
-												<th>가입일자</th>
-												<th>최근 로그인 일자</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<th>1</th>
-												<td class="userId">andud</td>
-												<td class="userName">김무영</td>
-												<td class="userPhone">010-1111-1111</td>
-												<td class="userSignUpDate">2024-01-01</td>
-												<td class="userLoginDate">2024-06-01 15:37:20</td>
-												<!-- <td><span class="badge bg-success">Active</span></td> -->
-												<!-- <td><span class="badge bg-danger">Inactive</span></td> -->
-											</tr>
-											<tr>
-												<th>2</th>
-												<td class="userId">wngml</td>
-												<td class="userName">이주희</td>
-												<td class="userPhone">010-1111-1112</td>
-												<td class="userSignUpDate">2024-01-03</td>
-												<td class="userLoginDate">2024-06-01 16:37:30</td>
-											</tr>
-											<tr>
-												<th>3</th>
-												<td class="userId">dndcks</td>
-												<td class="userName">윤웅찬</td>
-												<td class="userPhone">010-1111-1113</td>
-												<td class="userSignUpDate">2024-01-05</td>
-												<td class="userLoginDate">2024-06-01 17:37:24</td>
-											</tr>
-											<tr>
-												<th>4</th>
-												<td class="userId">whgml</td>
-												<td class="userName">이조희</td>
-												<td class="userPhone">010-1111-1114</td>
-												<td class="userSignUpDate">2024-01-07</td>
-												<td class="userLoginDate">2024-06-01 18:37:28</td>
-											</tr>
-
-											<tr>
-												<th>5</th>
-												<td class="userId">cksdbs</td>
-												<td class="userName">웅찬윤</td>
-												<td class="userPhone">010-2222-1111</td>
-												<td class="userSignUpDate">2024-01-09</td>
-												<td class="userLoginDate">2024-06-01 19:37:21</td>
-											</tr>
-											<tr>
-												<th>6</th>
-												<td class="userId">anzld</td>
-												<td class="userName">영무킹</td>
-												<td class="userPhone">010-1111-2323</td>
-												<td class="userSignUpDate">2024-01-20</td>
-												<td class="userLoginDate">2024-06-01 20:37:37</td>
-											</tr>
-											<tr>
-												<th>7</th>
-												<td class="userId">alsths</td>
-												<td class="userName">지민손</td>
-												<td class="userPhone">010-1134-1111</td>
-												<td class="userSignUpDate">2024-02-01</td>
-												<td class="userLoginDate">2024-06-01 11:37:50</td>
-											</tr>
-											<tr>
-												<th>8</th>
-												<td class="userId">wlals</td>
-												<td class="userName">손지민</td>
-												<td class="userPhone">010-1445-1131</td>
-												<td class="userSignUpDate">2024-02-05</td>
-												<td class="userLoginDate">2024-06-01 13:37:29</td>
-											</tr>
-											<tr>
-												<th>9</th>
-												<td class="userId">Tkddyd</td>
-												<td class="userName">쌍용</td>
-												<td class="userPhone">010-1321-1671</td>
-												<td class="userSignUpDate">2024-03-04</td>
-												<td class="userLoginDate">2024-06-01 17:37:30</td>
-											</tr>
-											<tr>
-												<th>10</th>
-												<td class="userId">dydTkd</td>
-												<td class="userName">용쌍</td>
-												<td class="userPhone">010-1871-1651</td>
-												<td class="userSignUpDate">2024-03-01</td>
-												<td class="userLoginDate">2024-06-01 18:37:13</td>
-											</tr>
-											<tr>
-												<th>11</th>
-												<td class="userId">rlfehd</td>
-												<td class="userName">홍길동</td>
-												<td class="userPhone">010-2341-1511</td>
-												<td class="userSignUpDate">2024-05-02</td>
-												<td class="userLoginDate">2024-06-01 19:37:10</td>
-											</tr>
-
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-
-					</section>
-				</div>
-				<!-- 모달창 -->
-				<div class="modal fade text-left modal-borderless modal-xl "
-					id="userDetail" tabindex="-1" role="dialog"
-					aria-labelledby="myModalLabel1" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-scrollable" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title">회원 상세조회</h5>
-								<div class="d-flex justify-content-end">
-									<button type="button" class="btn btn-danger" onclick="deleteUserDetail()">
-										<i class="bx bx-x d-block d-sm-none"></i> 
-										<span class="d-none d-sm-block">계정삭제</span>
-									</button>
-									<!-- 				                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
-				                        aria-label="Close">
-				                    <i data-feather="x"></i>
-				                </button> -->
-
-								</div>
-							</div>
-							<form id = "userDetailForm" action="#"  class="form px-5" data-parsley-validate>
-								<div class="row">
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="userId">아이디</label> 
-											<input type="text"
-												id="userId" class="form-control"
-												name="userId" placeholder="아이디" readonly>
-
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="userEmail">이메일</label> 
-											<input
-						                        type="text"
-						                        id="userEmail"
-						                        class="form-control"
-						                        placeholder="test@test.test"
-						                        name="userEmail"
-						                        data-parsley-required="true"
-						                        data-parsley-type="email"
-						                        data-parsley-error-message="유효한 이메일 주소를 입력하세요."
-						                     />
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="userName">이름</label> 
-											<input
-						                        type="text"
-						                        id="userName"
-						                        class="form-control"
-						                        placeholder="이름"
-						                        name="userName"
-						                        data-parsley-required="true"
-						                        data-parsley-error-message="회원명은 필수 입력입니다."
-						                     />
-												
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="userGender">성별</label>
-											 <input type="text"
-												id="userGender" class="form-control" readonly
-												name="userGender" placeholder="성별">
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="userEnLastName">영문 성</label>
-											<input
-						                        type="text"
-						                        id="userEnLastName"
-						                        class="form-control"
-						                        placeholder="영문 성"
-						                        name="userEnLastName"
-						                        data-parsley-required="true"
-						                        data-parsley-error-message="영문 성은 필수 입력입니다."
-						                     />
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="userEnFirstName">영문 이름</label>
-											<input
-						                        type="text"
-						                        id="userEnFirstName"
-						                        class="form-control"
-						                        placeholder="영문 이름"
-						                        name="userEnFirstName"
-						                        data-parsley-required="true"
-						                        data-parsley-error-message="영문 이름은 필수 입력입니다."
-						                     />
-										</div>
-									</div>
-
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="userZipCode">우편번호</label>
-											<input
-						                        type="text"
-						                        id="userZipCode"
-						                        class="form-control"
-						                        placeholder="클릭시 우편번호 검색"
-						                        name="userZipCode"
-						                        data-parsley-required="true"
-						                        data-parsley-error-message="우편번호는 필수 입력입니다."
-						                     	readonly
-						                     	onclick="execDaumPostcode()"/>
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="userPhone">전화번호</label>
-											<input
-						                        type="text"
-						                        id="userPhone"
-						                        class="form-control"
-						                        placeholder="000-0000-0000"
-						                        name="userPhone"
-						                        data-parsley-required="true"
-						                        data-parsley-error-message="전화번호는 필수 입력입니다."
-						                     />
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="userAdress1">주소</label>
-											<input
-						                        type="text"
-						                        id="userAdress1"
-						                        class="form-control"
-						                        placeholder="주소"
-						                        name="userAdress1"
-						                        data-parsley-required="true"
-						                        data-parsley-error-message="주소는 필수 입력입니다."
-						                        readonly
-						                     />
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-										
-											<label for="userBirthday">생년월일</label>
-											 <input type="date"
-												id="userBirthday" class="form-control" name="userBirthday"
-												placeholder="생년월일" readonly>
-												
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="userAdress2">상세주소</label>
-											<input
-						                        type="text"
-						                        id="userAdress2"
-						                        class="form-control"
-						                        placeholder="상세주소"
-						                        name="userAdress2"
-						                        data-parsley-required="true"
-						                        data-parsley-error-message="상세주소는 필수 입력입니다."
-						                       
-						                     />
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="userSignUpDate">가입일자</label> 
-											<input type="date"
-												id="userSignUpDate" class="form-control"
-												name="userSignUpDate" placeholder="가입일자" readonly>
-										</div>
-									</div>
-
-									<div style="height: 30px;"></div>
-									<div class="col-12 d-flex justify-content-center">
-										<button type="submit" class="btn btn-primary me-1 mb-1">저장</button>
-										<button type="button" class="btn btn-light-secondary me-1 mb-1" data-bs-dismiss="modal">닫기</button>
-									</div>
-									<div style="height: 30px;"></div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-
-
-  
-
-				<!-- footer S -->
-				<jsp:include page="/admin/footer.jsp"></jsp:include>
-				<!-- footer E -->
-			</div>
-			<!-- main E -->
-
-		</div>
-	</div>
-
-	<!-- app E  -->
-
-	<!-- 공통 필요 Script S -->
-	<script src="/hotel_prj/admin/assets/static/js/components/dark.js"></script>
-	<script
-		src="/hotel_prj/admin/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script src="/hotel_prj/admin/assets/compiled/js/app.js"></script>
-	<!-- 공통 필요 Script E -->
-
-	<!-- 추가 Script S -->
-	<script src="/hotel_prj/admin/assets/extensions/jquery/jquery.min.js"></script>
-	<script src="/hotel_prj/admin/assets/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script src="/hotel_prj/admin/assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-	<script src="/hotel_prj/admin/assets/extensions/parsleyjs/parsley.min.js"></script>
-	<script src="/hotel_prj/admin/assets/static/js/pages/parsley.js"></script>
-	<script src="/hotel_prj/admin/assets/static/js/pages/datatables.js"></script>
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<!-- 추가 Script E -->
 
 	<script type="text/javascript">
 $(document).ready(function() {
@@ -595,6 +215,388 @@ document.getElementById('userDetailForm').onsubmit = function() {
 
 };
 </script>
+
+
+
+
+
+
+
+</head>
+<body>
+	<script src="/hotel_prj/admin/assets/static/js/initTheme.js"></script>
+
+	<!-- app S -->
+	<div id="app">
+		<!-- sidebar S -->
+		<jsp:include page="/admin/sidebar.jsp"></jsp:include>
+		<!-- sidebar E -->
+
+		<!-- main S -->
+		<div id="main">
+
+			<!-- header S -->
+			<jsp:include page="/admin/header.jsp"></jsp:include>
+			<!-- header E -->
+
+			<div class="page-heading">
+				<div class="page-title">
+					<div class="row">
+						<div class="col-12 col-md-6 order-md-1 order-last">
+							<h3>회원 관리</h3>
+							<p class="text-subtitle text-muted">관리자 회원 관리</p>
+						</div>
+						<div class="col-12 col-md-6 order-md-2 order-first">
+							<nav aria-label="breadcrumb"
+								class="breadcrumb-header float-start float-lg-end">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+									<li class="breadcrumb-item active" aria-current="page">DataTable
+										jQuery</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
+
+				<div class="page-content mb-3">
+					<!-- Basic Tables start -->
+					<section class="section">
+						<div class="card">
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table" id="table1">
+										<thead>
+											<tr>
+												<th>번호</th>
+												<th>아이디</th>
+												<th>이름</th>
+												<th>전화번호</th>
+												<th>가입일자</th>
+												<th>최근 로그인 일자</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>1</th>
+												<td><a href="#" class="userId">andud</a></td>
+												<td class="userName">김무영</td>
+												<td class="userPhone">010-1111-1111</td>
+												<td class="userSignUpDate">2024-01-01</td>
+												<td class="userLoginDate">2024-06-01 15:37:20</td>
+												<!-- <td><span class="badge bg-success">Active</span></td> -->
+												<!-- <td><span class="badge bg-danger">Inactive</span></td> -->
+											</tr>
+											<tr>
+												<th>2</th>
+												<td><a href="#" class="userId">wngml</a></td>
+												<td class="userName">이주희</td>
+												<td class="userPhone">010-1111-1112</td>
+												<td class="userSignUpDate">2024-01-03</td>
+												<td class="userLoginDate">2024-06-01 16:37:30</td>
+											</tr>
+											<tr>
+												<th>3</th>
+												<td><a href="#" class="userId">dndcks</a></td>
+												<td class="userName">윤웅찬</td>
+												<td class="userPhone">010-1111-1113</td>
+												<td class="userSignUpDate">2024-01-05</td>
+												<td class="userLoginDate">2024-06-01 17:37:24</td>
+											</tr>
+											<tr>
+												<th>4</th>
+												<td><a href="#" class="userId">whgml</a></td>
+												<td class="userName">이조희</td>
+												<td class="userPhone">010-1111-1114</td>
+												<td class="userSignUpDate">2024-01-07</td>
+												<td class="userLoginDate">2024-06-01 18:37:28</td>
+											</tr>
+
+											<tr>
+												<th>5</th>
+												<td><a href="#" class="userId">cksdbs</a></td>
+												<td class="userName">웅찬윤</td>
+												<td class="userPhone">010-2222-1111</td>
+												<td class="userSignUpDate">2024-01-09</td>
+												<td class="userLoginDate">2024-06-01 19:37:21</td>
+											</tr>
+											<tr>
+												<th>6</th>
+												<td><a href="#" class="userId">anzld</a></td>
+												<td class="userName">영무킹</td>
+												<td class="userPhone">010-1111-2323</td>
+												<td class="userSignUpDate">2024-01-20</td>
+												<td class="userLoginDate">2024-06-01 20:37:37</td>
+											</tr>
+											<tr>
+												<th>7</th>
+												<td><a href="#" class="userId">alsths</a></td>
+												<td class="userName">지민손</td>
+												<td class="userPhone">010-1134-1111</td>
+												<td class="userSignUpDate">2024-02-01</td>
+												<td class="userLoginDate">2024-06-01 11:37:50</td>
+											</tr>
+											<tr>
+												<th>8</th>
+												<td><a href="#" class="userId">wlals</a></td>
+												<td class="userName">손지민</td>
+												<td class="userPhone">010-1445-1131</td>
+												<td class="userSignUpDate">2024-02-05</td>
+												<td class="userLoginDate">2024-06-01 13:37:29</td>
+											</tr>
+											<tr>
+												<th>9</th>
+												<td><a href="#" class="userId">Tkddyd</a></td>
+												<td class="userName">쌍용</td>
+												<td class="userPhone">010-1321-1671</td>
+												<td class="userSignUpDate">2024-03-04</td>
+												<td class="userLoginDate">2024-06-01 17:37:30</td>
+											</tr>
+											<tr>
+												<th>10</th>
+												<td><a href="#" class="userId">dydTkd</a></td>
+												<td class="userName">용쌍</td>
+												<td class="userPhone">010-1871-1651</td>
+												<td class="userSignUpDate">2024-03-01</td>
+												<td class="userLoginDate">2024-06-01 18:37:13</td>
+											</tr>
+											<tr>
+												<th>11</th>
+												<td><a href="#" class="userId">rlfehd</a></td>
+												<td class="userName">홍길동</td>
+												<td class="userPhone">010-2341-1511</td>
+												<td class="userSignUpDate">2024-05-02</td>
+												<td class="userLoginDate">2024-06-01 19:37:10</td>
+											</tr>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+					</section>
+				</div>
+				<!-- 모달창 -->
+				<div class="modal fade text-left modal-borderless modal-xl "
+					id="userDetail" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-scrollable" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">회원 상세조회</h5>
+								<div class="d-flex justify-content-end">
+									<button type="button" class="btn btn-danger" onclick="deleteUserDetail()">
+										<i class="bx bx-x d-block d-sm-none"></i> 
+										<span class="d-none d-sm-block">계정삭제</span>
+									</button>
+									<!-- 				                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
+				                        aria-label="Close">
+				                    <i data-feather="x"></i>
+				                </button> -->
+
+								</div>
+							</div>
+							<form id = "userDetailForm" action="#"  class="form px-5" data-parsley-validate>
+								<div class="row">
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="userId">아이디</label> 
+											<input type="text"
+												id="userId" class="form-control"
+												name="userId" placeholder="아이디" Disabled>
+
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="userEmail">이메일</label> 
+											<input
+						                        type="text"
+						                        id="userEmail"
+						                        class="form-control"
+						                        placeholder="test@test.test"
+						                        name="userEmail"
+						                        data-parsley-required="true"
+						                        data-parsley-type="email"
+						                        data-parsley-error-message="유효한 이메일 주소를 입력하세요."
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="userName">이름</label> 
+											<input
+						                        type="text"
+						                        id="userName"
+						                        class="form-control"
+						                        placeholder="이름"
+						                        name="userName"
+						                        data-parsley-required="true"
+						                        data-parsley-error-message="회원명은 필수 입력입니다."
+						                     />
+												
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="userGender">성별</label>
+											 <input type="text"
+												id="userGender" class="form-control" Disabled
+												name="userGender" placeholder="성별">
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="userEnLastName">영문 성</label>
+											<input
+						                        type="text"
+						                        id="userEnLastName"
+						                        class="form-control"
+						                        placeholder="영문 성"
+						                        name="userEnLastName"
+						                        data-parsley-required="true"
+						                        data-parsley-error-message="영문 성은 필수 입력입니다."
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="userEnFirstName">영문 이름</label>
+											<input
+						                        type="text"
+						                        id="userEnFirstName"
+						                        class="form-control"
+						                        placeholder="영문 이름"
+						                        name="userEnFirstName"
+						                        data-parsley-required="true"
+						                        data-parsley-error-message="영문 이름은 필수 입력입니다."
+						                     />
+										</div>
+									</div>
+
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="userZipCode">우편번호</label>
+											<input
+						                        type="text"
+						                        id="userZipCode"
+						                        class="form-control"
+						                        placeholder="클릭시 우편번호 검색"
+						                        name="userZipCode"
+						                        data-parsley-required="true"
+						                        data-parsley-error-message="우편번호는 필수 입력입니다."
+						                     	readonly
+						                     	onclick="execDaumPostcode()"/>
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="userPhone">전화번호</label>
+											<input
+						                        type="text"
+						                        id="userPhone"
+						                        class="form-control"
+						                        placeholder="000-0000-0000"
+						                        name="userPhone"
+						                        data-parsley-required="true"
+						                        data-parsley-error-message="전화번호는 필수 입력입니다."
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="userAdress1">주소</label>
+											<input
+						                        type="text"
+						                        id="userAdress1"
+						                        class="form-control"
+						                        placeholder="주소"
+						                        name="userAdress1"
+						                        data-parsley-required="true"
+						                        data-parsley-error-message="주소는 필수 입력입니다."
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+										
+											<label for="userBirthday">생년월일</label>
+											 <input type="date"
+												id="userBirthday" class="form-control" name="userBirthday"
+												placeholder="생년월일" Disabled>
+												
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="userAdress2">상세주소</label>
+											<input
+						                        type="text"
+						                        id="userAdress2"
+						                        class="form-control"
+						                        placeholder="상세주소"
+						                        name="userAdress2"
+						                        data-parsley-required="true"
+						                        data-parsley-error-message="상세주소는 필수 입력입니다."
+						                       
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="userSignUpDate">가입일자</label> 
+											<input type="date"
+												id="userSignUpDate" class="form-control"
+												name="userSignUpDate" placeholder="가입일자" Disabled>
+										</div>
+									</div>
+
+									<div style="height: 30px;"></div>
+									<div class="col-12 d-flex justify-content-center">
+										<button type="submit" class="btn btn-primary me-1 mb-1">저장</button>
+										<button type="button" class="btn btn-light-secondary me-1 mb-1" data-bs-dismiss="modal">닫기</button>
+									</div>
+									<div style="height: 30px;"></div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+
+  
+
+				<!-- footer S -->
+				<jsp:include page="/admin/footer.jsp"></jsp:include>
+				<!-- footer E -->
+			</div>
+			<!-- main E -->
+
+		</div>
+	</div>
+
+	<!-- app E  -->
+
+	<!-- 공통 필요 Script S -->
+	<script src="/hotel_prj/admin/assets/static/js/components/dark.js"></script>
+	<script
+		src="/hotel_prj/admin/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="/hotel_prj/admin/assets/compiled/js/app.js"></script>
+	<!-- 공통 필요 Script E -->
+
+	<!-- 추가 Script S -->
+	<script src="/hotel_prj/admin/assets/extensions/jquery/jquery.min.js"></script>
+	<script src="/hotel_prj/admin/assets/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
+	<script src="/hotel_prj/admin/assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+	<script src="/hotel_prj/admin/assets/extensions/parsleyjs/parsley.min.js"></script>
+	<script src="/hotel_prj/admin/assets/static/js/pages/parsley.js"></script>
+	<script src="/hotel_prj/admin/assets/static/js/pages/datatables.js"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<!-- 추가 Script E -->
+
+
 
 
 

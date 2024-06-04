@@ -193,11 +193,11 @@
                                 </div>
                         </div>
 						<div class="buttons">
-                                <button type="button" class="btn icon icon-left btn-success">
+                                <button type="button" id="chkAddBtn" class="btn icon icon-left btn-success">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
                                         <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
                                         <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                                    </svg> 저장
+                                    </svg> 등록
                                 </button>
                           </div>
 						
@@ -210,85 +210,120 @@
 </div>
 	<!-- 이벤트 등록 end-->
 	
-	<!-- 이벤트 수정 start -->
-	<div class="modal fade text-left modal-borderless" id="eventDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+<!-- 이벤트 수정 start -->
+<div class="modal fade text-left modal-borderless" id="eventDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">이벤트 수정</h5>
-            </div>
-            <form id="evnetDetailForm" action="#" class="form px-5" data-parsley-validate>
-                <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <div>
-                            <div class="form-group">
-                                <label for="diningId">이벤트 아이디</label>
-                                <input type="text" class="form-control" id="diningId" placeholder="Dining01" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="diningName">이벤트명</label>
-                                <input type="text" class="form-control" id="diningName" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="openTime">이벤트 시작일</label>
-                                <input type="text" class="form-control" id="openTime" placeholder="00:00">
-                            </div>
-                            <div class="form-group">
-                                <label for="closeTime">이벤트 종료일</label>
-                                <input type="text" class="form-control" id="closeTime" placeholder="00:00">
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-6">
-						<div class="form-group">
-   							 <label for="diningDescription">이벤트 내용</label>
-   							 <textarea class="form-control" id="diningDescription" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">이벤트 상세 조회</h5>
+							<div class="d-flex justify-content-end">
+								<button type="button" id="chkDeleteBtn" class="btn btn-danger">
+									<i class="bx bx-x d-block d-sm-none"></i> <span
+										class="d-none d-sm-block">이벤트 삭제</span>
+								</button>
+							</div>
 						</div>
-						<div class="form-group">
-                               <label for="diningImg">이벤트 대표 이미지</label>
-                               <div class="input-group">
-                                   <input type="file" class="form-control" id="diningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                                   <button class="btn btn-primary" type="button" id="inputGroupFileAddon04">Upload</button>
-                                </div>
-                        </div>	<div class="form-group">
-                               <label for="diningImg">이벤트 부 이미지</label>
-                               <div class="input-group">
-                                   <input type="file" class="form-control" id="diningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                                   <button class="btn btn-primary" type="button" id="inputGroupFileAddon04">Upload</button>
-                                </div>
-                        </div>
-						<div class="buttons">
-                             <a href="#" class="btn icon icon-left btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>수정</a>
-                             <a href="#" class="btn icon icon-left btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>삭제</a>
-                        </div>
-						
-						
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+						<form id="evnetDetailForm" action="#" class="form px-5"
+							data-parsley-validate>
+							<div class="row">
+								<div class="col-12 col-lg-6">
+									<div class="form-group">
+										<label for="diningId">이벤트 아이디</label> <input type="text"
+											class="form-control" id="diningId" placeholder="Dining01"
+											disabled>
+									</div>
+									<div class="form-group">
+										<label for="diningName">이벤트명</label> <input type="text"
+											class="form-control" id="diningName" placeholder="">
+									</div>
+									<div class="form-group">
+										<label for="openTime">이벤트 시작일</label> <input type="text"
+											class="form-control" id="openTime" placeholder="00:00">
+									</div>
+									<div class="form-group">
+										<label for="closeTime">이벤트 종료일</label> <input type="text"
+											class="form-control" id="closeTime" placeholder="00:00">
+									</div>
+								</div>
+								<div class="col-12 col-lg-6">
+									<div class="form-group">
+										<label for="diningDescription">이벤트 내용</label>
+										<textarea class="form-control" id="diningDescription"
+											rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
+									</div>
+									<div class="form-group">
+										<label for="diningImg">이벤트 대표 이미지</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="diningImg"
+												aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+											<button class="btn btn-primary" type="button"
+												id="inputGroupFileAddon04">Upload</button>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="diningImg">이벤트 부 이미지</label>
+										<div class="input-group">
+											<input type="file" class="form-control" id="diningImg"
+												aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+											<button class="btn btn-primary" type="button"
+												id="inputGroupFileAddon04">Upload</button>
+										</div>
+									</div>
+                                    <div class="col-12 d-flex justify-content-center" >
+									<button type="button" id="chkUpdateBtn"
+										class="btn btn-primary me-1 mb-1">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+											viewBox="0 0 24 24" fill="none" stroke="currentColor"
+											stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path
+												d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline
+												points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg>
+										저장
+									</button>
+									<button type="button" id="closeBtn"
+										class="btn btn-light-secondary me-1 mb-1"
+										data-bs-dismiss="modal">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+											viewBox="0 0 24 24" fill="none" stroke="currentColor"
+											stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path
+												d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline
+												points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg>닫기
+									</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
 </div>
 <!-- 이벤트 수정 end -->
-<!-- 삭제 확인 모달 -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">삭제 확인</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- 공통 확인 모달 start-->
+            <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmModalLabel"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="confirmModalBody"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+                            <button type="button" class="btn btn-danger" id="confirmActionBtn"></button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                삭제하시겠습니까?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">예</button>
-            </div>
-        </div>
-    </div>
-</div>
+            <!-- 공통 확인 모달 end-->
+
 	
 
 
@@ -307,66 +342,73 @@ $(document).ready(function() {
         $(this).addClass("active");
 	});
 	
+	
 	//이벤트 등록 버튼 클릭시 등록 모달 표시
 	$("#addEventBtn").click(function(){
-	    // 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
+		// 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
         // 모달 내의 모든 'is-invalid' 클래스 제거
         $('#addEvent').find('.is-invalid').removeClass('is-invalid');
-        
-        
         // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
         $('#addEvent').find('span.parsley-custom-error-message').remove();
-        
-       
        // Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
        $('#addEvent').modal('show');
 		
 	})
 	
-	 // 테이블의 이벤트 번호 클릭시 조회,수정,삭제 모달 보여주기
+	 // 테이블의 이벤트 번호 클릭시
     $(".eventNumber").click( function(){
-    	
-   
     	
        /*  var userId = $(this).text();
         var userName = $(this).closest('tr').find('.userName').text(); // 같은 행(row) 내에서 .userName을 찾아 텍스트를 가져옴
         var userPhone = $(this).closest('tr').find('.userPhone').text(); // 같은 행(row) 내에서 .userName을 찾아 텍스트를 가져옴
         var userSignUpDate = $(this).closest('tr').find('.userSignUpDate').text(); // 같은 행(row) 내에서 .userName을 찾아 텍스트를 가져옴
 		*/
-
         // 모달 내 필드에 데이터 설정
-
-
-      
       // 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
          // 모달 내의 모든 'is-invalid' 클래스 제거
          $('#eventDetail').find('.is-invalid').removeClass('is-invalid');
-         
-         
          // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
          $('#eventDetail').find('span.parsley-custom-error-message').remove();
-         
-        
         // Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
         $('#eventDetail').modal('show');
     });
 	
-	  // 삭제 버튼 클릭시
-    $(".btn-danger").click(function(){
-        // Bootstrap 모달 메소드를 사용하여 확인 모달을 보여줍니다.
-        $('#confirmDeleteModal').modal('show');
+	
+	var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+
+    function showModal(title, body, actionText, actionCallback) {
+        $('#confirmModalLabel').text(title);
+        $('#confirmModalBody').text(body);
+        $('#confirmActionBtn').text(actionText);
+        $('#confirmActionBtn').off('click').on('click', function() {
+            actionCallback();
+            confirmModal.hide();
+        });
+        confirmModal.show();
+    }
+	
+	 // 등록 버튼 클릭 시
+    $('#chkAddBtn').on('click', function() {
+        showModal('등록 확인', '등록하시겠습니까?', '예', function() {
+            registerAction();
+            alert('등록 동작 수행');
+        });
     });
 
-    // 확인 모달에서 예 버튼 클릭시
-    $("#confirmDeleteBtn").click(function(){
-        // 여기서 실제 삭제 작업을 수행합니다.
-        // 예를 들어, AJAX를 사용하여 서버에 삭제 요청을 보낼 수 있습니다.
-        // 성공적으로 삭제한 후 모달을 닫습니다.
-        $('#confirmDeleteModal').modal('hide');
-        $('#diningDetail').modal('hide');
+    // 삭제 버튼 클릭 시
+    $('#chkDeleteBtn').on('click', function() {
+        showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
+            deleteAction();
+            alert('삭제 동작 수행');
+        });
+    });
 
-        // 예시로 alert를 사용합니다.
-        alert("삭제되었습니다.");
+    // 수정 버튼 클릭 시
+    $('#chkUpdateBtn').on('click', function() {
+        showModal('수정 확인', '수정하시겠습니까?', '예', function() {
+            updateAction();
+            alert('수정 동작 수행');
+        });
     });
 
 });//ready

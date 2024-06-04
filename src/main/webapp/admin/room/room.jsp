@@ -9,56 +9,139 @@
 <title>엘리시안 호텔 관리자 페이지</title>
 
 <!-- favicon S -->
-<link rel="shortcut icon"
-	href="/hotel_prj/admin/assets/static/images/logo/favicon.ico"
-	type="image/x-icon">
+<link rel="shortcut icon"href="/hotel_prj/admin/assets/static/images/logo/favicon.ico" type="image/x-icon">
 <!-- favicon E -->
 
+
+<link rel="stylesheet" href="/hotel_prj/admin/assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" crossorigin="" href="/hotel_prj/admin/assets/compiled/css/table-datatable-jquery.css">
+
 <!-- template css S -->
-<link rel="stylesheet" crossorigin
-	href="/hotel_prj/admin/assets/compiled/css/app.css">
-<link rel="stylesheet" crossorigin
-	href="/hotel_prj/admin/assets/compiled/css/app-dark.css">
-<link rel="stylesheet" crossorigin
-	href="/hotel_prj/admin/assets/compiled/css/iconly.css">
+<link rel="stylesheet" crossorigin href="/hotel_prj/admin/assets/compiled/css/app.css">
+<link rel="stylesheet" crossorigin href="/hotel_prj/admin/assets/compiled/css/app-dark.css">
+<link rel="stylesheet" crossorigin href="/hotel_prj/admin/assets/compiled/css/iconly.css">
 <!-- template css E -->
 
 <!-- jQuery CDN S -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN E -->
 
 <style type="text/css">
-<!-- /*grid to table*/
-.grid-thead {
-	display: grid;
-	grid-template-columns: 5% 45% 10% 10% 10% 10% 10%;
-}
 
-.grid-tbody {
-	display: grid;
-	grid-template-columns: 5% 45% 10% 10% 10% 10% 10%;
-}
-#table1_wrapper {
-	width:1470px;
-}
 </style>
 
-<script type="text/javascript">
-	$(function() {
-		$(".sidebar-item.rm").addClass("active");
+	<script type="text/javascript">
+$(document).ready(function() {
+    $(".sidebar-item.rm").addClass("active");
 
-		$(document).on('click', '.sidebar-item', function() {
-			// 모든 .sidebar-item 요소에서 active 클래스 제거
-			$(".sidebar-item").removeClass("active");
+    $(document).on('click', '.sidebar-item', function() {
+        // 모든 .sidebar-item 요소에서 active 클래스 제거
+        $(".sidebar-item").removeClass("active");
 
-			// 클릭된 요소에만 active 클래스 추가
-			$(this).addClass("active");
-		});
-	}); // ready
+        // 클릭된 요소에만 active 클래스 추가
+        $(this).addClass("active");
+    });
+
+    
+    
+    
+    
+    // 테이블의 유저아이디 클릭시
+    $(document).on("click", ".roomId", function() {
+        var roomId = $(this).text();
+        var roomRankName = $(this).closest('tr').find('.roomRankName').text(); // 같은 행(row) 내에서 .roomRankName을 찾아 텍스트를 가져옴
+        var bedName = $(this).closest('tr').find('.bedName').text(); // 같은 행(row) 내에서 .roomRankName을 찾아 텍스트를 가져옴
+        var viewName = $(this).closest('tr').find('.viewName').text(); // 같은 행(row) 내에서 .roomRankName을 찾아 텍스트를 가져옴
+        
+        var roomFloor;
+        if (roomId.length == 3) {
+            roomFloor = roomId.substr(0, 1);
+        } else if (roomId.length == 4) {
+            roomFloor = roomId.substr(0, 2);
+        }
+
+        $("#roomId").val(roomId);
+        $("#roomFloor").val(roomFloor+"층");
+        $("#roomRankName").val(roomRankName);
+       /*  $("#bedName").val(bedName); */
+        $("#viewName").val(viewName);
+        
+        $("#bedName").empty();
+        $("#bedName").append(new Option("KING", "KING"));
+        $("#bedName").append(new Option("TWIN", "TWIN"));
+        
+        
+        
+        
+
+        // 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
+        // 모달 내의 모든 'is-invalid' 클래스 제거
+        $('#roomDetail').find('.is-invalid').removeClass('is-invalid');
+        
+        
+        // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
+        $('#roomDetail').find('span.parsley-custom-error-message').remove();
+        
+        
+        // Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
+        $('#roomDetail').modal('show');
+    });
+
+    
+
+});//ready
+
+
+// 페이지 변경을 시뮬레이션하는 예제 함수
+function changePage(pageNumber) {
+    // 새로운 페이지 내용을 로드하는 로직
+    // 여기서는 시연을 위해 tbody의 내용을 변경합니다.
+    var tbody = $("#table1 tbody");
+    tbody.empty(); // 기존 행을 지웁니다.
+
+    // 선택된 페이지에 맞는 새로운 행을 시뮬레이션하여 로드합니다.
+    for (var i = 1; i <= 5; i++) {
+        var row = `<tr>
+            <th>${(pageNumber - 1) * 5 + i}</th>
+            <td class="roomId">아이디${(pageNumber - 1) * 5 + i}</td>
+            <td>email${(pageNumber - 1) * 5 + i}@example.com</td>
+            <td>전화번호${(pageNumber - 1) * 5 + i}</td>
+            <td>가입일자${(pageNumber - 1) * 5 + i}</td>
+            <td><span class="badge bg-success">Active</span></td>
+        </tr>`;
+        tbody.append(row);
+    }
+}
 </script>
-</head>
+	<script type="text/javascript">
 
+function deleteRoom(){
+	var result = confirm("객실을 정말로 삭제 하시겠습니까?");
+
+}
+
+</script>
+
+
+
+
+<script>
+document.getElementById('roomDetailForm').onsubmit = function() {
+    
+	if(confirm('회원정보를 정말로 저장하시겠습니까?')){
+	alert('회원정보저장 시작')
+	}
+
+};
+</script>
+
+
+
+
+
+
+
+</head>
 <body>
 	<script src="/hotel_prj/admin/assets/static/js/initTheme.js"></script>
 
@@ -80,8 +163,7 @@
 					<div class="row">
 						<div class="col-12 col-md-6 order-md-1 order-last">
 							<h3>객실 관리</h3>
-							<p class="text-subtitle text-muted">Powerful interactive
-								tables with datatables (jQuery required).</p>
+							<p class="text-subtitle text-muted">관리자 객실 관리</p>
 						</div>
 						<div class="col-12 col-md-6 order-md-2 order-first">
 							<nav aria-label="breadcrumb"
@@ -100,230 +182,144 @@
 					<!-- Basic Tables start -->
 					<section class="section">
 						<div class="card">
-
 							<div class="card-body">
 								<div class="table-responsive">
 									<table class="table" id="table1">
 										<thead>
 											<tr>
-												<th>Num</th>
-												<th>Name</th>
-												<th>Email</th>
-												<th>Phone</th>
-												<th>City</th>
-												<th>Status</th>
+												<th>번호</th>
+												<th>객실ID</th>
+												<th>객실등급</th>
+												<th>침대유형</th>
+												<th>뷰</th>
+												<th>방크기(m^2)</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
 												<th>1</th>
-												<td>김무영</td>
-												<td>vehicula.aliquet@semconsequat.co.uk</td>
-												<td>076 4820 8838</td>
-												<td>Offenburg</td>
-												<td><span class="badge bg-success">Active</span></td>
+												<td><a href="#" class="roomId">101</a></td>
+												<td class="roomRankName">STANDARD</td>
+												<td class="bedName">KING</td>
+												<td class="viewName">STANDARD</td>
+												<td class="roomSize">30</td>
+												<!-- <td><span class="badge bg-success">Active</span></td> -->
+												<!-- <td><span class="badge bg-danger">Inactive</span></td> -->
 											</tr>
 											<tr>
 												<th>2</th>
-												<td>이주희</td>
-												<td>fringilla.euismod.enim@quam.ca</td>
-												<td>0500 527693</td>
-												<td>New Quay</td>
-												<td><span class="badge bg-success">Active</span></td>
+												<td><a href="#" class="roomId">102</a></td>
+												<td class="roomRankName">STANDARD</td>
+												<td class="bedName">KING</td>
+												<td class="viewName">STANDARD</td>
+												<td class="roomSize">30</td>
 											</tr>
 											<tr>
 												<th>3</th>
-												<td>윤웅찬</td>
-												<td>mi.Duis@diam.edu</td>
-												<td>(012165) 76278</td>
-												<td>Grumo Appula</td>
-												<td><span class="badge bg-danger">Inactive</span></td>
+												<td><a href="#" class="roomId">103</a></td>
+												<td class="roomRankName">STANDARD</td>
+												<td class="bedName">KING</td>
+												<td class="viewName">GARDEN</td>
+												<td class="roomSize">30</td>
 											</tr>
 											<tr>
 												<th>4</th>
-												<td>이조희</td>
-												<td>velit@nec.com</td>
-												<td>0309 690 7871</td>
-												<td>Ways</td>
-												<td><span class="badge bg-success">Active</span></td>
+												<td><a href="#" class="roomId">104</a></td>
+												<td class="roomRankName">STANDARD</td>
+												<td class="bedName">TWIN</td>
+												<td class="viewName">GARDEN</td>
+												<td class="roomSize">30</td>
 											</tr>
 
 											<tr>
 												<th>5</th>
-												<td>Oleg</td>
-												<td>rhoncus.id@Aliquamauctorvelit.net</td>
-												<td>0500 441046</td>
-												<td>Rossignol</td>
-												<td><span class="badge bg-success">Active</span></td>
+												<td><a href="#" class="roomId">105</a></td>
+												<td class="roomRankName">STANDARD</td>
+												<td class="bedName">TWIN</td>
+												<td class="viewName">POOLSIDE</td>
+												<td class="roomSize">30</td>
 											</tr>
 											<tr>
 												<th>6</th>
-												<td>Kermit</td>
-												<td>diam.Sed.diam@anteVivamusnon.org</td>
-												<td>(01653) 27844</td>
-												<td>Patna</td>
-												<td><span class="badge bg-success">Active</span></td>
+												<td><a href="#" class="roomId">201</a></td>
+												<td class="roomRankName">DELUXE</td>
+												<td class="bedName">KING</td>
+												<td class="viewName">STANDARD</td>
+												<td class="roomSize">45</td>
 											</tr>
 											<tr>
 												<th>7</th>
-												<td>Jermaine</td>
-												<td>sodales@nuncsit.org</td>
-												<td>0800 528324</td>
-												<td>Mold</td>
-												<td><span class="badge bg-success">Active</span></td>
+												<td><a href="#" class="roomId">202</a></td>
+												<td class="roomRankName">DELUXE</td>
+												<td class="bedName">KING</td>
+												<td class="viewName">STANDARD</td>
+												<td class="roomSize">45</td>
 											</tr>
 											<tr>
 												<th>8</th>
-												<td>Ferdinand</td>
-												<td>gravida.molestie@tinciduntadipiscing.org</td>
-												<td>(016977) 4107</td>
-												<td>Marlborough</td>
-												<td><span class="badge bg-danger">Inactive</span></td>
+												<td><a href="#" class="roomId">203</a></td>
+												<td class="roomRankName">DELUXE</td>
+												<td class="bedName">KING</td>
+												<td class="viewName">GARDEN</td>
+												<td class="roomSize">45</td>
 											</tr>
 											<tr>
 												<th>9</th>
-												<td>Kuame</td>
-												<td>Quisque.purus@mauris.org</td>
-												<td>(0151) 561 8896</td>
-												<td>Tresigallo</td>
-												<td><span class="badge bg-success">Active</span></td>
+												<td><a href="#" class="roomId">204</a></td>
+												<td class="roomRankName">DELUXE</td>
+												<td class="bedName">TWIN</td>
+												<td class="viewName">GARDEN</td>
+												<td class="roomSize">45</td>
 											</tr>
 											<tr>
 												<th>10</th>
-												<td>Deacon</td>
-												<td>Duis.a.mi@sociisnatoquepenatibus.com</td>
-												<td>07740 599321</td>
-												<td>Karapınar</td>
-												<td><span class="badge bg-success">Active</span></td>
+												<td><a href="#" class="roomId">205</a></td>
+												<td class="roomRankName">DELUXE</td>
+												<td class="bedName">TWIN</td>
+												<td class="viewName">POOLSIDE</td>
+												<td class="roomSize">45</td>
 											</tr>
 											<tr>
 												<th>11</th>
-												<td>Channing</td>
-												<td>tempor.bibendum.Donec@ornarelectusante.ca</td>
-												<td>0845 46 49</td>
-												<td>Warrnambool</td>
-												<td><span class="badge bg-success">Active</span></td>
+												<td><a href="#" class="roomId">301</a></td>
+												<td class="roomRankName">SUITE</td>
+												<td class="bedName">KING</td>
+												<td class="viewName">STANDARD</td>
+												<td class="roomSize">90</td>
 											</tr>
 											<tr>
 												<th>12</th>
-												<td>Aladdin</td>
-												<td>sem.ut@pellentesqueafacilisis.ca</td>
-												<td>0800 1111</td>
-												<td>Bothey</td>
-												<td><span class="badge bg-success">Active</span></td>
+												<td><a href="#" class="roomId">302</a></td>
+												<td class="roomRankName">SUITE</td>
+												<td class="bedName">KING</td>
+												<td class="viewName">STANDARD</td>
+												<td class="roomSize">90</td>
 											</tr>
 											<tr>
 												<th>13</th>
-												<td>Cruz</td>
-												<td>non@quisturpisvitae.ca</td>
-												<td>07624 944915</td>
-												<td>Shikarpur</td>
-												<td><span class="badge bg-success">Active</span></td>
+												<td><a href="#" class="roomId">303</a></td>
+												<td class="roomRankName">SUITE</td>
+												<td class="bedName">KING</td>
+												<td class="viewName">GARDEN</td>
+												<td class="roomSize">90</td>
 											</tr>
 											<tr>
 												<th>14</th>
-												<td>Keegan</td>
-												<td>molestie.dapibus@condimentumDonecat.edu</td>
-												<td>0800 200103</td>
-												<td>Assen</td>
-												<td><span class="badge bg-success">Active</span></td>
+												<td><a href="#" class="roomId">304</a></td>
+												<td class="roomRankName">SUITE</td>
+												<td class="bedName">TWIN</td>
+												<td class="viewName">GARDEN</td>
+												<td class="roomSize">90</td>
 											</tr>
 											<tr>
 												<th>15</th>
-												<td>Ray</td>
-												<td>placerat.eget@sagittislobortis.edu</td>
-												<td>(0112) 896 6829</td>
-												<td>Hofors</td>
-												<td><span class="badge bg-success">Active</span></td>
+												<td><a href="#" class="roomId">305</a></td>
+												<td class="roomRankName">SUITE</td>
+												<td class="bedName">TWIN</td>
+												<td class="viewName">POOLSIDE</td>
+												<td class="roomSize">90</td>
 											</tr>
-											<tr>
-												<th>16</th>
-												<td>Maxwell</td>
-												<td>diam@dapibus.org</td>
-												<td>0334 836 4028</td>
-												<td>Thane</td>
-												<td><span class="badge bg-success">Active</span></td>
-											</tr>
-											<tr>
-												<th>17</th>
-												<td>Carter</td>
-												<td>urna.justo.faucibus@orci.com</td>
-												<td>07079 826350</td>
-												<td>Biez</td>
-												<td><span class="badge bg-success">Active</span></td>
-											</tr>
-											<tr>
-												<th>18</th>
-												<td>Stone</td>
-												<td>velit.Aliquam.nisl@sitametrisus.com</td>
-												<td>0800 1111</td>
-												<td>Olivar</td>
-												<td><span class="badge bg-success">Active</span></td>
-											</tr>
-											<tr>
-												<th>19</th>
-												<td>Berk</td>
-												<td>fringilla.porttitor.vulputate@taciti.edu</td>
-												<td>(0101) 043 2822</td>
-												<td>Sanquhar</td>
-												<td><span class="badge bg-success">Active</span></td>
-											</tr>
-											<tr>
-												<th>20</th>
-												<td>Philip</td>
-												<td>turpis@euenimEtiam.org</td>
-												<td>0500 571108</td>
-												<td>Okara</td>
-												<td><span class="badge bg-success">Active</span></td>
-											</tr>
-											<tr>
-												<th>21</th>
-												<td>Kibo</td>
-												<td>feugiat@urnajustofaucibus.co.uk</td>
-												<td>07624 682306</td>
-												<td>La Cisterna</td>
-												<td><span class="badge bg-success">Active</span></td>
-											</tr>
-											<tr>
-												<th>22</th>
-												<td>Bruno</td>
-												<td>elit.Etiam.laoreet@luctuslobortisClass.edu</td>
-												<td>07624 869434</td>
-												<td>Rocca d"Arce</td>
-												<td><span class="badge bg-success">Active</span></td>
-											</tr>
-											<tr>
-												<th>23</th>
-												<td>Leonard</td>
-												<td>blandit.enim.consequat@mollislectuspede.net</td>
-												<td>0800 1111</td>
-												<td>Lobbes</td>
-												<td><span class="badge bg-success">Active</span></td>
-											</tr>
-											<tr>
-												<th>24</th>
-												<td>Hamilton</td>
-												<td>mauris@diam.org</td>
-												<td>0800 256 8788</td>
-												<td>Sanzeno</td>
-												<td><span class="badge bg-success">Active</span></td>
-											</tr>
-											<tr>
-												<th>25</th>
-												<td>Harding</td>
-												<td>Lorem.ipsum.dolor@etnetuset.com</td>
-												<td>0800 1111</td>
-												<td>Obaix</td>
-												<td><span class="badge bg-success">Active</span></td>
-											</tr>
-											<tr>
-												<th>26</th>
-												<td>Emmanuel</td>
-												<td>eget.lacus.Mauris@feugiatSednec.org</td>
-												<td>(016977) 8208</td>
-												<td>Saint-Remy-Geest</td>
-												<td><span class="badge bg-success">Active</span></td>
-											</tr>
+
 										</tbody>
 									</table>
 								</div>
@@ -332,8 +328,184 @@
 
 					</section>
 				</div>
+				<!-- 모달창 -->
+				<div class="modal fade text-left modal-borderless modal-xl "
+					id="roomDetail" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-scrollable" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">객실 상세조회</h5>
+								<div class="d-flex justify-content-end">
+									<button type="button" class="btn btn-danger" onclick="deleteRoom()">
+										<i class="bx bx-x d-block d-sm-none"></i> 
+										<span class="d-none d-sm-block">객실삭제</span>
+									</button>
+									<!-- 				                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
+				                        aria-label="Close">
+				                    <i data-feather="x"></i>
+				                </button> -->
 
+								</div>
+							</div>
+							<form id = "roomDetailForm" action="#"  class="form px-5" data-parsley-validate>
+								<div class="row">
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="roomId">객실 아이디</label> 
+											<input type="text"
+												id="roomId" class="form-control"
+												name="roomId" placeholder="객실아이디" Disabled>
 
+										</div>
+									</div>
+									
+									
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="roomBasicCapacity">객실 기본 인원</label> 
+												<input
+						                        type="text"
+						                        id="roomBasicCapacity"
+						                        class="form-control"
+						                        placeholder="객실 기본 인원"
+						                        name="roomBasicCapacity"
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="roomFloor">객실 층</label> 
+											<input
+						                        type="text"
+						                        id="roomFloor"
+						                        class="form-control"
+						                        placeholder="객실 층"
+						                        name="roomFloor"
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									
+									
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="roomMaxCapacity">객실 최대 인원</label> 
+											<input
+						                        type="text"
+						                        id="roomMaxCapacity"
+						                        class="form-control"
+						                        placeholder="객실 최대 인원"
+						                        name="roomMaxCapacity"
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="roomRankName">객실 등급</label> 
+											<input
+						                        type="text"
+						                        id="roomRankName"
+						                        class="form-control"
+						                        placeholder="객실 등급"
+						                        name="roomRankName"
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="roomBasicPrice">기본 요금</label>
+											<input
+						                        type="text"
+						                        id="roomBasicPrice"
+						                        class="form-control"
+						                        placeholder="기본 요금"
+						                        name="roomBasicPrice"
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="bedName">침대 유형</label>
+						                     <select class="bedName form-select" id="bedName">
+						                     </select>
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="roomAddPrice">추가 요금</label>
+											<input
+						                        type="text"
+						                        id="roomAddPrice"
+						                        class="form-control"
+						                        placeholder="추가 요금"
+						                        name="roomAddPrice"
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="viewName">뷰 유형</label> 
+											<input
+						                        type="text"
+						                        id="viewName"
+						                        class="form-control"
+						                        placeholder="뷰 유형"
+						                        name="viewName"
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="amenity"> </label> 
+											<input
+						                        type="button"
+						                        id="amenity"
+						                        class="form-control"
+						                        name="amenity"
+												value="어메니티"
+						                     />
+										</div>
+									</div>	
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="roomSize">방 크기</label>
+											<input
+						                        type="text"
+						                        id="roomSize"
+						                        class="form-control"
+						                        placeholder="방 크기"
+						                        name="roomSize"
+						                        Disabled
+						                     />
+										</div>
+									</div>					
+									<div class="col-md-6 col-12">
+									</div>				
+									
+									
+									
+									
+
+									<div style="height: 30px;"></div>
+									<div class="col-12 d-flex justify-content-center">
+										<button type="submit" class="btn btn-primary me-1 mb-1">저장</button>
+										<button type="button" class="btn btn-light-secondary me-1 mb-1" data-bs-dismiss="modal">닫기</button>
+									</div>
+									<div style="height: 30px;"></div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
 				<!-- footer S -->
 				<jsp:include page="/admin/footer.jsp"></jsp:include>
 				<!-- footer E -->
@@ -342,6 +514,7 @@
 
 		</div>
 	</div>
+
 	<!-- app E  -->
 
 	<!-- 공통 필요 Script S -->
@@ -351,13 +524,19 @@
 	<script src="/hotel_prj/admin/assets/compiled/js/app.js"></script>
 	<!-- 공통 필요 Script E -->
 
-	<!--  추가 Script S -->
+	<!-- 추가 Script S -->
 	<script src="/hotel_prj/admin/assets/extensions/jquery/jquery.min.js"></script>
-	<script
-		src="/hotel_prj/admin/assets/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script
-		src="/hotel_prj/admin/assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+	<script src="/hotel_prj/admin/assets/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
+	<script src="/hotel_prj/admin/assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+	<script src="/hotel_prj/admin/assets/extensions/parsleyjs/parsley.min.js"></script>
+	<script src="/hotel_prj/admin/assets/static/js/pages/parsley.js"></script>
 	<script src="/hotel_prj/admin/assets/static/js/pages/datatables.js"></script>
-	<!--  추가 Script E -->
+	<!-- 추가 Script E -->
+
+
+
+
+
+
 </body>
 </html>

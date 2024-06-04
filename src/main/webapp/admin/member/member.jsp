@@ -198,20 +198,6 @@ function changePage(pageNumber) {
     }
 }
 </script>
-	<script type="text/javascript">
-	
-
-
-
-
-function deleteUserDetail(){
-	var result = confirm("회원정보를 정말로 삭제 하시겠습니까?");
-
-}
-
-
-</script>
-
 
 
 <script type="text/javascript">
@@ -307,18 +293,6 @@ function deleteUserDetail(){
 
     /*---------------주소검색 종료--------------------------------- */
 </script>
-<script>
-document.getElementById('userDetailForm').onsubmit = function() {
-    
-	if(confirm('회원정보를 정말로 저장하시겠습니까?')){
-	alert('회원정보저장 시작')
-	}
-
-};
-</script>
-
-
-
 
 
 
@@ -385,8 +359,6 @@ document.getElementById('userDetailForm').onsubmit = function() {
 												<td class="userPhone">010-1111-1111</td>
 												<td class="userSignUpDate">2024-01-01</td>
 												<td class="userLoginDate">2024-06-01 15:37:20</td>
-												<!-- <td><span class="badge bg-success">Active</span></td> -->
-												<!-- <td><span class="badge bg-danger">Inactive</span></td> -->
 											</tr>
 											<tr>
 												<th>2</th>
@@ -491,11 +463,6 @@ document.getElementById('userDetailForm').onsubmit = function() {
                                     <i class="bx bx-x d-block d-sm-none"></i> 
                                     <span class="d-none d-sm-block">회원정보 삭제</span>
                                 </button>
-									<!-- 				                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
-				                        aria-label="Close">
-				                    <i data-feather="x"></i>
-				                </button> -->
-
 								</div>
 							</div>
 							<form id = "userDetailForm" action="#"  class="form px-5" data-parsley-validate>

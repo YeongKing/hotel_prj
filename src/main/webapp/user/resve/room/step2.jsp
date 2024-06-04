@@ -675,91 +675,21 @@
 							<li class="toggleOn" data-roomidx="0"><!-- 기본으로 펼쳐진 경우 toggleOn  추가 -->
 								<input type="hidden" name="bpArr" id="bpArr0" value="" />
 								<input type="hidden" name="bpNmArr" id="bpNmArr0" value="" />
-								<strong class="listTit">객실1</strong>
+								<strong class="listTit">객실</strong>
 								<button type="button" class="btnToggle">
 									<span class="hidden">상세내용 보기</span>
 								</button>
 								<div class="toggleCont" style="display: block;">
 									<div class="toggleInner">
-										<h3 class="opTit">BREAKFAST</h3>
+
 										
 											
                                                 
 												
 											
-										
+	
 											
-                                                
-													<div class="addOption" data-type="optA">
-														<span class="txt">성인 조식 추가</span>
-														<span class="price">KRW 57,272</span>
-														<div class="numPeople type02">
-															<input type="hidden" name="optAAmount" id="optAAmount0" value="57272"/>
-															<input type="hidden" name="optAArr" id="optAArr0" value="BK"/>
-															<input type="hidden" name="optAQtyArr" id="optAQtyArr0" value="0"/>
-															<button type="button" class="btnDown blank" data-btntype="down" disabled>인원 수 감소</button>
-															<span>0</span>
-															<button type="button" class="btnUp" data-btntype="up">인원 수 증가</button>
-														</div>
-													</div>
-												
-												
-											
-										
-											
-                                                
-												
-													<div class="addOption" data-type="optC">
-														<span class="txt">어린이 조식 추가</span>
-														<span class="price">KRW 31,091</span>
-														<div class="numPeople type02">
-															<input type="hidden" name="optCAmount" id="optCAmount0" value="31091"/>
-															<input type="hidden" name="optCArr" id="optCArr0" value="CHBK"/>
-															<input type="hidden" name="optCQtyArr" id="optCQtyArr0" value="0"/>
-															<button type="button" class="btnDown blank" data-btntype="down" disabled>인원 수 감소</button>
-															<span>0</span>
-															<button type="button" class="btnUp" data-btntype="up" disabled>인원 수 증가</button>
-														</div>
-													</div>
-												
-											
-										
-										<ul class="txtGuide">
-											<li>조식 옵션 추가 시, 투숙 일수와 동일한 횟수의 조식이 제공됩니다.</li>
-											
-											
-												<li>인원 추가 금액에는 조식이 포함되어 있지 않습니다. 조식 추가 기능을 통해 별도로 추가가 가능합니다.</li>
-												<li>어린이 조식 추가 비용 적용 대상은 37개월 이상 12세 이하입니다.</li>
-											
-											<li>사전 추가된 조식의 경우 특별요금이 적용된 혜택으로, 체크인 후 미사용 시 환불이 불가합니다.<!-- 사전 추가된 조식의 경우 특별요금이 적용된 혜택으로, 체크인 후 미사용 시 환불이 불가합니다. --></li>
-											<li>만나이 통일법 시행에 따라 2023.06.28부터 연령 표기 변경되었습니다.<!-- 코로나19에 따른 사회적 거리두기 정부 시책이 진행될 경우, 뷔페 조식은 다른 장소 및 단품 메뉴로 대체 제공될 수 있습니다. --></li>
-										</ul>
-										
-										
-											
-											
-												
-													<input type="hidden" name="optEAmount" id="optEAmount0" value="0"/>
-													<input type="hidden" name="optEArr" id="optEArr0" value="0" />
-													<input type="hidden" name="optEQtyArr" id="optEQtyArr0" value="0"/>
-												
-													<input type="hidden" name="optEAmount" id="optEAmount0" value="0"/>
-													<input type="hidden" name="optEArr" id="optEArr0" value="0" />
-													<input type="hidden" name="optEQtyArr" id="optEQtyArr0" value="0"/>
-												
-													<input type="hidden" name="optEAmount" id="optEAmount0" value="0"/>
-													<input type="hidden" name="optEArr" id="optEArr0" value="0" />
-													<input type="hidden" name="optEQtyArr" id="optEQtyArr0" value="0"/>
-												
-											
-										
-										
-										
-										
-											
-											
-												<input type="hidden" name="chldAgeArr" value="">
-											
+
 										
 										<h3 class="opTit">
 											<label for="request01">REQUESTS</label>

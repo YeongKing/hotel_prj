@@ -195,7 +195,7 @@
 		
 		// 예약 상태 select 추가
 		$('#table1_filter').prepend('<select id="res_status" class="form-select" style="width: 150px; display: inline; margin: 0px 20px 0px 10px;"></select>');
-		$('#res_status').append('<option value="">ALL</option>')
+		$('#res_status').append('<option value="">예약상태 선택</option>')
 						.append('<option value="RESERVED">RESERVED</option>')
 						.append('<option value="CHECK IN">CHECK IN</option>')
 						.append('<option value="CHECK OUT">CHECK OUT</option>')
@@ -205,12 +205,30 @@
 		// 검색 조건 select 추가
 		$('#table1_filter').prepend('검색 조건<select id="select" class="form-select" style="width: 170px; display: inline; margin: 0px 20px 0px 10px;"></select>');
 		$('#table1 > thead > tr').children().each(function (indexInArray, valueOfElement) { 
-			$('#select').append('<option>'+valueOfElement.innerHTML+'</option>');
+			// 필요 컬럼 선택 
+			var requiredColumns = [1, 3, 4, 5, 6, 7, 8];
+		    
+		    // 현재 인덱스가 배열에 있는지 확인
+		    if (requiredColumns.includes(indexInArray)) {
+		        $('#select').append('<option>'+valueOfElement.innerHTML+'</option>');
+		    }
 		});
 		
 	    // 검색 input에 이벤트 리바인딩
 		$('.dataTables_filter input').unbind().bind('keyup keydown input', function () {
 			var colIndex = document.querySelector('#select').selectedIndex;
+			
+			// 선택한 인덱스와 실제 테이블 인덱스 번호 맞추기
+			switch(colIndex) {
+			case 0 : colIndex = 1; break;
+			case 1 : colIndex = 3; break;
+			case 2 : colIndex = 4; break;
+			case 3 : colIndex = 5; break;
+			case 4 : colIndex = 6; break;
+			case 5 : colIndex = 7; break;
+			case 6 : colIndex = 8; break;
+			}
+			console.log(colIndex);
 			table.column(colIndex).search(this.value).draw();
 		});
 		
@@ -229,7 +247,9 @@
 	    $("#select").on('change', function() {
 			var columnIndex = $("#select option").index($("#select option:selected"));
 			// 선택된 select이 날짜 관련(체크인, 체크아웃, 예약일) 인덱스일 경우만 함수 실행
-			if(columnIndex == 4 || columnIndex == 5 || columnIndex == 6) {
+			if(columnIndex == 2 || columnIndex == 3 || columnIndex == 4) {
+				// 선택한 인덱스와 실제 테이블 인덱스 번호 맞추기
+				columnIndex = columnIndex + 2;
 				// 기존 필터 제거
 				$.fn.dataTable.ext.search.pop();
 				// 새 필터 추가

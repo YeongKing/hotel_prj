@@ -27,6 +27,17 @@
 <!-- jQuery CDN E -->
 
 <style type="text/css">
+        
+       .grid-thead {
+            display: grid;
+            grid-template-columns: 20% 10% 20% 20% 20% 10%
+        } 
+        .grid-tbody {
+            display: grid;
+            grid-template-columns: 20% 10% 20% 20% 20% 10%
+        }
+
+
 
 </style>
 
@@ -71,6 +82,96 @@ $(document).ready(function() {
         $('#userDetail').modal('show');
     });
 
+    var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+
+    function showModal(title, body, actionText, actionCallback) {
+        $('#confirmModalLabel').text(title);
+        $('#confirmModalBody').text(body);
+        $('#confirmActionBtn').text(actionText);
+        $('#confirmActionBtn').off('click').on('click', function() {
+            actionCallback();
+            confirmModal.hide();
+        });
+        confirmModal.show();
+    }
+
+    function deleteAction() {
+        console.log('삭제 동작 수행');
+        // 서버로 삭제 요청 보내기
+        // $.ajax({
+        //     url: 'delete_url',
+        //     method: 'POST',
+        //     data: { id: itemId },
+        //     success: function(response) {
+        //         console.log('삭제 성공');
+        //     },
+        //     error: function(error) {
+        //         console.log('삭제 실패', error);
+        //     }
+        // });
+    }
+
+    function updateAction() {
+        console.log('수정 동작 수행');
+        // 서버로 수정 요청 보내기
+        // $.ajax({
+        //     url: 'update_url',
+        //     method: 'POST',
+        //     data: { id: itemId, data: newData },
+        //     success: function(response) {
+        //         console.log('수정 성공');
+        //     },
+        //     error: function(error) {
+        //         console.log('수정 실패', error);
+        //     }
+        // });
+    }
+
+    function registerAction() {
+        console.log('등록 동작 수행');
+        // 서버로 등록 요청 보내기
+        // $.ajax({
+        //     url: 'register_url',
+        //     method: 'POST',
+        //     data: { data: newData },
+        //     success: function(response) {
+        //         console.log('등록 성공');
+        //     },
+        //     error: function(error) {
+        //         console.log('등록 실패', error);
+        //     }
+        // });
+    }
+
+    // 등록 버튼 클릭 시
+    $('#chkAddBtn').on('click', function() {
+        showModal('등록 확인', '등록하시겠습니까?', '예', function() {
+            registerAction();
+            alert('등록 동작 수행');
+        });
+    });
+
+    // 삭제 버튼 클릭 시
+    $('#chkDeleteBtn').on('click', function() {
+        showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
+            deleteAction();
+            alert('삭제 동작 수행');
+        });
+    });
+
+    // 수정 버튼 클릭 시
+    $('#chkUpdateBtn').on('click', function() {
+        showModal('수정 확인', '수정하시겠습니까?', '예', function() {
+            updateAction();
+            alert('수정 동작 수행');
+        });
+    });
+    
+    
+    
+    
+    
+    
     
 
 });//ready
@@ -97,20 +198,6 @@ function changePage(pageNumber) {
     }
 }
 </script>
-	<script type="text/javascript">
-	
-
-
-
-
-function deleteUserDetail(){
-	var result = confirm("회원정보를 정말로 삭제 하시겠습니까?");
-
-}
-
-
-</script>
-
 
 
 <script type="text/javascript">
@@ -206,18 +293,6 @@ function deleteUserDetail(){
 
     /*---------------주소검색 종료--------------------------------- */
 </script>
-<script>
-document.getElementById('userDetailForm').onsubmit = function() {
-    
-	if(confirm('회원정보를 정말로 저장하시겠습니까?')){
-	alert('회원정보저장 시작')
-	}
-
-};
-</script>
-
-
-
 
 
 
@@ -284,8 +359,6 @@ document.getElementById('userDetailForm').onsubmit = function() {
 												<td class="userPhone">010-1111-1111</td>
 												<td class="userSignUpDate">2024-01-01</td>
 												<td class="userLoginDate">2024-06-01 15:37:20</td>
-												<!-- <td><span class="badge bg-success">Active</span></td> -->
-												<!-- <td><span class="badge bg-danger">Inactive</span></td> -->
 											</tr>
 											<tr>
 												<th>2</th>
@@ -377,7 +450,7 @@ document.getElementById('userDetailForm').onsubmit = function() {
 
 					</section>
 				</div>
-				<!-- 모달창 -->
+				<!-- 수정 모달창 S-->
 				<div class="modal fade text-left modal-borderless modal-xl "
 					id="userDetail" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel1" aria-hidden="true">
@@ -386,15 +459,10 @@ document.getElementById('userDetailForm').onsubmit = function() {
 							<div class="modal-header">
 								<h5 class="modal-title">회원 상세조회</h5>
 								<div class="d-flex justify-content-end">
-									<button type="button" class="btn btn-danger" onclick="deleteUserDetail()">
-										<i class="bx bx-x d-block d-sm-none"></i> 
-										<span class="d-none d-sm-block">계정삭제</span>
-									</button>
-									<!-- 				                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
-				                        aria-label="Close">
-				                    <i data-feather="x"></i>
-				                </button> -->
-
+                                <button type="button" id="chkDeleteBtn" class="btn btn-danger">
+                                    <i class="bx bx-x d-block d-sm-none"></i> 
+                                    <span class="d-none d-sm-block">회원정보 삭제</span>
+                                </button>
 								</div>
 							</div>
 							<form id = "userDetailForm" action="#"  class="form px-5" data-parsley-validate>
@@ -555,8 +623,18 @@ document.getElementById('userDetailForm').onsubmit = function() {
 
 									<div style="height: 30px;"></div>
 									<div class="col-12 d-flex justify-content-center">
-										<button type="submit" class="btn btn-primary me-1 mb-1">저장</button>
-										<button type="button" class="btn btn-light-secondary me-1 mb-1" data-bs-dismiss="modal">닫기</button>
+                                        <button type="button" id="chkUpdateBtn" class="btn btn-primary me-1 mb-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg> 저장
+                                        </button>
+                                        <button type="button" id="closeBtn" class="btn btn-light-secondary me-1 mb-1" data-bs-dismiss="modal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg> 닫기
+                                        </button>
 									</div>
 									<div style="height: 30px;"></div>
 								</div>
@@ -565,8 +643,26 @@ document.getElementById('userDetailForm').onsubmit = function() {
 					</div>
 				</div>
 
-
-  
+				<!-- 수정 모달창 E -->>
+            <!-- 공통 확인 모달 start-->
+            <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmModalLabel"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="confirmModalBody"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+                            <button type="button" class="btn btn-danger" id="confirmActionBtn"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 공통 확인 모달 end-->
 
 				<!-- footer S -->
 				<jsp:include page="/admin/footer.jsp"></jsp:include>

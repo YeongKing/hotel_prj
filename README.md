@@ -38,7 +38,7 @@
 - 추가 예정
 
 ## 📚 API
-- 포트원(결제) : [https://developers.portone.io/docs/ko/readme?v=v2)
+- 포트원(결제) : [https://developers.portone.io/docs/ko/readme?v=v2](https://developers.portone.io/docs/ko/readme?v=v2)
 - Chart.js(차트) : [https://www.chartjs.org/docs/latest/](https://www.chartjs.org/docs/latest/)
 
 ## 💾 Docs

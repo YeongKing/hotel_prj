@@ -37,6 +37,23 @@
 	    .form-group {
         display: flex;
         align-items: center; /* 세로 중앙 정렬 */
+        }
+        
+        .addQna {
+            display: flex; 
+            justify-content: flex-end;
+            padding-bottom: 30px;
+            padding-right: 10px;
+        }
+        
+        .buttons {
+            display: flex; 
+            padding-top: 30px;
+        }
+
+
+        
+        
     }
 	
 	
@@ -58,7 +75,7 @@
 	    
 	    
 	    
-	    // 테이블의 유저아이디 클릭시
+	    // 테이블의 자주 찾는 질문 클릭시
 	    $(document).on("click", ".qnaTitle", function() {
 	    	var noticeNum = $(this).closest('tr').find('.hiddenQnaNum').val();
 	    	var qnaType = $(this).closest('tr').find('.qnaType').text();
@@ -68,35 +85,156 @@
 	        //var noticeViewCnt ;
 
 	        
-	        $("#inputQnaNum").val(noticeNum);
-	        $("#inputQnaType").val(qnaType);
-	        $("#inputQnaTitle").val(qnaTitle);
+	        $("#updateQnaNum").val(noticeNum);
+/* 	        $("#updateQnaType").val(qnaType); */
+	        $("#updateQnaTitle").val(qnaTitle);
 	        
-	        $("#inputQnaType").empty();
-	        $("#inputQnaType").append(new Option("계정", "계정"));
-	        $("#inputQnaType").append(new Option("결제", "결제"));
-	        $("#inputQnaType").append(new Option("예약", "예약"));
-	        $("#inputQnaType").append(new Option("기타", "기타"));
+	        $("#updateQnaType").empty();
+	        $("#updateQnaType").append(new Option("계정", "계정"));
+	        $("#updateQnaType").append(new Option("결제", "결제"));
+	        $("#updateQnaType").append(new Option("예약", "예약"));
+	        $("#updateQnaType").append(new Option("기타", "기타"));
 	        
-	        $("#inputQnaType").val(qnaType).prop("selected",true);
+	        $("#updateQnaType").val(qnaType).prop("selected",true);
 	        
 	        //$("#inputAdminId").val(adminId);
 
 
 	        // 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
 	        // 모달 내의 모든 'is-invalid' 클래스 제거
-	        $('#noticeDetail').find('.is-invalid').removeClass('is-invalid');
+	        $('#updateQnaModal').find('.is-invalid').removeClass('is-invalid');
 	        
 	        
 	        // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
-	        $('#noticeDetail').find('span.parsley-custom-error-message').remove();
+	        $('#updateQnaModal').find('span.parsley-custom-error-message').remove();
 	        
 	        
 	        // Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
-	        $('#noticeDetail').modal('show');
+	        $('#updateQnaModal').modal('show');
 	    });
 
 	    
+	 // 자주 찾는 질문 등록 클릭 시
+	    $("#addQnaBtn").click(function() {
+	    	// 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
+	        // 모달 내의 모든 'is-invalid' 클래스 제거
+	        $('#addQnaModal').find('.is-invalid').removeClass('is-invalid');
+	        
+	        $("#addQnaType").empty();
+	        $("#addQnaType").append(new Option("계정", "계정"));
+	        $("#addQnaType").append(new Option("결제", "결제"));
+	        $("#addQnaType").append(new Option("예약", "예약"));
+	        $("#addQnaType").append(new Option("기타", "기타"));
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	        // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
+	        $('#addQnaModal').find('span.parsley-custom-error-message').remove();
+	        $('#addQnaModal').modal('show');
+	        
+	        
+	    });
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+
+	    function showModal(title, body, actionText, actionCallback) {
+	        $('#confirmModalLabel').text(title);
+	        $('#confirmModalBody').text(body);
+	        $('#confirmActionBtn').text(actionText);
+	        $('#confirmActionBtn').off('click').on('click', function() {
+	            actionCallback();
+	            confirmModal.hide();
+	        });
+	        confirmModal.show();
+	    }
+
+	    function deleteAction() {
+	        console.log('삭제 동작 수행');
+	        // 서버로 삭제 요청 보내기
+	        // $.ajax({
+	        //     url: 'delete_url',
+	        //     method: 'POST',
+	        //     data: { id: itemId },
+	        //     success: function(response) {
+	        //         console.log('삭제 성공');
+	        //     },
+	        //     error: function(error) {
+	        //         console.log('삭제 실패', error);
+	        //     }
+	        // });
+	    }
+
+	    function updateAction() {
+	        console.log('수정 동작 수행');
+	        // 서버로 수정 요청 보내기
+	        // $.ajax({
+	        //     url: 'update_url',
+	        //     method: 'POST',
+	        //     data: { id: itemId, data: newData },
+	        //     success: function(response) {
+	        //         console.log('수정 성공');
+	        //     },
+	        //     error: function(error) {
+	        //         console.log('수정 실패', error);
+	        //     }
+	        // });
+	    }
+
+	    function registerAction() {
+	        console.log('등록 동작 수행');
+	        // 서버로 등록 요청 보내기
+	        // $.ajax({
+	        //     url: 'register_url',
+	        //     method: 'POST',
+	        //     data: { data: newData },
+	        //     success: function(response) {
+	        //         console.log('등록 성공');
+	        //     },
+	        //     error: function(error) {
+	        //         console.log('등록 실패', error);
+	        //     }
+	        // });
+	    }
+
+	    // 등록 버튼 클릭 시
+	    $('#chkAddBtn').on('click', function() {
+	        showModal('등록 확인', '등록하시겠습니까?', '예', function() {
+	            registerAction();
+	            alert('등록 동작 수행');
+	        });
+	    });
+
+	    // 삭제 버튼 클릭 시
+	    $('#chkDeleteBtn').on('click', function() {
+	        showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
+	            deleteAction();
+	            alert('삭제 동작 수행');
+	        });
+	    });
+
+	    // 수정 버튼 클릭 시
+	    $('#chkUpdateBtn').on('click', function() {
+	        showModal('수정 확인', '수정하시겠습니까?', '예', function() {
+	            updateAction();
+	            alert('수정 동작 수행');
+	        });
+	    });
+	    
+	    
+	    
+
 		
 	}); // ready
 	
@@ -121,27 +259,9 @@
 	    }
 	}
 	</script>
-		<script type="text/javascript">
-
-	function deleteNotice(){
-		var result = confirm("자주 찾는 질문을 정말로 삭제 하시겠습니까?");
-
-	}
-
-	</script>
 
 
 
-
-	<script>
-	document.getElementById('noticeDetailForm').onsubmit = function() {
-	    
-		if(confirm('자주 찾는 질문을 정말로 저장하시겠습니까?')){
-		}
-
-	};
-	
-</script>
 
 </head>
 
@@ -200,8 +320,6 @@
 												<th>1</th>
 												<td class="qnaType">계정</td>
 												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 1</a><input type="hidden" class="hiddenQnaNum" value="1"/></td>
-												<!-- <td><span class="badge bg-success">Active</span></td> -->
-												<!-- <td><span class="badge bg-danger">Inactive</span></td> -->
 											</tr>
 											<tr>
 												<th>2</th>
@@ -277,41 +395,36 @@
 
 										</tbody>
 									</table>
+                                <div class="addQna">
+                                    <a href="#" class="btn btn-info" id="addQnaBtn">자주 찾는 질문 등록</a>
+                                </div>
 								</div>
 							</div>
 						</div>
 
 					</section>
 				</div>
-				<!-- 모달창 -->
+		
+				<!-- 등록 모달창 S -->
 				<div class="modal fade text-left modal-borderless modal-xl "
-					id="noticeDetail" tabindex="-1" role="dialog"
+					id="addQnaModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel1" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-scrollable" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title">자주 찾는 질문 상세조회</h5>
 								<div class="d-flex justify-content-end">
-									<button type="button" class="btn btn-danger" onclick="deleteNotice()">
-										<i class="bx bx-x d-block d-sm-none"></i> 
-										<span class="d-none d-sm-block">자주 찾는 질문 삭제</span>
-									</button>
-									<!-- 				                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
-				                        aria-label="Close">
-				                    <i data-feather="x"></i>
-				                </button> -->
-
 								</div>
 							</div>
-							<form id = "noticeDetailForm" action="#"  class="form px-5" data-parsley-validate>
+							<form id = "addQnaForm" action="#"  class="form px-5" data-parsley-validate>
 								<div class="row">
 									<div class="col-md-3 col-12">
 										<div class="form-group">
-											<label for="inputQnaNum" style="flex: 1">번호</label> 
+											<label for="addQnaNum" style="flex: 1">번호</label> 
 											<input type="text"
-												id="inputQnaNum" 
+												id="addQnaNum" 
 												class="form-control"
-												name="inputQnaNum" 
+												name="addQnaNum" 
 												placeholder="번호" 
 												style="flex: 2 " 
 												Disabled>
@@ -324,13 +437,13 @@
 									
 									<div class="col-md-12 col-12">
 										<div class="form-group">
-											<label for="inputQnaTitle" style="flex: 1 ">제목</label> 
+											<label for="addQnaTitle" style="flex: 1 ">제목</label> 
 											<input
 						                        type="text"
-						                        id="inputQnaTitle"
+						                        id="addQnaTitle"
 						                        class="form-control"
 						                        placeholder="제목"
-						                        name="inputQnaTitle"
+						                        name="addQnaTitle"
 						                        style="flex: 13 "
 						                        data-parsley-required="true"
 						                        data-parsley-error-message="제목은 필수 입력입니다."
@@ -339,8 +452,8 @@
 									</div>
 									<div class="col-md-3 col-12">
 										<div class="form-group">
-											<label for="inputQnaType" style="flex: 1">구분</label> 
-						                     <select class="inputQnaType form-select" id="inputQnaType" style="flex:2 ">
+											<label for="addQnaType" style="flex: 1">구분</label> 
+						                     <select class="addQnaType form-select" id="addQnaType" style="flex:2 ">
 						                     </select>
 										</div>
 									</div>
@@ -356,13 +469,13 @@
 									
 									<div class="col-md-12 col-12">
 										<div class="form-group">
-											<label for="inputQnaContent" style="flex: 1 ">내용</label> 
+											<label for="addQnaContent" style="flex: 1 ">내용</label> 
 											<textarea
-						                        id="inputQnaContent"
+						                        id="addQnaContent"
 						                        class="form-control"
 						                        placeholder="내용"
 						                        rows="15"
-						                        name="inputQnaContent"
+						                        name="addQnaContent"
 						                        style="flex: 13 "
 						                        data-parsley-required="true"
 						                        data-parsley-error-message="내용은 필수 입력입니다."
@@ -375,10 +488,20 @@
 									
 									
 
-									<div style="height: 30px;"></div>
+									<div style="height: 15px;"></div>
 									<div class="col-12 d-flex justify-content-center">
-										<button type="submit" class="btn btn-primary me-1 mb-1">저장</button>
-										<button type="button" class="btn btn-light-secondary me-1 mb-1" data-bs-dismiss="modal">닫기</button>
+                                        <button type="button" id="chkAddBtn" class="btn icon icon-left btn-success me-1 mb-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg> 등록
+                                        </button>
+                                        <button type="button" id="closeBtn" class="btn btn-light-secondary icon icon-left me-1 mb-1" data-bs-dismiss="modal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg> 닫기
+                                        </button>
 									</div>
 									<div style="height: 30px;"></div>
 								</div>
@@ -386,6 +509,143 @@
 						</div>
 					</div>
 				</div>
+				<!-- 등록 모달창 E -->
+		
+		
+				
+				
+				
+				<!-- 수정 모달창 S -->
+				<div class="modal fade text-left modal-borderless modal-xl "
+					id="updateQnaModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-scrollable" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">자주 찾는 질문 상세조회</h5>
+								<div class="d-flex justify-content-end">
+                                <button type="button" id="chkDeleteBtn" class="btn btn-danger">
+                                    <i class="bx bx-x d-block d-sm-none"></i> 
+                                    <span class="d-none d-sm-block">자주 찾는 질문 삭제</span>
+                                </button>
+								</div>
+							</div>
+							<form id = "updateQnaForm" action="#"  class="form px-5" data-parsley-validate>
+								<div class="row">
+									<div class="col-md-3 col-12">
+										<div class="form-group">
+											<label for="updateQnaNum" style="flex: 1">번호</label> 
+											<input type="text"
+												id="updateQnaNum" 
+												class="form-control"
+												name="updateQnaNum" 
+												placeholder="번호" 
+												style="flex: 2 " 
+												Disabled>
+
+										</div>
+									</div>
+									<div class="col-md-9 col-12">
+									</div>
+									
+									
+									<div class="col-md-12 col-12">
+										<div class="form-group">
+											<label for="updateQnaTitle" style="flex: 1 ">제목</label> 
+											<input
+						                        type="text"
+						                        id="updateQnaTitle"
+						                        class="form-control"
+						                        placeholder="제목"
+						                        name="updateQnaTitle"
+						                        style="flex: 13 "
+						                        data-parsley-required="true"
+						                        data-parsley-error-message="제목은 필수 입력입니다."
+						                     />
+										</div>
+									</div>
+									<div class="col-md-3 col-12">
+										<div class="form-group">
+											<label for="updateQnaType" style="flex: 1">구분</label> 
+						                     <select 
+						                     class="updateQnaType form-select"
+						                      id="updateQnaType" 
+						                      style="flex:2 ">
+						                     </select>
+										</div>
+									</div>
+									
+									
+									
+									
+									
+									<div class="col-md-9 col-12">
+									</div>
+									
+									
+									
+									<div class="col-md-12 col-12">
+										<div class="form-group">
+											<label for="updateQnaContent" style="flex: 1 ">내용</label> 
+											<textarea
+						                        id="updateQnaContent"
+						                        class="form-control"
+						                        placeholder="내용"
+						                        rows="15"
+						                        name="updateQnaContent"
+						                        style="flex: 13 "
+						                        data-parsley-required="true"
+						                        data-parsley-error-message="내용은 필수 입력입니다."
+						                     ></textarea>
+										</div>
+									</div>
+									
+								
+									
+									
+									<div style="height: 15px;"></div>
+									<div class="col-12 d-flex justify-content-center">
+                                        <button type="button" id="chkUpdateBtn" class="btn btn-primary me-1 mb-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg> 저장
+                                        </button>
+                                        <button type="button" id="closeBtn" class="btn btn-light-secondary me-1 mb-1" data-bs-dismiss="modal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg> 닫기
+                                        </button>
+									</div>
+									<div style="height: 30px;"></div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!-- 수정 모달창 E -->
+            <!-- 공통 확인 모달 start-->
+            <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmModalLabel"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="confirmModalBody"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+                            <button type="button" class="btn btn-danger" id="confirmActionBtn"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 공통 확인 모달 end-->
+				
+				
 				<!-- footer S -->
 				<jsp:include page="/admin/footer.jsp"></jsp:include>
 				<!-- footer E -->

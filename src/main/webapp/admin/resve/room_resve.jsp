@@ -187,11 +187,20 @@
 		});
 		
 		// 검색 input 사이즈 조절
-		$('#table1_wrapper').find('input[type="search"]').removeClass('form-control-sm').attr('style', 'width:350px;');
+		$('#table1_wrapper').find('input[type="search"]').removeClass('form-control-sm').attr('style', 'width:300px;');
 		
 	    // 날짜 기간 조회를 위한 input 추가
 		$('#table1_filter').prepend('<input type="date" id="toDate" placeholder="yyyy.MM.dd" class="form-control flatpickr-no-config" style="width: 150px; margin: 0px 20px 0px 0px;"> ');
 		$('#table1_filter').prepend('<input type="date" id="fromDate" placeholder="yyyy.MM.dd" class="form-control flatpickr-no-config" style="width: 150px;"> ~ ');
+		
+		// 예약 상태 select 추가
+		$('#table1_filter').prepend('<select id="res_status" class="form-select" style="width: 150px; display: inline; margin: 0px 20px 0px 10px;"></select>');
+		$('#res_status').append('<option value="">ALL</option>')
+						.append('<option value="RESERVED">RESERVED</option>')
+						.append('<option value="CHECK IN">CHECK IN</option>')
+						.append('<option value="CHECK OUT">CHECK OUT</option>')
+						.append('<option value="CANCELED">CANCELED</option>')
+						.append('<option value="NO SHOW">NO SHOW</option>');
 
 		// 검색 조건 select 추가
 		$('#table1_filter').prepend('검색 조건<select id="select" class="form-select" style="width: 170px; display: inline; margin: 0px 20px 0px 10px;"></select>');
@@ -199,21 +208,26 @@
 			$('#select').append('<option>'+valueOfElement.innerHTML+'</option>');
 		});
 		
-	    // 검색 input에 키보드 이벤트 리바인딩
+	    // 검색 input에 이벤트 리바인딩
 		$('.dataTables_filter input').unbind().bind('keyup keydown input', function () {
 			var colIndex = document.querySelector('#select').selectedIndex;
 			table.column(colIndex).search(this.value).draw();
 		});
 		
-	    // 날짜에 키보드 이벤트 리바인딩
-		$('#toDate, #fromDate').unbind().bind('keyup change',function(){
+	    // 날짜에 이벤트 리바인딩
+		$('#toDate, #fromDate').unbind().bind('keyup change', function(){
 	        table.draw();
 	    });
+	    
+		// 예약 상태 변경 시 필터 적용
+		$('#res_status').on('change', function() {
+			var status = $(this).val();
+			table.column(2).search(status).draw();
+		});
 	    
 	    // 검색 조건 select에 chagne 이벤트 추가
 	    $("#select").on('change', function() {
 			var columnIndex = $("#select option").index($("#select option:selected"));
-			
 			// 선택된 select이 날짜 관련(체크인, 체크아웃, 예약일) 인덱스일 경우만 함수 실행
 			if(columnIndex == 4 || columnIndex == 5 || columnIndex == 6) {
 				// 기존 필터 제거

@@ -215,7 +215,7 @@
 			var columnIndex = $("#select option").index($("#select option:selected"));
 			
 			// 선택된 select이 날짜 관련(체크인, 체크아웃, 예약일) 인덱스일 경우만 함수 실행
-			if(columnIndex == 3 || columnIndex == 4 || columnIndex == 5) {
+			if(columnIndex == 4 || columnIndex == 5 || columnIndex == 6) {
 				// 기존 필터 제거
 				$.fn.dataTable.ext.search.pop();
 				// 새 필터 추가

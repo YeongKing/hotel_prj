@@ -30,12 +30,18 @@
 
 
 
-<style type = "text/css">
-    .form-group {
-        display: flex;
-        align-items: center; /* 세로 중앙 정렬 */
-    }
+<style type="text/css">
+.form-group {
+	display: flex;
+	align-items: center; /* 세로 중앙 정렬 */
+}
 
+.addNotice {
+	display: flex;
+	justify-content: flex-end;
+	padding-bottom: 30px;
+	padding-right: 10px;
+}
 </style>
 
 <script type = "text/javascript">
@@ -50,8 +56,6 @@
 	        $(this).addClass("active");
 		});
 
-	    
-	    
 	    
 	    
 	    // 테이블의 유저아이디 클릭시
@@ -70,22 +74,123 @@
 	        
 	        //$("#inputAdminId").val(adminId);
 
-
 	        // 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
 	        // 모달 내의 모든 'is-invalid' 클래스 제거
-	        $('#noticeDetail').find('.is-invalid').removeClass('is-invalid');
-	        
+	        $('#noticeDetailModal').find('.is-invalid').removeClass('is-invalid');
 	        
 	        // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
-	        $('#noticeDetail').find('span.parsley-custom-error-message').remove();
-	        
+	        $('#noticeDetailModal').find('span.parsley-custom-error-message').remove();
 	        
 	        // Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
-	        $('#noticeDetail').modal('show');
+	        $('#noticeDetailModal').modal('show');
 	    });
 
-	    
+	    $("#addNotice").click(function(){
+	       	// 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
+            // 모달 내의 모든 'is-invalid' 클래스 제거
+            $('#addNoticeModal').find('.is-invalid').removeClass('is-invalid');
+            
+            // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
+            $('#addNoticeModal').find('span.parsley-custom-error-message').remove();
+            $('#addNoticeModal').modal('show');
+	    })
 		
+	    var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+
+        function showModal(title, body, actionText, actionCallback) {
+            $('#confirmModalLabel').text(title);
+            $('#confirmModalBody').text(body);
+            $('#confirmActionBtn').text(actionText);
+            $('#confirmActionBtn').off('click').on('click', function() {
+                actionCallback();
+                confirmModal.hide();
+            });
+            confirmModal.show();
+        }
+
+        function deleteAction() {
+            console.log('삭제 동작 수행');
+            // 서버로 삭제 요청 보내기
+            // $.ajax({
+            //     url: 'delete_url',
+            //     method: 'POST',
+            //     data: { id: itemId },
+            //     success: function(response) {
+            //         console.log('삭제 성공');
+            //     },
+            //     error: function(error) {
+            //         console.log('삭제 실패', error);
+            //     }
+            // });
+        }
+
+        function updateAction() {
+            console.log('수정 동작 수행');
+            // 서버로 수정 요청 보내기
+            // $.ajax({
+            //     url: 'update_url',
+            //     method: 'POST',
+            //     data: { id: itemId, data: newData },
+            //     success: function(response) {
+            //         console.log('수정 성공');
+            //     },
+            //     error: function(error) {
+            //         console.log('수정 실패', error);
+            //     }
+            // });
+        }
+
+        function registerAction() {
+            console.log('등록 동작 수행');
+            // 서버로 등록 요청 보내기
+            // $.ajax({
+            //     url: 'register_url',
+            //     method: 'POST',
+            //     data: { data: newData },
+            //     success: function(response) {
+            //         console.log('등록 성공');
+            //     },
+            //     error: function(error) {
+            //         console.log('등록 실패', error);
+            //     }
+            // });
+        }
+
+        // 등록 버튼 클릭 시
+        $('#chkAddBtn').on('click', function() {
+            showModal('등록 확인', '등록하시겠습니까?', '예', function() {
+                registerAction();
+                alert('등록 동작 수행');
+            });
+        });
+
+        // 삭제 버튼 클릭 시
+        $('#chkDeleteBtn').on('click', function() {
+            showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
+                deleteAction();
+                alert('삭제 동작 수행');
+            });
+        });
+
+        // 수정 버튼 클릭 시
+        $('#chkUpdateBtn').on('click', function() {
+            showModal('수정 확인', '수정하시겠습니까?', '예', function() {
+                updateAction();
+                alert('수정 동작 수행');
+            });
+        });
+        
+        
+        //esc 클릭 이벤트 
+        $(document).keydown(function(event) {
+            // ESC 키 입력 감지
+            if (event.keyCode == 27 || event.which == 27) {
+                // 수정 모달 열려있는지 확인
+                $('#confirmModal').modal('hide');
+            }
+        });
+	    
+	    
 	}); // ready
 	
 	// 페이지 변경을 시뮬레이션하는 예제 함수
@@ -109,17 +214,6 @@
 	    }
 	}
 	</script>
-		<script type="text/javascript">
-
-	function deleteNotice(){
-		var result = confirm("공지사항을 정말로 삭제 하시겠습니까?");
-
-	}
-
-	</script>
-
-
-
 
 	<script>
 	document.getElementById('noticeDetailForm').onsubmit = function() {
@@ -297,22 +391,123 @@
 
 										</tbody>
 									</table>
+									<div class="addNotice">
+                                    <a href="#" class="btn btn-info" id="addNotice">공지사항 등록</a>
+                               		 </div>
 								</div>
 							</div>
 						</div>
 
 					</section>
 				</div>
-				<!-- 모달창 -->
+				
+				<!-- 등록 모달창 start-->
 				<div class="modal fade text-left modal-borderless modal-xl "
-					id="noticeDetail" tabindex="-1" role="dialog"
+					id="addNoticeModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-scrollable" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">공지사항 등록</h5>
+							</div>
+							<form id = "noticeDetailForm" action="#"  class="form px-5" data-parsley-validate>
+								<div class="row">
+									<div class="col-md-3 col-12">
+										<div class="form-group">
+											<label for="inputNoticeNum" style="flex: 1">번호</label> 
+											<input type="text"
+												id="inputNoticeNum" 
+												class="form-control"
+												name="inputNoticeNum" 
+												placeholder="번호" 
+												style="flex: 2 " 
+												Disabled>
+
+										</div>
+									</div>
+									<div class="col-md-3 col-12">
+									</div>
+									
+									
+									<div class="col-md-3 col-12">
+										<div class="form-group">
+											<label for="inputNoticeInputdate" style="flex: 1">작성일</label> 
+												<input
+						                        type="text"
+						                        id="inputNoticeInputdate"
+						                        class="form-control"
+						                        placeholder="작성일"
+						                        name="inputNoticeInputdate"
+						                        style="flex: 2 "
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									<div class="col-md-3 col-12">
+									</div>
+									<div class="col-md-12 col-12">
+										<div class="form-group">
+											<label for="inputNoticeTitle" style="flex: 1 ">제목</label> 
+											<input
+						                        type="text"
+						                        id="inputNoticeTitle"
+						                        class="form-control"
+						                        placeholder="제목"
+						                        name="inputNoticeTitle"
+						                        style="flex: 13 "
+						                        data-parsley-required="true"
+						                        data-parsley-error-message="제목은 필수 입력입니다."
+						                     />
+										</div>
+									</div>
+									
+									
+									<div class="col-md-12 col-12">
+										<div class="form-group">
+											<label for="inputNoticeContent" style="flex: 1 ">내용</label> 
+											<textarea
+						                        id="inputNoticeContent"
+						                        class="form-control"
+						                        placeholder="내용"
+						                        rows="15"
+						                        name="inputNoticeContent"
+						                        style="flex: 13 "
+						                        data-parsley-required="true"
+						                        data-parsley-error-message="내용은 필수 입력입니다."
+						                     ></textarea>
+										</div>
+									</div>
+									<div style="height: 30px;"></div>
+									<div class="col-12 d-flex justify-content-center">
+										     <div class="buttons">
+                                        <button type="button" id="chkAddBtn" class="btn icon icon-left btn-success">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg> 등록
+                                        </button>
+                                    </div>
+									</div>
+									<div style="height: 30px;"></div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!-- 등록 모달창 end-->
+				
+				
+				
+				<!-- 수정 모달창 start-->
+				<div class="modal fade text-left modal-borderless modal-xl "
+					id="noticeDetailModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel1" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-scrollable" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title">공지사항 상세조회</h5>
 								<div class="d-flex justify-content-end">
-									<button type="button" class="btn btn-danger" onclick="deleteNotice()">
+									<button type="button" class="btn btn-danger" id="chkDeleteBtn">
 										<i class="bx bx-x d-block d-sm-none"></i> 
 										<span class="d-none d-sm-block">공지사항 삭제</span>
 									</button>
@@ -390,16 +585,20 @@
 						                     ></textarea>
 										</div>
 									</div>
-									
-								
-									
-									
-									
-
 									<div style="height: 30px;"></div>
 									<div class="col-12 d-flex justify-content-center">
-										<button type="submit" class="btn btn-primary me-1 mb-1">저장</button>
-										<button type="button" class="btn btn-light-secondary me-1 mb-1" data-bs-dismiss="modal">닫기</button>
+										                                        <button type="button" id="chkUpdateBtn" class="btn btn-primary me-1 mb-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg> 저장
+                                        </button>
+                                        <button type="button" id="closeBtn" class="btn btn-light-secondary me-1 mb-1" data-bs-dismiss="modal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg> 닫기
+                                        </button>
 									</div>
 									<div style="height: 30px;"></div>
 								</div>
@@ -407,9 +606,31 @@
 						</div>
 					</div>
 				</div>
+				<!-- 수정 모달창 end-->
+				
+				 <!-- 공통 확인 모달 start-->
+            <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmModalLabel"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="confirmModalBody"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+                            <button type="button" class="btn btn-danger" id="confirmActionBtn"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 공통 확인 모달 end-->
 				<!-- footer S -->
 				<jsp:include page="/admin/footer.jsp"></jsp:include>
 				<!-- footer E -->
+				
 			</div>
 			<!-- main E -->
 

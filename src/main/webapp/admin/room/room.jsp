@@ -27,6 +27,18 @@
 <!-- jQuery CDN E -->
 
 <style type="text/css">
+        .addRoom {
+            display: flex; 
+            justify-content: flex-end;
+            padding-bottom: 30px;
+            padding-right: 10px;
+        }
+        
+        .buttons {
+            display: flex; 
+            padding-top: 30px;
+        }
+
 
 </style>
 
@@ -46,12 +58,13 @@ $(document).ready(function() {
     
     
     
-    // 테이블의 유저아이디 클릭시
+    // 테이블의 객실번호 클릭시
     $(document).on("click", ".roomId", function() {
         var roomId = $(this).text();
         var roomRankName = $(this).closest('tr').find('.roomRankName').text(); // 같은 행(row) 내에서 .roomRankName을 찾아 텍스트를 가져옴
         var bedName = $(this).closest('tr').find('.bedName').text(); // 같은 행(row) 내에서 .roomRankName을 찾아 텍스트를 가져옴
         var viewName = $(this).closest('tr').find('.viewName').text(); // 같은 행(row) 내에서 .roomRankName을 찾아 텍스트를 가져옴
+        var roomSize = $(this).closest('tr').find('.roomSize').text();
         
         var roomFloor;
         if (roomId.length == 3) {
@@ -60,33 +73,188 @@ $(document).ready(function() {
             roomFloor = roomId.substr(0, 2);
         }
 
-        $("#roomId").val(roomId);
-        $("#roomFloor").val(roomFloor+"층");
-        $("#roomRankName").val(roomRankName);
+        $("#updateRoomId").val(roomId);
+        $("#updateRoomFloor").val(roomFloor+"층");
+        $("#updateRoomRankName").val(roomRankName);
        /*  $("#bedName").val(bedName); */
-        $("#viewName").val(viewName);
+        $("#updateViewName").val(viewName);
+        $("#updateRoomSize").val(roomSize);
         
-        $("#bedName").empty();
-        $("#bedName").append(new Option("KING", "KING"));
-        $("#bedName").append(new Option("TWIN", "TWIN"));
-        
+        $("#updateBedName").empty();
+        $("#updateBedName").append(new Option("KING", "KING"));
+        $("#updateBedName").append(new Option("TWIN", "TWIN"));
+      
+
         
         
         
 
         // 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
         // 모달 내의 모든 'is-invalid' 클래스 제거
-        $('#roomDetail').find('.is-invalid').removeClass('is-invalid');
+        $('#updateRoomModal').find('.is-invalid').removeClass('is-invalid');
         
         
         // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
-        $('#roomDetail').find('span.parsley-custom-error-message').remove();
+        $('updateRoomModal').find('span.parsley-custom-error-message').remove();
         
         
         // Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
-        $('#roomDetail').modal('show');
+        $('#updateRoomModal').modal('show');
+    });
+    
+
+    
+    
+    // 객실 등록 번호 클릭 시
+    $("#addRoomBtn").click(function() {
+
+    	// 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
+        // 모달 내의 모든 'is-invalid' 클래스 제거
+        $('#addRoomModal').find('.is-invalid').removeClass('is-invalid');
+        
+    	
+    	
+        $("#addRoomFloor").empty();
+        $("#addRoomFloor").append(new Option("1", "1"));
+        $("#addRoomFloor").append(new Option("2", "2"));
+        $("#addRoomFloor").append(new Option("3", "3"));
+        $("#addRoomFloor").append(new Option("4", "4"));
+        $("#addRoomFloor").append(new Option("5", "5"));
+    	
+        $("#addRoomRankName").empty();
+        $("#addRoomRankName").append(new Option("STANDARD", "STANDARD"));
+        $("#addRoomRankName").append(new Option("DELUXE", "DELUXE"));
+        $("#addRoomRankName").append(new Option("SUITE", "SUITE"));
+
+    	
+        $("#addRoomFloor").empty();
+        $("#addRoomFloor").append(new Option("1", "1"));
+        $("#addRoomFloor").append(new Option("2", "2"));
+        $("#addRoomFloor").append(new Option("3", "3"));
+        $("#addRoomFloor").append(new Option("4", "4"));
+        $("#addRoomFloor").append(new Option("5", "5"));
+    	
+    	
+        $("#addBedName").empty();
+        $("#addBedName").append(new Option("KING", "KING"));
+        $("#addBedName").append(new Option("TWIN", "TWIN"));
+    	
+        $("#addViewName").empty();
+        $("#addViewName").append(new Option("STANDARD", "STANDARD"));
+        $("#addViewName").append(new Option("GARDEN", "GARDEN"));
+        $("#addViewName").append(new Option("POOLSIDE", "POOLSIDE"));
+    	
+        // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
+        $('#addRoomModal').find('span.parsley-custom-error-message').remove();
+        $('#addRoomModal').modal('show');
+        
+        
+    });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+
+    function showModal(title, body, actionText, actionCallback) {
+        $('#confirmModalLabel').text(title);
+        $('#confirmModalBody').text(body);
+        $('#confirmActionBtn').text(actionText);
+        $('#confirmActionBtn').off('click').on('click', function() {
+            actionCallback();
+            confirmModal.hide();
+        });
+        confirmModal.show();
+    }
+
+    function deleteAction() {
+        console.log('삭제 동작 수행');
+        // 서버로 삭제 요청 보내기
+        // $.ajax({
+        //     url: 'delete_url',
+        //     method: 'POST',
+        //     data: { id: itemId },
+        //     success: function(response) {
+        //         console.log('삭제 성공');
+        //     },
+        //     error: function(error) {
+        //         console.log('삭제 실패', error);
+        //     }
+        // });
+    }
+
+    function updateAction() {
+        console.log('수정 동작 수행');
+        // 서버로 수정 요청 보내기
+        // $.ajax({
+        //     url: 'update_url',
+        //     method: 'POST',
+        //     data: { id: itemId, data: newData },
+        //     success: function(response) {
+        //         console.log('수정 성공');
+        //     },
+        //     error: function(error) {
+        //         console.log('수정 실패', error);
+        //     }
+        // });
+    }
+
+    function registerAction() {
+        console.log('등록 동작 수행');
+        // 서버로 등록 요청 보내기
+        // $.ajax({
+        //     url: 'register_url',
+        //     method: 'POST',
+        //     data: { data: newData },
+        //     success: function(response) {
+        //         console.log('등록 성공');
+        //     },
+        //     error: function(error) {
+        //         console.log('등록 실패', error);
+        //     }
+        // });
+    }
+
+    // 등록 버튼 클릭 시
+    $('#chkAddBtn').on('click', function() {
+        showModal('등록 확인', '등록하시겠습니까?', '예', function() {
+            registerAction();
+            alert('등록 동작 수행');
+        });
     });
 
+    // 삭제 버튼 클릭 시
+    $('#chkDeleteBtn').on('click', function() {
+        showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
+            deleteAction();
+            alert('삭제 동작 수행');
+        });
+    });
+
+    // 수정 버튼 클릭 시
+    $('#chkUpdateBtn').on('click', function() {
+        showModal('수정 확인', '수정하시겠습니까?', '예', function() {
+            updateAction();
+            alert('수정 동작 수행');
+        });
+    });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 
 });//ready
@@ -113,29 +281,6 @@ function changePage(pageNumber) {
     }
 }
 </script>
-	<script type="text/javascript">
-
-function deleteRoom(){
-	var result = confirm("객실을 정말로 삭제 하시겠습니까?");
-
-}
-
-</script>
-
-
-
-
-<script>
-document.getElementById('roomDetailForm').onsubmit = function() {
-    
-	if(confirm('회원정보를 정말로 저장하시겠습니까?')){
-	alert('회원정보저장 시작')
-	}
-
-};
-</script>
-
-
 
 
 
@@ -203,8 +348,6 @@ document.getElementById('roomDetailForm').onsubmit = function() {
 												<td class="bedName">KING</td>
 												<td class="viewName">STANDARD</td>
 												<td class="roomSize">30</td>
-												<!-- <td><span class="badge bg-success">Active</span></td> -->
-												<!-- <td><span class="badge bg-danger">Inactive</span></td> -->
 											</tr>
 											<tr>
 												<th>2</th>
@@ -322,40 +465,38 @@ document.getElementById('roomDetailForm').onsubmit = function() {
 
 										</tbody>
 									</table>
+                                <div class="addRoom">
+                                    <a href="#" class="btn btn-info" id="addRoomBtn">객실 등록</a>
+                                </div>
 								</div>
 							</div>
 						</div>
 
 					</section>
 				</div>
-				<!-- 모달창 -->
+				
+			<!-- 등록 모달창 S -->
 				<div class="modal fade text-left modal-borderless modal-xl "
-					id="roomDetail" tabindex="-1" role="dialog"
+					id="addRoomModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel1" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-scrollable" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title">객실 상세조회</h5>
+								<h5 class="modal-title">객실 등록</h5>
 								<div class="d-flex justify-content-end">
-									<button type="button" class="btn btn-danger" onclick="deleteRoom()">
-										<i class="bx bx-x d-block d-sm-none"></i> 
-										<span class="d-none d-sm-block">객실삭제</span>
-									</button>
-									<!-- 				                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
-				                        aria-label="Close">
-				                    <i data-feather="x"></i>
-				                </button> -->
 
 								</div>
 							</div>
-							<form id = "roomDetailForm" action="#"  class="form px-5" data-parsley-validate>
+							<form id = "addRoomForm" action="#"  class="form px-5" data-parsley-validate>
 								<div class="row">
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="roomId">객실 아이디</label> 
+											<label for="addRoomId">객실 아이디</label> 
 											<input type="text"
-												id="roomId" class="form-control"
-												name="roomId" placeholder="객실아이디" Disabled>
+												id="addRoomId"
+												class="form-control"
+												name="addRoomId"
+												placeholder="객실아이디" Disabled>
 
 										</div>
 									</div>
@@ -363,41 +504,37 @@ document.getElementById('roomDetailForm').onsubmit = function() {
 									
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="roomBasicCapacity">객실 기본 인원</label> 
+											<label for="addRoomBasicCapacity">객실 기본 인원</label> 
 												<input
 						                        type="text"
-						                        id="roomBasicCapacity"
+						                        id="addRoomBasicCapacity"
 						                        class="form-control"
 						                        placeholder="객실 기본 인원"
-						                        name="roomBasicCapacity"
+						                        name="addRoomBasicCapacity"
 						                        Disabled
 						                     />
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="roomFloor">객실 층</label> 
-											<input
-						                        type="text"
-						                        id="roomFloor"
-						                        class="form-control"
-						                        placeholder="객실 층"
-						                        name="roomFloor"
-						                        Disabled
-						                     />
+											<label for="addRoomFloor">객실 층</label>
+						                     <select 
+						                     class="addRoomFloor form-select" 
+						                     id="addRoomFloor">
+						                     </select>
 										</div>
 									</div>
 									
 									
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="roomMaxCapacity">객실 최대 인원</label> 
+											<label for="addRoomMaxCapacity">객실 최대 인원</label> 
 											<input
 						                        type="text"
-						                        id="roomMaxCapacity"
+						                        id="addRoomMaxCapacity"
 						                        class="form-control"
 						                        placeholder="객실 최대 인원"
-						                        name="roomMaxCapacity"
+						                        name="addRoomMaxCapacity"
 						                        Disabled
 						                     />
 										</div>
@@ -405,26 +542,23 @@ document.getElementById('roomDetailForm').onsubmit = function() {
 									
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="roomRankName">객실 등급</label> 
-											<input
-						                        type="text"
-						                        id="roomRankName"
-						                        class="form-control"
-						                        placeholder="객실 등급"
-						                        name="roomRankName"
-						                        Disabled
-						                     />
+											<label for="addRoomRankName">객실 등급</label>
+						                     <select 
+						                     class="addRoomRankName form-select" 
+						                     id="addRoomRankName">
+						                     </select>
+						                     
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="roomBasicPrice">기본 요금</label>
+											<label for="addRoomBasicPrice">기본 요금</label>
 											<input
 						                        type="text"
-						                        id="roomBasicPrice"
+						                        id="addRoomBasicPrice"
 						                        class="form-control"
 						                        placeholder="기본 요금"
-						                        name="roomBasicPrice"
+						                        name="addRoomBasicPrice"
 						                        Disabled
 						                     />
 										</div>
@@ -432,58 +566,46 @@ document.getElementById('roomDetailForm').onsubmit = function() {
 									
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="bedName">침대 유형</label>
-						                     <select class="bedName form-select" id="bedName">
+											<label for="addBedName">침대 유형</label>
+						                     <select 
+						                     class="addBedName form-select" 
+						                     id="addBedName">
 						                     </select>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="roomAddPrice">추가 요금</label>
+											<label for="addRoomAddPrice">추가 요금</label>
 											<input
 						                        type="text"
-						                        id="roomAddPrice"
+						                        id="addRoomAddPrice"
 						                        class="form-control"
 						                        placeholder="추가 요금"
-						                        name="roomAddPrice"
+						                        name="addRoomAddPrice"
 						                        Disabled
 						                     />
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="viewName">뷰 유형</label> 
-											<input
-						                        type="text"
-						                        id="viewName"
-						                        class="form-control"
-						                        placeholder="뷰 유형"
-						                        name="viewName"
-						                        Disabled
-						                     />
+											<label for="addViewName">뷰 유형</label>
+						                     <select 
+						                     class="addViewName form-select" 
+						                     id="addViewName">
+						                     </select>
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="amenity"> </label> 
-											<input
-						                        type="button"
-						                        id="amenity"
-						                        class="form-control"
-						                        name="amenity"
-												value="어메니티"
-						                     />
-										</div>
 									</div>	
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="roomSize">방 크기</label>
+											<label for="addRoomSize">방 크기</label>
 											<input
 						                        type="text"
-						                        id="roomSize"
+						                        id="addRoomSize"
 						                        class="form-control"
 						                        placeholder="방 크기"
-						                        name="roomSize"
+						                        name="addRoomSize"
 						                        Disabled
 						                     />
 										</div>
@@ -497,8 +619,18 @@ document.getElementById('roomDetailForm').onsubmit = function() {
 
 									<div style="height: 30px;"></div>
 									<div class="col-12 d-flex justify-content-center">
-										<button type="submit" class="btn btn-primary me-1 mb-1">저장</button>
-										<button type="button" class="btn btn-light-secondary me-1 mb-1" data-bs-dismiss="modal">닫기</button>
+                                        <button type="button" id="chkAddBtn" class="btn icon icon-left btn-success me-1 mb-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg> 등록
+                                        </button>
+                                        <button type="button" id="closeBtn" class="btn btn-light-secondary icon icon-left me-1 mb-1" data-bs-dismiss="modal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg> 닫기
+                                        </button>
 									</div>
 									<div style="height: 30px;"></div>
 								</div>
@@ -506,6 +638,222 @@ document.getElementById('roomDetailForm').onsubmit = function() {
 						</div>
 					</div>
 				</div>
+				<!-- 등록 모달창 E -->
+				
+				
+				
+				
+				
+				<!-- 수정 모달창 S -->
+				<div class="modal fade text-left modal-borderless modal-xl "
+					id="updateRoomModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-scrollable" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">객실 상세조회</h5>
+								<div class="d-flex justify-content-end">
+                                <button type="button" id="chkDeleteBtn" class="btn btn-danger">
+                                    <i class="bx bx-x d-block d-sm-none"></i> 
+                                    <span class="d-none d-sm-block">객실 삭제</span>
+                                </button>
+								</div>
+							</div>
+							<form id = "updateRoomForm" action="#"  class="form px-5" data-parsley-validate>
+								<div class="row">
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="updateRoomId">객실 아이디</label> 
+											<input type="text"
+												id="updateRoomId" class="form-control"
+												name="updateRoomId" placeholder="객실아이디" Disabled>
+
+										</div>
+									</div>
+									
+									
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="updateRoomBasicCapacity">객실 기본 인원</label> 
+												<input
+						                        type="text"
+						                        id="updateRoomBasicCapacity"
+						                        class="form-control"
+						                        placeholder="객실 기본 인원"
+						                        name="updateRoomBasicCapacity"
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="updateRoomFloor">객실 층</label> 
+											<input
+						                        type="text"
+						                        id="updateRoomFloor"
+						                        class="form-control"
+						                        placeholder="객실 층"
+						                        name="updateRoomFloor"
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									
+									
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="updateRoomMaxCapacity">객실 최대 인원</label> 
+											<input
+						                        type="text"
+						                        id="updateRoomMaxCapacity"
+						                        class="form-control"
+						                        placeholder="객실 최대 인원"
+						                        name="updateRoomMaxCapacity"
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="updateRoomRankName">객실 등급</label> 
+											<input
+						                        type="text"
+						                        id="updateRoomRankName"
+						                        class="form-control"
+						                        placeholder="객실 등급"
+						                        name="updateRoomRankName"
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="updateRoomBasicPrice">기본 요금</label>
+											<input
+						                        type="text"
+						                        id="updateRoomBasicPrice"
+						                        class="form-control"
+						                        placeholder="기본 요금"
+						                        name="updateRoomBasicPrice"
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="updateBedName">침대 유형</label>
+						                     <select 
+						                      class="updateBedName form-select"
+						                      id="updateBedName">
+						                     </select>
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="updateRoomAddPrice">추가 요금</label>
+											<input
+						                        type="text"
+						                        id="updateRoomAddPrice"
+						                        class="form-control"
+						                        placeholder="추가 요금"
+						                        name="updateRoomAddPrice"
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="updateViewName">뷰 유형</label> 
+											<input
+						                        type="text"
+						                        id="updateViewName"
+						                        class="form-control"
+						                        placeholder="뷰 유형"
+						                        name="updateViewName"
+						                        Disabled
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="updateAmenity"> </label> 
+											<input
+						                        type="button"
+						                        id="updateAmenity"
+						                        class="form-control"
+						                        name="updateAmenity"
+												value="어메니티"
+						                     />
+										</div>
+									</div>	
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="updateRoomSize">방 크기</label>
+											<input
+						                        type="text"
+						                        id="updateRoomSize"
+						                        class="form-control"
+						                        placeholder="방 크기"
+						                        name="updateRoomSize"
+						                        Disabled
+						                     />
+										</div>
+									</div>					
+									<div class="col-md-6 col-12">
+									</div>				
+									
+									
+									
+									
+
+									<div style="height: 30px;"></div>
+									<div class="col-12 d-flex justify-content-center">
+                                        <button type="button" id="chkUpdateBtn" class="btn btn-primary me-1 mb-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg> 저장
+                                        </button>
+                                        <button type="button" id="closeBtn" class="btn btn-light-secondary me-1 mb-1" data-bs-dismiss="modal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg> 닫기
+                                        </button>
+									</div>
+									<div style="height: 30px;"></div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!-- 수정 모달창 E -->
+				
+				
+				
+            <!-- 공통 확인 모달 start-->
+            <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmModalLabel"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="confirmModalBody"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+                            <button type="button" class="btn btn-danger" id="confirmActionBtn"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 공통 확인 모달 end-->
+				
+				
 				<!-- footer S -->
 				<jsp:include page="/admin/footer.jsp"></jsp:include>
 				<!-- footer E -->

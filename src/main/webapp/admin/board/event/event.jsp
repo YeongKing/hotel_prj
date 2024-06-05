@@ -145,7 +145,7 @@
 		</div>
 		
 	<!-- 이벤트 등록 start -->
-	<div class="modal fade text-left modal-borderless" id="addEvent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+	<div class="modal fade text-left modal-borderless" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -211,7 +211,7 @@
 	<!-- 이벤트 등록 end-->
 	
 <!-- 이벤트 수정 start -->
-<div class="modal fade text-left modal-borderless" id="eventDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+<div class="modal fade text-left modal-borderless" id="eventDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -316,15 +316,15 @@
                             <p id="confirmModalBody"></p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
                             <button type="button" class="btn btn-danger" id="confirmActionBtn"></button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- 공통 확인 모달 end-->
 
-	
+		
 
 
 		<!-- footer -->
@@ -347,11 +347,11 @@ $(document).ready(function() {
 	$("#addEventBtn").click(function(){
 		// 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
         // 모달 내의 모든 'is-invalid' 클래스 제거
-        $('#addEvent').find('.is-invalid').removeClass('is-invalid');
+        $('#addEventModal').find('.is-invalid').removeClass('is-invalid');
         // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
-        $('#addEvent').find('span.parsley-custom-error-message').remove();
+        $('#addEventModal').find('span.parsley-custom-error-message').remove();
        // Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
-       $('#addEvent').modal('show');
+       $('#addEventModal').modal('show');
 		
 	})
 	
@@ -366,11 +366,11 @@ $(document).ready(function() {
         // 모달 내 필드에 데이터 설정
       // 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
          // 모달 내의 모든 'is-invalid' 클래스 제거
-         $('#eventDetail').find('.is-invalid').removeClass('is-invalid');
+         $('#eventDetailModal').find('.is-invalid').removeClass('is-invalid');
          // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
-         $('#eventDetail').find('span.parsley-custom-error-message').remove();
+         $('#eventDetailModal').find('span.parsley-custom-error-message').remove();
         // Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
-        $('#eventDetail').modal('show');
+        $('#eventDetailModal').modal('show');
     });
 	
 	
@@ -409,6 +409,16 @@ $(document).ready(function() {
             updateAction();
             alert('수정 동작 수행');
         });
+    });
+    
+    
+    //esc 클릭 이벤트 
+    $(document).keydown(function(event) {
+        // ESC 키 입력 감지
+        if (event.keyCode == 27 || event.which == 27) {
+            // 수정 모달 열려있는지 확인
+            $('#confirmModal').modal('hide');
+        }
     });
 
 });//ready

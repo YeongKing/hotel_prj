@@ -1,7 +1,10 @@
-
+flatpickr('.flatpickr-basic', {
+    enableTime: false,
+    dateFormat: "Y.m.d", 
+})
 flatpickr('.flatpickr-no-config', {
     enableTime: true,
-    dateFormat: "Y-m-d H:i", 
+    dateFormat: "Y.m.d H:i", 
 })
 flatpickr('.flatpickr-always-open', {
     inline: true
@@ -13,11 +16,10 @@ flatpickr('.flatpickr-range', {
 flatpickr('.flatpickr-range-preloaded', {
     dateFormat: "F j, Y", 
     mode: 'range',
-    defaultDate: ["2016-10-10T00:00:00Z", "2016-10-20T00:00:00Z"]
+    defaultDate: ["2016.10.10T00:00:00Z", "2016.10.20T00:00:00Z"]
 })
 flatpickr('.flatpickr-time-picker-24h', {
     enableTime: true,
     noCalendar: true,
-    dateFormat: "H:i",
-    inline: true
+    dateFormat: "H:i"
 })

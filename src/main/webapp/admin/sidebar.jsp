@@ -70,13 +70,13 @@
 			
 			<ul class="submenu ">
 				<li class="submenu-item rrm ">
-				<a href="/hotel_prj/admin/resve/room_resve.jsp" class="submenu-link">
+				<a href="/hotel_prj/admin/resve/roomResve.jsp" class="submenu-link">
 				<i class="bi bi-dot"></i>
 				객실 예약 관리</a>
 				</li>
 				
 				<li class="submenu-item drm ">
-				<a href="/hotel_prj/admin/resve/dining_resve.jsp" class="submenu-link">
+				<a href="/hotel_prj/admin/resve/diningResve.jsp" class="submenu-link">
 				<i class="bi bi-dot"></i>
 				다이닝 예약 관리</a>
 				</li>

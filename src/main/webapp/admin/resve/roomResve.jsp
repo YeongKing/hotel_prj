@@ -109,7 +109,8 @@
 	<!-- page content E -->
 	
 	<!-- modal S -->
-	<jsp:include page="/admin/resve/room_resve_modal.jsp"></jsp:include>
+	<jsp:include page="/admin/resve/roomResveModal.jsp"></jsp:include>
+	<jsp:include page="/admin/modal/checkModal.jsp"></jsp:include>
 	<!-- modal E -->
 
 	<!-- footer S -->
@@ -143,7 +144,7 @@
 		// 현재 페이지 DataTable 인스턴스 생성
 		var table = $('#table1').DataTable({
 			ajax: {
-		       'url':'DATA.json', 
+		       'url':'room_data.json', 
 		       //'type': 'POST',
 		       'dataSrc':''
 		    },
@@ -190,8 +191,8 @@
 		$('#table1_wrapper').find('input[type="search"]').removeClass('form-control-sm').attr('style', 'width:300px;');
 		
 	    // 날짜 기간 조회를 위한 input 추가
-		$('#table1_filter').prepend('<input type="date" id="toDate" placeholder="yyyy.MM.dd" class="form-control flatpickr-no-config" style="width: 150px; margin: 0px 20px 0px 0px;"> ');
-		$('#table1_filter').prepend('<input type="date" id="fromDate" placeholder="yyyy.MM.dd" class="form-control flatpickr-no-config" style="width: 150px;"> ~ ');
+		$('#table1_filter').prepend('<input type="text" id="toDate" placeholder="연.월.일" class="form-control flatpickr-basic flatpickr-input" readonly="readonly" style="width: 150px; margin: 0px 20px 0px 0px;"> ');
+		$('#table1_filter').prepend('<input type="text" id="fromDate" placeholder="연.월.일" class="form-control flatpickr-basic flatpickr-input" readonly="readonly" style="width: 150px;"> ~ ');
 		
 		// 예약 상태 select 추가
 		$('#table1_filter').prepend('<select id="res_status" class="form-select" style="width: 150px; display: inline; margin: 0px 20px 0px 10px;"></select>');
@@ -228,7 +229,7 @@
 			case 5 : colIndex = 7; break;
 			case 6 : colIndex = 8; break;
 			}
-			console.log(colIndex);
+			//console.log(colIndex);
 			table.column(colIndex).search(this.value).draw();
 		});
 		
@@ -258,6 +259,27 @@
 				table.draw();
 			} // end if
 		});
+
+	    // select이 날짜 관련(체크인, 체크아웃, 예약일)일 때 실행되는 함수
+		// return이 true이면 검색 수행, false이면 무시
+		function createDateRangeFilter(columnIndex) {
+			return function(settings, data, dataIndex){
+				var fromDate = new Date($("#fromDate").val());
+				fromDate.setDate(fromDate.getDate());
+				
+				var min = Date.parse(fromDate);
+				var max = Date.parse($('#toDate').val());
+				var tableDate = Date.parse(data[columnIndex]);
+		
+				if( (isNaN(min) && isNaN(max)) || 
+					(isNaN(min) && tableDate <= max) || 
+					(tableDate >= min && isNaN(max)) ||
+					(tableDate >= min && tableDate <= max) ){ 
+						return true;
+					}
+				return false;
+			}
+		} // createDateRangeFilter
 	    
 	 	// 테이블의 예약번호 클릭시
 	    $(document).on('click', '.resNum', function() {
@@ -270,28 +292,116 @@
 	        // Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
 	        $('#roomResDetail').modal('show');
 	    });
+	 	
+	 	// 확인 모달창 불러오기
+	    var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+
+        function showModal(title, body, actionText, actionCallback) {
+            $('#confirmModalLabel').text(title);
+            $('#confirmModalBody').text(body);
+            $('#confirmActionBtn').text(actionText);
+            $('#confirmActionBtn').off('click').on('click', function() {
+                actionCallback();
+                confirmModal.hide();
+            });
+            confirmModal.show();
+        }
+
+        function updateAction() {
+            console.log('수정 동작 수행');
+            // 서버로 수정 요청 보내기
+            // $.ajax({
+            //     url: 'delete_url',
+            //     method: 'POST',
+            //     data: { id: itemId },
+            //     success: function(response) {
+            //         console.log('수정 성공');
+            //     },
+            //     error: function(error) {
+            //         console.log('수정 실패', error);
+            //     }
+            // });
+        }
+
+        function cancelAction() {
+            console.log('취소 동작 수행');
+            // 서버로 삭제 요청 보내기
+            // $.ajax({
+            //     url: 'delete_url',
+            //     method: 'POST',
+            //     data: { id: itemId },
+            //     success: function(response) {
+            //         console.log('삭제 성공');
+            //     },
+            //     error: function(error) {
+            //         console.log('삭제 실패', error);
+            //     }
+            // });
+        }
+        
+        function checkoutAction() {
+            console.log('체크아웃 동작 수행');
+            // 서버로 체크아웃 요청 보내기
+            // $.ajax({
+            //     url: 'update_url',
+            //     method: 'POST',
+            //     data: { id: itemId, data: newData },
+            //     success: function(response) {
+            //         console.log('체크아웃 성공');
+            //     },
+            //     error: function(error) {
+            //         console.log('체크아웃 실패', error);
+            //     }
+            // });
+        }
+
+        // 예약 수정 버튼 클릭 시
+        $('#chkUpdateBtn').on('click', function() {
+            showModal('수정 확인', '수정하시겠습니까?', '예', function() {
+                updateAction();
+                alert('수정 동작 수행');
+            });
+        });
+	 	
+	 	// 예약 삭제 버튼 클릭 시
+        $('#chkCancelBtn').on('click', function() {
+            showModal('취소 확인', '취소하시겠습니까?', '예', function() {
+            	cancelAction();
+                alert('취소 동작 수행');
+            });
+        });
+
+	 	// 체크아웃 처리 버튼 클릭 시
+        $('#chkCheckoutBtn').on('click', function() {
+            showModal('체크아웃 확인', '체크아웃 처리하시겠습니까?', '예', function() {
+                checkoutAction();
+                alert('체크아웃 동작 수행');
+            });
+        });
+	 	
+		// 동적으로 생성된 input type="text"에 flatpickr 스크립트 파일을 적용하기 위해 파일 추가
+		$.getScript("/hotel_prj/admin/assets/extensions/flatpickr/flatpickr.min.js")
+		.done(function() {
+			// flatpickr 스크립트 파일이 로드된 후에 initFlatpickr 함수 실행
+			initFlatpickr();
+		}).fail(function() {
+			console.error("flatpickr 스크립트 파일을 불러올 수 없습니다.");
+		});
+
+		// flatpickr 스크립트 파일을 추가한 후에 실행될 함수 정의
+		function initFlatpickr() {
+			flatpickr('#toDate', {
+				enableTime: false,
+				dateFormat: "Y.m.d",
+			});
+
+			flatpickr('#fromDate', {
+				enableTime: false,
+				dateFormat: "Y.m.d",
+			});
+		}
 	}); // ready
 	
-	// select이 날짜 관련(체크인, 체크아웃, 예약일)일 때 실행되는 함수
-	// return이 true이면 검색 수행, false이면 무시
-	function createDateRangeFilter(columnIndex) {
-		return function(settings, data, dataIndex){
-			var fromDate = new Date($("#fromDate").val());
-			fromDate.setDate(fromDate.getDate()-1);
-			
-			var min = Date.parse(fromDate);
-			var max = Date.parse($('#toDate').val());
-			var tableDate = Date.parse(data[columnIndex]);
-	
-			if( (isNaN(min) && isNaN(max)) || 
-				(isNaN(min) && tableDate <= max) || 
-				(tableDate >= min && isNaN(max)) ||
-				(tableDate >= min && tableDate <= max) ){ 
-					return true;
-				}
-			return false;
-		}
-	} // createDateRangeFilter
 </script>
 <script src="/hotel_prj/admin/assets/extensions/flatpickr/flatpickr.min.js"></script>
 <script src="/hotel_prj/admin/assets/static/js/pages/date-picker.js"></script>

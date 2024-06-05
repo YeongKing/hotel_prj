@@ -109,7 +109,7 @@
 	<!-- page content E -->
 	
 	<!-- modal S -->
-	<jsp:include page="/admin/resve/room_resve_modal.jsp"></jsp:include>
+	<jsp:include page="/admin/resve/roomResveModal.jsp"></jsp:include>
 	<!-- modal E -->
 
 	<!-- footer S -->

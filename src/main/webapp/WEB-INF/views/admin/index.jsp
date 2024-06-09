@@ -43,7 +43,7 @@
     <div class="col-lg-5 col-12">
         <div id="auth-left">
             <div class="auth-logo mb-3">
-                <a href="/hotel_prj/admin/index.jsp">
+                <a href="http://localhost/hotel_prj/admin/index.do">
                 <img src="/hotel_prj/admin/assets/static/images/logo/logo.png" alt="Logo"></a>
             </div>
             <h1 class="auth-title">Log in</h1>
@@ -65,7 +65,7 @@
                 <button class="btn btn-outline-warning btn-block btn-lg shadow-lg mt-5">Log in</button>
             </form>
 	        <div class="d-flex align-items-center justify-content-center">
-	        <a href="/hotel_prj/user/index.jsp" class="btn btn-outline-secondary btn-block">엘리시안 호텔 홈페이지 바로가기</a>
+	        <a href="http://localhost/hotel_prj/user/index.do" class="btn btn-outline-secondary btn-block">엘리시안 호텔 홈페이지 바로가기</a>
 	        </div>
         </div>
     </div>

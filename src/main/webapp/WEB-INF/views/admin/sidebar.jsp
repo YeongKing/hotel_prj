@@ -5,7 +5,7 @@
 	<div class="sidebar-header position-relative">
 		<div class="d-flex align-items-center flex-column text-center">
 			<div class="logo mb-3">
-				<a href="/hotel_prj/admin/dashboard/dashboard.jsp">
+				<a href="http://localhost/hotel_prj/admin/login.do">
 				<img src="/hotel_prj/admin/assets/static/images/logo/logo.png" alt="Logo"></a>
 			</div>
 	        
@@ -49,7 +49,7 @@
 			<li class="sidebar-title">Menu</li>
 			
 			<li class="sidebar-item db ">
-			<a href="/hotel_prj/admin/dashboard/dashboard.jsp" class='sidebar-link'>
+			<a href="http://localhost/hotel_prj/admin/login.do" class='sidebar-link'>
 				<i class="bi bi-grid-fill"></i>
 				<span>DashBoard</span>
 			</a>
@@ -70,13 +70,13 @@
 			
 			<ul class="submenu ">
 				<li class="submenu-item rrm ">
-				<a href="/hotel_prj/admin/resve/roomResve.jsp" class="submenu-link">
+				<a href="http://localhost/hotel_prj/admin/roomResve.do" class="submenu-link">
 				<i class="bi bi-dot"></i>
 				객실 예약 관리</a>
 				</li>
 				
 				<li class="submenu-item drm ">
-				<a href="/hotel_prj/admin/resve/diningResve.jsp" class="submenu-link">
+				<a href="http://localhost/hotel_prj/admin/diningResve.do" class="submenu-link">
 				<i class="bi bi-dot"></i>
 				다이닝 예약 관리</a>
 				</li>

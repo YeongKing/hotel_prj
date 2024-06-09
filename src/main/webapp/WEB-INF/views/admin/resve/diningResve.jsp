@@ -145,8 +145,8 @@
 		// 현재 페이지 DataTable 인스턴스 생성
 		var table = $('#table1').DataTable({
 			ajax: {
-		       'url':'dining_data.json', 
-		       //'type': 'POST',
+		       'url':'http://localhost/hotel_prj/test_data/dining_data.json', 
+		       'type': 'GET',
 		       'dataSrc':''
 		    },
 		    

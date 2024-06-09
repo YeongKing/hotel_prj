@@ -222,7 +222,7 @@
             <!-- 등록 모달창 end -->
 
             <!-- 수정 모달창 start -->
-            <div class="modal fade text-right modal-borderless" id="diningDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+            <div class="modal fade text-right modal-borderless" id="diningDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -320,23 +320,7 @@
             <!-- 수정 모달창 end -->
 
             <!-- 공통 확인 모달 start-->
-            <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="confirmModalLabel"></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p id="confirmModalBody"></p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
-                            <button type="button" class="btn btn-danger" id="confirmActionBtn"></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <jsp:include page="/admin/modal/checkModal.jsp"/>       
             <!-- 공통 확인 모달 end-->
 
         </div>
@@ -369,9 +353,9 @@
 
             // 테이블의 다이닝 번호 클릭 시
             $(".diningNumber").click(function() {
-                $('#diningDetail').find('.is-invalid').removeClass('is-invalid');
-                $('#diningDetail').find('span.parsley-custom-error-message').remove();
-                $('#diningDetail').modal('show');
+                $('#diningDetailModal').find('.is-invalid').removeClass('is-invalid');
+                $('#diningDetailModal').find('span.parsley-custom-error-message').remove();
+                $('#diningDetailModal').modal('show');
             });
 
             var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
@@ -458,7 +442,19 @@
                     alert('수정 동작 수행');
                 });
             });
+            
+            //esc 클릭 이벤트 
+            $(document).keydown(function(event) {
+                // ESC 키 입력 감지
+                if (event.keyCode == 27 || event.which == 27) {
+                    // 수정 모달 열려있는지 확인
+                    $('#confirmModal').modal('hide');
+                }
+            });
+
+            
         });
+        
     </script>
     <!-- 공통 필요 Script S -->
     <script src="/hotel_prj/admin/assets/static/js/components/dark.js"></script>

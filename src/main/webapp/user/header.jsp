@@ -64,6 +64,7 @@
 			<li>CUSTOMER SERVICE
 			<ul class="menuDepth02">
 				<li><a href="#">FAQ</a></li>
+				<li><a href="#">공지사항</a></li>
 			</ul>
 			</li>
 		</ul>

@@ -64,14 +64,14 @@
 <!-- app S -->
 <div id="app">
 	<!-- sidebar S -->
-	<jsp:include page="/admin/sidebar.jsp"></jsp:include>
+	<jsp:include page="../sidebar.jsp"></jsp:include>
 	<!-- sidebar E -->
 		
 	<!-- main S -->
 	<div id="main">
 	
 	<!-- header S -->
-	<jsp:include page="/admin/header.jsp"></jsp:include>
+	<jsp:include page="../header.jsp"></jsp:include>
 	<!-- header E -->
             
 	<div class="page-heading">
@@ -109,12 +109,12 @@
 	<!-- page content E -->
 	
 	<!-- modal S -->
-	<jsp:include page="/admin/resve/roomResveModal.jsp"></jsp:include>
-	<jsp:include page="/admin/modal/checkModal.jsp"></jsp:include>
+	<jsp:include page="../resve/roomResveModal.jsp"></jsp:include>
+	<jsp:include page="../modal/checkModal.jsp"></jsp:include>
 	<!-- modal E -->
 
 	<!-- footer S -->
-	<jsp:include page="/admin/footer.jsp"></jsp:include>
+	<jsp:include page="../footer.jsp"></jsp:include>
 	<!-- footer E -->
             
     </div>
@@ -144,8 +144,8 @@
 		// 현재 페이지 DataTable 인스턴스 생성
 		var table = $('#table1').DataTable({
 			ajax: {
-		       'url':'room_data.json', 
-		       //'type': 'POST',
+		       'url':'http://localhost/hotel_prj/test_data/room_data.json', 
+		       'type': 'GET',
 		       'dataSrc':''
 		    },
 		    

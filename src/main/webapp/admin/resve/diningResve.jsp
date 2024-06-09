@@ -192,7 +192,7 @@
 		// 검색 input 사이즈 조절
 		$('#table1_wrapper').find('input[type="search"]').removeClass('form-control-sm').attr('style', 'width:300px;');
 		
-	    // 날짜 기간 조회를 위한 input 추가
+		// 날짜 기간 조회를 위한 input 추가
 		$('#table1_filter').prepend('<input type="text" id="toDate" placeholder="연.월.일" class="form-control flatpickr-basic flatpickr-input" readonly="readonly" style="width: 150px; margin: 0px 20px 0px 0px;"> ');
 		$('#table1_filter').prepend('<input type="text" id="fromDate" placeholder="연.월.일" class="form-control flatpickr-basic flatpickr-input" readonly="readonly" style="width: 150px;"> ~ ');
 		
@@ -216,7 +216,7 @@
 		    }
 		});
 		
-	    // 검색 input에 이벤트 리바인딩
+		// 검색 input에 이벤트 리바인딩
 		$('.dataTables_filter input').unbind().bind('keyup keydown input', function () {
 			var colIndex = document.querySelector('#select').selectedIndex;
 			
@@ -235,10 +235,10 @@
 			table.column(colIndex).search(this.value).draw();
 		});
 		
-	    // 날짜에 이벤트 리바인딩
+		// 날짜에 이벤트 리바인딩
 		$('#toDate, #fromDate').unbind().bind('keyup change', function(){
-	        table.draw();
-	    });
+			table.draw();
+		});
 	    
 		// 예약 상태 변경 시 필터 적용
 		$('#dining_res_status').on('change', function() {
@@ -246,8 +246,8 @@
 			table.column(2).search(status).draw();
 		});
 	    
-	    // 검색 조건 select에 chagne 이벤트 추가
-	    $("#select").on('change', function() {
+		// 검색 조건 select에 chagne 이벤트 추가
+		$("#select").on('change', function() {
 			var columnIndex = $("#select option").index($("#select option:selected"));
 			// 선택된 select이 날짜 관련(방문일, 예약일) 인덱스일 경우만 함수 실행
 			if(columnIndex == 2 || columnIndex == 7) {
@@ -283,15 +283,15 @@
 			}
 		} // createDateRangeFilter
 	    
-	 	// 테이블의 예약번호 클릭시
-	    $(document).on('click', '.resNum', function() {
-	    	// 모달 내의 모든 'is-invalid' 클래스 제거
-	         $('#diningResDetail').find('.is-invalid').removeClass('is-invalid');
+		// 테이블의 예약번호 클릭시
+		$(document).on('click', '.resNum', function() {
+			// 모달 내의 모든 'is-invalid' 클래스 제거
+			$('#diningResDetail').find('.is-invalid').removeClass('is-invalid');
 	         
-	         // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
-	         $('#diningResDetail').find('span.parsley-custom-error-message').remove();
+			// 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
+			$('#diningResDetail').find('span.parsley-custom-error-message').remove();
 	        
-	        // Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
+			// Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
 	        $('#diningResDetail').modal('show');
 	    });
 	 	
@@ -380,6 +380,28 @@
                 alert('체크아웃 동작 수행');
             });
         });
+	 	
+		// 동적으로 생성된 input type="text"에 flatpickr 스크립트 파일을 적용하기 위해 파일 추가
+		$.getScript("/hotel_prj/admin/assets/extensions/flatpickr/flatpickr.min.js")
+		.done(function() {
+			// flatpickr 스크립트 파일이 로드된 후에 initFlatpickr 함수 실행
+			initFlatpickr();
+		}).fail(function() {
+			console.error("flatpickr 스크립트 파일을 불러올 수 없습니다.");
+		});
+
+		// flatpickr 스크립트 파일을 추가한 후에 실행될 함수 정의
+		function initFlatpickr() {
+			flatpickr('#toDate', {
+				enableTime: false,
+				dateFormat: "Y.m.d",
+			});
+
+			flatpickr('#fromDate', {
+				enableTime: false,
+				dateFormat: "Y.m.d",
+			});
+		}
 	}); // ready
 </script>
 <script src="/hotel_prj/admin/assets/extensions/flatpickr/flatpickr.min.js"></script>

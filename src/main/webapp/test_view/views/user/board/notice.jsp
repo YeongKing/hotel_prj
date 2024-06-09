@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-    <title>QnA - 자주찾는질문목록 | 엘리시안호텔</title>
+    <title>공지사항 - 공지사항 목록 | 엘리시안호텔</title>
     <link rel="shortcut icon" type="text/css" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
     <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
     <link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
@@ -23,6 +23,7 @@
     <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script> 
     <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
     <script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173355219-1"></script>
 </head>
 <body>
     <noscript>
@@ -30,11 +31,11 @@
     </noscript>
     <div class="skip"><a href="#container">본문 바로가기</a></div>
     <div class="wrapper">
-		<!--S header  -->
-		<jsp:include page="/user/header.jsp"></jsp:include>
-		<!--E header  -->
-
-		<script>
+         <!--S header  -->
+<jsp:include page="../header.jsp"></jsp:include>
+ <!--E header  -->
+        
+        <script>
             $(document).on("click",".headArea .btnMenu",function(){
                 if(jQuery(this).hasClass("menuOn")){
                     var expsrCount = 3;
@@ -49,6 +50,7 @@
                 }
             })
         </script>
+        
         
         <script>
             $(document).ready(function(){
@@ -85,10 +87,10 @@
                     });
             	});
             	
-            //상단 카테고리 클릭시 이벤트
-            $("#tabArea > li").click(function(){
-               if(!$(this).hasClass("on")){
-                   $(this).addClass("on");
+            	//상단 카테고리 클릭시 이벤트
+                $("#tabArea > li").click(function(){
+                    if(!$(this).hasClass("on")){
+                        $(this).addClass("on");
                     }
                 
                 });
@@ -125,8 +127,8 @@
                 <div class="inner">
                     <div class="lnbArea">
                         <ul class="lnb ctmType">
-                            <li><a href="notice.jsp">공지사항</a></li>
-                            <li class="on"><a href="#none">FAQ</a></li>
+                            <li class="on"><a href="#none">공지사항</a></li>
+                            <li><a href="qna.jsp">FAQ</a></li>
                         </ul>
                     </div>
                     <div class="myContents">
@@ -229,7 +231,7 @@
         </form>
       
 <!--S footer  -->
-<jsp:include page="/user/footer.jsp"></jsp:include>
+<jsp:include page="../footer.jsp"></jsp:include>
 <!--E footer  -->
         
     </div>

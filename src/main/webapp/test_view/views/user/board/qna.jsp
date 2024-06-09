@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-    <title>QnA - 자주찾는질문목록 | 엘리시안호텔</title>
+    <title>예약내역 - 객실 예약 내역 | 엘리시안호텔</title>
     <link rel="shortcut icon" type="text/css" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
     <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
     <link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
@@ -30,11 +30,11 @@
     </noscript>
     <div class="skip"><a href="#container">본문 바로가기</a></div>
     <div class="wrapper">
-		<!--S header  -->
-		<jsp:include page="/user/header.jsp"></jsp:include>
-		<!--E header  -->
-
-		<script>
+         <!--S header  -->
+<jsp:include page="../header.jsp"></jsp:include>
+ <!--E header  -->
+        
+        <script>
             $(document).on("click",".headArea .btnMenu",function(){
                 if(jQuery(this).hasClass("menuOn")){
                     var expsrCount = 3;
@@ -229,7 +229,7 @@
         </form>
       
 <!--S footer  -->
-<jsp:include page="/user/footer.jsp"></jsp:include>
+<jsp:include page="../footer.jsp"></jsp:include>
 <!--E footer  -->
         
     </div>

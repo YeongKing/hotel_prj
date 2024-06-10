@@ -5,7 +5,7 @@
 	<div class="sidebar-header position-relative">
 		<div class="d-flex align-items-center flex-column text-center">
 			<div class="logo mb-3">
-				<a href="http://localhost/hotel_prj/admin/login.do">
+				<a href="http://localhost/hotel_prj/admin/dashboard.do">
 				<img src="/hotel_prj/admin/assets/static/images/logo/logo.png" alt="Logo"></a>
 			</div>
 	        
@@ -49,7 +49,7 @@
 			<li class="sidebar-title">Menu</li>
 			
 			<li class="sidebar-item db ">
-			<a href="http://localhost/hotel_prj/admin/login.do" class='sidebar-link'>
+			<a href="http://localhost/hotel_prj/admin/dashboard.do" class='sidebar-link'>
 				<i class="bi bi-grid-fill"></i>
 				<span>DashBoard</span>
 			</a>

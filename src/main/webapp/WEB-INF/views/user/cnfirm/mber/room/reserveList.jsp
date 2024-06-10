@@ -203,7 +203,7 @@
 </script>
 
 <!--S header  -->
-<jsp:include page="/user/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
 <!--E header  -->
 
 <!--(페이지 URL)-->
@@ -336,7 +336,7 @@
 
 <div class="inner">
 	<!-- LNB -->
-	<jsp:include page="/user/mypage/lnb.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/user/mypage/lnb.jsp"></jsp:include>
 	<!-- LNB -->
 	
 	<!-- resvForm -->
@@ -472,7 +472,7 @@
 
 
 <!--S footer  -->
-<jsp:include page="/user/footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
 <!--E footer  -->
 
 </div>

@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-    <title>QnA - 자주찾는질문목록 | 엘리시안호텔</title>
+    <title>QNA - 자주찾는질문목록 | 엘리시안호텔</title>
     <link rel="shortcut icon" type="text/css" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
     <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
     <link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
@@ -31,7 +31,7 @@
     <div class="skip"><a href="#container">본문 바로가기</a></div>
     <div class="wrapper">
 		<!--S header  -->
-		<jsp:include page="/user/header.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
 		<!--E header  -->
 
 		<script>
@@ -125,13 +125,13 @@
                 <div class="inner">
                     <div class="lnbArea">
                         <ul class="lnb ctmType">
-                            <li><a href="notice.jsp">공지사항</a></li>
-                            <li class="on"><a href="#none">FAQ</a></li>
+                            <li><a href="http://localhost/hotel_prj/user/notice.do">공지사항</a></li>
+                            <li class="on"><a href="#none">QNA</a></li>
                         </ul>
                     </div>
                     <div class="myContents">
-                        <h3 class="titDep2">FAQ</h3>
-                        <h4 class="titDep3 hidden">FAQ</h4>
+                        <h3 class="titDep2">QNA</h3>
+                        <h4 class="titDep3 hidden">QNA</h4>
                         <div class="searchBox">
                             <div class="searchOp">
                                 <span class="hidden">검색</span>
@@ -229,7 +229,7 @@
         </form>
       
 <!--S footer  -->
-<jsp:include page="/user/footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
 <!--E footer  -->
         
     </div>

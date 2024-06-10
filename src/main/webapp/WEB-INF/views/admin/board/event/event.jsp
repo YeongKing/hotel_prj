@@ -65,12 +65,12 @@
 <!-- app -->
 <div id="app">
 	<!-- sidebar -->
-	<jsp:include page="/admin/sidebar.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/admin/sidebar.jsp"></jsp:include>
 
 	<!-- main -->
 	<div id="main">
 		<!-- header -->
-		<jsp:include page="/admin/header.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/admin/header.jsp"></jsp:include>
 
 		<div class="page-heading">
 		    <h3>이벤트 관리</h3>
@@ -305,14 +305,14 @@
 </div>
 <!-- 이벤트 수정 end -->
 <!-- 공통 확인 모달 start-->
-<jsp:include page="/admin/modal/checkModal.jsp"/>       
+<jsp:include page="/WEB-INF/views/admin/modal/checkModal.jsp"/>       
  <!-- 공통 확인 모달 end-->
 
 		
 
 
 		<!-- footer -->
-		<jsp:include page="/admin/footer.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/admin/footer.jsp"></jsp:include>
 	</div>
 </div>
 

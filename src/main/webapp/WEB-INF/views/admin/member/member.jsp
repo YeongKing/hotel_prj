@@ -304,35 +304,19 @@ function changePage(pageNumber) {
 	<!-- app S -->
 	<div id="app">
 		<!-- sidebar S -->
-		<jsp:include page="/admin/sidebar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/admin/sidebar.jsp"></jsp:include>
 		<!-- sidebar E -->
 
 		<!-- main S -->
 		<div id="main">
 
 			<!-- header S -->
-			<jsp:include page="/admin/header.jsp"></jsp:include>
+			<jsp:include page="/WEB-INF/views/admin/header.jsp"></jsp:include>
 			<!-- header E -->
 
 			<div class="page-heading">
-				<div class="page-title">
-					<div class="row">
-						<div class="col-12 col-md-6 order-md-1 order-last">
-							<h3>회원 관리</h3>
-							<p class="text-subtitle text-muted">관리자 회원 관리</p>
-						</div>
-						<div class="col-12 col-md-6 order-md-2 order-first">
-							<nav aria-label="breadcrumb"
-								class="breadcrumb-header float-start float-lg-end">
-								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-									<li class="breadcrumb-item active" aria-current="page">DataTable
-										jQuery</li>
-								</ol>
-							</nav>
-						</div>
-					</div>
-				</div>
+				<h3>회원 관리</h3>
+			</div>
 
 				<div class="page-content mb-3">
 					<!-- Basic Tables start -->
@@ -449,7 +433,7 @@ function changePage(pageNumber) {
 						</div>
 
 					</section>
-				</div>
+				
 				<!-- 수정 모달창 S-->
 				<div class="modal fade text-left modal-borderless modal-xl "
 					id="userDetail" tabindex="-1" role="dialog"
@@ -647,13 +631,13 @@ function changePage(pageNumber) {
 				
 				<!--  공통 컨펌 모달창 S  -->
 				
-				<jsp:include page="/admin/modal/checkModal.jsp"/>
+				<jsp:include page="/WEB-INF/views/admin/modal/checkModal.jsp"/>
 				
 				<!--  공통 컨펌 모달창 E  -->
 				
 
 				<!-- footer S -->
-				<jsp:include page="/admin/footer.jsp"></jsp:include>
+				<jsp:include page="/WEB-INF/views/admin/footer.jsp"></jsp:include>
 				<!-- footer E -->
 			</div>
 			<!-- main E -->

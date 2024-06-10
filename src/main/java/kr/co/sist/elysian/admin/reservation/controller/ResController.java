@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/admin")
 public class ResController {
 	
-	@GetMapping("roomResve.do")
+	@GetMapping("/roomResve.do")
 	public String searchRoomResList() {
 		return "admin/resve/roomResve";
 	} // mappingRoomResve
 	
-	@GetMapping("diningResve.do")
+	@GetMapping("/diningResve.do")
 	public String searchDiningResList() {
 		return "admin/resve/diningResve";
 	} // mappingDiningResve

@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -15,82 +14,18 @@
 
 <title>엘리시안호텔 공식 사이트 | ELYSIAN HOTEL Official Website</title>
 
-<script type="text/javascript" nonce="a6d9132286844ba792abb3d5626" src="//local.adguard.org?ts=1716279030894&amp;type=content-script&amp;dmn=localhost&amp;url=http%3A%2F%2Flocalhost%2Fhotel_prj%2Fjosun%2Findex.jsp&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script>
-<script type="text/javascript" nonce="a6d9132286844ba792abb3d5626" src="//local.adguard.org?ts=1716279030894&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><link rel="canonical" href="https://josunhotel.com/intro.do"/>
-<link rel="shortcut icon" type="image/x-icon" href="/hotel_prj/static/home/images/ko/pc/common/favicon.ico" >
-<link rel="icon" type="image/x-icon" href="/hotel_prj/static/home/images/ko/pc/common/favicon.ico" >
-<link href="/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
+<!-- S head css -->
+<jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
 <link href="/hotel_prj/static/home/css/ko/pc/common_new.css" rel="stylesheet" type="text/css">
-  
 <link href="/hotel_prj/static/home/css/ko/pc/main_josunhotel.css" rel="stylesheet" type="text/css">
+<!-- E head css -->
 
-<link href="/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css"> 
-<link href="/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css"> 
-<script type="text/javascript" src="/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
-<script type="text/javascript" src="/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script> <!-- 컨텐츠 스크립트 -->
-<script type="text/javascript" src="/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script> <!-- 메인, GNB 스크립트 -->
-<script type="text/javascript" src="/hotel_prj/static/home/js/ko/pc/selectbox.js"></script> 
-<script type="text/javascript" src="/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script> 
-<script type="text/javascript" src="/hotel_prj/static/home/js/home.js"></script>
-<script type="text/javascript" src="/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
-
-<script type="text/javascript">
-	// IE 브라우저인지 체크
-	if (navigator.userAgent.indexOf("MSIE") !== -1 || navigator.userAgent.indexOf("Trident") !== -1) {
-		// Edge 브라우저로 전환
-		alert('Internet Explorer 브라우저의 서비스 지원 종료(2022년 6월 15일)에 따라 조선호텔앤리조트 웹사이트 이용 시 크로미엄 기반(Chromium Base)의 브라우저 사용을 권장 드립니다.\n\n※ 크로미엄(Chromium) 기반 브라우저\n- 크롬(Google Chrome)\n- 마이크로소프트 엣지(Microsoft Edge)\n- 파이어폭스(Mozilla Firefox)\n- 오페라(Opera)\n- 웨일(Naver Wale)\n- 사파리(Apple Safari) 등');
-		window.location.replace("microsoft-edge:" + window.location.href);
-    
-		// IE 브라우저 종료
-		//edge 켜지지 않고, ie만 종료되어 setTimeout사용
-		setTimeout(function(){
-			window.open('', '_parent', '');
-			window.close();
-		},100)
-	}
-    
-	function fncChangeLang (changeLang) {
-		let currentLang = 'ko';
-			$(location).attr("href", "/intro.do?locale=" + changeLang);
-	}
-</script>
-
-<!--schema.org 적용(2021.05.03) -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Hotel",
-  "name": "조선호텔앤리조트",
-  "url": "https://josunhotel.com/",
-  "image": [
-    "https://www.josunhotel.com/revolution/content/fileImage.do?fileId=426021&cntntsSn=426020",
-    "https://www.josunhotel.com/revolution/content/fileImage.do?fileId=253318&cntntsSn=253316",
-    "https://gjb.josunhotel.comutil/file/download.do?fileSn=453363&sysCode=GJB"
-  ],
-  "description": "Experience the Difference - 조선호텔앤리조트는 신세계 그룹에서 운영하며, 고품격 라이프 스타일을 제안하는 서비스 전문 기업입니다.",
-  "sameAs": [
-    "https://www.instagram.com/josunhotelsandresorts",
-    "https://www.facebook.com/Josunhotelsandresorts",
-    "https://pf.kakao.com/_EnFPj",
-    "https://www.youtube.com/channel/UC7ZZk3mnc0DzJqPTdjD6tOw",
-    "https://play.google.com/store/apps/details?id=com.ssg.josunhotel",
-    "https://apps.apple.com/kr/app/id1528269578"
-  ],
-  "address": {
-    "@type": "PostalAddress",
-    "addressCountry": "Republic of Korea",
-    "addressRegion": "서울시",
-    "addressLocality": "중구",
-    "streetAddress": "소공로 16",
-    "postalCode": "04533"
-  },
-  "telephone": "02-771-0500"
-}
-</script>
- </head>
+<!-- S head script -->
+<jsp:include page="/WEB-INF/views/user/common/head_script.jsp"></jsp:include>
+<!-- E head script -->
+</head>
  
- <body>
+<body>
 <div class="skip"><a href="#container">본문 바로가기</a></div>
 <div class="wrapper mainWrapper topBanner">
 <!-- mass promotion 메뉴 동적 노출 -->

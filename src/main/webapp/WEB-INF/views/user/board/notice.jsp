@@ -32,7 +32,7 @@
     <div class="skip"><a href="#container">본문 바로가기</a></div>
     <div class="wrapper">
          <!--S header  -->
-<jsp:include page="/user/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
  <!--E header  -->
         
         <script>
@@ -128,12 +128,12 @@
                     <div class="lnbArea">
                         <ul class="lnb ctmType">
                             <li class="on"><a href="#none">공지사항</a></li>
-                            <li><a href="qna.jsp">FAQ</a></li>
+                            <li><a href="http://localhost/hotel_prj/user/qna.do">QNA</a></li>
                         </ul>
                     </div>
                     <div class="myContents">
-                        <h3 class="titDep2">FAQ</h3>
-                        <h4 class="titDep3 hidden">FAQ</h4>
+                        <h3 class="titDep2">공지사항</h3>
+                        <h4 class="titDep3 hidden">공지사항</h4>
                         <div class="searchBox">
                             <div class="searchOp">
                                 <span class="hidden">검색</span>
@@ -231,7 +231,7 @@
         </form>
       
 <!--S footer  -->
-<jsp:include page="/user/footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
 <!--E footer  -->
         
     </div>

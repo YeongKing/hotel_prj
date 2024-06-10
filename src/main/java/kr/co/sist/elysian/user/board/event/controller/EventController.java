@@ -4,13 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
+@Controller("userEventController")
 @RequestMapping("/user")
 public class EventController {
 	
-	@GetMapping("/userEvent.do")
-	public String main() {
-		System.out.println(1);
+	@GetMapping("/event.do")
+	public String searchAllEventList() {
+		
 		return "user/board/event";
-	}
-}
+	
+	} // searchAllEventList
+
+} // class

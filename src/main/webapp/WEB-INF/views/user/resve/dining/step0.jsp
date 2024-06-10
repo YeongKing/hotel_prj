@@ -68,14 +68,6 @@
     <meta name="naver-site-verification" content="7cc31c414eda7a3ea7b7a0bbb9c0a5c624370a87"/>
 
   <title></title>
-  <meta name="keywords" content="">
-  <meta name="description" content="">
-  <meta property="og:title" content="">
-  <meta property="og:description" content="">
-  <meta property="og:url" content="https://josunhotel.com/resve/dining/step0.do?searchSysCode=TWC&diningCode=003">
-  <meta property="og:image" content="https://josunhotel.com/static/home/images/josunhotel_og.png">
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="Josun Hotels & Resorts"/>
 
   <link rel="canonical" href="https://josunhotel.com/resve/dining/step0.do?searchSysCode=TWC&diningCode=003"/>
   <link rel="shortcut icon" type="text/css" href="/hotel_prj/static/home/images/ko/pc/common/favicon.ico" >
@@ -98,23 +90,6 @@
   <script type="text/javascript" src="/hotel_prj/static/home/js/home.js"></script>
   <script type="text/javascript" src="/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173355219-1"></script>
-  <script type="text/javascript">
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-173355219-1');
-  </script>
-  <!-- End Global site tag (gtag.js) - Google Analytics -->
-  
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-NP6NJMP');</script>
-  <!-- End Google Tag Manager -->
 
   <script type="text/javascript">
     // IE 브라우저인지 체크
@@ -144,24 +119,6 @@
   </script>
 
 
-<!-- 네이버 사이트 연관 채널 Code -->	
-<script type="application/ld+json">
-{
-"@context": "http://schema.org",
-"@type": "Person",
-"name": "조선호텔앤리조트",
-"url": "https://josunhotel.com/",
-	"sameAs": [
-		"https://www.instagram.com/josunhotelsandresorts/",
-		"https://www.facebook.com/Josunhotelsandresorts",
-		"https://pf.kakao.com/_EnFPj",
-		"https://www.youtube.com/channel/UC7ZZk3mnc0DzJqPTdjD6tOw",
-		"https://play.google.com/store/apps/details?id=com.ssg.josunhotel",
-		"https://apps.apple.com/kr/app/id1528269578"
-		]
-}	
-</script>
-<!-- End 네이버 사이트 연관 채널 Code -->
    
 <!--schema.org 적용(2021.05.03) -->
 <script type="application/ld+json">
@@ -197,10 +154,6 @@
 </script>
  </head>
  <body>
- <!-- Google Tag Manager (noscript) -->
- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP6NJMP"
- height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
- <!-- End Google Tag Manager (noscript) -->
 
 	<div class="skip"><a href="#container">본문 바로가기</a></div>
 	<div class="wrapper ">
@@ -329,7 +282,7 @@
 
 
 <!--S header  -->
-<jsp:include page="/user/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
 <!--E header  -->
 
 
@@ -1243,7 +1196,7 @@
 		<!-- //container -->
 
         <!--S footer  -->
-		<jsp:include page="/user/footer.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
  		<!--E footer  -->
 
 

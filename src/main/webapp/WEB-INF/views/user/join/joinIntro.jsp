@@ -2,120 +2,36 @@
  pageEncoding="UTF-8" 
  info="" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-view-source:https://www.josunhotel.com/join/joinIntro.do
 
-
-
-
-
-
-
-
-
-
-
-
-
-<!--( 템플릿 명(PC 기본 템플릿) 최종수정일 : 2024-03-07 17:08)-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-	
-        
-		
-		
-		
-		
-		
-		
-        
-        
-	
-	
-
- 
 <!DOCTYPE html>
 <html lang="ko">
- <head>
+<head>
 
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <meta name="format-detection" content="telephone=no">
-    <meta name="naver-site-verification" content="7cc31c414eda7a3ea7b7a0bbb9c0a5c624370a87"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="naver-site-verification" content="7cc31c414eda7a3ea7b7a0bbb9c0a5c624370a87"/>
 
-  <title>회원가입 - 약관동의 및 회원정보 입력 | 조선호텔앤리조트</title>
-  <meta name="keywords" content="조선호텔앤리조트회원가입, 조선호텔앤리조트회원">
-  <meta name="description" content="조선호텔앤리조트에 오신 것을 환영합니다.">
-  <meta property="og:title" content="회원가입 - 약관동의 및 회원정보 입력 | 조선호텔앤리조트">
-  <meta property="og:description" content="조선호텔앤리조트에 오신 것을 환영합니다.">
-  <meta property="og:url" content="https://josunhotel.com/join/joinIntro.do">
-  <meta property="og:image" content="https://josunhotel.com/static/home/images/josunhotel_og.png">
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="Josun Hotels & Resorts"/>
+<title>회원가입 - 약관동의 및 회원정보 입력 | 조선호텔앤리조트</title>
 
-  <link rel="canonical" href="https://josunhotel.com/join/joinIntro.do"/>
-  <link rel="shortcut icon" type="text/css" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico" >
-  <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
-  
-  
-  
-    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
-  
-  
+<link rel="canonical" href="https://josunhotel.com/join/joinIntro.do"/>
+<link rel="shortcut icon" type="text/css" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico" >
+<link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
 
-  <link href="http://localhost/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css"> 
-  <link href="http://localhost/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css"> 
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script> <!-- 컨텐츠 스크립트 -->
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script> <!-- 메인, GNB 스크립트 -->
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/selectbox.js"></script> 
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script> 
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173355219-1"></script>
-  <script type="text/javascript">
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-173355219-1');
-  </script>
-  <!-- End Global site tag (gtag.js) - Google Analytics -->
+<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
   
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-NP6NJMP');</script>
-  <!-- End Google Tag Manager -->
+<link href="http://localhost/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css"> 
+<link href="http://localhost/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css"> 
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script> <!-- 컨텐츠 스크립트 -->
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script> <!-- 메인, GNB 스크립트 -->
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/selectbox.js"></script> 
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script> 
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
+
 
   <script type="text/javascript">
     // IE 브라우저인지 체크
@@ -145,25 +61,6 @@ view-source:https://www.josunhotel.com/join/joinIntro.do
   </script>
 
 
-<!-- 네이버 사이트 연관 채널 Code -->	
-<script type="application/ld+json">
-{
-"@context": "http://schema.org",
-"@type": "Person",
-"name": "조선호텔앤리조트",
-"url": "https://josunhotel.com/",
-	"sameAs": [
-		"https://www.instagram.com/josunhotelsandresorts/",
-		"https://www.facebook.com/Josunhotelsandresorts",
-		"https://pf.kakao.com/_EnFPj",
-		"https://www.youtube.com/channel/UC7ZZk3mnc0DzJqPTdjD6tOw",
-		"https://play.google.com/store/apps/details?id=com.ssg.josunhotel",
-		"https://apps.apple.com/kr/app/id1528269578"
-		]
-}	
-</script>
-<!-- End 네이버 사이트 연관 채널 Code -->
-   
 <!--schema.org 적용(2021.05.03) -->
 <script type="application/ld+json">
 {
@@ -198,16 +95,11 @@ view-source:https://www.josunhotel.com/join/joinIntro.do
 </script>
  </head>
  <body>
- <!-- Google Tag Manager (noscript) -->
- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP6NJMP"
- height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
- <!-- End Google Tag Manager (noscript) -->
 
-	<div class="skip"><a href="#container">본문 바로가기</a></div>
-	<div class="wrapper ">
+<div class="skip"><a href="#container">본문 바로가기</a></div>
+<div class="wrapper ">
 		<!--(HEAD 최종수정일 : 2024-05-07 17:12)-->
 <!-- mass promotion 메뉴 동적 노출 -->
-
 
 <script>
 	jQuery(function(){
@@ -328,24 +220,13 @@ view-source:https://www.josunhotel.com/join/joinIntro.do
 </script>
 
 	
-	<!--S header  -->
-<jsp:include page="/user/header.jsp"></jsp:include>
+<!--S header  -->
+<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
 <!--E header  -->
 	
-	
-	
-        <!--(페이지 URL)-->
+<!--(페이지 URL)-->
 
-
-
-
-
-
-
-<head>
-    <script type="text/javascript" src="/static/home/js/home.js"></script>
-</head>
-
+<script type="text/javascript" src="/static/home/js/home.js"></script>
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -3284,7 +3165,7 @@ view-source:https://www.josunhotel.com/join/joinIntro.do
        
        
        <!--S footer  -->
-<jsp:include page="/user/footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
 <!--E footer  -->
        
        

@@ -3,78 +3,35 @@
  info="" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-
-
-
-<!--( 템플릿 명(PC 기본 템플릿) 최종수정일 : 2024-03-07 17:08)-->
-
-
-
-		
-	
-	
-
- 
 <!DOCTYPE html>
 <html lang="ko">
- <head>
+<head>
 
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <meta name="format-detection" content="telephone=no">
-    <meta name="naver-site-verification" content="7cc31c414eda7a3ea7b7a0bbb9c0a5c624370a87"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="naver-site-verification" content="7cc31c414eda7a3ea7b7a0bbb9c0a5c624370a87"/>
 
-  <title>로그인 | 조선호텔앤리조트</title>
-  <meta name="keywords" content="조선호텔앤리조트로그인, 조선호텔앤리조트회원가입, 조선호텔앤리조트회원">
-  <meta name="description" content="머무는 모든 순간이 특별해집니다.">
-  <meta property="og:title" content="로그인 | 조선호텔앤리조트">
-  <meta property="og:description" content="머무는 모든 순간이 특별해집니다.">
-  <meta property="og:url" content="https://josunhotel.com/login/loginForm.do">
-  <meta property="og:image" content="https://josunhotel.com/static/home/images/josunhotel_og.png">
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="Josun Hotels & Resorts"/>
+<title>로그인 | 조선호텔앤리조트</title>
 
-  <link rel="canonical" href="https://josunhotel.com/login/loginForm.do"/>
-  <link rel="shortcut icon" type="text/css" href="/static/home/images/ko/pc/common/favicon.ico" >
-  <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
-  <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_new.css" rel="stylesheet" type="text/css">
+<link rel="canonical" href="https://josunhotel.com/login/loginForm.do"/>
+<link rel="shortcut icon" type="text/css" href="/static/home/images/ko/pc/common/favicon.ico" >
+<link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
+<link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_new.css" rel="stylesheet" type="text/css">
   
-  
-  
-    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
-  
-  
+<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
 
-  <link href="/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css"> 
-  <link href="/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css"> 
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script> <!-- 컨텐츠 스크립트 -->
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script> <!-- 메인, GNB 스크립트 -->
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/selectbox.js"></script> 
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script> 
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
-  <script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173355219-1"></script>
-  <script type="text/javascript">
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-173355219-1');
-  </script>
-  <!-- End Global site tag (gtag.js) - Google Analytics -->
-  
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-NP6NJMP');</script>
-  <!-- End Google Tag Manager -->
+<link href="/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css"> 
+<link href="/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css"> 
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script> <!-- 컨텐츠 스크립트 -->
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script> <!-- 메인, GNB 스크립트 -->
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/selectbox.js"></script> 
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script> 
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
+<script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
 
   <script type="text/javascript">
     // IE 브라우저인지 체크
@@ -102,26 +59,6 @@
 		
 	}
   </script>
-
-
-<!-- 네이버 사이트 연관 채널 Code -->	
-<script type="application/ld+json">
-{
-"@context": "http://schema.org",
-"@type": "Person",
-"name": "조선호텔앤리조트",
-"url": "https://josunhotel.com/",
-	"sameAs": [
-		"https://www.instagram.com/josunhotelsandresorts/",
-		"https://www.facebook.com/Josunhotelsandresorts",
-		"https://pf.kakao.com/_EnFPj",
-		"https://www.youtube.com/channel/UC7ZZk3mnc0DzJqPTdjD6tOw",
-		"https://play.google.com/store/apps/details?id=com.ssg.josunhotel",
-		"https://apps.apple.com/kr/app/id1528269578"
-		]
-}	
-</script>
-<!-- End 네이버 사이트 연관 채널 Code -->
    
 <!--schema.org 적용(2021.05.03) -->
 <script type="application/ld+json">
@@ -157,14 +94,10 @@
 </script>
  </head>
  <body>
- <!-- Google Tag Manager (noscript) -->
- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP6NJMP"
- height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
- <!-- End Google Tag Manager (noscript) -->
 
-	<div class="skip"><a href="#container">본문 바로가기</a></div>
-	<div class="wrapper ">
-		<!--(HEAD 최종수정일 : 2024-05-07 17:12)-->
+<div class="skip"><a href="#container">본문 바로가기</a></div>
+<div class="wrapper ">
+<!--(HEAD 최종수정일 : 2024-05-07 17:12)-->
 <!-- mass promotion 메뉴 동적 노출 -->
 
 
@@ -286,22 +219,9 @@
         })
 </script>
  <!--S header  -->
-<jsp:include page="/user/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
  <!--E header  -->
-        <!--(페이지 URL)-->
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!--(페이지 URL)-->
 
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
@@ -914,15 +834,10 @@ function getLoginCookie(cookieName) {
 							</span>
 							<!-- //20200528 수정 : 아이디저장(추가) -->
 							<button type="button" class="btnSC btnL active btnFull" onclick="PageScript.fncLogin('ID'); return false;">로그인<!-- 로그인 --></button>
-							<p class="loginGuide">CLUB JOSUN 회원이 되시면 더 많은 혜택이 있습니다.<!-- Josun Hotels & Resorts 회원이 되시면 더 많은 혜택이 있습니다. --></p>
-							
 							
 							<div class="loginLink">
-							    <a href="/identify/identifyIntro.jsp" class="btnS icoArr">회원가입<!-- 회원가입 --></a>
-							    <a href="/identify/findIdentifyIntro.jsp" class="btnS icoArr">아이디 / 비밀번호 찾기<!-- 아이디 / 비밀번호 찾기 --></a>
-                                
-                                    <a href="/identify/identifyIntro.do" class="btnS icoArr">계정활성화<!-- 계정활성화 --></a>
-                                
+							    <a href="http://localhost/hotel_prj/user/join.do" class="btnS icoArr">회원가입<!-- 회원가입 --></a>
+							    <a href="http://localhost/hotel_prj/user/findIdentifyIntro.do" class="btnS icoArr">아이디 / 비밀번호 찾기<!-- 아이디 / 비밀번호 찾기 --></a>
 							</div>
 						</div>
 						<div class="snsLogin">
@@ -969,7 +884,7 @@ function getLoginCookie(cookieName) {
 		
 		
        <!--S footer  -->
-		<jsp:include page="/user/footer.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
  		<!--E footer  -->
  		
  		

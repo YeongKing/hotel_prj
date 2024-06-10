@@ -63,12 +63,12 @@
     <!-- app -->
     <div id="app">
         <!-- sidebar -->
-        <jsp:include page="/admin/sidebar.jsp"></jsp:include>
+        <jsp:include page="/WEB-INF/views/admin/sidebar.jsp"></jsp:include>
 
         <!-- main -->
         <div id="main">
             <!-- header -->
-            <jsp:include page="/admin/header.jsp"></jsp:include>
+            <jsp:include page="/WEB-INF/views/admin/header.jsp"></jsp:include>
 
             <div class="page-heading">
                 <h3>다이닝 관리</h3>
@@ -320,13 +320,13 @@
             <!-- 수정 모달창 end -->
 
             <!-- 공통 확인 모달 start-->
-            <jsp:include page="/admin/modal/checkModal.jsp"/>       
+            <jsp:include page="/WEB-INF/views/admin/modal/checkModal.jsp"/>       
             <!-- 공통 확인 모달 end-->
 
         </div>
     </div>
     <!-- footer -->
-    <jsp:include page="/admin/footer.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/views/admin/footer.jsp"></jsp:include>
 
     <script type="text/javascript">
         $(document).ready(function() {

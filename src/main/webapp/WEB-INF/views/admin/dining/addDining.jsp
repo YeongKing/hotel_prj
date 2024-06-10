@@ -51,14 +51,14 @@
 <!-- app S -->
 <div id="app">
 	<!-- sidebar S -->
-	<jsp:include page="/admin/sidebar.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/admin/sidebar.jsp"></jsp:include>
 	<!-- sidebar E -->
 
 	<!-- main S -->
 	<div id="main">
 
 	<!-- header S -->
-	<jsp:include page="/admin/header.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/admin/header.jsp"></jsp:include>
 	<!-- header E -->
 
 	<div class="page-heading">
@@ -158,7 +158,7 @@
 	</div>
 
 	<!-- footer S -->
-	<jsp:include page="/admin/footer.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/admin/footer.jsp"></jsp:include>
 	<!-- footer E -->
 
     </div>

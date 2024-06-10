@@ -293,14 +293,14 @@ function changePage(pageNumber) {
 	<!-- app S -->
 	<div id="app">
 		<!-- sidebar S -->
-		<jsp:include page="/admin/sidebar.jsp"></jsp:include>
+		<jsp:include page="../sidebar.jsp"></jsp:include>
 		<!-- sidebar E -->
 
 		<!-- main S -->
 		<div id="main">
 
 			<!-- header S -->
-			<jsp:include page="/admin/header.jsp"></jsp:include>
+			<jsp:include page="../header.jsp"></jsp:include>
 			<!-- header E -->
 
 			<div class="page-heading">
@@ -835,13 +835,13 @@ function changePage(pageNumber) {
 				
 				<!--  공통 컨펌 모달창 S  -->
 				
-				<jsp:include page="/admin/modal/checkModal.jsp"/>
+				<jsp:include page="../modal/checkModal.jsp"/>
 				
 				<!--  공통 컨펌 모달창 E  -->
 				
 				
 				<!-- footer S -->
-				<jsp:include page="/admin/footer.jsp"></jsp:include>
+				<jsp:include page="../footer.jsp"></jsp:include>
 				<!-- footer E -->
 			</div>
 			<!-- main E -->

@@ -26,7 +26,7 @@
   ✔ 기타 : DB 설계, 형상 관리, UI 설계, PPT 제작, 발표 등
 
 ## ⚙️ 개발 환경
-- Version : Java 17
+- Version : Java 11
 - IDE : Spring Tool Suite 3
 - Database : Oracle
 

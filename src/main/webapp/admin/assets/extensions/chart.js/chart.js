@@ -672,8 +672,7 @@ class DatasetController {
         this._dataCheck();
         if (this.datasetElementType) {
             meta.dataset = new this.datasetElementType();
-        }
-    }
+        } }
     buildOrUpdateElements(resetNewElements) {
         const meta = this._cachedMeta;
         const dataset = this.getDataset();
@@ -732,8 +731,7 @@ class DatasetController {
         }
         if (_stacked) {
             updateStacks(this, parsed);
-        }
-    }
+        }}
  parsePrimitiveData(meta, data, start, count) {
         const { iScale , vScale  } = meta;
         const iAxis = iScale.axis;
@@ -749,8 +747,7 @@ class DatasetController {
                 [vAxis]: vScale.parse(data[index], index)
             };
         }
-        return parsed;
-    }
+        return parsed;}
  parseArrayData(meta, data, start, count) {
         const { xScale , yScale  } = meta;
         const parsed = new Array(count);
@@ -763,8 +760,7 @@ class DatasetController {
                 y: yScale.parse(item[1], index)
             };
         }
-        return parsed;
-    }
+        return parsed;}
  parseObjectData(meta, data, start, count) {
         const { xScale , yScale  } = meta;
         const { xAxisKey ='x' , yAxisKey ='y'  } = this._parsing;
@@ -778,14 +774,11 @@ class DatasetController {
                 y: yScale.parse(resolveObjectKey(item, yAxisKey), index)
             };
         }
-        return parsed;
-    }
+        return parsed;}
  getParsed(index) {
-        return this._cachedMeta._parsed[index];
-    }
+        return this._cachedMeta._parsed[index];}
  getDataElement(index) {
-        return this._cachedMeta.data[index];
-    }
+        return this._cachedMeta.data[index];}
  applyStack(scale, parsed, mode) {
         const chart = this.chart;
         const meta = this._cachedMeta;

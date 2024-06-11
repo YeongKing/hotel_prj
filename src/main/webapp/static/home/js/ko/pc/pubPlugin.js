@@ -6440,7 +6440,7 @@
                 this.accept = t.isFunction(i) ? i : function(t) {
                     return t.is(i)
                 }
-                ;
+                
             else if ("scope" === e) {
                 var s = t.ui.ddmanager.droppables[this.options.scope];
                 this._splice(s),

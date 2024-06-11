@@ -34,9 +34,9 @@ public class DashboardDAO {
 
 		DashboardDAO dDAO = new DashboardDAO();
 		
-		//COMMON_CODEÅ×ÀÌºí¿¡¼­ 
-		//CODE_NAME°¡ "¾È±æ¶ó" ÀÎ CODE_VAL°ª ¹İÈ¯
-		String result = dDAO.testMethod("¾È±æ¶ó");
+		//COMMON_CODEí…Œì´ë¸”ì—ì„œ 
+		//CODE_NAMEê°€ "ì•ˆê¸¸ë¼" ì¸ CODE_VALê°’ ë°˜í™˜!!
+		String result = dDAO.testMethod("ì•ˆê¸¸ë¼");
 
 		System.out.println(result);
 		

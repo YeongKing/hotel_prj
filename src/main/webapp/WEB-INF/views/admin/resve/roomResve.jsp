@@ -64,14 +64,14 @@
 <!-- app S -->
 <div id="app">
 	<!-- sidebar S -->
-	<jsp:include page="../sidebar.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/admin/sidebar.jsp"></jsp:include>
 	<!-- sidebar E -->
 		
 	<!-- main S -->
 	<div id="main">
 	
 	<!-- header S -->
-	<jsp:include page="../header.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/admin/header.jsp"></jsp:include>
 	<!-- header E -->
             
 	<div class="page-heading">
@@ -109,12 +109,12 @@
 	<!-- page content E -->
 	
 	<!-- modal S -->
-	<jsp:include page="../resve/roomResveModal.jsp"></jsp:include>
-	<jsp:include page="../modal/checkModal.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/admin/resve/roomResveModal.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/admin/modal/checkModal.jsp"></jsp:include>
 	<!-- modal E -->
 
 	<!-- footer S -->
-	<jsp:include page="../footer.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/admin/footer.jsp"></jsp:include>
 	<!-- footer E -->
             
     </div>

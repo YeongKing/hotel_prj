@@ -6,24 +6,20 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="format-detection" content="telephone=no">
-    <title>이벤트 - 이벤트 목록 | 엘리시안호텔</title>
-    <link rel="shortcut icon" type="text/css" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
-    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
-    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
-    <link href="http://localhost/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css">
-    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/selectbox.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
- 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+
+<title>이벤트 - 이벤트 목록 | 엘리시안호텔</title>
+
+<!-- S head css -->
+<jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
+<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+<!-- E head css -->
+    
+<!-- S head script -->
+<jsp:include page="/WEB-INF/views/user/common/head_script.jsp"></jsp:include>
+<!-- E head script -->
     
     <script>
         //2022-05-23 조선라운지 추가
@@ -43,13 +39,13 @@
                 });
             }
         })
-    </script>
- 
+    </script> 
 </head>
+
 <body>
-    <!--S header  -->
-	<jsp:include page="../header.jsp"></jsp:include>
-	<!--E header  -->
+    <!-- S header -->
+	<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
+	<!-- E header -->
     <div class="wrapper ">
     <form id="form" name="form">
         <input type="hidden" id="page" name="page" value="1" />
@@ -186,7 +182,7 @@
 		</div>
     </form>
     <!-- footer -->
-        <jsp:include page="../footer.jsp"></jsp:include>
+        <jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
     </div>
     </body>
 </html>

@@ -49,7 +49,7 @@
             <h1 class="auth-title">Log in</h1>
             <p class="auth-subtitle mb-5">엘리시안 관리자 사이트 이용을 위해 로그인해주세요.</p>
 
-            <form action="http://localhost/hotel_prj/admin/login.do"  class="mb-5">
+            <form action="http://localhost/hotel_prj/admin/dashboard.do"  class="mb-5">
                 <div class="form-group position-relative has-icon-left mb-4">
                     <input type="text" class="form-control form-control-xl" placeholder="id">
                     <div class="form-control-icon">

@@ -5,26 +5,25 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="format-detection" content="telephone=no">
-    <title>공지사항 - 공지사항 목록 | 엘리시안호텔</title>
-    <link rel="shortcut icon" type="text/css" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
-    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
-    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
-    <link href="http://localhost/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css"> 
-    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css"> 
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/selectbox.js"></script> 
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script> 
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173355219-1"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+
+<title>공지사항 - 공지사항 목록 | 엘리시안호텔</title>
+
+<!-- S head css -->
+<jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
+<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+<!-- E head css -->
+
+<!-- S head script -->
+<jsp:include page="/WEB-INF/views/user/common/head_script.jsp"></jsp:include>
+<!-- E head script -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-173355219-1"></script>
 </head>
+
 <body>
     <noscript>
         <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP6NJMP" height="0" width="0" style="display:none;visibility:hidden"></iframe>
@@ -32,7 +31,7 @@
     <div class="skip"><a href="#container">본문 바로가기</a></div>
     <div class="wrapper">
          <!--S header  -->
-<jsp:include page="/user/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
  <!--E header  -->
         
         <script>
@@ -128,12 +127,12 @@
                     <div class="lnbArea">
                         <ul class="lnb ctmType">
                             <li class="on"><a href="#none">공지사항</a></li>
-                            <li><a href="qna.jsp">FAQ</a></li>
+                            <li><a href="http://localhost/hotel_prj/user/qna.do">QNA</a></li>
                         </ul>
                     </div>
                     <div class="myContents">
-                        <h3 class="titDep2">FAQ</h3>
-                        <h4 class="titDep3 hidden">FAQ</h4>
+                        <h3 class="titDep2">공지사항</h3>
+                        <h4 class="titDep3 hidden">공지사항</h4>
                         <div class="searchBox">
                             <div class="searchOp">
                                 <span class="hidden">검색</span>
@@ -231,7 +230,7 @@
         </form>
       
 <!--S footer  -->
-<jsp:include page="/user/footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
 <!--E footer  -->
         
     </div>

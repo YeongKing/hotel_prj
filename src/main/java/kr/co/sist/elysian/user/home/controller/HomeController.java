@@ -14,11 +14,5 @@ public class HomeController {
 		return "user/index";
 
 	}// main
-	
-	
-	
-	
-	
-	
 
-}
+} // class

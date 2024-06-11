@@ -3,161 +3,31 @@
  info="" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-
-
 <!DOCTYPE html>
 <html lang="ko">
- <head>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
 
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <meta name="format-detection" content="telephone=no">
-    <meta name="naver-site-verification" content="7cc31c414eda7a3ea7b7a0bbb9c0a5c624370a87"/>
+<title>엘리시안호텔 공식 사이트 | ELYSIAN HOTEL Official Website</title>
 
-  <title>엘리시안호텔 공식 사이트 | ELYSIAN HOTEL Official Website</title>
+<!-- S head css -->
+<jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
+<link href="/hotel_prj/static/home/css/ko/pc/common_new.css" rel="stylesheet" type="text/css">
+<link href="/hotel_prj/static/home/css/ko/pc/main_josunhotel.css" rel="stylesheet" type="text/css">
+<!-- E head css -->
 
-
-  <meta name="keywords" content="조선호텔앤리조트, 신세계조선, 조선호텔, 웨스틴조선, 웨스틴조선호텔, 그랜드조선, 그랜드조선호텔,  레스케이프, 레스케이프호텔, 포포인츠, 포포인츠바이쉐라톤">
-  <meta name="description" content="조선호텔앤리조트는 고품격 라이프 스타일을 제안하는 서비스 전문 기업입니다. 호텔뿐 아니라 외식 사업, 오피스 빌딩 위탁 운영 등 품격 있는 서비스와 시설을 제공합니다.">
-  <meta property="og:title" content="조선호텔앤리조트 공식 사이트 | JOSUN HOTELS &amp; RESORTS Official Website">
-  <meta property="og:description" content="조선호텔앤리조트는 고품격 라이프 스타일을 제안하는 서비스 전문 기업입니다. 호텔뿐 아니라 외식 사업, 오피스 빌딩 위탁 운영 등 품격 있는 서비스와 시설을 제공합니다.">
-  <meta property="og:url" content="https://josunhotel.com/intro.do">
-  <meta property="og:image" content="https://josunhotel.comstatic/home/images/josunhotel_og.png">
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="Josun Hotels & Resorts"/>
-
-  <script type="text/javascript" nonce="a6d9132286844ba792abb3d5626" src="//local.adguard.org?ts=1716279030894&amp;type=content-script&amp;dmn=localhost&amp;url=http%3A%2F%2Flocalhost%2Fhotel_prj%2Fjosun%2Findex.jsp&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script>
-  <script type="text/javascript" nonce="a6d9132286844ba792abb3d5626" src="//local.adguard.org?ts=1716279030894&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><link rel="canonical" href="https://josunhotel.com/intro.do"/>
-  <link rel="shortcut icon" type="image/x-icon" href="/hotel_prj/static/home/images/ko/pc/common/favicon.ico" >
-  <link rel="icon" type="image/x-icon" href="/hotel_prj/static/home/images/ko/pc/common/favicon.ico" >
-  <link href="/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
-  <link href="/hotel_prj/static/home/css/ko/pc/common_new.css" rel="stylesheet" type="text/css">
-  
-  
-  <link href="/hotel_prj/static/home/css/ko/pc/main_josunhotel.css" rel="stylesheet" type="text/css">
-
-  <link href="/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css"> 
-  <link href="/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css"> 
-  <script type="text/javascript" src="/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
-  <script type="text/javascript" src="/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script> <!-- 컨텐츠 스크립트 -->
-  <script type="text/javascript" src="/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script> <!-- 메인, GNB 스크립트 -->
-  <script type="text/javascript" src="/hotel_prj/static/home/js/ko/pc/selectbox.js"></script> 
-  <script type="text/javascript" src="/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script> 
-  <script type="text/javascript" src="/hotel_prj/static/home/js/home.js"></script>
-  <script type="text/javascript" src="/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173355219-1"></script>
-  <script type="text/javascript">
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-173355219-1');
-  </script>
-  <!-- End Global site tag (gtag.js) - Google Analytics -->
-  
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-NP6NJMP');</script>
-  <!-- End Google Tag Manager -->
-
-  <script type="text/javascript">
-    // IE 브라우저인지 체크
-    if (navigator.userAgent.indexOf("MSIE") !== -1 || navigator.userAgent.indexOf("Trident") !== -1) {
-      // Edge 브라우저로 전환
-      alert('Internet Explorer 브라우저의 서비스 지원 종료(2022년 6월 15일)에 따라 조선호텔앤리조트 웹사이트 이용 시 크로미엄 기반(Chromium Base)의 브라우저 사용을 권장 드립니다.\n\n※ 크로미엄(Chromium) 기반 브라우저\n- 크롬(Google Chrome)\n- 마이크로소프트 엣지(Microsoft Edge)\n- 파이어폭스(Mozilla Firefox)\n- 오페라(Opera)\n- 웨일(Naver Wale)\n- 사파리(Apple Safari) 등');
-      window.location.replace("microsoft-edge:" + window.location.href);
-    
-      // IE 브라우저 종료
-      //edge 켜지지 않고, ie만 종료되어 setTimeout사용
-      setTimeout(function(){
-        window.open('', '_parent', '');
-        window.close();
-      },100)
-
-    }
-
-
-    
-	function fncChangeLang (changeLang) {
-		let currentLang = 'ko';
-		
-			$(location).attr("href", "/intro.do?locale=" + changeLang);
-		
-		
-	}
-  </script>
-
-
-<!-- 네이버 사이트 연관 채널 Code -->	
-<script type="application/ld+json">
-{
-"@context": "http://schema.org",
-"@type": "Person",
-"name": "조선호텔앤리조트",
-"url": "https://josunhotel.com/",
-	"sameAs": [
-		"https://www.instagram.com/josunhotelsandresorts/",
-		"https://www.facebook.com/Josunhotelsandresorts",
-		"https://pf.kakao.com/_EnFPj",
-		"https://www.youtube.com/channel/UC7ZZk3mnc0DzJqPTdjD6tOw",
-		"https://play.google.com/store/apps/details?id=com.ssg.josunhotel",
-		"https://apps.apple.com/kr/app/id1528269578"
-		]
-}	
-</script>
-<!-- End 네이버 사이트 연관 채널 Code -->
-   
-<!--schema.org 적용(2021.05.03) -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Hotel",
-  "name": "조선호텔앤리조트",
-  "url": "https://josunhotel.com/",
-  "image": [
-    "https://www.josunhotel.com/revolution/content/fileImage.do?fileId=426021&cntntsSn=426020",
-    "https://www.josunhotel.com/revolution/content/fileImage.do?fileId=253318&cntntsSn=253316",
-    "https://gjb.josunhotel.comutil/file/download.do?fileSn=453363&sysCode=GJB"
-  ],
-  "description": "Experience the Difference - 조선호텔앤리조트는 신세계 그룹에서 운영하며, 고품격 라이프 스타일을 제안하는 서비스 전문 기업입니다.",
-  "sameAs": [
-    "https://www.instagram.com/josunhotelsandresorts",
-    "https://www.facebook.com/Josunhotelsandresorts",
-    "https://pf.kakao.com/_EnFPj",
-    "https://www.youtube.com/channel/UC7ZZk3mnc0DzJqPTdjD6tOw",
-    "https://play.google.com/store/apps/details?id=com.ssg.josunhotel",
-    "https://apps.apple.com/kr/app/id1528269578"
-  ],
-  "address": {
-    "@type": "PostalAddress",
-    "addressCountry": "Republic of Korea",
-    "addressRegion": "서울시",
-    "addressLocality": "중구",
-    "streetAddress": "소공로 16",
-    "postalCode": "04533"
-  },
-  "telephone": "02-771-0500"
-}
-</script>
- </head>
- <body>
- <!-- Google Tag Manager (noscript) -->
- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP6NJMP"
- height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
- <!-- End Google Tag Manager (noscript) -->
-
-	<div class="skip"><a href="#container">본문 바로가기</a></div>
-	<div class="wrapper mainWrapper topBanner">
-		<!--(HEAD 최종수정일 : 2024-05-07 17:12)-->
+<!-- S head script -->
+<jsp:include page="/WEB-INF/views/user/common/head_script.jsp"></jsp:include>
+<!-- E head script -->
+</head>
+ 
+<body>
+<div class="skip"><a href="#container">본문 바로가기</a></div>
+<div class="wrapper mainWrapper topBanner">
 <!-- mass promotion 메뉴 동적 노출 -->
-
 
 <script>
 	jQuery(function(){
@@ -253,7 +123,6 @@
             }
         }
     }
-
 </script>
 
 <script>
@@ -277,22 +146,10 @@
         })
 </script>
  <!--S header  -->
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
  <!--E header  -->
-        <!--(페이지 URL)-->
 
-
-
-
-
-
-
-
-
-
-
-
-
+<!--(페이지 URL)-->
 <script type="text/javascript">
 
 jQuery(function(){
@@ -726,14 +583,9 @@ function closeHubPopup(){
 }
 </script>
  
- 
- 
 <input type="hidden" name="sysCode" id="sysCode" value="JOSUNHOTEL"/>
 <div id="container" class="container">
 	<!-- 컨텐츠 S -->
-	
-		
-		
 			<script>
 				$(function(){
 					//window.onload = function(){
@@ -741,11 +593,7 @@ function closeHubPopup(){
 					//};
 				});
 			</script>
-		
-	
 
-	
-		
 			<!-- 20200812 추가 -->
 			<div class="deviceCheck">
 				<p class="checkTxt">
@@ -760,11 +608,6 @@ function closeHubPopup(){
 				</div>
 			</div>
 			<!-- //20200812 추가 -->
-		
-		
-	
-
-	
 
 	<div class="hubMain">
 		<h1 class="hidden">신세계 조선 호텔</h1>
@@ -782,7 +625,6 @@ function closeHubPopup(){
 				<!-- // scroll icon 추가 -->
 			</div>
 
-
 		</div>
 		<!--  //mainArea01  -->
 		<div class="mainArea04">
@@ -793,10 +635,7 @@ function closeHubPopup(){
 					<button type="button" class="btnSwipe btnPrev"><span class="hidden">이전</span></button>
 					<div class="swipeWrap swipeGroup">
 						<ul class="swipeCont">
-							
-								
-									
-										
+
 										<li class="swipeSlide">
 											<span class="thum">
 												<img src="/hotel_prj/util/file/download.do?fileSn=2039698&sysCode=FPBSS" alt="신선하고 건강한 재료로 만든 아침 식사와 함께 든든한 하루를 시작해보세요!">
@@ -812,13 +651,6 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag FPBSS">포포인츠 바이 쉐라톤 조선 서울역</span>
 										</li>
-									
-									
-								
-
-							
-								
-									
 										
 										<li class="swipeSlide">
 											<span class="thum">
@@ -835,13 +667,6 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag JOSUNHOTEL">조선호텔앤리조트</span>
 										</li>
-									
-									
-								
-
-							
-								
-									
 										
 										<li class="swipeSlide">
 											<span class="thum">
@@ -858,13 +683,6 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag PPJ">파라스파라 서울</span>
 										</li>
-									
-									
-								
-
-							
-								
-									
 										
 										<li class="swipeSlide">
 											<span class="thum">
@@ -882,13 +700,6 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag LESCAPE">레스케이프</span>
 										</li>
-									
-									
-								
-
-							
-								
-									
 										
 										<li class="swipeSlide">
 											<span class="thum">
@@ -905,13 +716,6 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag GJB">그랜드 조선 부산</span>
 										</li>
-									
-									
-								
-
-							
-								
-									
 										
 										<li class="swipeSlide">
 											<span class="thum">
@@ -928,13 +732,6 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag GRP">그래비티 서울 판교</span>
 										</li>
-									
-									
-								
-
-							
-								
-									
 										
 										<li class="swipeSlide">
 											<span class="thum">
@@ -951,13 +748,6 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag TWCB">웨스틴 조선 부산</span>
 										</li>
-									
-									
-								
-
-							
-								
-									
 										
 										<li class="swipeSlide">
 											<span class="thum">
@@ -976,13 +766,6 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag TWCB">웨스틴 조선 부산</span>
 										</li>
-									
-									
-								
-
-							
-								
-									
 										
 										<li class="swipeSlide">
 											<span class="thum">
@@ -999,13 +782,6 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag FPBSM">포포인츠 바이 쉐라톤 조선, 서울 명동</span>
 										</li>
-									
-									
-								
-
-							
-								
-									
 										
 										<li class="swipeSlide">
 											<span class="thum">
@@ -1023,13 +799,6 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag TWC">웨스틴 조선 서울</span>
 										</li>
-									
-									
-								
-
-							
-								
-									
 										
 										<li class="swipeSlide">
 											<span class="thum">
@@ -1046,13 +815,6 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag TWC">웨스틴 조선 서울</span>
 										</li>
-									
-									
-								
-
-							
-								
-									
 										
 										<li class="swipeSlide">
 											<span class="thum">
@@ -1069,13 +831,6 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag TWCB">웨스틴 조선 부산</span>
 										</li>
-									
-									
-								
-
-							
-								
-									
 										
 										<li class="swipeSlide">
 											<span class="thum">
@@ -1093,13 +848,6 @@ function closeHubPopup(){
 											<span class="locationTag FPBSS">포포인츠 바이 쉐라톤 조선 서울역</span>
 										</li>
 									
-									
-								
-
-							
-								
-									
-										
 										<li class="swipeSlide">
 											<span class="thum">
 												<img src="/hotel_prj/util/file/download.do?fileSn=1481795&sysCode=GJB" alt="2 Nights Escape!">
@@ -1116,13 +864,6 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag GJB">그랜드 조선 부산</span>
 										</li>
-									
-									
-								
-
-							
-								
-									
 										
 										<li class="swipeSlide">
 											<span class="thum">
@@ -1140,13 +881,6 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag LESCAPE">레스케이프</span>
 										</li>
-									
-									
-								
-
-							
-								
-									
 										
 										<li class="swipeSlide">
 											<span class="thum">
@@ -1163,22 +897,13 @@ function closeHubPopup(){
 											</span>
 											<span class="locationTag TWC">웨스틴 조선 서울</span>
 										</li>
-									
-									
-								
-
-							
 						</ul>
 					</div>
 					<button type="button" class="btnSwipe btnNext"><span class="hidden">다음</span></button>
 				</div>
 			</div>
 		</div>
-
-        
             <!-- 2022-05-23 조선라운지 추가 -->
-            
-            
             
                 <div class="mainArea07" tabindex="0">
                     <h2 class="hidden">JOSUN LOUNGE</h2>
@@ -1249,8 +974,6 @@ function closeHubPopup(){
                                                 <strong class="tit">It’s Picnic Season</strong>
                                                 <span class="txt">조선델리의 샌드위치로 채우는 봄날의 피크닉 메뉴</span>
                                             </li>
-                                    
-
                                 </ul>
                                 <div class="swipBtn swiper-button-prev"></div>
                                 <div class="swipBtn swiper-button-next"></div>
@@ -1258,10 +981,6 @@ function closeHubPopup(){
                         </div>
                     </div>
                 </div>
-            
-
-        
-
 
 		<!-- //mainArea01 -->
 		<div class="mainArea03">
@@ -1270,10 +989,8 @@ function closeHubPopup(){
 				<strong class="titDep1">Club Josun</strong>
 				<p class="txt">품격 있는 서비스와 다채로운 라이프 스타일을 선사하는<br>조선호텔앤리조트의 통합 멤버십 프로그램, 클럽조선(CLUB JOSUN)<br>지금 회원만을 위한 특별한 혜택과 경험을 확인해보세요.</p><!-- 20200723 수정 -->
 				
-				
 					<a href="/membership/ed2_product.do" class="btnSC btnM btnMW">VIEW MORE &amp; JOIN</a>
 					<a href="/membership/event.do" class="btnSC btnM btnMW">MEMBER'S EVENT</a>
-				
 
 			</div>
 		</div>
@@ -1310,9 +1027,6 @@ function closeHubPopup(){
 												<li class="hType10"><a href="/hotel/parasparaSeoul.do">파라스파라 서울</a></li>
 	                                            <li class="hType11"><a href="/hotel/Corallo.do">코랄로 바이 조선</a></li>
 											</ul>
-										
-										
-
 									</div>
 								</div>
 							</li>
@@ -1372,8 +1086,6 @@ function closeHubPopup(){
 			</ul>
 		</div>
 		<!-- //mainArea04 -->
-
-		
 		
 		<!-- //mainArea05 -->
 
@@ -1419,8 +1131,6 @@ function closeHubPopup(){
 										<li data-code="GJJ" class="grandJeju" data-nm="그랜드 조선 제주" class="grandJeju">
 											<a href="#none" id="hotel_select_GJJ"><span class="hotelTit">그랜드 조선 제주</span></a>
 										</li>
-
-										
 
 									</ul>
 									<button type="button" class="btnClose">닫기</button>
@@ -1621,18 +1331,12 @@ function closeHubPopup(){
 
 		<div class="mainIndicator"> <!-- mainArea01 일 경우에는 비노출, mainArea04 일 경우 type02 추가 -->
 			<ul>
-                
-                    
                         <li class="indicator01 on"><a href="#none">HOME</a></li>
                         <li class="indicator02"><a href="#none">OFFERS</a></li>
                         <li class="indicator03"><a href="#none">JOSUN LOUNGE</a></li>
                         <li class="indicator04"><a href="#none">MEMBERSHIP</a></li>
                         <li class="indicator05"><a href="#none">HOTELS</a></li>
                         <li class="indicator06"><a href="#none">RETAIL BUSINESS</a></li>
-                        
-                    
-                    
-                
 			</ul>
 		</div>
 		<!-- //mainIndicator -->
@@ -1640,16 +1344,11 @@ function closeHubPopup(){
 	<!-- //hubMain -->
 </div>
 
-
-
 		<!-- //container -->
 
-
         <!--S footer  -->
-		<jsp:include page="footer.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
  		<!--E footer  -->
-
-
 
 	</div>
 	<!-- //wrapper -->
@@ -1732,4 +1431,3 @@ function closeHubPopup(){
 <div class="dimmed"></div>
 </body>
 </html>
-

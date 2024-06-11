@@ -1,88 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8" 
- info="최초 객실 예약내역 페이지 입장시" %>
+ info="객실 예약내역 페이지 메인" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <meta name="format-detection" content="telephone=no">
 
 <title>예약내역 - 객실 예약 내역 | 엘리시안호텔</title>
-<link rel="shortcut icon" type="text/css" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico" >
 
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
+<!-- S head css -->
+<jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
 <link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
-<link href="http://localhost/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css"> 
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css"> 
+<!-- E head css -->
 
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script> <!-- 컨텐츠 스크립트 -->
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script> <!-- 메인, GNB 스크립트 -->
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/selectbox.js"></script> 
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script> 
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
-
-<script type="text/javascript">
-	// IE 브라우저인지 체크
-	if(navigator.userAgent.indexOf("MSIE") !== -1 || navigator.userAgent.indexOf("Trident") !== -1) {
-		// Edge 브라우저로 전환
-		alert('Internet Explorer 브라우저의 서비스 지원 종료(2022년 6월 15일)에 따라 조선호텔앤리조트 웹사이트 이용 시 크로미엄 기반(Chromium Base)의 브라우저 사용을 권장 드립니다.\n\n※ 크로미엄(Chromium) 기반 브라우저\n- 크롬(Google Chrome)\n- 마이크로소프트 엣지(Microsoft Edge)\n- 파이어폭스(Mozilla Firefox)\n- 오페라(Opera)\n- 웨일(Naver Wale)\n- 사파리(Apple Safari) 등');
-		window.location.replace("microsoft-edge:" + window.location.href);
-	   
-		// IE 브라우저 종료
-		//edge 켜지지 않고, ie만 종료되어 setTimeout사용
-		setTimeout(function(){
-		window.open('', '_parent', '');
-		window.close();
-		},100)
-	}
-</script>
-
-<!--schema.org 적용(2021.05.03) -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Hotel",
-  "name": "조선호텔앤리조트",
-  "url": "https://josunhotel.com/",
-  "image": [
-    "https://www.josunhotel.com/revolution/content/fileImage.do?fileId=426021&cntntsSn=426020",
-    "https://www.josunhotel.com/revolution/content/fileImage.do?fileId=253318&cntntsSn=253316",
-    "https://gjb.josunhotel.com/util/file/download.do?fileSn=453363&sysCode=GJB"
-  ],
-  "description": "Experience the Difference - 조선호텔앤리조트는 신세계 그룹에서 운영하며, 고품격 라이프 스타일을 제안하는 서비스 전문 기업입니다.",
-  "sameAs": [
-    "https://www.instagram.com/josunhotelsandresorts",
-    "https://www.facebook.com/Josunhotelsandresorts",
-    "https://pf.kakao.com/_EnFPj",
-    "https://www.youtube.com/channel/UC7ZZk3mnc0DzJqPTdjD6tOw",
-    "https://play.google.com/store/apps/details?id=com.ssg.josunhotel",
-    "https://apps.apple.com/kr/app/id1528269578"
-  ],
-  "address": {
-    "@type": "PostalAddress",
-    "addressCountry": "Republic of Korea",
-    "addressRegion": "서울시",
-    "addressLocality": "중구",
-    "streetAddress": "소공로 16",
-    "postalCode": "04533"
-  },
-  "telephone": "02-771-0500"
-}
-</script>
+<!-- S head script -->
+<jsp:include page="/WEB-INF/views/user/common/head_script.jsp"></jsp:include>
+<!-- E head script -->
 </head>
 
 <body>
 <div class="skip"><a href="#container">본문 바로가기</a></div>
 <div class="wrapper ">
-<!-- mass promotion 메뉴 동적 노출 -->
 
 <script>
 	jQuery(function(){
@@ -203,7 +146,7 @@
 </script>
 
 <!--S header  -->
-<jsp:include page="/user/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
 <!--E header  -->
 
 <!--(페이지 URL)-->
@@ -211,15 +154,16 @@
 <script>
 	function fncSearch(){
 		$("#resvForm").attr("method", "get");
-		$("#resvForm").attr("action", "/cnfirm/mber/room/reserveList.do");
+		$("#resvForm").attr("action", "/hotel_prj/user/roomResList.do");
 		$("#resvForm").submit();
 	}
 	
 	function fncResvDetail(confirmNo, hotlSysCode){
 		$("#confirmationNumber").val(confirmNo);
 		$("#hotlSysCode").val(hotlSysCode);
-		$("#resvForm").attr("method", "post");
-		$("#resvForm").attr("action", "/cnfirm/mber/room/reserveView.do");
+		//$("#resvForm").attr("method", "post");
+		$("#resvForm").attr("method", "get");
+		$("#resvForm").attr("action", "/hotel_prj/user/roomResView.do");
 		$("#resvForm").submit();
 	}
 	
@@ -286,13 +230,6 @@
 				      $('#usefulPointSpan').html(fncComma(data.usefulPoint));
 				      //보유쿠폰수 세팅 
 				      $('#couponCntDiv').html(fncComma(data.couponCnt));
-					     
-						//언어코드가 영문이면 멤버십메뉴 숨김
-	// 				      if(data.langCode=='en') {
-	// 				    	  $('#mbrshp1').css('display','none');
-	// 				    	  $('#mbrshp2').css('display','none');
-	// 				      }
-					      
 				}else{
 					alert(data.statusR + " : 관리자에게 문의하세요");
 				}
@@ -322,10 +259,6 @@
 	});
 </script>
  
-<form id="formLnb">
-<input type="hidden" id="langCode" name="langCode" value="ko" />
-</form>
-                 
 <h1 class="hidden">마이페이지</h1>
 <div class="topArea">
 	<div class="topInner">
@@ -336,7 +269,7 @@
 
 <div class="inner">
 	<!-- LNB -->
-	<jsp:include page="/user/mypage/lnb.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/user/mypage/lnb.jsp"></jsp:include>
 	<!-- LNB -->
 	
 	<!-- resvForm -->
@@ -349,8 +282,8 @@
 	<div class="myContents">
 		<h3 class="titDep2">예약확인</h3>
 		<ul class="tabType01 tabType02">
-			<li class="on"><a href="#">객실</a></li>
-			<li><a href="#">다이닝</a></li>
+			<li class="on"><a href="http://localhost/hotel_prj/user/roomResList.do">객실</a></li>
+			<li><a href="http://localhost/hotel_prj/user/diningResList.do">다이닝</a></li>
 		</ul>
 		
 		<!-- tab01 -->
@@ -461,7 +394,7 @@
 	</div>
 	<!-- myContents -->
 	</form>
-	<!-- tab01 -->
+	<!-- resvForm -->
 	
 		
 </div>
@@ -472,7 +405,7 @@
 
 
 <!--S footer  -->
-<jsp:include page="/user/footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
 <!--E footer  -->
 
 </div>

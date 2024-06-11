@@ -14,7 +14,42 @@ public class MyPageController {
 		return "user/mypage/main";
 		
 	} // main
+
+	@GetMapping("/roomResList.do")
+	public String searchRoomResList() {
+		
+		return "user/cnfirm/mber/room/reserveList";
+		
+	} // searchRoomResList
 	
+	@GetMapping("/roomResView.do")
+	public String detailRoomRes() {
+		
+		return "user/cnfirm/mber/room/reserveView";
+		
+	} // detailRoomRes
+	
+	@GetMapping("/diningResList.do")
+	public String searchDiningResList() {
+		
+		return "user/cnfirm/mber/dining/reserveList";
+		
+	} // searchDiningResList
+
+	@GetMapping("/diningResView.do")
+	public String detailDiningRes() {
+		
+		return "user/cnfirm/mber/dining/reserveView";
+		
+	} // detailDiningRes
+	
+	@GetMapping("/infoUpdateForm.do")
+	public String updateVisitorInfo() {
+		
+		return "user/cnfirm/mber/dining/infoUpdateForm";
+		
+	} // updateVisitorInfo
+
 	@GetMapping("/myInfoForm.do")
 	public String detailUserInfo() {
 		
@@ -22,11 +57,25 @@ public class MyPageController {
 		
 	} // detailUserInfo
 
-	@GetMapping("/reserveList.do")
-	public String searchRoomResList() {
+	@GetMapping("/pwChngForm.do")
+	public String modifyPw() {
 		
-		return "user/cnfirm/mber/room/reserveList";
+		return "user/mypage/pwChngForm";
 		
-	} // searchRoomResList
+	} // modifyPw
+	
+	@GetMapping("/withdraPwCfmForm.do")
+	public String removeUserInfo() {
+		
+		return "user/mypage/withdraPwCfmForm";
+		
+	} // removeUserInfo
 
+	@GetMapping("/withdraCfmForm.do")
+	public String checkRemove() {
+		
+		return "user/mypage/withdraCfmForm";
+		
+	} // checkRemove
+	
 } // class

@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <meta name="format-detection" content="telephone=no">
 
-<title>개인정보관리 - 회원탈퇴, 비밀번호 입력 | 엘리시안호텔</title>
+<title>개인정보관리 - 회원탈퇴, 유의사항 | 엘리시안호텔</title>
 
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
@@ -149,29 +149,26 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 <!-- E header -->
  
 <script type="text/javascript">
-    //회원탈퇴 신청화면 진입전 패스워드 재확인
-	function fncWithDraPwCfmApi() {
-    	
-	var password = jQuery("#password").val();
-	if(password.length == 0) {
-      alert('비밀번호를 입력해주세요.');		
-      return;
-	}
-    jQuery("#loginPassword").val(password);
-    
-	var formData =  jQuery("#formWithPwForm").serialize();
+	//회원탈퇴API 실행(무료회원)
+	function withdrawalApi() {
+		
+	var formData =  jQuery("#withdraCfmForm").serialize();
 		jQuery.ajax({
 		type : "POST",
-		url : "/mypage/pwCheckApi.do",
+		url : "/mypage/withdrawalApi.do",
 		cache : false,
 		data : formData, 
 		dataType : "json",
 		global : false,
 		success : function(data) {
 			if(data.statusR==200 && data.codeR=='S00000') { 
-				goConvertPage();
+				/* alert("회원 탈퇴 되었습니다."); */
+				alert('회원 탈퇴 되었습니다');
+				goLogout();
+				
 			}else if(data.statusR==400){
-				alert(data.statusR +" : " +data.codeR+" : "+data.messageR);
+			/* 	alert(data.statusR + " : 패스워드가 일치하지 않습니다."); */
+				alert(data.statusR + '패스워드가 일치하지 않습니다.');
 			}else{ 
 				alert(data.statusR +" : " +data.codeR+" : "+data.messageR);
 			}
@@ -181,17 +178,16 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 		}
 	});
 	}
-    
-	//회원탈퇴 페이지 이동
-    function goConvertPage() {
-    	jQuery("#formWithPwForm").attr("action", "/user/mypage/withdraCfmForm.do");
-	    jQuery("#formWithPwForm").attr("method", "post");
-	    jQuery("#formWithPwForm").submit();
-	} 
+
+	//회원탈퇴 처리후 로그아웃 실행
+	function goLogout() {
+		jQuery("#withdraCfmForm").attr("action", "/login/logout.do");
+	    jQuery("#withdraCfmForm").attr("method", "post");
+	    jQuery("#withdraCfmForm").submit();
+	}
 </script> 
 
-<form id="formWithPwForm">
-<input type="hidden" id="loginPassword" name="loginPassword" value=""  />
+<form id="withdraCfmForm">
 </form>
   
 <div id="container" class="container mypage">
@@ -251,34 +247,22 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 	<!-- myContents -->
 	<div class="myContents">
 	<h3 class="titDep2">회원 탈퇴</h3>
-	<p class="pageGuide tleft">정보를 안전하게 보호하기 위해 비밀번호를 다시 한 번 확인합니다.</p>
-		<div class="frmInfo">
-			<ul class="intList">
-				<li><!-- 필수입력서식에 미입력 발생 시, error 클래스 추가 alertMessage 노출, 포커스가 가면 error 클래스 제거 -->
-				<div class="intWrap">
-					<span class="tit">
-						<label for="userpw">PASSWORD</label>
-						<span class="essential">필수</span>
-					</span>
-				</div>
-                                
-				<div class="intInner">
-					<span class="intArea">
-						<input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요." style="width:1000px" aria-required="true">
-						<span class="alertMessage">비밀번호를 입력해주세요.</span>
-					</span>
-				</div>
-				</li>
+	<p class="pageGuide tleft">탈퇴를 신청하시기 전에 아래의 유의사항을 한 번 더 확인해 주시기 바랍나다.</p>
+		<div class="cautionBox">
+			<span class="tit">유의 사항</span>
+			<ul class="listDep1">
+				<li>탈퇴를 신청하시면 번복이 불가능합니다.</li>
+				<li>개인정보보호법에 따라 고객님의 호텔 이용기록, 개인정보 및 문의내역 기록도 모두 삭제됩니다.</li>
+				<li>탈퇴 신청이 완료되면 즉시 홈페이지 로그인이 제한됩니다.</li>
 			</ul>
 		</div>
-		
-		<div class="btnArea">
-			<button type="button" class="btnSC btnL" onclick="fncWithDraPwCfmApi();">다음</button>
-		</div>
-	</div>
-	<!-- myContents -->
 
-</div> 
+		<div class="btnArea">
+			<button type="button" class="btnSC btnL active" onclick="withdrawalApi();">탈퇴</button>
+		</div>
+                    
+	</div>
+</div>
 <!-- inner -->
 
 </div>

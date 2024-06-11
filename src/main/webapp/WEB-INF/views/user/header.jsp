@@ -16,8 +16,8 @@
 			<ul class="menuDepth02">
 				<li><a href="http://localhost/hotel_prj/user/index.do">ELYSIAN HOTEL</a>
 				<ul class="menuDepth03">
-					<li><a href="#">기업소개</a></li>
-					<li><a href="#">오시는길</a></li>
+					<li><a href="http://localhost/hotel_prj/user/aboutUs.do">기업소개</a></li>
+					<li><a href="http://localhost/hotel_prj/user/location.do">오시는길</a></li>
 				</ul>
 				</li>
 			</ul>

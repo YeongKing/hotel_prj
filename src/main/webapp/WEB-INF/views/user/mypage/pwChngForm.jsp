@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -25,9 +24,8 @@
 </head>
 
 <body>
-
-	<div class="skip"><a href="#container">본문 바로가기</a></div>
-	<div class="wrapper ">
+<div class="skip"><a href="#container">본문 바로가기</a></div>
+<div class="wrapper ">
 
 <script>
 	jQuery(function(){
@@ -123,49 +121,33 @@
             }
         }
     }
-
 </script>
 
 <script>
-        //2022-05-23 조선라운지 추가
-        //헤더 메뉴 버튼 클릭 이벤트
-        jQuery(document).on("click",".headArea .btnMenu" ,function(){
+//2022-05-23 조선라운지 추가
+//헤더 메뉴 버튼 클릭 이벤트
+jQuery(document).on("click",".headArea .btnMenu" ,function(){
 
-            //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-            if(jQuery(this).hasClass("menuOn")){
-                var expsrCount = 3;
-                var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
-                var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
+    //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
+    if(jQuery(this).hasClass("menuOn")){
+        var expsrCount = 3;
+        var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
+        var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
 
-                $loungeList.addClass("hidden");
-                $loungeList.each(function(index){
-                    if(randomArray.indexOf(index) > -1){
-                        jQuery(this).removeClass("hidden");
-                    }
-                });
+        $loungeList.addClass("hidden");
+        $loungeList.each(function(index){
+            if(randomArray.indexOf(index) > -1){
+                jQuery(this).removeClass("hidden");
             }
-        })
+        });
+    }
+})
 </script>
 
-<!--S header  -->
+<!-- S header -->
 <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
-<!--E header  -->
+<!-- E header -->
 
-
-
-
-        <!--(페이지 URL)-->
-
-
-
-
-
-
-
-
-
-
-  
 <script type="text/javascript">
     //패스워드 변경버튼 
  	function fnChngPwApi() {
@@ -270,27 +252,15 @@
 	    jQuery("#formPwChng").attr("method", "post");
 	    jQuery("#formPwChng").submit();
 	} 
- 	
 </script>
- 
- <form id="formPwChng" >
-		
-		<div id="container" class="container mypage">
-		 
 
-
-
-
-
-
-
-
-
+<form id="formPwChng" >
+<div id="container" class="container mypage">
  
 <script type="text/javascript">
- $(document).ready(function(){
+	$(document).ready(function(){
 	 
-	 fncLnbInfoApi();
+		fncLnbInfoApi();
  	   
 	}); 
   
@@ -314,13 +284,6 @@
 				      $('#usefulPointSpan').html(fncComma(data.usefulPoint));
 				      //보유쿠폰수 세팅 
 				      $('#couponCntDiv').html(fncComma(data.couponCnt));
-				     
-				      ///언어코드가 영문이면 멤버십메뉴 숨김
-// 				      if(data.langCode=='en') {
-// 				    	  $('#mbrshp1').css('display','none');
-// 				    	  $('#mbrshp2').css('display','none');
-// 				      }
-				      
 				}else{
 					alert(data.statusR + " : 관리자에게 문의하세요");
 				}
@@ -330,204 +293,95 @@
 			}
 		});
  	}
-	
-  </script> 
+</script> 
+
+<h1 class="hidden">마이페이지</h1>
+<div class="topArea">
+	<div class="topInner">
+	<h2 class="titDep1">My Page</h2>
+	<p class="pageGuide">멤버십 회원을 위한 다양한 혜택이 준비되어 있습니다.</p>
+	</div>
+</div> 
+
+<div class="inner">
+	<!-- LNB -->
+	<jsp:include page="/WEB-INF/views/user/mypage/lnb.jsp"></jsp:include>
+	<!-- LNB -->
  
-  <form id="formLnb">
-  <input type="hidden" id="langCode" name="langCode" value="ko" />
-  </form>
-                 
-			<h1 class="hidden">마이페이지</h1>
-			<div class="topArea">
-                <div class="topInner">
-                    <h2 class="titDep1">My Page</h2>
-                    <p class="pageGuide"><!-- 멤버십 회원을 위한 다양한 혜택이 준비되어 있습니다. -->멤버십 회원을 위한 다양한 혜택이 준비되어 있습니다.</p>
-                </div>
-			</div> 
-			<div class="inner">
-                <!-- LNB -->
-                <div class="lnbArea">
-                 <!-- 20200806 수정 : 구조(변경) -->
-                    <div class="myInfo">
-                       <p class="name"> <a href="/mypage/main.do"><em id="nm1">  </em><!-- 님 -->님</a> </p>
-                        <div class="info">
-                            <a href="/mypage/myPointForm.do">
-                                <span class="tit"><!-- 포인트 -->포인트</span>
-                                <span  class="txt"><em id="usefulPointSpan">  </em><abbr title="Josun Point">J</abbr></span>
-                            </a>
-                            <a href="/mypage/myCouponaForm.do">
-                                <span class="tit"><!-- 쿠폰 -->쿠폰</span>
-                                <span id="couponCntDiv" class="txt"></span>
-                            </a>
-                        </div>
-                    </div>
-                    <ul class="lnb">
-                        <!-- 20200709 수정 : LNB목록(text변경) -->
-                        
-	                        <li id="mbrshp1">멤버십확인
-	                            <ul>
-	                                <li><a href="/mypage/myGoodsForm.do">CLUB JOSUN VIP 내역</a></li>
-	                            </ul>
-	                        </li>
-                        
-                        <!-- //20200709 수정 : LNB목록(text변경) -->
-                        <li><!-- 예약확인 -->예약확인
-                            <ul>
-                                <li><a href="/cnfirm/mber/room/reserveList.do"><!-- 객실 &middot; 패키지 예약 내역 -->객실 &middot; 패키지 예약 내역</a></li>
-                                <li><a href="/cnfirm/mber/dining/reserveList.do"><!-- 다이닝 예약 내역 -->다이닝 예약 내역</a></li>
-                                <li><a href="/cnfirm/mber/activity/reserveList.do"><!-- 액티비티 예약 내역 -->액티비티 예약 내역</a></li>
+	<!-- myContents -->
+	<div class="myContents">
+	<h3 class="titDep2">비밀 번호 변경</h3>
+	<p class="pageGuide tleft">현재 비밀번호를 올바르게 입력해야만 비밀번호 변경이 가능합니다.</p>
+		<div class="frmInfo">
+			<ul class="intList">
+				<li><!-- 필수입력서식에 미입력 발생 시, error 클래스 추가 alertMessage 노출, 포커스가 가면 error 클래스 제거 -->
+				<div class="intWrap">
+					<span class="tit">
+						<label for="userpw">CURRENT PASSWORD</label>
+						<span class="essential">필수</span>
+					</span>
+				</div>
                                 
-                                <li id="mbrshp2"><a href="/cnfirm/mber/vouch/reserveList.do"><!-- 멤버십 예약 내역 -->멤버십 예약 내역</a></li>
-                                
-                            </ul>
-                        </li>
-                        <li><!-- 관심 리스트 -->관심 리스트
-                            <ul>
-                                <li><a href="/mber/interest/roomList.do"><!-- 객실 리스트 -->객실 리스트</a></li>
-                                <li><a href="/mber/interest/packageList.do"><!-- 패키지 리스트 -->패키지 리스트</a></li>
-                            </ul>
-                        </li>
-                        <li><!-- 개인정보관리 -->개인정보관리
-                            <ul>
-                                <li>
-                                <a href="/mypage/myInfoForm.do"> <!-- 회원 정보 수정 -->회원 정보 수정 </a>  
-                                
-                                 </li>
-                                <li><a href="/mypage/pwChngForm.do"><!-- 비밀번호 변경 -->비밀번호 변경</a></li>
-                                <li><a href="/mypage/withdraPwCfmForm.do"><!-- 회원 탈퇴 -->회원 탈퇴</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+				<div class="intInner">
+					<span class="intArea">
+						<input type="password" id="curLoginPassword" name="curLoginPassword" placeholder="현재 비밀번호를 입력해주세요." style="width:487px" aria-required="true">
+						<span class="alertMessage">비밀번호를 입력해주세요.</span>
+					</span>
+				</div>
+				</li>
 
+				<li>
+				<div class="intWrap">
+					<span class="tit">
+						<label for="userpw">NEW PASSWORD</label>
+						<span class="essential">필수</span>
+					</span>
+				</div>
+                               
+     			<div class="intInner">
+					<span class="intArea">
+						<input type="password" id="loginPassword" name="loginPassword" placeholder="영문, 숫자, 특수문자 조합 8~12자리를 입력해주세요." style="width:487px" aria-required="true">
+						<span class="alertMessage">비밀번호를 입력해주세요.</span>
+					</span>
+				</div>   
+				                             
+				<p class="txtGuide">비밀번호 내 ID가 포함되거나, 연속되는 문자 또는 숫자는 3자리 이상 사용할 수 없습니다.</p>
+				</li>
+                            
+				<li class="intList-repwd">
+				<div class="intWrap">
+					<span class="tit">
+						<label for="userpw-re">CONFIRM PASSWORD</label>
+						<span class="essential">필수</span>
+					</span>
+				</div>
 
- 
-                <!-- myContents -->
-                <div class="myContents">
-                    <h3 class="titDep2"><!-- 비밀 번호 변경 -->비밀 번호 변경</h3>
-                    <p class="pageGuide tleft"><!-- 현재 비밀번호를 올바르게 입력해야만 비밀번호 변경이 가능합니다. -->현재 비밀번호를 올바르게 입력해야만 비밀번호 변경이 가능합니다.</p>
-                    <div class="frmInfo">
-                        <ul class="intList">
-                           <li><!-- 필수입력서식에 미입력 발생 시, error 클래스 추가 alertMessage 노출, 포커스가 가면 error 클래스 제거 -->
-                               <div class="intWrap"><span class="tit"><label for="userpw">CURRENT PASSWORD</label><span class="essential">필수</span></span></div>
-                                <div class="intInner">
-                                    <span class="intArea"><input type="password" id="curLoginPassword" name="curLoginPassword" placeholder="현재 비밀번호를 입력해주세요." style="width:487px" aria-required="true"><span class="alertMessage"><!-- 비밀번호를 입력해주세요. -->비밀번호를 입력해주세요.</span></span>
-                                </div>
-                            </li>
-                           <li>
-                                <div class="intWrap"><span class="tit"><label for="userpw">NEW PASSWORD</label><span class="essential">필수</span></span></div>
-                                <div class="intInner">
-                                    <span class="intArea"><input type="password" id="loginPassword" name="loginPassword" placeholder="영문, 숫자, 특수문자 조합 8~12자리를 입력해주세요." style="width:487px" aria-required="true"><span class="alertMessage"><!-- 비밀번호를 입력해주세요. -->비밀번호를 입력해주세요.</span></span>
-                                </div>                                
-                                <p class="txtGuide"><!-- 비밀번호 내 ID가 포함되거나, 연속되는 문자 또는 숫자는 3자리 이상 사용할 수 없습니다. -->비밀번호 내 ID가 포함되거나, 연속되는 문자 또는 숫자는 3자리 이상 사용할 수 없습니다.</p><!-- 20200709  : txtGuide(추가) -->
-                            </li>
-                            <li class="intList-repwd">
-                                <div class="intWrap"><span class="tit"><label for="userpw-re">CONFIRM PASSWORD</label><span class="essential">필수</span></span></div>
-                                <div class="intInner">
-                                    <span class="intArea"><input type="password" id="loginPasswordRe" name="loginPasswordRe" placeholder="동일한 비밀번호를 입력해주세요." style="width:487px" aria-required="true"><span class="alertMessage"><!-- 동일한 비밀번호를 입력해주세요. -->동일한 비밀번호를 입력해주세요.</span></span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="btnArea">
-                        <button type="button" class="btnSC btnL active" onclick="fnChngPwApi(); return false;"><!-- 확인 -->확인</button>
-                    </div>
-                </div>
-                </div>
-                <!-- //myContents -->
-			</div>
-	</form>
-
-
-		<!-- //container -->
-
+				<div class="intInner">
+					<span class="intArea">
+						<input type="password" id="loginPasswordRe" name="loginPasswordRe" placeholder="동일한 비밀번호를 입력해주세요." style="width:487px" aria-required="true">
+						<span class="alertMessage">동일한 비밀번호를 입력해주세요.</span>
+					</span>
+ 				</div>
+				</li>
+			</ul>
+		</div>
+                    
+		<div class="btnArea">
+			<button type="button" class="btnSC btnL active" onclick="fnChngPwApi(); return false;">확인</button>
+		</div>
+	</div>
+</div>
+<!-- inner -->
+</div>
+<!-- //container -->
+</form>
 
 <!--S footer  -->
 <jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
 <!--E footer  -->
 
-
-
-
-	</div>
-	<!-- //wrapper -->
-
-<!-- 호텔 찾기 Layer -->
-<div id="hotelFindLayer" class="layerPop">
-	<div class="layerCont">
-		<div class="hotelFindPop">
-			<h2>호텔 찾기</h2>
-			<ul class="hotelSelect">
-								<li>
-					<a href="https://jpg.josunhotel.com/main.do" target="_blank" title="새창열림">		
-						<span class="hotelLogo palace">
-						</span>
-						<span class="hotelTit">조선 팰리스<!-- 조선 팰리스 --></span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selwi-the-westin-chosun-seoul" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo westinSeoul">
-						</span>
-						<span class="hotelTit">웨스틴 조선 서울</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/puswi-the-westin-chosun-busan" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo westinBusan">
-						</span>
-						<span class="hotelTit">웨스틴 조선 부산</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://gjb.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo grandBusan">
-						</span>
-						<span class="hotelTit">그랜드 조선 부산</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://gjj.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo grandJeju">
-						</span>
-						<span class="hotelTit">그랜드 조선 제주</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://lescapehotel.com/main" target="_blank" title="새창열림">
-						<span class="hotelLogo lescape">
-						</span>
-						<span class="hotelTit">레스케이프 호텔</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://grp.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo gravityPangyo">
-						</span>
-						<span class="hotelTit">그래비티 서울 판교</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selfp-four-points-seoul-namsan" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo sheratonSeoulstation">
-						</span>
-						<span class="hotelTit">포포인츠 바이 쉐라톤 조선 서울역</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selfd-four-points-seoul-myeongdong" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo sheratonMyeongdong">
-						</span>
-						<span class="hotelTit">포포인츠 바이 쉐라톤 조선, 서울 명동</span>
-					</a>
-				</li>
-			</ul>
-		</div>
-		<button type="button" class="btnClose" onclick="commonJs.popClose($('#hotelFindLayer'))">닫기</button>
-	</div>
 </div>
-<!-- //호텔 찾기 Layer -->
-<div class="dimmed"></div>
+<!-- //wrapper -->
+
 </body>
 </html>
-

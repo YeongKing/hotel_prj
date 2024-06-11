@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8" 
- info="객실 예약내역 페이지 메인" %>
+ info="다이닝 예약내역 페이지 메인" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <meta name="format-detection" content="telephone=no">
 
-<title>예약내역 - 객실 예약 내역 | 엘리시안호텔</title>
+<title>예약내역 - 다이닝 예약 내역 | 엘리시안호텔</title>
 
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
@@ -150,21 +150,94 @@
 <!--E header  -->
 
 <!--(페이지 URL)-->
-
 <script>
-	function fncSearch(){
-		$("#resvForm").attr("method", "get");
-		$("#resvForm").attr("action", "/hotel_prj/user/roomResList.do");
-		$("#resvForm").submit();
-	}
-	
-	function fncResvDetail(confirmNo, hotlSysCode){
-		$("#confirmationNumber").val(confirmNo);
-		$("#hotlSysCode").val(hotlSysCode);
-		//$("#resvForm").attr("method", "post");
-		$("#resvForm").attr("method", "get");
-		$("#resvForm").attr("action", "/hotel_prj/user/roomResView.do");
-		$("#resvForm").submit();
+    $(function(){
+        fncGetList();
+    });
+
+    function fncGetList() {
+        const statusCode = jQuery("#statusCode").val();
+        const visitFrom = jQuery("#datepickerFrom").val();
+        const visitTo = jQuery("#datepickerTo").val();
+        const searchSysCode = jQuery("#searchDataValue").val();
+
+        if (visitFrom != "" && visitTo == "") {
+            alert("검색 종료일을 입력해 주세요.");	//검색 종료일을 입력해 주세요.
+            jQuery("#datepickerTo").focus();
+            return false;
+        }else if (visitTo != "" && visitFrom == "") {
+            alert("검색 시작일을 입력해 주세요."); //검색 시작일을 입력해 주세요.
+            jQuery("#datepickerFrom").focus();
+            return false;
+        }
+
+        jQuery.ajax({
+            type : "GET",
+            url : "/resve/dining/list.json",
+            cache : false,
+            dataType : "json",
+            data : {
+                statusCode  : statusCode,
+                visitFrom   : visitFrom,
+                visitTo : visitTo,
+                searchSysCode   : searchSysCode
+            },
+            global : false,
+	        beforeSend: function() {
+				commonJs.showLoadingBar(); //로딩바 show
+         	},
+            complete: function() {
+				commonJs.closeLoadingBar(); //로딩바 hide
+            },
+            success : function(data){
+
+                const result = data.result;
+
+                if (data.resultCode != "SUCCESS") {
+                    alert(data.resultMsg);
+                }else {
+
+                    let html = "";
+                    const list = result;   //예약 list
+                    let count = 0;
+                    
+                    //리스트 없을 경우
+                    if(list == null || list.length == 0){
+                        html = `<li class="noData"><p class="txt">검색 결과가 없습니다. </p></li>`;
+                    }else {
+                        for (let i = 0; i < list.length; i++) {
+                            const visitorInfo = '방문 인원 {1}명'.replace("{1}", list[i].personCount);
+                            const deposit = list[i].deposit;
+                            const depositInfoHtml  = list[i].deposit ? `<br/>예약금: \${fncComma(list[i].deposit.amount)}KRW` : '';
+
+                            html += `<li>
+                                        <div class="cardInner">
+                                            <span class="status">${list[i].statusNm}</span>
+                                            <em class="tit"><a href="javascript:fncView('${list[i].reservationId}')">${list[i].diningNm}</a></em>
+                                            <p class="info">${list[i].hotelNm}</p>
+                                            <p class="date">${list[i].visitFullDate} | ${visitorInfo } ${depositInfoHtml}
+											</p>
+                                        </div>
+                                    </li>`;
+                        }
+                        count = list.length;
+                    }
+                    jQuery(".count").text("총 {1} 건".replace("{1}", count.toString()));    //총 n 건
+                    jQuery(".cardList").html(html);
+                }
+            },
+            error:function(r, s, e){
+                alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
+            }
+        });
+    }
+
+	// 예약 상세페이지
+	function fncView(reservationId) {
+        jQuery("#reservationId").val(reservationId);
+		jQuery("#form").attr("action", "/cnfirm/mber/dining/reserveView.do");
+	    jQuery("#form").attr("method", "get");
+	    jQuery("#form").submit();
 	}
 	
 	function fncSetMonth(agoMonth){
@@ -174,27 +247,11 @@
 
 		if(agoMonth != ''){
 			endDate.setMonth(monthOfYear+Number(agoMonth));
-			$("#datepickerFrom").val(gfncDateFormat(beginDate,'yyyy.MM.dd'));
-			$("#datepickerTo").val(gfncDateFormat(endDate,'yyyy.MM.dd'));
-		} else{
-			$("#datepickerFrom").val("");
-			$("#datepickerTo").val("");
-		}
-	}
-
-	function fncMore(page){
-		var maxCnt = 20;
-		var listCnt = "0";
-		var totalCnt = page*maxCnt;
-		
-		for(var i = $("#listArea > li:visible").length; i < totalCnt; i++){
-			$("#show_"+i).show();
-		}
-		
-		if(Number(listCnt) < totalCnt){
-			$("#moreBtn").hide();
+			jQuery("#datepickerFrom").val(gfncDateFormat(beginDate,'yyyy.MM.dd'));
+			jQuery("#datepickerTo").val(gfncDateFormat(endDate,'yyyy.MM.dd'));
 		}else{
-			$("#moreBtn").html("<button type=\"button\" class=\"btnLine more\" onclick=\"fncMore('"+(Number(page)+1)+"');\">MORE</button>");
+			jQuery("#datepickerFrom").val("");
+			jQuery("#datepickerTo").val("");
 		}
 	}
 	
@@ -202,6 +259,10 @@
 		$("input[id^=agoMonth]:checked").prop("checked", false);
 	}
 </script>
+
+<form id="form" name="form">
+    <input type="hidden" id="reservationId" name="reservationId" value=""/>
+</form>
 
 <div id="container" class="container mypage">
 
@@ -272,45 +333,35 @@
 	<jsp:include page="/WEB-INF/views/user/mypage/lnb.jsp"></jsp:include>
 	<!-- LNB -->
 	
-	<!-- resvForm -->
-	<form id="resvForm" name="resvForm">
-	<input type="hidden" id="confirmationNumber" name="confirmationNumber" />
-	<input type="hidden" id="hotlSysCode" name="hotlSysCode" />
-	<input type="hidden" id="test" name="test" value="GJB" />
-	
 	<!-- myContents -->
 	<div class="myContents">
 		<h3 class="titDep2">예약확인</h3>
 		<ul class="tabType01 tabType02">
-			<li class="on"><a href="http://localhost/hotel_prj/user/roomResList.do">객실</a></li>
-			<li><a href="http://localhost/hotel_prj/user/diningResList.do">다이닝</a></li>
+			<li><a href="http://localhost/hotel_prj/user/roomResList.do">객실</a></li>
+			<li class="on"><a href="http://localhost/hotel_prj/user/diningResList.do">다이닝</a></li>
 		</ul>
 		
-		<!-- tab01 -->
+		<!-- tabCont(다이닝) -->
 		<div id="tab01" class="tabCont" style="display:block">
-		<h3 class="hidden">객실</h3>
-			<!-- searchBox -->
+		<h3 class="hidden">다이닝 </h3>
+			<!-- 기간조회 -->
 			<div class="searchBox">
-			<div class="searchOp">
+ 			<div class="searchOp">
 				<span class="hidden">기간 조회</span>
 				
-				<div class="selectWrap" style="width:346px">
-					<select title="조회옵션" data-height="150px" id="searchDataType" name="searchDataType">
-						<option value="GJB" selected="selected">엘리시안 서울</option>
+				<div id="hotlSel" class="selectWrap" style="width:346px">
+					<select data-height="150px" data-direction="down" id="searchDataValue" name="searchDataValue" style="display: none;" title="전체 호텔">
+						<option value="엘리시안 서울" selected="selected">엘리시안 서울</option>
 					</select>
 				</div>
-
+                    
 				<div class="period">
-					<span class="hidden">날짜선택</span>
+  					<span class="hidden">날짜선택</span>
 					<span class="intArea">
-						<input type="text" style='width:143px;' title="검색 시작일" readonly="readonly"
-								id="datepickerFrom" name="searchDataBeginDe" onchange="fncChangeDate();" />
+						<input type="text" value="" style="width:143px" title="검색 시작일" readonly id="datepickerFrom" name="searchDataBeginDe" onchange="fncChangeDate();">
 					</span>
 					<span class="hBar">-</span>
-					<span class="intArea">
-						<input type="text" style='width:143px;' title="검색 종료일" readonly="readonly"
-								id="datepickerTo" name="searchDataEndDe" onchange="fncChangeDate();" />
-					</span>
+					<span class="intArea"><input type="text" value="" style="width:143px" title="검색 종료일" readonly id="datepickerTo" name="searchDataEndDe" onchange="fncChangeDate();"></span>
 				</div>
 				
 				<div class="frmList periodOp">
@@ -318,84 +369,57 @@
 						<input type="radio" id="agoMonth1" onclick="fncSetMonth('1');" name="agoMonth" value="1"  />
 						<label for="agoMonth1">1개월</label>
 					</span>
-					
+                        
 					<span class="frmRadio">
 						<input type="radio" id="agoMonth3" onclick="fncSetMonth('3');" name="agoMonth" value="3" checked="checked" />
 						<label for="agoMonth3">3개월</label>
 					</span>
 					
 					<span class="frmRadio">
-						<input type="radio" id="agoMonth6" onclick="fncSetMonth('6');" name="agoMonth" value="6"  />
+						<input type="radio" id="agoMonth6" onclick="fncSetMonth('6');" name="agoMonth" value="6" />
 						<label for="agoMonth6">6개월</label>
 					</span>
 				</div>
 			</div>
-			
+                
 			<div class="btnWrap">
-				<a href="#" class="btnSC btnM" role="button" onclick="fncSearch();">기간조회</a>
+				<a href="#" class="btnSC btnM" role="button" onclick="fncGetList(); return false;">기간 조회</a>
 			</div>
 			
 			<ul class="txtGuide">
-				<li>온라인 예약 건에 한하여 조회가 가능하며, 현재일 기준 1년까지 제공됩니다.</li>
-				<li>예약날짜 기준으로 현재부터 3개월 이후의 예약 내역이 우선 조회됩니다.</li>
-				<li>과거 또는 미래의 예약내역을 조회하시려면 상단의 날짜를 변경해주십시오.</li>
-			</ul> 
-			</div>
-			<!-- searchBox -->
-			
-			<!-- listBox -->
+				<li>온라인 예약 건에 한하여 조회가 가능하며, 현재일 기준 1년까지 제공됩니다.</li><!-- 온라인 예약 건에 한하여 조회가 가능하며, 현재일 기준 1까지 제공됩니다. -->
+				<li>예약날짜 기준으로 현재부터 3개월 이후의 예약 내역이 우선 조회됩니다.</li><!-- 예약날짜 기준으로 현재부터 3개월 이후의 예약 내역이 우선 조회됩니다. -->
+				<li>과거 또는 미래의 예약내역을 조회하시려면 상단의 날짜를 변경해주십시오.</li><!-- 과거 또는 미래의 예약내역을 조회하시려면 상단의 날짜를 변경해주십시오. -->
+			</ul>
+            </div>
+			<!-- //기간조회 -->
+            
+			<!-- 조회목록 -->
 			<div class="listBox">
+			<!-- Sorting -->
 			<div class="countList">
-				<span class="count">총 <em>2</em>건</span>
-				<div class="selectWrap" style="width:200px;">
-					<select title="목록정렬" data-height="150px" id="searchCtgry" name="searchCtgry" onchange="fncSearch();">
-						<option value="">ALL</option>
-						<option value="RESERVED" >RESERVED</option>
-						<option value="CANCELED" >CANCELED</option>
+				<span class="count"></span>
+ 				<div class="selectWrap" style="width:200px;">
+					<select name="statusCode" id="statusCode"  onchange="fncGetList();">
+						<option value="">전체 예약</option>
+						<option value="COMPLETED" >이용완료</option>
+						<option value="CONFIRMED" >예약</option>
+						<option value="CANCELLED" >취소</option>
+						<option value="NO-SHOW" >NO SHOW</option>
 					</select>
 				</div>
 			</div>
-					
+			<!-- //Sorting -->
+			
 			<ul class="cardList reserveInfo">
-				<!-- <li class="noData"><p class="txt">검색 결과가 없습니다.</p></li> -->
-				
-				<li id="show_0" >
-					<div class="cardInner">
-					<span class="status" >RESERVED</span>
-					<em class="tit">
-						<a href="#none" onclick="fncResvDetail('411665', 'GJJ');">ROOM ONLY</a>
-					</em>
-					<p class="info">엘리시안 서울 / 객실 1개 / 성인  2, 어린이  0</p>
-					<p class="number">예약번호
-						<em>411665</em>
-					</p>
-					<p class="date">2024.07.16 - 2024.07.17</p>
-					</div>
-				</li>
-				
-				<li id="show_1" >
-					<div class="cardInner">
-					<span class="status" style="color:#B01414;">CANCELED</span>
-					<em class="tit">
-						<a href="#none" onclick="fncResvDetail('411665', 'GJJ');">ROOM ONLY</a>
-					</em>
-					<p class="info">엘리시안 서울 / 객실 1개 / 성인 2, 어린이 0</p>
-					<p class="number">예약번호
-						<em>411665</em>
-					</p>
-					<p class="date">2024.07.16 - 2024.07.17</p>
-					</div>
-				</li>
+
 			</ul>
-			</div>
-			<!-- listBox -->
-		</div>
-		<!-- tab01 -->
+            </div>
+            <!-- 조회목록 -->
+        </div>
+        <!-- //tabCont(다이닝) -->
 	</div>
 	<!-- myContents -->
-	</form>
-	<!-- resvForm -->
-	
 		
 </div>
 <!-- //inner -->

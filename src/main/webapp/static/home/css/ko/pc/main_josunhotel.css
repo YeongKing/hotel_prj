@@ -196,7 +196,7 @@
     opacity: .3;
     width: 2px;
     /*height:280px*/
-    height: 240px;
+    /*height: 240px;*/
 }
 
 .mainIndicator ul > li {
@@ -581,13 +581,13 @@
 .mainArea02 .contents02 .homeBox .hList > li {
     position: relative;
     display: inline-block;
-    width: 160px;
+    width: 300px;
     margin: 45px 58px 0
 }
 
 .mainArea02 .contents02 .homeBox .hList > li > a {
     display: block;
-    height: 96px;
+    height: 100px;
     text-indent: -99999px;
     overflow: hidden;
     opacity: .45
@@ -596,8 +596,8 @@
 .mainArea02 .contents02 .homeBox .hList > li > a:before {
     content: '';
     display: block;
-    width: 160px;
-    height: 96px
+    width: 300px;
+    height: 100px
 }
 
 .mainArea02 .contents02 .homeBox .hList > li > a:hover {
@@ -605,57 +605,7 @@
 }
 
 .mainArea02 .contents02 .homeBox .hList > li.hType01 > a:before {
-    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN01.png) center no-repeat
-}
-
-/*서울웨스틴조선호텔*/
-.mainArea02 .contents02 .homeBox .hList > li.hType02 > a:before {
-    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN02.png) center no-repeat
-}
-
-/*그랜드조선부산*/
-.mainArea02 .contents02 .homeBox .hList > li.hType03 > a:before {
-    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN03.png) center no-repeat
-}
-
-/*부산웨스틴조선호텔*/
-.mainArea02 .contents02 .homeBox .hList > li.hType04 > a:before {
-    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN04.png) center no-repeat
-}
-
-/*포포인츠서울역*/
-.mainArea02 .contents02 .homeBox .hList > li.hType05 > a:before {
-    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN05.png) center no-repeat
-}
-
-/*레스케이프호텔*/
-.mainArea02 .contents02 .homeBox .hList > li.hType06 > a:before {
-    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN06.png) center no-repeat
-}
-
-/*포포인츠서울명동*/
-.mainArea02 .contents02 .homeBox .hList > li.hType07 > a:before {
-    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN07.png) center no-repeat
-}
-
-/*그랜드조선제주*/
-.mainArea02 .contents02 .homeBox .hList > li.hType08 > a:before {
-    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN08.png) center no-repeat
-}
-
-/*그래비티서울판교*/
-.mainArea02 .contents02 .homeBox .hList > li.hType09 > a:before {
-    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN09.png) center no-repeat
-}
-
-/* 조선팰리스서울강남 */
-.mainArea02 .contents02 .homeBox .hList > li.hType10 > a:before {
-    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN10.png) center no-repeat
-}
-
-/* 파라스파라 서울 */
-.mainArea02 .contents02 .homeBox .hList > li.hType11 > a:before {
-    background: url(../../../images/ko/pc/HUMA/img_homebox_logoN11.png) center no-repeat
+    background: url(../../../images/ko/pc/common/bg_logo_footer.png) center no-repeat
 }
 
 /* 코랄로 조선 */
@@ -1214,8 +1164,8 @@
 
 .revArea .mainRoom .roomContainer .txtGuide {
     position: absolute;
-    right: 0;
-    bottom: 155px
+    right: 20px;
+    bottom: 10px
 }
 
 .revArea .mainRoom .roomContainer .txtGuide.gjb {
@@ -1229,7 +1179,7 @@
 .revArea .mainRoom .roomContainer .btnSC {
     position: absolute;
     right: 25px;
-    bottom: 80px
+    /*bottom: 80px*/
 }
 
 .revArea .mainRoom .roomInner {

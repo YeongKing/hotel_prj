@@ -23,6 +23,15 @@
 	
 	<context:component-scan base-package="kr.co.sist.elysian" />
 	
+		<interceptors>
+		<interceptor>
+			<mapping path="/admin/**"/>
+			<exclude-mapping path="/admin/adminlogin_frm.do"/>
+			<exclude-mapping path="/admin/set_session.do"/>
+			<beans:bean id="ai" class="kr.co.sist.elysian.admin.login.interceptor.AdminInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
 	
 	
 </beans:beans>

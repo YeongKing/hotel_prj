@@ -42,7 +42,7 @@
     <div class="col-lg-5 col-12">
         <div id="auth-left">
             <div class="auth-logo mb-3">
-                <a href="http://localhost/hotel_prj/admin/index.do">
+                <a href="http://localhost/hotel_prj/admin/login_frm.do">
                 <img src="/hotel_prj/admin/assets/static/images/logo/logo.png" alt="Logo"></a>
             </div>
             <h1 class="auth-title">Log in</h1>

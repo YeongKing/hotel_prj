@@ -8,13 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class LoginController {
 
+	@GetMapping("/login_frm.do")
+	public String main() {
+
+		return "admin/login/login_frm";
+
+	}// main
 	
+
 	@GetMapping("/dashboard.do")
 	public String login() {
 
 		return "admin/dashboard/dashboard";
 
-	}// main
+	}// login
 	
 	
 	

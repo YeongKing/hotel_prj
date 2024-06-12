@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <meta name="format-detection" content="telephone=no">
 
-<title>개인정보관리 - 회원탈퇴, 비밀번호 입력 | 엘리시안호텔</title>
+<title>기업소개 | 엘리시안호텔</title>
 
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
@@ -22,10 +22,14 @@
 <jsp:include page="/WEB-INF/views/user/common/head_script.jsp"></jsp:include>
 <!-- E head script -->
 </head>
-
+ 
 <body>
+<!-- S header -->
+<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
+<!-- E header -->
+ 
 <div class="skip"><a href="#container">본문 바로가기</a></div>
-<div class="wrapper ">
+<div class="wrapper mainWrapper topBanner">
 
 <script>
 	jQuery(function(){
@@ -124,172 +128,96 @@
 </script>
 
 <script>
-//2022-05-23 조선라운지 추가
-//헤더 메뉴 버튼 클릭 이벤트
-jQuery(document).on("click",".headArea .btnMenu" ,function(){
+	//2022-05-23 조선라운지 추가
+	//헤더 메뉴 버튼 클릭 이벤트
+	jQuery(document).on("click",".headArea .btnMenu" ,function(){
 
-    //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-    if(jQuery(this).hasClass("menuOn")){
-        var expsrCount = 3;
-        var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
-        var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
+	//메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
+	if(jQuery(this).hasClass("menuOn")){
+		var expsrCount = 3;
+		var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
+		var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
 
-        $loungeList.addClass("hidden");
-        $loungeList.each(function(index){
-            if(randomArray.indexOf(index) > -1){
-                jQuery(this).removeClass("hidden");
-            }
-        });
-    }
-})
-</script>
-	
-<!-- S header -->
-<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
-<!-- E header -->
- 
-<script type="text/javascript">
-    //회원탈퇴 신청화면 진입전 패스워드 재확인
-	function fncWithDraPwCfmApi() {
-    	
-	var password = jQuery("#password").val();
-	if(password.length == 0) {
-      alert('비밀번호를 입력해주세요.');		
-      return;
-	}
-    jQuery("#loginPassword").val(password);
-    
-	var formData =  jQuery("#formWithPwForm").serialize();
-		jQuery.ajax({
-		type : "POST",
-		url : "/mypage/pwCheckApi.do",
-		cache : false,
-		data : formData, 
-		dataType : "json",
-		global : false,
-		success : function(data) {
-			if(data.statusR==200 && data.codeR=='S00000') { 
-				goConvertPage();
-			}else if(data.statusR==400){
-				alert(data.statusR +" : " +data.codeR+" : "+data.messageR);
-			}else{ 
-				alert(data.statusR +" : " +data.codeR+" : "+data.messageR);
-			}
-		},
-		error:function(){
-			alert('처리가 실패하였습니다. 잠시 후 재시도 해주세요. 지속적으로 문제발생 시 관리자에게 문의해 주세요.');
-		}
-	});
-	}
-    
-	//회원탈퇴 페이지 이동
-    function goConvertPage() {
-    	jQuery("#formWithPwForm").attr("action", "/user/mypage/withdraCfmForm.do");
-	    jQuery("#formWithPwForm").attr("method", "post");
-	    jQuery("#formWithPwForm").submit();
-	} 
-</script> 
-
-<form id="formWithPwForm">
-<input type="hidden" id="loginPassword" name="loginPassword" value=""  />
-</form>
-  
-<div id="container" class="container mypage">
-
-<script type="text/javascript">
- 	$(document).ready(function(){
-	 
-		fncLnbInfoApi();
- 	   
-	}); 
-  
-  	//LNB정보조회(쿠폰수,가용포인트) API호출
- 	function fncLnbInfoApi() {
-		var formData =  jQuery("#formLnb").serialize();
- 		jQuery.ajax({
-			type : "POST",
-			url : "/mypage/lnbInfoApi.do",
-			cache : false,
-			data : formData, 
-			dataType : "json",
-			global : false,
-			success : function(data) {
-				if(data.statusR==200 && data.codeR=='S00000') { 
-					  //회원명 세팅
-					  var nameHtml = ''+data.name;
-				      /* $('.name').html(nameHtml); */
-				      $('#nm1').html(nameHtml);
-				      //가용포인트 세팅 
-				      $('#usefulPointSpan').html(fncComma(data.usefulPoint));
-				      //보유쿠폰수 세팅 
-				      $('#couponCntDiv').html(fncComma(data.couponCnt));
-				}else{
-					alert(data.statusR + " : 관리자에게 문의하세요");
-				}
-			},
-			error:function(){
-				alert("관리자에게 문의하세요.");
+		$loungeList.addClass("hidden");
+		$loungeList.each(function(index){
+			if(randomArray.indexOf(index) > -1){
+			jQuery(this).removeClass("hidden");
 			}
 		});
- 	}
- </script> 
+	}
+})
+</script>
+
  
-                 
-<h1 class="hidden">마이페이지</h1>
-<div class="topArea">
-	<div class="topInner">
-	<h2 class="titDep1">My Page</h2>
-	<p class="pageGuide">멤버십 회원을 위한 다양한 혜택이 준비되어 있습니다.</p>
+<!-- container -->
+<div id="container" class="container about">
+<!-- 컨텐츠 S -->
+	<h1 class="hidden">기업 소개</h1>
+	<!-- //topArea -->
+	<div class="topArea">
+		<div class="topInner">
+			<h2 class="titDep1">About Us</h2>
+		</div>
 	</div>
-</div> 
+	<!-- //topArea -->
+
+	<div class="visualBox">
+	<div class="inner">
+		<img src="http://localhost/hotel_prj/util/file/img_visual_about01_01.jpg" alt="로비">
+	</div>
+	</div>
+	<!-- //visualBox -->
+
+	<div class="inner">
+	<h3 class="hidden">사업소개</h3>
+                
+	<!-- 사업소개(Intro) -->
+	<div class="propertyIntro type02">
+		<em class="tit">엘리시안호텔은 <br>고품격 라이프 스타일을 제안하는 <br>서비스 전문 기업입니다.</em>
+		<p class="txt">엘리시안호텔은 ‘꿈꾸던 이상향에서의 완벽한 휴식’을 지향하며 호스피탈리티 산업의 대표기업으로 자리매김 하고 있습니다.<br>
+						수많은 ‘한국 최초’의 신화를 남겨온 엘리시안은 호텔 뿐 아니라 외식사업 등 품격 있는 서비스와 시설을 제공합니다.</p>
+		<div class="txt">
+		<dl style="width: 114px;">
+			<dt>설립일</dt>
+			<dd>2024<span class="hidden">년</span>.06<span class="hidden">월</span></dd>
+		</dl>
+		</div>
+	</div>
+	<!-- 사업소개(Intro) -->
+
+	<!-- CI -->
+	<div class="topInner type02" style="padding-top: 140px;">
+		<h2 class="titDep1" style="padding-bottom: 50px;">CORPORATE IDENTITY</h2>
+		<ul class="businessRoomList type02" style="margin-top: 0px;">
+			<li>
+				<div class="info">
+				<strong class="hidden">세로형</strong>
+					<span class="ciImg"><img src="http://localhost/hotel_prj/util/file/logo_Elysian.png" alt=""></span>
+				</div>
+			</li>
 			
-<div class="inner">
-	<!-- LNB -->
-	<jsp:include page="/WEB-INF/views/user/mypage/lnb.jsp"></jsp:include>
-	<!-- LNB -->
-
-	<!-- myContents -->
-	<div class="myContents">
-	<h3 class="titDep2">회원 탈퇴</h3>
-	<p class="pageGuide tleft">정보를 안전하게 보호하기 위해 비밀번호를 다시 한 번 확인합니다.</p>
-		<div class="frmInfo">
-			<ul class="intList">
-				<li><!-- 필수입력서식에 미입력 발생 시, error 클래스 추가 alertMessage 노출, 포커스가 가면 error 클래스 제거 -->
-				<div class="intWrap">
-					<span class="tit">
-						<label for="userpw">PASSWORD</label>
-						<span class="essential">필수</span>
-					</span>
+ 			<li>
+				<div class="info">
+				<strong class="hidden">가로형</strong>
+				<span class="ciImg"><img src="http://localhost/hotel_prj/util/file/logo_Elysian2.png" alt=""></span>
 				</div>
-                                
-				<div class="intInner">
-					<span class="intArea">
-						<input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요." style="width:1000px" aria-required="true">
-						<span class="alertMessage">비밀번호를 입력해주세요.</span>
-					</span>
-				</div>
-				</li>
-			</ul>
-		</div>
-		
-		<div class="btnArea">
-			<button type="button" class="btnSC btnL" onclick="fncWithDraPwCfmApi();">다음</button>
-		</div>
+			</li>
+		</ul>            
 	</div>
-	<!-- myContents -->
-
-</div> 
-<!-- inner -->
-
+	<!-- //CI -->
+	
+	</div>
+	<!-- //inner -->
+	
 </div>
+<!-- 컨텐츠 E -->
 <!-- //container -->
 
 <!--S footer  -->
 <jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
 <!--E footer  -->
-
+		
 </div>
 <!-- //wrapper -->
-
 </body>
 </html>

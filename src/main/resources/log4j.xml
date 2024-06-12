@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="kr.co.sist">
+	<logger name="kr.co.sist.elysian">
 		<level value="info" />
 	</logger>
 	

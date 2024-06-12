@@ -16,8 +16,8 @@
 			<ul class="menuDepth02">
 				<li><a href="http://localhost/hotel_prj/user/index.do">ELYSIAN HOTEL</a>
 				<ul class="menuDepth03">
-					<li><a href="#">기업소개</a></li>
-					<li><a href="#">오시는길</a></li>
+					<li><a href="http://localhost/hotel_prj/user/aboutUs.do">기업소개</a></li>
+					<li><a href="http://localhost/hotel_prj/user/location.do">오시는길</a></li>
 				</ul>
 				</li>
 			</ul>
@@ -32,7 +32,7 @@
 			<li>MY PAGE
 			<ul class="menuDepth02">
 				<li><a href="http://localhost/hotel_prj/user/mypage.do">MY PAGE</a></li>
-				<li><a href="http://localhost/hotel_prj/user/reserveList.do">예약확인</a></li>
+				<li><a href="http://localhost/hotel_prj/user/roomResList.do">예약확인</a></li>
 				<li><a href="http://localhost/hotel_prj/user/myInfoForm.do">개인정보관리</a></li>
 			</ul>
 			</li>
@@ -54,7 +54,7 @@
 		<ul>
 			<li><a href="http://localhost/hotel_prj/user/login.do" id="login">로그인</a></li>
 			<li><a href="http://localhost/hotel_prj/user/join.do" id="join">회원가입</a></li>
-			<li><a href="http://localhost/hotel_prj/user/reserveList.do" id="confirmReserv">예약확인</a></li>
+			<li><a href="http://localhost/hotel_prj/user/roomResList.do" id="confirmReserv">예약확인</a></li>
 		</ul>
 					
 		<div class="resvBtn">

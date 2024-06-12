@@ -11,7 +11,7 @@
 				<a href="#">웹사이트 이용약관</a>
 				<a href="#" class="pointColor">개인정보처리방침</a>
 				<a href="#">이메일무단수집금지</a>
-				<a href="http://localhost/hotel_prj/admin/index.do">관리자사이트</a>
+				<a href="http://localhost/hotel_prj/admin/login_frm.do">관리자사이트</a>
 			</div>
 			
 			<div class="address">

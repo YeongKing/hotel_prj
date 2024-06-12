@@ -1,4 +1,4 @@
-package kr.co.sist.elysian.admin.room.model.vo;
+package kr.co.sist.elysian.admin.board.qna.model.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RoomVO {
+public class QnaDomain {
+	
+	private String qnaTitle, qnaContent, adminId, qnaType ;
+	private int qnaNum;
 
-	private int roomFloor, roomId, roomRankCode, viewCode, bedCode;
 }

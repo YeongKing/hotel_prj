@@ -1,4 +1,4 @@
-package kr.co.sist.elysian.admin.room.model.vo;
+package kr.co.sist.elysian.admin.login.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RoomVO {
+public class AdminVO {
 
-	private int roomFloor, roomId, roomRankCode, viewCode, bedCode;
+	private String adminId, adminPw, adminName,
+	approveStatus, adminAuthority;
+	
+	
+	
 }

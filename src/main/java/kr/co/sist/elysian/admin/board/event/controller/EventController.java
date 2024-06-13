@@ -1,18 +1,31 @@
 package kr.co.sist.elysian.admin.board.event.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.co.sist.elysian.admin.board.event.model.domain.EventListDomain;
 import kr.co.sist.elysian.admin.board.event.model.vo.EventVO;
+import kr.co.sist.elysian.admin.board.event.repository.EventDAO;
+import kr.co.sist.elysian.admin.board.event.service.EventService;
 
 @Controller("adminEventController")
 @RequestMapping("/admin")
 public class EventController {
 	
+	@Autowired(required = false)
+	private EventService es;
+	
 	@GetMapping("/event.do")
-	public String searchEventList() {
+	public String searchEventList(Model model) {
+		List<EventListDomain> list = es.searchEventList();
+		model.addAttribute("eventList",list);
+		
+
 		return "admin/board/event/event";
 	}//searchEventList
 	

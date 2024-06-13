@@ -265,14 +265,34 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
+<c:if test="${ empty requestScope.noticeList }">
+<tr>
+<td colspan="5" style="text-align: center;">
+공지사항 정보가 존재하지 않습니다.
+</td>
+</tr>
+</c:if>	                            
+<c:forEach var="nld" items="${ requestScope.noticeList }" varStatus="i">
+<tr>
+	<td><c:out value="${ i.count }"/></td>
+	<td><a href="#" class="noticeTitle" >${ nld.noticeTitle }</a><input type="hidden" class="hiddenNoticeNum" value="${ nld.noticeNum }"/></td>
+	<td class="noticeInputdate">${ nld.noticeInputDate }</td>
+	<td class="adminId">${ nld.adminId }</td>
+	<td class="noticeViewCnt">${ nld.noticeViewCount }</td>
+</tr>
+
+</c:forEach>	
+										
+										
+										
+											<!-- <tr>
 												<th>1</th>
 												<td><a href="#" class="noticeTitle" >공지 제목 1</a><input type="hidden" class="hiddenNoticeNum" value="1"/></td>
 												<td class="noticeInputdate">2024-05-01</td>
 												<td class="adminId">admin1</td>
 												<td class="noticeViewCnt">0</td>
-												<!-- <td><span class="badge bg-success">Active</span></td> -->
-												<!-- <td><span class="badge bg-danger">Inactive</span></td> -->
+												<td><span class="badge bg-success">Active</span></td>
+												<td><span class="badge bg-danger">Inactive</span></td>
 											</tr>
 											<tr>
 												<th>2</th>
@@ -372,7 +392,7 @@
 												<td class="noticeInputdate">2024-05-15</td>
 												<td class="adminId">admin2</td>
 												<td class="noticeViewCnt">50</td>
-											</tr>
+											</tr> -->
 
 										</tbody>
 									</table>

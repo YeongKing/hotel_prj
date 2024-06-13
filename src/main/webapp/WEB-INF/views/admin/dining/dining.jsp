@@ -85,13 +85,34 @@
                                 <table class="table dataTable no-footer" id="table1">
                                     <thead>
                                         <tr>
+											<th>번호</th>
                                             <th>다이닝번호</th>
                                             <th>구분</th>
                                             <th>다이닝명</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+<c:if test="${ empty requestScope.diningList }">
+<tr>
+<td colspan="4" style="text-align: center;">
+다이닝 정보가 존재하지 않습니다.
+</td>
+</tr>
+</c:if>
+<c:forEach var="dld" items="${ requestScope.diningList }" varStatus="i">
+<tr>
+	<td><c:out value="${ i.count }"/></td>
+	<td><a href="#" class="diningNumber"><c:out value="${ dld.diningId }"/></a></td>
+	<td><c:out value="${ dld.diningType }"/></td>
+	<td class="text-bold-500"><c:out value="${ dld.diningName }"/></td>
+
+</tr>
+
+
+</c:forEach>    
+                                    
+                                    
+<!--                                         <tr>
                                             <td><a href="#" class="diningNumber">Dining0001</a></td>
                                             <td>양식</td>
                                             <td class="text-bold-500">Ramsey</td>
@@ -125,7 +146,7 @@
                                             <td><a href="#" class="diningNumber">Dining0007</a></td>
                                             <td>스페인 요리</td>
                                             <td class="text-bold-500">El Celler de Can Roca</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                                 <div class="addDining">

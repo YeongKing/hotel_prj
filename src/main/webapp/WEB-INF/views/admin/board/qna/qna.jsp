@@ -299,7 +299,25 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
+<c:if test="${ empty requestScope.qnaList }">
+<tr>
+<td colspan="3" style="text-align: center;">
+자주 찾는 질문 정보가 존재하지 않습니다.
+</td>
+</tr>
+</c:if>	                            
+<c:forEach var="qld" items="${ requestScope.qnaList }" varStatus="i">
+<tr>
+	<td><c:out value="${ i.count }"/></td>
+	<td class="qnaType"><c:out value="${ qld.qnaType }"/></td>
+	<td><a href="#" class="qnaTitle"><c:out value="${ qld.qnaTitle }"/></a><input type="hidden" class="hiddenQnaNum" value="${ qld.qnaNum }"/></td>
+
+</tr>
+
+</c:forEach>			
+										
+										
+<!-- 											<tr>
 												<th>1</th>
 												<td class="qnaType">계정</td>
 												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 1</a><input type="hidden" class="hiddenQnaNum" value="1"/></td>
@@ -374,7 +392,7 @@
 												<th>15</th>
 												<td class="qnaType">계정</td>
 												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 15</a><input type="hidden" class="hiddenQnaNum" value="15"/></td>
-											</tr>
+											</tr> -->
 
 										</tbody>
 									</table>

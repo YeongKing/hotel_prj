@@ -325,7 +325,39 @@ function changePage(pageNumber) {
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
+<c:if test="${ empty requestScope.roomList }">
+<tr>
+<td colspan="6" style="text-align: center;">
+객실정보가 존재하지 않습니다.
+</td>
+</tr>
+</c:if>
+<c:forEach var="rld" items="${ requestScope.roomList }" varStatus="i">
+<tr>
+	<td><c:out value="${ i.count }"/></td>
+	<td><a href="#" class="userId"><c:out value="${ rld.roomId }"/></a></td>
+	<td class="roomRankName"><c:out value="${ rld.roomRankName }"/></td>
+	<td class="bedName"><c:out value="${ rld.bedName }"/></td>
+	<td class="viewName"><c:out value="${ rld.viewName }"/></td>
+	<td class="roomSize"><c:out value="${ rld.roomSize }"/></td>
+</tr>
+
+
+</c:forEach>
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+											<!-- <tr>
 												<th>1</th>
 												<td><a href="#" class="roomId">101</a></td>
 												<td class="roomRankName">STANDARD</td>
@@ -445,7 +477,7 @@ function changePage(pageNumber) {
 												<td class="bedName">TWIN</td>
 												<td class="viewName">POOLSIDE</td>
 												<td class="roomSize">90</td>
-											</tr>
+											</tr> -->
 
 										</tbody>
 									</table>

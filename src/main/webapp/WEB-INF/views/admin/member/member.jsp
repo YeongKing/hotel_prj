@@ -336,7 +336,28 @@ function changePage(pageNumber) {
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
+<c:if test="${ empty requestScope.memberList }">
+<tr>
+<td colspan="6" style="text-align: center;">
+회원정보가 존재하지 않습니다.
+</td>
+</tr>
+</c:if>
+<c:forEach var="mld" items="${ requestScope.memberList }" varStatus="i">
+<tr>
+	<td><c:out value="${ i.count }"/></td>
+	<td><a href="#" class="userId"><c:out value="${ mld.memberId }"/></a></td>
+	<td class="userName"><c:out value="${ mld.name }"/></td>
+	<td class="userPhone"><c:out value="${ mld.phone }"/></td>
+	<td class="userSignUpDate"><c:out value="${ mld.signupDate }"/></td>
+	<td class="userLoginDate"><c:out value="${ mld.loginDate }"/></td>
+</tr>
+
+
+</c:forEach>
+										
+						
+											<!-- <tr>
 												<th>1</th>
 												<td><a href="#" class="userId">andud</a></td>
 												<td class="userName">김무영</td>
@@ -424,7 +445,7 @@ function changePage(pageNumber) {
 												<td class="userPhone">010-2341-1511</td>
 												<td class="userSignUpDate">2024-05-02</td>
 												<td class="userLoginDate">2024-06-01 19:37:10</td>
-											</tr>
+											</tr> -->
 
 										</tbody>
 									</table>
@@ -627,7 +648,7 @@ function changePage(pageNumber) {
 					</div>
 				</div>
 
-				<!-- 수정 모달창 E -->>
+				<!-- 수정 모달창 E -->
 				
 				<!--  공통 컨펌 모달창 S  -->
 				

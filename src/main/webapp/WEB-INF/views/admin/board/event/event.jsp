@@ -87,13 +87,34 @@
 	                        <table class="table dataTable no-footer" id="table1">
 	                            <thead>
 	                                <tr>
+										<th>번호</th>
 	                                    <th>이벤트번호</th>
 	                                    <th>이벤트명</th>
 	                                    <th>등록일</th>
 	                                </tr>
 	                            </thead>
 	                            <tbody>
-	                                <tr>
+<c:if test="${ empty requestScope.eventList }">
+<tr>
+<td colspan="4" style="text-align: center;">
+이벤트 정보가 존재하지 않습니다.
+</td>
+</tr>
+</c:if>	                            
+<c:forEach var="eld" items="${ requestScope.eventList }" varStatus="i">
+<tr>
+	<td><c:out value="${ i.count }"/></td>
+	<td><a href="#" class="eventNumber"><c:out value="${ eld.eventNum }"/></a></td>
+	<td class="text-bold-500"><c:out value="${ eld.eventTitle }"/></td>
+	<td><c:out value="${ eld.eventInputdate }"/></td>
+
+</tr>
+
+</c:forEach>	                            
+	                            
+	                            
+	                            
+	                                <!-- <tr>
 	                                    <td><a href="#" class="eventNumber">Event0001</a></td>
 	                                    <td class="text-bold-500">2024 SUMMBER ART FESTIBAL</td>
 	                                    <td>2024.06.03</td>
@@ -132,7 +153,7 @@
 	                                    <td><a href="#" class="eventNumber">Event0008</a></td>
 	                                    <td class="text-bold-500">2024 MIDNIGHT POOL PARTY</td>
 	                                    <td>2024.02.03</td>
-	                                </tr>
+	                                </tr> -->
 	                            </tbody>
 	                        </table>
 	                        <div class="addEvent">

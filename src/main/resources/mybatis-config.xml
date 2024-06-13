@@ -5,12 +5,17 @@
 <configuration>
 	<properties resource="database.properties" />
 	
-	<!-- typeAlias예시 -->
-	<typeAliases><!--kr.co.sist.domain.EmpDomain -> mapper에서 resultType을 ed로 사용가능  -->
-	
-	<!-- AS 예시 -->
-	<!-- <typeAlias type="kr.co.sist.domain.EmpDomain" alias="ed"/> -->
 
+  
+	
+	<!-- typeAlias예시 -->
+	<typeAliases>
+		<typeAlias type="kr.co.sist.elysian.admin.member.model.domain.MemberListDomain" alias="mld"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.room.model.domain.RoomListDomain" alias="rld"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.dining.model.domain.DiningListDomain" alias="dld"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.event.model.domain.EventListDomain" alias="eld"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.qna.model.domain.QnaListDomain" alias="qld"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.notice.model.domain.NoticeListDomain" alias="nld"/> 
 	</typeAliases>
   
   <!-- 환경 설정 -->
@@ -28,17 +33,20 @@
 
   <!-- 매퍼 위치 설정 -->
   <mappers>
-    <mapper resource="mapper/DashboardMapper.xml"/>
+    <mapper resource="mapper/admin/DashboardMapper.xml"/>
+    <mapper resource="mapper/admin/MemberMapper.xml"/>
+    <mapper resource="mapper/admin/RoomMapper.xml"/>
+    <mapper resource="mapper/admin/DiningMapper.xml"/>
+	<mapper resource="mapper/admin/EventMapper.xml"/>
+	<mapper resource="mapper/admin/QnaMapper.xml"/>
+	<mapper resource="mapper/admin/NoticeMapper.xml"/>
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
-<!--     <mapper resource="mapper/EventMapper.xml"/>
-    <mapper resource="mapper/NoticeMapper.xml"/>
-    <mapper resource="mapper/QnaMapper.xml"/>
-    <mapper resource="mapper/DiningMapper.xml"/>
-    <mapper resource="mapper/HomeMapper.xml"/>
-    <mapper resource="mapper/LoginMapper.xml"/>
-    <mapper resource="mapper/MemberMapper.xml"/>
-    <mapper resource="mapper/ResMapper.xml"/>
-    <mapper resource="mapper/RoomMapper.xml"/> -->
+<!--     
+    <mapper resource="mapper/admin/HomeMapper.xml"/>
+    <mapper resource="mapper/admin/LoginMapper.xml"/>
+    <mapper resource="mapper/admin/ResMapper.xml"/>
+     -->
   </mappers>
   
+
 </configuration>

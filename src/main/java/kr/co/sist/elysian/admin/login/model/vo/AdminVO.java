@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AdminVO {
 
-	private String adminId, adminPw, adminName,
-	approveStatus, adminAuthority;
+	private String adminId, adminPw;
 	
 	
 	

@@ -364,6 +364,7 @@
 	                    <div id="chart-visitors-profile"></div>
 	                </div>
 	            </div>
+	            <c:out value="${requestScope.adminId }"/>님 나오세요...
 	        </div>
 	    </section>
 	</div>

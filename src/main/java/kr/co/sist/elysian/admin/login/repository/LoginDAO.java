@@ -1,7 +1,5 @@
 package kr.co.sist.elysian.admin.login.repository;
 
-import java.util.List;
-
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +24,7 @@ public class LoginDAO {
 //		System.out.println("DAO aVO : " + aVO);
 		SqlSession ss= mbDAO.getMyBatisHandler(false);
 		adm = ss.selectOne("kr.co.sist.elysian.admin.login.searchLogin", aVO);
+//		System.out.println("DAO aVO : " + aVO.getAdminPw());
 //		System.out.println("DAO adm : " + adm);
 		mbDAO.closeHandler(ss);
 		return adm;

@@ -1,8 +1,11 @@
 package kr.co.sist.elysian.admin.login.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +17,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import kr.co.sist.elysian.admin.login.model.domain.AdminDomain;
 import kr.co.sist.elysian.admin.login.model.vo.AdminVO;
 import kr.co.sist.elysian.admin.login.service.LoginService;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @SessionAttributes("adminId")
 @Controller("adminLoginController")
@@ -50,7 +50,8 @@ public class LoginController {
 	public String searchLogin(AdminVO aVO , Model model) {
 		
 		/*
-		 * String id = httpServletRequest.getParameter("adminId"); String pw =
+		 * String id = httpServletRequest.getParameter("adminId"); 
+		 * String pw =
 		 * httpServletRequest.getParameter("adminPw");
 		 * 
 		 * System.out.println(id); System.out.println(pw);
@@ -59,13 +60,29 @@ public class LoginController {
 		 */
 		
 //		System.out.println("aVO : " + aVO);
+		//암호화 객체 생성
+		PasswordEncoder pe = new BCryptPasswordEncoder();
 		
+		boolean flag=false;
 		AdminDomain adm = ls.searchLogin(aVO);
 		
+		flag = adm!= null; //조회결과가 있으면 true,  false
 		
-		if (adm != null) {
+		String encryptedPassword = "";
+		
+		// 입력한 비밀번호와 암호화된 비밀번호 비교
+//		if( flag ) {
+//			encryptedPassword=adm.getAdminPw();
+//			System.out.println( aVO.getAdminPw()+" /" + encryptedPassword );
+//			flag = pe.matches(aVO.getAdminPw(), encryptedPassword);
+//			System.out.println("------------------"+flag);
+//		}
+		
+		if ( flag ) {
 //			model.addAttribute("adminId", "test"); //get방식 test용 코드
 //			model.addAttribute("adminAuthority", adm.getAdminAuthority()); //get방식 test용 코드
+			encryptedPassword=adm.getAdminPw();
+			flag = pe.matches(aVO.getAdminPw(), encryptedPassword);
             model.addAttribute("adminId", adm.getAdminId());
             model.addAttribute("adminAuthority", adm.getAdminAuthority());
             return "forward:dashboard.do";

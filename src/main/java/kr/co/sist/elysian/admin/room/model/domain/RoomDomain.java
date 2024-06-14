@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RoomDomain {
 
-	private int roomId, rankCode, viewCode, bedCode, roomSize, roomBasicCapacity, roomMaxCapacity, roomBasicPrice, roomAddPrice;
-	private String roomRankName, viewName, bedName;
+	private int roomId, roomSize, roomBasicCapacity, roomMaxCapacity, roomBasicPrice, roomAddPrice, roomBedCnt;
+	private String roomRankCode,roomRankName,roomViewCode, roomViewName, roomBedCode, roomBedName, roomDeleteStatus;
+	
 	
 }

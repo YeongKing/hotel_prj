@@ -6,7 +6,7 @@
 
   <!-- 관리자 로그인 시 해당 관리자가 테이블에 존재하는 지 -->
 	<select id="searchLogin" resultType="ad" parameterType="av">
-		select admin_id adminId
+		select admin_id adminId, admin_authority adminAuthority
 		from admin
 		where admin_id = #{ adminId } and admin_pw = #{ adminPw }
 	</select>

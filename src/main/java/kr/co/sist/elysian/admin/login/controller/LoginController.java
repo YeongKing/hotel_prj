@@ -15,7 +15,10 @@ import kr.co.sist.elysian.admin.login.model.domain.AdminDomain;
 import kr.co.sist.elysian.admin.login.model.vo.AdminVO;
 import kr.co.sist.elysian.admin.login.service.LoginService;
 
-@SessionAttributes("admin_id")
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+@SessionAttributes("adminId")
 @Controller("adminLoginController")
 @RequestMapping("/admin")
 public class LoginController {
@@ -23,15 +26,17 @@ public class LoginController {
 	
 	
 	@GetMapping("/login_frm.do")
-	public String main() {
+	public String main(Model model) {
 
+		System.out.println("----adminId session : "+ model.getAttribute("adminId"));
 		return "admin/login/login_frm";
 
 	}// main
 	
 	
 
-	@GetMapping("/dashboard.do")
+//	@GetMapping("/dashboard.do")
+	@RequestMapping(value="/dashboard.do",method= {GET,POST})
 	public String dashboard() {
 
 		return "admin/dashboard/dashboard";
@@ -53,25 +58,30 @@ public class LoginController {
 		 * AdminVO aVO = new AdminVO(id, pw);
 		 */
 		
-		System.out.println("aVO : " + aVO);
+//		System.out.println("aVO : " + aVO);
 		
 		AdminDomain adm = ls.searchLogin(aVO);
 		
 		
 		if (adm != null) {
+//			model.addAttribute("adminId", "test"); //get방식 test용 코드
+//			model.addAttribute("adminAuthority", adm.getAdminAuthority()); //get방식 test용 코드
             model.addAttribute("adminId", adm.getAdminId());
+            model.addAttribute("adminAuthority", adm.getAdminAuthority());
             return "forward:dashboard.do";
         } else {
             model.addAttribute("error", "Invalid credentials");
             return "admin/login/login_frm";
         }
+		
+//		return "forward:dashboard.do"; //get방식 test용 코드
 		 
 	}
 	
-	@GetMapping("/remove_session.do")
+	@GetMapping("/logout.do")
 	public String logout(SessionStatus ss) {
 		ss.setComplete();
-		return "redirect:adminlogin_frm.do";
+		return "admin/login/logout";
 	}
 	
 	

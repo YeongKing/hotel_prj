@@ -17,7 +17,7 @@ public class LoginService {
 	private LoginDAO lDAO;
 	
 	public AdminDomain searchLogin( AdminVO aVO ){
-		System.out.println("Service aVO : " + aVO);
+//		System.out.println("Service aVO : " + aVO);
 		AdminDomain adm = null;
 		try {
 			adm =lDAO.selectLogin( aVO );
@@ -26,7 +26,7 @@ public class LoginService {
 			
 		}//end catch
 		
-		System.out.println("Service : " + adm);
+//		System.out.println("Service : " + adm);
 		return adm;
 
 	

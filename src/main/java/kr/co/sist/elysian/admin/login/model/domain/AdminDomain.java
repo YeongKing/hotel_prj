@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AdminDomain {
 
-	private String adminName,adminAuthority;
+	private String adminId, adminAuthority, adminPw;
 	
 }

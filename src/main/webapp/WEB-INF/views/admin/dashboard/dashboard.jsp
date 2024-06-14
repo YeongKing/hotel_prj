@@ -313,8 +313,8 @@
 	                            <img src="/hotel_prj/admin/assets/compiled/jpg/1.jpg" alt="Face 1">
 	                        </div>
 	                        <div class="ms-3 name">
-	                            <h5 class="font-bold">John Duck</h5>
-	                            <h6 class="text-muted mb-0">@johnducky</h6>
+	                            <h5 class="font-bold"><c:out value="${ requestScope.adminId }"/></h5>
+	                            <h6 class="text-muted mb-0"><c:out value="${ requestScope.adminAuthority }"/></h6>
 	                        </div>
 	                    </div>
 	                </div>
@@ -364,6 +364,7 @@
 	                    <div id="chart-visitors-profile"></div>
 	                </div>
 	            </div>
+	            <c:out value="${requestScope.adminId }"/>님 나오세요...
 	        </div>
 	    </section>
 	</div>

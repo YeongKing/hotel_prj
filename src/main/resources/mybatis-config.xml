@@ -18,6 +18,8 @@
 		<typeAlias type="kr.co.sist.elysian.admin.board.event.model.domain.EventListDomain" alias="eld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.board.qna.model.domain.QnaListDomain" alias="qld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.board.notice.model.domain.NoticeListDomain" alias="nld"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.login.model.vo.AdminVO" alias="av"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.login.model.domain.AdminDomain" alias="ad"/> 
 	</typeAliases>
   
   <!-- 환경 설정 -->
@@ -42,10 +44,12 @@
 	<mapper resource="mapper/admin/EventMapper.xml"/>
 	<mapper resource="mapper/admin/QnaMapper.xml"/>
 	<mapper resource="mapper/admin/NoticeMapper.xml"/>
+	
+    <mapper resource="mapper/admin/LoginMapper.xml"/>
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
 <!--     
     <mapper resource="mapper/admin/HomeMapper.xml"/>
-    <mapper resource="mapper/admin/LoginMapper.xml"/>
+
     <mapper resource="mapper/admin/ResMapper.xml"/>
      -->
   </mappers>

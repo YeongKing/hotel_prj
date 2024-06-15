@@ -79,7 +79,7 @@ $(document).ready(function() {
                 if (zipcode.length < 5) {
                     zipcode = zipcode.padStart(5, '0');
                 }
-
+ 	 
         		$("#memberId").val(jsonObj.memberId);
         		$("#memberEmail").val(jsonObj.email);
         		$("#memberName").val(jsonObj.name);

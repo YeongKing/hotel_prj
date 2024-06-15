@@ -35,14 +35,14 @@ public class MemberService {
 	
 	
 	public MemberDomain searchMemberDetail(String memberId){
-		MemberDomain mD = null;
+		MemberDomain md = null;
 		try {
-			mD =mDAO.selectMemeberDetail(memberId);
+			md =mDAO.selectMemeberDetail(memberId);
 		}catch(PersistenceException pe){
 			pe.printStackTrace();
 			
 		}//end catch
-		return mD;
+		return md;
 		
 		
 		

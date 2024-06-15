@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class QnaDomain {
 	
-	private String qnaTitle, qnaContent, adminId, qnaType ;
-	private int qnaNum;
+	private String qnaNum, qnaTitle, qnaContent, adminId, qnaType ,qnaInputdate;
+
 
 }

@@ -10,7 +10,14 @@
 		select QNA_NUM qnaNum, QNA_TYPE qnaType, QNA_TITLE qnaTitle
 		from QNA
 	 </select>
-
+	 
+	 <select id="qnaDetail" resultType="qd" parameterType="String">
+		select QNA_NUM qnaNum, ADMIN_ID adminId, QNA_TITLE qnaTitle, QNA_TYPE qnaType, QNA_CONTENT qnaContent, QNA_INPUTDATE qnaInputdate
+		from QNA
+		where QNA_NUM =#{qnaNum}
+	 </select>
+	 
+	
 </mapper>
 
 

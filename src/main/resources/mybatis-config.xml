@@ -29,11 +29,11 @@
   <!-- 매퍼 위치 설정 -->
   <mappers>
     <mapper resource="mapper/DashboardMapper.xml"/>
+    <mapper resource="mapper/DiningMapper.xml"/>
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
 <!--     <mapper resource="mapper/EventMapper.xml"/>
     <mapper resource="mapper/NoticeMapper.xml"/>
     <mapper resource="mapper/QnaMapper.xml"/>
-    <mapper resource="mapper/DiningMapper.xml"/>
     <mapper resource="mapper/HomeMapper.xml"/>
     <mapper resource="mapper/LoginMapper.xml"/>
     <mapper resource="mapper/MemberMapper.xml"/>

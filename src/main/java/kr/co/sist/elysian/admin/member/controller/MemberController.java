@@ -3,7 +3,6 @@ package kr.co.sist.elysian.admin.member.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 
 import org.springframework.web.bind.support.SessionStatus;
@@ -23,7 +19,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import kr.co.sist.elysian.admin.member.model.domain.MemberDomain;
 import kr.co.sist.elysian.admin.member.model.domain.MemberListDomain;
 import kr.co.sist.elysian.admin.member.model.vo.MemberVO;
-import kr.co.sist.elysian.admin.member.model.vo.SearchVO;
 import kr.co.sist.elysian.admin.member.service.MemberService;
 
 @Controller("adminMemberController")
@@ -52,7 +47,7 @@ public class MemberController {
 	     MemberDomain md = ms.searchMemberDetail(memberId);
 
 		return md;
-	}//detailMember
+	}//selectMemberDetail
 	
 
 	

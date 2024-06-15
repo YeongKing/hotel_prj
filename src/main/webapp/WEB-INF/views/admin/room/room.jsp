@@ -95,10 +95,7 @@ $(document).ready(function() {
     
                 $("#updateRoomFloor").val(roomFloor+"층");
                 
-                $("#updateBedName").empty();
-                $("#updateBedName").append(new Option("KING", "KING"));
-                $("#updateBedName").append(new Option("TWIN", "TWIN")); 
-                $("#updateBedName").append(new Option("DOUBLE", "DOUBLE")); 
+
                 $("#updateBedName").val(jsonObj.roomBedName);
         		
         	}
@@ -657,6 +654,9 @@ function changePage(pageNumber) {
 						                     <select 
 						                      class="updateBedName form-select"
 						                      id="updateBedName">
+						                     <option>KING</option>
+						                     <option>TWIN</option>
+						                     <option>DOUBLE</option>
 						                     </select>
 										</div>
 									</div>

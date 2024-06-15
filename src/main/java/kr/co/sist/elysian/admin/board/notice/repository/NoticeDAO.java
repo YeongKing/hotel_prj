@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.sist.elysian.admin.board.event.model.domain.EventDomain;
+import kr.co.sist.elysian.admin.board.notice.model.domain.NoticeDomain;
 import kr.co.sist.elysian.admin.board.notice.model.domain.NoticeListDomain;
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
 
@@ -25,7 +27,18 @@ public class NoticeDAO {
 		mbDAO.closeHandler(ss);
 		return list;
 		
-	}
+	}//selectNoticeList
+	
+	public NoticeDomain selectNoticeDetail(String noticeNum) throws PersistenceException{
+		
+		NoticeDomain nd = null;
+		
+		SqlSession ss= mbDAO.getMyBatisHandler(false);
+		nd = ss.selectOne("kr.co.sist.elysian.admin.board.notice.noticeDetail",noticeNum);
+		mbDAO.closeHandler(ss);
+		return nd;
+		
+	}//selectNoticeDetail
 	
 
 }

@@ -77,27 +77,39 @@
 	    
 	    // 테이블의 자주 찾는 질문 클릭시
 	    $(document).on("click", ".qnaTitle", function() {
-	    	var noticeNum = $(this).closest('tr').find('.hiddenQnaNum').val();
-	    	var qnaType = $(this).closest('tr').find('.qnaType').text();
-	        var qnaTitle = $(this).closest('tr').find('.qnaTitle').text();
-	        //var noticeContent ;
-	        //var adminId  ;
-	        //var noticeViewCnt ;
+	    	var qnaNum = $(this).closest('tr').find('.hiddenQnaNum').val();
+	    	
+		        $.ajax({
+		        	url:'qnaDetail.do',
+		        	type:'POST',
+		        	contentType:'application/json',
+		        	dataType:'JSON',
+		        	data:JSON.stringify({ qnaNum: qnaNum }),
+		        	error:function(xhr){
+		        		console.log(xhr.status)
+		        		alert("문제가 발생했습니다.")
+		        	},
+		        	success:function(jsonObj){
+		        		
+	    	        	$("#updateQnaNum").val(jsonObj.qnaNum);
+		          		$("#updateQnaType").val(jsonObj.qnaType); 
+		    	        $("#updateQnaTitle").val(jsonObj.qnaTitle);
+		    	        $("#updateQnaContent").val(jsonObj.qnaContent);
 
-	        
-	        $("#updateQnaNum").val(noticeNum);
-/* 	        $("#updateQnaType").val(qnaType); */
-	        $("#updateQnaTitle").val(qnaTitle);
-	        
-	        $("#updateQnaType").empty();
-	        $("#updateQnaType").append(new Option("계정", "계정"));
-	        $("#updateQnaType").append(new Option("결제", "결제"));
-	        $("#updateQnaType").append(new Option("예약", "예약"));
-	        $("#updateQnaType").append(new Option("기타", "기타"));
-	        
-	        $("#updateQnaType").val(qnaType).prop("selected",true);
-	        
-	        //$("#inputAdminId").val(adminId);
+		        		
+		        	}
+		        	
+		        	
+		        	
+		        })//ajax
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
 
 
 	        // 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
@@ -572,6 +584,10 @@
 						                     class="updateQnaType form-select"
 						                      id="updateQnaType" 
 						                      style="flex:2 ">
+						                      <option>계정</option>
+						                      <option>결제</option>
+						                      <option>예약</option>
+						                      <option>기타</option>
 						                     </select>
 										</div>
 									</div>

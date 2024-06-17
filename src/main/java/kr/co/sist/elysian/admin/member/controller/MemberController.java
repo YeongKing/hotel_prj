@@ -65,11 +65,10 @@ public class MemberController {
 	
 	@ResponseBody
 	@PostMapping(value="/updateMember.do", produces="application/json; charset=UTF-8")
-	public Boolean updateMember(@RequestBody MemberVO memberVO, Model model) {
+	public Boolean updateMember(@RequestBody MemberVO mVO, Model model) {
 
-	     boolean result = ms.updateMember(memberVO);
+	     boolean result = ms.updateMember(mVO);
 	     
-	     System.out.println("boolean result : " +result);
 	     
 		return result;
 	}//updateMember

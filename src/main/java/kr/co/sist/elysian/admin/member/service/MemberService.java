@@ -54,7 +54,6 @@ public class MemberService {
 
 		try {
 			int result =mDAO.deleteMember(memberId);
-			System.out.println("result>0 :"+ (result>0) );
 			return result>0;
 		}catch(PersistenceException pe){
 			pe.printStackTrace();
@@ -67,7 +66,6 @@ public class MemberService {
 		
 		try {
 			int result =mDAO.updateMember(mVO);
-			System.out.println("result>0 :"+ (result>0) );
 			return result>0;
 		}catch(PersistenceException pe){
 			pe.printStackTrace();

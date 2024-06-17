@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<mapper namespace="kr.co.sist.elysian.test">
-	<select id="test" resultType="String" parameterType="String">
-		SELECT CODE_VAL
-		FROM COMMON_CODE
-		WHERE CODE_NAME = #{ name}
-	</select>
-</mapper>

@@ -61,28 +61,53 @@ $(document).ready(function() {
     // 테이블의 객실번호 클릭시
     $(document).on("click", ".roomId", function() {
         var roomId = $(this).text();
-        var roomRankName = $(this).closest('tr').find('.roomRankName').text(); // 같은 행(row) 내에서 .roomRankName을 찾아 텍스트를 가져옴
-        var bedName = $(this).closest('tr').find('.bedName').text(); // 같은 행(row) 내에서 .roomRankName을 찾아 텍스트를 가져옴
-        var viewName = $(this).closest('tr').find('.viewName').text(); // 같은 행(row) 내에서 .roomRankName을 찾아 텍스트를 가져옴
-        var roomSize = $(this).closest('tr').find('.roomSize').text();
-        
-        var roomFloor;
-        if (roomId.length == 3) {
-            roomFloor = roomId.substr(0, 1);
-        } else if (roomId.length == 4) {
-            roomFloor = roomId.substr(0, 2);
-        }
+        $.ajax({
+        	url:'roomDetail.do',
+        	type:'POST',
+        	contentType:'application/json',
+        	dataType:'JSON',
+        	data:JSON.stringify({ roomId: roomId }),
+        	error:function(xhr){
+        		console.log(xhr.status)
+        		alert("문제가 발생했습니다.");
+        	},
+        	success:function(jsonObj){
 
-        $("#updateRoomId").val(roomId);
-        $("#updateRoomFloor").val(roomFloor+"층");
-        $("#updateRoomRankName").val(roomRankName);
-       /*  $("#bedName").val(bedName); */
-        $("#updateViewName").val(viewName);
-        $("#updateRoomSize").val(roomSize);
+				roomId = jsonObj.roomId.toString();
+				
+                    var roomFloor;
+                    if (roomId.length == 3) {
+                        roomFloor = roomId.substr(0, 1);
+                    } else if (roomId.length == 4) {
+                        roomFloor = roomId.substr(0, 2);
+                    }
+
+
+            	$("#updateRoomId").val(roomId);
+            	$("#updateRoomBasicCapacity").val(jsonObj.roomBasicCapacity);
+                $("#updateRoomRankName").val(jsonObj.roomRankName);
+                $("#updateRoomMaxCapacity").val(jsonObj.roomMaxCapacity);
+                $("#updateRoomBasicPrice").val(jsonObj.roomBasicPrice);
+                
+                $("#updateRoomAddPrice").val(jsonObj.roomAddPrice);
+                $("#updateViewName").val(jsonObj.roomViewName);
+                $("#updateRoomSize").val(jsonObj.roomSize);
+    
+                $("#updateRoomFloor").val(roomFloor+"층");
+                
+
+                $("#updateBedName").val(jsonObj.roomBedName);
+        		
+        	}
+        	
+        	
+        	
+        })
         
-        $("#updateBedName").empty();
-        $("#updateBedName").append(new Option("KING", "KING"));
-        $("#updateBedName").append(new Option("TWIN", "TWIN"));
+        
+        
+
+
       
 
         
@@ -108,6 +133,7 @@ $(document).ready(function() {
     // 객실 등록 번호 클릭 시
     $("#addRoomBtn").click(function() {
 
+
     	// 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
         // 모달 내의 모든 'is-invalid' 클래스 제거
         $('#addRoomModal').find('.is-invalid').removeClass('is-invalid');
@@ -128,16 +154,16 @@ $(document).ready(function() {
 
     	
         $("#addRoomFloor").empty();
-        $("#addRoomFloor").append(new Option("1", "1"));
-        $("#addRoomFloor").append(new Option("2", "2"));
-        $("#addRoomFloor").append(new Option("3", "3"));
-        $("#addRoomFloor").append(new Option("4", "4"));
-        $("#addRoomFloor").append(new Option("5", "5"));
+        $("#addRoomFloor").append(new Option("32", "32"));
+        $("#addRoomFloor").append(new Option("33", "33"));
+        $("#addRoomFloor").append(new Option("34", "34"));
+
     	
     	
         $("#addBedName").empty();
         $("#addBedName").append(new Option("KING", "KING"));
         $("#addBedName").append(new Option("TWIN", "TWIN"));
+        $("#addBedName").append(new Option("DOUBLE", "DOUBLE"));
     	
         $("#addViewName").empty();
         $("#addViewName").append(new Option("STANDARD", "STANDARD"));
@@ -325,160 +351,25 @@ function changePage(pageNumber) {
 											</tr>
 										</thead>
 										<tbody>
-<c:if test="${ empty requestScope.roomList }">
-<tr>
-<td colspan="6" style="text-align: center;">
-객실정보가 존재하지 않습니다.
-</td>
-</tr>
-</c:if>
-<c:forEach var="rld" items="${ requestScope.roomList }" varStatus="i">
-<tr>
-	<td><c:out value="${ i.count }"/></td>
-	<td><a href="#" class="userId"><c:out value="${ rld.roomId }"/></a></td>
-	<td class="roomRankName"><c:out value="${ rld.roomRankName }"/></td>
-	<td class="bedName"><c:out value="${ rld.bedName }"/></td>
-	<td class="viewName"><c:out value="${ rld.viewName }"/></td>
-	<td class="roomSize"><c:out value="${ rld.roomSize }"/></td>
-</tr>
-
-
-</c:forEach>
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-											<!-- <tr>
-												<th>1</th>
-												<td><a href="#" class="roomId">101</a></td>
-												<td class="roomRankName">STANDARD</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">STANDARD</td>
-												<td class="roomSize">30</td>
-											</tr>
+											<c:if test="${ empty requestScope.roomList }">
 											<tr>
-												<th>2</th>
-												<td><a href="#" class="roomId">102</a></td>
-												<td class="roomRankName">STANDARD</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">STANDARD</td>
-												<td class="roomSize">30</td>
+											<td colspan="6" style="text-align: center;">
+											객실정보가 존재하지 않습니다.
+											</td>
 											</tr>
+											</c:if>
+											<c:forEach var="rld" items="${ requestScope.roomList }" varStatus="i">
 											<tr>
-												<th>3</th>
-												<td><a href="#" class="roomId">103</a></td>
-												<td class="roomRankName">STANDARD</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">GARDEN</td>
-												<td class="roomSize">30</td>
+												<td><c:out value="${ i.count }"/></td>
+												<td><a href="#" class="roomId"><c:out value="${ rld.roomId }"/></a></td>
+												<td class="roomRankName"><c:out value="${ rld.roomRankName }"/></td>
+												<td class="bedName"><c:out value="${ rld.bedName }"/></td>
+												<td class="viewName"><c:out value="${ rld.viewName }"/></td>
+												<td class="roomSize"><c:out value="${ rld.roomSize }"/></td>
 											</tr>
-											<tr>
-												<th>4</th>
-												<td><a href="#" class="roomId">104</a></td>
-												<td class="roomRankName">STANDARD</td>
-												<td class="bedName">TWIN</td>
-												<td class="viewName">GARDEN</td>
-												<td class="roomSize">30</td>
-											</tr>
-
-											<tr>
-												<th>5</th>
-												<td><a href="#" class="roomId">105</a></td>
-												<td class="roomRankName">STANDARD</td>
-												<td class="bedName">TWIN</td>
-												<td class="viewName">POOLSIDE</td>
-												<td class="roomSize">30</td>
-											</tr>
-											<tr>
-												<th>6</th>
-												<td><a href="#" class="roomId">201</a></td>
-												<td class="roomRankName">DELUXE</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">STANDARD</td>
-												<td class="roomSize">45</td>
-											</tr>
-											<tr>
-												<th>7</th>
-												<td><a href="#" class="roomId">202</a></td>
-												<td class="roomRankName">DELUXE</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">STANDARD</td>
-												<td class="roomSize">45</td>
-											</tr>
-											<tr>
-												<th>8</th>
-												<td><a href="#" class="roomId">203</a></td>
-												<td class="roomRankName">DELUXE</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">GARDEN</td>
-												<td class="roomSize">45</td>
-											</tr>
-											<tr>
-												<th>9</th>
-												<td><a href="#" class="roomId">204</a></td>
-												<td class="roomRankName">DELUXE</td>
-												<td class="bedName">TWIN</td>
-												<td class="viewName">GARDEN</td>
-												<td class="roomSize">45</td>
-											</tr>
-											<tr>
-												<th>10</th>
-												<td><a href="#" class="roomId">205</a></td>
-												<td class="roomRankName">DELUXE</td>
-												<td class="bedName">TWIN</td>
-												<td class="viewName">POOLSIDE</td>
-												<td class="roomSize">45</td>
-											</tr>
-											<tr>
-												<th>11</th>
-												<td><a href="#" class="roomId">301</a></td>
-												<td class="roomRankName">SUITE</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">STANDARD</td>
-												<td class="roomSize">90</td>
-											</tr>
-											<tr>
-												<th>12</th>
-												<td><a href="#" class="roomId">302</a></td>
-												<td class="roomRankName">SUITE</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">STANDARD</td>
-												<td class="roomSize">90</td>
-											</tr>
-											<tr>
-												<th>13</th>
-												<td><a href="#" class="roomId">303</a></td>
-												<td class="roomRankName">SUITE</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">GARDEN</td>
-												<td class="roomSize">90</td>
-											</tr>
-											<tr>
-												<th>14</th>
-												<td><a href="#" class="roomId">304</a></td>
-												<td class="roomRankName">SUITE</td>
-												<td class="bedName">TWIN</td>
-												<td class="viewName">GARDEN</td>
-												<td class="roomSize">90</td>
-											</tr>
-											<tr>
-												<th>15</th>
-												<td><a href="#" class="roomId">305</a></td>
-												<td class="roomRankName">SUITE</td>
-												<td class="bedName">TWIN</td>
-												<td class="viewName">POOLSIDE</td>
-												<td class="roomSize">90</td>
-											</tr> -->
-
+											
+											
+											</c:forEach>
 										</tbody>
 									</table>
                                 <div class="addRoom">
@@ -763,6 +654,9 @@ function changePage(pageNumber) {
 						                     <select 
 						                      class="updateBedName form-select"
 						                      id="updateBedName">
+						                     <option>KING</option>
+						                     <option>TWIN</option>
+						                     <option>DOUBLE</option>
 						                     </select>
 										</div>
 									</div>

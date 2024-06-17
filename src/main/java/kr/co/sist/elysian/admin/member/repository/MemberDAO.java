@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.sist.elysian.admin.member.model.domain.MemberDomain;
 import kr.co.sist.elysian.admin.member.model.domain.MemberListDomain;
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
 
@@ -26,8 +27,18 @@ public class MemberDAO {
 		mbDAO.closeHandler(ss);
 		return list;
 		
-	}
+	}//selectMemeberList
 	
+	public MemberDomain selectMemeberDetail(String memberId) throws PersistenceException{
+		
+		MemberDomain md = null;
+		
+		SqlSession ss= mbDAO.getMyBatisHandler(false);
+		md = ss.selectOne("kr.co.sist.elysian.admin.member.memberDetail",memberId);
+		mbDAO.closeHandler(ss);
+		return md;
+		
+	}//selectMemeberDetail
 	
 	
 }

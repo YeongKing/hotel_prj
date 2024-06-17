@@ -10,5 +10,12 @@
 		select DINING_ID diningId, DINING_TYPE diningType, DINING_NAME diningName
 		from DINING
 	 </select>
+	 
+	 <select id="diningDetail" resultType="dd" parameterType="String">
+ 		select DINING_ID diningId, DINING_NAME diningName,DINING_TYPE diningType, HALL_TABLE hallTable, ROOM_TABLE roomTable, OPEN_TIME openTime, CLOSE_TIME closeTime, LOCATION location, DEPOSIT deposit, DINING_IMG diningImg, DINING_COMMENT diningComment, MENU menu
+ 		from DINING
+ 		where DINING_ID = #{diningId}
+	 </select>
+
 
 </mapper>

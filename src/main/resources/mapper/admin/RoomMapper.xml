@@ -17,5 +17,17 @@
 		from ROOM
 		where ROOM_ID = #{roomId}
 	 </select>
+	 
+	 <update id="updateRoom"  parameterType="urVO">
+		update ROOM
+		set
+		BED_CODE = #{bedCode},
+		BED_NAME = #{bedName},
+		BED_CNT = #{bedCnt}
+		where ROOM_ID = #{roomId}
+	 </update>
+
+
+
 
 </mapper>

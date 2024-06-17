@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.sist.elysian.admin.member.model.domain.MemberDomain;
+import kr.co.sist.elysian.admin.member.model.vo.MemberVO;
 import kr.co.sist.elysian.admin.room.model.domain.RoomDomain;
 import kr.co.sist.elysian.admin.room.model.domain.RoomListDomain;
+import kr.co.sist.elysian.admin.room.model.vo.UpdateRoomVO;
 import kr.co.sist.elysian.admin.room.repository.RoomDAO;
 
 @Service
@@ -45,7 +47,16 @@ public class RoomService {
 		
 	}//searchMemberDetail
 	
-	
+	public boolean updateRoom(UpdateRoomVO urVO){
+		
+		try {
+			int result =rDAO.updateRoom(urVO);
+			return result>0;
+		}catch(PersistenceException pe){
+			pe.printStackTrace();
+			return false;
+		}//end catch
+	}//updateRoom
 	
 	
 	

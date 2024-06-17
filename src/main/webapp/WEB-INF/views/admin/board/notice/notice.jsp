@@ -136,7 +136,7 @@
             confirmModal.show();
         }
 
-        function deleteAction() {
+/*         function deleteAction() {
             console.log('삭제 동작 수행');
             // 서버로 삭제 요청 보내기
             // $.ajax({
@@ -150,7 +150,7 @@
             //         console.log('삭제 실패', error);
             //     }
             // });
-        }
+        } */
 
         function updateAction() {
             console.log('수정 동작 수행');
@@ -192,13 +192,13 @@
             });
         });
 
-        // 삭제 버튼 클릭 시
+/*         // 삭제 버튼 클릭 시
         $('#chkDeleteBtn').on('click', function() {
             showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
                 deleteAction();
                 alert('삭제 동작 수행');
             });
-        });
+        }); */
 
         // 수정 버튼 클릭 시
         $('#chkUpdateBtn').on('click', function() {
@@ -311,116 +311,7 @@
 
 </c:forEach>	
 										
-										
-										
-											<!-- <tr>
-												<th>1</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 1</a><input type="hidden" class="hiddenNoticeNum" value="1"/></td>
-												<td class="noticeInputdate">2024-05-01</td>
-												<td class="adminId">admin1</td>
-												<td class="noticeViewCnt">0</td>
-												<td><span class="badge bg-success">Active</span></td>
-												<td><span class="badge bg-danger">Inactive</span></td>
-											</tr>
-											<tr>
-												<th>2</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 2</a><input type="hidden" class="hiddenNoticeNum" value="2"/></td>
-												<td class="noticeInputdate">2024-05-02</td>
-												<td class="adminId">admin1</td>
-												<td class="noticeViewCnt">10</td>
-											</tr>
-											<tr>
-												<th>3</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 3</a><input type="hidden" class="hiddenNoticeNum" value="3"/></td>
-												<td class="noticeInputdate">2024-05-03</td>
-												<td class="adminId">admin2</td>
-												<td class="noticeViewCnt">15</td>
-											</tr>
-											<tr>
-												<th>4</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 4</a><input type="hidden" class="hiddenNoticeNum" value="4"/></td>
-												<td class="noticeInputdate">2024-05-04</td>
-												<td class="adminId">admin1</td>
-												<td class="noticeViewCnt">0</td>
-											</tr>
 
-											<tr>
-												<th>5</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 5</a><input type="hidden" class="hiddenNoticeNum" value="5"/></td>
-												<td class="noticeInputdate">2024-05-05</td>
-												<td class="adminId">admin1</td>
-												<td class="noticeViewCnt">0</td>
-											</tr>
-											<tr>
-												<th>6</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 6</a><input type="hidden" class="hiddenNoticeNum" value="6"/></td>
-												<td class="noticeInputdate">2024-05-06</td>
-												<td class="adminId">admin2</td>
-												<td class="noticeViewCnt">65</td>
-											</tr>
-											<tr>
-												<th>7</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 7</a><input type="hidden" class="hiddenNoticeNum" value="7"/></td>
-												<td class="noticeInputdate">2024-05-07</td>
-												<td class="adminId">admin1</td>
-												<td class="noticeViewCnt">5</td>
-											</tr>
-											<tr>
-												<th>8</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 8</a><input type="hidden" class="hiddenNoticeNum" value="8"/></td>
-												<td class="noticeInputdate">2024-05-08</td>
-												<td class="adminId">admin1</td>
-												<td class="noticeViewCnt">15</td>
-											</tr>
-											<tr>
-												<th>9</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 9</a><input type="hidden" class="hiddenNoticeNum" value="9"/></td>
-												<td class="noticeInputdate">2024-05-09</td>
-												<td class="adminId">admin2</td>
-												<td class="noticeViewCnt">435</td>
-											</tr>
-											<tr>
-												<th>10</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 10</a><input type="hidden" class="hiddenNoticeNum" value="10"/></td>
-												<td class="noticeInputdate">2024-05-10</td>
-												<td class="adminId">admin1</td>
-												<td class="noticeViewCnt">5</td>
-											</tr>
-											<tr>
-												<th>11</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 11</a><input type="hidden" class="hiddenNoticeNum" value="11"/></td>
-												<td class="noticeInputdate">2024-05-11</td>
-												<td class="adminId">admin1</td>
-												<td class="noticeViewCnt">0</td>
-											</tr>
-											<tr>
-												<th>12</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 12</a><input type="hidden" class="hiddenNoticeNum" value="12"/></td>
-												<td class="noticeInputdate">2024-05-12</td>
-												<td class="adminId">admin2</td>
-												<td class="noticeViewCnt">0</td>
-											</tr>
-											<tr>
-												<th>13</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 13</a><input type="hidden" class="hiddenNoticeNum" value="13"/></td>
-												<td class="noticeInputdate">2024-05-13</td>
-												<td class="adminId">admin1</td>
-												<td class="noticeViewCnt">10</td>
-											</tr>
-											<tr>
-												<th>14</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 14</a><input type="hidden" class="hiddenNoticeNum" value="14"/></td>
-												<td class="noticeInputdate">2024-05-14</td>
-												<td class="adminId">admin1</td>
-												<td class="noticeViewCnt">30</td>
-											</tr>
-											<tr>
-												<th>15</th>
-												<td><a href="#" class="noticeTitle" >공지 제목 15</a><input type="hidden" class="hiddenNoticeNum" value="15"/></td>
-												<td class="noticeInputdate">2024-05-15</td>
-												<td class="adminId">admin2</td>
-												<td class="noticeViewCnt">50</td>
-											</tr> -->
 
 										</tbody>
 									</table>
@@ -540,10 +431,10 @@
 							<div class="modal-header">
 								<h5 class="modal-title">공지사항 상세조회</h5>
 								<div class="d-flex justify-content-end">
-									<button type="button" class="btn btn-danger" id="chkDeleteBtn">
+<!-- 									<button type="button" class="btn btn-danger" id="chkDeleteBtn">
 										<i class="bx bx-x d-block d-sm-none"></i> 
 										<span class="d-none d-sm-block">공지사항 삭제</span>
-									</button>
+									</button> -->
 									<!-- 				                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
 				                        aria-label="Close">
 				                    <i data-feather="x"></i>

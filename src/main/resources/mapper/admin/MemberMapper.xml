@@ -17,5 +17,34 @@
 		where MEMBER_ID =#{memberId}
 	 </select>
 	 
+	 
+	 
+	 <update id="deleteMember"  parameterType="String">
+	 	update MEMBER
+		set EXIT_FLAG ='Y'
+		where MEMBER_ID=#{memberId}
+	 </update>
+	 
+	 <update id="updateMember"  parameterType="mVO">
+		update MEMBER
+		set
+		NAME = #{name},
+		EMAIL = #{email},
+		ENG_LNAME = #{engLname},
+		ENG_FNAME = #{engFname},
+		ZIPCODE = #{zipcode},
+		PHONE = #{phone},
+		ADDRESS  = #{address},
+		ADDR_DETAIL = #{addrDetail}
+		where MEMBER_ID=#{memberId}
+	 </update>
+
+
+	 
+	 
+	 
+	 
+	 
+	 
 
 </mapper>

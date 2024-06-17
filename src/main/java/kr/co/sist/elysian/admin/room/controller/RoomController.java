@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 import kr.co.sist.elysian.admin.member.model.domain.MemberDomain;
+import kr.co.sist.elysian.admin.member.model.vo.MemberVO;
 import kr.co.sist.elysian.admin.room.model.domain.RoomDomain;
 import kr.co.sist.elysian.admin.room.model.domain.RoomListDomain;
 import kr.co.sist.elysian.admin.room.model.vo.RoomVO;
+import kr.co.sist.elysian.admin.room.model.vo.UpdateRoomVO;
 import kr.co.sist.elysian.admin.room.service.RoomService;
 
 @Controller("adminRoomController")
@@ -45,6 +47,19 @@ public class RoomController {
 		return rd;
 	}//selectRoomDetail
 	
+	@ResponseBody
+	@PostMapping(value="/updateRoom.do", produces="application/json; charset=UTF-8")
+	public Boolean updateRoom(@RequestBody UpdateRoomVO urVO, Model model) {
+
+		
+		System.out.println(urVO.toString());
+	     boolean result = rs.updateRoom(urVO);
+	     
+	     
+		return result;
+	}//updateRoom
+	
+	
 	
 	
 	
@@ -62,10 +77,7 @@ public class RoomController {
 		return "";
 	}//detailRoom
 	
-	
-	public String modifyRoom(RoomVO rVO, Model model) {
-		return "";
-	}//modifyRoom
+
 	
 	
 	public String removeRoom(int roomId, Model model) {

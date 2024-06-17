@@ -15,8 +15,8 @@ public class RoomResDomain {
 
 	private int num, roomFloor, roomId, adultsNum, kidsNum, cardNum, payPrice, bedCnt ;
 	private String payNum, roomResStatus, engLName, engFName, guestPhone, guestEmail, guestRequest, cardCode, roomRankName, viewName, bedName ;
-	private Date checkin, checkout, roomResDate ;
+	private Date checkIn, checkOut, roomResDate ;
 	
-	private String room, engName;
+	private String room, engName, checkInStr, checkOutStr, roomResDateStr;
 	
 } // class

@@ -15,4 +15,15 @@
 		and rr.user_id = m.member_id
 		order by payNum
 	</select>
+	
+	<select id="diningResList" resultType="drd">
+		select row_number() over(order by dr.pay_num) num,
+			 dr.pay_num payNum, dr.dining_res_status diningResStatus,
+			 d.dining_name diningName,
+			 dr.visit_datetime visitDateTime, dr.visit_people visitPeople, dr.visitor_name visitorName, dr.visitor_phone visitorPhone, dr.dining_res_date diningResDate
+		from dining_reservation dr, dining d, member m
+		where dr.dining_id = d.dining_id
+		and dr.user_id = m.member_id
+		order by payNum
+	</select>
 </mapper>

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain;
 import kr.co.sist.elysian.admin.reservation.model.domain.RoomResDomain;
-import kr.co.sist.elysian.admin.reservation.model.domain.RoomResResponse;
 import kr.co.sist.elysian.admin.reservation.model.vo.DiningResVO;
 import kr.co.sist.elysian.admin.reservation.model.vo.RoomResVO;
 import kr.co.sist.elysian.admin.reservation.repository.ResDAO;
@@ -25,11 +24,12 @@ public class ResService {
 	 * DAO에서 가져온 RoomResDomain을 view List column에 맞게 변환
 	 * @return roomResResponseList
 	 */
-	public List<RoomResResponse> searchRoomResList() {
+	public List<RoomResDomain> searchRoomResList() {
 		List<RoomResDomain> roomResList = resDAO.selectRoomResList();
-		List<RoomResResponse> roomResResponseList = new ArrayList<RoomResResponse>();
+		List<RoomResDomain> roomResResponseList = new ArrayList<RoomResDomain>();
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			
 			for(RoomResDomain roomResDomain : roomResList) {
 				switch(roomResDomain.getRoomResStatus()) {
 				case "RESERVED" : roomResDomain.setRoomResStatus("<span class='badge bg-light'>RESERVED</span>"); break;
@@ -39,14 +39,14 @@ public class ResService {
 				case "NO SHOW" : roomResDomain.setRoomResStatus("<span class='badge bg-secondary'>NO SHOW</span>"); break;
 				} // end case
 				
-				RoomResResponse roomResResponse = RoomResResponse.builder()
+				RoomResDomain roomResResponse = RoomResDomain.builder()
 						.num(roomResDomain.getNum())
-						.payNum("<a href='#' class='resNum'>" + roomResDomain.getPayNum() + "</a>")
+						.payNum("<a href='#' class='payNum'>" + roomResDomain.getPayNum() + "</a>")
 						.roomResStatus(roomResDomain.getRoomResStatus())
 						.room(roomResDomain.getRoom())
-						.checkIn(sdf.format(roomResDomain.getCheckin()))
-						.checkOut(sdf.format(roomResDomain.getCheckout()))
-						.roomResDate(sdf.format(roomResDomain.getRoomResDate()))
+						.checkInStr(sdf.format(roomResDomain.getCheckIn()))
+						.checkOutStr(sdf.format(roomResDomain.getCheckOut()))
+						.roomResDateStr(sdf.format(roomResDomain.getRoomResDate()))
 						.engName(roomResDomain.getEngName())
 						.guestPhone(roomResDomain.getGuestPhone())
 						.build();
@@ -72,8 +72,44 @@ public class ResService {
 	} // removeRoomRes
 
 	
+	/**
+	 * DAO에서 가져온 DiningResDomain을 view List column에 맞게 변환
+	 * @return diningResResponseList
+	 */
 	public List<DiningResDomain> searchDiningResList() {
-		return null;
+		List<DiningResDomain> diningResList = resDAO.selectDiningResList();
+		List<DiningResDomain> diningResResponseList = new ArrayList<DiningResDomain>();
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdfTime = new SimpleDateFormat("a HH:mm");
+			
+			for(DiningResDomain diningResDomain : diningResList) {
+				switch(diningResDomain.getDiningResStatus()) {
+				case "COMPLETED" : diningResDomain.setDiningResStatus("<span class='badge bg-success'>이용 완료</span>"); break;
+				case "CONFIRMED" : diningResDomain.setDiningResStatus("<span class='badge bg-light'>예약</span>"); break;
+				case "CANCELLED" : diningResDomain.setDiningResStatus("<span class='badge bg-danger'>취소</span>"); break;
+				case "NO SHOW" : diningResDomain.setDiningResStatus("<span class='badge bg-secondary'>NO SHOW</span>"); break;
+				} // end case
+				
+				DiningResDomain diningResResponse = DiningResDomain.builder()
+						.num(diningResDomain.getNum())
+						.payNum("<a href='#' class='payNum'>" + diningResDomain.getPayNum() + "</a>")
+						.diningResStatus(diningResDomain.getDiningResStatus())
+						.diningName(diningResDomain.getDiningName())
+						.visitDate(sdf.format(diningResDomain.getVisitDateTime()))
+						.visitTime(sdfTime.format(diningResDomain.getVisitDateTime()))
+						.visitPeopleStr(diningResDomain.getVisitPeople() + "명")
+						.visitorName(diningResDomain.getVisitorName())
+						.visitorPhone(diningResDomain.getVisitorPhone())
+						.diningResDateStr(sdf.format(diningResDomain.getDiningResDate()))
+						.build();
+				diningResResponseList.add(diningResResponse);
+			} // end for
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		
+		return diningResResponseList;
 	} // searchDiningResList
 
 	public DiningResDomain detailDiningRes(String diningResNum) {

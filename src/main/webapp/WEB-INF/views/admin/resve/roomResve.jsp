@@ -157,9 +157,9 @@
 				{"data": "payNum", "width": "150px"},
 				{"data": "roomResStatus", "width": "130px"},
 				{"data": "room", "width": "300px"}, 
-				{"data": "checkIn", "width": "120px"},
-				{"data": "checkOut", "width": "120px"},
-				{"data": "roomResDate", "width": "120px"},
+				{"data": "checkInStr", "width": "120px"},
+				{"data": "checkOutStr", "width": "120px"},
+				{"data": "roomResDateStr", "width": "120px"},
 				{"data": "engName", "width": "150px"},
 				{"data": "guestPhone", "width": "150px"}
 			],

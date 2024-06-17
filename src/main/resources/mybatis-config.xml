@@ -28,6 +28,7 @@
 		<typeAlias type="kr.co.sist.elysian.admin.login.model.vo.AdminVO" alias="av"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.login.model.domain.AdminDomain" alias="ad"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.RoomResDomain" alias="rrd"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain" alias="drd"/> 
 	</typeAliases>
   
   <!-- 환경 설정 -->

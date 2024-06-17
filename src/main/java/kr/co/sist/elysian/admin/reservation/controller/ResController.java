@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
-import kr.co.sist.elysian.admin.reservation.model.domain.RoomResResponse;
+import kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain;
+import kr.co.sist.elysian.admin.reservation.model.domain.RoomResDomain;
 import kr.co.sist.elysian.admin.reservation.model.vo.DiningResVO;
 import kr.co.sist.elysian.admin.reservation.model.vo.RoomResVO;
 import kr.co.sist.elysian.admin.reservation.service.ResService;
@@ -26,12 +27,12 @@ public class ResController {
 	@GetMapping("/roomResve.do")
 	public String viewRoomResPage() {
 		return "admin/resve/roomResve";
-	}//searchRoomResList
+	}//viewRoomResPage
 	
 	@ResponseBody
 	@PostMapping(value="roomResList.do", produces="application/json; charset=UTF-8")
-	public List<RoomResResponse> searchRoomResList() {
-		List<RoomResResponse> data = resService.searchRoomResList();
+	public List<RoomResDomain> searchRoomResList() {
+		List<RoomResDomain> data = resService.searchRoomResList();
 		return data;
 	}//searchRoomResList
 
@@ -49,9 +50,16 @@ public class ResController {
 	
 	
 	@GetMapping("/diningResve.do")
-	public String searchDiningResList(Model model) {
+	public String viewDiningResPage() {
 		return "admin/resve/diningResve";
-	}//searchDiningResList
+	}//viewDiningResPage
+	
+	@ResponseBody
+	@PostMapping(value="diningResList.do", produces="application/json; charset=UTF-8")
+	public List<DiningResDomain> searchDiningResList() {
+		List<DiningResDomain> data = resService.searchDiningResList();
+		return data;
+	}//searchRoomResList
 	
 	public String detailDiningRes(String diningId , Model model) {
 		return "";

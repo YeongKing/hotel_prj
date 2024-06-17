@@ -12,7 +12,7 @@
 	 </select>
 
 	 <select id="eventDetail" resultType="ed" parameterType="String">
-		select EVENT_NUM eventNum, ADMIN_ID adminId, EVENT_TITLE eventTitle, EVENT_STARTDATE eventStartDate, EVENT_ENDDATE eventEndDate, EVENT_MAIN_IMG eventMainImg, EVENT_SUB_IMG eventSubImg, EVENT_CONTENT eventContent, EVENT_INPUTDATE eventInputdate
+		select EVENT_NUM eventNum, ADMIN_ID adminId, EVENT_TITLE eventTitle, to_char(EVENT_STARTDATE,'yyyy-MM-dd') eventStartDate, to_char(EVENT_ENDDATE,'yyyy-MM-dd') eventEndDate, EVENT_MAIN_IMG eventMainImg, EVENT_SUB_IMG eventSubImg, EVENT_CONTENT eventContent, EVENT_INPUTDATE eventInputdate
 		from EVENT
 		where EVENT_NUM =#{eventNum}
 	 </select>

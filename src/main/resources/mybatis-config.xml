@@ -11,6 +11,7 @@
 	<!-- typeAlias예시 -->
 	<typeAliases>
 		<typeAlias type="kr.co.sist.elysian.admin.member.model.domain.MemberListDomain" alias="mld"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.member.model.vo.MemberVO" alias="mVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.member.model.domain.MemberDomain" alias="md"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.room.model.domain.RoomListDomain" alias="rld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.room.model.domain.RoomDomain" alias="rd"/> 

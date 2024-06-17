@@ -58,21 +58,49 @@
 
 	    
 	    
-	    // 테이블의 유저아이디 클릭시
+	    // 공지사항 제목 클릭시
 	    $(document).on("click", ".noticeTitle", function() {
 	    	var noticeNum = $(this).closest('tr').find('.hiddenNoticeNum').val();
-	    	var noticeInputdate = $(this).closest('tr').find('.noticeInputdate').text();
-	        var noticeTitle = $(this).closest('tr').find('.noticeTitle').text();
-	        //var noticeContent ;
-	        //var adminId  ;
-	        //var noticeViewCnt ;
+	    	
+	        $.ajax({
+	        	url:'noticeDetail.do',
+	        	type:'POST',
+	        	contentType:'application/json',
+	        	dataType:'JSON',
+	        	data:JSON.stringify({ noticeNum: noticeNum }),
+	        	error:function(xhr){
+	        		console.log(xhr.status)
+	        		alert("문제가 발생했습니다.")
+	        	},
+	        	success:function(jsonObj){
+	        		
+	        		
 
-	        
-	        $("#inputNoticeNum").val(noticeNum);
-	        $("#inputNoticeInputdate").val(noticeInputdate);
-	        $("#inputNoticeTitle").val(noticeTitle);
-	        
-	        //$("#inputAdminId").val(adminId);
+	        		$("#updateNoticeNum").val(jsonObj.noticeNum);
+	        		$("#updateNoticeInputdate").val(jsonObj.noticeInputDate);
+	        		$("#updateNoticeTitle").val(jsonObj.noticeTitle);
+	        		$("#updateNoticeContent").val(jsonObj.noticeContent);
+	        	}
+	        	
+	        })//ajax
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+
 
 	        // 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
 	        // 모달 내의 모든 'is-invalid' 클래스 제거
@@ -265,14 +293,34 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
+<c:if test="${ empty requestScope.noticeList }">
+<tr>
+<td colspan="5" style="text-align: center;">
+공지사항 정보가 존재하지 않습니다.
+</td>
+</tr>
+</c:if>	                            
+<c:forEach var="nld" items="${ requestScope.noticeList }" varStatus="i">
+<tr>
+	<td><c:out value="${ i.count }"/></td>
+	<td><a href="#" class="noticeTitle" >${ nld.noticeTitle }</a><input type="hidden" class="hiddenNoticeNum" value="${ nld.noticeNum }"/></td>
+	<td class="noticeInputdate">${ nld.noticeInputDate }</td>
+	<td class="adminId">${ nld.adminId }</td>
+	<td class="noticeViewCnt">${ nld.noticeViewCount }</td>
+</tr>
+
+</c:forEach>	
+										
+										
+										
+											<!-- <tr>
 												<th>1</th>
 												<td><a href="#" class="noticeTitle" >공지 제목 1</a><input type="hidden" class="hiddenNoticeNum" value="1"/></td>
 												<td class="noticeInputdate">2024-05-01</td>
 												<td class="adminId">admin1</td>
 												<td class="noticeViewCnt">0</td>
-												<!-- <td><span class="badge bg-success">Active</span></td> -->
-												<!-- <td><span class="badge bg-danger">Inactive</span></td> -->
+												<td><span class="badge bg-success">Active</span></td>
+												<td><span class="badge bg-danger">Inactive</span></td>
 											</tr>
 											<tr>
 												<th>2</th>
@@ -372,7 +420,7 @@
 												<td class="noticeInputdate">2024-05-15</td>
 												<td class="adminId">admin2</td>
 												<td class="noticeViewCnt">50</td>
-											</tr>
+											</tr> -->
 
 										</tbody>
 									</table>
@@ -507,11 +555,11 @@
 								<div class="row">
 									<div class="col-md-3 col-12">
 										<div class="form-group">
-											<label for="inputNoticeNum" style="flex: 1">번호</label> 
+											<label for="updateNoticeNum" style="flex: 1">번호</label> 
 											<input type="text"
-												id="inputNoticeNum" 
+												id="updateNoticeNum" 
 												class="form-control"
-												name="inputNoticeNum" 
+												name="updateNoticeNum" 
 												placeholder="번호" 
 												style="flex: 2 " 
 												Disabled>
@@ -524,13 +572,13 @@
 									
 									<div class="col-md-3 col-12">
 										<div class="form-group">
-											<label for="inputNoticeInputdate" style="flex: 1">작성일</label> 
+											<label for="updateNoticeInputdate" style="flex: 1">작성일</label> 
 												<input
 						                        type="text"
-						                        id="inputNoticeInputdate"
+						                        id="updateNoticeInputdate"
 						                        class="form-control"
 						                        placeholder="작성일"
-						                        name="inputNoticeInputdate"
+						                        name="updateNoticeInputdate"
 						                        style="flex: 2 "
 						                        Disabled
 						                     />
@@ -540,13 +588,13 @@
 									</div>
 									<div class="col-md-12 col-12">
 										<div class="form-group">
-											<label for="inputNoticeTitle" style="flex: 1 ">제목</label> 
+											<label for="updateNoticeTitle" style="flex: 1 ">제목</label> 
 											<input
 						                        type="text"
-						                        id="inputNoticeTitle"
+						                        id="updateNoticeTitle"
 						                        class="form-control"
 						                        placeholder="제목"
-						                        name="inputNoticeTitle"
+						                        name="updateNoticeTitle"
 						                        style="flex: 13 "
 						                        data-parsley-required="true"
 						                        data-parsley-error-message="제목은 필수 입력입니다."
@@ -557,13 +605,13 @@
 									
 									<div class="col-md-12 col-12">
 										<div class="form-group">
-											<label for="inputNoticeContent" style="flex: 1 ">내용</label> 
+											<label for="updateNoticeContent" style="flex: 1 ">내용</label> 
 											<textarea
-						                        id="inputNoticeContent"
+						                        id="updateNoticeContent"
 						                        class="form-control"
 						                        placeholder="내용"
 						                        rows="15"
-						                        name="inputNoticeContent"
+						                        name="updateNoticeContent"
 						                        style="flex: 13 "
 						                        data-parsley-required="true"
 						                        data-parsley-error-message="내용은 필수 입력입니다."

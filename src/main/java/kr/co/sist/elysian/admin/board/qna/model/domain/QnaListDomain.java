@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class QnaDomain {
+public class QnaListDomain {
 	
-	private String qnaNum, qnaTitle, qnaContent, adminId, qnaType ,qnaInputdate;
+	private String qnaNum, qnaType,qnaTitle;
 
 
 }

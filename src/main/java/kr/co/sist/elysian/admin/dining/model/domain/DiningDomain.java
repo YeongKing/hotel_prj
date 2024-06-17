@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DiningDomain {
 
-	private int diningId , hallTable,roomTable, deposit;
-	private String diningName, diningType, openTime, closeTime, location, diningImg, diningComment, menu;
+	private int hallTable,roomTable, deposit;
+	private String diningId, diningName, diningType, openTime, closeTime, location, diningImg, diningComment, menu;
 	
 }

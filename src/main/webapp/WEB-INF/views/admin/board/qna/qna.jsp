@@ -172,7 +172,7 @@
 	        confirmModal.show();
 	    }
 
-	    function deleteAction() {
+/* 	    function deleteAction() {
 	        console.log('삭제 동작 수행');
 	        // 서버로 삭제 요청 보내기
 	        // $.ajax({
@@ -186,7 +186,7 @@
 	        //         console.log('삭제 실패', error);
 	        //     }
 	        // });
-	    }
+	    } */
 
 	    function updateAction() {
 	        console.log('수정 동작 수행');
@@ -228,13 +228,13 @@
 	        });
 	    });
 
-	    // 삭제 버튼 클릭 시
+/* 	    // 삭제 버튼 클릭 시
 	    $('#chkDeleteBtn').on('click', function() {
 	        showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
 	            deleteAction();
 	            alert('삭제 동작 수행');
 	        });
-	    });
+	    }); */
 
 	    // 수정 버튼 클릭 시
 	    $('#chkUpdateBtn').on('click', function() {
@@ -329,82 +329,6 @@
 </c:forEach>			
 										
 										
-<!-- 											<tr>
-												<th>1</th>
-												<td class="qnaType">계정</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 1</a><input type="hidden" class="hiddenQnaNum" value="1"/></td>
-											</tr>
-											<tr>
-												<th>2</th>
-												<td class="qnaType">결제</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 2</a><input type="hidden" class="hiddenQnaNum" value="2"/></td>
-											</tr>
-											<tr>
-												<th>3</th>
-												<td class="qnaType">예약</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 3</a><input type="hidden" class="hiddenQnaNum" value="3"/></td>
-											</tr>
-											<tr>
-												<th>4</th>
-												<td class="qnaType">기타</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 4</a><input type="hidden" class="hiddenQnaNum" value="4"/></td>
-											</tr>
-
-											<tr>
-												<th>5</th>
-												<td class="qnaType">계정</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 5</a><input type="hidden" class="hiddenQnaNum" value="5"/></td>
-											</tr>
-											<tr>
-												<th>6</th>
-												<td class="qnaType">계정</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 6</a><input type="hidden" class="hiddenQnaNum" value="6"/></td>
-											</tr>
-											<tr>
-												<th>7</th>
-												<td class="qnaType">결제</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 7</a><input type="hidden" class="hiddenQnaNum" value="7"/></td>
-											</tr>
-											<tr>
-												<th>8</th>
-												<td class="qnaType">예약</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 8</a><input type="hidden" class="hiddenQnaNum" value="8"/></td>
-											</tr>
-											<tr>
-												<th>9</th>
-												<td class="qnaType">기타</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 9</a><input type="hidden" class="hiddenQnaNum" value="9"/></td>
-											</tr>
-											<tr>
-												<th>10</th>
-												<td class="qnaType">기타</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 10</a><input type="hidden" class="hiddenQnaNum" value="10"/></td>
-											</tr>
-											<tr>
-												<th>11</th>
-												<td class="qnaType">계정</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 11</a><input type="hidden" class="hiddenQnaNum" value="11"/></td>
-											</tr>
-											<tr>
-												<th>12</th>
-												<td class="qnaType">결제</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 12</a><input type="hidden" class="hiddenQnaNum" value="12"/></td>
-											</tr>
-											<tr>
-												<th>13</th>
-												<td class="qnaType">예약</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 13</a><input type="hidden" class="hiddenQnaNum" value="13"/></td>
-											</tr>
-											<tr>
-												<th>14</th>
-												<td class="qnaType">기타</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 14</a><input type="hidden" class="hiddenQnaNum" value="14"/></td>
-											</tr>
-											<tr>
-												<th>15</th>
-												<td class="qnaType">계정</td>
-												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 15</a><input type="hidden" class="hiddenQnaNum" value="15"/></td>
-											</tr> -->
 
 										</tbody>
 									</table>
@@ -536,12 +460,12 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title">자주 찾는 질문 상세조회</h5>
-								<div class="d-flex justify-content-end">
+<!-- 								<div class="d-flex justify-content-end">
                                 <button type="button" id="chkDeleteBtn" class="btn btn-danger">
                                     <i class="bx bx-x d-block d-sm-none"></i> 
                                     <span class="d-none d-sm-block">자주 찾는 질문 삭제</span>
                                 </button>
-								</div>
+								</div> -->
 							</div>
 							<form id = "updateQnaForm" action="#"  class="form px-5" data-parsley-validate>
 								<div class="row">

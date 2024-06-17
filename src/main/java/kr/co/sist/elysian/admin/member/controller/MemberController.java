@@ -45,11 +45,45 @@ public class MemberController {
 	public MemberDomain selectMemberDetail(@RequestBody Map<String, Object> requestData, Model model) {
 		 String memberId = (String) requestData.get("memberId");
 	     MemberDomain md = ms.searchMemberDetail(memberId);
-
+	     
 		return md;
 	}//selectMemberDetail
 	
+	
+	
+	
+	@ResponseBody
+	@PostMapping(value="/deleteMember.do", produces="application/json; charset=UTF-8")
+	public Boolean deleteMember(@RequestBody Map<String, Object> requestData, Model model) {
+		 String memberId = (String) requestData.get("memberId");
+	     boolean result = ms.deleteMember(memberId);
+	     
+	     System.out.println("boolean result : " +result);
+	     
+		return result;
+	}//deleteMember
+	
+	@ResponseBody
+	@PostMapping(value="/updateMember.do", produces="application/json; charset=UTF-8")
+	public Boolean updateMember(@RequestBody MemberVO mVO, Model model) {
 
+	     boolean result = ms.updateMember(mVO);
+	     
+	     
+		return result;
+	}//updateMember
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public String addFrm() {
 		return "";
@@ -69,9 +103,7 @@ public class MemberController {
 	}//modifyMember
 	
 	
-	public String removeMember(String userId, Model model) {
-		return "";
-	}//removeMember
+
 	
 	
 	public String logout(SessionStatus ss) {

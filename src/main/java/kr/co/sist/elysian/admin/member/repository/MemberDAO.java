@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.sist.elysian.admin.member.model.domain.MemberDomain;
 import kr.co.sist.elysian.admin.member.model.domain.MemberListDomain;
+import kr.co.sist.elysian.admin.member.model.vo.MemberVO;
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
 
 
@@ -40,5 +41,25 @@ public class MemberDAO {
 		
 	}//selectMemeberDetail
 	
+	
+	public int deleteMember(String memberId) throws PersistenceException{
+		
+		SqlSession ss= mbDAO.getMyBatisHandler(true);
+		int result = ss.update("kr.co.sist.elysian.admin.member.deleteMember",memberId);
+		mbDAO.closeHandler(ss);
+		System.out.println("result : " + result);
+		return result;
+		
+	}//deleteMember
+	
+	
+	public int updateMember(MemberVO mVO) throws PersistenceException{
+		
+		SqlSession ss= mbDAO.getMyBatisHandler(true);
+		int result = ss.update("kr.co.sist.elysian.admin.member.updateMember",mVO);
+		mbDAO.closeHandler(ss);
+		return result;
+		
+	}//updateMember
 	
 }

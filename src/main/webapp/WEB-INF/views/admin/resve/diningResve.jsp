@@ -144,24 +144,26 @@
 		
 		// 현재 페이지 DataTable 인스턴스 생성
 		var table = $('#table1').DataTable({
+			processing : true,
+			serverSide: false,
 			ajax: {
-		       'url':'http://localhost/hotel_prj/test_data/dining_data.json', 
-		       'type': 'GET',
+		       'url':'diningResList.do', 
+		       'type': 'POST',
 		       'dataSrc':''
 		    },
 		    
 		    // 컬럼 설정
 			columns: [
 				{"data": "num", "width": "35px"},
-				{"data": "res_num", "width": "150px"},
-				{"data": "dining_res_status", "width": "100px"},
-				{"data": "dining_name", "width": "150px"}, 
-				{"data": "visit_date", "width": "100px"},
-				{"data": "visit_time", "width": "100px"},
-				{"data": "visit_people", "width": "80px"},
-				{"data": "visitor_name", "width": "130px"},
-				{"data": "visitor_phone", "width": "150px"},
-				{"data": "dining_res_date", "width": "100px"}
+				{"data": "payNum", "width": "150px"},
+				{"data": "diningResStatus", "width": "100px"},
+				{"data": "diningName", "width": "150px"}, 
+				{"data": "visitDate", "width": "100px"},
+				{"data": "visitTime", "width": "100px"},
+				{"data": "visitPeopleStr", "width": "80px"},
+				{"data": "visitorName", "width": "130px"},
+				{"data": "visitorPhone", "width": "150px"},
+				{"data": "diningResDateStr", "width": "100px"}
 			],
 			
 			// 돔 설정

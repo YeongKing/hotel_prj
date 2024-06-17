@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kr.co.sist.elysian.admin.member.model.domain.MemberDomain;
+import kr.co.sist.elysian.admin.member.model.vo.MemberVO;
 import kr.co.sist.elysian.admin.room.model.domain.RoomDomain;
 import kr.co.sist.elysian.admin.room.model.domain.RoomListDomain;
+import kr.co.sist.elysian.admin.room.model.vo.UpdateRoomVO;
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
 
 @Repository
@@ -39,6 +41,16 @@ public class RoomDAO {
 		return rd;
 		
 	}//selectRoomDetail
+	
+	public int updateRoom(UpdateRoomVO urVO) throws PersistenceException{
+		
+		SqlSession ss= mbDAO.getMyBatisHandler(true);
+		int result = ss.update("kr.co.sist.elysian.admin.room.updateRoom",urVO);
+		mbDAO.closeHandler(ss);
+		return result;
+		
+	}//updateRoom
+	
 	
 	
 }

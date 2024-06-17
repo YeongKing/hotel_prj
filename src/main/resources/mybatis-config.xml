@@ -11,9 +11,12 @@
 	<!-- typeAlias예시 -->
 	<typeAliases>
 		<typeAlias type="kr.co.sist.elysian.admin.member.model.domain.MemberListDomain" alias="mld"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.member.model.vo.MemberVO" alias="mVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.member.model.domain.MemberDomain" alias="md"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.room.model.domain.RoomListDomain" alias="rld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.room.model.domain.RoomDomain" alias="rd"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.room.model.vo.UpdateRoomVO" alias="urVO"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.room.model.vo.RoomVO" alias="rVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.dining.model.domain.DiningListDomain" alias="dld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.dining.model.domain.DiningDomain" alias="dd"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.board.event.model.domain.EventListDomain" alias="eld"/> 
@@ -24,6 +27,8 @@
 		<typeAlias type="kr.co.sist.elysian.admin.board.notice.model.domain.NoticeDomain" alias="nd"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.login.model.vo.AdminVO" alias="av"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.login.model.domain.AdminDomain" alias="ad"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.RoomResDomain" alias="rrd"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain" alias="drd"/> 
 	</typeAliases>
   
   <!-- 환경 설정 -->
@@ -50,12 +55,12 @@
 	<mapper resource="mapper/admin/NoticeMapper.xml"/>
 	
     <mapper resource="mapper/admin/LoginMapper.xml"/>
+    <mapper resource="mapper/admin/ResMapper.xml"/>
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
 <!--     
     <mapper resource="mapper/admin/HomeMapper.xml"/>
-
-    <mapper resource="mapper/admin/ResMapper.xml"/>
      -->
+
   </mappers>
   
 

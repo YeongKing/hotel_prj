@@ -28,7 +28,7 @@ public class ResService {
 		List<RoomResDomain> roomResList = resDAO.selectRoomResList();
 		List<RoomResDomain> roomResResponseList = new ArrayList<RoomResDomain>();
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 			
 			for(RoomResDomain roomResDomain : roomResList) {
 				switch(roomResDomain.getRoomResStatus()) {
@@ -80,8 +80,8 @@ public class ResService {
 		List<DiningResDomain> diningResList = resDAO.selectDiningResList();
 		List<DiningResDomain> diningResResponseList = new ArrayList<DiningResDomain>();
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			SimpleDateFormat sdfTime = new SimpleDateFormat("a HH:mm");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+			SimpleDateFormat sdfTime = new SimpleDateFormat("a hh:mm");
 			
 			for(DiningResDomain diningResDomain : diningResList) {
 				switch(diningResDomain.getDiningResStatus()) {

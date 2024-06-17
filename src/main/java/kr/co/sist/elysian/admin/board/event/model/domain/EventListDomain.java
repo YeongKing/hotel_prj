@@ -1,4 +1,4 @@
-package kr.co.sist.elysian.admin.board.qna.model.domain;
+package kr.co.sist.elysian.admin.board.event.model.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class QnaDomain {
+public class EventListDomain {
+
+
+	private String eventNum,eventTitle,eventInputdate;
 	
-	private String qnaNum, qnaTitle, qnaContent, adminId, qnaType ,qnaInputdate;
-
-
+	
+	
 }

@@ -77,27 +77,39 @@
 	    
 	    // 테이블의 자주 찾는 질문 클릭시
 	    $(document).on("click", ".qnaTitle", function() {
-	    	var noticeNum = $(this).closest('tr').find('.hiddenQnaNum').val();
-	    	var qnaType = $(this).closest('tr').find('.qnaType').text();
-	        var qnaTitle = $(this).closest('tr').find('.qnaTitle').text();
-	        //var noticeContent ;
-	        //var adminId  ;
-	        //var noticeViewCnt ;
+	    	var qnaNum = $(this).closest('tr').find('.hiddenQnaNum').val();
+	    	
+		        $.ajax({
+		        	url:'qnaDetail.do',
+		        	type:'POST',
+		        	contentType:'application/json',
+		        	dataType:'JSON',
+		        	data:JSON.stringify({ qnaNum: qnaNum }),
+		        	error:function(xhr){
+		        		console.log(xhr.status)
+		        		alert("문제가 발생했습니다.")
+		        	},
+		        	success:function(jsonObj){
+		        		
+	    	        	$("#updateQnaNum").val(jsonObj.qnaNum);
+		          		$("#updateQnaType").val(jsonObj.qnaType); 
+		    	        $("#updateQnaTitle").val(jsonObj.qnaTitle);
+		    	        $("#updateQnaContent").val(jsonObj.qnaContent);
 
-	        
-	        $("#updateQnaNum").val(noticeNum);
-/* 	        $("#updateQnaType").val(qnaType); */
-	        $("#updateQnaTitle").val(qnaTitle);
-	        
-	        $("#updateQnaType").empty();
-	        $("#updateQnaType").append(new Option("계정", "계정"));
-	        $("#updateQnaType").append(new Option("결제", "결제"));
-	        $("#updateQnaType").append(new Option("예약", "예약"));
-	        $("#updateQnaType").append(new Option("기타", "기타"));
-	        
-	        $("#updateQnaType").val(qnaType).prop("selected",true);
-	        
-	        //$("#inputAdminId").val(adminId);
+		        		
+		        	}
+		        	
+		        	
+		        	
+		        })//ajax
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
 
 
 	        // 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
@@ -299,7 +311,25 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
+<c:if test="${ empty requestScope.qnaList }">
+<tr>
+<td colspan="3" style="text-align: center;">
+자주 찾는 질문 정보가 존재하지 않습니다.
+</td>
+</tr>
+</c:if>	                            
+<c:forEach var="qld" items="${ requestScope.qnaList }" varStatus="i">
+<tr>
+	<td><c:out value="${ i.count }"/></td>
+	<td class="qnaType"><c:out value="${ qld.qnaType }"/></td>
+	<td><a href="#" class="qnaTitle"><c:out value="${ qld.qnaTitle }"/></a><input type="hidden" class="hiddenQnaNum" value="${ qld.qnaNum }"/></td>
+
+</tr>
+
+</c:forEach>			
+										
+										
+<!-- 											<tr>
 												<th>1</th>
 												<td class="qnaType">계정</td>
 												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 1</a><input type="hidden" class="hiddenQnaNum" value="1"/></td>
@@ -374,7 +404,7 @@
 												<th>15</th>
 												<td class="qnaType">계정</td>
 												<td><a href="#" class="qnaTitle" >자주 찾는 질문 제목 15</a><input type="hidden" class="hiddenQnaNum" value="15"/></td>
-											</tr>
+											</tr> -->
 
 										</tbody>
 									</table>
@@ -554,6 +584,10 @@
 						                     class="updateQnaType form-select"
 						                      id="updateQnaType" 
 						                      style="flex:2 ">
+						                      <option>계정</option>
+						                      <option>결제</option>
+						                      <option>예약</option>
+						                      <option>기타</option>
 						                     </select>
 										</div>
 									</div>

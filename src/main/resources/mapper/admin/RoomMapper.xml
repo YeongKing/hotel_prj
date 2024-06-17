@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.sist.elysian.admin.room">
+
+
+	 <select id="roomList" resultType="rld">
+		select ROOM_ID roomId, ROOM_RANK_NAME roomRankName, BED_NAME bedName, VIEW_NAME viewName, ROOM_SIZE roomSize 
+		from ROOM
+		where DELETE_STATUS ='N'
+	 </select>
+	 
+	 <select id="roomDetail" resultType="rd" parameterType="int">
+		select ROOM_ID roomId, ROOM_RANK_CODE roomRankCode, ROOM_RANK_NAME roomRankName, ROOM_SIZE roomSize, ROOM_BASIC_CAPACITY roomBasicCapacity, ROOM_MAX_CAPACITY roomMaxCapacity, ROOM_BASIC_PRICE roomBasicPrice, VIEW_CODE roomViewCode, VIEW_NAME roomViewName, ROOM_ADD_PRICE roomAddPrice, BED_CODE roomBedCode, BED_NAME roomBedName, BED_CNT roomBedCnt, DELETE_STATUS roomDeleteStatus
+		from ROOM
+		where ROOM_ID = #{roomId}
+	 </select>
+
+</mapper>

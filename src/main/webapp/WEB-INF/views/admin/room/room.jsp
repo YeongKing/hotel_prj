@@ -97,6 +97,7 @@ $(document).ready(function() {
                 
 
                 $("#updateBedName").val(jsonObj.roomBedName);
+                $("#updateBedCnt").val(jsonObj.roomBedCnt);
         		
         	}
         	
@@ -198,7 +199,7 @@ $(document).ready(function() {
         confirmModal.show();
     }
 
-    function deleteAction() {
+/*     function deleteAction() {
         console.log('삭제 동작 수행');
         // 서버로 삭제 요청 보내기
         // $.ajax({
@@ -213,7 +214,7 @@ $(document).ready(function() {
         //     }
         // });
     }
-
+ */
     function updateAction() {
         console.log('수정 동작 수행');
         // 서버로 수정 요청 보내기
@@ -254,14 +255,14 @@ $(document).ready(function() {
         });
     });
 
-    // 삭제 버튼 클릭 시
+/*     // 삭제 버튼 클릭 시
     $('#chkDeleteBtn').on('click', function() {
         showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
             deleteAction();
             alert('삭제 동작 수행');
         });
     });
-
+ */
     // 수정 버튼 클릭 시
     $('#chkUpdateBtn').on('click', function() {
         showModal('수정 확인', '수정하시겠습니까?', '예', function() {
@@ -559,12 +560,12 @@ function changePage(pageNumber) {
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title">객실 상세조회</h5>
-								<div class="d-flex justify-content-end">
+<!-- 								<div class="d-flex justify-content-end">
                                 <button type="button" id="chkDeleteBtn" class="btn btn-danger">
                                     <i class="bx bx-x d-block d-sm-none"></i> 
                                     <span class="d-none d-sm-block">객실 삭제</span>
                                 </button>
-								</div>
+								</div> -->
 							</div>
 							<form id = "updateRoomForm" action="#"  class="form px-5" data-parsley-validate>
 								<div class="row">
@@ -662,6 +663,18 @@ function changePage(pageNumber) {
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
+											<label for="updateBedCnt">침대 개수</label>
+											<input
+						                        type="text"
+						                        id="updateBedCnt"
+						                        class="form-control"
+						                        placeholder="침대 개수"
+						                        name="updateBedCnt"
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
 											<label for="updateRoomAddPrice">추가 요금</label>
 											<input
 						                        type="text"
@@ -688,19 +701,7 @@ function changePage(pageNumber) {
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="updateAmenity"> </label> 
-											<input
-						                        type="button"
-						                        id="updateAmenity"
-						                        class="form-control"
-						                        name="updateAmenity"
-												value="어메니티"
-						                     />
-										</div>
-									</div>	
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="updateRoomSize">방 크기</label>
+											<label for="updateRoomSize">방 크기m^2</label>
 											<input
 						                        type="text"
 						                        id="updateRoomSize"
@@ -712,7 +713,20 @@ function changePage(pageNumber) {
 										</div>
 									</div>					
 									<div class="col-md-6 col-12">
-									</div>				
+										<div class="form-group">
+											<label for="updateAmenity"> </label> 
+											<input
+						                        type="button"
+						                        id="updateAmenity"
+						                        class="form-control"
+						                        name="updateAmenity"
+												value="어메니티"
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+									</div>
+				
 									
 									
 									

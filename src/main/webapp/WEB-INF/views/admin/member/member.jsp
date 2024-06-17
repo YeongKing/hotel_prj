@@ -129,6 +129,34 @@ $(document).ready(function() {
 
     function deleteAction() {
         console.log('삭제 동작 수행');
+        var memberId = $('#memberId').val()
+        alert(memberId);
+        $.ajax({
+        	url:'deleteMember.do',
+        	type:'POST',
+        	contentType:'application/json',
+        	dataType:'JSON',
+        	data:JSON.stringify({ memberId: memberId }),
+        	error:function(xhr){
+        		console.log(xhr.status)
+        		alert("문제가 발생했습니다.")
+        	},
+        	success:function(jsonObj){
+        		
+			alert("회원정보가 정상적으로 삭제되었습니다.");
+			$('#memberDetail').modal('hide');
+			 location.reload();
+        		
+        		
+        	}
+        	
+        	
+        	
+        })
+        
+        
+        
+
         // 서버로 삭제 요청 보내기
         // $.ajax({
         //     url: 'delete_url',
@@ -144,20 +172,88 @@ $(document).ready(function() {
     }
 
     function updateAction() {
-        console.log('수정 동작 수행');
-        // 서버로 수정 요청 보내기
-        // $.ajax({
-        //     url: 'update_url',
-        //     method: 'POST',
-        //     data: { id: itemId, data: newData },
-        //     success: function(response) {
-        //         console.log('수정 성공');
-        //     },
-        //     error: function(error) {
-        //         console.log('수정 실패', error);
-        //     }
-        // });
-    }
+
+        var memberId = $('#memberId').val();
+        var memberName = $('#memberName').val();
+        var memberEnLastName = $('#memberEnLastName').val();
+        var memberEnFirstName = $('#memberEnFirstName').val();
+        var memberAdress1 = $('#memberAdress1').val();
+        var memberAdress2 = $('#memberAdress2').val();
+        var memberEmail = $('#memberEmail').val();
+        var memberPhone = $('#memberPhone').val();
+        var memberZipCode = $('#memberZipCode').val();
+
+        // 한글 유효성 검사
+        var koreanRegex = /^[가-힣]+$/;
+        if (!koreanRegex.test(memberName)) {
+            alert("이름은 한글만 입력 가능합니다.");
+            return;
+        }
+
+        // 영어 유효성 검사
+        var englishRegex = /^[A-Za-z]+$/;
+        if (!englishRegex.test(memberEnLastName)) {
+            alert("영문 성은 영어만 입력 가능합니다.");
+            return;
+        }
+        if (!englishRegex.test(memberEnFirstName)) {
+            alert("영문 이름은 영어만 입력 가능합니다.");
+            return;
+        }
+
+        // 대문자 변환
+        memberEnLastName = memberEnLastName.toUpperCase();
+        memberEnFirstName = memberEnFirstName.toUpperCase();
+
+        // 이메일 유효성 검사
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(memberEmail)) {
+            alert("유효한 이메일 주소를 입력하세요.");
+            return;
+        }
+
+        // 전화번호 유효성 검사
+        var phoneRegex = /^010-\d{4}-\d{4}$/;
+        if (!phoneRegex.test(memberPhone)) {
+            alert("전화번호는 010-0000-0000 형식으로 입력하세요.");
+            return;
+        }
+
+        // 상세 주소 유효성 검사
+        if (!memberAdress2) {
+            alert("상세주소가 빈칸입니다.");
+            return;
+        }
+
+        var memberVO = {
+            memberId: memberId,
+            name: memberName,
+            engLname: memberEnLastName,
+            engFname: memberEnFirstName,
+            address: memberAdress1,
+            addrDetail: memberAdress2,
+            email: memberEmail,
+            phone: memberPhone,
+            zipcode: memberZipCode
+        };
+
+        $.ajax({
+            url: 'updateMember.do',
+            type: 'POST',
+            contentType: 'application/json; charset=UTF-8',
+            dataType: 'json',
+            data: JSON.stringify(memberVO),
+            error: function(xhr) {
+                console.log(xhr.status);
+                alert("문제가 발생했습니다.");
+            },
+            success: function(jsonObj) {
+                alert("회원정보가 정상적으로 수정되었습니다.");
+                $('#memberDetail').modal('hide');
+                location.reload();
+            }
+        });//ajax
+    }//updateAction
 
     function registerAction() {
         console.log('등록 동작 수행');
@@ -187,7 +283,7 @@ $(document).ready(function() {
     $('#chkDeleteBtn').on('click', function() {
         showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
             deleteAction();
-            alert('삭제 동작 수행');
+
         });
     });
 
@@ -195,7 +291,7 @@ $(document).ready(function() {
     $('#chkUpdateBtn').on('click', function() {
         showModal('수정 확인', '수정하시겠습니까?', '예', function() {
             updateAction();
-            alert('수정 동작 수행');
+
         });
     });
     
@@ -390,96 +486,6 @@ function changePage(pageNumber) {
 
 </c:forEach>
 										
-						
-											<!-- <tr>
-												<th>1</th>
-												<td><a href="#" class="memberId">andud</a></td>
-												<td class="memberName">김무영</td>
-												<td class="memberPhone">010-1111-1111</td>
-												<td class="memberSignUpDate">2024-01-01</td>
-												<td class="memberLoginDate">2024-06-01 15:37:20</td>
-											</tr>
-											<tr>
-												<th>2</th>
-												<td><a href="#" class="memberId">wngml</a></td>
-												<td class="memberName">이주희</td>
-												<td class="memberPhone">010-1111-1112</td>
-												<td class="memberSignUpDate">2024-01-03</td>
-												<td class="memberLoginDate">2024-06-01 16:37:30</td>
-											</tr>
-											<tr>
-												<th>3</th>
-												<td><a href="#" class="memberId">dndcks</a></td>
-												<td class="memberName">윤웅찬</td>
-												<td class="memberPhone">010-1111-1113</td>
-												<td class="memberSignUpDate">2024-01-05</td>
-												<td class="memberLoginDate">2024-06-01 17:37:24</td>
-											</tr>
-											<tr>
-												<th>4</th>
-												<td><a href="#" class="memberId">whgml</a></td>
-												<td class="memberName">이조희</td>
-												<td class="memberPhone">010-1111-1114</td>
-												<td class="memberSignUpDate">2024-01-07</td>
-												<td class="memberLoginDate">2024-06-01 18:37:28</td>
-											</tr>
-
-											<tr>
-												<th>5</th>
-												<td><a href="#" class="memberId">cksdbs</a></td>
-												<td class="memberName">웅찬윤</td>
-												<td class="memberPhone">010-2222-1111</td>
-												<td class="memberSignUpDate">2024-01-09</td>
-												<td class="memberLoginDate">2024-06-01 19:37:21</td>
-											</tr>
-											<tr>
-												<th>6</th>
-												<td><a href="#" class="memberId">anzld</a></td>
-												<td class="memberName">영무킹</td>
-												<td class="memberPhone">010-1111-2323</td>
-												<td class="memberSignUpDate">2024-01-20</td>
-												<td class="memberLoginDate">2024-06-01 20:37:37</td>
-											</tr>
-											<tr>
-												<th>7</th>
-												<td><a href="#" class="memberId">alsths</a></td>
-												<td class="memberName">지민손</td>
-												<td class="memberPhone">010-1134-1111</td>
-												<td class="memberSignUpDate">2024-02-01</td>
-												<td class="memberLoginDate">2024-06-01 11:37:50</td>
-											</tr>
-											<tr>
-												<th>8</th>
-												<td><a href="#" class="memberId">wlals</a></td>
-												<td class="memberName">손지민</td>
-												<td class="memberPhone">010-1445-1131</td>
-												<td class="memberSignUpDate">2024-02-05</td>
-												<td class="memberLoginDate">2024-06-01 13:37:29</td>
-											</tr>
-											<tr>
-												<th>9</th>
-												<td><a href="#" class="memberId">Tkddyd</a></td>
-												<td class="memberName">쌍용</td>
-												<td class="memberPhone">010-1321-1671</td>
-												<td class="memberSignUpDate">2024-03-04</td>
-												<td class="memberLoginDate">2024-06-01 17:37:30</td>
-											</tr>
-											<tr>
-												<th>10</th>
-												<td><a href="#" class="memberId">dydTkd</a></td>
-												<td class="memberName">용쌍</td>
-												<td class="memberPhone">010-1871-1651</td>
-												<td class="memberSignUpDate">2024-03-01</td>
-												<td class="memberLoginDate">2024-06-01 18:37:13</td>
-											</tr>
-											<tr>
-												<th>11</th>
-												<td><a href="#" class="memberId">rlfehd</a></td>
-												<td class="memberName">홍길동</td>
-												<td class="memberPhone">010-2341-1511</td>
-												<td class="memberSignUpDate">2024-05-02</td>
-												<td class="memberLoginDate">2024-06-01 19:37:10</td>
-											</tr> -->
 
 										</tbody>
 									</table>

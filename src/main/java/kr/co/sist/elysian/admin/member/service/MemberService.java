@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.sist.elysian.admin.member.model.domain.MemberDomain;
 import kr.co.sist.elysian.admin.member.model.domain.MemberListDomain;
+import kr.co.sist.elysian.admin.member.model.vo.MemberVO;
 import kr.co.sist.elysian.admin.member.repository.MemberDAO;
 
 
@@ -49,7 +50,31 @@ public class MemberService {
 	}//searchMemberDetail
 	
 	
+	public boolean deleteMember(String memberId){
+
+		try {
+			int result =mDAO.deleteMember(memberId);
+			System.out.println("result>0 :"+ (result>0) );
+			return result>0;
+		}catch(PersistenceException pe){
+			pe.printStackTrace();
+			return false;
+		}//end catch
+	}//deleteMember
 	
+	
+	public boolean updateMember(MemberVO mVO){
+		
+		try {
+			int result =mDAO.updateMember(mVO);
+			System.out.println("result>0 :"+ (result>0) );
+			return result>0;
+		}catch(PersistenceException pe){
+			pe.printStackTrace();
+			return false;
+		}//end catch
+	}//updateMember
+
 	
 
 }

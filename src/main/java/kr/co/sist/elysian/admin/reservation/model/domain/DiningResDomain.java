@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class DiningResDomain {
 
 	private int visitPeople, cardNum, payPrice ;
-	private String diningResNum, diningResStatus, diningName, visitDate, visitTime, visitorName, visitorPhone, visitorEmail, visitorRequest, cardCode ;
+	private String payNum, diningResStatus, diningName, visitDate, visitTime, visitorName, visitorPhone, visitorEmail, visitorRequest, cardCode ;
 	private Date diningResDate;
 	
-}
+} // class

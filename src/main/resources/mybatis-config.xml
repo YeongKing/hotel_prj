@@ -24,6 +24,7 @@
 		<typeAlias type="kr.co.sist.elysian.admin.board.notice.model.domain.NoticeDomain" alias="nd"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.login.model.vo.AdminVO" alias="av"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.login.model.domain.AdminDomain" alias="ad"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.RoomResDomain" alias="rrd"/> 
 	</typeAliases>
   
   <!-- 환경 설정 -->
@@ -50,12 +51,12 @@
 	<mapper resource="mapper/admin/NoticeMapper.xml"/>
 	
     <mapper resource="mapper/admin/LoginMapper.xml"/>
+    <mapper resource="mapper/admin/ResMapper.xml"/>
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
 <!--     
     <mapper resource="mapper/admin/HomeMapper.xml"/>
-
-    <mapper resource="mapper/admin/ResMapper.xml"/>
      -->
+
   </mappers>
   
 

@@ -11,6 +11,7 @@ import kr.co.sist.elysian.admin.member.model.domain.MemberDomain;
 import kr.co.sist.elysian.admin.member.model.vo.MemberVO;
 import kr.co.sist.elysian.admin.room.model.domain.RoomDomain;
 import kr.co.sist.elysian.admin.room.model.domain.RoomListDomain;
+import kr.co.sist.elysian.admin.room.model.vo.RoomVO;
 import kr.co.sist.elysian.admin.room.model.vo.UpdateRoomVO;
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
 
@@ -51,6 +52,24 @@ public class RoomDAO {
 		
 	}//updateRoom
 	
+	public int selectRoomId(int selectedFloor) throws PersistenceException{
+		
+		SqlSession ss= mbDAO.getMyBatisHandler(true);
+		int result = ss.selectOne("kr.co.sist.elysian.admin.room.selectRoomId",selectedFloor);
+		mbDAO.closeHandler(ss);
+		return result;
+		
+	}//selectRoomId
+	
+	
+	public int insertRoom(RoomVO rVO) throws PersistenceException{
+		
+		SqlSession ss= mbDAO.getMyBatisHandler(true);
+		int result = ss.insert("kr.co.sist.elysian.admin.room.insertRoom",rVO);
+		mbDAO.closeHandler(ss);
+		return result;
+		
+	}//insertRoom
 	
 	
 }

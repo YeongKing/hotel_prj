@@ -6,12 +6,13 @@
 <mapper namespace="kr.co.sist.elysian.admin.board.qna">
 
 
-	 <select id="qnaList" resultType="qld">
+	 <select id="selectQnaList" resultType="qld">
 		select QNA_NUM qnaNum, QNA_TYPE qnaType, QNA_TITLE qnaTitle, ADMIN_ID adminId
 		from QNA
+		ORDER BY QNA_NUM ASC
 	 </select>
 	 
-	 <select id="qnaDetail" resultType="qd" parameterType="String">
+	 <select id="selectQnaDetail" resultType="qd" parameterType="String">
 		select QNA_NUM qnaNum, ADMIN_ID adminId, QNA_TITLE qnaTitle, QNA_TYPE qnaType, QNA_CONTENT qnaContent, QNA_INPUTDATE qnaInputdate
 		from QNA
 		where QNA_NUM =#{qnaNum}

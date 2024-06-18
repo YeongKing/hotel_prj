@@ -58,28 +58,60 @@ $(document).ready(function() {
     
     
     // 테이블의 유저아이디 클릭시
-    $(document).on("click", ".userId", function() {
-        var userId = $(this).text();
-        var userName = $(this).closest('tr').find('.userName').text(); // 같은 행(row) 내에서 .userName을 찾아 텍스트를 가져옴
-        var userPhone = $(this).closest('tr').find('.userPhone').text(); // 같은 행(row) 내에서 .userName을 찾아 텍스트를 가져옴
-        var userSignUpDate = $(this).closest('tr').find('.userSignUpDate').text(); // 같은 행(row) 내에서 .userName을 찾아 텍스트를 가져옴
+    $(document).on("click", ".memberId", function() {
+        var memberId = $(this).text();
+        
+        
+        $.ajax({
+        	url:'memberDetail.do',
+        	type:'POST',
+        	contentType:'application/json',
+        	dataType:'JSON',
+        	data:JSON.stringify({ memberId: memberId }),
+        	error:function(xhr){
+        		console.log(xhr.status)
+        		alert("문제가 발생했습니다.")
+        	},
+        	success:function(jsonObj){
+        		
+                // Zipcode가 숫자일 경우 문자열로 변환하여 처리
+                var zipcode = String(jsonObj.zipcode);
+                if (zipcode.length < 5) {
+                    zipcode = zipcode.padStart(5, '0');
+                }
+ 	 
+        		$("#memberId").val(jsonObj.memberId);
+        		$("#memberEmail").val(jsonObj.email);
+        		$("#memberName").val(jsonObj.name);
+        		$("#memberGender").val(jsonObj.gender);
+        		$("#memberEnLastName").val(jsonObj.engLname);
+        		$("#memberEnFirstName").val(jsonObj.engFname);
+        		$("#memberZipCode").val(zipcode);
+        		$("#memberPhone").val(jsonObj.phone);
+        		$("#memberAdress1").val(jsonObj.address);
+        		$("#memberBirthday").val(jsonObj.birthday);
+        		$("#memberAdress2").val(jsonObj.addrDetail);
+        		$("#memberSignUpDate").val(jsonObj.signupDate);
+        		
+        		
+        	}
+        	
+        	
+        	
+        })
 
-        $("#userId").val(userId);
-        $("#userName").val(userName);
-        $("#userPhone").val(userPhone);
-        $("#userSignUpDate").val(userSignUpDate);
 
         // 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
         // 모달 내의 모든 'is-invalid' 클래스 제거
-        $('#userDetail').find('.is-invalid').removeClass('is-invalid');
+        $('#memberDetail').find('.is-invalid').removeClass('is-invalid');
         
         
         // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
-        $('#userDetail').find('span.parsley-custom-error-message').remove();
+        $('#memberDetail').find('span.parsley-custom-error-message').remove();
         
         
         // Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
-        $('#userDetail').modal('show');
+        $('#memberDetail').modal('show');
     });
 
     var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
@@ -97,6 +129,34 @@ $(document).ready(function() {
 
     function deleteAction() {
         console.log('삭제 동작 수행');
+        var memberId = $('#memberId').val()
+        alert(memberId);
+        $.ajax({
+        	url:'deleteMember.do',
+        	type:'POST',
+        	contentType:'application/json',
+        	dataType:'JSON',
+        	data:JSON.stringify({ memberId: memberId }),
+        	error:function(xhr){
+        		console.log(xhr.status)
+        		alert("문제가 발생했습니다.")
+        	},
+        	success:function(jsonObj){
+        		
+			alert("회원정보가 정상적으로 삭제되었습니다.");
+			$('#memberDetail').modal('hide');
+			 location.reload();
+        		
+        		
+        	}
+        	
+        	
+        	
+        })
+        
+        
+        
+
         // 서버로 삭제 요청 보내기
         // $.ajax({
         //     url: 'delete_url',
@@ -112,20 +172,88 @@ $(document).ready(function() {
     }
 
     function updateAction() {
-        console.log('수정 동작 수행');
-        // 서버로 수정 요청 보내기
-        // $.ajax({
-        //     url: 'update_url',
-        //     method: 'POST',
-        //     data: { id: itemId, data: newData },
-        //     success: function(response) {
-        //         console.log('수정 성공');
-        //     },
-        //     error: function(error) {
-        //         console.log('수정 실패', error);
-        //     }
-        // });
-    }
+
+        var memberId = $('#memberId').val();
+        var memberName = $('#memberName').val();
+        var memberEnLastName = $('#memberEnLastName').val();
+        var memberEnFirstName = $('#memberEnFirstName').val();
+        var memberAdress1 = $('#memberAdress1').val();
+        var memberAdress2 = $('#memberAdress2').val();
+        var memberEmail = $('#memberEmail').val();
+        var memberPhone = $('#memberPhone').val();
+        var memberZipCode = $('#memberZipCode').val();
+
+        // 한글 유효성 검사
+        var koreanRegex = /^[가-힣]+$/;
+        if (!koreanRegex.test(memberName)) {
+            alert("이름은 한글만 입력 가능합니다.");
+            return;
+        }
+
+        // 영어 유효성 검사
+        var englishRegex = /^[A-Za-z]+$/;
+        if (!englishRegex.test(memberEnLastName)) {
+            alert("영문 성은 영어만 입력 가능합니다.");
+            return;
+        }
+        if (!englishRegex.test(memberEnFirstName)) {
+            alert("영문 이름은 영어만 입력 가능합니다.");
+            return;
+        }
+
+        // 대문자 변환
+        memberEnLastName = memberEnLastName.toUpperCase();
+        memberEnFirstName = memberEnFirstName.toUpperCase();
+
+        // 이메일 유효성 검사
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(memberEmail)) {
+            alert("유효한 이메일 주소를 입력하세요.");
+            return;
+        }
+
+        // 전화번호 유효성 검사
+        var phoneRegex = /^010-\d{4}-\d{4}$/;
+        if (!phoneRegex.test(memberPhone)) {
+            alert("전화번호는 010-0000-0000 형식으로 입력하세요.");
+            return;
+        }
+
+        // 상세 주소 유효성 검사
+        if (!memberAdress2) {
+            alert("상세주소가 빈칸입니다.");
+            return;
+        }
+
+        var memberVO = {
+            memberId: memberId,
+            name: memberName,
+            engLname: memberEnLastName,
+            engFname: memberEnFirstName,
+            address: memberAdress1,
+            addrDetail: memberAdress2,
+            email: memberEmail,
+            phone: memberPhone,
+            zipcode: memberZipCode
+        };
+
+        $.ajax({
+            url: 'updateMember.do',
+            type: 'POST',
+            contentType: 'application/json; charset=UTF-8',
+            dataType: 'json',
+            data: JSON.stringify(memberVO),
+            error: function(xhr) {
+                console.log(xhr.status);
+                alert("문제가 발생했습니다.");
+            },
+            success: function(jsonObj) {
+                alert("회원정보가 정상적으로 수정되었습니다.");
+                $('#memberDetail').modal('hide');
+                location.reload();
+            }
+        });//ajax
+    }//updateAction
 
     function registerAction() {
         console.log('등록 동작 수행');
@@ -155,7 +283,7 @@ $(document).ready(function() {
     $('#chkDeleteBtn').on('click', function() {
         showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
             deleteAction();
-            alert('삭제 동작 수행');
+
         });
     });
 
@@ -163,7 +291,7 @@ $(document).ready(function() {
     $('#chkUpdateBtn').on('click', function() {
         showModal('수정 확인', '수정하시겠습니까?', '예', function() {
             updateAction();
-            alert('수정 동작 수행');
+
         });
     });
     
@@ -188,7 +316,7 @@ function changePage(pageNumber) {
     for (var i = 1; i <= 5; i++) {
         var row = `<tr>
             <th>${(pageNumber - 1) * 5 + i}</th>
-            <td class="userId">아이디${(pageNumber - 1) * 5 + i}</td>
+            <td class="memberId">아이디${(pageNumber - 1) * 5 + i}</td>
             <td>email${(pageNumber - 1) * 5 + i}@example.com</td>
             <td>전화번호${(pageNumber - 1) * 5 + i}</td>
             <td>가입일자${(pageNumber - 1) * 5 + i}</td>
@@ -227,7 +355,7 @@ function changePage(pageNumber) {
                 var extraAddr = ''; // 참고항목 변수
 
                 //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                if (data.memberSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
                     addr = data.roadAddress;
                 } else { // 사용자가 지번 주소를 선택했을 경우(J)
                     addr = data.jibunAddress;
@@ -235,7 +363,7 @@ function changePage(pageNumber) {
 
 
                 // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if (data.userSelectedType === 'R') {
+                if (data.memberSelectedType === 'R') {
                     // 법정동명이 있을 경우 추가한다. (법정리는 제외)
                     // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
                     if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
@@ -257,10 +385,12 @@ function changePage(pageNumber) {
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('userZipCode').value = data.zonecode;
-                document.getElementById("userAdress1").value = addr;
+                document.getElementById('memberZipCode').value = data.zonecode;
+                document.getElementById("memberAdress1").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("userAdress2").focus();
+                
+                document.getElementById("memberAdress2").value = "";
+                document.getElementById("memberAdress2").focus();
             }
         }).open();
     }
@@ -346,106 +476,16 @@ function changePage(pageNumber) {
 <c:forEach var="mld" items="${ requestScope.memberList }" varStatus="i">
 <tr>
 	<td><c:out value="${ i.count }"/></td>
-	<td><a href="#" class="userId"><c:out value="${ mld.memberId }"/></a></td>
-	<td class="userName"><c:out value="${ mld.name }"/></td>
-	<td class="userPhone"><c:out value="${ mld.phone }"/></td>
-	<td class="userSignUpDate"><c:out value="${ mld.signupDate }"/></td>
-	<td class="userLoginDate"><c:out value="${ mld.loginDate }"/></td>
+	<td><a href="#" class="memberId"><c:out value="${ mld.memberId }"/></a></td>
+	<td class="memberName"><c:out value="${ mld.name }"/></td>
+	<td class="memberPhone"><c:out value="${ mld.phone }"/></td>
+	<td class="memberSignUpDate"><c:out value="${ mld.signupDate }"/></td>
+	<td class="memberLoginDate"><c:out value="${ mld.loginDate }"/></td>
 </tr>
 
 
 </c:forEach>
 										
-						
-											<!-- <tr>
-												<th>1</th>
-												<td><a href="#" class="userId">andud</a></td>
-												<td class="userName">김무영</td>
-												<td class="userPhone">010-1111-1111</td>
-												<td class="userSignUpDate">2024-01-01</td>
-												<td class="userLoginDate">2024-06-01 15:37:20</td>
-											</tr>
-											<tr>
-												<th>2</th>
-												<td><a href="#" class="userId">wngml</a></td>
-												<td class="userName">이주희</td>
-												<td class="userPhone">010-1111-1112</td>
-												<td class="userSignUpDate">2024-01-03</td>
-												<td class="userLoginDate">2024-06-01 16:37:30</td>
-											</tr>
-											<tr>
-												<th>3</th>
-												<td><a href="#" class="userId">dndcks</a></td>
-												<td class="userName">윤웅찬</td>
-												<td class="userPhone">010-1111-1113</td>
-												<td class="userSignUpDate">2024-01-05</td>
-												<td class="userLoginDate">2024-06-01 17:37:24</td>
-											</tr>
-											<tr>
-												<th>4</th>
-												<td><a href="#" class="userId">whgml</a></td>
-												<td class="userName">이조희</td>
-												<td class="userPhone">010-1111-1114</td>
-												<td class="userSignUpDate">2024-01-07</td>
-												<td class="userLoginDate">2024-06-01 18:37:28</td>
-											</tr>
-
-											<tr>
-												<th>5</th>
-												<td><a href="#" class="userId">cksdbs</a></td>
-												<td class="userName">웅찬윤</td>
-												<td class="userPhone">010-2222-1111</td>
-												<td class="userSignUpDate">2024-01-09</td>
-												<td class="userLoginDate">2024-06-01 19:37:21</td>
-											</tr>
-											<tr>
-												<th>6</th>
-												<td><a href="#" class="userId">anzld</a></td>
-												<td class="userName">영무킹</td>
-												<td class="userPhone">010-1111-2323</td>
-												<td class="userSignUpDate">2024-01-20</td>
-												<td class="userLoginDate">2024-06-01 20:37:37</td>
-											</tr>
-											<tr>
-												<th>7</th>
-												<td><a href="#" class="userId">alsths</a></td>
-												<td class="userName">지민손</td>
-												<td class="userPhone">010-1134-1111</td>
-												<td class="userSignUpDate">2024-02-01</td>
-												<td class="userLoginDate">2024-06-01 11:37:50</td>
-											</tr>
-											<tr>
-												<th>8</th>
-												<td><a href="#" class="userId">wlals</a></td>
-												<td class="userName">손지민</td>
-												<td class="userPhone">010-1445-1131</td>
-												<td class="userSignUpDate">2024-02-05</td>
-												<td class="userLoginDate">2024-06-01 13:37:29</td>
-											</tr>
-											<tr>
-												<th>9</th>
-												<td><a href="#" class="userId">Tkddyd</a></td>
-												<td class="userName">쌍용</td>
-												<td class="userPhone">010-1321-1671</td>
-												<td class="userSignUpDate">2024-03-04</td>
-												<td class="userLoginDate">2024-06-01 17:37:30</td>
-											</tr>
-											<tr>
-												<th>10</th>
-												<td><a href="#" class="userId">dydTkd</a></td>
-												<td class="userName">용쌍</td>
-												<td class="userPhone">010-1871-1651</td>
-												<td class="userSignUpDate">2024-03-01</td>
-												<td class="userLoginDate">2024-06-01 18:37:13</td>
-											</tr>
-											<tr>
-												<th>11</th>
-												<td><a href="#" class="userId">rlfehd</a></td>
-												<td class="userName">홍길동</td>
-												<td class="userPhone">010-2341-1511</td>
-												<td class="userSignUpDate">2024-05-02</td>
-												<td class="userLoginDate">2024-06-01 19:37:10</td>
-											</tr> -->
 
 										</tbody>
 									</table>
@@ -457,7 +497,7 @@ function changePage(pageNumber) {
 				
 				<!-- 수정 모달창 S-->
 				<div class="modal fade text-left modal-borderless modal-xl "
-					id="userDetail" tabindex="-1" role="dialog"
+					id="memberDetail" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel1" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-scrollable" role="document">
 						<div class="modal-content">
@@ -470,26 +510,26 @@ function changePage(pageNumber) {
                                 </button>
 								</div>
 							</div>
-							<form id = "userDetailForm" action="#"  class="form px-5" data-parsley-validate>
+							<form id = "memberDetailForm" action="#"  class="form px-5" data-parsley-validate>
 								<div class="row">
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="userId">아이디</label> 
+											<label for="memberId">아이디</label> 
 											<input type="text"
-												id="userId" class="form-control"
-												name="userId" placeholder="아이디" Disabled>
+												id="memberId" class="form-control"
+												name="memberId" placeholder="아이디" Disabled>
 
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="userEmail">이메일</label> 
+											<label for="memberEmail">이메일</label> 
 											<input
 						                        type="text"
-						                        id="userEmail"
+						                        id="memberEmail"
 						                        class="form-control"
 						                        placeholder="test@test.test"
-						                        name="userEmail"
+						                        name="memberEmail"
 						                        data-parsley-required="true"
 						                        data-parsley-type="email"
 						                        data-parsley-error-message="유효한 이메일 주소를 입력하세요."
@@ -498,13 +538,13 @@ function changePage(pageNumber) {
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="userName">이름</label> 
+											<label for="memberName">이름</label> 
 											<input
 						                        type="text"
-						                        id="userName"
+						                        id="memberName"
 						                        class="form-control"
 						                        placeholder="이름"
-						                        name="userName"
+						                        name="memberName"
 						                        data-parsley-required="true"
 						                        data-parsley-error-message="회원명은 필수 입력입니다."
 						                     />
@@ -513,21 +553,21 @@ function changePage(pageNumber) {
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="userGender">성별</label>
+											<label for="memberGender">성별</label>
 											 <input type="text"
-												id="userGender" class="form-control" Disabled
-												name="userGender" placeholder="성별">
+												id="memberGender" class="form-control" Disabled
+												name="memberGender" placeholder="성별">
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="userEnLastName">영문 성</label>
+											<label for="memberEnLastName">영문 성</label>
 											<input
 						                        type="text"
-						                        id="userEnLastName"
+						                        id="memberEnLastName"
 						                        class="form-control"
 						                        placeholder="영문 성"
-						                        name="userEnLastName"
+						                        name="memberEnLastName"
 						                        data-parsley-required="true"
 						                        data-parsley-error-message="영문 성은 필수 입력입니다."
 						                     />
@@ -535,13 +575,13 @@ function changePage(pageNumber) {
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="userEnFirstName">영문 이름</label>
+											<label for="memberEnFirstName">영문 이름</label>
 											<input
 						                        type="text"
-						                        id="userEnFirstName"
+						                        id="memberEnFirstName"
 						                        class="form-control"
 						                        placeholder="영문 이름"
-						                        name="userEnFirstName"
+						                        name="memberEnFirstName"
 						                        data-parsley-required="true"
 						                        data-parsley-error-message="영문 이름은 필수 입력입니다."
 						                     />
@@ -550,13 +590,13 @@ function changePage(pageNumber) {
 
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="userZipCode">우편번호</label>
+											<label for="memberZipCode">우편번호</label>
 											<input
 						                        type="text"
-						                        id="userZipCode"
+						                        id="memberZipCode"
 						                        class="form-control"
 						                        placeholder="클릭시 우편번호 검색"
-						                        name="userZipCode"
+						                        name="memberZipCode"
 						                        data-parsley-required="true"
 						                        data-parsley-error-message="우편번호는 필수 입력입니다."
 						                     	readonly
@@ -565,13 +605,13 @@ function changePage(pageNumber) {
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="userPhone">전화번호</label>
+											<label for="memberPhone">전화번호</label>
 											<input
 						                        type="text"
-						                        id="userPhone"
+						                        id="memberPhone"
 						                        class="form-control"
 						                        placeholder="000-0000-0000"
-						                        name="userPhone"
+						                        name="memberPhone"
 						                        data-parsley-required="true"
 						                        data-parsley-error-message="전화번호는 필수 입력입니다."
 						                     />
@@ -579,13 +619,13 @@ function changePage(pageNumber) {
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="userAdress1">주소</label>
+											<label for="memberAdress1">주소</label>
 											<input
 						                        type="text"
-						                        id="userAdress1"
+						                        id="memberAdress1"
 						                        class="form-control"
 						                        placeholder="주소"
-						                        name="userAdress1"
+						                        name="memberAdress1"
 						                        data-parsley-required="true"
 						                        data-parsley-error-message="주소는 필수 입력입니다."
 						                        Disabled
@@ -595,22 +635,22 @@ function changePage(pageNumber) {
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 										
-											<label for="userBirthday">생년월일</label>
-											 <input type="date"
-												id="userBirthday" class="form-control" name="userBirthday"
+											<label for="memberBirthday">생년월일</label>
+											 <input type="text"
+												id="memberBirthday" class="form-control" name="memberBirthday"
 												placeholder="생년월일" Disabled>
 												
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="userAdress2">상세주소</label>
+											<label for="memberAdress2">상세주소</label>
 											<input
 						                        type="text"
-						                        id="userAdress2"
+						                        id="memberAdress2"
 						                        class="form-control"
 						                        placeholder="상세주소"
-						                        name="userAdress2"
+						                        name="memberAdress2"
 						                        data-parsley-required="true"
 						                        data-parsley-error-message="상세주소는 필수 입력입니다."
 						                       
@@ -619,10 +659,10 @@ function changePage(pageNumber) {
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="userSignUpDate">가입일자</label> 
-											<input type="date"
-												id="userSignUpDate" class="form-control"
-												name="userSignUpDate" placeholder="가입일자" Disabled>
+											<label for="memberSignUpDate">가입일자</label> 
+											<input type="text"
+												id="memberSignUpDate" class="form-control"
+												name="memberSignUpDate" placeholder="가입일자" Disabled>
 										</div>
 									</div>
 

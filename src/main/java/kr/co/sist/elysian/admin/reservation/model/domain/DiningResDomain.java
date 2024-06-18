@@ -7,15 +7,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class DiningResDomain {
 
-	private int visitPeople, cardNum, payPrice ;
-	private String diningResNum, diningResStatus, diningName, visitDate, visitTime, visitorName, visitorPhone, visitorEmail, visitorRequest, cardCode ;
-	private Date diningResDate;
+	private int num, visitPeople, cardNum, payPrice ;
+	private String payNum, diningResStatus, diningName, visitorName, visitorPhone, visitorEmail, visitorRequest, cardCode ;
+	private Date visitDateTime, diningResDate;
 	
-}
+	private String visitDate, visitTime, visitPeopleStr, diningResDateStr;
+	
+} // class

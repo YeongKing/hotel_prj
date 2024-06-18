@@ -1,221 +1,87 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
- pageEncoding="UTF-8" 
- info="" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" info="다이닝 예약 step0" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-<meta name="format-detection" content="telephone=no">
-
-<title>다이닝 예약 - 날짜, 시간, 인원 선택 | 엘리시안호텔</title>
-
-<!-- S head css -->
-<jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
-<!-- E head css -->
-
-<!-- S head script -->
-<jsp:include page="/WEB-INF/views/user/common/head_script.jsp"></jsp:include>
-<!-- E head script -->
-</head>
-
-<body>
-
-	<div class="skip"><a href="#container">본문 바로가기</a></div>
-	<div class="wrapper ">
-
-<script>
-	jQuery(function(){
-		jQuery.ajax({
-			type : "GET",
-			url : "/massPromotion/get.json",
-			cache : false,
-			dataType : "json",
-			global : false,
-			beforeSend: function() {
-			},
-			complete: function() {
-			},
-			success : function(data){
-                var massPromtn = data.bean;
-                //조회 결과에 따라 랜더링
-                if(massPromtn != null && massPromtn != ""){
-                    var url = getMassPromtnUrl();
-                    var menuNm = massPromtn.promtnNm;
-                    var sysCode = massPromtn.sysCode;
-                    appendMassPromotionMenu(url, menuNm, sysCode);
-                }
-			},
-			error:function(r, s, e){
-			}
-		});
-	});
-
-    function getMassPromtnUrl(){
-        var url = "";
-        var sysCode = jQuery("#sysCode").val();
-
-        if(gfncIsApp()){
-            //앱일 경우
-            url = "/m/massPromotion/list.do";
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/m/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/m/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/m/massPromotion/list.do";
-                }
-            }
-        }else {
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/massPromotion/list.do";
-                }
-            }
-        }
-        return url;
-    }
-
-    function appendMassPromotionMenu(url, menuNm, sysCode){
-        if(gfncIsApp()){
-            //앱일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-
-            var pathname = window.location.pathname;
-            if(pathname.indexOf("/app/main.do") == 0){
-                jQuery(".gnbArea ul.toggleList > li > .titArea:contains('패키지')").closest("ul").append(menuHtml);
-            }else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-
-            /*if(jQuery(".gnbArea ul.toggleList li:contains('패키지')").length > jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").length){
-                jQuery(".gnbArea ul.toggleList li:contains('패키지')").closest("ul").append(menuHtml);
-            } else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }*/
-
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-            jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-        }else{
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL" || sysCode == "JPY"){
-                //해당 페이지가 HUB거나 JPY일 경우
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".allMenu ul.menuDepth01 ul.menuDepth02 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }else {
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".headArea .utilMenu .gnbDepth1 .gnbDepth2 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-        }
-    }
-
-</script>
-
-<script>
-        //2022-05-23 조선라운지 추가
-        //헤더 메뉴 버튼 클릭 이벤트
-        jQuery(document).on("click",".headArea .btnMenu" ,function(){
-
-            //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-            if(jQuery(this).hasClass("menuOn")){
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>다이닝 - 다이닝 예약 | 엘리시안호텔</title>
+    <link rel="shortcut icon" type="text/css" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
+    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/selectbox.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
+    <script>
+        // 헤더 메뉴 버튼 클릭 이벤트
+        jQuery(document).on("click", ".headArea .btnMenu", function() {
+            // 메뉴 펼쳐질 때 라운지 리스트 3가지 무작위 노출
+            if (jQuery(this).hasClass("menuOn")) {
                 var expsrCount = 3;
                 var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
                 var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
 
                 $loungeList.addClass("hidden");
-                $loungeList.each(function(index){
-                    if(randomArray.indexOf(index) > -1){
+                $loungeList.each(function(index) {
+                    if (randomArray.indexOf(index) > -1) {
                         jQuery(this).removeClass("hidden");
                     }
                 });
             }
-        })
-</script>
-
-
-
-<!--S header  -->
-<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
-<!--E header  -->
-
-
-
-
-
-        <!--(페이지 URL)-->
-
-
-
-
-
-
-
-
-
-
-
-
-<script type="text/javascript">
+        });
+    </script>
+    
+</head>
+<body>
+    <div class="wrapper">
+        <!--S header  -->
+        <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
+        <!--E header  -->
+		<script type="text/javascript">
 
     $(document).ready(function() {
         // 예약 가능일 조회
         fncSearchAvailTimesWeekly();
     });
 
-    // 예약 시작 가능일 조회 api
+    // 예약 가능 시간 데이터를 하드코딩
     function fncAvailTimesWeekly(visitDateTime) {
         return new Promise(function (resolve, reject) {
-            let shopId = $("#shopId").val();
-            let personCount = $("#personCountSelect").val();
-
-            if (personCount != '' && visitDateTime != '') {
-                jQuery.ajax({
-                    type : "GET",
-                    url : "/resve/dining/time/weekly.json",
-                    cache : false,
-                    dataType : "json",
-                    async : true,
-                    data : {
-                        "shopId" : shopId,
-                        "personCount" : personCount,
-                        "visitDateTime" : visitDateTime
-                    },
-                    global : false,
-                    beforeSend: function() {
-                        commonJs.showLoadingBar(); //로딩바 show
-                    },
-                    complete: function() {
-                        commonJs.closeLoadingBar(); //로딩바 hide
-                    },
-                    success : function(data){
-                        if (typeof data.result != 'undefined') {
-                            if (typeof data.result.slotStatusMsg != 'undefined') {
-                                alert(data.result.slotStatusMsg);
-                                return;
-                            } else if (typeof data.result.resultMsg != 'undefined'){
-                                alert(data.result.resultMsg);
-                            }
-                        } else {
-                            alert(data.resultMsg);
+            let data = {
+                result: {
+                    data: [
+                        {
+                            date: "2024-06-14",
+                            slots: [
+                                { availDateTime: "2024-07-01 12:00", isAvailable: true },
+                                { availDateTime: "2024-07-01 13:00", isAvailable: true },
+                                { availDateTime: "2024-07-01 18:00", isAvailable: false },
+                                { availDateTime: "2024-07-01 19:00", isAvailable: true }
+                            ]
+                        },
+                        {
+                            date: "2024-07-02",
+                            slots: [
+                                { availDateTime: "2024-07-02 12:00", isAvailable: true },
+                                { availDateTime: "2024-07-02 13:00", isAvailable: false },
+                                { availDateTime: "2024-07-02 18:00", isAvailable: true },
+                                { availDateTime: "2024-07-02 19:00", isAvailable: false }
+                            ]
                         }
-                        resolve(data);
-                    }});
-            }
+                    ]
+                }
+            };
+            resolve(data);
         });
     }
 
@@ -411,7 +277,12 @@
         $("#visitTime").val("");
         $("#selectInfoWrap").children().remove();
         $('#allTimeSwitch').prop("checked", false);
-
+        //화면 로딩시 예약가능한 시간만 보여줌
+        $('.frmRadio').each(function() {
+            if ($(this).find("input").is(":disabled")) {
+                $(this).hide();
+            }
+        });
         let data = await fncAvailTimes();
 
         if (data != "callResve") {
@@ -613,11 +484,20 @@
     // 모든 시간보기
     function fncShowAllTimes() {
         if ($('#allTimeSwitch').prop("checked")) {
-            $(".emptyDesc").hide();
-            $(".emptyAll").show();
+            $(".frmRadio").show(); // 모든 시간을 처음에 숨깁니다.
+            $(".emptyDesc").hide(); // 빈 설명을 숨깁니다.
+            $(".emptyAll").show(); // 필요한 경우 모든 빈 슬롯을 표시합니다.
         } else {
-            $(".emptyDesc").show();
-            $(".emptyAll").show();
+        	$(".frmRadio").hide();
+      	  	$(".frmRadio").each(function() {
+              	if ($(this).find("input").is(":disabled")) {
+              	    $(this).hide(); // 예약 불가능한 시간만 숨깁니다.
+             	 } else {
+              	    $(this).show(); // 예약 가능한 시간은 표시합니다.
+             	 }
+         	 });
+          	$(".emptyDesc").show(); // 빈 설명을 표시합니다.
+          	$(".emptyAll").show(); // 필요한 경우 모든 빈 슬롯을 표시합니다.
         }
     }
 
@@ -625,7 +505,6 @@
     function fncSelectTime(timeHtml) {
         $("#selectInfoWrap").hide();
         $("#selectInfoWrap").children().remove();
-
         let date = $("#diningCal").val()
         let week = ['일', '월', '화', '수', '목', '금', '토']; // '일', '월', '화', '수', '목', '금', '토'
         let day = week[new Date(date.replaceAll('.', '/')).getDay()]; // ios에서 날짜형식 YYYY/MM/DD (모두가능)
@@ -636,7 +515,15 @@
         let visitTime = time;
         let visitDate = date + "(" + day + ")";
 
+        console.log("인원 수 : " + personCount);
+        console.log("availSlotToken : " + availSlotToken);
+        console.log("방문시간 : " + visitTime);
+        console.log("방문날짜 : " + visitDate);
+
+        
         let confirmReservationUseYn = $("#confirmReservationUseYn").val();
+       
+        console.log("confirmReservationUseYn : " + confirmReservationUseYn);
 
         $("#availSlotToken").val(availSlotToken);
         $("#visitTime").val(visitTime);
@@ -647,15 +534,15 @@
                         <div class="selectInfo">
                             <div>
                                 <p>날짜</p><!-- 날짜 -->
-                                <em>${date}<span>(${day})</span></em>
+                                <em>visitTime<span></span></em>
                             </div>
                             <div>
                                 <p>시간</p><!-- 시간 -->
-                                <em>${time}</em>
+                                <em>${visitTime}</em>
                             </div>
                             <div>
-                                <p>인원수</p><!-- 인원수 -->
-                                <em>${"방문인원 총 {1}명".replace('{1}', personCount)}</em><!-- 방문인원 총 2명 -->
+                            <p>인원수</p><!-- 인원수 -->
+                            <em>${"방문인원 총 {1}명".replace('{1}', personCount != null ? personCount : "0")}</em><!-- 방문인원 총 2명 -->
                             </div>
                         </div>
                         <div class="manualInfoWrap" id="manualInfoWrap"></div>
@@ -666,7 +553,7 @@
                                 <div class="order_txt">① 예약신청 > ② 업장 예약 가능 여부 확인 > ③ 예약확정</div><!-- ① 예약신청 > ② 업장 예약 가능 여부 확인 > ③ 예약확정 -->
                                 <p class="txtGuide">예약 진행 과정은 알림톡/SMS로 안내해 드립니다.</p><!-- 예약 진행 과정은 알림톡/SMS로 안내해 드립니다. -->
                             </div>`;
-
+		alert(infoHtml);
         $("#selectInfoWrap").append(infoHtml);
         $("#selectInfoWrap").show();
 
@@ -721,578 +608,156 @@
     }
 
     async function fncGoStep2() {
-        let data = await fncSetSessionAvailToken();
-
-        if (data.resultMsg == "OK") {
-            $("#form").attr("action", "/resve/dining/step2.do");
-            $("#form").attr("method", "post");
-            $("#form").submit();
-        }
+        //let data = await fncSetSessionAvailToken();
+        
+         $("#form").attr("action", "dining_step1.do");
+         $("#form").attr("method", "post");
+         $("#form").submit();
+        
     }
 
     function fncGoStep0() {
         let searchSysCode = $("#searchSysCode").val();
         let diningCode = $("#diningCode").val();
-        location.href = "/resve/dining/step0.do?searchSysCode="+searchSysCode+"&diningCode="+diningCode ;
+        location.href = "resve/dining/step0";
     }
 
 </script>
-<form id="form" name="form">
-    <input type="hidden" id="searchSysCode" name="searchSysCode" value='TWC'/>
-    <input type="hidden" id="diningCode" name="diningCode" value='003'/>
-    <input type="hidden" id="searchLangCode" name="searchLangCode" value=""/>
+		
+		
 
-    <input type="hidden" id="shopId" name="shopId" value="pQUWDMHkPf2II_uVDPCFFQ" />
-    <input type="hidden" id="personCount" name="personCount" value=''/>
-    <input type="hidden" id="availSlotToken" name="availSlotToken" value=''/>
-    <input type="hidden" id="visitTime" name="visitTime" value=''/>
-    <input type="hidden" id="visitDate" name="visitDate" value=''/>
-    <input type="hidden" id="confirmReservationUseYn" name="confirmReservationUseYn" value=''/>
-    <div id="container" class="container">
-        <!-- 컨텐츠 S -->
-        <h1 class="hidden">날짜, 시간, 인원 선택</h1><!-- 예약-날짜 및 인원체크 -->
-        <div class="topArea">
-            <div class="topInner">
-                <h2 class="titDep1">Booking</h2>
-                <p class="pageGuide">조선호텔앤리조트의 다이닝과 함께 차원이 다른 미식을 경험해 보세요.</p><!-- 조선호텔앤리조트의 다이닝과 함께 차원이 다른 미식을 경험해 보세요. -->
-                <div class="stepWrap">
-                    <ol>
-                        <li class="on"><span class="hidden">현재단계</span><em>날짜, 시간, 인원 선택</em></li><!-- 날짜, 시간, 인원 선택 -->
-                        <li><em>예약정보 상세</em></li><!-- 예약정보 상세 -->
-                    </ol>
-                </div>
-            </div>
-        </div>
-        <!-- //topArea -->
-        <div class="inner">
-            <div class="diningContainer drDining_st02">
-                <div class="chkValue"><span>웨스틴 조선 서울<!--  그랜드 조선 부산 --></span><span>ARIA <!-- The Ninth Gate --></span></div>
-                <div class="diningSelectCont calCont">
-                    <div class="lCont" id="calDiv">
-                        <!-- 달력 한개 짜리 -->
-                        <div class="calContainer calSingle calInner" id="diningCal"></div>
-                        <!-- //달력 한개 짜리 -->
-                    </div>
-                    <div class="rCont">
-                        <div class="tit">방문인원</div><!-- 방문인원 -->
-                        <div class="intArea selectWrap" style="width:385px">
-                            <select id="personCountSelect" data-height="150px" data-direction="down" aria-required="true" onchange="fncSearchAvailTimes();">
-                                
-                                    <option value="1" >1명</option><!-- 명 -->
-                                
-                                    <option value="2" selected='selected'>2명</option><!-- 명 -->
-                                
-                                    <option value="3" >3명</option><!-- 명 -->
-                                
-                                    <option value="4" >4명</option><!-- 명 -->
-                                
-                                    <option value="5" >5명</option><!-- 명 -->
-                                
-                                    <option value="6" >6명</option><!-- 명 -->
-                                
-                                    <option value="7" >7명</option><!-- 명 -->
-                                
-                                    <option value="8" >8명</option><!-- 명 -->
-                                
-                                    <option value="9" >9명</option><!-- 명 -->
-                                
-                                    <option value="10" >10명</option><!-- 명 -->
-                                
-                                <option value="callResve">11명 이상</option><!-- 11명 이상 -->
-                            </select>
+        <form id="form" name="form">
+            <input type="hidden" id="searchSysCode" name="searchSysCode" value='TWC'/>
+            <input type="hidden" id="diningCode" name="diningCode" value='003'/>
+            <input type="hidden" id="searchLangCode" name="searchLangCode" value=""/>
+            <input type="hidden" id="shopId" name="shopId" value="pQUWDMHkPf2II_uVDPCFFQ"/>
+            <input type="hidden" id="personCount" name="personCount" value=''/>
+            <input type="hidden" id="availSlotToken" name="availSlotToken" value=''/>
+            <input type="hidden" id="visitTime" name="visitTime" value=''/>
+            <input type="hidden" id="visitDate" name="visitDate" value=''/>
+            <input type="hidden" id="confirmReservationUseYn" name="confirmReservationUseYn" value=''/>
+
+            <div id="container" class="container">
+                <!-- 컨텐츠 S -->
+                <h1 class="hidden">날짜, 시간, 인원 선택</h1>
+                <!-- 예약-날짜 및 인원체크 -->
+                <div class="topArea">
+                    <div class="topInner">
+                        <h2 class="titDep1">Booking</h2>
+                        <p class="pageGuide">조선호텔앤리조트의 다이닝과 함께 차원이 다른 미식을 경험해 보세요.</p>
+                        <!-- 조선호텔앤리조트의 다이닝과 함께 차원이 다른 미식을 경험해 보세요. -->
+                        <div class="stepWrap">
+                            <ol>
+                                <li class="on"><span class="hidden">현재단계</span><em>날짜, 시간, 인원 선택</em></li>
+                                <!-- 날짜, 시간, 인원 선택 -->
+                                <li><em>예약정보 상세</em></li>
+                                <!-- 예약정보 상세 -->
+                            </ol>
                         </div>
-                        <div class="allTimeWrap" id="timeListDiv"><!-- 221130 allTimeWrap 클래스추가 : 날짜 인원 선택후 나옴 -->
-                            <div class="tit">시간 선택<!-- 시간 선택 -->
-                                <div class="allTimeSwitch">
-                                    <fieldset>
-                                        <label>
-                                            <span>모든 시간 보기</span><!-- 모든 시간 보기 -->
-                                            <input role="switch" type="checkbox" id="allTimeSwitch" onchange="fncShowAllTimes();"/>
-                                        </label>
-                                    </fieldset>
-                                </div>
+                    </div>
+                </div>
+                
+                <!-- //topArea -->
+                <div class="inner">
+                    <div class="diningContainer drDining_st02">
+                        <div class="chkValue"><span>웨스틴 조선 서울<!--  그랜드 조선 부산 --></span><span>ARIA <!-- The Ninth Gate --></span></div>
+                        <div class="diningSelectCont calCont">
+                            <div class="lCont" id="calDiv">
+                                <!-- 달력 한개 짜리 -->
+                                <div class="calContainer calSingle calInner" id="diningCal"></div>
+                                <!-- //달력 한개 짜리 -->
                             </div>
-                            <div class="timeWrap"><!-- 221221 div 넣음 / 단체일때 display:none  -->
+                            <div class="rCont">
+                                <div class="tit">방문인원</div>
+                                <!-- 방문인원 -->
+                                <div class="intArea selectWrap" style="width:385px">
+                                    <select id="personCountSelect" data-height="150px" data-direction="down" aria-required="true" onchange="fncSearchAvailTimes();">
+                                        <option value="1">1명</option>
+                                        <!-- 명 -->
+                                        <option value="2" selected='selected'>2명</option>
+                                        <!-- 명 -->
+                                        <option value="3">3명</option>
+                                        <!-- 명 -->
+                                        <option value="4">4명</option>
+                                        <!-- 명 -->
+                                        <option value="5">5명</option>
+                                        <!-- 명 -->
+                                        <option value="6">6명</option>
+                                        <!-- 명 -->
+                                        <option value="7">7명</option>
+                                        <!-- 명 -->
+                                        <option value="8">8명</option>
+                                        <!-- 명 -->
+                                        <option value="9">9명</option>
+                                        <!-- 명 -->
+                                        <option value="10">10명</option>
+                                        <!-- 명 -->
+                                        <option value="callResve">11명 이상</option>
+                                        <!-- 11명 이상 -->
+                                    </select>
+                                </div>
+                                <div class="allTimeWrap" id="timeListDiv">
+                                    <!-- 221130 allTimeWrap 클래스추가 : 날짜 인원 선택후 나옴 -->
+                                    <div class="tit">시간 선택
+                                        <!-- 시간 선택 -->
+                                        <div class="allTimeSwitch">
+                                            <fieldset>
+                                                <label>
+                                                    <span>모든 시간 보기</span>
+                                                    <!-- 모든 시간 보기 -->
+                                                    <input role="switch" type="checkbox" id="allTimeSwitch" onchange="fncShowAllTimes();"/>
+                                                </label>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="timeWrap"><!-- 221221 div 넣음 / 단체일때 display:none  -->
                                 <strong class="timeTit">점심</strong><!-- 점심 -->
                                 <div class="timeSel morning"><!--  221206 class추가 -->
-                                    <ul class="frmList" id="timeUlAm">
-
-
-
-
-
-
-
-
-
-                                    </ul>
+                                    <ul class="frmList" id="timeUlAm"><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오전 6:00</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오전 6:30</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오전 7:00</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오전 7:30</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오전 8:00</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오전 8:30</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오전 9:00</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오전 9:30</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오전 10:00</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오전 10:30</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오전 11:00</label></li><li class="frmRadio"><input type="radio" class="test1" id="time0" name="frmRdo" data-ampm="am" data-token="H4sIAAAAAAAA_wEYAef-QvL05tkzx0dfR9LSmbbJQ6ZwJhPJeuFciJ5aOhG5aiLBeOGYUxBNKa1DP-wHLJ0-xjgZruWGWpZUt1PaKqQuTjS0KlVf7E8ohjXKiL554sulKR3aiyy2RuK2cEtQUgQYhsde23jfIL2nOCJ58Zu1PkLszUfpyCanCBe080mFQkMu0zcK5179cQDy4hn6eoQl9d_oD69XLjl9WGiJrLdXN3n6SCU3AZdE4tMtJgZpUwrNgDMNufs_qn6FN49Tz0_Q3mmc6Wjfsl0zNqLISbMuVRFYhka64db9ukWXl9rATf1ICxv5H8OY4T_r1fGW8qwbFn9tFTkhFrwKtxytNVmIuapIpdmaZPFu7RYr5p1i6YtjdCBPH7PXlU-g_icYAQAA" onclick="fncSelectTime(this);"><label for="time0">오전 11:30</label></li><li class="frmRadio"><input type="radio" id="time1" name="frmRdo" data-ampm="pm" data-token="H4sIAAAAAAAA_wEYAef-gfosQgSLhI3K1U327C5eNIinp4gXLe_K9sHHQadmf67BjnwSenLy3BhbT_o7n886kk5l50L_JSddaBQX5GMOE798RNaX0lxqXHkWQ_hLrAWjwoNSQEoEWQpMdKAti_4tC7H1rVYzXx5_rJYdZh2U7vwJmEYyVhZokuijq_y2IA1v4-KBnYwUlHyA2Cm9W_bPuMwoWIf2OsypuCgQo48sjxOxbWAsxQmvSGipwrf2aC6Kb_PHRbwb4JKH-IukBmYNzVu-PWaTssrSxALZrj2NsDjroq0JhEQmYk7iUK5ODStVlbBQ7k7liuvcLU_CVEql5DTFn1VpX5jjA_kQbp_jQdbOJc5Ntxt-dj5ovM4L1DH56MYv98yH7f-wlxoYAQAA" onclick="fncSelectTime(this);" data-gtm-form-interact-field-id="0"><label for="time1">오후 12:00</label></li><li class="frmRadio"><input type="radio" id="time2" name="frmRdo" data-ampm="pm" data-token="H4sIAAAAAAAA_wEYAef-d35vNDpZLC1dHjRM4dwDAkQhHp6WOMLc2loMZu7h7roX2WeeuZOMf1N2lr1lqAVOXVu-QHIV0q0vAPrYziIysu-icOJkZGB_NPq_79vK7zWFBUf6IUhuIivjQHcr4bco4saGco98mpGcQYVMmHR5Y29dZk2BoUymbsiF3S17vkXXH7WCDgVY1YsQylWbsidt5LTP4y1XboYR4B0Eup3ti9bIbZSMsGHfeNszIY9stQXwcWZbG0aavdqxRCdSOD2EU2jHewAJM_5Nso951NLYUsC3UnloT31utumTVRhYwGxtpNK-M8uPMt0MFF1H7MxHCTu5chVJj26w0uKLXExhLppKVMkYAdHWcvT1yaE8SMzM48ARgrYgwzxNG5AYAQAA" onclick="fncSelectTime(this);" data-gtm-form-interact-field-id="1"><label for="time2">오후 12:30</label></li><li class="frmRadio"><input type="radio" id="time3" name="frmRdo" data-ampm="pm" data-token="H4sIAAAAAAAA_wEYAef-P1o8UdYm3u14hoyhqe5EvdtEdTtXH7HuCCcTFsQhlllk3a3vX2feGKKDZK_g3fQN0LagdqC6nwbV0flZ80TiGlX6xshI4lYbbvrIycOU2YERPe7K2e_BGH-DmAaNLsmm2ypJArnTLTm4f75q17_DFgqAAtqXd42MyIiiMfwEoUUbq9jr9kNlbD__S2HDbwKsZf_2IlvnwDEFppRBkmClX7GUioYHvzB_hVyo04b3mqBvrdNc8UnlK99n27-aZiSH-Bgf9fNQNpTX_pHISKu6BH1iGbJHCy0lzBGh8_5MhtRb8gssDFfzjLydQaw9Tmrn95BfvTFIXGiITAqy8HRta9tetbllpQIyr1Wl5nH95O54f7r512bkFzH1aKwYAQAA" onclick="fncSelectTime(this);" data-gtm-form-interact-field-id="3"><label for="time3">오후 1:00</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오후 1:30</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오후 2:00</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오후 2:30</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오후 3:00</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오후 3:30</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오후 4:00</label></li><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오후 4:30</label></li></ul>
                                 </div>
                                 <strong class="timeTit">저녁</strong><!-- 저녁 -->
                                 <div class="timeSel afternoon"><!--  221206 class추가 -->
-                                    <ul class="frmList" id="timeUlPm">
-
-
-
-
-
-
-
-
-
-
-
-                                    </ul>
+                                    <ul class="frmList" id="timeUlPm"><li class="frmRadio" style=""><input type="radio" name="frmRdo" disabled=""><label for="time0">오후 5:00</label></li><li class="frmRadio"><input type="radio" id="time4" name="frmRdo" data-ampm="pm" data-token="H4sIAAAAAAAA_wEYAef-Iz__zh1UlVirrKdR9NBcypXEtgvq21WWxEQnMSydzz9pT7_kwuuHZa1_g9Y1r5HZFmkNnphH8OlNO5nKjFlG_Q1o0r9EfGpp9sUH2iKbwcBQK42BOiFflYts_QFEk772XQoi7JT0yGMfIv0wrNJr92MoBpSbuLg5Q3uLheok2KnvqUr-xX5kSvH8tNsiXAZ6Me9JNyKYN3iyHkvL-rGJvy0HyCD9hv8xi6Z1eZkrhU2xXOfpnrevl-l5uISVPlVYjjd_v9Zj1j8EtIYxj96LQz65gn2r7mkunDyE-SzKH0ZEtfgzcFyJ6Tm-CqNnYtBKOiK9s5iqzmFDkPavQVyKPQwTlOMJ1TgrapDpSTCvSgQHumxwTCObT_K27JEYAQAA" onclick="fncSelectTime(this);"><label for="time4">오후 5:20</label></li><li class="frmRadio"><input type="radio" id="time5" name="frmRdo" data-ampm="pm" data-token="H4sIAAAAAAAA_wEYAef-jgCtmJ71z68DXrK-OZYASYU72_kjbPi4xFbOXi6UkG7-MZC5z2KPmdMdz6Bw7gSMbm-iywkkI_1g6Hfp4JBX79n9yvaMxtlhsh00paBH6sH8ZYMLWCKEnYNcQy31x1-4JiFE9Pn1M_XndH70hYP12tHRZD6PycRj-nGFpHa5zJTupYC62LJNco4daxPIHIbYNlHYX9jhx1uzFZIVzbQfxPfucEkB9OvIhPQRM9adVOvT661774NADJ3DUEVm7dgdNjfXUifNGTObvyf8Ng7TC5OmOnUrTqxePbA4nol51t9rYgpHuVSd49PLp6ooQAnpL7SNANCqD6qyjrF7DWo_UAx-oxrZewl8IaaRX6sEkUZrmp8tdcqvqpkqXIIYAQAA" onclick="fncSelectTime(this);"><label for="time5">오후 5:30</label></li><li class="frmRadio"><input type="radio" id="time6" name="frmRdo" data-ampm="pm" data-token="H4sIAAAAAAAA_wEYAef-A9fgcTrUsfuPOQcNm80BHxMDZMk4FzZ-gf2gRW3KzZhyeVMefFRFwfhAOOFAUuBpTtPjFbYctuwwW1gYEfCtjoz5VvG0W_26L7iVI3OHkTo59lHctYXdjj2NLWo1591N9TJzeci9eQGiRNo7-LSXks14SyginUBA-fe6-cAVn1J41_H4fo5T7-2HZS-Qbvn7UhGBpj_5yae3iB66mH3d2mWbikFItreMnG2Oe-bIUxrVeqFzMNqfEj_4k0xgwQUWNwuqrXOabHVW2A9u7QqeyhtaodlDCuTMj4meNFj7uQS4BGaMcAAI1lzDmGC2IJgjZxTCtdgiYAJC_I2L9qNVvdAmE6q5ugJxKXfewp8ik1Y7QcfEz-P2pUMJAC4YAQAA" onclick="fncSelectTime(this);"><label for="time6">오후 7:50</label></li><li class="frmRadio"><input type="radio" id="time7" name="frmRdo" data-ampm="pm" data-token="H4sIAAAAAAAA_wEYAef-seOMtZ8srrDj0nPolTE96UjsEFtOqVCUoY9U5GBnndHbR07enSVdP0Z2urD0CSVX3XQrq4RaNl-Kp7dIyT41Ii88WVfFRk8YTL651QPo1OiWm47wGYRZk6-2GMNbW3NHq2Za-rOGSBoOKZ5G5zmvYDKaIARFLUhIjn5PBk3e6TillrM3lwLcMh1YXhVWK4mb8I70dhnn8GMXHygJNhVoEURJ8k7JP5y8NbRQLKqUJshR6UevRswejVJbYUjh3rJa32LNSbUBJ9rtjD6lWQTvIwfc3H6PzZQ6mg1Ppavm4AWrnv4Z8U6omqYvmvXziED3WTYbO8Sf4tOmclPIbmUvYjalCIB4DcRpdMNeQnDJ8yyfHUoRaim9mLSICo0YAQAA" onclick="fncSelectTime(this);"><label for="time7">오후 8:00</label></li></ul>
                                 </div>
                             </div>
-                            <!-- 221221 단체일때 보여짐 -->
-                            <div class="groupPerson" id="groupPerson">
-
+                                    <!-- 221221 단체일때 보여짐 -->
+                                    <div class="groupPerson" id="groupPerson"></div>
+                                    <div class="timeGuideWrap">
+                                        <ul>
+                                            <li class="tg01">선택</li>
+                                            <!-- 선택 -->
+                                            <li class="tg02">선택불가</li>
+                                            <!-- 선택불가 -->
+                                            <li class="tg03">선택가능</li>
+                                            <!-- 선택가능 -->
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="timeGuideWrap">
-                                <ul>
-                                    <li class="tg01">선택</li><!-- 선택 -->
-                                    <li class="tg02">선택불가</li><!-- 선택불가 -->
-                                    <li class="tg03">선택가능</li><!-- 선택가능 -->
-                                </ul>
-                            </div>
+                            <!-- // rCont -->
                         </div>
-                    </div><!-- // rCont -->
+
+                        <!-- 선택힌 예약 정보 -->
+                        <div class="selectInfoWrap" id="selectInfoWrap" style="display: none"></div>
+                        <!-- // 선택힌 예약 정보 -->
+                        <div class="btnArea">
+                            <a href="javascript:void(0)" class="btnSC btnL" onclick="fncGoStep0();">이전</a>
+                            <!-- 이전 -->
+                            <a href="javascript:void(0)" class="btnSC btnL active" onclick="fncGoStep2();">다음</a>
+                            <!-- 다음 -->
+                        </div>
+                    </div>
                 </div>
-                <script>
-                    /*221206 script 추가 및 수정*/
-
-                    //모든시간보기함수추가
-                    function empty_time(time, act){
-                        var empty = $(time).find('input:enabled').parent('li.frmRadio').length;
-                        if(act == "default" && empty == 0){
-                            $(time).find('input:disabled').parents('li.frmRadio').hide();
-                        }else if(act == "default" && empty != 0){
-                            $(time).find('.emptyTime').hide();
-
-                        }else if(empty == 0 && act =="hide"){
-                            $(time).find('.emptyTime').hide();
-                        }else if(empty == 0 && act =="show"){
-                            $(time).find('.emptyTime').show();
-                        }
-                    }
-
-                    //모든시간보기 default
-                    var allTimeSwitchchk = $('#allTimeSwitch').is(':checked');
-                    if(!allTimeSwitchchk){
-                        $(".timeSel").find('input:disabled').parents('li.frmRadio').hide();
-                        $(".timeGuideWrap").find(".tg02").hide();
-                    }
-                    empty_time(".morning", "default");
-                    empty_time(".afternoon", "default");
-
-
-                    //모든시간보기 클릭시
-                    $( "#allTimeSwitch" ).click(function() {
-                        var allTimeSwitchchk = $(this).is(':checked');
-                        if(allTimeSwitchchk){ //모든시간보기 on
-                            empty_time(".morning","hide");
-                            empty_time(".afternoon","hide");
-                            $(".timeSel").find('input:disabled').parents('li.frmRadio').show();
-                            $(".timeGuideWrap").find(".tg02").show();
-                        }else{ //모든시간보기 off
-                            $(".timeSel").find('input:disabled').parents('li.frmRadio').hide();
-                            $(".timeGuideWrap").find(".tg02").hide();
-                            empty_time(".morning","show");
-                            empty_time(".afternoon","show");
-                        }
-                    });
-                    /*// 221206 script 추가 및 수정*/
-                </script>
-                <!-- 선택힌 예약 정보 -->
-                <div class="selectInfoWrap" id="selectInfoWrap" style="display: none">
-                    
-                    <!-- // 221230 div 추가 -->
-                </div>
-                <!-- // 선택힌 예약 정보 -->
-                <div class="btnArea">
-                    <a href="javascript:void(0)" class="btnSC btnL" onclick="fncGoStep0();">이전</a><!-- 이전 -->
-                    <a href="javascript:void(0)" class="btnSC btnL active" onclick="fncGoStep2();">다음</a><!-- 다음 -->
-                </div>
+                <!-- //inner -->
+                <!-- 컨텐츠 E -->
             </div>
-        </div>
-        <!-- //inner -->
-        <!-- 컨텐츠 E -->
+            <!-- //container -->
+        </form>
+        
+         <!-- footer S -->
+    <jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
+    <!-- footer E -->
     </div>
-    <!-- //container -->
-</form>
-
-
-
-
-
-
-
-
-<script type="text/javascript" src="/revolution/js/bw.lab.alphanumeric-1.0.js"></script>
-<script type="text/javascript" src="/revolution/js/bw.lab.money-1.0.js"></script>
-<script>
-	
-	jQuery(function(){
-		jQuery("#menuTab > li").on("click", function() {
-			jQuery("#menuTab > li").removeClass("on");
-			jQuery(this).addClass("on");
-		});
-	})
-	function fncMenuShow(searchSysCode, diningCode) {
-		
-		jQuery("#menuPopDiningCode").val(diningCode);
-		jQuery("#menuPopSysCode").val(searchSysCode);
-		fncTabListJson(searchSysCode, diningCode);
-		
-	}
-	
-	
-	function fncTabListJson(searchSysCode, diningCode) {
-		
-		jQuery.ajax({
-			type : "GET",
-			url : "/rstrntMenu/tabListJson.json",
-			cache : false,
-			dataType : "json",
-			data : {
-				"diningCode" : diningCode,
-				"searchSysCode" : searchSysCode	
-			},
-			global : false,
-			async : false,
-			
-			success : function(data){
-				
-				var _list = data.tabList;
-				
-				var rstrntLclas = "";
-				var tabHtml = "";
-				
-				//다이닝 이름
-				jQuery("#menuPopup .compTit").text(data.diningNm);
-				jQuery("#popDiningNm").val(data.diningNm);
-				
-				if(_list != null && _list.length > 0){
-					
-					for(var i=0; i<_list.length; i++){
-						
-						if (i == 0) {
-							rstrntLclas = _list[i].lclasCode;
-						}
-						tabHtml += '<li><a href="#'+ _list[i].lclasCode +'" onclick="fncSelectMenuTab(\''+_list[i].lclasCode+ '\')">' + _list[i].lclasNm + '</a></li>';
-						
-						
-					}
-					
-				}
-				jQuery("#menuTab").html(tabHtml);
-				jQuery("#menuTab > li").first().addClass("on");
-				fncMenuListJson(searchSysCode, diningCode);
-			},
-			
-			error:function(r, s, e){
-				alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
-			}
-			
-		});
-	}
-	
-	
-	function fncMenuListJson(searchSysCode, diningCode) {
-		
-		jQuery.ajax({
-			type : "GET",
-			url : "/rstrntMenu/menuListJson.json",
-			cache : false,
-			dataType : "json",
-			data : {
-				"diningCode" : diningCode,
-				"searchSysCode" : searchSysCode
-			},
-			global : false,
-			async : false,
-			
-			success : function(data){
-				var _menuMapList = data;
-				
-				//등록된 메뉴가 있을때만 출력
-				if(_menuMapList.length == 0 || _menuMapList == null){
-					alert("등록된 메뉴가 없습니다."); //등록된 메뉴가 없습니다.
-					return false;
-				}
-				
-				jQuery(".menuCont").each(function(){
-					jQuery(this).remove();
-				});
-				
-				//첫번째 탭 value 세팅
-				jQuery("#lclasCode").val(_menuMapList[0].lclasCode);
-				
-				for(var k=0; k< _menuMapList.length; k++){
-				
-				 	var _singleMenu = _menuMapList[k].singleMenu;			// 단품 메뉴
-				 	var _lclasCode = _menuMapList[k].lclasCode;				// 대분류 코드
-				 	var _lclasNm = _menuMapList[k].lclasNm;				// 대분류 명
-				 	
-				 	var _singleLclasMenuList = null;
-					var _singleMenuOrigin = null;
-					
-				 	if(_singleMenu != null){
-				 		_singleLclasMenuList = _singleMenu.lclasMenuList; // 단품 대분류
-						_singleMenuOrigin = _singleMenu.origin.originCn;  //단품 원산지
-					}
-					
-					var _setMenu = _menuMapList[k].setMenu;						// 세트 메뉴
-					var _setLclasMenuList = null;
-					var _setMenuOrigin = null;
-					if(_setMenu != null){
-						
-						_setLclasMenuList = _setMenu.lclasMenuList; 		// 세트 대분류
-						_setMenuOrigin = _setMenu.origin.originCn;			// 세트 원산지
-					}
-					
-					
-					
-					var menuHtml = "";
-					if(k == 0){
-						menuHtml += '<div id='+ _lclasCode +' class="tabCont printCont menuCont" style="display:block">';
-					}else {
-						menuHtml += '<div id='+ _lclasCode +' class="tabCont printCont menuCont" style="display:none">';
-					}
-					menuHtml += '	<h3 class="hidden">'+ _lclasNm +'</h3>';
-					menuHtml += '	<div class="scrollWrap menuPanView">';
-					/* menuHtml += '		<div class="customScrollBox">'; */
-					
-					//세트 메뉴 세팅
-					if(_setLclasMenuList != null && _setLclasMenuList.length > 0){
-						
-						for(var i=0; i<_setLclasMenuList.length; i++){
-							
-							var _setDetailMenu = _setLclasMenuList[i].detailMenuList[0]; //상세 메뉴
-							
-							
-							menuHtml += '			<div class="menuPan type02">';
-							menuHtml += '				<p class="tit">'+ _setDetailMenu.menuNm +'</p>';
-							menuHtml += '				<ul class="menuList">';
-							menuHtml += '				<li>';
-							menuHtml += '					<div class="txt">';
-							menuHtml += '						<span>'+ fncReplaceEnter(_setDetailMenu.contents) +'</span>';
-							menuHtml += '					</div>';
-							menuHtml += '				</li>';
-							menuHtml += '				</ul>';
-							menuHtml += '				<p class="bill">'+ fncReplaceEnter(_setDetailMenu.pcCndDc) +'</p>';
-							menuHtml += '			</div>';
-							
-						}
-						
-						//세트 원산지 세팅
-						if(_setMenuOrigin != null && _setMenuOrigin != ""){
-							menuHtml += '			<div class="notiBox">';
-							menuHtml += '				<strong class="hidden">원산지 표시 안내</strong>';
-							menuHtml += fncReplaceEnter(_setMenuOrigin);
-							menuHtml += '			</div>';
-						}
-					}
-					
-					//단품 메뉴 세팅
-					if(_singleLclasMenuList != null && _singleLclasMenuList.length > 0){
-						
-						for(var i=0; i<_singleLclasMenuList.length; i++){
-							
-							var _detailMenuList = _singleLclasMenuList[i].detailMenuList; //상세 메뉴
-							
-							menuHtml += '			<div class="menuPan type01">';
-							menuHtml += '				<p class="tit">'+ _singleLclasMenuList[i].singleSclasNm +'</p>';
-							menuHtml += '				<ul class="menuList">';
-							
-							//상세 메뉴 세팅
-							for(var j=0; j<_detailMenuList.length; j++){
-								menuHtml += '				<li>';
-								menuHtml += '					<span class="txt">'+ fncReplaceEnter(_detailMenuList[j].menuNm) +'</span>';
-								menuHtml += '					<p class="bill">';
-								menuHtml += '						'+ _detailMenuList[j].pcCndDc +'';
-								menuHtml += '					</p>';
-								menuHtml += '				</li>';
-							}
-							
-							menuHtml += '				</ul>';
-							menuHtml += '			</div>';
-						}
-						
-						//단품 원산지 세팅
-						if(_singleMenuOrigin != null && _singleMenuOrigin != ""){
-							menuHtml += '			<div class="notiBox">';
-							menuHtml += '				<strong class="hidden">원산지 표시 안내</strong>';
-							menuHtml += fncReplaceEnter(_singleMenuOrigin);
-							menuHtml += '			</div>';
-						}
-						
-					}
-					
-					menuHtml += '		</div>';
-					/* menuHtml += '	</div>'; */
-					menuHtml += '</div>';
-					
-					jQuery(".menuPanArea").append(menuHtml);
-				}
-				commonJs.initDesignScroll($('.scrollWrap'));
-				commonJs.initTab('.tabToggle');
-				commonJs.popShow($('#menuPopup'));
-				
-			},
-			
-			error:function(r, s, e){
-				alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
-			}
-		})
-	}
-	
-	
-	function fncSelectMenuTab(lclasCode){
-		jQuery("#lclasCode").val(lclasCode);
-	}
-	
-	
-	function fncMenuDownload(){
-		jQuery("#diningMenuPopForm").attr("action", "/rstrntMenu/menuDownload.do");
-		jQuery("#diningMenuPopForm").attr("method", "get");
-		jQuery("#diningMenuPopForm").submit();
-	}
-	
-	
-	
-	function fncReplaceEnter(str) {
-		if(str != "") {
-			return str.split("\r\n").join("<br/>");
-		} else {
-			return "";
-		}
-	}
-	
-</script>
-
-<form id="diningMenuPopForm" name="diningMenuPopForm">
-	<input type="hidden" id="lclasCode" name="lclasCode" value="">
-	<input type="hidden" id="menuPopSysCode" name="searchSysCode" value="">
-	<input type="hidden" id="menuPopDiningCode" name="diningCode" value="">
-	<input type="hidden" id="popDiningNm" name="diningNm" value="">
-</form>
-
-<!-- 메뉴 자세히 보기 Layer -->
-<div id="menuPopup" class="layerPop">
-	<div class="layerCont">
-		<div class="menuPanArea">
-			
-			<h2 class="compTit"></h2>
-			
-			            
-            <ul id="menuTab" class="tabType03 tabToggle"></ul>
-            
-            
-            <div class="side">
-				<button type="button" class="btnPrint02 btnLine">인쇄하기</button><!-- 인쇄하기 -->
-				<button type="button" class="btnLine" onclick="fncMenuDownload();">다운로드</button><!-- 다운로드 -->
-			</div>
-		</div>
-		<button type="button" class="btnClose" onclick="commonJs.popClose($('#menuPopup'))">닫기</button><!-- 닫기 -->
-	</div>
-</div>
-<!-- //메뉴 자세히 보기 Layer -->
-<div id="dimmed" class="dimmed">
-
-</div>
-
-
-		<!-- //container -->
-
-
-<!--S footer  -->
-<jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
-<!--E footer  -->
-
-
-
-
-	</div>
-	<!-- //wrapper -->
-
-<!-- 호텔 찾기 Layer -->
-<div id="hotelFindLayer" class="layerPop">
-	<div class="layerCont">
-		<div class="hotelFindPop">
-			<h2>호텔 찾기</h2>
-			<ul class="hotelSelect">
-								<li>
-					<a href="https://jpg.josunhotel.com/main.do" target="_blank" title="새창열림">		
-						<span class="hotelLogo palace">
-						</span>
-						<span class="hotelTit">조선 팰리스<!-- 조선 팰리스 --></span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selwi-the-westin-chosun-seoul" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo westinSeoul">
-						</span>
-						<span class="hotelTit">웨스틴 조선 서울</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/puswi-the-westin-chosun-busan" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo westinBusan">
-						</span>
-						<span class="hotelTit">웨스틴 조선 부산</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://gjb.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo grandBusan">
-						</span>
-						<span class="hotelTit">그랜드 조선 부산</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://gjj.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo grandJeju">
-						</span>
-						<span class="hotelTit">그랜드 조선 제주</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://lescapehotel.com/main" target="_blank" title="새창열림">
-						<span class="hotelLogo lescape">
-						</span>
-						<span class="hotelTit">레스케이프 호텔</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://grp.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo gravityPangyo">
-						</span>
-						<span class="hotelTit">그래비티 서울 판교</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selfp-four-points-seoul-namsan" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo sheratonSeoulstation">
-						</span>
-						<span class="hotelTit">포포인츠 바이 쉐라톤 조선 서울역</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selfd-four-points-seoul-myeongdong" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo sheratonMyeongdong">
-						</span>
-						<span class="hotelTit">포포인츠 바이 쉐라톤 조선, 서울 명동</span>
-					</a>
-				</li>
-			</ul>
-		</div>
-		<button type="button" class="btnClose" onclick="commonJs.popClose($('#hotelFindLayer'))">닫기</button>
-	</div>
-</div>
-<!-- //호텔 찾기 Layer -->
-<div class="dimmed"></div>
+    <!-- //wrapper -->
 </body>
 </html>
-

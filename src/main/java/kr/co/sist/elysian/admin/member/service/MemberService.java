@@ -6,7 +6,9 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.sist.elysian.admin.member.model.domain.MemberDomain;
 import kr.co.sist.elysian.admin.member.model.domain.MemberListDomain;
+import kr.co.sist.elysian.admin.member.model.vo.MemberVO;
 import kr.co.sist.elysian.admin.member.repository.MemberDAO;
 
 
@@ -28,9 +30,49 @@ public class MemberService {
 		return list;
 		
 		
-	}
+		
+	}//searchMemberList
 	
 	
+	
+	public MemberDomain searchMemberDetail(String memberId){
+		MemberDomain md = null;
+		try {
+			md =mDAO.selectMemeberDetail(memberId);
+		}catch(PersistenceException pe){
+			pe.printStackTrace();
+			
+		}//end catch
+		return md;
+		
+		
+		
+	}//searchMemberDetail
+	
+	
+	public boolean deleteMember(String memberId){
+
+		try {
+			int result =mDAO.deleteMember(memberId);
+			return result>0;
+		}catch(PersistenceException pe){
+			pe.printStackTrace();
+			return false;
+		}//end catch
+	}//deleteMember
+	
+	
+	public boolean updateMember(MemberVO mVO){
+		
+		try {
+			int result =mDAO.updateMember(mVO);
+			return result>0;
+		}catch(PersistenceException pe){
+			pe.printStackTrace();
+			return false;
+		}//end catch
+	}//updateMember
+
 	
 
 }

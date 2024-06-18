@@ -6,8 +6,10 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.sist.elysian.admin.board.event.model.domain.EventDomain;
 import kr.co.sist.elysian.admin.board.event.model.domain.EventListDomain;
 import kr.co.sist.elysian.admin.board.event.repository.EventDAO;
+import kr.co.sist.elysian.admin.member.model.domain.MemberDomain;
 
 @Service
 public class EventService {
@@ -27,7 +29,22 @@ public class EventService {
 		return list;
 		
 		
-	}
+	}//searchEventList
+	
+	
+	
+	public EventDomain searchEventDetail(String eventNum){
+		EventDomain ed = null;
+		try {
+			ed =eDAO.selectEventDetail(eventNum);
+		}catch(PersistenceException pe){
+			pe.printStackTrace();
+			
+		}//end catch
+		return ed;
+
+	}//searchEventDetail
+	
 	
 	
 	

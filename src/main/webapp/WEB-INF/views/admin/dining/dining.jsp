@@ -77,9 +77,7 @@
             <div class="page-content mb-3">
                 <section class="row">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">Dining Search</h5>
-                        </div>
+
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table dataTable no-footer" id="table1">
@@ -170,11 +168,11 @@
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
                                         <label for="diningId">매장아이디</label>
-                                        <input type="text" class="form-control" id="diningId" placeholder="Dining01" disabled>
+                                        <input type="text" class="form-control" id="addDiningId" placeholder="Dining01" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="diningName">매장명</label>
-                                        <input type="text" class="form-control" id="diningName" placeholder="Enter dining name">
+                                        <input type="text" class="form-control" id="addDiningName" placeholder="Enter dining name">
                                     </div>
                                     <div class="form-group">
                                         <label for="diningType">매장구분</label>
@@ -188,42 +186,42 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="hallTable">홀테이블</label>
-                                        <input type="text" class="form-control" id="hallTable" placeholder="0">
+                                        <input type="text" class="form-control" id="addHallTable" placeholder="0">
                                     </div>
                                     <div class="form-group">
                                         <label for="roomTable">룸테이블</label>
-                                        <input type="text" class="form-control" id="roomTable" placeholder="0">
+                                        <input type="text" class="form-control" id="addRoomTable" placeholder="0">
                                     </div>
                                     <div class="form-group">
                                         <label for="openTime">영업시작시간</label>
-                                        <input type="text" class="form-control" id="openTime" placeholder="00:00">
+                                        <input type="text" class="form-control" id="addOpenTime" placeholder="00:00">
                                     </div>
                                     <div class="form-group">
                                         <label for="closeTime">영업종료시간</label>
-                                        <input type="text" class="form-control" id="closeTime" placeholder="00:00">
+                                        <input type="text" class="form-control" id="addCloseTime" placeholder="00:00">
                                     </div>
                                     <div class="form-group">
                                         <label for="location">위치</label>
-                                        <input type="text" class="form-control" id="location">
+                                        <input type="text" class="form-control" id="addLocation">
                                     </div>
                                     <div class="form-group">
                                         <label for="deposit">예약금</label>
-                                        <input type="text" id="deposit" class="form-control" placeholder="0">
+                                        <input type="text" id="addDeposit" class="form-control" placeholder="0">
                                         <p><small class="text-muted">인당</small></p>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
                                         <label for="diningDescription">레스토랑설명</label>
-                                        <textarea class="form-control" id="diningDescription" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
+                                        <textarea class="form-control" id="addDiningDescription" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
                                         <label for="diningDescription">코스설명</label>
-                                        <textarea class="form-control" id="diningDescription1" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
+                                        <textarea class="form-control" id="addDiningDescription1" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="diningImg">매장 대표 이미지</label>
                                         <div class="input-group">
-                                            <input type="file" class="form-control" id="diningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                                            <button class="btn btn-primary" type="button" id="inputGroupFileAddon04">Upload</button>
+                                            <input type="file" class="form-control" id="addDiningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                            <button class="btn btn-primary" type="button" id="addInputGroupFileAddon04">Upload</button>
                                         </div>
                                     </div>
                                     <div class="buttons">
@@ -259,61 +257,62 @@
                             <div class="row">
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="diningId">매장아이디</label>
-                                        <input type="text" class="form-control" id="diningId" placeholder="Dining01" disabled>
+                                        <label for="updateDiningId">매장아이디</label>
+                                        <input type="text" class="form-control" id="updateDiningId" placeholder="Dining01" disabled>
                                     </div>
                                     <div class="form-group">
-                                        <label for="diningName">매장명</label>
-                                        <input type="text" class="form-control" id="diningName" placeholder="Enter dining name">
+                                        <label for="updateDiningName">매장명</label>
+                                        <input type="text" class="form-control" id="updateDiningName" placeholder="Enter dining name">
                                     </div>
                                     <div class="form-group">
-                                        <label for="diningType">매장구분</label>
-                                        <select class="form-select" id="diningType">
+                                        <label for="updateDiningType">매장구분</label>
+                                        <select class="form-select" id="updateDiningType">
                                             <option>양식</option>
                                             <option>중식</option>
                                             <option>일식</option>
                                             <option>다이닝바</option>
                                             <option>베이커리</option>
+                                            <option>뷔페</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="hallTable">홀테이블</label>
-                                        <input type="text" class="form-control" id="hallTable" placeholder="0">
+                                        <label for="updateHallTable">홀테이블</label>
+                                        <input type="text" class="form-control" id="updateHallTable" placeholder="0">
                                     </div>
                                     <div class="form-group">
-                                        <label for="roomTable">룸테이블</label>
-                                        <input type="text" class="form-control" id="roomTable" placeholder="0">
+                                        <label for="updateRoomTable">룸테이블</label>
+                                        <input type="text" class="form-control" id="updateRoomTable" placeholder="0">
                                     </div>
                                     <div class="form-group">
-                                        <label for="openTime">영업시작시간</label>
-                                        <input type="text" class="form-control" id="openTime" placeholder="00:00">
+                                        <label for="updateOpenTime">영업시작시간</label>
+                                        <input type="text" class="form-control" id="updateOpenTime" placeholder="00:00">
                                     </div>
                                     <div class="form-group">
-                                        <label for="closeTime">영업종료시간</label>
-                                        <input type="text" class="form-control" id="closeTime" placeholder="00:00">
+                                        <label for="updateCloseTime">영업종료시간</label>
+                                        <input type="text" class="form-control" id="updateCloseTime" placeholder="00:00">
                                     </div>
                                     <div class="form-group">
-                                        <label for="location">위치</label>
-                                        <input type="text" class="form-control" id="location">
+                                        <label for="updateLocation">위치</label>
+                                        <input type="text" class="form-control" id="updateLocation">
                                     </div>
                                     <div class="form-group">
-                                        <label for="deposit">예약금</label>
-                                        <input type="text" id="deposit" class="form-control" placeholder="0">
+                                        <label for="updateDeposit">예약금</label>
+                                        <input type="text" id="updateDeposit" class="form-control" placeholder="0">
                                         <p><small class="text-muted">인당</small></p>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="diningDescription">레스토랑설명</label>
-                                        <textarea class="form-control" id="diningDescription" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
-                                        <label for="diningDescription">코스설명</label>
-                                        <textarea class="form-control" id="diningDescription1" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
+                                        <label for="updateDiningDescription">레스토랑설명</label>
+                                        <textarea class="form-control" id="updateDiningDescription" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
+                                        <label for="updateDiningDescription1">코스설명</label>
+                                        <textarea class="form-control" id="updateDiningDescription1" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="diningImg">매장 대표 이미지</label>
                                         <div class="input-group">
-                                            <input type="file" class="form-control" id="diningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                                            <button class="btn btn-primary" type="button" id="inputGroupFileAddon04">Upload</button>
+                                            <input type="file" class="form-control" id="updateDiningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                            <button class="btn btn-primary" type="button" id="updateInputGroupFileAddon04">Upload</button>
                                         </div>
                                     </div>
                                     <div style="height: 30px;"></div>
@@ -370,10 +369,63 @@
                 $('#addDiningModal').modal('show');
                 
                 
+                
             });
 
             // 테이블의 다이닝 번호 클릭 시
             $(".diningNumber").click(function() {
+            	var diningId = $(this).text();
+            	
+                $.ajax({
+                	url:'diningDetail.do',
+                	type:'POST',
+                	contentType:'application/json',
+                	dataType:'JSON',
+                	data:JSON.stringify({ diningId: diningId }),
+                	error:function(xhr){
+                		console.log(xhr.status)
+                		alert("문제가 발생했습니다.")
+                	},
+                	success:function(jsonObj){
+                		
+                		$("#updateDiningId").val(jsonObj.diningId);
+                		$("#updateDiningName").val(jsonObj.diningName);
+                		$("#updateDiningType").val(jsonObj.diningType);
+                		$("#updateHallTable").val(jsonObj.hallTable);
+                		$("#updateRoomTable").val(jsonObj.roomTable);
+                		$("#updateOpenTime").val(jsonObj.openTime);
+                		$("#updateCloseTime").val(jsonObj.closeTime);
+                		$("#updateLocation").val(jsonObj.location);
+                		$("#updateDeposit").val(jsonObj.deposit);
+                		$("#updateDiningDescription").val(jsonObj.diningComment);
+                		$("#updateDiningDescription1").val(jsonObj.menu);
+                		//$("#updateDiningImg").val(jsonObj.diningImg); 이거 file이라 직접접근은 불가능
+                		
+                		
+
+
+                		
+                		
+                	}
+                	
+                	
+                	
+                })
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
                 $('#diningDetailModal').find('.is-invalid').removeClass('is-invalid');
                 $('#diningDetailModal').find('span.parsley-custom-error-message').remove();
                 $('#diningDetailModal').modal('show');

@@ -10,6 +10,7 @@ import kr.co.sist.elysian.admin.member.model.domain.MemberDomain;
 import kr.co.sist.elysian.admin.member.model.vo.MemberVO;
 import kr.co.sist.elysian.admin.room.model.domain.RoomDomain;
 import kr.co.sist.elysian.admin.room.model.domain.RoomListDomain;
+import kr.co.sist.elysian.admin.room.model.vo.RoomVO;
 import kr.co.sist.elysian.admin.room.model.vo.UpdateRoomVO;
 import kr.co.sist.elysian.admin.room.repository.RoomDAO;
 
@@ -59,6 +60,30 @@ public class RoomService {
 	}//updateRoom
 	
 	
+	
+	public int selectRoomId(int selectedFloor){
+		int result = 0;
+		
+		try {
+			 result =rDAO.selectRoomId(selectedFloor);
+
+		}catch(PersistenceException pe){
+			pe.printStackTrace();
+		}//end catch
+		
+		return result;
+	}//selectRoomId
+	
+	public boolean insertRoom(RoomVO rVO){
+		
+		try {
+			int result =rDAO.insertRoom(rVO);
+			return result>0;
+		}catch(PersistenceException pe){
+			pe.printStackTrace();
+			return false;
+		}//end catch
+	}//insertRoom
 	
 	
 	

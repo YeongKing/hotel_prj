@@ -10,7 +10,10 @@ import kr.co.sist.elysian.admin.board.event.model.domain.EventDomain;
 import kr.co.sist.elysian.admin.board.notice.model.domain.NoticeDomain;
 import kr.co.sist.elysian.admin.board.qna.model.domain.QnaDomain;
 import kr.co.sist.elysian.admin.board.qna.model.domain.QnaListDomain;
+import kr.co.sist.elysian.admin.board.qna.model.vo.QnaVO;
 import kr.co.sist.elysian.admin.board.qna.repository.QnaDAO;
+import kr.co.sist.elysian.admin.member.model.vo.MemberVO;
+import kr.co.sist.elysian.admin.room.model.vo.RoomVO;
 
 @Service
 public class QnaService {
@@ -42,5 +45,51 @@ public class QnaService {
 		return qd;
 
 	}//searchQnaDetail
+	
+	public boolean updateQna(QnaVO qVO){
+		
+		try {
+			int result =qDAO.updateQna(qVO);
+			return result>0;
+		}catch(PersistenceException pe){
+			pe.printStackTrace();
+			return false;
+		}//end catch
+	}//updateQna
+	
+	
+	
+	
+	public String selectQnaNum(){
+		String result = "";
+		
+		try {
+			 result =qDAO.selectQnaNum();
+
+		}catch(PersistenceException pe){
+			pe.printStackTrace();
+		}//end catch
+		return result;
+	}//selectRoomId
+	
+	
+	
+	public boolean insertQna(QnaVO qVO){
+		
+		try {
+			int result =qDAO.insertQna(qVO);
+			return result>0;
+		}catch(PersistenceException pe){
+			pe.printStackTrace();
+			return false;
+		}//end catch
+	}//insertQna
+	
+	
+	
+	
+	
+	
+	
 	
 }

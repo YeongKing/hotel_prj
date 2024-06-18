@@ -41,401 +41,415 @@
         });
     </script>
 </head>
-<body style="overflow: hidden; position: fixed; width: 100%;">
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP6NJMP" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+ <body style="overflow: hidden; position: fixed; width: 100%;">
+ <!-- Google Tag Manager (noscript) -->
+ <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP6NJMP"
+ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+ <!-- End Google Tag Manager (noscript) -->
 
-    <div class="skip"><a href="#container">본문 바로가기</a></div>
-    <div class="wrapper ">
+	<div class="skip"><a href="#container">본문 바로가기</a></div>
+	<div class="wrapper ">
         <!--S header  -->
         <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
         <!--E header  -->
-        <script type="text/javascript">
-            let langCode = 'ko';
-            let emptyTableType = false; // 모든 테이블이 비어있을경우 true
-            let emptyMenuSet = false;
-            let snsValidation = false; // 전화번호 인증
-            let timer // 타이머
+<script type="text/javascript">
 
-            $(document).ready(function () {
-                fncBrowserBtn(); // 브라우저 버튼
-                fncTranceText();
+    let langCode = 'ko';
+    let emptyTableType = false; // 모든 테이블이 비어있을경우 true
+    let emptyMenuSet = false;
+    let snsValidation = false; // 전화번호 인증
+    let timer // 타이머
 
-                fncDrawReady(); // 예약 준비 화면
-                fncBtnNoPay(); // 예약, 결제 버튼 구분
-                //메뉴 선택 없는 업장 정보 호출 용
-                fncCatchDiningInfo(); // 업장정보(취소규정)
+    $(document).ready(function () {
+        fncBrowserBtn(); // 브라우저 버튼
+        fncTranceText();
+
+        
+
+        fncDrawReady(); // 예약 준비 화면
+        fncBtnNoPay(); // 예약, 결제 버튼 구분
+	    //메뉴 선택 없는 업장 정보 호출 용
+        fncCatchDiningInfo(); // 업장정보(취소규정)
+    });
+
+
+    // 브라우저 버튼 이벤트
+    function fncBrowserBtn() {
+        // 뒤로가기 버튼 이벤트
+        window.history.pushState(null, null, '');
+        window.onpopstate = () => {
+            window.history.pushState(null, null, '');
+            window.onbeforeunload = null;
+            history.go(1);
+            fncGoStep0();
+        };
+    }
+
+    // 이메일 셀렉트 박스 텍스트 입력
+    $(function(){
+        /*
+             이메일 도메인 정보 수정 시
+             직접입력인 경우 email2 input disabled 제거
+             도메인 선택 시 도메인 email2 input에 주입 후 disabled
+         */
+        jQuery("[name='emailType']").on("change", function(){
+            var value = jQuery(this).val();
+            let title = jQuery(this).prop("title");
+            let id = "inp_"+title+"Email1";
+            if(value == ""){
+                jQuery('['+id+']').val("");
+                jQuery('['+id+']').prop("readonly", false);
+            }else{
+                jQuery('['+id+']').val(value);
+                jQuery('['+id+']').prop("readonly", true);
+            }
+        });
+    });
+
+    // 업장정보(취소규정)
+    function fncCatchDiningInfo() {
+        let shopId = $("#shopId").val();
+        jQuery.ajax({
+            type: "GET",
+            url: "/resve/dining/info.json",
+            cache: false,
+            dataType: "json",
+            async: false,
+            global: false,
+            data: {
+                "shopId": shopId
+            },
+            beforeSend: function () {
+                commonJs.showLoadingBar(); //로딩바 show
+            },
+            complete: function () {
+                commonJs.closeLoadingBar(); //로딩바 hide
+            },
+            success: function (data) {
+                let refundPolicy = data.result.data.refundPolicy;
+                let totalAmount = Number($("#totalAmount").val());
+
+                refundPolicy.sort(function(a, b) {
+                    return a.baseDay - b.baseDay;
+                });
+
+                $("#refundUl").html('');
+
+                refundPolicy.forEach(function (item, idx){
+                    let baseDay = item.baseDay;
+                    let refundRate = item.refundRate;
+                    let dayNm = "";
+                    let rateNm = "";
+                    switch (baseDay) {
+                        case -1:
+                            dayNm = "노쇼 시"; // 노쇼 시
+                            break;
+                        case 0:
+                            dayNm = "당일 취소"; // 당일 취소
+                            break;
+                        default:
+                            dayNm = "{1}일 전 취소".replace('{1}', baseDay); // 1일 전 취소
+                            break;
+                    }
+
+                    if (refundRate > 0) {
+                        rateNm = "{1}% 환불".replace('{1}', (refundRate * 100)); // 10% 환불
+                    } else if (refundRate == 0) {
+                        rateNm = "환불 불가"; // 환불 불가
+                    }
+
+                    let refundLi = `<li>`+dayNm+` : `+rateNm+`</li>`;
+                    $("#refundUl").append(refundLi);
+
+                    if (baseDay > -1 && refundRate > 0 && idx == refundPolicy.length -1 && refundRate == 1 && totalAmount > 0) {
+                        let refundDate = new Date($("#visitDate").val());
+                        refundDate.setDate(refundDate.getDate() - Number(baseDay));
+                        if (refundDate >= new Date()) {
+                            let mm = refundDate.getMonth() >= 9 ? (refundDate.getMonth()+1) : "0"+(refundDate.getMonth()+1);
+                            let dd = refundDate.getDate() >= 10 ? refundDate.getDate() : "0"+refundDate.getDate();
+                            let refundDesc = "{1}월 {2}일 23시 59분까지 취소 시 예약금 100% 환불".replace('{1}', mm).replace('{2}', dd);
+                            $("#refundDesc").show();
+                            $("#refundDesc").text(refundDesc);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    // 예약 준비 api
+    function resveReady() {
+        return new Promise(function (resolve, reject) {
+            jQuery.ajax({
+                type: "GET",
+                url: "/resve/dining/prepare.json",
+                cache: false,
+                dataType: "json",
+                async: false,
+                global: false,
+                beforeSend: function () {
+                    commonJs.showLoadingBar(); //로딩바 show
+                },
+                complete: function () {
+                    commonJs.closeLoadingBar(); //로딩바 hide
+                },
+                success: function (data) {
+                    resolve(data);
+                }
             });
+        });
 
-            // 브라우저 버튼 이벤트
-            function fncBrowserBtn() {
-                // 뒤로가기 버튼 이벤트
-                window.history.pushState(null, null, '');
-                window.onpopstate = () => {
-                    window.history.pushState(null, null, '');
-                    window.onbeforeunload = null;
-                    history.go(1);
-                    fncGoStep0();
-                };
-            }
+    }
 
-            // 이메일 셀렉트 박스 텍스트 입력
-            $(function(){
-                /*
-                     이메일 도메인 정보 수정 시
-                     직접입력인 경우 email2 input disabled 제거
-                     도메인 선택 시 도메인 email2 input에 주입 후 disabled
-                 */
-                jQuery("[name='emailType']").on("change", function(){
-                    var value = jQuery(this).val();
-                    let title = jQuery(this).prop("title");
-                    let id = "inp_"+title+"Email1";
-                    if(value == ""){
-                        jQuery('['+id+']').val("");
-                        jQuery('['+id+']').prop("readonly", false);
-                    }else{
-                        jQuery('['+id+']').val(value);
-                        jQuery('['+id+']').prop("readonly", true);
-                    }
-                });
-            });
+    // 예약 준비 화면
+    async function fncDrawReady() {
+        let data = await resveReady();
 
-            // 업장정보(취소규정)
-            function fncCatchDiningInfo() {
-                let shopId = $("#shopId").val();
-                jQuery.ajax({
-                    type: "GET",
-                    url: "/resve/dining/info.json",
-                    cache: false,
-                    dataType: "json",
-                    async: false,
-                    global: false,
-                    data: {
-                        "shopId": shopId
-                    },
-                    beforeSend: function () {
-                        commonJs.showLoadingBar(); //로딩바 show
-                    },
-                    complete: function () {
-                        commonJs.closeLoadingBar(); //로딩바 hide
-                    },
-                    success: function (data) {
-                        let refundPolicy = data.result.data.refundPolicy;
-                        let totalAmount = Number($("#totalAmount").val());
+        if (typeof data.result.data == "undefined") {
+            alert(data.resultMsg);
+            return;
+        }
 
-                        refundPolicy.sort(function(a, b) {
-                            return a.baseDay - b.baseDay;
-                        });
+        if (typeof data.result.data != "undefined") {
 
-                        $("#refundUl").html('');
+            let tables = data.result.data.tables;
+            let sourceTableTypes = data.result.data.sourceTableTypes;
+            let tableTypes = data.result.data.tableTypes;
+            let notAvailableTableTypes = data.result.data.notAvailableTableTypes;
+            let useTableTypeYn = data.result.data.useTableTypeYn;
+            let useTableTypeMenuSet = data.result.data.useTableTypeMenuSet;
+            let sourceTableTypeNames = data.result.data.sourceTableTypeNames; // {테이블 코드 : 테이블 명}
 
-                        refundPolicy.forEach(function (item, idx){
-                            let baseDay = item.baseDay;
-                            let refundRate = item.refundRate;
-                            let dayNm = "";
-                            let rateNm = "";
-                            switch (baseDay) {
-                                case -1:
-                                    dayNm = "노쇼 시"; // 노쇼 시
-                                    break;
-                                case 0:
-                                    dayNm = "당일 취소"; // 당일 취소
-                                    break;
-                                default:
-                                    dayNm = "{1}일 전 취소".replace('{1}', baseDay); // 1일 전 취소
-                                    break;
-                            }
+            $("#reservationToken").val(data.result.data.reservationToken);
+            $("#holdingToken").val(data.result.data.holdingToken);
+            $("#holdingExpiresAt").val(data.result.data.holdingExpiresAt);
+            $("#useTableTypeYn").val(useTableTypeYn);
+            $("#useTableTypeMenuSet").val(useTableTypeMenuSet);
 
-                            if (refundRate > 0) {
-                                rateNm = "{1}% 환불".replace('{1}', (refundRate * 100)); // 10% 환불
-                            } else if (refundRate == 0) {
-                                rateNm = "환불 불가"; // 환불 불가
-                            }
+            let personCount = $("#personCount").val();
+            let confirmReservationUseYn = $("#confirmUseYn").val();
 
-                            let refundLi = `<li>`+dayNm+` : `+rateNm+`</li>`;
-                            $("#refundUl").append(refundLi);
+            let tableTypeIsAll = useTableTypeYn == "N" && useTableTypeMenuSet == "Y"; // 전체 테이블을 사용하는 경우
+            let useNTableType = useTableTypeYn == "Y" && useTableTypeMenuSet == "Y"; // 미지정 메뉴 구분을 사용하는 경우
 
-                            if (baseDay > -1 && refundRate > 0 && idx == refundPolicy.length -1 && refundRate == 1 && totalAmount > 0) {
-                                let refundDate = new Date($("#visitDate").val());
-                                refundDate.setDate(refundDate.getDate() - Number(baseDay));
-                                if (refundDate >= new Date()) {
-                                    let mm = refundDate.getMonth() >= 9 ? (refundDate.getMonth()+1) : "0"+(refundDate.getMonth()+1);
-                                    let dd = refundDate.getDate() >= 10 ? refundDate.getDate() : "0"+refundDate.getDate();
-                                    let refundDesc = "{1}월 {2}일 23시 59분까지 취소 시 예약금 100% 환불".replace('{1}', mm).replace('{2}', dd);
-                                    $("#refundDesc").show();
-                                    $("#refundDesc").text(refundDesc);
-                                }
-                            }
-                        });
-                    }
-                });
-            }
+            if (tables.length > 0) {
 
-            // 예약 준비 api
-            function resveReady() {
-                return new Promise(function (resolve, reject) {
-                    jQuery.ajax({
-                        type: "GET",
-                        url: "/resve/dining/prepare.json",
-                        cache: false,
-                        dataType: "json",
-                        async: false,
-                        global: false,
-                        beforeSend: function () {
-                            commonJs.showLoadingBar(); //로딩바 show
-                        },
-                        complete: function () {
-                            commonJs.closeLoadingBar(); //로딩바 hide
-                        },
-                        success: function (data) {
-                            resolve(data);
-                        }
-                    });
-                });
-
-            }
-
-            // 예약 준비 화면
-            async function fncDrawReady() {
-                let data = await resveReady();
-
-                if (typeof data.result.data == "undefined") {
-                    alert(data.resultMsg);
-                    return;
-                }
-
-                if (typeof data.result.data != "undefined") {
-
-                    let tables = data.result.data.tables;
-                    let sourceTableTypes = data.result.data.sourceTableTypes;
-                    let tableTypes = data.result.data.tableTypes;
-                    let notAvailableTableTypes = data.result.data.notAvailableTableTypes;
-                    let useTableTypeYn = data.result.data.useTableTypeYn;
-                    let useTableTypeMenuSet = data.result.data.useTableTypeMenuSet;
-                    let sourceTableTypeNames = data.result.data.sourceTableTypeNames; // {테이블 코드 : 테이블 명}
-
-                    $("#reservationToken").val(data.result.data.reservationToken);
-                    $("#holdingToken").val(data.result.data.holdingToken);
-                    $("#holdingExpiresAt").val(data.result.data.holdingExpiresAt);
-                    $("#useTableTypeYn").val(useTableTypeYn);
-                    $("#useTableTypeMenuSet").val(useTableTypeMenuSet);
-
-                    let personCount = $("#personCount").val();
-                    let confirmReservationUseYn = $("#confirmUseYn").val();
-
-                    let tableTypeIsAll = useTableTypeYn == "N" && useTableTypeMenuSet == "Y"; // 전체 테이블을 사용하는 경우
-                    let useNTableType = useTableTypeYn == "Y" && useTableTypeMenuSet == "Y"; // 미지정 메뉴 구분을 사용하는 경우
-
-                    if (tables.length > 0) {
-
-                        if (useTableTypeMenuSet == "Y") {
-                            fncSelectMenuSet();
-                            fncSelectTableType();
-                            fncSelectMenuItem();
-                        } else {
-                            fncSelectTableType();
-                            fncSelectMenuSet();
-                            fncSelectMenuItem();
-                        }
-
-                    }
-                }
-            }
-
-            // 예약
-            function fncReservation() {
-                let useTableTypeYn = nvl($("#useTableTypeYn").val());
-                let useTableTypeMenuSet = nvl($("#useTableTypeMenuSet").val());
-
-                if (useTableTypeYn == 'N' && useTableTypeMenuSet == 'N') {
-                    $("#selectedTableType").val('');
-                }
-
-                let bookerLastName = $("#bookerLastName").val();
-                let bookerFirstName = $("#bookerFirstName").val();
-                let bookerName = "";
-
-                // 인증받은 번호
-                let moblphonTelnoCkd = $("#moblphonTelno").val();
-                let moblphonTelnoCkd1 = $("#moblphonTelno1").val();
-                let moblphonTelnoCkd2 = $("#moblphonTelno2").val();
-                // 현재 입력되어있는 번호
-                let moblphoneTelno = $("#inp_moblphonTelno").val();
-                let moblphoneTelno1 = $("#inp_moblphonTelno1").val();
-                let moblphoneTelno2 = $("#inp_moblphonTelno2").val();
-
-                // 국가코드
-                let bookerNationality = $("#bookerNationality").val();
-
-                // 인증받은 이메일
-                let bookerEmailCkd = nvl($("#bookerEmail").val());
-                // 현재 입력되어있는 이메일
-                let bookerEmail = $("#inp_bookerEmail").val() != '' && $("#inp_bookerEmail1").val() != '' ? $("#inp_bookerEmail").val() + "@" + $("#inp_bookerEmail1").val() : '';
-
-                if (langCode == "ko") {
-                    bookerName = $("#inp_bookerName").val();
-
-                    if (moblphonTelnoCkd != moblphoneTelno || moblphonTelnoCkd1 != moblphoneTelno1 || moblphonTelnoCkd2 != moblphoneTelno2) {
-                        snsValidation = false;
-                    } else if (typeof moblphonTelnoCkd != 'undefined' && typeof moblphonTelnoCkd1 != 'undefined' && typeof moblphonTelnoCkd2 != 'undefined') {
-                        if (moblphonTelnoCkd == moblphoneTelno && moblphonTelnoCkd1 == moblphoneTelno1 && moblphonTelnoCkd2 == moblphoneTelno2) {
-                            snsValidation = true;
-                        }
-                    }
-                } else if (langCode != "ko") {
-                    bookerName = bookerLastName + " " + bookerFirstName;
-                    moblphoneTelno = bookerNationality + moblphoneTelno;
-
-                    if (bookerEmailCkd != bookerEmail) {
-                        snsValidation = false;
-                    } else if (typeof bookerEmailCkd != 'undefined') {
-                        if (bookerEmailCkd == bookerEmail) {
-                            snsValidation = true;
-                        }
-                    }
-                }
-
-                let requests = $("#inp_requests").val();
-                let isDiffVisitorBooker = $("#inp_isDiffVisitorBooker").closest("li").hasClass("toggleOn");
-                let notice = $("#frmA02");
-                let refund = $("#frmA04");
-                let personal = $("#frmA03");
-
-                let visitorPhone = "";
-                let visitorName = "";
-                let visitorEmail = "";
-                if (langCode == 'ko') {
-                    visitorPhone = $("#inp_phone").val()+$("#inp_phone1").val()+$("#inp_phone2").val();
-                    visitorName = $("#inp_visitorName").val();
+                if (useTableTypeMenuSet == "Y") {
+                    fncSelectMenuSet();
+                    fncSelectTableType();
+                    fncSelectMenuItem();
                 } else {
-                    visitorEmail = $("#inp_visitorEmail").val() != '' && $("#inp_visitorEmail1").val() != '' ? $("#inp_visitorEmail").val() + "@" + $("#inp_visitorEmail1").val() : '';
-                    visitorPhone = $("#visitorNationality").val()+$("#inp_phone").val()+$("#inp_phone1").val()+$("#inp_phone2").val();
-                    visitorName = $("#visitorLastName").val() + " " + $("#visitorFirstName").val();
+                    fncSelectTableType();
+                    fncSelectMenuSet();
+                    fncSelectMenuItem();
                 }
 
-                if (langCode == "ko") {
-                    // 예약자 명 입력 검증
-                    if (bookerName == '') {
-                        alert("예약자명을 입력해 주세요."); // 예약자명은 필수 입니다
-                        $("#inp_bookerName").focus();
-                        return ;
-                    }
+            }
 
-                    // 전화번호 입력 검증
-                    if (moblphoneTelno == '' || moblphoneTelno1 == '' || moblphoneTelno2 == '') {
-                        alert("예약자 전화번호를 입력해 주세요."); // 예약자 전화번호는 필수 입니다
-                        $("#inp_moblphonTelno").focus();
-                        return ;
-                    }
 
-                    // 전화번호 인증 검증
-                    if (!snsValidation) {
-                        alert("인증번호 요청 버튼을 누르고 전화번호 인증을 해주세요."); // 전화번호 인증을 해주세요
-                        $("#inp_moblphonTelno").focus();
-                        return ;
-                    }
+    }
 
-                    // 이메일 입력 검증
-                    if (($("#inp_bookerEmail").val() != '' && $("#inp_bookerEmail1").val() == '') ||
-                        ($("#inp_bookerEmail").val() == '' && $("#inp_bookerEmail1").val() != '')) {
-                        alert("이메일 형식이 맞지 않습니다. 이메일 주소를 확인해 주세요."); // 이메일 형식이 잘못되었습니다
-                        $("#inp_bookerEmail").focus();
-                        return ;
-                    }
+    // 예약
+    function fncReservation() {
+        let useTableTypeYn = nvl($("#useTableTypeYn").val());
+        let useTableTypeMenuSet = nvl($("#useTableTypeMenuSet").val());
 
-                } else if (langCode != "ko") {
-                    // 예약자 명 입력 검증
-                    if (bookerLastName == '' || bookerFirstName == '') {
-                        alert("이름을 정확히 입력해주세요."); // 이름을 정확히 입력해주세요.
-                        $("#bookerLastName").focus();
-                        return ;
-                    }
+        if (useTableTypeYn == 'N' && useTableTypeMenuSet == 'N') {
+            $("#selectedTableType").val('');
+        }
 
-                    // 전화번호 입력 검증
-                    if (bookerNationality == '' && (moblphoneTelno != '' || moblphoneTelno1 != '' || moblphoneTelno2 != '')) {
-                        alert("국가코드를 선택해 주세요."); // 국가코드를 선택해주세요.
-                        $("#inp_moblphonTelno").focus();
-                        return ;
-                    }
+        
+        let bookerLastName = $("#bookerLastName").val();
+        let bookerFirstName = $("#bookerFirstName").val();
+        let bookerName = "";
 
-                    // 전화번호 입력 검증
-                    if (bookerNationality != '' && (moblphoneTelno == '' || moblphoneTelno1 == '' || moblphoneTelno2 == '')) {
-                        alert("전화번호를 올바르게 입력해 주세요."); // 전화번호를 올바르게 입력해 주세요.
-                        $("#inp_moblphonTelno").focus();
-                        return ;
-                    }
+        // 인증받은 번호
+        let moblphonTelnoCkd = $("#moblphonTelno").val();
+        let moblphonTelnoCkd1 = $("#moblphonTelno1").val();
+        let moblphonTelnoCkd2 = $("#moblphonTelno2").val();
+        // 현재 입력되어있는 번호
+        let moblphoneTelno = $("#inp_moblphonTelno").val();
+        let moblphoneTelno1 = $("#inp_moblphonTelno1").val();
+        let moblphoneTelno2 = $("#inp_moblphonTelno2").val();
 
-                    // 이메일 입력 검증
-                    if ($("#inp_bookerEmail").val() == '' || $("#inp_bookerEmail1").val() == '') {
-                        alert("예약자 이메일은 필수입니다."); // 예약자 이메일은 필수입니다.
-                        $("#inp_bookerEmail").focus();
-                        return ;
-                    }
+        // 국가코드
+        let bookerNationality = $("#bookerNationality").val();
 
-                    // 이메일 인증 검증
-                    if (!snsValidation) {
-                        alert("이메일 검증을 해주세요"); // 이메일 검증을 해주세요
-                        $("#inp_bookerEmail").focus();
-                        return ;
-                    }
+        // 인증받은 이메일
+        let bookerEmailCkd = nvl($("#bookerEmail").val());
+        // 현재 입력되어있는 이메일
+        let bookerEmail = $("#inp_bookerEmail").val() != '' && $("#inp_bookerEmail1").val() != '' ? $("#inp_bookerEmail").val() + "@" + $("#inp_bookerEmail1").val() : '';
+
+        if (langCode == "ko") {
+            bookerName = $("#inp_bookerName").val();
+
+            if (moblphonTelnoCkd != moblphoneTelno || moblphonTelnoCkd1 != moblphoneTelno1 || moblphonTelnoCkd2 != moblphoneTelno2) {
+                snsValidation = false;
+            } else if (typeof moblphonTelnoCkd != 'undefined' && typeof moblphonTelnoCkd1 != 'undefined' && typeof moblphonTelnoCkd2 != 'undefined') {
+                if (moblphonTelnoCkd == moblphoneTelno && moblphonTelnoCkd1 == moblphoneTelno1 && moblphonTelnoCkd2 == moblphoneTelno2) {
+                    snsValidation = true;
                 }
+            }
+        } else if (langCode != "ko") {
+            bookerName = bookerLastName + " " + bookerFirstName;
+            moblphoneTelno = bookerNationality + moblphoneTelno;
 
-                //이메일 형식 검증
-                if(bookerEmail != '' && !gfncVaildateEmail(bookerEmail)){
-                    alert("이메일 형식이 맞지 않습니다. 이메일 주소를 확인해 주세요."); // 이메일 형식이 잘못되었습니다
-                    $("#inp_bookerEmail").focus();
+            if (bookerEmailCkd != bookerEmail) {
+                snsValidation = false;
+            } else if (typeof bookerEmailCkd != 'undefined') {
+                if (bookerEmailCkd == bookerEmail) {
+                    snsValidation = true;
+                }
+            }
+        }
+
+        
+
+        let requests = $("#inp_requests").val();
+        let isDiffVisitorBooker = $("#inp_isDiffVisitorBooker").closest("li").hasClass("toggleOn");
+        let notice = $("#frmA02");
+        let refund = $("#frmA04");
+        let personal = $("#frmA03");
+
+        let visitorPhone = "";
+        let visitorName = "";
+        let visitorEmail = "";
+        if (langCode == 'ko') {
+            visitorPhone = $("#inp_phone").val()+$("#inp_phone1").val()+$("#inp_phone2").val();
+            visitorName = $("#inp_visitorName").val();
+        } else {
+            visitorEmail = $("#inp_visitorEmail").val() != '' && $("#inp_visitorEmail1").val() != '' ? $("#inp_visitorEmail").val() + "@" + $("#inp_visitorEmail1").val() : '';
+            visitorPhone = $("#visitorNationality").val()+$("#inp_phone").val()+$("#inp_phone1").val()+$("#inp_phone2").val();
+            visitorName = $("#visitorLastName").val() + " " + $("#visitorFirstName").val();
+        }
+
+        
+
+        if (langCode == "ko") {
+            // 예약자 명 입력 검증
+            if (bookerName == '') {
+                alert("예약자명을 입력해 주세요."); // 예약자명은 필수 입니다
+                $("#inp_bookerName").focus();
+                return ;
+            }
+
+            // 전화번호 입력 검증
+            if (moblphoneTelno == '' || moblphoneTelno1 == '' || moblphoneTelno2 == '') {
+                alert("예약자 전화번호를 입력해 주세요."); // 예약자 전화번호는 필수 입니다
+                $("#inp_moblphonTelno").focus();
+                return ;
+            }
+
+            // 전화번호 인증 검증
+            if (!snsValidation) {
+                alert("인증번호 요청 버튼을 누르고 전화번호 인증을 해주세요."); // 전화번호 인증을 해주세요
+                $("#inp_moblphonTelno").focus();
+                return ;
+            }
+
+            // 이메일 입력 검증
+            if (($("#inp_bookerEmail").val() != '' && $("#inp_bookerEmail1").val() == '') ||
+                ($("#inp_bookerEmail").val() == '' && $("#inp_bookerEmail1").val() != '')) {
+                alert("이메일 형식이 맞지 않습니다. 이메일 주소를 확인해 주세요."); // 이메일 형식이 잘못되었습니다
+                $("#inp_bookerEmail").focus();
+                return ;
+            }
+
+        } else if (langCode != "ko") {
+            // 예약자 명 입력 검증
+            if (bookerLastName == '' || bookerFirstName == '') {
+                alert("이름을 정확히 입력해주세요."); // 이름을 정확히 입력해주세요.
+                $("#bookerLastName").focus();
+                return ;
+            }
+
+            // 전화번호 입력 검증
+            if (bookerNationality == '' && (moblphoneTelno != '' || moblphoneTelno1 != '' || moblphoneTelno2 != '')) {
+                alert("국가코드를 선택해 주세요."); // 국가코드를 선택해주세요.
+                $("#inp_moblphonTelno").focus();
+                return ;
+            }
+
+            // 전화번호 입력 검증
+            if (bookerNationality != '' && (moblphoneTelno == '' || moblphoneTelno1 == '' || moblphoneTelno2 == '')) {
+                alert("전화번호를 올바르게 입력해 주세요."); // 전화번호를 올바르게 입력해 주세요.
+                $("#inp_moblphonTelno").focus();
+                return ;
+            }
+
+            // 이메일 입력 검증
+            if ($("#inp_bookerEmail").val() == '' || $("#inp_bookerEmail1").val() == '') {
+                alert("예약자 이메일은 필수입니다."); // 예약자 이메일은 필수입니다.
+                $("#inp_bookerEmail").focus();
+                return ;
+            }
+
+            // 이메일 인증 검증
+            if (!snsValidation) {
+                alert("이메일 검증을 해주세요"); // 이메일 검증을 해주세요
+                $("#inp_bookerEmail").focus();
+                return ;
+            }
+        }
+
+        //이메일 형식 검증
+        if(bookerEmail != '' && !gfncVaildateEmail(bookerEmail)){
+            alert("이메일 형식이 맞지 않습니다. 이메일 주소를 확인해 주세요."); // 이메일 형식이 잘못되었습니다
+            $("#inp_bookerEmail").focus();
+            return ;
+        }
+
+        $("#bookerName").val(bookerName);
+        $("#moblphonTelno").val(moblphoneTelno);
+        $("#moblphonTelno1").val(moblphoneTelno1);
+        $("#moblphonTelno2").val(moblphoneTelno2);
+        $("#bookerEmail").val(bookerEmail);
+
+        
+
+        // 예약자 방문자 다른경우
+        if (isDiffVisitorBooker) {
+
+            if (langCode == 'ko') {
+                // 방문자 명 입력 검증 (필수)
+                if (visitorName == '') {
+                    alert("방문자명을 입력해 주세요."); // 방문자명은 필수 입니다
+                    $("#inp_visitorName").focus();
                     return ;
                 }
 
-                $("#bookerName").val(bookerName);
-                $("#moblphonTelno").val(moblphoneTelno);
-                $("#moblphonTelno1").val(moblphoneTelno1);
-                $("#moblphonTelno2").val(moblphoneTelno2);
-                $("#bookerEmail").val(bookerEmail);
+                // 방문자 전화번호 입력 검증 (필수)
+                if ($("#inp_phone").val() == '' || $("#inp_phone1").val() == '' || $("#inp_phone2").val() == '') {
+                    alert("방문자 전화번호를 입력해 주세요."); // 방문자 전화번호는 필수 입니다
+                    $("#inp_phone").focus();
+                    return ;
+                }
 
-                // 예약자 방문자 다른경우
-                if (isDiffVisitorBooker) {
-                    if (langCode == 'ko') {
-                        // 방문자 명 입력 검증 (필수)
-                        if (visitorName == '') {
-                            alert("방문자명을 입력해 주세요."); // 방문자명은 필수 입니다
-                            $("#inp_visitorName").focus();
-                            return ;
-                        }
+            } else if (langCode != 'ko') {
 
-                        // 방문자 전화번호 입력 검증 (필수)
-                        if ($("#inp_phone").val() == '' || $("#inp_phone1").val() == '' || $("#inp_phone2").val() == '') {
-                            alert("방문자 전화번호를 입력해 주세요."); // 방문자 전화번호는 필수 입니다
-                            $("#inp_phone").focus();
-                            return ;
-                        }
+                let visitorNationality = $("#visitorNationality").val();
 
-                    } else if (langCode != 'ko') {
-                        let visitorNationality = $("#visitorNationality").val();
+                // 방문자 명 입력 검증 (필수)
+                if ($("#visitorLastName").val() == '' || $("#visitorFirstName").val() == '') {
+                    alert("방문자명을 입력해 주세요."); // 방문자명은 필수 입니다
+                    $("#visitorLastName").focus();
+                    return ;
+                }
 
-                        // 방문자 명 입력 검증 (필수)
-                        if ($("#visitorLastName").val() == '' || $("#visitorFirstName").val() == '') {
-                            alert("방문자명을 입력해 주세요."); // 방문자명은 필수 입니다
-                            $("#visitorLastName").focus();
-                            return ;
-                        }
+                // 방문자 이메일 검증 (필수)
+                if ($("#inp_visitorEmail").val() == '' || $("#inp_visitorEmail1").val() == '') {
+                    alert("방문자 이메일을 입력해 주세요."); // 방문자 이메일은 필수입니다.
+                    $("#inp_visitorEmail").focus();
+                    return;
+                }
 
-                        // 방문자 이메일 검증 (필수)
-                        if ($("#inp_visitorEmail").val() == '' || $("#inp_visitorEmail1").val() == '') {
-                            alert("방문자 이메일을 입력해 주세요."); // 방문자 이메일은 필수입니다.
-                            $("#inp_visitorEmail").focus();
-                            return;
-                        }
+                //이메일 형식 검증 (필수)
+                if(visitorEmail != '' && !gfncVaildateEmail(visitorEmail)){
+                    alert("이메일 형식이 맞지 않습니다. 이메일 주소를 확인해 주세요."); // 이메일 형식이 잘못되었습니다
+                    $("#inp_visitorEmail").focus();
+                    return ;
+                }
 
-                        //이메일 형식 검증 (필수)
-                        if(visitorEmail != '' && !gfncVaildateEmail(visitorEmail)){
-                            alert("이메일 형식이 맞지 않습니다. 이메일 주소를 확인해 주세요."); // 이메일 형식이 잘못되었습니다
-                            $("#inp_visitorEmail").focus();
-                            return ;
-                        }
-
-                
                 // 전화번호 입력 검증 (비필수)
                 if (visitorNationality == '' && ($("#inp_phone").val() != '' || $("#inp_phone1").val() != '' || $("#inp_phone2").val() != '')) {
                     alert("국가코드를 선택해 주세요."); // 국가코드를 선택해주세요.

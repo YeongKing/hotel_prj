@@ -141,39 +141,7 @@ $(document).ready(function() {
     	// 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
         // 모달 내의 모든 'is-invalid' 클래스 제거
         $('#addRoomModal').find('.is-invalid').removeClass('is-invalid');
-        
-    	
-    	
-        $("#addRoomFloor").empty();
-        $("#addRoomFloor").append(new Option("1", "1"));
-        $("#addRoomFloor").append(new Option("2", "2"));
-        $("#addRoomFloor").append(new Option("3", "3"));
-        $("#addRoomFloor").append(new Option("4", "4"));
-        $("#addRoomFloor").append(new Option("5", "5"));
-    	
-        $("#addRoomRankName").empty();
-        $("#addRoomRankName").append(new Option("STANDARD", "STANDARD"));
-        $("#addRoomRankName").append(new Option("DELUXE", "DELUXE"));
-        $("#addRoomRankName").append(new Option("SUITE", "SUITE"));
-
-    	
-        $("#addRoomFloor").empty();
-        $("#addRoomFloor").append(new Option("32", "32"));
-        $("#addRoomFloor").append(new Option("33", "33"));
-        $("#addRoomFloor").append(new Option("34", "34"));
-
-    	
-    	
-        $("#addBedName").empty();
-        $("#addBedName").append(new Option("KING", "KING"));
-        $("#addBedName").append(new Option("TWIN", "TWIN"));
-        $("#addBedName").append(new Option("DOUBLE", "DOUBLE"));
-    	
-        $("#addViewName").empty();
-        $("#addViewName").append(new Option("STANDARD", "STANDARD"));
-        $("#addViewName").append(new Option("GARDEN", "GARDEN"));
-        $("#addViewName").append(new Option("POOLSIDE", "POOLSIDE"));
-    	
+       
         // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
         $('#addRoomModal').find('span.parsley-custom-error-message').remove();
         $('#addRoomModal').modal('show');
@@ -181,7 +149,7 @@ $(document).ready(function() {
         
     });
     
-    
+    //객실 상세조회에서 침대종류 변경시
     $('#updateBedName').change(function() {
         var bedName = $(this).val();
         var bedCode = '';
@@ -202,6 +170,144 @@ $(document).ready(function() {
         
         $('#updateBedCode').val(bedCode);
     });//change
+    
+    
+  //객실 등록에서 객실층 변경시
+    $('#addRoomFloor').change(function() {
+        var selectedFloor = $(this).val();
+            
+        
+        if(selectedFloor === '객실층') {
+            $('#addRoomId').val('');
+            
+        }else{
+        	
+            $.ajax({
+                url: 'selectRoomId.do',
+                type: 'POST',
+                contentType: 'application/json; charset=UTF-8',
+                dataType: 'json',
+                data: JSON.stringify({selectedFloor:selectedFloor}),
+                error: function(xhr) {
+                    console.log(xhr.status);
+                    alert("문제가 발생했습니다.");
+                },
+                success: function(jsonObj) {
+                    $('#addRoomId').val(jsonObj);
+                }
+            });//ajax
+        	
+        	
+
+        	
+        }
+        });
+    
+    
+    
+    
+    
+    
+    //객실 등록에서 객실등급 변경시
+    $('#addRoomRankName').change(function() {
+        var roomRankName = $(this).val();
+        var roomRankCode = '';
+        
+        switch (roomRankName) {
+            case 'DELUXE':
+            	roomRankCode = '30_001';
+            	$('#addRoomBasicCapacity').val(2);
+            	$('#addRoomMaxCapacity').val(4);
+            	$('#addRoomBasicPrice').val(200000);
+            	$('#addRoomAddPrice').val(20000);
+            	$('#addRoomSize').val(35);
+                break;
+            case 'STANDARD':
+            	roomRankCode = '30_002';
+            	$('#addRoomBasicCapacity').val(2);
+            	$('#addRoomMaxCapacity').val(4);
+            	$('#addRoomBasicPrice').val(150000);
+            	$('#addRoomAddPrice').val(20000);
+            	$('#addRoomSize').val(25);
+                break;
+            case 'SUITE':
+            	roomRankCode = '30_003';
+            	$('#addRoomBasicCapacity').val(2);
+            	$('#addRoomMaxCapacity').val(8);
+            	$('#addRoomBasicPrice').val(500000);
+            	$('#addRoomAddPrice').val(20000);
+            	$('#addRoomSize').val(55);
+                break;
+            default:
+            	roomRankCode = '';
+        		$('#addRoomBasicCapacity').val('');
+        		$('#addRoomMaxCapacity').val('');
+        		$('#addRoomBasicPrice').val('');
+        		$('#addRoomAddPrice').val('');
+        		$('#addRoomSize').val('');
+        }
+        
+        $('#addRoomRankCode').val(roomRankCode);
+    });//change
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //객실 등록에서 침대종류 변경시
+    $('#addBedName').change(function() {
+        var bedName = $(this).val();
+        var bedCode = '';
+        
+        switch (bedName) {
+            case 'DOUBLE':
+                bedCode = '50_001';
+                break;
+            case 'TWIN':
+                bedCode = '50_002';
+                break;
+            case 'KING':
+                bedCode = '50_003';
+                break;
+            default:
+                bedCode = '';
+        }
+        
+        $('#addBedCode').val(bedCode);
+    });//change
+    
+    
+    //객실 등록에서 뷰종류 변경시
+    $('#addViewName').change(function() {
+        var viewName = $(this).val();
+        var viewCode = '';
+        
+        switch (viewName) {
+            case 'CITY VIEW':
+            	viewCode = '40_001';
+                break;
+            case 'GARDEN VIEW':
+            	viewCode = '40_002';
+                break;
+            case 'POLLSIDE VIEW':
+            	viewCode = '40_003';
+                break;
+            default:
+            	viewCode = '';
+        }
+        
+        $('#addViewCode').val(viewCode);
+    });//change
+    
+    
+    
+    
+    
     
     
 
@@ -242,25 +348,36 @@ $(document).ready(function() {
  
  function updateAction() {
 
-	 var updateRoomId = $('#updateRoomId').val();
-	 var updateBedCnt = $('#updateBedCnt').val();
-	 var updateBedName = $('#updateBedName').val();
-	 var updateBedCode = $('#updateBedCode').val();
+	 var roomId = $('#updateRoomId').val();
+	 var bedCnt = $('#updateBedCnt').val();
+	 var bedName = $('#updateBedName').val();
+	 var bedCode = $('#updateBedCode').val();
 
 	 
-	    // 숫자 유효성 검사
-	    if (!/^\d+$/.test(updateBedCnt) || parseInt(updateBedCnt) < 0) {
-	        alert("침대 수는 0보다 큰 숫자여야 합니다.");
+	    // 침대 개수 미입력
+	    if (bedCnt === '') {
+	        alert("침대 개수를 입력해주세요.");
+	        $('#updateBedCnt').focus(); 
+	        return;
+	    } else if (!/^\d+$/.test(bedCnt) || parseInt(bedCnt, 10) < 1 || parseInt(bedCnt, 10) > 9) { // 숫자만 입력 가능하며 1 이상 9 이하
+	        alert("침대 개수는 숫자만 입력 가능하며, 최소 1개 이상 최대 9개까지 입력 가능합니다.");
+	        $('#updateBedCnt').focus(); 
 	        return;
 	    }
+   	 	
+	   	 //침대유형 미선택 
+	     if(bedCode === '') {
+	         alert("침대유형을 선택 해주세요.");
+	         return;
+	     }
 	 
 
       var urVO = {
     		 
-    	 roomId: updateRoomId,  
-    	 bedName: updateBedName,
-    	 bedCode: updateBedCode,
-    	 bedCnt: updateBedCnt
+    	 roomId: roomId,  
+    	 bedName: bedName,
+    	 bedCode: bedCode,
+    	 bedCnt: bedCnt
      }; 
 
       $.ajax({
@@ -281,27 +398,109 @@ $(document).ready(function() {
      });//ajax 
  }//updateAction
 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
     function registerAction() {
         console.log('등록 동작 수행');
-        // 서버로 등록 요청 보내기
-        // $.ajax({
-        //     url: 'register_url',
-        //     method: 'POST',
-        //     data: { data: newData },
-        //     success: function(response) {
-        //         console.log('등록 성공');
-        //     },
-        //     error: function(error) {
-        //         console.log('등록 실패', error);
-        //     }
-        // });
+      	 
+       	var roomId				=	$('#addRoomId').val();
+       	var roomBasicCapacity	=	$('#addRoomBasicCapacity').val();
+       	var roomMaxCapacity		=	$('#addRoomMaxCapacity').val();
+       	var roomRankName		=	$('#addRoomRankName').val();
+       	var roomRankCode		=	$('#addRoomRankCode').val();
+       	var roomBasicPrice		=	$('#addRoomBasicPrice').val();
+       	var bedName				=	$('#addBedName').val();
+       	var bedCode				=	$('#addBedCode').val();
+       	var roomAddPrice		=	$('#addRoomAddPrice').val();
+       	var bedCnt				=	$('#addBedCnt').val();
+       	var viewName			=	$('#addViewName').val();
+       	var viewCode			=	$('#addViewCode').val();
+       	var roomSize			=	$('#addRoomSize').val();
+       	
+
+   	 //객실층 미선택 
+     if(roomId === '') {
+         alert("객실층을 선택 해주세요.");
+         return;
+     }
+   	 
+   	 //객실등급 미선택 
+     if(roomRankCode === '') {
+         alert("객실등급을 선택해 주세요.");
+         return;
+     }
+   	 
+   	 //침대유형 미선택 
+     if(bedCode === '') {
+         alert("침대유형을 선택 해주세요.");
+         return;
+     }
+   	 
+     // 침대 개수 미입력
+     if (bedCnt === '') {
+         alert("침대 개수를 입력해주세요.");
+         $('#updateBedCnt').focus(); 
+         return;
+     } else if (!/^\d+$/.test(bedCnt) || parseInt(bedCnt, 10) < 1 || parseInt(bedCnt, 10) > 9) { // 숫자만 입력 가능하며 1 이상 9 이하
+         alert("침대 개수는 숫자만 입력 가능하며, 최소 1개 이상 최대 9개까지 입력 가능합니다.");
+         $('#updateBedCnt').focus(); 
+         return;
+     }
+   	 
+   	 //뷰 유형 미선택 
+     if(viewCode === '') {
+         alert("뷰 유형을 선택 해주세요.");
+         return;
+     }
+   
+   	var rVO = {
+   		    roomId: roomId,
+   		    roomSize: roomSize,
+   		    roomBasicCapacity: roomBasicCapacity,
+   		    roomMaxCapacity: roomMaxCapacity,
+   		    roomBasicPrice: roomBasicPrice,
+   		    roomAddPrice: roomAddPrice,
+   		    bedCnt: bedCnt,
+   		    roomRankCode: roomRankCode,
+   		    roomRankName: roomRankName,
+   		    viewCode: viewCode,
+   		    viewName: viewName,
+   		    bedCode: bedCode,
+   		    bedName: bedName
+   		};
+
+          $.ajax({
+            url: 'insertRoom.do',
+            type: 'POST',
+            contentType: 'application/json; charset=UTF-8',
+            dataType: 'json',
+            data: JSON.stringify(rVO),
+            error: function(xhr) {
+                console.log(xhr.status);
+                alert("문제가 발생했습니다.");
+            },
+            success: function(jsonObj) {
+                alert("객실정보가 정상적으로 등록되었습니다.");
+                $('#addRoomModal').modal('hide');
+                location.reload();
+            }
+        });//ajax  
     }
 
     // 등록 버튼 클릭 시
     $('#chkAddBtn').on('click', function() {
         showModal('등록 확인', '등록하시겠습니까?', '예', function() {
             registerAction();
-            alert('등록 동작 수행');
+
         });
     });
 
@@ -490,6 +689,11 @@ function changePage(pageNumber) {
 						                     <select 
 						                     class="addRoomFloor form-select" 
 						                     id="addRoomFloor">
+						                     
+						                     <option>객실층</option>
+						                     <option>32</option>
+						                     <option>33</option>
+						                     <option>34</option>
 						                     </select>
 										</div>
 									</div>
@@ -515,7 +719,12 @@ function changePage(pageNumber) {
 						                     <select 
 						                     class="addRoomRankName form-select" 
 						                     id="addRoomRankName">
+						                     <option>객실 등급</option>
+						                     <option>STANDARD</option>
+						                     <option>DELUXE</option>
+						                     <option>SUITE</option>
 						                     </select>
+						                     <input type="hidden" id="addRoomRankCode" name="addRoomRankCode" value="">
 						                     
 										</div>
 									</div>
@@ -539,7 +748,13 @@ function changePage(pageNumber) {
 						                     <select 
 						                     class="addBedName form-select" 
 						                     id="addBedName">
+						                     
+						                     <option>침대 유형</option>
+						                     <option>KING</option>
+						                     <option>TWIN</option>
+						                     <option>DOUBLE</option>
 						                     </select>
+						                     <input type="hidden" id="addBedCode" name="addBedCode" value="">
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
@@ -557,15 +772,30 @@ function changePage(pageNumber) {
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
+											<label for="addBedCnt">침대 개수</label>
+											<input
+						                        type="text"
+						                        id="addBedCnt"
+						                        class="form-control"
+						                        placeholder="침대 개수"
+						                        name="addBedCnt"
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
 											<label for="addViewName">뷰 유형</label>
 						                     <select 
 						                     class="addViewName form-select" 
 						                     id="addViewName">
+						                     <option>뷰 유형</option>
+						                     <option>CITY VIEW</option>
+						                     <option>GARDEN VIEW</option>
+						                     <option>POLLSIDE VIEW</option>
 						                     </select>
+						                     <input type="hidden" id="addViewCode" name="addViewCode" value="">
 										</div>
 									</div>
-									<div class="col-md-6 col-12">
-									</div>	
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="addRoomSize">방 크기</label>
@@ -581,7 +811,7 @@ function changePage(pageNumber) {
 									</div>					
 									<div class="col-md-6 col-12">
 									</div>				
-									
+
 									
 									
 									
@@ -725,18 +955,6 @@ function changePage(pageNumber) {
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="updateBedCnt">침대 개수</label>
-											<input
-						                        type="text"
-						                        id="updateBedCnt"
-						                        class="form-control"
-						                        placeholder="침대 개수"
-						                        name="updateBedCnt"
-						                     />
-										</div>
-									</div>
-									<div class="col-md-6 col-12">
-										<div class="form-group">
 											<label for="updateRoomAddPrice">추가 요금</label>
 											<input
 						                        type="text"
@@ -745,6 +963,18 @@ function changePage(pageNumber) {
 						                        placeholder="추가 요금"
 						                        name="updateRoomAddPrice"
 						                        Disabled
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="updateBedCnt">침대 개수</label>
+											<input
+						                        type="text"
+						                        id="updateBedCnt"
+						                        class="form-control"
+						                        placeholder="침대 개수"
+						                        name="updateBedCnt"
 						                     />
 										</div>
 									</div>

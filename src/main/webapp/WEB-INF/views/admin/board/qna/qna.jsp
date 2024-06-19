@@ -61,6 +61,10 @@
 
 <script type = "text/javascript">
 	$(function() {
+	<%
+    String adminId = (String) session.getAttribute("adminId");
+    %>
+		
 		$(".sidebar-item.qm").addClass("active");
 		
 		$(document).on('click', '.sidebar-item', function() {
@@ -188,9 +192,7 @@
 	    } */
 
 	    function updateAction() {
-	    <%
-	        String adminId = (String) session.getAttribute("adminId");
-	    %>
+
 
 	        var qnaNum = $('#updateQnaNum').val();
 	        var qnaTitle = $('#updateQnaTitle').val();
@@ -239,7 +241,7 @@
 	        });//ajax
 	    	
 
-	    }
+	    }//updateAction
 
 	    
 	    

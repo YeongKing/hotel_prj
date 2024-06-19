@@ -14,13 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
-import kr.co.sist.elysian.admin.board.notice.model.domain.NoticeDomain;
 import kr.co.sist.elysian.admin.board.qna.model.domain.QnaDomain;
 import kr.co.sist.elysian.admin.board.qna.model.domain.QnaListDomain;
 import kr.co.sist.elysian.admin.board.qna.model.vo.QnaVO;
 import kr.co.sist.elysian.admin.board.qna.service.QnaService;
-import kr.co.sist.elysian.admin.member.model.vo.MemberVO;
-import kr.co.sist.elysian.admin.room.model.vo.RoomVO;
 
 @Controller("adminQnaController")
 @RequestMapping("/admin")
@@ -52,7 +49,7 @@ public class QnaController {
 	
 	@ResponseBody
 	@PostMapping(value="/updateQna.do", produces="application/json; charset=UTF-8")
-	public Boolean updateQna(@RequestBody QnaVO qVO , Model model) {
+	public Boolean updateQna(@RequestBody QnaVO qVO) {
 
 	     boolean result = qs.updateQna(qVO);
 	     
@@ -61,16 +58,15 @@ public class QnaController {
 	}//updateQna
 	
 	
+
 	/**
 	 * 자주 찾는 질문 등록 모달창이 열리면 qnaNum의 가장 마지막 + 1 반환
-	 * @param requestData
 	 * @return
 	 */
 	@ResponseBody
 	@PostMapping(value="/selectQnaNum.do", produces="application/json; charset=UTF-8")
 	public Map<String, String> selectQnaNum() {
 	    String result = qs.selectQnaNum();
-	    System.out.println("컨트롤러 : " + result);
 
 	    Map<String, String> response = new HashMap<String, String>();
 	    response.put("qnaNum", result);

@@ -6,14 +6,10 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.sist.elysian.admin.board.event.model.domain.EventDomain;
-import kr.co.sist.elysian.admin.board.notice.model.domain.NoticeDomain;
 import kr.co.sist.elysian.admin.board.qna.model.domain.QnaDomain;
 import kr.co.sist.elysian.admin.board.qna.model.domain.QnaListDomain;
 import kr.co.sist.elysian.admin.board.qna.model.vo.QnaVO;
 import kr.co.sist.elysian.admin.board.qna.repository.QnaDAO;
-import kr.co.sist.elysian.admin.member.model.vo.MemberVO;
-import kr.co.sist.elysian.admin.room.model.vo.RoomVO;
 
 @Service
 public class QnaService {

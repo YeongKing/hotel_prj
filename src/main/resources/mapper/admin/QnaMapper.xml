@@ -6,16 +6,42 @@
 <mapper namespace="kr.co.sist.elysian.admin.board.qna">
 
 
-	 <select id="qnaList" resultType="qld">
-		select QNA_NUM qnaNum, QNA_TYPE qnaType, QNA_TITLE qnaTitle
+	 <select id="selectQnaList" resultType="qld">
+		select QNA_NUM qnaNum, QNA_TYPE qnaType, QNA_TITLE qnaTitle, ADMIN_ID adminId
 		from QNA
+		ORDER BY QNA_NUM ASC
 	 </select>
 	 
-	 <select id="qnaDetail" resultType="qd" parameterType="String">
+	 <select id="selectQnaDetail" resultType="qd" parameterType="String">
 		select QNA_NUM qnaNum, ADMIN_ID adminId, QNA_TITLE qnaTitle, QNA_TYPE qnaType, QNA_CONTENT qnaContent, QNA_INPUTDATE qnaInputdate
 		from QNA
 		where QNA_NUM =#{qnaNum}
 	 </select>
+	 
+	 <update id="updateQna"  parameterType="qVO">
+		UPDATE QNA
+		SET 
+		ADMIN_ID = #{adminId},
+		QNA_TITLE = #{qnaTitle},
+		QNA_TYPE = #{qnaType},
+		QNA_CONTENT = #{qnaContent}
+		WHERE
+		QNA_NUM = #{qnaNum}
+	 </update>
+	 
+	 <select id="selectQnaNum" resultType="String">
+		select 'QNA'||LPAD((max(QnaNum)+1), 4, '0') qnaNum
+		from (
+		select SUBSTR(QNA_NUM,4) QnaNum from QNA  )
+ 	</select>
+	 
+	 <insert id="insertQna" parameterType="qVO">
+		INSERT INTO QNA 
+		(QNA_NUM, ADMIN_ID, QNA_TITLE, QNA_TYPE, QNA_CONTENT)
+		VALUES
+		(#{qnaNum}, #{adminId}, #{qnaTitle}, #{qnaType}, #{qnaContent})
+	</insert>
+	 
 	 
 	
 </mapper>

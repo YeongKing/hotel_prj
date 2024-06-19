@@ -383,7 +383,7 @@
 					}); // ajax
 				}
 			}); // ajax
-		}
+		} // loadData
 		
 		// 셀렉 옵션 정렬 함수
 		function sortSelectOptions() {

@@ -40,11 +40,6 @@
 					<div class="row">
 					<div class="col-12 col-lg-3">
 					<input type="text" class="form-control" id="roomFloor" disabled>
-					<!-- <select class="form-select" id="roomFloor">
-						<option value="32">32층</option>
-						<option value="33">33층</option>
-						<option value="34">34층</option>
-					</select> -->
 					</div>
 																	
 					<div class="col-12 col-lg-9">

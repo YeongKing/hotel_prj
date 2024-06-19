@@ -24,7 +24,7 @@ public class LoginService {
 			
 		}//end catch
 		
-//		System.out.println("Service aVO: " + aVO.getAdminPw());
+		System.out.println("Service aVO: " + adm);
 //		System.out.println("Service adm: " + adm);
 		return adm;
 

@@ -77,5 +77,13 @@
 </div>
 
 </div>
+
+<!-- 관리자 정보가 없을 때 -->
+<c:if test="${ not empty error }">
+	<script type="text/javascript">
+		alert('${ error }');
+	</script>
+</c:if>
+
 <!-- auth E -->
 </body>

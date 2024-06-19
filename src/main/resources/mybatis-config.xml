@@ -10,6 +10,7 @@
 	
 	<!-- typeAlias예시 -->
 	<typeAliases>
+		<!-- admin -->
 		<typeAlias type="kr.co.sist.elysian.admin.member.model.domain.MemberListDomain" alias="mld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.member.model.vo.MemberVO" alias="mVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.member.model.domain.MemberDomain" alias="md"/> 
@@ -31,7 +32,11 @@
 		<typeAlias type="kr.co.sist.elysian.admin.login.model.vo.AdminVO" alias="av"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.login.model.domain.AdminDomain" alias="ad"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.RoomResDomain" alias="rrd"/> 
-		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain" alias="drd"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain" alias="drd"/>
+		
+		<!-- user --> 
+		<typeAlias type="kr.co.sist.elysian.user.login.model.vo.UserVO" alias="uv"/> 
+		<typeAlias type="kr.co.sist.elysian.user.login.model.domain.UserDomain" alias="ud"/>  
 	</typeAliases>
   
   <!-- 환경 설정 -->
@@ -49,6 +54,7 @@
 
   <!-- 매퍼 위치 설정 -->
   <mappers>
+  	<!-- admin -->
     <mapper resource="mapper/admin/DashboardMapper.xml"/>
     <mapper resource="mapper/admin/MemberMapper.xml"/>
     <mapper resource="mapper/admin/RoomMapper.xml"/>
@@ -59,6 +65,10 @@
 	
     <mapper resource="mapper/admin/LoginMapper.xml"/>
     <mapper resource="mapper/admin/ResMapper.xml"/>
+    
+    <!-- user -->
+    <mapper resource="mapper/member/LoginMapper.xml"/>
+    
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
 <!--     
     <mapper resource="mapper/admin/HomeMapper.xml"/>

@@ -3,6 +3,8 @@ package kr.co.sist.elysian.admin.login.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.nio.file.spi.FileSystemProvider;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,52 +49,34 @@ public class LoginController {
 	private LoginService ls;
 	
 	@PostMapping("/set_session.do")
-	public String searchLogin(AdminVO aVO , Model model) {
-		
-		/*
-		 * String id = httpServletRequest.getParameter("adminId"); 
-		 * String pw =
-		 * httpServletRequest.getParameter("adminPw");
-		 * 
-		 * System.out.println(id); System.out.println(pw);
-		 * 
-		 * AdminVO aVO = new AdminVO(id, pw);
-		 */
-		
-//		System.out.println("aVO : " + aVO);
-		//암호화 객체 생성
-		PasswordEncoder pe = new BCryptPasswordEncoder();
-		
-		boolean flag=false;
-		AdminDomain adm = ls.searchLogin(aVO);
-		
-		flag = adm!= null; //조회결과가 있으면 true,  false
-		
-		String encryptedPassword = "";
-		
-		// 입력한 비밀번호와 암호화된 비밀번호 비교
-//		if( flag ) {
-//			encryptedPassword=adm.getAdminPw();
-//			System.out.println( aVO.getAdminPw()+" /" + encryptedPassword );
-//			flag = pe.matches(aVO.getAdminPw(), encryptedPassword);
-//			System.out.println("------------------"+flag);
-//		}
-		
-		if ( flag ) {
-//			model.addAttribute("adminId", "test"); //get방식 test용 코드
-//			model.addAttribute("adminAuthority", adm.getAdminAuthority()); //get방식 test용 코드
-			encryptedPassword=adm.getAdminPw();
-			flag = pe.matches(aVO.getAdminPw(), encryptedPassword);
-            model.addAttribute("adminId", adm.getAdminId());
-            model.addAttribute("adminAuthority", adm.getAdminAuthority());
-            return "forward:dashboard.do";
-        } else {
-            model.addAttribute("error", "Invalid credentials");
-            return "admin/login/login_frm";
-        }
-		
-//		return "forward:dashboard.do"; //get방식 test용 코드
-		 
+	public String searchLogin(AdminVO aVO, Model model) {
+	    // 암호화 객체 생성
+	    PasswordEncoder pe = new BCryptPasswordEncoder();
+	    
+	    AdminDomain adm = ls.searchLogin(aVO);
+	    
+	    // 조회 결과가 없으면 등록된 관리자가 아님
+	    if (adm == null) {
+	        model.addAttribute("error", "등록된 관리자가 아닙니다.");
+	        return "admin/login/login_frm";
+	    }
+	    
+	    // 조회 결과가 있으면 비밀번호 비교
+	    String encryptedPassword = adm.getAdminPw(); // DB에서 가져온 비밀번호
+	    System.out.println("DB에 저장된 비밀번호: " + encryptedPassword);
+	    
+	    String uncodePass = aVO.getAdminPw();
+	    boolean matchFlag = pe.matches(uncodePass, encryptedPassword);
+	    System.out.println("비밀번호 일치 여부: " + matchFlag);
+	    
+	    if (matchFlag) {
+	        model.addAttribute("adminId", adm.getAdminId());
+	        model.addAttribute("adminAuthority", adm.getAdminAuthority());
+	        return "forward:dashboard.do";
+	    } else {
+	        model.addAttribute("error", "잘못된 비밀번호 입니다.");
+	        return "admin/login/login_frm";
+	    }
 	}
 	
 	@GetMapping("/logout.do")

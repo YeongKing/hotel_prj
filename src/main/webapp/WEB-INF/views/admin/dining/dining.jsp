@@ -77,21 +77,40 @@
             <div class="page-content mb-3">
                 <section class="row">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">Dining Search</h5>
-                        </div>
+
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table dataTable no-footer" id="table1">
                                     <thead>
                                         <tr>
+											<th>번호</th>
                                             <th>다이닝번호</th>
                                             <th>구분</th>
                                             <th>다이닝명</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+<c:if test="${ empty requestScope.diningList }">
+<tr>
+<td colspan="4" style="text-align: center;">
+다이닝 정보가 존재하지 않습니다.
+</td>
+</tr>
+</c:if>
+<c:forEach var="dld" items="${ requestScope.diningList }" varStatus="i">
+<tr>
+	<td><c:out value="${ i.count }"/></td>
+	<td><a href="#" class="diningNumber"><c:out value="${ dld.diningId }"/></a></td>
+	<td><c:out value="${ dld.diningType }"/></td>
+	<td class="text-bold-500"><c:out value="${ dld.diningName }"/></td>
+
+</tr>
+
+
+</c:forEach>    
+                                    
+                                    
+<!--                                         <tr>
                                             <td><a href="#" class="diningNumber">Dining0001</a></td>
                                             <td>양식</td>
                                             <td class="text-bold-500">Ramsey</td>
@@ -125,7 +144,7 @@
                                             <td><a href="#" class="diningNumber">Dining0007</a></td>
                                             <td>스페인 요리</td>
                                             <td class="text-bold-500">El Celler de Can Roca</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                                 <div class="addDining">
@@ -144,20 +163,20 @@
                         <div class="modal-header">
                             <h5 class="modal-title">다이닝 등록</h5>
                         </div>
-                        <form id="diningDetailForm" action="#" class="form px-5" data-parsley-validate>
+                        <form id="diningDetailForm" action="addDining.do" method="post" enctype="multipart/form-data" class="form px-5" data-parsley-validate>
                             <div class="row">
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
                                         <label for="diningId">매장아이디</label>
-                                        <input type="text" class="form-control" id="diningId" placeholder="Dining01" disabled>
+                                        <input type="text" class="form-control" id="addDiningId" name="diningId" placeholder="Dining01" readonly="readonly">
                                     </div>
                                     <div class="form-group">
                                         <label for="diningName">매장명</label>
-                                        <input type="text" class="form-control" id="diningName" placeholder="Enter dining name">
+                                        <input type="text" class="form-control" id="addDiningName" name="diningName" placeholder="Enter dining name">
                                     </div>
                                     <div class="form-group">
                                         <label for="diningType">매장구분</label>
-                                        <select class="form-select" id="diningType">
+                                        <select class="form-select" id="diningType" name="diningType">
                                             <option>양식</option>
                                             <option>중식</option>
                                             <option>일식</option>
@@ -167,42 +186,41 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="hallTable">홀테이블</label>
-                                        <input type="text" class="form-control" id="hallTable" placeholder="0">
+                                        <input type="text" class="form-control" id="addHallTable" name="hallTable" placeholder="0">
                                     </div>
                                     <div class="form-group">
                                         <label for="roomTable">룸테이블</label>
-                                        <input type="text" class="form-control" id="roomTable" placeholder="0">
+                                        <input type="text" class="form-control" id="addRoomTable" name="roomTable" placeholder="0">
                                     </div>
                                     <div class="form-group">
                                         <label for="openTime">영업시작시간</label>
-                                        <input type="text" class="form-control" id="openTime" placeholder="00:00">
+                                        <input type="text" class="form-control" id="addOpenTime" name="openTime" placeholder="00:00">
                                     </div>
                                     <div class="form-group">
                                         <label for="closeTime">영업종료시간</label>
-                                        <input type="text" class="form-control" id="closeTime" placeholder="00:00">
+                                        <input type="text" class="form-control" id="addCloseTime" name="closeTime" placeholder="00:00">
                                     </div>
                                     <div class="form-group">
                                         <label for="location">위치</label>
-                                        <input type="text" class="form-control" id="location">
+                                        <input type="text" class="form-control" id="addLocation" name="location">
                                     </div>
                                     <div class="form-group">
                                         <label for="deposit">예약금</label>
-                                        <input type="text" id="deposit" class="form-control" placeholder="0">
+                                        <input type="text" id="addDeposit" class="form-control" name="deposit" placeholder="0">
                                         <p><small class="text-muted">인당</small></p>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
                                         <label for="diningDescription">레스토랑설명</label>
-                                        <textarea class="form-control" id="diningDescription" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
+                                        <textarea class="form-control" id="addDiningDescription" name="diningComment" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
                                         <label for="diningDescription">코스설명</label>
-                                        <textarea class="form-control" id="diningDescription1" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
+                                        <textarea class="form-control" id="addDiningDescription1" name="menu" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="diningImg">매장 대표 이미지</label>
                                         <div class="input-group">
-                                            <input type="file" class="form-control" id="diningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                                            <button class="btn btn-primary" type="button" id="inputGroupFileAddon04">Upload</button>
+                                            <input type="file" class="form-control"  id="addDiningImg" name="diningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                                         </div>
                                     </div>
                                     <div class="buttons">
@@ -234,65 +252,68 @@
                                 </button>
                             </div>
                         </div>
-                        <form id="diningDetailForm" action="#" class="form px-5" data-parsley-validate>
+                        <form id="diningDetailFormUpdate" enctype="multipart/form-data" class="form px-5" data-parsley-validate>
                             <div class="row">
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="diningId">매장아이디</label>
-                                        <input type="text" class="form-control" id="diningId" placeholder="Dining01" disabled>
+                                        <label for="updateDiningId">매장아이디</label>
+                                        <input type="text" class="form-control" id="updateDiningId" name="diningId" placeholder="Dining01" disabled>
                                     </div>
                                     <div class="form-group">
-                                        <label for="diningName">매장명</label>
-                                        <input type="text" class="form-control" id="diningName" placeholder="Enter dining name">
+                                        <label for="updateDiningName">매장명</label>
+                                        <input type="text" class="form-control" id="updateDiningName" name="diningName"  placeholder="Enter dining name">
                                     </div>
                                     <div class="form-group">
-                                        <label for="diningType">매장구분</label>
-                                        <select class="form-select" id="diningType">
+                                        <label for="updateDiningType">매장구분</label>
+                                        <select class="form-select" id="updateDiningType" name="diningType">
                                             <option>양식</option>
                                             <option>중식</option>
                                             <option>일식</option>
                                             <option>다이닝바</option>
                                             <option>베이커리</option>
+                                            <option>뷔페</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="hallTable">홀테이블</label>
-                                        <input type="text" class="form-control" id="hallTable" placeholder="0">
+                                        <label for="updateHallTable">홀테이블</label>
+                                        <input type="text" class="form-control" id="updateHallTable" name="hallTable" placeholder="0">
                                     </div>
                                     <div class="form-group">
-                                        <label for="roomTable">룸테이블</label>
-                                        <input type="text" class="form-control" id="roomTable" placeholder="0">
+                                        <label for="updateRoomTable">룸테이블</label>
+                                        <input type="text" class="form-control" id="updateRoomTable" name="roomTable" placeholder="0">
                                     </div>
                                     <div class="form-group">
-                                        <label for="openTime">영업시작시간</label>
-                                        <input type="text" class="form-control" id="openTime" placeholder="00:00">
+                                        <label for="updateOpenTime">영업시작시간</label>
+                                        <input type="text" class="form-control" id="updateOpenTime" name="openTime" placeholder="00:00">
                                     </div>
                                     <div class="form-group">
-                                        <label for="closeTime">영업종료시간</label>
-                                        <input type="text" class="form-control" id="closeTime" placeholder="00:00">
+                                        <label for="updateCloseTime">영업종료시간</label>
+                                        <input type="text" class="form-control" id="updateCloseTime" name="closeTime" placeholder="00:00">
                                     </div>
                                     <div class="form-group">
-                                        <label for="location">위치</label>
-                                        <input type="text" class="form-control" id="location">
+                                        <label for="updateLocation">위치</label>
+                                        <input type="text" class="form-control" id="updateLocation" name="location">
                                     </div>
                                     <div class="form-group">
-                                        <label for="deposit">예약금</label>
-                                        <input type="text" id="deposit" class="form-control" placeholder="0">
+                                        <label for="updateDeposit">예약금</label>
+                                        <input type="text" id="updateDeposit" name="depost" class="form-control" placeholder="0">
                                         <p><small class="text-muted">인당</small></p>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="diningDescription">레스토랑설명</label>
-                                        <textarea class="form-control" id="diningDescription" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
-                                        <label for="diningDescription">코스설명</label>
-                                        <textarea class="form-control" id="diningDescription1" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
+                                        <label for="updateDiningDescription">레스토랑설명</label>
+                                        <textarea class="form-control" id="updateDiningDescription" name="diningComment" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
+                                        <label for="updateDiningDescription1">코스설명</label>
+                                        <textarea class="form-control" id="updateDiningDescription1" name="menu" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="diningImg">매장 대표 이미지</label>
+                                        <br>
+                                            <input id="updateDiningImgText" name="" class="upload-name" value="기존 파일" disabled="disabled">
+                                            <label style="color: red; margin-bottom: 20px" ><small>*기존 이미지</small></label>
                                         <div class="input-group">
-                                            <input type="file" class="form-control" id="diningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                                            <button class="btn btn-primary" type="button" id="inputGroupFileAddon04">Upload</button>
+                                            <input type="file" class="form-control" id="updateDiningImg" name="diningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                                         </div>
                                     </div>
                                     <div style="height: 30px;"></div>
@@ -336,7 +357,8 @@
                 $(".sidebar-item").removeClass("active");
                 $(this).addClass("active");
             });
-
+			
+            
             
             // 다이닝 등록 번호 클릭 시
             $("#addDiningBtn").click(function() {
@@ -348,11 +370,55 @@
                 $('#addDiningModal').find('span.parsley-custom-error-message').remove();
                 $('#addDiningModal').modal('show');
                 
+                $.ajax({
+                    url: 'addDiningModal.do',
+                    method: 'GET',
+                    success: function(data) {
+                        $("#addDiningId").val(data);
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Ajax Error: ", status, error); // 디버그 로그
+                        alert("문제가 발생했습니다.");
+                    }
+                });
                 
             });
-
+            
+      
             // 테이블의 다이닝 번호 클릭 시
             $(".diningNumber").click(function() {
+            	var diningId = $(this).text();
+            	
+                $.ajax({
+                	url:'diningDetail.do',
+                	type:'POST',
+                	contentType:'application/json',
+                	dataType:'JSON',
+                	data:JSON.stringify({ diningId: diningId }),
+                	error:function(xhr){
+                		console.log(xhr.status)
+                		alert("문제가 발생했습니다.")
+                	},
+                	success:function(jsonObj){
+                		
+                		$("#updateDiningId").val(jsonObj.diningId);
+                		$("#updateDiningName").val(jsonObj.diningName);
+                		$("#updateDiningType").val(jsonObj.diningType);
+                		$("#updateHallTable").val(jsonObj.hallTable);
+                		$("#updateRoomTable").val(jsonObj.roomTable);
+                		$("#updateOpenTime").val(jsonObj.openTime);
+                		$("#updateCloseTime").val(jsonObj.closeTime);
+                		$("#updateLocation").val(jsonObj.location);
+                		$("#updateDeposit").val(jsonObj.deposit);
+                		$("#updateDiningDescription").val(jsonObj.diningComment);
+                		$("#updateDiningDescription1").val(jsonObj.menu);
+                		$("#updateDiningImgText").val(jsonObj.diningImg); 
+                		
+                	}
+                	
+                })
+            	
+            	
                 $('#diningDetailModal').find('.is-invalid').removeClass('is-invalid');
                 $('#diningDetailModal').find('span.parsley-custom-error-message').remove();
                 $('#diningDetailModal').modal('show');
@@ -387,43 +453,66 @@
                 // });
             }
 
+            //다이닝 수정 함수
             function updateAction() {
-                console.log('수정 동작 수행');
-                // 서버로 수정 요청 보내기
-                // $.ajax({
-                //     url: 'update_url',
-                //     method: 'POST',
-                //     data: { id: itemId, data: newData },
-                //     success: function(response) {
-                //         console.log('수정 성공');
-                //     },
-                //     error: function(error) {
-                //         console.log('수정 실패', error);
-                //     }
-                // });
+				var form = $("#diningDetailFormUpdate")[0];
+				var formData = new FormData(form);
+				formData.append("diningId", $("#updateDiningId").val());
+				
+				//파일을 고르지 않았을시 기존 이미지 파일을 formData에 담는다
+				var fileInput = $("#updateDiningImg")[0];
+				if(fileInput.files.length === 0){
+					alert("존재했던 이미지 이름 : "+$("#updateDiningImgText").val());
+					formData.append("existDiningImg", $("#updateDiningImgText").val());
+				}
+				
+                 $.ajax({
+                     url: 'updateDining.do',
+                     method: 'POST',
+                     data: formData,
+                     processData: false, // 필수: 파일 업로드를 위해 false로 설정
+                     contentType: false, // 필수: 파일 업로드를 위해 false로 설정
+                     success: function(response) {
+                         if(response){
+                    		 alert('수정을 성공적으로 마쳤습니다');
+                         }else{
+                        	 alert('수정에 실패하였습니다')
+                         }
+                     },
+                     error: function(error) {
+                         alert('문제가 발생했습니다', error);
+                     }
+                 });
             }
-
+            
+			//다이닝 등록 함수
             function registerAction() {
-                console.log('등록 동작 수행');
-                // 서버로 등록 요청 보내기
-                // $.ajax({
-                //     url: 'register_url',
-                //     method: 'POST',
-                //     data: { data: newData },
-                //     success: function(response) {
-                //         console.log('등록 성공');
-                //     },
-                //     error: function(error) {
-                //         console.log('등록 실패', error);
-                //     }
-                // });
+				var form = $("#diningDetailForm")[0];
+				var formData = new FormData(form);
+                $.ajax({
+                     url: 'addDining.do',
+                     method: 'POST',
+                     processData: false,
+                     contentType: false,
+                     data: formData,
+                     success: function(response) {
+                    	 if(response){
+                         alert('등록을 성공적으로 마쳤습니다');
+						 window.location.reload();                    		 
+                    	 }else{
+                    		 alert('등록에 실패하였씁니다');
+                    	 }
+                     },
+                     error: function(error) {
+                    	 alert('문제가 발생했습니다', error);
+                     }
+                 });
             }
 
             // 등록 버튼 클릭 시
             $('#chkAddBtn').on('click', function() {
                 showModal('등록 확인', '등록하시겠습니까?', '예', function() {
                     registerAction();
-                    alert('등록 동작 수행');
                 });
             });
 

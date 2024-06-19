@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.sist.elysian.admin.dining">
+
+	 <!-- 다이닝 목록 조회 쿼리 -->
+	 <select id="diningList" resultType="dld">
+		select DINING_ID diningId, DINING_TYPE diningType, DINING_NAME diningName
+		from DINING
+	 </select>
+	 
+	 <!-- 다이닝 상세 조회 쿼리 -->
+	 <select id="diningDetail" resultType="dd" parameterType="String">
+ 		select DINING_ID diningId, DINING_NAME diningName,DINING_TYPE diningType, HALL_TABLE hallTable, ROOM_TABLE roomTable, OPEN_TIME openTime, CLOSE_TIME closeTime, LOCATION location, DEPOSIT deposit, DINING_IMG diningImg, DINING_COMMENT diningComment, MENU menu
+ 		from DINING
+ 		where DINING_ID = #{diningId}
+	 </select>
+	 
+	 <!-- 최근 다이닝 번호 조회 쿼리 -->
+	 <select id="lastDiningId" resultType="String">
+	 	select dining_id
+		from dining
+		where rownum = 1
+		order by dining_id desc
+	 </select>
+
+	<!-- 다이닝 등록 쿼리 -->
+	<insert id="addDining" parameterType="dVO">
+      INSERT INTO DINING (dining_id, dining_name, dining_type, hall_table, room_table, open_time, close_time, location, deposit, dining_img, dining_comment, menu)
+    VALUES (
+         #{diningId, jdbcType=VARCHAR}, 
+        #{diningName, jdbcType=VARCHAR}, 
+        #{diningType, jdbcType=VARCHAR}, 
+        #{hallTable, jdbcType=INTEGER}, 
+        #{roomTable, jdbcType=INTEGER}, 
+        #{openTime, jdbcType=VARCHAR}, 
+        #{closeTime, jdbcType=VARCHAR}, 
+        #{location, jdbcType=VARCHAR}, 
+        #{deposit, jdbcType=INTEGER}, 
+        #{diningImg, jdbcType=VARCHAR}, 
+        #{diningComment, jdbcType=VARCHAR}, 
+        #{menu, jdbcType=VARCHAR}
+    )
+	</insert>
+
+	<update id="updateDining" parameterType="HashMap">
+		UPDATE DINING
+		SET
+		DINING_NAME = #{dVO.diningName, jdbcType=VARCHAR},
+		DINING_TYPE = #{dVO.diningType, jdbcType=VARCHAR},
+		HALL_TABLE = #{dVO.hallTable, jdbcType=INTEGER},
+		ROOM_TABLE = #{dVO.roomTable, jdbcType=INTEGER},
+		OPEN_TIME = #{dVO.openTime, jdbcType=VARCHAR},
+		CLOSE_TIME = #{dVO.closeTime, jdbcType=VARCHAR},
+		LOCATION = #{dVO.location, jdbcType=VARCHAR},
+		DEPOSIT = #{dVO.deposit, jdbcType=INTEGER},
+		DINING_IMG = #{dVO.diningImg, jdbcType=VARCHAR},
+		DINING_COMMENT = #{dVO.diningComment, jdbcType=VARCHAR},
+		MENU = #{dVO.menu, jdbcType=VARCHAR}
+		WHERE DINING_ID = #{diningId, jdbcType=VARCHAR}
+	</update>
+</mapper>

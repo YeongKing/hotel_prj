@@ -79,21 +79,39 @@
 		<div class="page-content mb-3">
 			<section class="row">
 				<div class="card">
-	                <div class="card-header">
-	                    <h5 class="card-title">jQuery Datatable</h5>
-	                </div>
 	                <div class="card-body">
 	                    <div class="table-responsive">
 	                        <table class="table dataTable no-footer" id="table1">
 	                            <thead>
 	                                <tr>
+										<th>번호</th>
 	                                    <th>이벤트번호</th>
 	                                    <th>이벤트명</th>
 	                                    <th>등록일</th>
 	                                </tr>
 	                            </thead>
 	                            <tbody>
-	                                <tr>
+<c:if test="${ empty requestScope.eventList }">
+<tr>
+<td colspan="4" style="text-align: center;">
+이벤트 정보가 존재하지 않습니다.
+</td>
+</tr>
+</c:if>	                            
+<c:forEach var="eld" items="${ requestScope.eventList }" varStatus="i">
+<tr>
+	<td><c:out value="${ i.count }"/></td>
+	<td><a href="#" class="eventNumber"><c:out value="${ eld.eventNum }"/></a></td>
+	<td class="text-bold-500"><c:out value="${ eld.eventTitle }"/></td>
+	<td><c:out value="${ eld.eventInputdate }"/></td>
+
+</tr>
+
+</c:forEach>	                            
+	                            
+	                            
+	                            
+	                                <!-- <tr>
 	                                    <td><a href="#" class="eventNumber">Event0001</a></td>
 	                                    <td class="text-bold-500">2024 SUMMBER ART FESTIBAL</td>
 	                                    <td>2024.06.03</td>
@@ -132,7 +150,7 @@
 	                                    <td><a href="#" class="eventNumber">Event0008</a></td>
 	                                    <td class="text-bold-500">2024 MIDNIGHT POOL PARTY</td>
 	                                    <td>2024.02.03</td>
-	                                </tr>
+	                                </tr> -->
 	                            </tbody>
 	                        </table>
 	                        <div class="addEvent">
@@ -156,39 +174,39 @@
                     <div class="col-12 col-lg-6">
                         <div>
                             <div class="form-group">
-                                <label for="diningId">이벤트 아이디</label>
-                                <input type="text" class="form-control" id="diningId" placeholder="Dining01" disabled>
+                                <label for="addEventNum">이벤트 아이디</label>
+                                <input type="text" class="form-control" id="addEventNum" placeholder="event" disabled>
                             </div>
                             <div class="form-group">
-                                <label for="diningName">이벤트명</label>
-                                <input type="text" class="form-control" id="diningName" placeholder="">
+                                <label for="addEventTitle">이벤트명</label>
+                                <input type="text" class="form-control" id="addEventTitle" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="openTime">이벤트 시작일</label>
-                                <input type="text" class="form-control" id="openTime" placeholder="00:00">
+                                <input type="text" class="form-control" id="addEventStartDate" placeholder="yyyy-mm-dd">
                             </div>
                             <div class="form-group">
                                 <label for="closeTime">이벤트 종료일</label>
-                                <input type="text" class="form-control" id="closeTime" placeholder="00:00">
+                                <input type="text" class="form-control" id="addEventEndDate" placeholder="yyyy-mm-dd">
                             </div>
 
                         </div>
                     </div>
                     <div class="col-12 col-lg-6">
 						<div class="form-group">
-   							 <label for="diningDescription">이벤트 내용</label>
-   							 <textarea class="form-control" id="diningDescription" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
+   							 <label for="addEventContent">이벤트 내용</label>
+   							 <textarea class="form-control" id="addEventContent" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
 						</div>
 						<div class="form-group">
-                               <label for="diningImg">이벤트 대표 이미지</label>
+                               <label for="addEventImg">이벤트 대표 이미지</label>
                                <div class="input-group">
-                                   <input type="file" class="form-control" id="diningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                   <input type="file" class="form-control" id="addEventImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                                    <button class="btn btn-primary" type="button" id="inputGroupFileAddon04">Upload</button>
                                 </div>
                         </div>	<div class="form-group">
-                               <label for="diningImg">이벤트 부 이미지</label>
+                               <label for="addEventSubImg">이벤트 부 이미지</label>
                                <div class="input-group">
-                                   <input type="file" class="form-control" id="diningImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                   <input type="file" class="form-control" id="addEventSubImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                                    <button class="btn btn-primary" type="button" id="inputGroupFileAddon04">Upload</button>
                                 </div>
                         </div>
@@ -228,45 +246,45 @@
 							<div class="row">
 								<div class="col-12 col-lg-6">
 									<div class="form-group">
-										<label for="diningId">이벤트 아이디</label> <input type="text"
-											class="form-control" id="diningId" placeholder="Dining01"
+										<label for="updateEventNum">이벤트 아이디</label> <input type="text"
+											class="form-control" id="updateEventNum" placeholder="Dining01"
 											disabled>
 									</div>
 									<div class="form-group">
-										<label for="diningName">이벤트명</label> <input type="text"
-											class="form-control" id="diningName" placeholder="">
+										<label for="updateEventTitle">이벤트명</label> <input type="text"
+											class="form-control" id="updateEventTitle" placeholder="">
 									</div>
 									<div class="form-group">
-										<label for="openTime">이벤트 시작일</label> <input type="text"
-											class="form-control" id="openTime" placeholder="00:00">
+										<label for="updateEventStartDate">이벤트 시작일</label> <input type="text"
+											class="form-control" id="updateEventStartDate" placeholder="00:00">
 									</div>
 									<div class="form-group">
-										<label for="closeTime">이벤트 종료일</label> <input type="text"
-											class="form-control" id="closeTime" placeholder="00:00">
+										<label for="updateEventEndDate">이벤트 종료일</label> <input type="text"
+											class="form-control" id="updateEventEndDate" placeholder="00:00">
 									</div>
 								</div>
 								<div class="col-12 col-lg-6">
 									<div class="form-group">
-										<label for="diningDescription">이벤트 내용</label>
-										<textarea class="form-control" id="diningDescription"
+										<label for="updateEventContent">이벤트 내용</label>
+										<textarea class="form-control" id="updateEventContent"
 											rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
 									</div>
 									<div class="form-group">
-										<label for="diningImg">이벤트 대표 이미지</label>
+										<label for="updateEventImg">이벤트 대표 이미지</label>
 										<div class="input-group">
-											<input type="file" class="form-control" id="diningImg"
-												aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+											<input type="file" class="form-control" id="updateEventImg"
+												aria-describedby="GroupFileAddon04" aria-label="Upload">
 											<button class="btn btn-primary" type="button"
-												id="inputGroupFileAddon04">Upload</button>
+												id="updateGroupFileAddon04">Upload</button>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="diningImg">이벤트 부 이미지</label>
+										<label for="updateEventSubImg">이벤트 부 이미지</label>
 										<div class="input-group">
-											<input type="file" class="form-control" id="diningImg"
-												aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+											<input type="file" class="form-control" id="updateEventSubImg"
+												aria-describedby="GroupFileAddon04" aria-label="Upload">
 											<button class="btn btn-primary" type="button"
-												id="inputGroupFileAddon04">Upload</button>
+												id="updateGroupFileAddon04">Upload</button>
 										</div>
 									</div>
                                     <div class="col-12 d-flex justify-content-center" >
@@ -341,13 +359,60 @@ $(document).ready(function() {
 	
 	 // 테이블의 이벤트 번호 클릭시
     $(".eventNumber").click( function(){
+
     	
-       /*  var userId = $(this).text();
-        var userName = $(this).closest('tr').find('.userName').text(); // 같은 행(row) 내에서 .userName을 찾아 텍스트를 가져옴
-        var userPhone = $(this).closest('tr').find('.userPhone').text(); // 같은 행(row) 내에서 .userName을 찾아 텍스트를 가져옴
-        var userSignUpDate = $(this).closest('tr').find('.userSignUpDate').text(); // 같은 행(row) 내에서 .userName을 찾아 텍스트를 가져옴
-		*/
-        // 모달 내 필드에 데이터 설정
+    	var eventNum = $(this).text();
+    	
+        $.ajax({
+        	url:'eventDetail.do',
+        	type:'POST',
+        	contentType:'application/json',
+        	dataType:'JSON',
+        	data:JSON.stringify({ eventNum: eventNum }),
+        	error:function(xhr){
+        		console.log(xhr.status)
+        		alert("문제가 발생했습니다.")
+        	},
+        	success:function(jsonObj){
+        		
+        		$("#updateEventNum").val(jsonObj.eventNum);
+        		$("#updateEventTitle").val(jsonObj.eventTitle);
+        		$("#updateEventStartDate").val(jsonObj.eventStartDate);
+        		$("#updateEventEndDate").val(jsonObj.eventEndDate);
+        		$("#updateEventContent").val(jsonObj.eventContent);
+        		/* $("#updateEventImg").val(jsonObj.eventMainImg);
+        		$("#updateEventSubImg").val(jsonObj.eventSubImg); */
+        		
+
+        	}
+        	
+        	
+        	
+        })//ajax
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+
       // 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
          // 모달 내의 모든 'is-invalid' 클래스 제거
          $('#eventDetailModal').find('.is-invalid').removeClass('is-invalid');

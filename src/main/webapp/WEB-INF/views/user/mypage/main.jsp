@@ -190,13 +190,6 @@
 				      $('#usefulPointSpan').html(fncComma(data.usefulPoint));
 				      //보유쿠폰수 세팅 
 				      $('#couponCntDiv').html(fncComma(data.couponCnt));
-					     
-						//언어코드가 영문이면 멤버십메뉴 숨김
-	// 				      if(data.langCode=='en') {
-	// 				    	  $('#mbrshp1').css('display','none');
-	// 				    	  $('#mbrshp2').css('display','none');
-	// 				      }
-					      
 				}else{
 					alert(data.statusR + " : 관리자에게 문의하세요");
 				}

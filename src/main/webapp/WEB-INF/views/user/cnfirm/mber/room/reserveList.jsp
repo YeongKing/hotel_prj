@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8" 
- info="최초 객실 예약내역 페이지 입장시" %>
+ info="객실 예약내역 페이지 메인" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -26,7 +26,6 @@
 <body>
 <div class="skip"><a href="#container">본문 바로가기</a></div>
 <div class="wrapper ">
-<!-- mass promotion 메뉴 동적 노출 -->
 
 <script>
 	jQuery(function(){
@@ -155,15 +154,16 @@
 <script>
 	function fncSearch(){
 		$("#resvForm").attr("method", "get");
-		$("#resvForm").attr("action", "/cnfirm/mber/room/reserveList.do");
+		$("#resvForm").attr("action", "/hotel_prj/user/roomResList.do");
 		$("#resvForm").submit();
 	}
 	
 	function fncResvDetail(confirmNo, hotlSysCode){
 		$("#confirmationNumber").val(confirmNo);
 		$("#hotlSysCode").val(hotlSysCode);
-		$("#resvForm").attr("method", "post");
-		$("#resvForm").attr("action", "/cnfirm/mber/room/reserveView.do");
+		//$("#resvForm").attr("method", "post");
+		$("#resvForm").attr("method", "get");
+		$("#resvForm").attr("action", "/hotel_prj/user/roomResView.do");
 		$("#resvForm").submit();
 	}
 	
@@ -230,13 +230,6 @@
 				      $('#usefulPointSpan').html(fncComma(data.usefulPoint));
 				      //보유쿠폰수 세팅 
 				      $('#couponCntDiv').html(fncComma(data.couponCnt));
-					     
-						//언어코드가 영문이면 멤버십메뉴 숨김
-	// 				      if(data.langCode=='en') {
-	// 				    	  $('#mbrshp1').css('display','none');
-	// 				    	  $('#mbrshp2').css('display','none');
-	// 				      }
-					      
 				}else{
 					alert(data.statusR + " : 관리자에게 문의하세요");
 				}
@@ -266,10 +259,6 @@
 	});
 </script>
  
-<form id="formLnb">
-<input type="hidden" id="langCode" name="langCode" value="ko" />
-</form>
-                 
 <h1 class="hidden">마이페이지</h1>
 <div class="topArea">
 	<div class="topInner">
@@ -293,8 +282,8 @@
 	<div class="myContents">
 		<h3 class="titDep2">예약확인</h3>
 		<ul class="tabType01 tabType02">
-			<li class="on"><a href="#">객실</a></li>
-			<li><a href="#">다이닝</a></li>
+			<li class="on"><a href="http://localhost/hotel_prj/user/roomResList.do">객실</a></li>
+			<li><a href="http://localhost/hotel_prj/user/diningResList.do">다이닝</a></li>
 		</ul>
 		
 		<!-- tab01 -->
@@ -405,7 +394,7 @@
 	</div>
 	<!-- myContents -->
 	</form>
-	<!-- tab01 -->
+	<!-- resvForm -->
 	
 		
 </div>

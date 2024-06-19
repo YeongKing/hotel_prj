@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.sist.elysian.admin.board.notice">
+
+
+	 <select id="selectNoticeList" resultType="nld">
+		select NOTICE_NUM noticeNum, NOTICE_TITLE noticeTitle, to_char(NOTICE_INPUTDATE,'yyyy-MM-dd') noticeInputDate, ADMIN_ID adminId, NOTICE_VIEWCNT noticeViewCount 
+		from NOTICE
+	 </select>
+	 
+	 <select id="selectNoticeDetail" resultType="nd" parameterType="String">
+		select NOTICE_NUM noticeNum, ADMIN_ID adminId, to_char(NOTICE_INPUTDATE,'yyyy-MM-dd') noticeInputDate, NOTICE_TITLE noticeTitle, NOTICE_CONTENT noticeContent, NOTICE_VIEWCNT noticeViewCount
+		from NOTICE
+		where NOTICE_NUM = #{noticeNum}
+	 </select>
+
+	 <update id="updateNotice"  parameterType="nVO">
+		UPDATE NOTICE
+		SET 
+		ADMIN_ID = #{adminId},
+		NOTICE_TITLE = #{noticeTitle},
+		NOTICE_CONTENT = #{noticeContent}
+		WHERE
+		NOTICE_NUM = #{noticeNum}
+	 </update>
+
+	 <select id="selectNoticeNum" resultType="String">
+   		select 'NOTICE'||LPAD((max(NoticeNum)+1), 4, '0') noticeNum
+		from (
+		select SUBSTR(NOTICE_NUM,7) NoticeNum from NOTICE  )
+ 	</select>
+
+	<insert id="insertNotice" parameterType="nVO">
+		INSERT INTO NOTICE 
+		(NOTICE_NUM, ADMIN_ID, NOTICE_TITLE, NOTICE_INPUTDATE, NOTICE_CONTENT)
+		VALUES
+		(#{noticeNum}, #{adminId}, #{noticeTitle}, #{noticeInputdate}, #{noticeContent})
+	</insert>
+
+
+</mapper>
+
+	

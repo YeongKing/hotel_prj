@@ -1,200 +1,192 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
- pageEncoding="UTF-8" 
- info="" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" info="다이닝 예약 step0" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-<meta name="format-detection" content="telephone=no">
-
-<title>다이닝 예약 - 예약정보 상세 | 엘리시안호텔</title>
-
-<!-- S head css -->
-<jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
-<!-- E head css -->
-
-<!-- S head script -->
-<jsp:include page="/WEB-INF/views/user/common/head_script.jsp"></jsp:include>
-<!-- E head script -->
-</head>
-
-<body>
-
-	<div class="skip"><a href="#container">본문 바로가기</a></div>
-	<div class="wrapper ">
-
-<script>
-	jQuery(function(){
-		jQuery.ajax({
-			type : "GET",
-			url : "/massPromotion/get.json",
-			cache : false,
-			dataType : "json",
-			global : false,
-			beforeSend: function() {
-			},
-			complete: function() {
-			},
-			success : function(data){
-                var massPromtn = data.bean;
-                //조회 결과에 따라 랜더링
-                if(massPromtn != null && massPromtn != ""){
-                    var url = getMassPromtnUrl();
-                    var menuNm = massPromtn.promtnNm;
-                    var sysCode = massPromtn.sysCode;
-                    appendMassPromotionMenu(url, menuNm, sysCode);
-                }
-			},
-			error:function(r, s, e){
-			}
-		});
-	});
-
-    function getMassPromtnUrl(){
-        var url = "";
-        var sysCode = jQuery("#sysCode").val();
-
-        if(gfncIsApp()){
-            //앱일 경우
-            url = "/m/massPromotion/list.do";
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/m/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/m/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/m/massPromotion/list.do";
-                }
-            }
-        }else {
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/massPromotion/list.do";
-                }
-            }
-        }
-        return url;
-    }
-
-    function appendMassPromotionMenu(url, menuNm, sysCode){
-        if(gfncIsApp()){
-            //앱일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-
-            var pathname = window.location.pathname;
-            if(pathname.indexOf("/app/main.do") == 0){
-                jQuery(".gnbArea ul.toggleList > li > .titArea:contains('패키지')").closest("ul").append(menuHtml);
-            }else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-
-            /*if(jQuery(".gnbArea ul.toggleList li:contains('패키지')").length > jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").length){
-                jQuery(".gnbArea ul.toggleList li:contains('패키지')").closest("ul").append(menuHtml);
-            } else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }*/
-
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-            jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-        }else{
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL" || sysCode == "JPY"){
-                //해당 페이지가 HUB거나 JPY일 경우
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".allMenu ul.menuDepth01 ul.menuDepth02 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }else {
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".headArea .utilMenu .gnbDepth1 .gnbDepth2 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-        }
-    }
-
-</script>
-
-<script>
-        //2022-05-23 조선라운지 추가
-        //헤더 메뉴 버튼 클릭 이벤트
-        jQuery(document).on("click",".headArea .btnMenu" ,function(){
-
-            //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-            if(jQuery(this).hasClass("menuOn")){
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>다이닝 - 다이닝 예약 | 엘리시안호텔</title>
+    <link rel="shortcut icon" type="text/css" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
+    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/selectbox.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
+    <script>
+        // 헤더 메뉴 버튼 클릭 이벤트
+        jQuery(document).on("click", ".headArea .btnMenu", function() {
+            // 메뉴 펼쳐질 때 라운지 리스트 3가지 무작위 노출
+            if (jQuery(this).hasClass("menuOn")) {
                 var expsrCount = 3;
                 var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
                 var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
 
                 $loungeList.addClass("hidden");
-                $loungeList.each(function(index){
-                    if(randomArray.indexOf(index) > -1){
+                $loungeList.each(function(index) {
+                    if (randomArray.indexOf(index) > -1) {
                         jQuery(this).removeClass("hidden");
                     }
                 });
             }
-        })
-</script>
+        });
+    </script>
+</head>
+ <body style="overflow: hidden; position: fixed; width: 100%;">
+ <!-- Google Tag Manager (noscript) -->
+ <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP6NJMP"
+ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+ <!-- End Google Tag Manager (noscript) -->
 
-
-<!--S header  -->
-<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
-<!--E header  -->
-
-
-
-
-
-        <!--(페이지 URL)-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script type="text/javascript" src="/static/home/js/home.js"></script>
+	<div class="skip"><a href="#container">본문 바로가기</a></div>
+	<div class="wrapper ">
+        <!--S header  -->
+        <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
+        <!--E header  -->
 <script type="text/javascript">
 
-    $(document).ready(function (){
-        fncCatchDiningInfo();
+    let langCode = 'ko';
+    let emptyTableType = false; // 모든 테이블이 비어있을경우 true
+    let emptyMenuSet = false;
+    let snsValidation = false; // 전화번호 인증
+    let timer // 타이머
+
+    $(document).ready(function () {
+        fncBrowserBtn(); // 브라우저 버튼
+        fncTranceText();
+
+        
+
+        fncDrawReady(); // 예약 준비 화면
+        fncBtnNoPay(); // 예약, 결제 버튼 구분
+	    //메뉴 선택 없는 업장 정보 호출 용
+        fncCatchDiningInfo(); // 업장정보(취소규정)
     });
 
-    // 캐치테이블 업장정보
+
+    // 브라우저 버튼 이벤트
+    function fncBrowserBtn() {
+        // 뒤로가기 버튼 이벤트
+        window.history.pushState(null, null, '');
+        window.onpopstate = () => {
+            window.history.pushState(null, null, '');
+            window.onbeforeunload = null;
+            history.go(1);
+            fncGoStep0();
+        };
+    }
+
+    // 이메일 셀렉트 박스 텍스트 입력
+    $(function(){
+        /*
+             이메일 도메인 정보 수정 시
+             직접입력인 경우 email2 input disabled 제거
+             도메인 선택 시 도메인 email2 input에 주입 후 disabled
+         */
+        jQuery("[name='emailType']").on("change", function(){
+            var value = jQuery(this).val();
+            let title = jQuery(this).prop("title");
+            let id = "inp_"+title+"Email1";
+            if(value == ""){
+                jQuery('['+id+']').val("");
+                jQuery('['+id+']').prop("readonly", false);
+            }else{
+                jQuery('['+id+']').val(value);
+                jQuery('['+id+']').prop("readonly", true);
+            }
+        });
+    });
+
+    // 업장정보(취소규정)
     function fncCatchDiningInfo() {
         let shopId = $("#shopId").val();
+        jQuery.ajax({
+            type: "GET",
+            url: "/resve/dining/info.json",
+            cache: false,
+            dataType: "json",
+            async: false,
+            global: false,
+            data: {
+                "shopId": shopId
+            },
+            beforeSend: function () {
+                commonJs.showLoadingBar(); //로딩바 show
+            },
+            complete: function () {
+                commonJs.closeLoadingBar(); //로딩바 hide
+            },
+            success: function (data) {
+                let refundPolicy = data.result.data.refundPolicy;
+                let totalAmount = Number($("#totalAmount").val());
 
-        if (shopId == '') {
-            $("#catchInfo").remove();
-        }
+                refundPolicy.sort(function(a, b) {
+                    return a.baseDay - b.baseDay;
+                });
 
-        if (shopId != '') {
+                $("#refundUl").html('');
+
+                refundPolicy.forEach(function (item, idx){
+                    let baseDay = item.baseDay;
+                    let refundRate = item.refundRate;
+                    let dayNm = "";
+                    let rateNm = "";
+                    switch (baseDay) {
+                        case -1:
+                            dayNm = "노쇼 시"; // 노쇼 시
+                            break;
+                        case 0:
+                            dayNm = "당일 취소"; // 당일 취소
+                            break;
+                        default:
+                            dayNm = "{1}일 전 취소".replace('{1}', baseDay); // 1일 전 취소
+                            break;
+                    }
+
+                    if (refundRate > 0) {
+                        rateNm = "{1}% 환불".replace('{1}', (refundRate * 100)); // 10% 환불
+                    } else if (refundRate == 0) {
+                        rateNm = "환불 불가"; // 환불 불가
+                    }
+
+                    let refundLi = `<li>`+dayNm+` : `+rateNm+`</li>`;
+                    $("#refundUl").append(refundLi);
+
+                    if (baseDay > -1 && refundRate > 0 && idx == refundPolicy.length -1 && refundRate == 1 && totalAmount > 0) {
+                        let refundDate = new Date($("#visitDate").val());
+                        refundDate.setDate(refundDate.getDate() - Number(baseDay));
+                        if (refundDate >= new Date()) {
+                            let mm = refundDate.getMonth() >= 9 ? (refundDate.getMonth()+1) : "0"+(refundDate.getMonth()+1);
+                            let dd = refundDate.getDate() >= 10 ? refundDate.getDate() : "0"+refundDate.getDate();
+                            let refundDesc = "{1}월 {2}일 23시 59분까지 취소 시 예약금 100% 환불".replace('{1}', mm).replace('{2}', dd);
+                            $("#refundDesc").show();
+                            $("#refundDesc").text(refundDesc);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    // 예약 준비 api
+    function resveReady() {
+        return new Promise(function (resolve, reject) {
             jQuery.ajax({
                 type: "GET",
-                url: "/resve/dining/info.json",
+                url: "/resve/dining/prepare.json",
                 cache: false,
                 dataType: "json",
-                async: true,
+                async: false,
                 global: false,
-                data: {
-                    "shopId": shopId
-                },
                 beforeSend: function () {
                     commonJs.showLoadingBar(); //로딩바 show
                 },
@@ -202,953 +194,831 @@
                     commonJs.closeLoadingBar(); //로딩바 hide
                 },
                 success: function (data) {
-                    const langCode = jQuery("#searchLangCode").val();
-
-                    $("#catchInfo").children().remove();
-                    let catchInfoHtml = "";
-                    let parkingGuide = "";
-                    let bizHourGuide = "";
-
-                    if (langCode == "ko") {
-                        parkingGuide = data.result.data.parkingGuide != null ? data.result.data.parkingGuide.replace(/\n/g, "</br>") : "";
-                        bizHourGuide = data.result.data.bizHourGuide != null ? data.result.data.bizHourGuide.replace(/\n/g, "</br>") : "";
-                    } else {
-                        parkingGuide = data.result.data.parkingGuideEn != null ? data.result.data.parkingGuideEn.replace(/\n/g, "</br>") : "";
-                        bizHourGuide = data.result.data.bizHourGuideEn != null ? data.result.data.bizHourGuideEn.replace(/\n/g, "</br>") : "";
-                    }
-
-                    if (bizHourGuide != '' || bizHourGuide != null) {
-                        catchInfoHtml += `</br><p style="font-weight: bold;">운영시간</p>
-                                            <p>${bizHourGuide}</p>`; // 운영정보
-                    }
-                    if (parkingGuide != '' || parkingGuide != null) {
-                        catchInfoHtml += `</br><p style="font-weight: bold;">주차정보</p>
-                                            <p>${parkingGuide}</p>`; // 주차정보
-                    }
-                    if (parkingGuide == '' && bizHourGuide == '') {
-                        $("#catchInfo").remove();
-                    }
-
-                    $("#catchInfo").append(catchInfoHtml);
-                },
-                error: function (data) {
-                    $("#catchInfo").remove();
+                    resolve(data);
                 }
             });
+        });
+
+    }
+
+    // 예약 준비 화면
+    async function fncDrawReady() {
+        let data = await resveReady();
+
+        if (typeof data.result.data == "undefined") {
+            alert(data.resultMsg);
+            return;
         }
 
-    }
+        if (typeof data.result.data != "undefined") {
 
-    //호텔 선택
-    function fncSelectHotel(){
-        var searchSysCode = jQuery("#hotelSel").val();
-        jQuery("#searchSysCode").val(searchSysCode);
-        jQuery.ajax({
-            type : "GET",
-            url : "/dining/getResveAbleList.json",
-            cache : false,
-            dataType : "json",
-            async: true,
-            data : {
-                "searchSysCode" : searchSysCode
-            },
-            global : false,
-            beforeSend: function() {
-                commonJs.showLoadingBar(); //로딩바 show
-            },
-            complete: function() {
-                commonJs.initSwipe(jQuery(".swipeWrap"));
-                commonJs.closeLoadingBar(); //로딩바 hide
-            },
-            success : function(data){
-                console.log(data);
-                var diningCodeList = data.diningCodeList;
+            let tables = data.result.data.tables;
+            let sourceTableTypes = data.result.data.sourceTableTypes;
+            let tableTypes = data.result.data.tableTypes;
+            let notAvailableTableTypes = data.result.data.notAvailableTableTypes;
+            let useTableTypeYn = data.result.data.useTableTypeYn;
+            let useTableTypeMenuSet = data.result.data.useTableTypeMenuSet;
+            let sourceTableTypeNames = data.result.data.sourceTableTypeNames; // {테이블 코드 : 테이블 명}
 
-                //선택 호텔의 다이닝이 없을 경우, 이전 호텔의 값을 유지
-                if(data.errMsg != null){
-                    alert(data.errMsg); //선택하신 호텔은 예약 가능한 다이닝이 없습니다.
-                    jQuery("#searchSysCode").val(jQuery("#prevSysCode").val());
-                    jQuery("#hotelSel").val(jQuery("#prevSysCode").val());
-                    jQuery("#hotelSel").seletMenuUpdate();
+            $("#reservationToken").val(data.result.data.reservationToken);
+            $("#holdingToken").val(data.result.data.holdingToken);
+            $("#holdingExpiresAt").val(data.result.data.holdingExpiresAt);
+            $("#useTableTypeYn").val(useTableTypeYn);
+            $("#useTableTypeMenuSet").val(useTableTypeMenuSet);
 
-                    return false;
+            let personCount = $("#personCount").val();
+            let confirmReservationUseYn = $("#confirmUseYn").val();
+
+            let tableTypeIsAll = useTableTypeYn == "N" && useTableTypeMenuSet == "Y"; // 전체 테이블을 사용하는 경우
+            let useNTableType = useTableTypeYn == "Y" && useTableTypeMenuSet == "Y"; // 미지정 메뉴 구분을 사용하는 경우
+
+            if (tables.length > 0) {
+
+                if (useTableTypeMenuSet == "Y") {
+                    fncSelectMenuSet();
+                    fncSelectTableType();
+                    fncSelectMenuItem();
+                } else {
+                    fncSelectTableType();
+                    fncSelectMenuSet();
+                    fncSelectMenuItem();
                 }
 
-                jQuery("#prevSysCode").val(searchSysCode);
-                jQuery("#diningSel>option").remove();
-                var html = "";
-                for(var i=0; i < diningCodeList.length; i++){
-                    if(i != 0){
-                        html += '<option value='+diningCodeList[i].diningCode+'>'+ diningCodeList[i].diningNm +'</option>';
-                    }else {
-                        html += '<option value='+diningCodeList[i].diningCode+' selected>'+ diningCodeList[i].diningNm +'</option>';
-                    }
-                }
-                jQuery("#diningSel").append(html);
-                //select box 업데이트
-                jQuery("#diningSel").seletMenuUpdate();
-
-                fncSelectDining();
-            },
-            error:function(r, s, e){
-                alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
             }
 
-        })
+
     }
 
-    //다이닝 선택
-    function fncSelectDining(){
-        //예약 버튼 제거
-        // jQuery("#goResvBtnArea").empty();
+    // 예약
+    function fncReservation() {
+        let useTableTypeYn = nvl($("#useTableTypeYn").val());
+        let useTableTypeMenuSet = nvl($("#useTableTypeMenuSet").val());
 
-        var searchSysCode = jQuery("#hotelSel").val();
-        var searchDiningCode = jQuery("#diningSel").val();
-
-        jQuery("#diningCode").val(searchDiningCode);
-        jQuery.ajax({
-            type : "GET",
-            url : "/dining/get.json",
-            cache : false,
-            dataType : "json",
-            async : true,
-            data : {
-                "searchSysCode" : searchSysCode,
-                "diningCode" : searchDiningCode
-            },
-            global : false,
-            beforeSend: function() {
-                commonJs.showLoadingBar(); //로딩바 show
-            },
-            complete: function() {
-                commonJs.closeLoadingBar(); //로딩바 hide
-                // fncRenderStep2();
-	            setTimeout(function(){
-	                //스와이프 초기화
-	                commonJs.initSwipe($('.swipeWrap'));
-	            }, 200)
-
-            },
-            success : function(data){
-                console.log(data);
-
-                //선택된 data 초기화
-                jQuery("#selDay").val("");
-
-                //에러가 있을 경우
-                if(data.errMsg != null){
-                    alert(data.errMsg);
-                    return false;
-                }
-
-                var diningInfoBean = data.diningInfoBean;
-                var imgList = data.imgList;
-                var diningCode = data.diningInfoBean.diningCode;
-                var searchSysCode = data.diningInfoBean.sysCode;
-                const resveKndCode = data.diningInfoBean?.resveKndCode;
-                const resveLinkUrl = data.diningInfoBean?.resveLinkUrl;
-
-                $("#shopId").val(data.diningInfoBean.tmpr2);
-                jQuery("#diningNm").val(diningInfoBean.diningNm);
-
-                var imgHtml = "";
-
-                if(imgList.length > 1){
-                    imgHtml += '<button type="button" class="btnSwipe btnPrev"><span class="hidden">이전</span></button>';
-                }
-
-                imgHtml += '<ul class="swipeCont">';
-                for(var i=0; i < imgList.length; i++){
-                    imgHtml += '<li class="swipeSlide">';
-                    imgHtml += '	<img src="/util/file/download.do?fileSn='+imgList[i].fileSn+'&subFileSn='+imgList[i].subFileSn+'&sysCode='+diningInfoBean.sysCode +'" alt="'+diningInfoBean.imgDc+'">';
-                    imgHtml += '</li>';
-                }
-                imgHtml += '</ul>';
-
-                if(imgList.length > 1){
-                    imgHtml += '<button type="button" class="btnSwipe btnNext"><span class="hidden">다음</span></button>';
-                }
-
-
-                jQuery(".swipeWrap.gallery").html(imgHtml);
-
-                var diningInfoHtml = "";
-                jQuery(".roomIntro").children().remove();
-                diningInfoHtml += '<dl>';
-                diningInfoHtml += '<dt class="name">'+ diningInfoBean.diningNm +'</dt>';
-                diningInfoHtml += '<dd class="txt" style="padding-bottom: 100px;">' + diningInfoBean.intrcnDc;
-                diningInfoHtml += '<div class="addDiningOption" id="catchInfo"></div></dd>';
-                diningInfoHtml += '<dd class="info" style="position: relative;">';
-                diningInfoHtml += '	<ul>';
-                diningInfoHtml += '		<li>';
-                diningInfoHtml += '			<em>위치</em>';/* 위치 */
-                diningInfoHtml += '			<span>' + diningInfoBean.adres + '</span>';
-                diningInfoHtml += '		</li>';
-                diningInfoHtml += '		<li>';
-                diningInfoHtml += '			<em>문의</em>';/* 문의  */
-                diningInfoHtml += '			<span>'+diningInfoBean.inquiryTelno+'</span>';
-                diningInfoHtml += '		</li>';
-                diningInfoHtml += '		<li>';
-                diningInfoHtml += '			<em>좌석수</em>';/* 좌석수 */
-                diningInfoHtml += '			<span>'+diningInfoBean.seatDc+'</span>';
-                diningInfoHtml += '		</li>';
-                if(diningInfoBean.menuUseYn === "Y"){
-                    diningInfoHtml += '		<li>';
-                    diningInfoHtml += '			<em>메뉴</em>';/* 메뉴 */
-                    diningInfoHtml += '			<a href="#" class="btnLine" onclick="fncMenuShow(\''+searchSysCode+'\',\''+diningCode+'\'); return false;">메뉴 보기</a>';/* 메뉴 보기 */
-                    diningInfoHtml += '		</li>';
-                }
-                diningInfoHtml += '	</ul>';
-                diningInfoHtml += '</dd>';
-                diningInfoHtml += '</dl>';
-
-                jQuery(".roomIntro").append(diningInfoHtml);
-				fncRenderResveBtn(resveKndCode, resveLinkUrl);
-                fncCatchDiningInfo();
-
-            },
-            error:function(r, s, e){
-                alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
-            }
-
-        })
-    }
-    /**
-     * 예약 구분 코드에 따라 예약 버튼 랜더링
-     * */
-    function fncRenderResveBtn(resveKndCode, resveLinkUrl){
-        //<button id="btnResve" type="button" class="btnSC btnL active" onclick="fncPingCheck();">예약하기</button>
-	    const $resveBtn = jQuery("#btnResve");
-        $resveBtn.show();
-        if(resveKndCode === "00"){
-            $resveBtn.attr("onclick", "fncPingCheck();");
-        }else if(resveKndCode === "01"){
-            $resveBtn.attr("onclick", `window.open('${resveLinkUrl}')`);
-        }else {
-            $resveBtn.attr("onclick", "");
-            $resveBtn.hide();
+        if (useTableTypeYn == 'N' && useTableTypeMenuSet == 'N') {
+            $("#selectedTableType").val('');
         }
-    }
 
-    // 캐치테이블 연결 매장
-    function fncCatchTableResveDining(sysCode , diningCode){
-        var flag = true;
+        
+        let bookerLastName = $("#bookerLastName").val();
+        let bookerFirstName = $("#bookerFirstName").val();
+        let bookerName = "";
 
-        var resvList = [
-            /*{ sysCode : "JPY", diningCode : ["001","002","003"] }, // 조선 팰리스 (콘스탄스, 더그레이트 홍연, 이타닉가든)
-            { sysCode : "GJJ", diningCode : ["001","002"] }, // 그랜드 조선 제주 (ARIA, 루브리카)
-            { sysCode : "GJB", diningCode : ["001","003"] }, // 그랜드 조선 부산 (ARIA, 팔레드신)
-            { sysCode : "GRP", diningCode : ["001", "003"] }, // 그래비티 판교 (앤디쉬, 호무랑)
-            { sysCode : "LESCAPE", diningCode : ["001","002"] }, // 리스케이프 (Palais de Chine, 라망시크레)
-            { sysCode : "TWC", diningCode : ["001","003","004"] }, // 웨스틴 조선 서울 (THE NINTH GATE, ARIA, RUBRICA)
-            { sysCode : "TWCB", diningCode : ["001","003","008"] }, // 웨스틴 조선 부산 (까밀리아, 셔블, 오킴스)
-            { sysCode : "FPBSS", diningCode : ["001"] }, // 포포인츠 바이 쉐라톤 조선 서울역 (THE EATERY)
-            { sysCode : "FPBSM", diningCode : ["001"] }, // 포포인츠 바이 쉐라톤 조선 명동 (EVOLUTION)
-            { sysCode : "JOSUNHOTEL", diningCode : ["006"] }, // 조선호텔앤리조트 (MOTT 32)*/
+        // 인증받은 번호
+        let moblphonTelnoCkd = $("#moblphonTelno").val();
+        let moblphonTelnoCkd1 = $("#moblphonTelno1").val();
+        let moblphonTelnoCkd2 = $("#moblphonTelno2").val();
+        // 현재 입력되어있는 번호
+        let moblphoneTelno = $("#inp_moblphonTelno").val();
+        let moblphoneTelno1 = $("#inp_moblphonTelno1").val();
+        let moblphoneTelno2 = $("#inp_moblphonTelno2").val();
 
-            { sysCode : "TWC", diningCode : ["003"] }, // 웨스틴 조선 서울 (ARIA)
-            { sysCode : "LESCAPE", diningCode : ["002"] }, // 리스케이프 (라망시크레)
+        // 국가코드
+        let bookerNationality = $("#bookerNationality").val();
 
+        // 인증받은 이메일
+        let bookerEmailCkd = nvl($("#bookerEmail").val());
+        // 현재 입력되어있는 이메일
+        let bookerEmail = $("#inp_bookerEmail").val() != '' && $("#inp_bookerEmail1").val() != '' ? $("#inp_bookerEmail").val() + "@" + $("#inp_bookerEmail1").val() : '';
 
-        ];
+        if (langCode == "ko") {
+            bookerName = $("#inp_bookerName").val();
 
-        var resvHotel = resvList.find(item =>item.sysCode == sysCode);
-        if(resvHotel != null){
-            flag = resvHotel.diningCode.some(code => code == diningCode);
+            if (moblphonTelnoCkd != moblphoneTelno || moblphonTelnoCkd1 != moblphoneTelno1 || moblphonTelnoCkd2 != moblphoneTelno2) {
+                snsValidation = false;
+            } else if (typeof moblphonTelnoCkd != 'undefined' && typeof moblphonTelnoCkd1 != 'undefined' && typeof moblphonTelnoCkd2 != 'undefined') {
+                if (moblphonTelnoCkd == moblphoneTelno && moblphonTelnoCkd1 == moblphoneTelno1 && moblphonTelnoCkd2 == moblphoneTelno2) {
+                    snsValidation = true;
+                }
+            }
+        } else if (langCode != "ko") {
+            bookerName = bookerLastName + " " + bookerFirstName;
+            moblphoneTelno = bookerNationality + moblphoneTelno;
+
+            if (bookerEmailCkd != bookerEmail) {
+                snsValidation = false;
+            } else if (typeof bookerEmailCkd != 'undefined') {
+                if (bookerEmailCkd == bookerEmail) {
+                    snsValidation = true;
+                }
+            }
+        }
+
+        
+
+        let requests = $("#inp_requests").val();
+        let isDiffVisitorBooker = $("#inp_isDiffVisitorBooker").closest("li").hasClass("toggleOn");
+        let notice = $("#frmA02");
+        let refund = $("#frmA04");
+        let personal = $("#frmA03");
+
+        let visitorPhone = "";
+        let visitorName = "";
+        let visitorEmail = "";
+        if (langCode == 'ko') {
+            visitorPhone = $("#inp_phone").val()+$("#inp_phone1").val()+$("#inp_phone2").val();
+            visitorName = $("#inp_visitorName").val();
         } else {
-            flag = false;
+            visitorEmail = $("#inp_visitorEmail").val() != '' && $("#inp_visitorEmail1").val() != '' ? $("#inp_visitorEmail").val() + "@" + $("#inp_visitorEmail1").val() : '';
+            visitorPhone = $("#visitorNationality").val()+$("#inp_phone").val()+$("#inp_phone1").val()+$("#inp_phone2").val();
+            visitorName = $("#visitorLastName").val() + " " + $("#visitorFirstName").val();
         }
-        return flag;
-    }
 
-    // healthCheck
-    function fncPingCheck() {
-        jQuery.ajax({
-            type : "GET",
-            url : "/resve/dining/catch/healthcheck.json",
-            cache : false,
-            dataType : "json",
-            async : true,
-            data : {
-            },
-            global : false,
-            beforeSend: function() {
-                commonJs.showLoadingBar(); //로딩바 show
-            },
-            complete: function() {
-                commonJs.closeLoadingBar(); //로딩바 hide
-            },
-            success : function(data){
-                if (typeof data.result.data.status != 'undefined') {
-                    if (data.result.data.status == 200) {
-                        fncGoStep1();
-                    } else {
-                        commonJs.popShow(jQuery('#healthCheckPop'));
-                    }
+        
+
+        if (langCode == "ko") {
+            // 예약자 명 입력 검증
+            if (bookerName == '') {
+                alert("예약자명을 입력해 주세요."); // 예약자명은 필수 입니다
+                $("#inp_bookerName").focus();
+                return ;
+            }
+
+            // 전화번호 입력 검증
+            if (moblphoneTelno == '' || moblphoneTelno1 == '' || moblphoneTelno2 == '') {
+                alert("예약자 전화번호를 입력해 주세요."); // 예약자 전화번호는 필수 입니다
+                $("#inp_moblphonTelno").focus();
+                return ;
+            }
+
+            // 전화번호 인증 검증
+            if (!snsValidation) {
+                alert("인증번호 요청 버튼을 누르고 전화번호 인증을 해주세요."); // 전화번호 인증을 해주세요
+                $("#inp_moblphonTelno").focus();
+                return ;
+            }
+
+            // 이메일 입력 검증
+            if (($("#inp_bookerEmail").val() != '' && $("#inp_bookerEmail1").val() == '') ||
+                ($("#inp_bookerEmail").val() == '' && $("#inp_bookerEmail1").val() != '')) {
+                alert("이메일 형식이 맞지 않습니다. 이메일 주소를 확인해 주세요."); // 이메일 형식이 잘못되었습니다
+                $("#inp_bookerEmail").focus();
+                return ;
+            }
+
+        } else if (langCode != "ko") {
+            // 예약자 명 입력 검증
+            if (bookerLastName == '' || bookerFirstName == '') {
+                alert("이름을 정확히 입력해주세요."); // 이름을 정확히 입력해주세요.
+                $("#bookerLastName").focus();
+                return ;
+            }
+
+            // 전화번호 입력 검증
+            if (bookerNationality == '' && (moblphoneTelno != '' || moblphoneTelno1 != '' || moblphoneTelno2 != '')) {
+                alert("국가코드를 선택해 주세요."); // 국가코드를 선택해주세요.
+                $("#inp_moblphonTelno").focus();
+                return ;
+            }
+
+            // 전화번호 입력 검증
+            if (bookerNationality != '' && (moblphoneTelno == '' || moblphoneTelno1 == '' || moblphoneTelno2 == '')) {
+                alert("전화번호를 올바르게 입력해 주세요."); // 전화번호를 올바르게 입력해 주세요.
+                $("#inp_moblphonTelno").focus();
+                return ;
+            }
+
+            // 이메일 입력 검증
+            if ($("#inp_bookerEmail").val() == '' || $("#inp_bookerEmail1").val() == '') {
+                alert("예약자 이메일은 필수입니다."); // 예약자 이메일은 필수입니다.
+                $("#inp_bookerEmail").focus();
+                return ;
+            }
+
+            // 이메일 인증 검증
+            if (!snsValidation) {
+                alert("이메일 검증을 해주세요"); // 이메일 검증을 해주세요
+                $("#inp_bookerEmail").focus();
+                return ;
+            }
+        }
+
+        //이메일 형식 검증
+        if(bookerEmail != '' && !gfncVaildateEmail(bookerEmail)){
+            alert("이메일 형식이 맞지 않습니다. 이메일 주소를 확인해 주세요."); // 이메일 형식이 잘못되었습니다
+            $("#inp_bookerEmail").focus();
+            return ;
+        }
+
+        $("#bookerName").val(bookerName);
+        $("#moblphonTelno").val(moblphoneTelno);
+        $("#moblphonTelno1").val(moblphoneTelno1);
+        $("#moblphonTelno2").val(moblphoneTelno2);
+        $("#bookerEmail").val(bookerEmail);
+
+        
+
+        // 예약자 방문자 다른경우
+        if (isDiffVisitorBooker) {
+
+            if (langCode == 'ko') {
+                // 방문자 명 입력 검증 (필수)
+                if (visitorName == '') {
+                    alert("방문자명을 입력해 주세요."); // 방문자명은 필수 입니다
+                    $("#inp_visitorName").focus();
+                    return ;
                 }
-            },
-            error : function() {
-                commonJs.popShow(jQuery('#healthCheckPop'));
-        }});
+
+                // 방문자 전화번호 입력 검증 (필수)
+                if ($("#inp_phone").val() == '' || $("#inp_phone1").val() == '' || $("#inp_phone2").val() == '') {
+                    alert("방문자 전화번호를 입력해 주세요."); // 방문자 전화번호는 필수 입니다
+                    $("#inp_phone").focus();
+                    return ;
+                }
+
+            } else if (langCode != 'ko') {
+
+                let visitorNationality = $("#visitorNationality").val();
+
+                // 방문자 명 입력 검증 (필수)
+                if ($("#visitorLastName").val() == '' || $("#visitorFirstName").val() == '') {
+                    alert("방문자명을 입력해 주세요."); // 방문자명은 필수 입니다
+                    $("#visitorLastName").focus();
+                    return ;
+                }
+
+                // 방문자 이메일 검증 (필수)
+                if ($("#inp_visitorEmail").val() == '' || $("#inp_visitorEmail1").val() == '') {
+                    alert("방문자 이메일을 입력해 주세요."); // 방문자 이메일은 필수입니다.
+                    $("#inp_visitorEmail").focus();
+                    return;
+                }
+
+                //이메일 형식 검증 (필수)
+                if(visitorEmail != '' && !gfncVaildateEmail(visitorEmail)){
+                    alert("이메일 형식이 맞지 않습니다. 이메일 주소를 확인해 주세요."); // 이메일 형식이 잘못되었습니다
+                    $("#inp_visitorEmail").focus();
+                    return ;
+                }
+
+                // 전화번호 입력 검증 (비필수)
+                if (visitorNationality == '' && ($("#inp_phone").val() != '' || $("#inp_phone1").val() != '' || $("#inp_phone2").val() != '')) {
+                    alert("국가코드를 선택해 주세요."); // 국가코드를 선택해주세요.
+                    $("#inp_phone").focus();
+                    return ;
+                }
+                // 전화번호 입력 검증 (비필수)
+                if (visitorNationality != '' && ($("#inp_phone").val() == '' || $("#inp_phone1").val() == '' || $("#inp_phone2").val() == '')) {
+                    alert("전화번호를 올바르게 입력해 주세요."); // 전화번호를 올바르게 입력해 주세요.
+                    $("#inp_phone").focus();
+                    return;
+                }
+
+            }
+
+        }
+
+        // 유의사항 체크 검증
+        if (!notice.is(":checked")) {
+            alert("매장 이용규정에 동의해 주세요."); // 매장 이용규정에 동의해 주세요
+            notice.focus();
+            return ;
+        }
+
+        // 환불규정 체크 검증
+        if (!refund.is(":checked")) {
+            alert("취소 및 환불 규정에 동의해 주세요."); // 취소 및 환불 규정에 동의해 주세요
+            refund.focus();
+            return ;
+        }
+
+        // 개인정보 동의 체크 검증
+        if (!personal.is(":checked")) {
+            alert("예약에 필요한 개인정보의 수집과 이용에 동의해 주세요.") // 개인정보 수집 · 이용에 동의해 주세요
+            personal.focus();
+            return ;
+        }
+
+        $("#requests").val(requests);
+        $("#isDiffVisitorBooker").val(isDiffVisitorBooker);
+        $("#visitorName").val(visitorName);
+        $("#visitorPhone").val(visitorPhone);
+        $("#visitorEmail").val(visitorEmail);
+        paymentPopup();
+
     }
 
-    // 예약하기
-    function fncGoStep1() {
-        var searchSysCode = jQuery("#hotelSel").val();
-        var searchDiningCode = jQuery("#diningSel").val();
-
-        //비회원시에 예약
-        
-        
-        fncNotLoginResv();
-        
-
+    // 결제 팝업 validation alert
+    function fncViewAlert(resultMsg) {
+        alert(resultMsg);
     }
 
-    function fncNotLoginResv(){
-        $("#form").attr("action", "/resve/dining/step1.do");
-        $("#form").attr("method", "get");
+    // 결제 팝업
+    function paymentPopup() {
+
+        let options = 'top=10, left=10, width=375, height=812, status=no, menubar=no, toolbar=no, resizable=no';
+        let popup = window.open("", "reserve", options);
+        if (!popup || popup.closed || typeof popup.closed == "undefined") {
+	        alert("팝업이 차단되었습니다. 팝업 차단 해제 후 다시 시도해주세요.");
+            return false;
+        }
+        $("#form").attr("action", "/resve/dining.do");
+        $("#form").attr("target", "reserve");
+        $("#form").attr("method", "POST");
         $("#form").submit();
     }
 
-    function fncLoginResv(){
-        //로그인 page로 이동
-        var searchSysCode = nvl(jQuery("#searchSysCode").val(),"");
-        var diningCode = nvl(jQuery("#diningCode").val(),"");
 
-        var nextUrl = "/resve/dining/step0.do?searchSysCode="+searchSysCode+"&diningCode="+diningCode ;
+    // 예약, 결제 구분
+    function fncBtnNoPay() {
+        let totalAmount = Number($("#totalAmount").val());
 
-        jQuery("#nextURL").val(nextUrl);
-        jQuery("#loginForm").attr("action", "/login/loginForm.do");
-        jQuery("#loginForm").attr("method", "get");
-        jQuery("#loginForm").submit();	//검색 시 true값으로 설정-validation 체크를 하지 않음
-    }
-
-    function fncBrAlert(){
-        var text = '선택하신 다이닝은 예약이 불가합니다. 고객센터로 문의해주세요.';	//선택하신 다이닝은 예약이 불가합니다. 고객센터로 문의해주세요.
-        var msg = text.replace(/(<br>|<br\/>|<br \/>)/g, '\r\n');
-        alert(msg);
-    }
-
-    function fncClosePopup() {
-        commonJs.popClose(jQuery('#healthCheckPop'));
-    }
-
-    function nvl(str, newStr){
-        if(isNull(str)||isUndefined(str)){
-            return newStr;
-        }else {
-            return str;
+        if (totalAmount == 0) {
+            $("#btnResve").html("예약"); // 예약
+            $("#refundDesc").hide();
+        } else if (totalAmount > 0) {
+            $("#btnResve").html("결제하기"); // 결제하기
         }
     }
 
-    function isNull(value){
-        var _chkStr = value+"";
-        if(_chkStr == "" || _chkStr == null || _chkStr == "null"){
-            return true;
-        }else {
-            return false;
-        }
+
+
+
+
+
+    //예약 팝업에서 성공시 실행되는 함수
+    function fncGoComplete(reservationId) {
+        location.href = "/resve/dining/complete.do?reservationId="+reservationId;
     }
 
-    function isUndefined(value){
-        if(typeof(value) == undefined || typeof(value) == "undefined" || value == "undefined" || value == undefined){
-            return true;
-        }else{
-            return false;
-        }
+    function fncTranceText() {
+        $("#personCntTitle").html('방문인원 총 {1}명'.replace('{1}', $("#personCount").val()));
+        $("#nTypeGide").html('{1}표시가 있는 메뉴는 단독으로 선택이 되지 않습니다.'.replace('{1}', `<strong class="ico_ampersand"></strong>`));
     }
 
 </script>
-<div id="container" class="container">
-    <input type="hidden" id="prevSysCode" value='TWC'/>	
-    <input type="hidden" id="searchLangCode" name="searchLangCode" value="ko"/>
-    <input type="hidden" id="diningNm" name="diningNm" value="ARIA" />
-    <form id="form" name="form">
-        <input type="hidden" id="searchSysCode" name="searchSysCode" value='TWC'/>
-        <input type="hidden" id="diningCode" name="diningCode" value='003'/>
-        <input type="hidden" id="shopId" name="shopId" value="pQUWDMHkPf2II_uVDPCFFQ" />
-    </form>
-    <form name="loginForm" id="loginForm">
-        <input type="hidden" name="nextURL" id="nextURL" />
-    </form>
-    <!-- 컨텐츠 S -->
-    <h1 class="hidden">예약<!-- 예약 --></h1>
-    <div class="topArea">
-        <div class="topInner">
-            <h2 class="titDep1">Booking</h2>
-            <p class="pageGuide">조선호텔앤리조트의 다이닝과 함께 차원이 다른 미식을 경험해 보세요.</p><!-- 조선호텔앤리조트의 다이닝과 함께 차원이 다른 미식을 경험해 보세요. -->
+<form id="form" name="form">
+    <input type="hidden" id="searchSysCode" name="searchSysCode" value="TWC">
+    <input type="hidden" id="diningCode" name="diningCode" value="003">
+    <input type="hidden" id="searchLangCode" name="searchLangCode" value="">
+
+    <input type="hidden" id="shopId" name="shopId" value="pQUWDMHkPf2II_uVDPCFFQ">
+    <input type="hidden" id="holdingExpiresAt" name="holdingExpiresAt" value="2024-06-17T12:22:16.605423953+09:00">
+    <input type="hidden" id="confirmUseYn" name="confirmUseYn" value="N">
+    <input type="hidden" id="personCount" name="personCount" value="2">
+    <input type="hidden" id="visitDate" value="2024.06.17(월)">
+
+    <input type="hidden" id="holdingToken" name="holdingToken" value="4BtLblwlv--hiGwdrZYAJw">
+    <input type="hidden" id="reservationToken" name="reservationToken" value="H4sIAAAAAAAA_wFQAa_-UTAJq207djnjOl75wJAxxgoDJUf6_uNK9zBqk4rnsij1QbxbjyfJIU1nHBhGNvWAUm6Yc6HxwPwYFKih993-g9JKCPI9zSeiXPYlpiHzf1CUyL7VOZ-y_G-NGcECouABMXNmJqKXHHqxSevtWAvSr8Fi3ovZ5XJbi9-lxW6Zxc2ZazEkWY6sYLRL2cMknLUbACvHSb5-JsCx5RC9EqzWhKFabh6I4XhnyPnogZQEeX3RULecyXkAS-fhVlU61AMd7Ns_mjLQHhR7jjswI0z-3VwNByymy6Sg6bE1DKjrFfAEf1OXNqmjzZ8kKKqQ7QcuarA0g8BWA-GkcuOpW8PkHbGY9Th5CERFqAba81X2Lfg7T5X3bBT01yFl2M7aOZXko0IvfGfrebX5YOt1Tr0DFrFN0E7FM2dvLwfqhvzYDyM1FGlLormJ88vt_scKahSZHLvePVABAAA=">
+    <input type="hidden" id="bookerName" name="bookerName" value="">
+    <input type="hidden" id="bookerEmail" name="bookerEmail" value="">
+    <input type="hidden" id="bookerNationalCode" name="bookerNationalCode" value="">
+    <input type="hidden" id="moblphonTelno" name="moblphonTelno" value="">
+    <input type="hidden" id="moblphonTelno1" name="moblphonTelno1" value="">
+    <input type="hidden" id="moblphonTelno2" name="moblphonTelno2" value="">
+    <input type="hidden" id="isDiffVisitorBooker" name="isDiffVisitorBooker" value="">
+    <input type="hidden" id="requests" name="requests" value="">
+    <input type="hidden" id="visitorName" name="visitorName" value="">
+    <input type="hidden" id="visitorNationalCode" name="visitorNationalCode" value="">
+    <input type="hidden" id="visitorPhone" name="visitorPhone" value="">
+    <input type="hidden" id="visitorEmail" name="visitorEmail" value="">
+    <input type="hidden" id="selectedMenus" name="selectedMenus" value="">
+    <input type="hidden" id="selectedTableType" name="selectedTableType" value="">
+
+    <input type="hidden" id="selectedMenuSetId" name="selectedMenuSetId" value="BBg9ONqfJAzE-wJ6TxdRBA">
+    <input type="hidden" id="sellType" name="sellType" value="C">
+    <input type="hidden" id="menuSelectType" name="menuSelectType" value="B">
+    <input type="hidden" id="useTableTypeYn" name="useTableTypeYn" value="N">
+    <input type="hidden" id="useTableTypeMenuSet" name="useTableTypeMenuSet" value="N">
+    <input type="hidden" id="additionalType" name="additionalType" value="">
+    <input type="hidden" id="maxAmount" name="maxAmount" value="">
+    <input type="hidden" id="totalAmount" name="totalAmount" value="0">
+    <div id="container" class="container" style="margin-top: 0px;">
+        <!-- 컨텐츠 S -->
+        <h1 class="hidden">예약정보 상세</h1><!-- 예약정보 상세 -->
+        <div class="topArea">
+            <div class="topInner">
+                <h2 class="titDep1">Booking</h2>
+                <p class="pageGuide">조선호텔앤리조트의 다이닝과 함께 차원이 다른 미식을 경험해 보세요.</p><!-- 조선호텔앤리조트의 다이닝과 함께 차원이 다른 미식을 경험해 보세요. -->
+                <div class="stepWrap">
+                    <ol>
+                        <li class="prev"><em>날짜, 시간, 인원 선택</em></li><!-- 날짜, 시간, 인원 선택 -->
+                        <li class="on"><span class="hidden">현재단계</span><em>예약정보 상세</em></li><!-- 예약정보 상세 -->
+                    </ol>
+                </div>
+            </div>
         </div>
-    </div>
-    <!-- //topArea -->
-    <div class="inner">
-        <div class="diningContainer drDining_st01">
-            <strong class="listTit">호텔 & 다이닝 선택<!-- 호텔 &amp; 다이닝 선택 --></strong>
-            <div class="diningSelectCont ">
-                <div class="lCont">
-                    <div class="intInner duobuleSelect">
-                        <div class="intArea selectWrap" style="width:508px">
-                            <select id="hotelSel" name="searchSysCode" data-height="150px" data-direction="down" aria-required="true" onchange="fncSelectHotel();">
-                                
-                                    <option value="JPY"  >조선 팰리스</option>
-                                
-                                    <option value="TWC" selected='selected' >웨스틴 조선 서울</option>
-                                
-                                    <option value="TWCB"  >웨스틴 조선 부산</option>
-                                
-                                    <option value="GJB"  >그랜드 조선 부산</option>
-                                
-                                    <option value="GJJ"  >그랜드 조선 제주</option>
-                                
-                                    <option value="LESCAPE"  >레스케이프</option>
-                                
-                                    <option value="GRP"  >그래비티 서울 판교</option>
-                                
-                                    <option value="FPBSS"  >포포인츠 바이 쉐라톤 조선 서울역</option>
-                                
-                                    <option value="FPBSM"  >포포인츠 바이 쉐라톤 조선, 서울 명동</option>
-                                
-                                    <option value="PPJ"  >파라스파라 서울</option>
-                                
-                                    <option value="YYH"  >코랄로 바이 조선</option>
-                                
-                                    <option value="JOSUNHOTEL"  >조선호텔앤리조트</option>
-                                
-                            </select>
-                        </div>
-                        <div class="intArea selectWrap" style="width:508px">
-                            <select id="diningSel" name="diningCode" data-height="150px" data-direction="down" aria-required="true" onchange="fncSelectDining();">
-                                
-                                    <option value="001" >THE NINTH GATE</option>
-                                
-                                    <option value="003" selected="selected">ARIA</option>
-                                
-                                    <option value="004" >RUBRICA</option>
-                                
-                                    <option value="011" >SUSHI CHO</option>
-                                
-                                    <option value="015" >HONGYUAN</option>
-                                
-                                    <option value="099" >LOUNGE &amp; BAR</option>
-                                
-                                    <option value="100" >JOSUN DELI</option>
-                                
-                            </select>
-                        </div>
+        <!-- //topArea -->
+        <div class="inner">
+            <div class="drDining_st03">
+                <div class="chkValue"><span>웨스틴 조선 서울<!--  그랜드 조선 부산 --></span><span>ARIA <!-- The Ninth Gate --></span></div>
+                <div class="chkValue_prev">
+                    <div class="leftInfo">
+                        <span>2024.06.17(월) <!-- 2022.10.27(금) --></span>
+                        <span>오후 8:00 <!-- 오전 10:00 --></span>
+                        <span id="personCntTitle">방문인원 총 2명</span>
                     </div>
-                    <div class="swipeWrapArea">
-                        <div class="swipeWrap gallery">
-                            <button type="button" class="btnSwipe btnPrev"><span class="hidden">이전</span></button>
-                            <ul class="swipeCont">
-                                
-                                    <li class="swipeSlide"><img src="/util/file/download.do?fileSn=263788&subFileSn=264355&sysCode=TWC" alt="아리아 이미지"></li>
-                                
-                            </ul>
-                            <button type="button" class="btnSwipe btnNext"><span class="hidden">다음</span></button>
-                        </div>
-                        <div class="indicator">
-                            <button type="button" class="num on">
-                                <em class="hidden">현재 이미지</em>01
-                            </button>
-                            <button type="button" class="num">02</button>
-                            <button type="button" class="num">03</button>
-                        </div>
+                    <div class="rightInfo">
+                        <strong name="timerText">시간 내 예약을 완료해 주세요</strong><!-- 시간 내 예약을 완료해 주세요 -->
+                        <span class="chkTime" id="holdingTimer" name="holdingTimer">3:21</span>
                     </div>
                 </div>
-                <!-- //lCont -->
-                <div class="rCont">
-                    <div class="roomIntro">
-                        <dl>
-                            <dt class="name">ARIA</dt>
-                            <dd class="txt">
-                                오페라의 영혼을 셰프와 함께 실시간으로 느낄 수 있는 뷔페 레스토랑<br><br>
-<div class="mainDiningHidden">
-<p style="font-weight: bold;">가격 안내</p>
-<p>[아침]</p>
-<p>성인 70,000 KRW / 어린이 35,000 KRW 
-<p>[주중 점심]</p>
-<p>성인 165,000 KRW / 어린이 80,000 KRW 
-<p>[주중 저녁]</p>
-<p>성인 190,000 KRW / 어린이 80,000 KRW 
-<p>[주말/공휴일]</p>
-<p>성인 190,000 KRW / 어린이 80,000 KRW
-<p>*어린이: 37개월 이상 ~ 12세 이하 (초등학생까지)<br><br>
-<div class="mainDiningHidden">
-<p><p style="font-weight: bold;">콜키지 안내</p>
-<p>- 테이블 당 1병 10만원 (와인 750ml 기준)</p>
-<p>※ 규정 외 주류는 업장에 문의 부탁드립니다.<br><br>
-<div class="mainDiningHidden">
-<p><p style="font-weight: bold;">뷔페 상품권 안내</p>
-<p>웨스틴 조선 서울 아리아에서 준비한 뷔페 상품권으로</p>
-<p>소중한 분께 감사의 마음을 전하시기 바랍니다.</p>
-<p>- 아리아 뷔페 1인 식사권</p>
-<p>- 아리아 뷔페 2인 식사권</p>
-<p>※ 갈라디너 등 이벤트일 및 12월 사용 시 추가 요금이 발생될 수 있습니다.</p>
-                                    <!-- 230102 api 추가 옵션 부분 :: 추가옵션 없으면 addDiningOption 전부 지워주세요 -->
-                                <div class="addDiningOption" id="catchInfo">
-                                    <!-- option01 -->
-
-
-                                    <!-- // option01 -->
-                                    <!-- option02 -->
-
-
-
-
-
-                                    <!-- // option02 -->
-                                </div>
-                                    <!-- // 230102 api 추가 옵션 부분 -->
-                            </dd>
-                            <dd class="info">
-                                <ul>
-                                    <li>
-                                        <em>위치<!-- 위치 --></em>
-                                        <span>웨스틴 조선 서울 저층 로비</span>
-                                    </li>
-                                    <li>
-                                        <em>문의<!-- 문의 --></em>
-                                        <span>02-317-0357</span>
-                                    </li>
-                                    <li>
-                                        <em>좌석수<!-- 좌석수 --></em>
-                                        <span>총 240석 별실 3개(최대 10명 수용 가능) <br> * 별실 이용 시 룸 차지(50,000원) 부과 </span>
-                                    </li>
-                                    
-                                </ul>
-                            </dd>
-                        </dl>
-                    </div>
-                    
-                        
+                <!-- rsvRoomWrap -->
+                <div class="rsvRoomWrap">
+                    <div class="lCont">
+                        <div class="rsvDingList">
+                            <strong class="listTit">예약자 정보 입력</strong><!-- 예약자 정보 입력 -->
+                            <ul class="intList">
                             
-                            <button id="btnResve" type="button" class="btnSC btnL active" onclick="fncPingCheck();">예약하기</button><!-- 예약하기 -->
-                        
-                        
-                        
-                    
+                            
+                                <li>
+                                    <div class="intWrap top">
+											<span class="tit">
+												<label for="inp_bookerName">RESERVATION NAME</label>
+												<span class="essential">필수</span>
+											</span>
+                                    </div>
+                                    <div class="intInner">
+											<span>
+												<input type="text" id="inp_bookerName" placeholder="성함(국문)을 입력해주세요." style="width:437px" aria-required="true" onkeyup="this.value=this.value.replace(/\s/g, '');" maxlength="20"><!-- 이름 -->
+											</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="intWrap">
+											<span class="tit">
+												<label for="inp_moblphonTelno">PHONE NUMBER</label>
+												<span class="essential">필수</span>
+											</span>
+                                    </div>
+                                    <div class="intInner phoneInp verifiCode">
+                                        <span class="intArea"><input type="text" class="bookerPhone" id="inp_moblphonTelno" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]|\s/g, '');" maxlength="3"></span>
+                                        <span class="dash"></span>
+                                        <span class="intArea"><input type="text" class="bookerPhone" id="inp_moblphonTelno1" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]|\s/g, '');" maxlength="4"></span>
+                                        <span class="dash"></span>
+                                        <span class="intArea"><input type="text" class="bookerPhone" id="inp_moblphonTelno2" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]|\s/g, '');" maxlength="4"></span>
+                                        <span class="btnArea"><a href="javascript:void(0)" class="btnSC btnL verifiCodeBtn" onclick="fncAllimTalkSendPhone();">인증번호 요청</a></span><!-- 인증번호 요청 -->
+                                    </div>
+                                    <!-- 인증번호 확인창  -->
+                                    <div class="verifiCode" id="checkPhoneNum" style="display: none">
+											<span class="intArea">
+												<input id="allimTalkVerifyPhone" type="text" style="width:349px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" maxlength="4">
+												<span class="vertifiTime" name="allimTalkTimer">0:00</span>
+											</span>
+                                        <span class="btnArea"><a href="javascript:void(0)" class="btnSC btnL active verifiCodeBtn" onclick="fncAllimTalkVerifyPhone();">인증번호 확인</a></span><!-- 인증번호 확인 -->
+                                    </div>
+                                    <!-- // 인증번호 확인창  -->
+                                    <p class="txtGuide">예약을 하시려면 휴대폰 번호 인증이 필요합니다.</p><!-- 예약을 하시려면 휴대폰 번호 인증이 필요합니다. -->
+                                    <p class="txtGuide">휴대폰 번호는 예약번호 전송에 사용됩니다.</p><!-- 휴대폰 번호는 예약번호 전송에 사용됩니다. -->
+                                    <p class="txtGuide">비회원의 경우 휴대폰 번호 인증을 통해 예약이 진행되며, 휴대폰 인증이 불가할 경우 유선 예약 부탁드립니다.</p><!-- 비회원의 경우 휴대폰 번호 인증을 통해 예약이 진행되며, 휴대폰 인증이 불가할 경우 유선 예약 부탁드립니다. -->
+                                </li>
+                                <li>
+                                    <div class="intWrap">
+											<span class="tit">
+												<label for="inp_bookerEmail">E-MAIL</label><!-- 221209 필수삭제 -->
+											</span>
+                                    </div>
+                                    <div class="intInner emailInp">
+                                        <span><input type="text" id="inp_bookerEmail" style="width:273px" aria-required="true" maxlength="50"></span>
+                                        <span class="dash">@</span>
+                                        <span><input type="text" id="inp_bookerEmail1" inp_bookeremail1="" style="width:273px" aria-required="true" maxlength="50"></span>
+                                        <div class="intArea selectWrap" style="width:241px" first="true">
+                                            <!-- 직접 선택 -->
+                                            <select name="emailType" id="emailType" class="form-control" title="booker" style="display: none;"><option value="">직접 선택</option><option value="naver.com">naver.com</option><option value="hanmail.net">hanmail.net</option><option value="hotmail.com">hotmail.com</option><option value="nate.com">nate.com</option><option value="gmail.com">gmail.com</option></select><button tabindex="0" id="emailType-button" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-owns="emailType-menu" aria-haspopup="true" title="booker" class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget" type="button"><span class="ui-selectmenu-text">직접 선택</span></button>
+                                        <div class="ui-selectmenu-menu ui-front"><div class="tweenDiv"><ul aria-hidden="true" aria-labelledby="emailType-button" id="emailType-menu" role="listbox" tabindex="0" class="ui-menu ui-corner-bottom ui-widget ui-widget-content" style="max-height: 200px;"></ul></div></div></div>
+                                    </div>
+                                </li>
+                            
 
+                            
+                            
+
+                            
+                                <!-- 230104 request 위치재변경 -->
+                                <!-- 221202 request 위치변경 -->
+                                <li>
+                                    <div class="intWrap">
+                                        <span class="tit">
+                                            <label for="inp_requests">REQUEST</label><!-- 221209 필수삭제 -->
+                                        </span>
+                                    </div>
+                                    <div class="intInner requestArea">
+                                        <!-- 알레르기가 있다면, 예약 시 미리 말씀해 주십시오. 유아용품이 필요하신 경우 여기에 기재해 주십시오. -->
+                                        <input id="inp_requests" maxlength="100" type="text" placeholder="알레르기가 있다면, 예약 시 미리 말씀해 주십시오. 유아용품이 필요하신 경우 여기에 기재해 주십시오.">
+                                    </div>
+                                    <!-- 요청사항을 최대한 반영하도록 최선을 다하겠습니다.<br/>다만, 호텔의 사정으로 부득이 반영되지 않을 수도 있으니 이 점 양해 부탁드립니다. -->
+                                    <p class="txtGuide">요청사항을 최대한 반영하도록 최선을 다하겠습니다.<br>다만, 호텔의 사정으로 부득이 반영되지 않을 수도 있으니 이 점 양해 부탁드립니다.</p>
+                                </li>
+                                <!-- // 221202 request 위치변경 -->
+                                <!--//  230104 request 위치재변경 -->
+                            </ul>
+                        </div>
+
+                        <div class="notiContainer">
+                            <div>
+                                <ul class="toggleList agreeCont toggleListAll">
+                                    <li>
+                                        <div class="clickBtn">
+												<span class="frm type03 btnToggle" onclick="fncDiffVisitorRefresh();">
+													<input type="checkbox" id="inp_isDiffVisitorBooker" class="type03Chk"><label class="label" for="">[선택] 예약자와 방문자가 다릅니다.</label><!-- [선택] 예약자와 방문자가 다릅니다. -->
+												</span>
+                                        </div>
+                                        <!-- 예약자와 실제 방문자가 다를 경우에만 체크 후 추가 입력해 주세요. -->
+                                        <p class="txtGuide">예약자와 실제 방문자가 다를 경우에만 체크 후 추가 입력해 주세요.</p>
+                                        <div class="toggleCont" style="display: none;">
+                                            <div class="visitorWrap">
+                                                <strong class="listTit">방문자 정보 입력</strong><!-- 방문자 정보 입력 -->
+                                                
+                                                    
+                                                        <ul class="intList">
+                                                            <li>
+                                                                <div class="intWrap top">
+																<span class="tit">
+																	<label for="inp_visitorName">NAME</label>
+																	<span class="essential">필수</span>
+																</span>
+                                                                </div>
+                                                                <div class="intInner">
+																<span>
+																	<input type="text" id="inp_visitorName" placeholder="성함(국문)을 입력해주세요." style="width:437px" aria-required="true" onkeyup="this.value=this.value.replace(/\s/g, '');" maxlength="20"><!-- 이름 -->
+																</span>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="intWrap">
+																<span class="tit">
+																	<label for="inp_phone">PHONE NUMBER</label>
+																	<span class="essential">필수</span>
+																</span>
+                                                                </div>
+                                                                <div class="intInner phoneInp">
+                                                                    <span class="intArea"><input type="text" id="inp_phone" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]|\s/g, '');" maxlength="3"></span>
+                                                                    <span class="dash"></span>
+                                                                    <span class="intArea"><input type="text" id="inp_phone1" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]|\s/g, '');" maxlength="4"></span>
+                                                                    <span class="dash"></span>
+                                                                    <span class="intArea"><input type="text" id="inp_phone2" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]|\s/g, '');" maxlength="4"></span>
+                                                                </div>
+                                                            </li>
+                                                            <!-- 221209 방문자 이메일 삭제 -->
+                                                        </ul>
+                                                    
+                                                    
+                                                
+
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="titDep3" id="noticeTitle">매장 이용규정</h3><!-- 매장 이용규정 -->
+                                <ul class="toggleList agreeCont" id="noticeArea">
+                                    <li class="toggleOn">
+											<span class="frm type02">
+												<input type="checkbox" id="frmA02"><label for="frmA02">[필수] 매장 이용규정에 동의 합니다.</label><!-- [필수] 매장 이용규정에 동의 합니다. -->
+											</span>
+                                        <button type="button" class="btnToggle"><span class="hidden">상세내용 보기</span></button>
+                                        <!-- 버튼 클릭 시 li에 toggleOn 클래스 추가되면서 toggleCont 펼쳐짐 -->
+                                        <div class="toggleCont" style="display: block;">
+                                            <div class="toggleInner">
+                                                <div class="designScroll"><div class="scrollWrap" style=""><div class="customScrollBox">
+                                                    <ul class="listDep1" id="noticeUl"><li>당일 취소 및 노쇼(예약 시간 기준 30분 경과) 시 추후 예약이 제한됩니다.</li><li>예약 시간 30분 경과 시 자동 예약 취소됩니다.</li><li>예약금에 대한 환불 규정 확인 후 결제 진행 부탁 드립니다.</li><li>예약금은 서비스 이용 후 전액 자동 환불됩니다.</li><li>좌석 지정은 어려우며 예약하신 순서대로 자동 배정됩니다.</li><li>예약인원 외 현장에서 영유아, 어린이 동반 방문 시, 좌석 배치가 어려울 수 있습니다.</li><li>방문 전 주류 및 콜키지 규정 확인 부탁드립니다.</li></ul>
+                                                </div></div></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <h3 class="titDep3">취소 환불 규정</h3><!-- 221209 타이틀 추가 -->
+                                <!--  221207 취소규정 추가 -->
+                                <ul class="toggleList agreeCont"><!-- 221209 style 삭제 -->
+                                    <li class="toggleOn">
+											<span class="frm type02">
+												<input type="checkbox" id="frmA04"><label for="frmA04">[필수] 취소 및 환불 규정에 동의합니다</label><!-- [필수] 취소 및 환불 규정에 동의합니다. -->
+											</span>
+                                        <button type="button" class="btnToggle"><span class="hidden">상세내용 보기</span></button>
+                                        <!-- 버튼 클릭 시 li에 toggleOn 클래스 추가되면서 toggleCont 펼쳐짐 -->
+                                        <div class="toggleCont" style="display: block;">
+                                            <div class="toggleInner">
+                                                <div class="designScroll"><div class="scrollWrap" style=""><div class="customScrollBox">
+                                                    <ul class="listDep1" id="refundUl"><li>노쇼 시 : 환불 불가</li><li>당일 취소 : 환불 불가</li><li>1일 전 취소 : 50% 환불</li><li>2일 전 취소 : 100% 환불</li></ul>
+                                                </div></div></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!-- // 221207 취소규정 추가 -->
+                            </div>
+                            <div>
+                                <h3 class="titDep3">개인정보 수집 · 이용 동의</h3><!-- 개인정보 수집 &middot; 이용 동의 -->
+                                <ul class="toggleList agreeCont">
+                                    <li class="toggleOn">
+											<span class="frm type02">
+                                                <input type="checkbox" id="frmA03"><label for="frmA03">[필수] 개인정보 수집 · 이용에 동의합니다.</label><!-- [필수]  개인정보 수집 &middot; 이용에 동의합니다. -->
+											</span>
+                                        <button type="button" class="btnToggle"><span class="hidden">상세내용 보기</span></button>
+                                        <!-- 버튼 클릭 시 li에 toggleOn 클래스 추가되면서 toggleCont 펼쳐짐 -->
+                                        <div class="toggleCont" style="display: block;">
+                                            <div class="toggleInner">
+                                                <!-- 221207 정보방침 수정 -->
+                                                <pg message="">
+                                                    </pg><table class="tblH">
+                                                    <colgroup>
+                                                        <col style="width:30%">
+                                                        <col style="width:auto">
+                                                        <col style="width:30%">
+                                                    </colgroup>
+                                                    <caption>개인정보 수집 이용 목록</caption><!-- 개인정보 수집 이용 목록 -->
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">수집 항목</th><!-- 수집 항목 -->
+                                                        <th scope="col">수집 목적</th><!-- 수집 목적 -->
+                                                        <th scope="col">보유 기간</th><!-- 보유 기간 -->
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>이름, 휴대폰번호, 이메일주소</td><!-- 이름, 휴대폰번호, 이메일주소 -->
+                                                        <td>서비스 이용자 식별, 서비스 이행을 위한 연락 및 안내, 고지사항 전달, 불만처리 등의 의사소통</td><!-- 서비스 이용자 식별, 서비스 이행을 위한 연락 및 안내, 고지사항 전달, 불만처리 등의 의사소통 -->
+                                                        <td class="f18">최종 이용일부터 1년</td><!-- 최종 이용일부터 1년 -->
+                                                    </tr></tbody>
+                                                </table>
+                                                <!-- // 221207 정보방침 수정 -->
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!-- 221207 가이드변경 및 위치변경 -->
+                                <!-- 위 개인정보 수집/이용에 대한 동의를 거부할 수 있으나 동의 거부 시 영업장 예약이 제한됩니다. -->
+                                <p class="txtGuide">위 개인정보 수집/이용에 대한 동의를 거부할 수 있으나 동의 거부 시 영업장 예약이 제한됩니다.</p>
+                                <!-- //221207 가이드변경 및 위치변경 -->
+                            </div>
+                            <div id="descDiv">
+                                <div class="boxNotice">
+                                    <h3 class="titDep3">유의사항</h3><!-- 유의 사항 -->
+                                    <ul id="descUl"><li>* 클럽 조선 멤버십,제휴 카드 등 제휴사 할인 혜택은 내부 정책에 따라 이용이 제한될 수 있으며 방문 전 관련 상세 안내 및 이용 약관을 확인해 주시기 바랍니다.</li><li>[할인 혜택 공통 제외일 : 5/5, 12/24, 12/25,12/31]</li></ul>
+                                </div>
+                            </div>
+                        </div><!-- // notiContainer -->
+                    </div>
+                    <div class="rCont floating" style="transition: margin-top 0.3s ease-out 0s;">
+                        <ul class="rsvList">
+                            <li>
+                                <strong class="listTit">
+                                    총 예약금액<!-- 총 예약금액 -->
+                                    <span class="price"><em name="totalPrice">0</em>KRW</span>
+                                </strong>
+                                <div class="toggleCont">
+                                    <div class="toggleInner">
+                                        <div class="optionTotal">
+                                            <ul class="infoData" id="calcUl"><li class="menuList" id="OnfHDUAzSnW_9cpfS9jRpA" data-id="OnfHDUAzSnW_9cpfS9jRpA" style="display: none;"><span class="lfData">성인 x </span><span class="amount">0</span><span class="rtData menuPrice">0</span></li><li class="menuList" id="l0ljPCWyuLp73646rTZU3w" data-id="l0ljPCWyuLp73646rTZU3w" style="display: none;"><span class="lfData">어린이 x </span><span class="amount">0</span><span class="rtData menuPrice">0</span></li><li class="menuList" id="kvUt09mqm8fXUfrdeA_1wA" data-id="kvUt09mqm8fXUfrdeA_1wA" style="display: none;"><span class="lfData">36개월 이하 x </span><span class="amount">0</span><span class="rtData menuPrice">0</span></li></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="totalCont">
+                            <div class="totalPrice">
+                                <span class="txt">총 예약금액</span><!-- 총 예약금액 -->
+                                <span class="price"><em name="totalPrice">0</em>KRW</span>
+                            </div>
+                            <div class="btnArea">
+                                <a href="javascript:void(0)" class="btnSC btnL active" id="btnResve" onclick="fncReservation();">예약</a><!-- 결제하기 -->
+                            </div>
+                        </div>
+                        <p class="txtReference" id="refundDesc" style="display: none;"></p>
+                    </div>
+                </div><!-- //rsvRoomWrap -->
+                <div class="btnArea">
+                    <a href="javascript:void(0);" class="btnSC btnL" onclick="fncGoStep0();">이전</a><!-- 이전 -->
                 </div>
-                <!-- //rCont -->
-            </div>
-            <!-- //diningSelectCont -->
+
+            </div><!--  // drDining_st03 -->
         </div>
+        <!-- //inner -->
+        <!-- 컨텐츠 E -->
     </div>
-    <!-- //inner -->
-    <!-- 컨텐츠 E -->
-</div>
-<!-- //container -->
-
-<!-- 헬스체크 Layer -->
-<div id="healthCheckPop" class="layerPop">
-    <div class="layerCont" style="top: 50%; left: 50%; margin-top: -175px; margin-left: -350px">
-        <h2 class="compTit">다이닝 예약 안내</h2><!--다이닝 예약 안내-->
-        <div class="compLayer reserveOpArea" style="width:560px">
-            <p class="txt">현재 다이닝 예약 시스템 점검 중으로 온라인 예약이 불가합니다.</p><!--현재 다이닝 예약 시스템 점검 중으로 온라인 예약이 불가합니다.-->
-            <strong class="txtConfirm">각 다이닝 업장으로 유선문의 부탁 드립니다.</strong><!--각 다이닝 업장으로 유선문의 부탁 드립니다.-->
-            <p class="txt">서비스 이용에 불편을 드려 죄송합니다.</p><!-- 서비스 이용에 불편을 드려 죄송합니다. -->
-            <div class="btnArea">
-                <button type="button" class="btnSC btnM active" onclick="fncClosePopup();">확인</button><!-- 확인 -->
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- //헬스체크 Layer -->
-
-<!-- 비회원 예약 Layer -->
-<div id="layerPop1" class="layerPop">
-    <div class="layerCont" style="top: 50%; left: 50%; margin-top: -175px; margin-left: -350px">
-        <h2 class="compTit">비회원 예약<!-- 비회원 예약 --></h2>
-        <div class="compLayer reserveOpArea" style="width:560px">
-            <p class="txt">현재 비회원으로 예약 진행 중입니다<!-- 현재 비회원으로 예약 진행 중입니다 --></p>
-            <strong class="txtConfirm">회원이신 고객은 로그인 후, 예약을 진행 하시겠습니까?<!-- 회원이신 고객은 로그인 후, 예약을 진행 하시겠습니까? --></strong>
-            <p class="txt">※ 회원 가입시 포인트적립이 가능합니다.<!-- 회원 가입시 포인트적립이 가능합니다. --></p>
-            <div class="btnArea">
-                <button type="button" class="btnSC btnM" onclick="fncNotLoginResv();">비회원 예약<!-- 비회원 예약 --></button>
-                <button type="button" class="btnSC btnM active" onclick="fncLoginResv();">로그인<!-- 로그인 --></button>
-                <button type="button" class="btnSC btnM active" onclick="location.href='/identify/identifyIntro.do'">회원가입<!-- 회원가입 --></button>
-            </div>
-        </div>
-        <!-- 230103 팝업 닫기 버튼 추가 -->
-        <button type="button" class="btnClose" onclick="commonJs.popClose($('#layerPop1'))">닫기</button>
-        <!-- // 230103 팝업 닫기 버튼 추가 -->
-    </div>
-</div>
-
-<!-- //비회원 예약 Layer -->
-
-
-
-
-
-
-
-
-
-<script type="text/javascript" src="/revolution/js/bw.lab.alphanumeric-1.0.js"></script>
-<script type="text/javascript" src="/revolution/js/bw.lab.money-1.0.js"></script>
-<script>
-	
-	jQuery(function(){
-		jQuery("#menuTab > li").on("click", function() {
-			jQuery("#menuTab > li").removeClass("on");
-			jQuery(this).addClass("on");
-		});
-	})
-	function fncMenuShow(searchSysCode, diningCode) {
-		
-		jQuery("#menuPopDiningCode").val(diningCode);
-		jQuery("#menuPopSysCode").val(searchSysCode);
-		fncTabListJson(searchSysCode, diningCode);
-		
-	}
-	
-	
-	function fncTabListJson(searchSysCode, diningCode) {
-		
-		jQuery.ajax({
-			type : "GET",
-			url : "/rstrntMenu/tabListJson.json",
-			cache : false,
-			dataType : "json",
-			data : {
-				"diningCode" : diningCode,
-				"searchSysCode" : searchSysCode	
-			},
-			global : false,
-			async : false,
-			
-			success : function(data){
-				
-				var _list = data.tabList;
-				
-				var rstrntLclas = "";
-				var tabHtml = "";
-				
-				//다이닝 이름
-				jQuery("#menuPopup .compTit").text(data.diningNm);
-				jQuery("#popDiningNm").val(data.diningNm);
-				
-				if(_list != null && _list.length > 0){
-					
-					for(var i=0; i<_list.length; i++){
-						
-						if (i == 0) {
-							rstrntLclas = _list[i].lclasCode;
-						}
-						tabHtml += '<li><a href="#'+ _list[i].lclasCode +'" onclick="fncSelectMenuTab(\''+_list[i].lclasCode+ '\')">' + _list[i].lclasNm + '</a></li>';
-						
-						
-					}
-					
-				}
-				jQuery("#menuTab").html(tabHtml);
-				jQuery("#menuTab > li").first().addClass("on");
-				fncMenuListJson(searchSysCode, diningCode);
-			},
-			
-			error:function(r, s, e){
-				alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
-			}
-			
-		});
-	}
-	
-	
-	function fncMenuListJson(searchSysCode, diningCode) {
-		
-		jQuery.ajax({
-			type : "GET",
-			url : "/rstrntMenu/menuListJson.json",
-			cache : false,
-			dataType : "json",
-			data : {
-				"diningCode" : diningCode,
-				"searchSysCode" : searchSysCode
-			},
-			global : false,
-			async : false,
-			
-			success : function(data){
-				var _menuMapList = data;
-				
-				//등록된 메뉴가 있을때만 출력
-				if(_menuMapList.length == 0 || _menuMapList == null){
-					alert("등록된 메뉴가 없습니다."); //등록된 메뉴가 없습니다.
-					return false;
-				}
-				
-				jQuery(".menuCont").each(function(){
-					jQuery(this).remove();
-				});
-				
-				//첫번째 탭 value 세팅
-				jQuery("#lclasCode").val(_menuMapList[0].lclasCode);
-				
-				for(var k=0; k< _menuMapList.length; k++){
-				
-				 	var _singleMenu = _menuMapList[k].singleMenu;			// 단품 메뉴
-				 	var _lclasCode = _menuMapList[k].lclasCode;				// 대분류 코드
-				 	var _lclasNm = _menuMapList[k].lclasNm;				// 대분류 명
-				 	
-				 	var _singleLclasMenuList = null;
-					var _singleMenuOrigin = null;
-					
-				 	if(_singleMenu != null){
-				 		_singleLclasMenuList = _singleMenu.lclasMenuList; // 단품 대분류
-						_singleMenuOrigin = _singleMenu.origin.originCn;  //단품 원산지
-					}
-					
-					var _setMenu = _menuMapList[k].setMenu;						// 세트 메뉴
-					var _setLclasMenuList = null;
-					var _setMenuOrigin = null;
-					if(_setMenu != null){
-						
-						_setLclasMenuList = _setMenu.lclasMenuList; 		// 세트 대분류
-						_setMenuOrigin = _setMenu.origin.originCn;			// 세트 원산지
-					}
-					
-					
-					
-					var menuHtml = "";
-					if(k == 0){
-						menuHtml += '<div id='+ _lclasCode +' class="tabCont printCont menuCont" style="display:block">';
-					}else {
-						menuHtml += '<div id='+ _lclasCode +' class="tabCont printCont menuCont" style="display:none">';
-					}
-					menuHtml += '	<h3 class="hidden">'+ _lclasNm +'</h3>';
-					menuHtml += '	<div class="scrollWrap menuPanView">';
-					/* menuHtml += '		<div class="customScrollBox">'; */
-					
-					//세트 메뉴 세팅
-					if(_setLclasMenuList != null && _setLclasMenuList.length > 0){
-						
-						for(var i=0; i<_setLclasMenuList.length; i++){
-							
-							var _setDetailMenu = _setLclasMenuList[i].detailMenuList[0]; //상세 메뉴
-							
-							
-							menuHtml += '			<div class="menuPan type02">';
-							menuHtml += '				<p class="tit">'+ _setDetailMenu.menuNm +'</p>';
-							menuHtml += '				<ul class="menuList">';
-							menuHtml += '				<li>';
-							menuHtml += '					<div class="txt">';
-							menuHtml += '						<span>'+ fncReplaceEnter(_setDetailMenu.contents) +'</span>';
-							menuHtml += '					</div>';
-							menuHtml += '				</li>';
-							menuHtml += '				</ul>';
-							menuHtml += '				<p class="bill">'+ fncReplaceEnter(_setDetailMenu.pcCndDc) +'</p>';
-							menuHtml += '			</div>';
-							
-						}
-						
-						//세트 원산지 세팅
-						if(_setMenuOrigin != null && _setMenuOrigin != ""){
-							menuHtml += '			<div class="notiBox">';
-							menuHtml += '				<strong class="hidden">원산지 표시 안내</strong>';
-							menuHtml += fncReplaceEnter(_setMenuOrigin);
-							menuHtml += '			</div>';
-						}
-					}
-					
-					//단품 메뉴 세팅
-					if(_singleLclasMenuList != null && _singleLclasMenuList.length > 0){
-						
-						for(var i=0; i<_singleLclasMenuList.length; i++){
-							
-							var _detailMenuList = _singleLclasMenuList[i].detailMenuList; //상세 메뉴
-							
-							menuHtml += '			<div class="menuPan type01">';
-							menuHtml += '				<p class="tit">'+ _singleLclasMenuList[i].singleSclasNm +'</p>';
-							menuHtml += '				<ul class="menuList">';
-							
-							//상세 메뉴 세팅
-							for(var j=0; j<_detailMenuList.length; j++){
-								menuHtml += '				<li>';
-								menuHtml += '					<span class="txt">'+ fncReplaceEnter(_detailMenuList[j].menuNm) +'</span>';
-								menuHtml += '					<p class="bill">';
-								menuHtml += '						'+ _detailMenuList[j].pcCndDc +'';
-								menuHtml += '					</p>';
-								menuHtml += '				</li>';
-							}
-							
-							menuHtml += '				</ul>';
-							menuHtml += '			</div>';
-						}
-						
-						//단품 원산지 세팅
-						if(_singleMenuOrigin != null && _singleMenuOrigin != ""){
-							menuHtml += '			<div class="notiBox">';
-							menuHtml += '				<strong class="hidden">원산지 표시 안내</strong>';
-							menuHtml += fncReplaceEnter(_singleMenuOrigin);
-							menuHtml += '			</div>';
-						}
-						
-					}
-					
-					menuHtml += '		</div>';
-					/* menuHtml += '	</div>'; */
-					menuHtml += '</div>';
-					
-					jQuery(".menuPanArea").append(menuHtml);
-				}
-				commonJs.initDesignScroll($('.scrollWrap'));
-				commonJs.initTab('.tabToggle');
-				commonJs.popShow($('#menuPopup'));
-				
-			},
-			
-			error:function(r, s, e){
-				alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
-			}
-		})
-	}
-	
-	
-	function fncSelectMenuTab(lclasCode){
-		jQuery("#lclasCode").val(lclasCode);
-	}
-	
-	
-	function fncMenuDownload(){
-		jQuery("#diningMenuPopForm").attr("action", "/rstrntMenu/menuDownload.do");
-		jQuery("#diningMenuPopForm").attr("method", "get");
-		jQuery("#diningMenuPopForm").submit();
-	}
-	
-	
-	
-	function fncReplaceEnter(str) {
-		if(str != "") {
-			return str.split("\r\n").join("<br/>");
-		} else {
-			return "";
-		}
-	}
-	
-</script>
-
-<form id="diningMenuPopForm" name="diningMenuPopForm">
-	<input type="hidden" id="lclasCode" name="lclasCode" value="">
-	<input type="hidden" id="menuPopSysCode" name="searchSysCode" value="">
-	<input type="hidden" id="menuPopDiningCode" name="diningCode" value="">
-	<input type="hidden" id="popDiningNm" name="diningNm" value="">
+    <!-- //container -->
 </form>
 
-<!-- 메뉴 자세히 보기 Layer -->
-<div id="menuPopup" class="layerPop">
-	<div class="layerCont">
-		<div class="menuPanArea">
-			
-			<h2 class="compTit"></h2>
-			
-			            
-            <ul id="menuTab" class="tabType03 tabToggle"></ul>
+<!-- 메뉴선택 Layer -->
+<div id="menuPop" class="layerPop diningSelectPop" style="display: block;">
+    <div class="layerCont" tabindex="0" style="top: 50%; left: 50%; margin-top: -469.427px; margin-left: -540px;" data-gtm-vis-recent-on-screen36519946_61="107" data-gtm-vis-first-on-screen36519946_61="107" data-gtm-vis-total-visible-time36519946_61="100" data-gtm-vis-has-fired36519946_61="1">
+        <div class="compTit" data-gtm-vis-has-fired36519946_61="1">
+            <span id="menuTitle" data-gtm-vis-has-fired36519946_61="1">메뉴 선택</span>
             
-            
-            <div class="side">
-				<button type="button" class="btnPrint02 btnLine">인쇄하기</button><!-- 인쇄하기 -->
-				<button type="button" class="btnLine" onclick="fncMenuDownload();">다운로드</button><!-- 다운로드 -->
-			</div>
-		</div>
-		<button type="button" class="btnClose" onclick="commonJs.popClose($('#menuPopup'))">닫기</button><!-- 닫기 -->
-	</div>
+            <div class="rightInfo" data-gtm-vis-has-fired36519946_61="1">
+                <strong name="timerText" data-gtm-vis-has-fired36519946_61="1">시간 내 예약을 완료해 주세요</strong><!-- 시간 내 예약을 완료해 주세요 -->
+                <span class="chkTime" name="holdingTimer" data-gtm-vis-has-fired36519946_61="1">3:21</span>
+            </div>
+        </div>
+        <div class="compLayer dnSelectScroll" data-gtm-vis-has-fired36519946_61="1">
+            <!-- 221230 수동예약 인벤토리일 경우 문구 출력 -->
+            <div class="manualInfoWrap" id="manualInfoWrap" style="display:none;" data-gtm-vis-has-fired36519946_61="1">
+                <div class="txtWrap" data-gtm-vis-has-fired36519946_61="1">
+                    <strong data-gtm-vis-has-fired36519946_61="1">다이닝 업장의 좌석 확인이 필요한 예약이며, 예약확정까지 다소 시간이 소요됩니다.</strong><!-- 다이닝 업장의 좌석 확인이 필요한 예약이며, 예약확정까지 다소 시간이 소요됩니다. -->
+                    <div class="order_txt" data-gtm-vis-has-fired36519946_61="1">① 예약신청 &gt; ② 업장 예약 가능 여부 확인 &gt; ③ 예약확정</div><!-- ① 예약신청 > ② 예약 가능 여부 확인 > ③ 예약확정 -->
+                    <p class="txtGuide" data-gtm-vis-has-fired36519946_61="1">예약 진행 과정은 알림톡/SMS로 안내해 드립니다.</p><!-- 예약 진행 과정은 알림톡/SMS로 안내 드립니다. -->
+                </div>
+            </div>
+            <!-- // 221230 수동예약 인벤토리일 경우 문구 출력 -->
+            <!--  선택타입 15 - 테이블선택  -->
+            <div class="dnSelectBox" id="tableTypeDiv1" style="display: none;" data-gtm-vis-has-fired36519946_61="1">
+                <h2 class="boxTit" data-gtm-vis-has-fired36519946_61="1">테이블 선택</h2><!-- 테이블 선택 -->
+                <div class="txtSelectBox" data-gtm-vis-has-fired36519946_61="1">
+                    <ul class="frmList" id="tableTypeUl1" data-gtm-vis-has-fired36519946_61="1"></ul>
+                </div>
+            </div>
+            <!-- //  선택타입 15 - 테이블선택  -->
+            <div class="dnSelectBox" name="menuListDiv" style="display: none;" data-gtm-vis-has-fired36519946_61="1">
+                <h2 class="boxTit sSelects" data-gtm-vis-has-fired36519946_61="1">세트 선택</h2><!-- 세트 선택 -->
+                <div class="txtSelectBox" data-gtm-vis-has-fired36519946_61="1">
+                    <div class="selectWrap" style="width:487px" first="true" data-gtm-vis-has-fired36519946_61="1">
+                        <select id="menuListSelect" data-height="150px" data-direction="down" aria-required="true" style="display: none;" data-gtm-vis-has-fired36519946_61="1"><option name="menuSet" value="BBg9ONqfJAzE-wJ6TxdRBA" data-gtm-vis-has-fired36519946_61="1">일반 예약</option></select><button tabindex="0" id="menuListSelect-button" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-owns="menuListSelect-menu" aria-haspopup="true" class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget" type="button" data-gtm-vis-has-fired36519946_61="1"><span class="ui-selectmenu-text" data-gtm-vis-has-fired36519946_61="1">일반 예약</span></button>
+                    <div class="ui-selectmenu-menu ui-front" data-gtm-vis-has-fired36519946_61="1"><div class="tweenDiv" data-gtm-vis-has-fired36519946_61="1"><ul aria-hidden="true" aria-labelledby="menuListSelect-button" id="menuListSelect-menu" role="listbox" tabindex="0" class="ui-menu ui-corner-bottom ui-widget ui-widget-content" style="max-height: 150px;" data-gtm-vis-has-fired36519946_61="1"></ul></div></div></div>
+                </div>
+            </div>
+            <div class="dnSelectBox" id="tableTypeDiv2" style="display: none;" data-gtm-vis-has-fired36519946_61="1">
+                <h2 class="boxTit" data-gtm-vis-has-fired36519946_61="1">테이블 선택</h2><!-- 테이블 선택 -->
+                <div class="txtSelectBox" data-gtm-vis-has-fired36519946_61="1">
+                    <ul class="frmList" id="tableTypeUl2" data-gtm-vis-has-fired36519946_61="1"></ul>
+                </div>
+            </div>
+            <div class="dnSelectBox" id="menuItemDiv" data-gtm-vis-has-fired36519946_61="1">
+                <!-- 230112 &메뉴 가이드설명 -->
+                <!-- 메뉴 선택 --><!-- 표시가 있는 메뉴는 단독으로 선택이 되지 않습니다. -->
+                <h2 class="boxTit" data-gtm-vis-has-fired36519946_61="1">메뉴 선택<span class="smallTxt" id="nTypeGide" style="display: none;" data-gtm-vis-has-fired36519946_61="1"><strong class="ico_ampersand" data-gtm-vis-has-fired36519946_61="1"></strong>표시가 있는 메뉴는 단독으로 선택이 되지 않습니다.</span><span class="hidden" data-gtm-vis-has-fired36519946_61="1">타입02</span></h2>
+                <!-- // 230112 &메뉴 가이드설명 -->
+                <div class="txtSelectBox" data-gtm-vis-has-fired36519946_61="1">
+                    <ul class="menuSelcet type02 badge_all" id="popMenuUl" data-gtm-vis-has-fired36519946_61="1"><li data-menuitemid="OnfHDUAzSnW_9cpfS9jRpA" data-price="20000" data-tabletype="N" data-fixedperson="1" data-menutype="main" data-gtm-vis-has-fired36519946_61="1">
+                                                                <div class="menuSelcet_li" data-gtm-vis-has-fired36519946_61="1">
+                                                                    <span class="txt" data-gtm-vis-has-fired36519946_61="1"><span class="badge_txt" data-gtm-vis-has-fired36519946_61="1">위 결제금액은 예약금입니다.</span>            성인</span>
+                                                                    <span class="price" data-gtm-vis-has-fired36519946_61="1">20,000 KRW</span>
+                                                                    <div class="numPeople type02" data-gtm-vis-has-fired36519946_61="1">
+                                                                        <button type="button" class="btnDown count" data-prop="down" onclick="fncBtnUpDown(this);" disabled="disabled" data-gtm-vis-has-fired36519946_61="1">인원 수 감소</button>
+                                                                        <span class="personNum" data-count="0" data-gtm-vis-has-fired36519946_61="1">0</span>
+                                                                        <button type="button" class="btnUp count" data-prop="up" onclick="fncBtnUpDown(this)" data-gtm-vis-has-fired36519946_61="1">인원 수 증가</button>
+                                                                    </div>
+                                                                </div></li><li data-menuitemid="l0ljPCWyuLp73646rTZU3w" data-price="0" data-tabletype="N" data-fixedperson="1" data-menutype="main" data-gtm-vis-has-fired36519946_61="1">
+                                                                <div class="menuSelcet_li" data-gtm-vis-has-fired36519946_61="1">
+                                                                    <span class="txt" data-gtm-vis-has-fired36519946_61="1">            어린이</span>
+                                                                    <span class="price" data-gtm-vis-has-fired36519946_61="1">0 KRW</span>
+                                                                    <div class="numPeople type02" data-gtm-vis-has-fired36519946_61="1">
+                                                                        <button type="button" class="btnDown count" data-prop="down" onclick="fncBtnUpDown(this);" disabled="disabled" data-gtm-vis-has-fired36519946_61="1">인원 수 감소</button>
+                                                                        <span class="personNum" data-count="0" data-gtm-vis-has-fired36519946_61="1">0</span>
+                                                                        <button type="button" class="btnUp count" data-prop="up" onclick="fncBtnUpDown(this)" data-gtm-vis-has-fired36519946_61="1">인원 수 증가</button>
+                                                                    </div>
+                                                                </div><div class="add_Description" data-gtm-vis-has-fired36519946_61="1">37개월 이상 12세 이하(초등학생)</div></li><li data-menuitemid="kvUt09mqm8fXUfrdeA_1wA" data-price="0" data-tabletype="N" data-fixedperson="1" data-menutype="main" data-gtm-vis-has-fired36519946_61="1">
+                                                                <div class="menuSelcet_li" data-gtm-vis-has-fired36519946_61="1">
+                                                                    <span class="txt" data-gtm-vis-has-fired36519946_61="1">            36개월 이하</span>
+                                                                    <span class="price" data-gtm-vis-has-fired36519946_61="1">0 KRW</span>
+                                                                    <div class="numPeople type02" data-gtm-vis-has-fired36519946_61="1">
+                                                                        <button type="button" class="btnDown count" data-prop="down" onclick="fncBtnUpDown(this);" disabled="disabled" data-gtm-vis-has-fired36519946_61="1">인원 수 감소</button>
+                                                                        <span class="personNum" data-count="0" data-gtm-vis-has-fired36519946_61="1">0</span>
+                                                                        <button type="button" class="btnUp count" data-prop="up" onclick="fncBtnUpDown(this)" data-gtm-vis-has-fired36519946_61="1">인원 수 증가</button>
+                                                                    </div>
+                                                                </div></li></ul>
+                    <p class="txtGuide" id="menuDesc" data-gtm-vis-has-fired36519946_61="1">메뉴명(메뉴가격) 메뉴별 예약금 확인 후 총 방문인원 수만큼 입력해 주세요.</p><!-- 메뉴명(메뉴가격) 메뉴별 예약금 확인 후 총 방문인원 수만큼 입력해 주세요. -->
+                </div>
+            </div>
+  
+            <div class="dnSelectBox" id="amountDiv" data-gtm-vis-has-fired36519946_61="1">
+                <h2 class="boxTit" data-gtm-vis-has-fired36519946_61="1">예약금액</h2><!-- 예약금액 -->
+                <div class="txtSelectBox" data-gtm-vis-has-fired36519946_61="1">
+                    <table class="tblV" data-gtm-vis-has-fired36519946_61="1">
+                        <colgroup data-gtm-vis-has-fired36519946_61="1">
+                            <col style="width:33.3%" data-gtm-vis-has-fired36519946_61="1">
+                            <col style="width:33.3%" data-gtm-vis-has-fired36519946_61="1">
+                            <col style="width:33.3%" data-gtm-vis-has-fired36519946_61="1">
+                        </colgroup>
+                        <tbody id="popCalcUl" data-gtm-vis-has-fired36519946_61="1"><tr class="popMenuList" id="pop_OnfHDUAzSnW_9cpfS9jRpA" data-id="OnfHDUAzSnW_9cpfS9jRpA" data-tabletype="N" data-menutype="main" style="display: none;" data-gtm-vis-has-fired36519946_61="1">
+                                                            <th data-gtm-vis-has-fired36519946_61="1">성인</th>
+                                                            <td class="person" data-gtm-vis-has-fired36519946_61="1">20,000 x <span class="amount" data-gtm-vis-has-fired36519946_61="1">0</span>명</td> <!-- 2명 -->
+                                                            <td class="price" data-gtm-vis-has-fired36519946_61="1">KRW <span class="popMenuPrice" data-gtm-vis-has-fired36519946_61="1">0</span></td>
+                                                        </tr><tr class="popMenuList" id="pop_l0ljPCWyuLp73646rTZU3w" data-id="l0ljPCWyuLp73646rTZU3w" data-tabletype="N" data-menutype="main" style="display: none;" data-gtm-vis-has-fired36519946_61="1">
+                                                            <th data-gtm-vis-has-fired36519946_61="1">어린이</th>
+                                                            <td class="person" data-gtm-vis-has-fired36519946_61="1">0 x <span class="amount" data-gtm-vis-has-fired36519946_61="1">0</span>명</td> <!-- 2명 -->
+                                                            <td class="price" data-gtm-vis-has-fired36519946_61="1">KRW <span class="popMenuPrice" data-gtm-vis-has-fired36519946_61="1">0</span></td>
+                                                        </tr><tr class="popMenuList" id="pop_kvUt09mqm8fXUfrdeA_1wA" data-id="kvUt09mqm8fXUfrdeA_1wA" data-tabletype="N" data-menutype="main" style="display: none;" data-gtm-vis-has-fired36519946_61="1">
+                                                            <th data-gtm-vis-has-fired36519946_61="1">36개월 이하</th>
+                                                            <td class="person" data-gtm-vis-has-fired36519946_61="1">0 x <span class="amount" data-gtm-vis-has-fired36519946_61="1">0</span>명</td> <!-- 2명 -->
+                                                            <td class="price" data-gtm-vis-has-fired36519946_61="1">KRW <span class="popMenuPrice" data-gtm-vis-has-fired36519946_61="1">0</span></td>
+                                                        </tr></tbody>
+                    </table>
+                    <div class="total noMember" data-gtm-vis-has-fired36519946_61="1">
+                        <div class="totalWrap type02" data-gtm-vis-has-fired36519946_61="1">
+                            <span class="tit" data-gtm-vis-has-fired36519946_61="1">총 예약금액</span><strong class="pay" data-gtm-vis-has-fired36519946_61="1"><em name="popTotalPrice" data-gtm-vis-has-fired36519946_61="1">0</em>KRW</strong><!-- 총 예약 금액 -->
+                        </div>
+                    </div>
+                    <div data-gtm-vis-has-fired36519946_61="1">
+                        <p class="txtGuide" id="priceDesc" data-gtm-vis-has-fired36519946_61="1">메뉴별 예약금 x 총 예약인원</p><!-- 메뉴별 예약금 x 총 예약인원 -->
+                        <p class="txtGuide" data-gtm-vis-has-fired36519946_61="1">예약확정에 필요한 인원당 예약금 안내 입니다.</p><!-- 예약확정에 필요한 인원당 예약금 안내 입니다. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btnArea" data-gtm-vis-has-fired36519946_61="1">
+            <a href="javascript:void(0)" class="btnSC btnL" onclick="fncGoStep0();" data-gtm-vis-has-fired36519946_61="1">이전</a><!-- 이전 -->
+            <a href="javascript:void(0)" class="btnSC btnL active" onclick="fncCompleteMenuSelect();" data-gtm-vis-has-fired36519946_61="1">다음</a><!-- 다음 -->
+        </div>
+    </div>
 </div>
-<!-- //메뉴 자세히 보기 Layer -->
-<div id="dimmed" class="dimmed">
 
-</div>
-
-
-		<!-- //container -->
-
-
-<!--S footer  -->
-<jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
-<!--E footer  -->
-
-
-
+      <!-- footer S -->
+    <jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
+    <!-- footer E -->
 	</div>
 	<!-- //wrapper -->
+<div class="dimmed" style="display: block;"></div>
 
-<!-- 호텔 찾기 Layer -->
-<div id="hotelFindLayer" class="layerPop">
-	<div class="layerCont">
-		<div class="hotelFindPop">
-			<h2>호텔 찾기</h2>
-			<ul class="hotelSelect">
-								<li>
-					<a href="https://jpg.josunhotel.com/main.do" target="_blank" title="새창열림">		
-						<span class="hotelLogo palace">
-						</span>
-						<span class="hotelTit">조선 팰리스<!-- 조선 팰리스 --></span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selwi-the-westin-chosun-seoul" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo westinSeoul">
-						</span>
-						<span class="hotelTit">웨스틴 조선 서울</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/puswi-the-westin-chosun-busan" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo westinBusan">
-						</span>
-						<span class="hotelTit">웨스틴 조선 부산</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://gjb.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo grandBusan">
-						</span>
-						<span class="hotelTit">그랜드 조선 부산</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://gjj.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo grandJeju">
-						</span>
-						<span class="hotelTit">그랜드 조선 제주</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://lescapehotel.com/main" target="_blank" title="새창열림">
-						<span class="hotelLogo lescape">
-						</span>
-						<span class="hotelTit">레스케이프 호텔</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://grp.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo gravityPangyo">
-						</span>
-						<span class="hotelTit">그래비티 서울 판교</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selfp-four-points-seoul-namsan" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo sheratonSeoulstation">
-						</span>
-						<span class="hotelTit">포포인츠 바이 쉐라톤 조선 서울역</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selfd-four-points-seoul-myeongdong" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo sheratonMyeongdong">
-						</span>
-						<span class="hotelTit">포포인츠 바이 쉐라톤 조선, 서울 명동</span>
-					</a>
-				</li>
-			</ul>
-		</div>
-		<button type="button" class="btnClose" onclick="commonJs.popClose($('#hotelFindLayer'))">닫기</button>
-	</div>
-</div>
-<!-- //호텔 찾기 Layer -->
-<div class="dimmed"></div>
-</body>
-</html>
 
+
+</body></html>

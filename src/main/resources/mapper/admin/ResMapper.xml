@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.sist.elysian.admin.res">
+	<select id="roomResList" resultType="rrd">
+		select row_number() over(order by rr.pay_num) num,
+			 rr.pay_num payNum, rr.room_res_status roomResStatus,
+			 r.room_rank_name || ' | ' || r.bed_cnt || ' ' || r.bed_name || ' | ' || r.view_name room,
+			 rr.checkin checkIn, rr.checkout checkOut, rr.room_res_date roomResDate,
+			 m.eng_fname || ' ' || m.eng_lname engName, rr.guest_phone guestPhone
+		from room_reservation rr, room r, member m
+		where rr.room_id = r.room_id
+		and rr.user_id = m.member_id
+		order by payNum
+	</select>
+	
+	<select id="diningResList" resultType="drd">
+		select row_number() over(order by dr.pay_num) num,
+			 dr.pay_num payNum, dr.dining_res_status diningResStatus,
+			 d.dining_name diningName,
+			 dr.visit_datetime visitDateTime, dr.visit_people visitPeople, dr.visitor_name visitorName, dr.visitor_phone visitorPhone, dr.dining_res_date diningResDate
+		from dining_reservation dr, dining d, member m
+		where dr.dining_id = d.dining_id
+		and dr.user_id = m.member_id
+		order by payNum
+	</select>
+</mapper>

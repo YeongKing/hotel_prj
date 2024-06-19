@@ -61,28 +61,55 @@ $(document).ready(function() {
     // 테이블의 객실번호 클릭시
     $(document).on("click", ".roomId", function() {
         var roomId = $(this).text();
-        var roomRankName = $(this).closest('tr').find('.roomRankName').text(); // 같은 행(row) 내에서 .roomRankName을 찾아 텍스트를 가져옴
-        var bedName = $(this).closest('tr').find('.bedName').text(); // 같은 행(row) 내에서 .roomRankName을 찾아 텍스트를 가져옴
-        var viewName = $(this).closest('tr').find('.viewName').text(); // 같은 행(row) 내에서 .roomRankName을 찾아 텍스트를 가져옴
-        var roomSize = $(this).closest('tr').find('.roomSize').text();
-        
-        var roomFloor;
-        if (roomId.length == 3) {
-            roomFloor = roomId.substr(0, 1);
-        } else if (roomId.length == 4) {
-            roomFloor = roomId.substr(0, 2);
-        }
+        $.ajax({
+        	url:'roomDetail.do',
+        	type:'POST',
+        	contentType:'application/json',
+        	dataType:'JSON',
+        	data:JSON.stringify({ roomId: roomId }),
+        	error:function(xhr){
+        		console.log(xhr.status)
+        		alert("문제가 발생했습니다.");
+        	},
+        	success:function(jsonObj){
 
-        $("#updateRoomId").val(roomId);
-        $("#updateRoomFloor").val(roomFloor+"층");
-        $("#updateRoomRankName").val(roomRankName);
-       /*  $("#bedName").val(bedName); */
-        $("#updateViewName").val(viewName);
-        $("#updateRoomSize").val(roomSize);
+				roomId = jsonObj.roomId.toString();
+				
+                    var roomFloor;
+                    if (roomId.length == 3) {
+                        roomFloor = roomId.substr(0, 1);
+                    } else if (roomId.length == 4) {
+                        roomFloor = roomId.substr(0, 2);
+                    }
+
+
+            	$("#updateRoomId").val(roomId);
+            	$("#updateRoomBasicCapacity").val(jsonObj.roomBasicCapacity);
+                $("#updateRoomRankName").val(jsonObj.roomRankName);
+                $("#updateRoomMaxCapacity").val(jsonObj.roomMaxCapacity);
+                $("#updateRoomBasicPrice").val(jsonObj.roomBasicPrice);
+                
+                $("#updateRoomAddPrice").val(jsonObj.roomAddPrice);
+                $("#updateViewName").val(jsonObj.roomViewName);
+                $("#updateRoomSize").val(jsonObj.roomSize);
+    
+                $("#updateRoomFloor").val(roomFloor+"층");
+                
+
+                $("#updateBedName").val(jsonObj.roomBedName);
+                $("#updateBedCode").val(jsonObj.roomBedCode);
+                $("#updateBedCnt").val(jsonObj.roomBedCnt);
+        		
+        	}
+        	
+        	
+        	
+        })
         
-        $("#updateBedName").empty();
-        $("#updateBedName").append(new Option("KING", "KING"));
-        $("#updateBedName").append(new Option("TWIN", "TWIN"));
+        
+        
+
+
       
 
         
@@ -102,48 +129,19 @@ $(document).ready(function() {
         $('#updateRoomModal').modal('show');
     });
     
+    
+    
 
     
     
     // 객실 등록 번호 클릭 시
     $("#addRoomBtn").click(function() {
 
+
     	// 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
         // 모달 내의 모든 'is-invalid' 클래스 제거
         $('#addRoomModal').find('.is-invalid').removeClass('is-invalid');
-        
-    	
-    	
-        $("#addRoomFloor").empty();
-        $("#addRoomFloor").append(new Option("1", "1"));
-        $("#addRoomFloor").append(new Option("2", "2"));
-        $("#addRoomFloor").append(new Option("3", "3"));
-        $("#addRoomFloor").append(new Option("4", "4"));
-        $("#addRoomFloor").append(new Option("5", "5"));
-    	
-        $("#addRoomRankName").empty();
-        $("#addRoomRankName").append(new Option("STANDARD", "STANDARD"));
-        $("#addRoomRankName").append(new Option("DELUXE", "DELUXE"));
-        $("#addRoomRankName").append(new Option("SUITE", "SUITE"));
-
-    	
-        $("#addRoomFloor").empty();
-        $("#addRoomFloor").append(new Option("1", "1"));
-        $("#addRoomFloor").append(new Option("2", "2"));
-        $("#addRoomFloor").append(new Option("3", "3"));
-        $("#addRoomFloor").append(new Option("4", "4"));
-        $("#addRoomFloor").append(new Option("5", "5"));
-    	
-    	
-        $("#addBedName").empty();
-        $("#addBedName").append(new Option("KING", "KING"));
-        $("#addBedName").append(new Option("TWIN", "TWIN"));
-    	
-        $("#addViewName").empty();
-        $("#addViewName").append(new Option("STANDARD", "STANDARD"));
-        $("#addViewName").append(new Option("GARDEN", "GARDEN"));
-        $("#addViewName").append(new Option("POOLSIDE", "POOLSIDE"));
-    	
+       
         // 모달 내의 모든 'parsley-custom-error-message' 클래스를 가진 span 태그 제거
         $('#addRoomModal').find('span.parsley-custom-error-message').remove();
         $('#addRoomModal').modal('show');
@@ -151,11 +149,168 @@ $(document).ready(function() {
         
     });
     
+    //객실 상세조회에서 침대종류 변경시
+    $('#updateBedName').change(function() {
+        var bedName = $(this).val();
+        var bedCode = '';
+        
+        switch (bedName) {
+            case 'DOUBLE':
+                bedCode = '50_001';
+                break;
+            case 'TWIN':
+                bedCode = '50_002';
+                break;
+            case 'KING':
+                bedCode = '50_003';
+                break;
+            default:
+                bedCode = '';
+        }
+        
+        $('#updateBedCode').val(bedCode);
+    });//change
+    
+    
+  //객실 등록에서 객실층 변경시
+    $('#addRoomFloor').change(function() {
+        var selectedFloor = $(this).val();
+            
+        
+        if(selectedFloor === '객실층') {
+            $('#addRoomId').val('');
+            
+        }else{
+        	
+            $.ajax({
+                url: 'selectRoomId.do',
+                type: 'POST',
+                contentType: 'application/json; charset=UTF-8',
+                dataType: 'json',
+                data: JSON.stringify({selectedFloor:selectedFloor}),
+                error: function(xhr) {
+                    console.log(xhr.status);
+                    alert("문제가 발생했습니다.");
+                },
+                success: function(jsonObj) {
+                    $('#addRoomId').val(jsonObj);
+                }
+            });//ajax
+        	
+        	
+
+        	
+        }
+        });
     
     
     
     
     
+    
+    //객실 등록에서 객실등급 변경시
+    $('#addRoomRankName').change(function() {
+        var roomRankName = $(this).val();
+        var roomRankCode = '';
+        
+        switch (roomRankName) {
+            case 'DELUXE':
+            	roomRankCode = '30_001';
+            	$('#addRoomBasicCapacity').val(2);
+            	$('#addRoomMaxCapacity').val(4);
+            	$('#addRoomBasicPrice').val(200000);
+            	$('#addRoomAddPrice').val(20000);
+            	$('#addRoomSize').val(35);
+                break;
+            case 'STANDARD':
+            	roomRankCode = '30_002';
+            	$('#addRoomBasicCapacity').val(2);
+            	$('#addRoomMaxCapacity').val(4);
+            	$('#addRoomBasicPrice').val(150000);
+            	$('#addRoomAddPrice').val(20000);
+            	$('#addRoomSize').val(25);
+                break;
+            case 'SUITE':
+            	roomRankCode = '30_003';
+            	$('#addRoomBasicCapacity').val(2);
+            	$('#addRoomMaxCapacity').val(8);
+            	$('#addRoomBasicPrice').val(500000);
+            	$('#addRoomAddPrice').val(20000);
+            	$('#addRoomSize').val(55);
+                break;
+            default:
+            	roomRankCode = '';
+        		$('#addRoomBasicCapacity').val('');
+        		$('#addRoomMaxCapacity').val('');
+        		$('#addRoomBasicPrice').val('');
+        		$('#addRoomAddPrice').val('');
+        		$('#addRoomSize').val('');
+        }
+        
+        $('#addRoomRankCode').val(roomRankCode);
+    });//change
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //객실 등록에서 침대종류 변경시
+    $('#addBedName').change(function() {
+        var bedName = $(this).val();
+        var bedCode = '';
+        
+        switch (bedName) {
+            case 'DOUBLE':
+                bedCode = '50_001';
+                break;
+            case 'TWIN':
+                bedCode = '50_002';
+                break;
+            case 'KING':
+                bedCode = '50_003';
+                break;
+            default:
+                bedCode = '';
+        }
+        
+        $('#addBedCode').val(bedCode);
+    });//change
+    
+    
+    //객실 등록에서 뷰종류 변경시
+    $('#addViewName').change(function() {
+        var viewName = $(this).val();
+        var viewCode = '';
+        
+        switch (viewName) {
+            case 'CITY VIEW':
+            	viewCode = '40_001';
+                break;
+            case 'GARDEN VIEW':
+            	viewCode = '40_002';
+                break;
+            case 'POLLSIDE VIEW':
+            	viewCode = '40_003';
+                break;
+            default:
+            	viewCode = '';
+        }
+        
+        $('#addViewCode').val(viewCode);
+    });//change
+    
+    
+    
+    
+    
+    
+    
+
     
     
     
@@ -172,7 +327,7 @@ $(document).ready(function() {
         confirmModal.show();
     }
 
-    function deleteAction() {
+/*     function deleteAction() {
         console.log('삭제 동작 수행');
         // 서버로 삭제 요청 보내기
         // $.ajax({
@@ -187,66 +342,198 @@ $(document).ready(function() {
         //     }
         // });
     }
+ */
+ 
+ 
+ 
+ function updateAction() {
 
-    function updateAction() {
-        console.log('수정 동작 수행');
-        // 서버로 수정 요청 보내기
-        // $.ajax({
-        //     url: 'update_url',
-        //     method: 'POST',
-        //     data: { id: itemId, data: newData },
-        //     success: function(response) {
-        //         console.log('수정 성공');
-        //     },
-        //     error: function(error) {
-        //         console.log('수정 실패', error);
-        //     }
-        // });
-    }
+	 var roomId = $('#updateRoomId').val();
+	 var bedCnt = $('#updateBedCnt').val();
+	 var bedName = $('#updateBedName').val();
+	 var bedCode = $('#updateBedCode').val();
 
+	 
+	    // 침대 개수 미입력
+	    if (bedCnt === '') {
+	        alert("침대 개수를 입력해주세요.");
+	        $('#updateBedCnt').focus(); 
+	        return;
+	    } else if (!/^\d+$/.test(bedCnt) || parseInt(bedCnt, 10) < 1 || parseInt(bedCnt, 10) > 9) { // 숫자만 입력 가능하며 1 이상 9 이하
+	        alert("침대 개수는 숫자만 입력 가능하며, 최소 1개 이상 최대 9개까지 입력 가능합니다.");
+	        $('#updateBedCnt').focus(); 
+	        return;
+	    }
+   	 	
+	   	 //침대유형 미선택 
+	     if(bedCode === '') {
+	         alert("침대유형을 선택 해주세요.");
+	         return;
+	     }
+	 
+
+      var urVO = {
+    		 
+    	 roomId: roomId,  
+    	 bedName: bedName,
+    	 bedCode: bedCode,
+    	 bedCnt: bedCnt
+     }; 
+
+      $.ajax({
+         url: 'updateRoom.do',
+         type: 'POST',
+         contentType: 'application/json; charset=UTF-8',
+         dataType: 'json',
+         data: JSON.stringify(urVO),
+         error: function(xhr) {
+             console.log(xhr.status);
+             alert("문제가 발생했습니다.");
+         },
+         success: function(jsonObj) {
+             alert("객실정보가 정상적으로 수정되었습니다.");
+             $('#memberDetail').modal('hide');
+             location.reload();
+         }
+     });//ajax 
+ }//updateAction
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
     function registerAction() {
         console.log('등록 동작 수행');
-        // 서버로 등록 요청 보내기
-        // $.ajax({
-        //     url: 'register_url',
-        //     method: 'POST',
-        //     data: { data: newData },
-        //     success: function(response) {
-        //         console.log('등록 성공');
-        //     },
-        //     error: function(error) {
-        //         console.log('등록 실패', error);
-        //     }
-        // });
+      	 
+       	var roomId				=	$('#addRoomId').val();
+       	var roomBasicCapacity	=	$('#addRoomBasicCapacity').val();
+       	var roomMaxCapacity		=	$('#addRoomMaxCapacity').val();
+       	var roomRankName		=	$('#addRoomRankName').val();
+       	var roomRankCode		=	$('#addRoomRankCode').val();
+       	var roomBasicPrice		=	$('#addRoomBasicPrice').val();
+       	var bedName				=	$('#addBedName').val();
+       	var bedCode				=	$('#addBedCode').val();
+       	var roomAddPrice		=	$('#addRoomAddPrice').val();
+       	var bedCnt				=	$('#addBedCnt').val();
+       	var viewName			=	$('#addViewName').val();
+       	var viewCode			=	$('#addViewCode').val();
+       	var roomSize			=	$('#addRoomSize').val();
+       	
+
+   	 //객실층 미선택 
+     if(roomId === '') {
+         alert("객실층을 선택 해주세요.");
+         return;
+     }
+   	 
+   	 //객실등급 미선택 
+     if(roomRankCode === '') {
+         alert("객실등급을 선택해 주세요.");
+         return;
+     }
+   	 
+   	 //침대유형 미선택 
+     if(bedCode === '') {
+         alert("침대유형을 선택 해주세요.");
+         return;
+     }
+   	 
+     // 침대 개수 미입력
+     if (bedCnt === '') {
+         alert("침대 개수를 입력해주세요.");
+         $('#updateBedCnt').focus(); 
+         return;
+     } else if (!/^\d+$/.test(bedCnt) || parseInt(bedCnt, 10) < 1 || parseInt(bedCnt, 10) > 9) { // 숫자만 입력 가능하며 1 이상 9 이하
+         alert("침대 개수는 숫자만 입력 가능하며, 최소 1개 이상 최대 9개까지 입력 가능합니다.");
+         $('#updateBedCnt').focus(); 
+         return;
+     }
+   	 
+   	 //뷰 유형 미선택 
+     if(viewCode === '') {
+         alert("뷰 유형을 선택 해주세요.");
+         return;
+     }
+   
+   	var rVO = {
+   		    roomId: roomId,
+   		    roomSize: roomSize,
+   		    roomBasicCapacity: roomBasicCapacity,
+   		    roomMaxCapacity: roomMaxCapacity,
+   		    roomBasicPrice: roomBasicPrice,
+   		    roomAddPrice: roomAddPrice,
+   		    bedCnt: bedCnt,
+   		    roomRankCode: roomRankCode,
+   		    roomRankName: roomRankName,
+   		    viewCode: viewCode,
+   		    viewName: viewName,
+   		    bedCode: bedCode,
+   		    bedName: bedName
+   		};
+
+          $.ajax({
+            url: 'insertRoom.do',
+            type: 'POST',
+            contentType: 'application/json; charset=UTF-8',
+            dataType: 'json',
+            data: JSON.stringify(rVO),
+            error: function(xhr) {
+                console.log(xhr.status);
+                alert("문제가 발생했습니다.");
+            },
+            success: function(jsonObj) {
+                alert("객실정보가 정상적으로 등록되었습니다.");
+                $('#addRoomModal').modal('hide');
+                location.reload();
+            }
+        });//ajax  
     }
 
     // 등록 버튼 클릭 시
     $('#chkAddBtn').on('click', function() {
         showModal('등록 확인', '등록하시겠습니까?', '예', function() {
             registerAction();
-            alert('등록 동작 수행');
+
         });
     });
 
-    // 삭제 버튼 클릭 시
+/*     // 삭제 버튼 클릭 시
     $('#chkDeleteBtn').on('click', function() {
         showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
             deleteAction();
             alert('삭제 동작 수행');
         });
     });
-
+ */
     // 수정 버튼 클릭 시
     $('#chkUpdateBtn').on('click', function() {
         showModal('수정 확인', '수정하시겠습니까?', '예', function() {
             updateAction();
-            alert('수정 동작 수행');
         });
     });
     
     
-    
-    
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
     
     
     
@@ -325,128 +612,25 @@ function changePage(pageNumber) {
 											</tr>
 										</thead>
 										<tbody>
+											<c:if test="${ empty requestScope.roomList }">
 											<tr>
-												<th>1</th>
-												<td><a href="#" class="roomId">101</a></td>
-												<td class="roomRankName">STANDARD</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">STANDARD</td>
-												<td class="roomSize">30</td>
+											<td colspan="6" style="text-align: center;">
+											객실정보가 존재하지 않습니다.
+											</td>
 											</tr>
+											</c:if>
+											<c:forEach var="rld" items="${ requestScope.roomList }" varStatus="i">
 											<tr>
-												<th>2</th>
-												<td><a href="#" class="roomId">102</a></td>
-												<td class="roomRankName">STANDARD</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">STANDARD</td>
-												<td class="roomSize">30</td>
+												<td><c:out value="${ i.count }"/></td>
+												<td><a href="#" class="roomId"><c:out value="${ rld.roomId }"/></a></td>
+												<td class="roomRankName"><c:out value="${ rld.roomRankName }"/></td>
+												<td class="bedName"><c:out value="${ rld.bedName }"/></td>
+												<td class="viewName"><c:out value="${ rld.viewName }"/></td>
+												<td class="roomSize"><c:out value="${ rld.roomSize }"/></td>
 											</tr>
-											<tr>
-												<th>3</th>
-												<td><a href="#" class="roomId">103</a></td>
-												<td class="roomRankName">STANDARD</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">GARDEN</td>
-												<td class="roomSize">30</td>
-											</tr>
-											<tr>
-												<th>4</th>
-												<td><a href="#" class="roomId">104</a></td>
-												<td class="roomRankName">STANDARD</td>
-												<td class="bedName">TWIN</td>
-												<td class="viewName">GARDEN</td>
-												<td class="roomSize">30</td>
-											</tr>
-
-											<tr>
-												<th>5</th>
-												<td><a href="#" class="roomId">105</a></td>
-												<td class="roomRankName">STANDARD</td>
-												<td class="bedName">TWIN</td>
-												<td class="viewName">POOLSIDE</td>
-												<td class="roomSize">30</td>
-											</tr>
-											<tr>
-												<th>6</th>
-												<td><a href="#" class="roomId">201</a></td>
-												<td class="roomRankName">DELUXE</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">STANDARD</td>
-												<td class="roomSize">45</td>
-											</tr>
-											<tr>
-												<th>7</th>
-												<td><a href="#" class="roomId">202</a></td>
-												<td class="roomRankName">DELUXE</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">STANDARD</td>
-												<td class="roomSize">45</td>
-											</tr>
-											<tr>
-												<th>8</th>
-												<td><a href="#" class="roomId">203</a></td>
-												<td class="roomRankName">DELUXE</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">GARDEN</td>
-												<td class="roomSize">45</td>
-											</tr>
-											<tr>
-												<th>9</th>
-												<td><a href="#" class="roomId">204</a></td>
-												<td class="roomRankName">DELUXE</td>
-												<td class="bedName">TWIN</td>
-												<td class="viewName">GARDEN</td>
-												<td class="roomSize">45</td>
-											</tr>
-											<tr>
-												<th>10</th>
-												<td><a href="#" class="roomId">205</a></td>
-												<td class="roomRankName">DELUXE</td>
-												<td class="bedName">TWIN</td>
-												<td class="viewName">POOLSIDE</td>
-												<td class="roomSize">45</td>
-											</tr>
-											<tr>
-												<th>11</th>
-												<td><a href="#" class="roomId">301</a></td>
-												<td class="roomRankName">SUITE</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">STANDARD</td>
-												<td class="roomSize">90</td>
-											</tr>
-											<tr>
-												<th>12</th>
-												<td><a href="#" class="roomId">302</a></td>
-												<td class="roomRankName">SUITE</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">STANDARD</td>
-												<td class="roomSize">90</td>
-											</tr>
-											<tr>
-												<th>13</th>
-												<td><a href="#" class="roomId">303</a></td>
-												<td class="roomRankName">SUITE</td>
-												<td class="bedName">KING</td>
-												<td class="viewName">GARDEN</td>
-												<td class="roomSize">90</td>
-											</tr>
-											<tr>
-												<th>14</th>
-												<td><a href="#" class="roomId">304</a></td>
-												<td class="roomRankName">SUITE</td>
-												<td class="bedName">TWIN</td>
-												<td class="viewName">GARDEN</td>
-												<td class="roomSize">90</td>
-											</tr>
-											<tr>
-												<th>15</th>
-												<td><a href="#" class="roomId">305</a></td>
-												<td class="roomRankName">SUITE</td>
-												<td class="bedName">TWIN</td>
-												<td class="viewName">POOLSIDE</td>
-												<td class="roomSize">90</td>
-											</tr>
-
+											
+											
+											</c:forEach>
 										</tbody>
 									</table>
                                 <div class="addRoom">
@@ -505,6 +689,11 @@ function changePage(pageNumber) {
 						                     <select 
 						                     class="addRoomFloor form-select" 
 						                     id="addRoomFloor">
+						                     
+						                     <option>객실층</option>
+						                     <option>32</option>
+						                     <option>33</option>
+						                     <option>34</option>
 						                     </select>
 										</div>
 									</div>
@@ -530,7 +719,12 @@ function changePage(pageNumber) {
 						                     <select 
 						                     class="addRoomRankName form-select" 
 						                     id="addRoomRankName">
+						                     <option>객실 등급</option>
+						                     <option>STANDARD</option>
+						                     <option>DELUXE</option>
+						                     <option>SUITE</option>
 						                     </select>
+						                     <input type="hidden" id="addRoomRankCode" name="addRoomRankCode" value="">
 						                     
 										</div>
 									</div>
@@ -554,7 +748,13 @@ function changePage(pageNumber) {
 						                     <select 
 						                     class="addBedName form-select" 
 						                     id="addBedName">
+						                     
+						                     <option>침대 유형</option>
+						                     <option>KING</option>
+						                     <option>TWIN</option>
+						                     <option>DOUBLE</option>
 						                     </select>
+						                     <input type="hidden" id="addBedCode" name="addBedCode" value="">
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
@@ -572,15 +772,30 @@ function changePage(pageNumber) {
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
+											<label for="addBedCnt">침대 개수</label>
+											<input
+						                        type="text"
+						                        id="addBedCnt"
+						                        class="form-control"
+						                        placeholder="침대 개수"
+						                        name="addBedCnt"
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
 											<label for="addViewName">뷰 유형</label>
 						                     <select 
 						                     class="addViewName form-select" 
 						                     id="addViewName">
+						                     <option>뷰 유형</option>
+						                     <option>CITY VIEW</option>
+						                     <option>GARDEN VIEW</option>
+						                     <option>POLLSIDE VIEW</option>
 						                     </select>
+						                     <input type="hidden" id="addViewCode" name="addViewCode" value="">
 										</div>
 									</div>
-									<div class="col-md-6 col-12">
-									</div>	
 									<div class="col-md-6 col-12">
 										<div class="form-group">
 											<label for="addRoomSize">방 크기</label>
@@ -596,7 +811,7 @@ function changePage(pageNumber) {
 									</div>					
 									<div class="col-md-6 col-12">
 									</div>				
-									
+
 									
 									
 									
@@ -636,12 +851,12 @@ function changePage(pageNumber) {
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title">객실 상세조회</h5>
-								<div class="d-flex justify-content-end">
+<!-- 								<div class="d-flex justify-content-end">
                                 <button type="button" id="chkDeleteBtn" class="btn btn-danger">
                                     <i class="bx bx-x d-block d-sm-none"></i> 
                                     <span class="d-none d-sm-block">객실 삭제</span>
                                 </button>
-								</div>
+								</div> -->
 							</div>
 							<form id = "updateRoomForm" action="#"  class="form px-5" data-parsley-validate>
 								<div class="row">
@@ -731,7 +946,11 @@ function changePage(pageNumber) {
 						                     <select 
 						                      class="updateBedName form-select"
 						                      id="updateBedName">
+						                     <option>KING</option>
+						                     <option>TWIN</option>
+						                     <option>DOUBLE</option>
 						                     </select>
+						                     <input type="hidden" id="updateBedCode" name="updateBedCode" value="">
 										</div>
 									</div>
 									<div class="col-md-6 col-12">
@@ -744,6 +963,18 @@ function changePage(pageNumber) {
 						                        placeholder="추가 요금"
 						                        name="updateRoomAddPrice"
 						                        Disabled
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="form-group">
+											<label for="updateBedCnt">침대 개수</label>
+											<input
+						                        type="text"
+						                        id="updateBedCnt"
+						                        class="form-control"
+						                        placeholder="침대 개수"
+						                        name="updateBedCnt"
 						                     />
 										</div>
 									</div>
@@ -762,19 +993,7 @@ function changePage(pageNumber) {
 									</div>
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="updateAmenity"> </label> 
-											<input
-						                        type="button"
-						                        id="updateAmenity"
-						                        class="form-control"
-						                        name="updateAmenity"
-												value="어메니티"
-						                     />
-										</div>
-									</div>	
-									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="updateRoomSize">방 크기</label>
+											<label for="updateRoomSize">방 크기m^2</label>
 											<input
 						                        type="text"
 						                        id="updateRoomSize"
@@ -786,7 +1005,20 @@ function changePage(pageNumber) {
 										</div>
 									</div>					
 									<div class="col-md-6 col-12">
-									</div>				
+										<div class="form-group">
+											<label for="updateAmenity"> </label> 
+											<input
+						                        type="button"
+						                        id="updateAmenity"
+						                        class="form-control"
+						                        name="updateAmenity"
+												value="어메니티"
+						                     />
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+									</div>
+				
 									
 									
 									

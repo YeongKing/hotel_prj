@@ -143,23 +143,25 @@
 		
 		// 현재 페이지 DataTable 인스턴스 생성
 		var table = $('#table1').DataTable({
+			processing : true,
+			serverSide: false,
 			ajax: {
-		       'url':'http://localhost/hotel_prj/test_data/room_data.json', 
-		       'type': 'GET',
+		       'url':'roomResList.do', 
+		       'type': 'POST',
 		       'dataSrc':''
 		    },
 		    
 		    // 컬럼 설정
 			columns: [
 				{"data": "num", "width": "35px"},
-				{"data": "res_num", "width": "150px"},
-				{"data": "room_res_status", "width": "130px"},
+				{"data": "payNum", "width": "150px"},
+				{"data": "roomResStatus", "width": "130px"},
 				{"data": "room", "width": "300px"}, 
-				{"data": "check_in", "width": "120px"},
-				{"data": "check_out", "width": "120px"},
-				{"data": "room_res_date", "width": "120px"},
-				{"data": "eng_name", "width": "150px"},
-				{"data": "guest_phone", "width": "150px"}
+				{"data": "checkInStr", "width": "120px"},
+				{"data": "checkOutStr", "width": "120px"},
+				{"data": "roomResDateStr", "width": "120px"},
+				{"data": "engName", "width": "150px"},
+				{"data": "guestPhone", "width": "150px"}
 			],
 			
 			// 돔 설정

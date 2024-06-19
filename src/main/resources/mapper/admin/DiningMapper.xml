@@ -58,7 +58,12 @@
 		DEPOSIT = #{dVO.deposit, jdbcType=INTEGER},
 		DINING_IMG = #{dVO.diningImg, jdbcType=VARCHAR},
 		DINING_COMMENT = #{dVO.diningComment, jdbcType=VARCHAR},
-		MENU = #{dVO.menu, jdbcType=VARCHAR}
+		MENU = #{dVO.menu, jdbcType=VARCHAR},
 		WHERE DINING_ID = #{diningId, jdbcType=VARCHAR}
 	</update>
+	
+	<delete id="deleteDining" parameterType="String">
+		DELETE FROM DINING
+		WHERE DINING_ID = #{diningId}
+	</delete>
 </mapper>

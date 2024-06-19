@@ -22,6 +22,7 @@
 		<typeAlias type="kr.co.sist.elysian.admin.dining.model.vo.DiningVO" alias="dVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.board.event.model.domain.EventListDomain" alias="eld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.board.event.model.domain.EventDomain" alias="ed"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.event.model.vo.EventVO" alias="eVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.board.qna.model.domain.QnaListDomain" alias="qld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.board.qna.model.domain.QnaDomain" alias="qd"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.board.qna.model.vo.QnaVO" alias="qVO"/> 

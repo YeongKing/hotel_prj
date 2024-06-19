@@ -5,17 +5,64 @@
 
 <mapper namespace="kr.co.sist.elysian.admin.board.event">
 
-
-	 <select id="eventList" resultType="eld">
-		select EVENT_NUM eventNum, EVENT_TITLE eventTitle, to_char(EVENT_INPUTDATE,'yyyy-MM-dd') eventInputdate
+	<!-- 이벤트 목록 조회 쿼리 -->
+	<select id="eventList" resultType="eld">
+		select EVENT_NUM eventNum,
+		EVENT_TITLE eventTitle, to_char(EVENT_INPUTDATE,'yyyy-MM-dd')
+		eventInputdate
 		from EVENT
-	 </select>
+	</select>
 
-	 <select id="eventDetail" resultType="ed" parameterType="String">
-		select EVENT_NUM eventNum, ADMIN_ID adminId, EVENT_TITLE eventTitle, to_char(EVENT_STARTDATE,'yyyy-MM-dd') eventStartDate, to_char(EVENT_ENDDATE,'yyyy-MM-dd') eventEndDate, EVENT_MAIN_IMG eventMainImg, EVENT_SUB_IMG eventSubImg, EVENT_CONTENT eventContent, EVENT_INPUTDATE eventInputdate
+	<!-- 이벤트 상세 조회 쿼리 -->
+	<select id="eventDetail" resultType="ed" parameterType="String">
+		select
+		EVENT_NUM eventNum, ADMIN_ID adminId, EVENT_TITLE eventTitle,
+		to_char(EVENT_STARTDATE,'yyyy-MM-dd') eventStartDate,
+		to_char(EVENT_ENDDATE,'yyyy-MM-dd') eventEndDate, EVENT_MAIN_IMG
+		eventMainImg, EVENT_SUB_IMG eventSubImg, EVENT_CONTENT eventContent,
+		EVENT_INPUTDATE eventInputdate
 		from EVENT
 		where EVENT_NUM =#{eventNum}
-	 </select>
+	</select>
 
+	<!-- 최근 이벤트 번호 조회 쿼리 -->
+	<select id="lastEventNum" resultType="String">
+		SELECT EVENT_NUM
+		fROM EVENT
+		WHERE ROWNUM = 1
+		ORDER BY EVENT_NUM DESC
+	</select>
+
+	<insert id="addEvent" parameterType="eVO">
+		INSERT INTO EVENT
+		VALUES(
+		#{eventNum, jdbcType=VARCHAR},
+		#{adminId, jdbcType=VARCHAR},
+		#{eventTitle, jdbcType=VARCHAR},
+		#{eventStartDate, jdbcType=DATE},
+		#{eventEndDate, jdbcType=DATE},
+		#{eventMainImg, jdbcType=VARCHAR},
+		#{eventSubImg, jdbcType=VARCHAR},
+		#{eventContent, jdbcType=VARCHAR},
+		sysdate
+		)
+	</insert>
+
+	<update id="updateEvent" parameterType="HashMap">
+		UPDATE EVENT
+		SET
+		EVENT_TITLE = #{eVO.eventTitle, jdbcType=VARCHAR},
+		EVENT_STARTDATE = #{eVO.eventStartDate, jdbcType=DATE},
+		EVENT_ENDDATE = #{eVO.eventEndDate, jdbcType=DATE},
+		EVENT_MAIN_IMG = #{eVO.eventMainImg, jdbcType=VARCHAR},
+		EVENT_SUB_IMG = #{eVO.eventSubImg, jdbcType=VARCHAR},
+		EVENT_CONTENT = #{eVO.eventContent, jdbcType=VARCHAR}
+		WHERE EVENT_NUM = #{eventNum, jdbcType=VARCHAR}
+	</update>
+
+	<delete id="deleteEvent" parameterType="String">
+		DELETE FROM EVENT
+		WHERE EVENT_NUM = #{eventNum}
+	</delete>
 
 </mapper>

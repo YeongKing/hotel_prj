@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class NoticeVO {
 
-	private String noticeTitle, noticeContent, adminId;
-	private int noticeNum, noticeViewCount;
+	private String noticeNum,noticeTitle, noticeContent, adminId ,noticeInputdate ;
+
 }

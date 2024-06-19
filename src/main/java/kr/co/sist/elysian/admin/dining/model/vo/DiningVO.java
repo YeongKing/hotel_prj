@@ -4,14 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class DiningVO {
 
-	private int diningId , hallTable,roomTable, deposit;
-	private String diningName, diningType, openTime, closeTime, location, diningImg, diningComment, menu;
+	private  int hallTable,roomTable, deposit;
+	private  String diningId, diningName, diningType, openTime, closeTime, location, diningImg, diningComment, menu;
 	
 }

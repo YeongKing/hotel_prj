@@ -19,12 +19,15 @@
 		<typeAlias type="kr.co.sist.elysian.admin.room.model.vo.RoomVO" alias="rVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.dining.model.domain.DiningListDomain" alias="dld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.dining.model.domain.DiningDomain" alias="dd"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.dining.model.vo.DiningVO" alias="dVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.board.event.model.domain.EventListDomain" alias="eld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.board.event.model.domain.EventDomain" alias="ed"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.board.qna.model.domain.QnaListDomain" alias="qld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.board.qna.model.domain.QnaDomain" alias="qd"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.qna.model.vo.QnaVO" alias="qVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.board.notice.model.domain.NoticeListDomain" alias="nld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.board.notice.model.domain.NoticeDomain" alias="nd"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.notice.model.vo.NoticeVO" alias="nVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.login.model.vo.AdminVO" alias="av"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.login.model.domain.AdminDomain" alias="ad"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.RoomResDomain" alias="rrd"/> 

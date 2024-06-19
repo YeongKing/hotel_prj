@@ -225,7 +225,7 @@ $(document).ready(function() {
             return;
         }
 
-        var memberVO = {
+        var mVO = {
             memberId: memberId,
             name: memberName,
             engLname: memberEnLastName,
@@ -242,7 +242,7 @@ $(document).ready(function() {
             type: 'POST',
             contentType: 'application/json; charset=UTF-8',
             dataType: 'json',
-            data: JSON.stringify(memberVO),
+            data: JSON.stringify(mVO),
             error: function(xhr) {
                 console.log(xhr.status);
                 alert("문제가 발생했습니다.");

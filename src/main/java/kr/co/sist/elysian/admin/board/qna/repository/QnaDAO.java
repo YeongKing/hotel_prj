@@ -7,9 +7,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kr.co.sist.elysian.admin.board.event.model.domain.EventDomain;
 import kr.co.sist.elysian.admin.board.qna.model.domain.QnaDomain;
 import kr.co.sist.elysian.admin.board.qna.model.domain.QnaListDomain;
+import kr.co.sist.elysian.admin.board.qna.model.vo.QnaVO;
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
 
 @Repository
@@ -23,7 +23,7 @@ public class QnaDAO {
 		List<QnaListDomain> list = null;
 		
 		SqlSession ss= mbDAO.getMyBatisHandler(false);
-		list = ss.selectList("kr.co.sist.elysian.admin.board.qna.qnaList");
+		list = ss.selectList("kr.co.sist.elysian.admin.board.qna.selectQnaList");
 		mbDAO.closeHandler(ss);
 		return list;
 		
@@ -34,11 +34,43 @@ public class QnaDAO {
 		QnaDomain qd = null;
 		
 		SqlSession ss= mbDAO.getMyBatisHandler(false);
-		qd = ss.selectOne("kr.co.sist.elysian.admin.board.qna.qnaDetail",qnaNum);
+		qd = ss.selectOne("kr.co.sist.elysian.admin.board.qna.selectQnaDetail",qnaNum);
 		mbDAO.closeHandler(ss);
 		return qd;
 		
 	}//selectQnaDetail
+	
+	
+	public int updateQna(QnaVO qVO) throws PersistenceException{
+		
+		SqlSession ss= mbDAO.getMyBatisHandler(true);
+		int result = ss.update("kr.co.sist.elysian.admin.board.qna.updateQna",qVO);
+		mbDAO.closeHandler(ss);
+		return result;
+		
+	}//updateQna
+	
+	
+	public String selectQnaNum() throws PersistenceException{
+		
+		SqlSession ss= mbDAO.getMyBatisHandler(false);
+		String result = ss.selectOne("kr.co.sist.elysian.admin.board.qna.selectQnaNum");
+		mbDAO.closeHandler(ss);
+		return result;
+		
+	}//selectRoomId
+	
+	
+	public int insertQna(QnaVO qVO) throws PersistenceException{
+		
+		SqlSession ss= mbDAO.getMyBatisHandler(true);
+		int result = ss.insert("kr.co.sist.elysian.admin.board.qna.insertQna",qVO);
+		mbDAO.closeHandler(ss);
+		return result;
+		
+	}//insertQna
+	
+	
 	
 	
 }

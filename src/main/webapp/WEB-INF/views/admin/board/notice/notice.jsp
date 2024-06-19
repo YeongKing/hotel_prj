@@ -46,6 +46,11 @@
 
 <script type = "text/javascript">
 	$(function() {
+	<%
+        String adminId = (String) session.getAttribute("adminId");
+    %>
+		
+		
 		$(".sidebar-item.nm").addClass("active");
 		
 		$(document).on('click', '.sidebar-item', function() {
@@ -84,23 +89,6 @@
 	        	
 	        })//ajax
 	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-
 
 	        // 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
 	        // 모달 내의 모든 'is-invalid' 클래스 제거
@@ -114,6 +102,33 @@
 	    });
 
 	    $("#addNotice").click(function(){
+	    	
+	        $.ajax({
+	            url: 'selectNoticeNum.do',
+	            type: 'POST',
+	            contentType: 'application/json; charset=UTF-8',
+	            dataType: 'json',
+	            error: function(xhr) {
+	                console.log(xhr.status);
+	                alert("문제가 발생했습니다.");
+	            },
+	            success: function(jsonObj) {
+	                $('#addNoticeNum').val(jsonObj.noticeNum);
+	                
+	                
+	                // 현재 날짜를 yyyy-MM-dd 형식으로 설정
+	                var today = new Date();
+	                var year = today.getFullYear();
+	                var month = ('0' + (today.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 1을 더해주고, 두 자리로 맞추기
+	                var day = ('0' + today.getDate()).slice(-2); // 일자를 두 자리로 맞추기
+	                var formattedDate = year + '-' + month + '-' + day; // 형식화된 날짜 생성
+
+	                $('#addNoticeInputdate').val(formattedDate); // input 필드에 값 설정
+	                
+	            }
+	        });//ajax
+	    	
+    	
 	       	// 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
             // 모달 내의 모든 'is-invalid' 클래스 제거
             $('#addNoticeModal').find('.is-invalid').removeClass('is-invalid');
@@ -153,42 +168,110 @@
         } */
 
         function updateAction() {
-            console.log('수정 동작 수행');
-            // 서버로 수정 요청 보내기
-            // $.ajax({
-            //     url: 'update_url',
-            //     method: 'POST',
-            //     data: { id: itemId, data: newData },
-            //     success: function(response) {
-            //         console.log('수정 성공');
-            //     },
-            //     error: function(error) {
-            //         console.log('수정 실패', error);
-            //     }
-            // });
+
+        	
+	        var noticeNum = $('#updateNoticeNum').val();
+	        var noticeTitle = $('#updateNoticeTitle').val();
+	        var noticeContent = $('#updateNoticeContent').val();
+	        var adminId = "<%= adminId %>";
+
+	        
+	        // 유효성 검사
+	        if (!noticeTitle || noticeTitle.trim() === '') {
+	            alert("제목을 입력해주세요.");
+	            return;
+	        }
+
+	        if (!noticeContent || noticeContent.trim() === '') {
+	            alert("내용을 입력해주세요.");
+	            return;
+	        }
+	        
+	        
+
+	        var nVO = {
+	        		noticeNum: noticeNum,
+	        		noticeTitle: noticeTitle,
+	        		noticeContent: noticeContent,
+	                adminId: adminId
+	            };
+
+
+	        $.ajax({
+	            url: 'updateNotice.do',
+	            type: 'POST',
+	            contentType: 'application/json; charset=UTF-8',
+	            dataType: 'json',
+	            data: JSON.stringify(nVO),
+	            error: function(xhr) {
+	                console.log(xhr.status);
+	                alert("문제가 발생했습니다.");
+	            },
+	            success: function(jsonObj) {
+	                alert("공지사항이 정상적으로 수정되었습니다.");
+	                $('#updateNoticeModal').modal('hide');
+	                location.reload();
+	            }
+	        });//ajax
+	    	
+
         }
 
         function registerAction() {
-            console.log('등록 동작 수행');
-            // 서버로 등록 요청 보내기
-            // $.ajax({
-            //     url: 'register_url',
-            //     method: 'POST',
-            //     data: { data: newData },
-            //     success: function(response) {
-            //         console.log('등록 성공');
-            //     },
-            //     error: function(error) {
-            //         console.log('등록 실패', error);
-            //     }
-            // });
-        }
+	    	
+	    	var noticeNum = $('#addNoticeNum').val();
+	    	var noticeTitle = $('#addNoticeTitle').val();
+	    	var noticeContent = $('#addNoticeContent').val();
+	    	var noticeInputdate = $('#addNoticeInputdate').val();
+	    	var adminId = "<%=adminId%>";
+	    	
+
+	    	
+	        // 유효성 검사
+	        if (!noticeTitle || noticeTitle.trim() === '') {
+	            alert("제목을 입력해주세요.");
+	            return;
+	        }
+
+	        if (!noticeContent || noticeContent.trim() === '') {
+	            alert("내용을 입력해주세요.");
+	            return;
+	        }
+	    	
+
+  
+	        var nVO = {
+	        		noticeNum: noticeNum,
+	        		noticeTitle: noticeTitle,
+	        		noticeContent: noticeContent,
+	        		noticeInputdate: noticeInputdate,
+	                adminId: adminId
+	            };
+	    	
+
+	        $.ajax({
+	            url: 'insertNotice.do',
+	            type: 'POST',
+	            contentType: 'application/json; charset=UTF-8',
+	            dataType: 'json',
+	            data: JSON.stringify(nVO),
+	            error: function(xhr) {
+	                console.log(xhr.status);
+	                alert("문제가 발생했습니다.");
+	            },
+	            success: function(jsonObj) {
+	                alert("공지사항이 정상적으로 등록 되었습니다.");
+	                $('#addNoticeModal').modal('hide');
+	                location.reload();
+	            }
+	        });//ajax
+	    	
+        }//registerAction
 
         // 등록 버튼 클릭 시
         $('#chkAddBtn').on('click', function() {
             showModal('등록 확인', '등록하시겠습니까?', '예', function() {
                 registerAction();
-                alert('등록 동작 수행');
             });
         });
 
@@ -243,15 +326,6 @@
 	}
 	</script>
 
-	<script>
-	document.getElementById('noticeDetailForm').onsubmit = function() {
-	    
-		if(confirm('공지사항을 정말로 저장하시겠습니까?')){
-		}
-
-	};
-	
-</script>
 
 </head>
 
@@ -338,11 +412,11 @@
 								<div class="row">
 									<div class="col-md-3 col-12">
 										<div class="form-group">
-											<label for="inputNoticeNum" style="flex: 1">번호</label> 
+											<label for="addNoticeNum" style="flex: 1">번호</label> 
 											<input type="text"
-												id="inputNoticeNum" 
+												id="addNoticeNum" 
 												class="form-control"
-												name="inputNoticeNum" 
+												name="addNoticeNum" 
 												placeholder="번호" 
 												style="flex: 2 " 
 												Disabled>
@@ -355,13 +429,13 @@
 									
 									<div class="col-md-3 col-12">
 										<div class="form-group">
-											<label for="inputNoticeInputdate" style="flex: 1">작성일</label> 
+											<label for="addNoticeInputdate" style="flex: 1">작성일</label> 
 												<input
 						                        type="text"
-						                        id="inputNoticeInputdate"
+						                        id="addNoticeInputdate"
 						                        class="form-control"
 						                        placeholder="작성일"
-						                        name="inputNoticeInputdate"
+						                        name="addNoticeInputdate"
 						                        style="flex: 2 "
 						                        Disabled
 						                     />
@@ -371,13 +445,13 @@
 									</div>
 									<div class="col-md-12 col-12">
 										<div class="form-group">
-											<label for="inputNoticeTitle" style="flex: 1 ">제목</label> 
+											<label for="addNoticeTitle" style="flex: 1 ">제목</label> 
 											<input
 						                        type="text"
-						                        id="inputNoticeTitle"
+						                        id="addNoticeTitle"
 						                        class="form-control"
 						                        placeholder="제목"
-						                        name="inputNoticeTitle"
+						                        name="addNoticeTitle"
 						                        style="flex: 13 "
 						                        data-parsley-required="true"
 						                        data-parsley-error-message="제목은 필수 입력입니다."
@@ -388,29 +462,33 @@
 									
 									<div class="col-md-12 col-12">
 										<div class="form-group">
-											<label for="inputNoticeContent" style="flex: 1 ">내용</label> 
+											<label for="addNoticeContent" style="flex: 1 ">내용</label> 
 											<textarea
-						                        id="inputNoticeContent"
+						                        id="addNoticeContent"
 						                        class="form-control"
 						                        placeholder="내용"
 						                        rows="15"
-						                        name="inputNoticeContent"
+						                        name="addNoticeContent"
 						                        style="flex: 13 "
 						                        data-parsley-required="true"
 						                        data-parsley-error-message="내용은 필수 입력입니다."
 						                     ></textarea>
 										</div>
 									</div>
-									<div style="height: 30px;"></div>
+									<div style="height: 15px;"></div>
 									<div class="col-12 d-flex justify-content-center">
-										     <div class="buttons">
-                                        <button type="button" id="chkAddBtn" class="btn icon icon-left btn-success">
+                                        <button type="button" id="chkAddBtn" class="btn icon icon-left btn-success me-1 mb-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
                                                 <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
                                                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
                                             </svg> 등록
                                         </button>
-                                    </div>
+                                        <button type="button" id="closeBtn" class="btn btn-light-secondary icon icon-left me-1 mb-1" data-bs-dismiss="modal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+                                                <path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg> 닫기
+                                        </button>
 									</div>
 									<div style="height: 30px;"></div>
 								</div>

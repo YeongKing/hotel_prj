@@ -24,7 +24,6 @@ public class DiningController {
 	
 	//화면접속시 랜덤한 다이닝 정보 가져오기 다이닝
 	@GetMapping("/dining.do")
-	@ResponseBody
 	public String searchAllDiningList(Model model) {
 		
 		ObjectMapper mapper = new ObjectMapper();

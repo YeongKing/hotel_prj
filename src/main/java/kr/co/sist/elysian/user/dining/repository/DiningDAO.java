@@ -19,7 +19,7 @@ public class DiningDAO {
 		DiningDomain dDomain = null;
 		
 		SqlSession ss= mbDAO.getMyBatisHandler(false);
-		dDomain = ss.selectOne("kr.co.sist.elysian.user.dining.randomDiningDetail");
+		dDomain = ss.selectOne("kr.co.sist.elysian.member.dining.randomDiningDetail");
 		mbDAO.closeHandler(ss);
 		return dDomain;
 	}

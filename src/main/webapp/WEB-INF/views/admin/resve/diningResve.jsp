@@ -144,7 +144,7 @@
 		
 		// 현재 페이지 DataTable 인스턴스 생성
 		var table = $('#table1').DataTable({
-			processing : true,
+			processing: true,
 			serverSide: false,
 			ajax: {
 		       'url':'diningResList.do', 
@@ -286,7 +286,7 @@
 		} // createDateRangeFilter
 	    
 		// 테이블의 예약번호 클릭시
-		$(document).on('click', '.resNum', function() {
+		$(document).on('click', '.payNum', function() {
 			// 모달 내의 모든 'is-invalid' 클래스 제거
 			$('#diningResDetail').find('.is-invalid').removeClass('is-invalid');
 	         

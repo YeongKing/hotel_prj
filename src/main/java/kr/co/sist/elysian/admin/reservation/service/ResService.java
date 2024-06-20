@@ -1,17 +1,19 @@
 package kr.co.sist.elysian.admin.reservation.service;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain;
+import kr.co.sist.elysian.admin.reservation.model.domain.RoomInfoDomain;
 import kr.co.sist.elysian.admin.reservation.model.domain.RoomResDomain;
 import kr.co.sist.elysian.admin.reservation.model.vo.DiningResVO;
-import kr.co.sist.elysian.admin.reservation.model.vo.RoomResVO;
 import kr.co.sist.elysian.admin.reservation.repository.ResDAO;
 
 @Service
@@ -25,9 +27,9 @@ public class ResService {
 	 * @return roomResResponseList
 	 */
 	public List<RoomResDomain> searchRoomResList() {
-		List<RoomResDomain> roomResList = resDAO.selectRoomResList();
 		List<RoomResDomain> roomResResponseList = new ArrayList<RoomResDomain>();
 		try {
+			List<RoomResDomain> roomResList = resDAO.selectRoomResList();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 			
 			for(RoomResDomain roomResDomain : roomResList) {
@@ -59,18 +61,133 @@ public class ResService {
 		return roomResResponseList;
 	} // searchRoomResList
 
-	public RoomResDomain detailRoomRes(String roomResNum) {
-		return null;
+	/**
+	 * DAO에서 가져온 RoomResDomain을 예약번호별 view에 맞게 변환
+	 * @param payNum
+	 * @return roomResResponseDomain
+	 */
+	public RoomResDomain detailRoomRes(String payNum) {
+		RoomResDomain roomResResponseDomain = null;
+		try {
+			RoomResDomain roomResDomain = resDAO.selectOneRoomRes(payNum);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+			DecimalFormat df = new DecimalFormat("###,###,###");
+			
+			roomResResponseDomain = RoomResDomain.builder()
+							.payNum(roomResDomain.getPayNum())
+							.roomId(roomResDomain.getRoomId())
+							.room(roomResDomain.getRoom())
+							.roomResStatus(roomResDomain.getRoomResStatus())
+							.adultsNumStr(roomResDomain.getAdultsNum() + "명")
+							.kidsNumStr(roomResDomain.getKidsNum() + "명")
+							.checkInStr(sdf.format(roomResDomain.getCheckIn()))
+							.checkOutStr(sdf.format(roomResDomain.getCheckOut()))
+							.engName(roomResDomain.getEngName())
+							.guestPhone(roomResDomain.getGuestPhone())
+							.guestEmail(roomResDomain.getGuestEmail())
+							.guestRequest(roomResDomain.getGuestRequest())
+							.cardName(roomResDomain.getCardName())
+							.cardNum(roomResDomain.getCardNum())
+							.payPriceStr(df.format(roomResDomain.getPayPrice()) + "원")
+							.payTimeStr(sdf.format(roomResDomain.getPayTime()))
+							.build();
+		} catch(PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		return roomResResponseDomain;
 	} // detailRoomRes
+	
+	/**
+	 * DAO에서 가져온 roomInfoList 반환
+	 * @param paramMap(체크인일자, 체크아웃일자)
+	 * @return roomInfoList
+	 */
+	public List<RoomInfoDomain> searchRoomInfoList(Map<String, String> paramMap) {
+		List<RoomInfoDomain> roomInfoList = null;
+		try {
+			roomInfoList = resDAO.selectRoomInfoList(paramMap);
+			
+		} catch(PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		return roomInfoList;
+	} // searchRoomInfo
+	
+	/**
+	 * DAO에서 checkin 처리 후 결과 반환(결과가 1일 때만 true)
+	 * @param paramMap(예약 번호, 세션 아이디)
+	 * @return updateFlag(처리 여부)
+	 */
+	public boolean modifyRoomResToCheckin(Map<String, String> paramMap) {
+		boolean updateFlag = false;
+		try {
+			int result = resDAO.updateRoomResToCheckin(paramMap);
+			if(result == 1) {
+				updateFlag = true;
+			} // end if
+		} catch(PersistenceException pe) {
+			pe.printStackTrace();
+			updateFlag = false;
+		} // end catch
+		return updateFlag;
+	} // modifyRoomResToCheckin
+	
+	/**
+	 * DAO에서 checkout 처리 후 결과 반환(결과가 1일 때만 true)
+	 * @param paramMap(예약 번호, 세션 아이디)
+	 * @return updateFlag(처리 여부)
+	 */
+	public boolean modifyRoomResToCheckout(Map<String, String> paramMap) {
+		boolean updateFlag = false;
+		try {
+			int result = resDAO.updateRoomResToCheckout(paramMap);
+			if(result == 1) {
+				updateFlag = true;
+			} // end if
+		} catch(PersistenceException pe) {
+			pe.printStackTrace();
+			updateFlag = false;
+		} // end catch
+		return updateFlag;
+	} // modifyRoomResToCheckout
+	
+	/**
+	 * DAO에서 예약 취소 처리 후 결과 반환(결과가 1일 때만 true)
+	 * @param paramMap(예약 번호, 세션 아이디)
+	 * @return updateFlag(처리 여부)
+	 */
+	public boolean modifyRoomResToCancel(Map<String, String> paramMap) {
+		boolean updateFlag = false;
+		try {
+			int result = resDAO.updateRoomResToCancel(paramMap);
+			if(result == 1) {
+				updateFlag = true;
+			} // end if
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+			updateFlag = false;
+		} // end catch
+		return updateFlag;
+	} // modifyRoomResToCancel
 
-	public int modifyRoomRes(RoomResVO roomResVO) {
-		return 0;
+	/**
+	 * DAO에서 예약 수정 처리 후 결과 반환(결과가 1일 때만 true)
+	 * @param roomResVO(예약 정보 VO)
+	 * @return updateFlag(처리 여부)
+	 */
+	public boolean modifyRoomRes(Map<String, Object> paramMap) {
+		boolean updateFlag = false;
+		try {
+			int result = resDAO.updateRoomRes(paramMap);
+			if(result == 1) {
+				updateFlag = true;
+			} // end if
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+			updateFlag = false;
+		} // end catch
+		return updateFlag;
 	} // modifyRoomRes
-
-	public int removeRoomRes(String roomResNum) {
-		return 0;
-	} // removeRoomRes
-
 	
 	/**
 	 * DAO에서 가져온 DiningResDomain을 view List column에 맞게 변환
@@ -112,7 +229,7 @@ public class ResService {
 		return diningResResponseList;
 	} // searchDiningResList
 
-	public DiningResDomain detailDiningRes(String diningResNum) {
+	public DiningResDomain detailDiningRes(String payNum) {
 		return null;
 	} // detailDiningRes
 
@@ -120,7 +237,7 @@ public class ResService {
 		return 0;
 	} // modifyDiningRes
 
-	public int removeDiningRes(String diningResNum) {
+	public int removeDiningRes(String payNum) {
 		return 0;
 	} // removeDiningRes
 	

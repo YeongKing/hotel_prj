@@ -31,12 +31,12 @@ import kr.co.sist.elysian.admin.dining.service.DiningService;
 public class DiningController {
 	
 	@Autowired(required = false)
-	private DiningService ds;
+	private DiningService adminDiningService;
 	
 	//다이닝 리스트 가져오는 메서드
 	@GetMapping("/dining.do")
 	public String searchDiningList(Model model) {
-		List<DiningListDomain> list = ds.searchDiningList();
+		List<DiningListDomain> list = adminDiningService.searchDiningList();
 		model.addAttribute("diningList",list);
 
 		
@@ -50,7 +50,7 @@ public class DiningController {
 	@PostMapping(value="/diningDetail.do", produces="application/json; charset=UTF-8")
 	public DiningDomain selectDiningDetail(@RequestBody Map<String, Object> requestData, Model model) {
 		 String diningId = (String) requestData.get("diningId");
-	     DiningDomain dd = ds.searchDiningDetail(diningId);
+	     DiningDomain dd = adminDiningService.searchDiningDetail(diningId);
 	     
 		return dd;
 	}//selectDiningDetail
@@ -60,7 +60,7 @@ public class DiningController {
 	@ResponseBody
 	@GetMapping("/addDiningModal.do")
 	public String selectLastDiningId() {
-		String nextDiningId = ds.searchLastDiningId();
+		String nextDiningId = adminDiningService.searchLastDiningId();
 		return nextDiningId;
 	}//addDining
 	
@@ -97,7 +97,7 @@ public class DiningController {
 		    if(tempFile.length() > maxSize) { //업로드 제한
 				tempFile.delete();
 			}
-		boolean isInserted = ds.registerDining(dVO);
+		boolean isInserted = adminDiningService.registerDining(dVO);
 	
 		return isInserted;
 	}//addDining
@@ -144,7 +144,7 @@ public class DiningController {
 			HashMap< String, Object> param = new HashMap<String, Object>();
 			param.put("diningId", mr.getParameter("diningId"));
 			param.put("dVO", dVO);
-			boolean isUpdated = ds.modifyDining(param);
+			boolean isUpdated = adminDiningService.modifyDining(param);
 			
 		return isUpdated;
 	}//updateDining
@@ -153,7 +153,7 @@ public class DiningController {
 	@ResponseBody
 	@GetMapping("deleteDining.do")
 	public boolean deleteDining(@RequestParam("diningId") String diningId, Model model) {
-		boolean isDeleted = ds.removeDining(diningId);
+		boolean isDeleted = adminDiningService.removeDining(diningId);
 		return isDeleted;
 	}//deleteDining
 	

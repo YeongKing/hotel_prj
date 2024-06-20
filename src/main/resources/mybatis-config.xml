@@ -37,6 +37,11 @@
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.RoomResVO" alias="roomResVO"/> 
 	</typeAliases>
   
+  	<typeAliases>
+  		<typeAlias type="kr.co.sist.elysian.user.dining.model.domain.DiningDomain" alias="dDomain"/> 
+  		
+  	</typeAliases>
+  
   <!-- 환경 설정 -->
   <environments default="development">
     <environment id="development">

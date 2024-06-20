@@ -234,10 +234,7 @@
 						<div class="modal-header">
 							<h5 class="modal-title">이벤트 상세 조회</h5>
 							<div class="d-flex justify-content-end">
-								<button type="button" id="chkDeleteBtn" class="btn btn-danger">
-									<i class="bx bx-x d-block d-sm-none"></i> <span
-										class="d-none d-sm-block">이벤트 삭제</span>
-								</button>
+
 							</div>
 						</div>
 						<form id="eventDetailFormUpdate" action="#" class="form px-5"
@@ -496,26 +493,7 @@ $(document).ready(function() {
             }//ajax  
             
             
-	   //이벤트 삭제 ajax
-       function deleteAction() {
-				var eventNum = $("#updateEventNum").val();
-            	$.ajax({
-            	url: 'deleteEvent.do',
-            	method: 'GET',
-            	data: {eventNum : eventNum },
-            	success: function(response){
-            		if(response){
-            			alert('삭제을 성공적으로 마쳤습니다');  
-    					 window.location.reload();
-            		}else{
-            			alert('삭제에 실패했습니다');  
-            		}
-            	},
-            	error: function(error){
-                       alert('문제가 발생했습니다', error);
-            	}
-            })
-          }//ajax
+	  
 
     
 	
@@ -527,14 +505,7 @@ $(document).ready(function() {
         });
     });
 
-    // 삭제 버튼 클릭 시
-    $('#chkDeleteBtn').on('click', function() {
-        showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
-            deleteAction();
-            alert('삭제 동작 수행');
-        });
-    });
-
+  
     // 수정 버튼 클릭 시
     $('#chkUpdateBtn').on('click', function() {
         showModal('수정 확인', '수정하시겠습니까?', '예', function() {

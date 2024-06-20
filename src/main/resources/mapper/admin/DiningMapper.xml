@@ -9,6 +9,7 @@
 	 <select id="diningList" resultType="dld">
 		select DINING_ID diningId, DINING_TYPE diningType, DINING_NAME diningName
 		from DINING
+		where DELETE_STATUS ='N'
 	 </select>
 	 
 	 <!-- 다이닝 상세 조회 쿼리 -->
@@ -62,8 +63,10 @@
 		WHERE DINING_ID = #{diningId, jdbcType=VARCHAR}
 	</update>
 	
-	<delete id="deleteDining" parameterType="String">
-		DELETE FROM DINING
-		WHERE DINING_ID = #{diningId}
-	</delete>
+	<update id="deleteDining" parameterType="String">
+		UPDATE DINING
+ 		SET
+		DELETE_STATUS = 'Y'
+ 		WHERE DINING_ID = #{diningId}
+	</update>
 </mapper>

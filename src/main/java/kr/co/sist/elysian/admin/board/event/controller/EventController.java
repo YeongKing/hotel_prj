@@ -157,13 +157,7 @@ public class EventController {
 		return isUpdated;
 	}//updateEvent
 	
-	//이벤트 삭제 메서드
-	@ResponseBody
-	@GetMapping("deleteEvent.do")
-	public boolean deleteEvent(@RequestParam("eventNum")String eventNum ,Model model) {
-		boolean isDeleted = es.removeEvent(eventNum);
-		return isDeleted;
-	}//deleteEvent
+
 	
 	
 	

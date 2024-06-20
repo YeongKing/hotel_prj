@@ -12,18 +12,18 @@ import kr.co.sist.elysian.admin.dining.model.domain.DiningListDomain;
 import kr.co.sist.elysian.admin.dining.model.vo.DiningVO;
 import kr.co.sist.elysian.admin.dining.repository.DiningDAO;
 
-@Service
+@Service("adminDiningService")
 public class DiningService{
 	
 	
 	@Autowired(required = false)
-	private DiningDAO dDAO;
+	private DiningDAO adminDiningDAO;
 
 	//다이닝 상세조회
 	public DiningDomain searchDiningDetail(String diningId) {
 		DiningDomain dd = null;
 		try {
-			dd =dDAO.selectDiningDetail(diningId);
+			dd =adminDiningDAO.selectDiningDetail(diningId);
 		}catch(PersistenceException pe){
 			pe.printStackTrace();
 			
@@ -35,7 +35,7 @@ public class DiningService{
 	public List<DiningListDomain> searchDiningList() {
 		List<DiningListDomain> list = null;
 		try {
-			list =dDAO.selectDiningList();
+			list =adminDiningDAO.selectDiningList();
 		}catch(PersistenceException pe){
 			pe.printStackTrace();
 			
@@ -47,7 +47,7 @@ public class DiningService{
 	public String searchLastDiningId() {
 		String nextDiningId = "";
 		try {
-			String lastDiningId = dDAO.selectLastDiningId();
+			String lastDiningId = adminDiningDAO.selectLastDiningId();
 			//숫자 추출 과정
 			String prefix = "DINING";
 			String numberStr = lastDiningId.substring(prefix.length());
@@ -67,7 +67,7 @@ public class DiningService{
 	//다이닝 등록 메서드
 	public boolean registerDining(DiningVO dVO) {
 		try {
-			dDAO.insertDining(dVO);
+			adminDiningDAO.insertDining(dVO);
 			return true;
 		}catch(PersistenceException pe) {
 			pe.printStackTrace();
@@ -78,7 +78,7 @@ public class DiningService{
 	//다이닝 수정 메서드
 	public boolean modifyDining(HashMap<String, Object>param) {
 		try {
-			dDAO.updateDining(param);
+			adminDiningDAO.updateDining(param);
 			return true;
 		}catch(PersistenceException pe) {
 			pe.printStackTrace();
@@ -89,7 +89,7 @@ public class DiningService{
 	//다이닝 삭제 메서드
 	public boolean removeDining(String diningId) {
 		try {
-			dDAO.deleteDining(diningId);
+			adminDiningDAO.deleteDining(diningId);
 			return true;
 		}catch(PersistenceException pe) {
 			pe.printStackTrace();

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.support.SessionStatus;
 
 import kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain;
 import kr.co.sist.elysian.admin.reservation.model.domain.RoomInfoDomain;
@@ -80,7 +79,26 @@ public class ResController {
 		
 		List<RoomInfoDomain> roomInfoList = resService.searchRoomInfoList(paramMap);
 		return roomInfoList;
-	} // searchRoomInfo
+	} // searchRoomInfoList
+	
+	/**
+	 * 예약 정보 수정
+	 * @param roomResVO 예약정보
+	 * @param session 로그인 아이디 체크를 위한 세션
+	 * @return result 수정 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/modifyRoomRes.do", produces="application/json; charset=UTF-8")
+	public boolean modifyRoomRes(@RequestBody RoomResVO roomResVO, HttpSession session) {
+		String adminId = (String)session.getAttribute("adminId");
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("roomResVO", roomResVO);
+		paramMap.put("adminId", adminId);
+		
+		boolean result = resService.modifyRoomRes(paramMap);
+		return result;
+	}//modifyRoomRes
 	
 	/**
 	 * 예약 상세조회 모달 창 내 체크인 처리
@@ -129,7 +147,7 @@ public class ResController {
 	 * @return result 체크아웃 결과
 	 */
 	@ResponseBody
-	@PostMapping(value="/cancelRes.do", produces="application/json; charset=UTF-8")
+	@PostMapping(value="/cancelRoomRes.do", produces="application/json; charset=UTF-8")
 	public boolean modifyRoomResToCancel(@RequestBody Map<String, Object> requestData, HttpSession session) {
 		String payNum = (String)requestData.get("payNum");
 		String adminId = (String)session.getAttribute("adminId");
@@ -141,25 +159,6 @@ public class ResController {
 		boolean result = resService.modifyRoomResToCancel(paramMap);
 		return result;
 	} // modifyRoomResToCancel
-	
-	/**
-	 * 예약 정보 수정
-	 * @param roomResVO 예약정보
-	 * @param session 로그인 아이디 체크를 위한 세션
-	 * @return result 수정 결과
-	 */
-	@ResponseBody
-	@PostMapping(value="/modifyRoomRes.do", produces="application/json; charset=UTF-8")
-	public boolean modifyRoomRes(@RequestBody RoomResVO roomResVO, HttpSession session) {
-		String adminId = (String)session.getAttribute("adminId");
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		
-		paramMap.put("roomResVO", roomResVO);
-		paramMap.put("adminId", adminId);
-		
-		boolean result = resService.modifyRoomRes(paramMap);
-		return result;
-	}//modifyRoomRes
 	
 	/**
 	 * 다이닝 예약 관리 페이지 매핑
@@ -181,21 +180,80 @@ public class ResController {
 		return data;
 	}//searchRoomResList
 	
-	public String detailDiningRes(String diningId , Model model) {
-		return "";
-	}//detailDiningRes
+	/**
+	 * 예약 번호 클릭 시 해당 예약에 대한 정보 조회
+	 * @param requestData 예약 번호
+	 * @return diningResDomain 예약 정보
+	 */ 
+	@ResponseBody
+	@PostMapping(value="/diningResDetail.do", produces="application/json; charset=UTF-8")
+	public DiningResDomain detailDiningRes(@RequestBody Map<String, Object> requestData) {
+		String payNum = (String)requestData.get("payNum");
+		DiningResDomain diningResDomain = resService.detailDiningRes(payNum);
+		return diningResDomain;
+	}//detailRoomRes
 	
 	public String modifyDiningRes(DiningResVO drVO, Model model) {
 		return "";
+	}//detailDiningRes
+	
+	/**
+	 * 예약 정보 수정
+	 * @param diningResVO 예약정보
+	 * @param session 로그인 아이디 체크를 위한 세션
+	 * @return result 수정 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/modifyDiningRes.do", produces="application/json; charset=UTF-8")
+	public boolean modifyDiningRes(@RequestBody DiningResVO diningResVO, HttpSession session) {
+		String adminId = (String)session.getAttribute("adminId");
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		paramMap.put("diningResVO", diningResVO);
+		paramMap.put("adminId", adminId);
+		
+		boolean result = resService.modifyDiningRes(paramMap);
+		return result;
 	}//modifyDiningRes
 	
-	public String removeDiningRes(String diningId , Model model) {
-		return "";
-	}//removeDiningRes
+	/**
+	 * 예약 상세조회 모달 창 내 이용완료 처리
+	 * @param requestData 예약 번호
+	 * @param session 로그인 아이디 체크를 위한 세션
+	 * @return result 이용완료 처리 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/completeDiningRes.do", produces="application/json; charset=UTF-8")
+	public boolean modifyDiningResToComplete(@RequestBody Map<String, Object> requestData, HttpSession session) {
+		String payNum = (String)requestData.get("payNum");
+		String adminId = (String)session.getAttribute("adminId");
+		Map<String, String> paramMap = new HashMap<String, String>();
+		
+		paramMap.put("payNum", payNum);
+		paramMap.put("adminId", adminId);
+		
+		boolean result = resService.modifyDiningResToComplete(paramMap);
+		return result;
+	} // modifyDiningResToComplete
 	
-	
-	public String logout(SessionStatus ss) {
-		return "";
-	}//logout
+	/**
+	 * 예약 상세조회 모달 창 내 예약 취소 처리
+	 * @param requestData 예약 번호
+	 * @param session 로그인 아이디 체크를 위한 세션
+	 * @return result 취소 처리 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/cancelDiningRes.do", produces="application/json; charset=UTF-8")
+	public boolean modifyDiningResToCancel(@RequestBody Map<String, Object> requestData, HttpSession session) {
+		String payNum = (String)requestData.get("payNum");
+		String adminId = (String)session.getAttribute("adminId");
+		Map<String, String> paramMap = new HashMap<String, String>();
+		
+		paramMap.put("payNum", payNum);
+		paramMap.put("adminId", adminId);
+		
+		boolean result = resService.modifyDiningResToCancel(paramMap);
+		return result;
+	} // modifyDiningResToCancel
 	
 } // class

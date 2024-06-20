@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DiningResDomain {
 
-	private int num, visitPeople, cardNum, payPrice ;
-	private String payNum, diningResStatus, diningName, visitorName, visitorPhone, visitorEmail, visitorRequest, cardCode ;
+	private int num, visitPeople, payPrice ;
+	private String payNum, diningResStatus, diningName, visitorName, visitorPhone, visitorEmail, visitorRequest, cardName, cardNum ;
 	private Date visitDateTime, diningResDate;
 	
-	private String visitDate, visitTime, visitPeopleStr, diningResDateStr;
+	private String visitDate, visitTime, visitPeopleStr, adultsCntStr, childCntStr, babyCntStr, payPriceStr, diningResDateStr;
 	
 } // class

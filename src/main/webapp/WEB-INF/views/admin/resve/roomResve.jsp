@@ -381,7 +381,7 @@
 							$("#roomInfo").val(roomId);
 						}
 					}); // ajax
-				}
+				} // success
 			}); // ajax
 		} // loadData
 		
@@ -426,7 +426,7 @@
 	        	var roomResStatus = $("#roomResStatus").val();
 	        	
 	        	if(roomResStatus !== 'RESERVED') {
-	    			alert("예약 수정은 예약(RESERVED) 상태에서만 가능합니다.");
+	    			alert("예약 수정은 예약완료(RESERVED) 상태에서만 가능합니다.");
 	    			return;
 	    		} // end if
 	        	
@@ -438,15 +438,16 @@
 	    $("#chkCheckinBtn").on('click', function() {
 	    	showModal('체크인 확인', '체크인 처리하시겠습니까?', '예', function() {
 	    		var roomResStatus = $("#roomResStatus").val();
-	    		var checkIn = new Date($("#checkIn").val());
-	    		var today = new Date();
+	    		var checkIn = $("#checkIn").val();
+				var today = new Date();
+				var todayDateOnly = today.getFullYear() + '.' + String(today.getMonth()+1).padStart(2, '0') + '.' + String(today.getDate()).padStart(2, '0');
 	    		
 	    		if(roomResStatus !== 'RESERVED') {
-	    			alert("체크인 처리는 예약(RESERVED) 상태에서만 가능합니다.");
+	    			alert("체크인 처리는 예약완료(RESERVED) 상태에서만 가능합니다.");
 	    			return;
 	    		} // end if
 	    		
-	    		if(checkIn !== today) {
+	    		if(checkIn !== todayDateOnly) {
 	    			alert("체크인 가능한 날짜가 아닙니다.");
 	    			return;
 	    		} // end if
@@ -461,7 +462,7 @@
 	        	var roomResStatus = $("#roomResStatus").val();
 	        	
 	        	if(roomResStatus !== 'CHECK IN') {
-	        		alert("체크아웃 처리는 체크인 상태에서만 가능합니다.");
+	        		alert("체크아웃 처리는 체크인(CHECK IN) 상태에서만 가능합니다.");
 	        		return;
 	        	} // end if
 	        	
@@ -475,7 +476,7 @@
 				var roomResStatus = $("#roomResStatus").val();
 	    		
 	    		if(roomResStatus !== 'RESERVED') {
-	    			alert("예약 취소는 예약(RESERVED) 상태에서만 가능합니다.");
+	    			alert("예약 취소는 예약완료(RESERVED) 상태에서만 가능합니다.");
 	    			return;
 	    		} // end if
 	        	
@@ -489,37 +490,58 @@
 	 	});
 
 	 	// 예약 정보 수정 처리 함수
-	    function updateAction() {
-	 		// 모달 내 체크되어 있는 상세 정보 가공
-	 		var payNum = $("#payNum").val();
-	    	var roomId = $("#roomInfo").val();
-	    	var guestPhone = $("#guestPhone").val();
-	    	var guestEmail = $("#guestEmail").val();
-	    	var guestRequest = $("#guestRequest").val();
+		function updateAction() {
+			var payNum = $("#payNum").val();
+	 		
+			// 수정 가능한 데이터
+			var roomId = $("#roomInfo").val();
+			var guestPhone = $("#guestPhone").val();
+			var guestEmail = $("#guestEmail").val();
+			var guestRequest = $("#guestRequest").val();
 	    	
-	    	if(guestPhone === '') {
-	    		alert("예약자의 연락처를 입력해주세요.");
-	    		return;
-	    	} // end if
+			if(guestPhone === '') {
+				alert("예약자의 연락처를 입력해주세요.");
+	    		
+				setTimeout(function() {
+					$("#guestPhone").focus();
+				}, 100); // 100ms 후에 focus 설정
+	    		
+				return;
+			} // end if
 	    	
-	    	var patternPhone = /01[016789]-[^0][0-9]{2,3}-[0-9]{4}$/;
+			var patternPhone = /01[016789]-[^0][0-9]{2,3}-[0-9]{4}$/;
 	    	
-	    	if(!patternPhone.test(guestPhone)) {
-	    		alert("연락처의 형식(010-1234-5678)을 확인해주세요.");
-	    		return;
-	    	} // end if
+			if(!patternPhone.test(guestPhone)) {
+				alert("연락처의 형식(010-1234-5678)을 확인해주세요.");
+	    		
+				setTimeout(function() {
+					$("#guestPhone").focus();
+				}, 100); // 100ms 후에 focus 설정
+	    		
+				return;
+			} // end if
 	    	
-	    	if(guestEmail === '') {
-	    		alert("예약자의 이메일을 입력해주세요.");
-	    		return;
-	    	} // end if
+			if(guestEmail === '') {
+				alert("예약자의 이메일을 입력해주세요.");
+	    		
+				setTimeout(function() {
+					$("#guestEmail").focus();
+				}, 100); // 100ms 후에 focus 설정
+	    		
+				return;
+			} // end if
 	    	
-	    	var patternEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+			var patternEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 	    	
-	    	if(guestEmail.length < 6 || !patternEmail.test(guestEmail)) {
-	    		alert("이메일 형식이 맞지 않습니다. 확인해주세요.");
-	    		return;
-	    	} // end if
+			if(guestEmail.length < 6 || !patternEmail.test(guestEmail)) {
+				alert("이메일 형식이 맞지 않습니다. 확인해주세요.");
+	    		
+	    		setTimeout(function() {
+					$("#guestEmail").focus();
+				}, 100); // 100ms 후에 focus 설정
+	    		
+				return;
+			} // end if
 	    	
 	    	var roomResVO = {
 	    		payNum: payNum,
@@ -541,7 +563,8 @@
 	    		},
 	    		success: function(jsonObj) {
 	    			alert("예약 정보가 정상적으로 수정되었습니다.");
-	    		}
+	    			// 예약 정보 수정은 이미 수정할 값으로 선택되거나 수정된 값이 입력되어있는 상태이므로 reload 불필요
+	    		},
 	    	}); // ajax
 	    } // updateAction
 	    
@@ -595,7 +618,7 @@
 	    function cancelAction() {
 	    	var payNum = $("#payNum").val();
 			$.ajax({
-				url: 'cancelRes.do',
+				url: 'cancelRoomRes.do',
 				type: 'POST',
 				contentType: 'application/json',
 				dataType: 'JSON',

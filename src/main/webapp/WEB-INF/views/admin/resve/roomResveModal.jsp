@@ -31,12 +31,12 @@
 			<div class="modal-body">
             <form id="roomResDetailForm" action="#" class="form px-5" data-parsley-validate>
 				<div class="form-group">
-					<label for="roomResNum">예약번호</label>
+					<label for="payNum">예약번호</label>
 					<input type="text" class="form-control" id="payNum" disabled>
 				</div>
 							
 				<div class="form-group">
-					<label for="roomId">배정객실</label>
+					<label for="roomFloorAndInfo">배정객실</label>
 					<div class="row">
 					<div class="col-12 col-lg-3">
 					<input type="text" class="form-control" id="roomFloor" disabled>
@@ -56,24 +56,24 @@
                             
 				<div class="form-group row">
  					<div class="col-12 col-lg-6">
-					<label for="adultNum">인원(성인)</label>
+					<label for="adultsNum">인원(성인)</label>
 					<input type="text" class="form-control" id="adultsNum" disabled>
 					</div>
 					
  					<div class="col-12 col-lg-6">
-					<label for="adultNum">인원(어린이)</label>
+					<label for="kidsNum">인원(어린이)</label>
 					<input type="text" class="form-control" id="kidsNum" disabled>
 					</div>
 				</div>
 				
 				<div class="form-group row">
  					<div class="col-12 col-lg-6">
-					<label for="checkin">체크인</label>
+					<label for="checkIn">체크인</label>
 					<input type="text" id="checkIn" placeholder="연.월.일" class="form-control flatpickr-basic flatpickr-input" readonly="readonly" disabled>
 					</div>
 					
  					<div class="col-12 col-lg-6">
-					<label for="checkout">체크아웃</label>
+					<label for="checkOut">체크아웃</label>
 					<input type="text" id="checkOut" placeholder="연.월.일" class="form-control flatpickr-basic flatpickr-input" readonly="readonly" disabled>
 					</div>
 				</div>

@@ -66,13 +66,6 @@ public class EventDAO {
 		mbDAO.closeHandler(ss);
 	}//updateEvent
 
-	//DB에 이벤트 DELETE
-	public void deleteEvent(String eventNum) {
-		SqlSession ss = mbDAO.getMyBatisHandler(true);
-		ss.update("kr.co.sist.elysian.admin.board.event.deleteEvent",eventNum);
-		mbDAO.closeHandler(ss);
-	}
-
 	
 	
 

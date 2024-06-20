@@ -92,18 +92,6 @@ public class EventService {
 		}
 	}//modifyEvent
 
-	//이벤트 삭제 메서드
-	public boolean removeEvent(String eventNum) {
-		try {
-			eDAO.deleteEvent(eventNum);
-			return true;
-		}catch(PersistenceException pe) {
-			pe.printStackTrace();
-			return false;
-		}
-	}//removeEvent
-	
-	
 	
 	
 }

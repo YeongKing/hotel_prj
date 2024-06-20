@@ -957,6 +957,12 @@ function closeHubPopup(){
 <!--E footer  -->
 
 </div>
+
+<script type="text/javascript">
+    <c:if test="${not empty error}">
+        alert('${error}');
+    </c:if>
+</script>
 <!-- //wrapper -->
 
 </body>

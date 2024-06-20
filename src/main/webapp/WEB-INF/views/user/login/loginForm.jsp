@@ -448,26 +448,18 @@ function getLoginCookie(cookieName) {
 
 <script type="text/javascript">
  
-	document.domain = "josunhotel.com";
+	// document.domain = "josunhotel.com"; // 로컬 환경에서는 필요 없음
 	
 	var PageScript = function() {
-
+		this.init();
 	}
 
 	PageScript.prototype = {
 		init : function() {
-			
 			this.bindSnsLinkEvent();
 		}
 		,validate:function(){
-				
 			var bResult = true;
-			
-			/*
-			사용자 입력정보 VALIDATION 체크
-			해당 열  input, select 박스가 하나라도 미기재 된 경우 validation false
-			최초 미입력 된 element로 focus 이동됨
-			*/
 			var frstIdx = "";
 			$(".membersLogin p").each(function(){
 				var $this = $(this);
@@ -489,164 +481,84 @@ function getLoginCookie(cookieName) {
 						$this.find(".alertMessage").hide();
 					}
 				});
-				
+
 			});
 			if(frstIdx != ""){
-  				bResult = false;
+				bResult = false;
 				frstIdx.focus();
 				return false;
 			}
 			return bResult;
 		}	
 		,fncLogin:function(param_loginSeCode) {
+			console.log("fncLogin 호출됨"); // 디버깅 로그
 			var frm_userid = "";
 			var frm_userpw = "";
 			var param_nextUrl = decodeURIComponent("/intro.do");
 
-			
 			// 아이디 로그인시
 			if (param_loginSeCode != "SNS") {
-				
+
 				if(PageScript.validate()){
-					
+					console.log("유효성 검사 통과"); // 디버깅 로그
+
 					frm_userid = jQuery("#frm_userid").val(); // 입력된 아이디
 					frm_userpw = jQuery("#frm_userpw").val(); // 입력된 비밀번호
-					
-					var param = {
-							loginSeCode : param_loginSeCode
-							,loginId : frm_userid
-							,loginPassword : frm_userpw
-							,fromPageType : 'LOGIN'
-							,nextURL : param_nextUrl
-						}
 
-						/****************************
-						 * post 날리기 전에 요청전과 후의 동작을 정의
-						 ****************************/
-						$.ajaxSetup({
-							beforeSend : function(xhr, settings) {
-							},
-							complete : function(xhr, textStatus) {
-							}
-						});
+					// form 데이터 설정
+					jQuery("#loginId").val(frm_userid);
+					jQuery("#loginPassword").val(frm_userpw);
+					jQuery("#loginSeCode").val(param_loginSeCode);
+					jQuery("#nextURL").val(param_nextUrl);
 
-						/**********************************
-						 * post 요청
-						 **********************************/
-						$.post("/login/api/login.json", param, function(data, status, xhr) {
-
-							//로그인 실패시
-							if (data.loginYn == "N") {
-								
-								switch (data.apiRtnCd) {
-								case 'FC1004':
-										$('#frm_userpw').val("");
-										
-										if(data.nextURL != null && data.nextURL != '' && data.apiRtnCd == 'FC1004'){
-											
-											if(confirm(data.msg)){
-												
-												location.href = data.nextURL;
-												
-											}								
-											
-										}else{
-											
-											alert(data.msg);
-											
-										}
-									
-									break;
-								case 'FC1003':
-									// /identify/releaseIdentifyIntro.do
-									$("#releaseIdentifyForm").find("input[name='loginId']").val(frm_userid);
-                                    //외국인의 경우 email이 id
-                                    $("#releaseIdentifyForm").find("input[name='email']").val(frm_userid);
-									$("#releaseIdentifyForm").attr("action", data.nextURL);
-									$("#releaseIdentifyForm").submit();
-									break;
-								case 'FC1006':
-									alert(data.msg);	
-									break;
-								case 'E00007':
-									alert(data.msg);	
-									break;
-
-								default:
-									console.log(data.msg);
-									break;
-								}
-
-							//로그인 성공시	
-							} else {
-								location.href = data.nextURL;	
-							}
-
-						}, "json")
-
-						// error handling
-						.fail(function(xhr, status, error) {
-							alert('로그인 수행중 서버 오류가 발생하였습니다.');
-						});					
-				}			
-
+					// 폼 제출
+					console.log("폼 제출"); // 디버깅 로그
+					jQuery("#form").submit();
+				} else {
+					console.log("유효성 검사 실패"); // 디버깅 로그
+				}         
 			}
-
 		}
-		, bindSnsLinkEvent : function() {
-			$('.snsLogin > a').each(
-					function() {
+		,bindSnsLinkEvent : function() {
+			$('.snsLogin > a').each(function() {
+				$(this).bind('click', function() {
+					var lnkType = $(this).attr('class');
+					var winSize = '';
+					var lnkUrl = '';
+					switch (lnkType) {
+						case "google":
+							winSize = 'width=750,height=850';
+							lnkUrl = "/sns/googleLogin.do?fromPageType=LOGIN";
+							break;
+						case "facebook":
+							winSize = 'width=750,height=850';
+							lnkUrl = "/sns/facebookLogin.do?fromPageType=LOGIN";
+							break;
+						case "naver":
+							winSize = 'width=750,height=850';
+							lnkUrl = "/sns/naverLogin.do?callbackType=login&fromPageType=LOGIN";
+							break;
+						case "kakao":
+							winSize = 'width=750,height=850';
+							lnkUrl = "/sns/kakaoLogin.do?callbackType=login&fromPageType=LOGIN";
+							break;
+						case "apple":
+							winSize = 'width=750,height=850';
+							lnkUrl = "/sns/appleLogin.do?fromPageType=LOGIN";
+							break;
+						default:
+							break;
+					}
 
-						$(this).bind('click', function() {
-
-											var lnkType = $(this).attr('class');
-											var winSize = '';
-											var lnkUrl = '';
-											switch (lnkType) {
-											case "google":
-												winSize = 'width=750,height=850';
-												lnkUrl = "/sns/googleLogin.do?fromPageType=LOGIN";
-												break;
-											case "facebook":
-												winSize = 'width=750,height=850';
-												lnkUrl = "/sns/facebookLogin.do?fromPageType=LOGIN";
-												//alert('준비중입니다.');
-												//return;
-												break;
-											case "naver":
-												winSize = 'width=750,height=850';
-												lnkUrl = "/sns/naverLogin.do?callbackType=login&fromPageType=LOGIN";
-												break;
-											case "kakao":
-												winSize = 'width=750,height=850';
-												lnkUrl = "/sns/kakaoLogin.do?callbackType=login&fromPageType=LOGIN";
-												break;
-											case "apple":
-												winSize = 'width=750,height=850';
-												lnkUrl = "/sns/appleLogin.do?fromPageType=LOGIN";
-												break;
-
-											default:
-												break;
-											}
-
-											window.open(lnkUrl,'popupSnsLoginWin',winSize+ ',scrollbars=no,toolbar=no,menubar=no');
-
-										});
-
-					});
-
+					window.open(lnkUrl,'popupSnsLoginWin',winSize+ ',scrollbars=no,toolbar=no,menubar=no');
+				});
+			});
 		}
-
 	}
 
 	$(document).ready(function() {
-
-		PageScript = new PageScript();
-		PageScript.init();
-
+		window.PageScript = new PageScript();
 	});
-
 	
 	function redirectNextPage(nextURL) {
 		window.location.href = nextURL;
@@ -667,11 +579,9 @@ function getLoginCookie(cookieName) {
 		$('#form').attr('target', "_self");
 		$('#form').attr('method', "post");
 		$('#form').submit();
-
 	}
-
+	
     function checkOrigin(origin){
-        /*const devDomain = "";*/
         const josunhotelDomain = "https://josunhotel.com";
         const josunhotelwwwDomain = "https://www.josunhotel.com";
         const appDomain = "https://app.josunhotel.com";
@@ -685,9 +595,7 @@ function getLoginCookie(cookieName) {
     }
 
     window.addEventListener('message', function(e) {
-		//fbevents.js 에러로 객체 메세지 수신 가능성 있으므로, 예약 번호인 String 타입으로 받음
 		if(typeof e.data == "string"){
-			//메세지 origin 체크
 			if(checkOrigin(e.origin)){
 				if(e.data == ""){
                     redirectPage();
@@ -701,15 +609,16 @@ function getLoginCookie(cookieName) {
 	})
 </script>
 
+
 <!-- 휴면해제 본인인증 page form -->
 <form id="releaseIdentifyForm" name="releaseIdentifyForm" method="post">
 	<input type="hidden" name="loginId" value="">
     <input type="hidden" name="email" value="">
 </form>
 
-<form id="form" name="form">
-	<input type="hidden" id="loginId" name="loginId" value="" /> 
-	<input type="hidden" id="loginPassword" name="loginPassword" value="" /> 
+<form id="form" name="form" method="post" action="set_session.do">
+	<input type="hidden" id="loginId" name="userId" value="" /> 
+	<input type="hidden" id="loginPassword" name="userPw" value="" /> 
 	<input type="hidden" id="loginSeCode" name="loginSeCode" value="" /> 
 	<input type="hidden" id="nextURL" name="nextURL" value="/intro.do" /> 
 	<input type="hidden" id="hotlSysCode" name="hotlSysCode" value="" />

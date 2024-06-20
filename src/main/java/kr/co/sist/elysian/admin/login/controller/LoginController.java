@@ -6,6 +6,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import java.nio.file.spi.FileSystemProvider;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,6 @@ public class LoginController {
 	@GetMapping("/login_frm.do")
 	public String main(Model model) {
 
-		System.out.println("----adminId session : "+ model.getAttribute("adminId"));
 		return "admin/login/login_frm";
 
 	}// main
@@ -46,6 +46,7 @@ public class LoginController {
 	}// login
 	
 	@Autowired(required = false)
+	@Qualifier("adminLoginService")
 	private LoginService ls;
 	
 	@PostMapping("/set_session.do")
@@ -63,11 +64,9 @@ public class LoginController {
 	    
 	    // 조회 결과가 있으면 비밀번호 비교
 	    String encryptedPassword = adm.getAdminPw(); // DB에서 가져온 비밀번호
-	    System.out.println("DB에 저장된 비밀번호: " + encryptedPassword);
 	    
 	    String uncodePass = aVO.getAdminPw();
 	    boolean matchFlag = pe.matches(uncodePass, encryptedPassword);
-	    System.out.println("비밀번호 일치 여부: " + matchFlag);
 	    
 	    if (matchFlag) {
 	        model.addAttribute("adminId", adm.getAdminId());

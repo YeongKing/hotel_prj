@@ -8,14 +8,13 @@ import kr.co.sist.elysian.admin.login.model.domain.AdminDomain;
 import kr.co.sist.elysian.admin.login.model.vo.AdminVO;
 import kr.co.sist.elysian.admin.login.repository.LoginDAO;
 
-@Service
+@Service("adminLoginService")
 public class LoginService {
 	
 	@Autowired(required = false)
 	private LoginDAO lDAO;
 	
 	public AdminDomain searchLogin( AdminVO aVO ){
-//		System.out.println("Service aVO : " + aVO);
 		AdminDomain adm = null;
 		try {
 			adm =lDAO.selectLogin( aVO );
@@ -24,8 +23,6 @@ public class LoginService {
 			
 		}//end catch
 		
-		System.out.println("Service aVO: " + adm);
-//		System.out.println("Service adm: " + adm);
 		return adm;
 
 	

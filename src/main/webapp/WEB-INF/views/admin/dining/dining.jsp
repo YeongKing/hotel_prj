@@ -436,24 +436,29 @@
                 });
                 confirmModal.show();
             }
-
+            
+			//다이닝 삭제 ajax
             function deleteAction() {
-                console.log('삭제 동작 수행');
-                // 서버로 삭제 요청 보내기
-                // $.ajax({
-                //     url: 'delete_url',
-                //     method: 'POST',
-                //     data: { id: itemId },
-                //     success: function(response) {
-                //         console.log('삭제 성공');
-                //     },
-                //     error: function(error) {
-                //         console.log('삭제 실패', error);
-                //     }
-                // });
+				var diningId = $("#updateDiningId").val();
+            	$.ajax({
+            		url: 'deleteDining.do',
+            		method: 'GET',
+            		data: {diningId : diningId },
+            		success: function(response){
+            			if(response){
+            				alert('삭제을 성공적으로 마쳤습니다');  
+    					 	window.location.reload();
+            			}else{
+            				alert('삭제에 실패했습니다');  
+            			}
+            		},
+            		error: function(error){
+                        alert('문제가 발생했습니다', error);
+            		}
+            	})
             }
 
-            //다이닝 수정 함수
+            //다이닝 수정 ajax
             function updateAction() {
 				var form = $("#diningDetailFormUpdate")[0];
 				var formData = new FormData(form);
@@ -462,7 +467,6 @@
 				//파일을 고르지 않았을시 기존 이미지 파일을 formData에 담는다
 				var fileInput = $("#updateDiningImg")[0];
 				if(fileInput.files.length === 0){
-					alert("존재했던 이미지 이름 : "+$("#updateDiningImgText").val());
 					formData.append("existDiningImg", $("#updateDiningImgText").val());
 				}
 				
@@ -474,7 +478,8 @@
                      contentType: false, // 필수: 파일 업로드를 위해 false로 설정
                      success: function(response) {
                          if(response){
-                    		 alert('수정을 성공적으로 마쳤습니다');
+                    		 alert('수정을 성공적으로 마쳤습니다');  
+    						 window.location.reload();     
                          }else{
                         	 alert('수정에 실패하였습니다')
                          }
@@ -485,7 +490,7 @@
                  });
             }
             
-			//다이닝 등록 함수
+			//다이닝 등록 ajax
             function registerAction() {
 				var form = $("#diningDetailForm")[0];
 				var formData = new FormData(form);
@@ -498,7 +503,7 @@
                      success: function(response) {
                     	 if(response){
                          alert('등록을 성공적으로 마쳤습니다');
-						 window.location.reload();                    		 
+						 window.location.reload();     
                     	 }else{
                     		 alert('등록에 실패하였씁니다');
                     	 }

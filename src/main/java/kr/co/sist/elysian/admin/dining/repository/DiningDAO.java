@@ -19,7 +19,7 @@ public class DiningDAO {
 	@Autowired(required = false)
 	private MyBatisDAO mbDAO;
 	
-	//DB¿¡¼­ ´ÙÀÌ´× ¸®½ºÆ® Á¶È¸
+	//DBì—ì„œ ë‹¤ì´ë‹ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
 	public List<DiningListDomain> selectDiningList() throws PersistenceException{
 		
 		List<DiningListDomain> list = null;
@@ -31,7 +31,7 @@ public class DiningDAO {
 		
 	}//selectDiningList
 	
-	//DB¿¡¼­ ´ÙÀÌ´× »ó¼¼Á¶È¸
+	//DBì—ì„œ ë‹¤ì´ë‹ ìƒì„¸ì¡°íšŒ
 	public DiningDomain selectDiningDetail(String diningId) throws PersistenceException{
 		
 		DiningDomain dD = null;
@@ -43,28 +43,36 @@ public class DiningDAO {
 		
 	}//selectMemeberDetail
 	
-	//DB¿¡¼­ ¸¶Áö¸·´ÙÀÌ´× ¹øÈ£ Á¶È¸
+	//DBì—ì„œ ë§ˆì§€ë§‰ë‹¤ì´ë‹ ë²ˆí˜¸ ì¡°íšŒ
 	public String selectLastDiningId()throws PersistenceException{
 		String lastDiningId = "";
 		SqlSession ss = mbDAO.getMyBatisHandler(false);
 		lastDiningId = ss.selectOne("kr.co.sist.elysian.admin.dining.lastDiningId");
 		mbDAO.closeHandler(ss);
 		return lastDiningId;
-	}
+	}//selectLastDiningId
 
-	//DB¿¡ ´ÙÀÌ´× INSERT
+	//DBì— ë‹¤ì´ë‹ INSERT
 	public void insertDining(DiningVO dVO)throws PersistenceException {
 		SqlSession ss = mbDAO.getMyBatisHandler(true);
 		ss.insert("kr.co.sist.elysian.admin.dining.addDining",dVO);
 		mbDAO.closeHandler(ss);
-	}
+	}//insertDining
 	
-	//DB¿¡ ´ÙÀÌ´× UPDATE
+	//DBì— ë‹¤ì´ë‹ UPDATE
 	public void updateDining(HashMap<String, Object> param)throws PersistenceException{
 		SqlSession ss = mbDAO.getMyBatisHandler(true);
 		ss.update("kr.co.sist.elysian.admin.dining.updateDining",param);
 		mbDAO.closeHandler(ss);
-	}
+	}//updateDining
+	
+	//DBì— ë‹¤ì´ë‹ DELETE
+	public void deleteDining(String diningId) {
+		
+		SqlSession ss = mbDAO.getMyBatisHandler(true);
+		ss.update("kr.co.sist.elysian.admin.dining.deleteDining",diningId);
+		mbDAO.closeHandler(ss);
+	}//deleteDining
 	
 
 }

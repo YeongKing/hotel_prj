@@ -36,6 +36,11 @@
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain" alias="drd"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.RoomResVO" alias="roomResVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.DiningResVO" alias="diningResVO"/> 
+		
+		<!-- user -->
+    	<typeAlias type="kr.co.sist.elysian.user.login.model.vo.UserVO" alias="uv"/> 
+		<typeAlias type="kr.co.sist.elysian.user.login.model.domain.UserDomain" alias="ud"/>
+  		<typeAlias type="kr.co.sist.elysian.user.dining.model.domain.DiningDomain" alias="dDomain"/> 
 	</typeAliases>
   
   <!-- 환경 설정 -->
@@ -64,6 +69,9 @@
     <mapper resource="mapper/admin/LoginMapper.xml"/>
     <mapper resource="mapper/admin/ResMapper.xml"/>
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
+    
+    <!-- user -->
+    <mapper resource="mapper/member/LoginMapper.xml"/>
 <!--     
     <mapper resource="mapper/admin/HomeMapper.xml"/>
      -->

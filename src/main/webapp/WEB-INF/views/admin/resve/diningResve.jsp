@@ -458,7 +458,7 @@
 				return;
 			} // end if
 			
-			var patternPhone = /01[016789]-[^0][0-9]{2,3}-[0-9]{4}$/;
+			var patternPhone = /010-[^0][0-9]{3}-[0-9]{4}$/;
 	    	
 			if(!patternPhone.test(visitorPhone)) {
 				alert("연락처의 형식(010-1234-5678)을 확인해주세요.");
@@ -511,7 +511,11 @@
 					alert("문제가 발생했습니다. 담당자에게 문의해주세요.");
 				},
 				success: function(jsonObj) {
-					alert("예약 정보가 정상적으로 수정되었습니다.");
+					if(jsonObj === true) {
+						alert("예약 정보가 정상적으로 수정되었습니다.");
+					} else {
+						alert("예약 정보가 정상적으로 수정되지 않았습니다. 담당자에게 문의해주세요.");
+					} // end else
 					// 예약 정보 수정은 이미 수정할 값으로 선택되거나 수정된 값이 입력되어있는 상태이므로 reload 불필요
 				}
 			}); // ajax
@@ -531,8 +535,12 @@
 					alert("문제가 발생했습니다. 담당자에게 문의해주세요.");
 				},
 				success: function(jsonObj) {
-		            alert("이용완료 처리되었습니다.");
-		            loadData(payNum);
+					if(jsonObj === true) {
+			            alert("이용완료 처리되었습니다.");
+			            loadData(payNum);
+					} else {
+						alert("이용완료 처리가 정상적으로 처리되지 않았습니다. 담당자에게 문의해주세요.");
+					} // end else
 				},
 				complete: function() {
 					$("#diningResStatus").load(location.href + ' #diningResStatus');
@@ -554,8 +562,12 @@
 					alert("문제가 발생했습니다. 담당자에게 문의해주세요.");
 				},
 				success: function(jsonObj) {
-		            alert("예약 취소 처리되었습니다.");
-		            loadData(payNum);
+					if(jsonObj === true) {
+			            alert("예약 취소 처리되었습니다.");
+			            loadData(payNum);
+					} else {
+						alert("예약 취소가 정상적으로 처리되지 않았습니다. 담당자에게 문의해주세요.");
+					} // end else
 				},
 				complete: function() {
 					$("#diningResStatus").load(location.href + ' #diningResStatus');

@@ -33,66 +33,75 @@
             <div class="row">
             	<div class="col-12 col-lg-6">
 					<div class="form-group">
-						<label for="diningResNum">예약번호</label>
-						<input type="text" class="form-control" id="diningResId" value="D2024052400001" disabled>
+						<label for="payNum">예약번호</label>
+						<input type="text" class="form-control" id="payNum" disabled>
 					</div>
 								
 					<div class="form-group">
 						<label for="diningName">매장명</label>
-						<input type="text" class="form-control" id="diningName" value="라연" disabled>
+						<input type="text" class="form-control" id="diningName" disabled>
 					</div>
 					
 					<div class="form-group">
 						<label for="visitDate">방문일</label>
-						<input type="text" id="visitDate" class="form-control flatpickr-basic flatpickr-input" value="2024.05.24" disabled>
+						<input type="text" id="visitDate" class="form-control flatpickr-basic flatpickr-input" disabled>
 					</div>
 				</div>
 				
 				<div class="col-12 col-lg-6">
 					<div class="form-group">
 						<label for="diningResStatus">예약상태</label>
-						<select class="form-select" id="diningResStatus">
-							<option>이용완료</option>
-							<option>예약</option>
-							<option>취소</option>
-							<option>NO SHOW</option>
-						</select>
+						<input type="text" class="form-control" id="diningResStatus" disabled>
 					</div>
 					
 					<div class="form-group">
 						<label for="visitPeople">방문인원</label>
-						<input type="text" class="form-control" id="visitPeople" value="2명" disabled>
+						<input type="text" class="form-control" id="visitPeople" disabled>
 					</div>
 					
 					<div class="form-group">
 						<label for="visitTime">방문시간</label>
-						<input type="text" id="visitTime" class="form-control flatpickr-time-picker-24h flatpickr-input" value="11:30" disabled>
+						<input type="text" id="visitTime" class="form-control flatpickr-time-picker-24h flatpickr-input" disabled>
 					</div>
+				</div>
+				
+				<div class="col-12 col-lg-4">
+					<label for="adultsCnt">어른인원</label>
+					<input type="text" class="form-control" id="adultsCnt" disabled>
+				</div>
+				
+				<div class="col-12 col-lg-4">
+					<label for="childCnt">어린이인원</label>
+					<input type="text" class="form-control" id="childCnt" disabled>
+				</div>
+				<div class="col-12 col-lg-4">
+					<label for="babyCnt">영유아인원</label>
+					<input type="text" class="form-control" id="babyCnt" disabled>
 				</div>
 				</div>
                             
-				<div class="form-group">
+				<div class="form-group mt-3">
 					<label>예약자 정보</label>
 					<div class="table-responsive">
 						<table class="table table-bordered modal-table">
 							<tr>
 							<th>방문자 이름</th>
-							<td><input type="text" class="form-control" value="윤웅찬"></td>
+							<td><input type="text" class="form-control" id="visitorName"></td>
 							</tr>
 
 							<tr>
 							<th>연락처</th>
-							<td><input type="text" class="form-control" value="010-1234-5678"></td>
+							<td><input type="text" class="form-control" id="visitorPhone"></td>
 							</tr>
                          			
 							<tr>
 							<th>이메일</th>
-							<td><input type="text" class="form-control" value="ywcsuwon@gmail.com"></td>
+							<td><input type="text" class="form-control" id="visitorEmail"></td>
 							</tr>
 
 							<tr>
 							<th>요청사항</th>
-							<td><input type="text" class="form-control" value="키위 알레르기 있어엽"></td>
+							<td><input type="text" class="form-control" id="visitorRequest"></td>
 							</tr>
 						</table>
 					</div>
@@ -104,22 +113,22 @@
                 		<table class="table table-bordered modal-table">
                 			<tr>
                 			<th>카드사</th>
-                			<td>국민</td>
+                			<td><input type="text" class="form-control" id="cardName" disabled></td>
                 			</tr>
 
                 			<tr>
                 			<th>신용카드 번호</th>
-                			<td>************0050</td>
+                			<td><input type="text" class="form-control" id="cardNum" disabled></td>
                 			</tr>
                 			
                 			<tr>
                 			<th>결제금액</th>
-                			<td>40,000원</td>
+                			<td><input type="text" class="form-control" id="payPrice" disabled></td>
                 			</tr>
 
                 			<tr>
                 			<th>예약일</th>
-                			<td>2024.05.24</td>
+                			<td><input type="text" class="form-control flatpickr-time-picker-24h flatpickr-input" id="diningResDate" disabled></td>
                 			</tr>
                 		</table>
 					</div>
@@ -131,6 +140,19 @@
 							<path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
 							<polyline points="22 4 12 14.01 9 11.01"></polyline>
 						</svg> 예약 수정
+					</button>
+					
+					<button type="button" id="chkCompleteBtn" class="btn btn-success me-1 mb-1">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+							<path d="M22 11.08V12a10 10 0 1 1-4-7.94"></path>
+							<polyline points="22 4 12 14.01 9 11.01"></polyline>
+						</svg> 이용완료 처리
+					</button>
+					
+					<button type="button" id="chkCancelBtn" class="btn btn-danger me-1 mb-1">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle>
+						<line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>
+						</svg> 예약 취소
 					</button>
 					
 					<button type="button" id="closeBtn" class="btn btn-light-secondary me-1 mb-1" data-bs-dismiss="modal">

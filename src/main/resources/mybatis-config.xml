@@ -36,6 +36,7 @@
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.RoomInfoDomain" alias="rid"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain" alias="drd"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.RoomResVO" alias="roomResVO"/>
+		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.DiningResVO" alias="diningResVO"/> 
   		
   		<!-- user -->
     	<typeAlias type="kr.co.sist.elysian.user.login.model.vo.UserVO" alias="uv"/> 

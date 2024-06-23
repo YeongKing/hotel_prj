@@ -1,14 +1,19 @@
 package kr.co.sist.elysian.user.mypage.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 import kr.co.sist.elysian.user.mypage.service.MyPageService;
 
 @Controller("userMyPageController")
@@ -46,7 +51,7 @@ public class MyPageController {
 	 * @return 예약 리스트
 	 */
 	@ResponseBody
-	@PostMapping("/mainRoomResList.do")
+	@GetMapping("/mainRoomResList.do")
 	public String searchMainRoomResList(HttpSession session) {
 		String userId = (String)session.getAttribute("userId");
 		String jsonObj = myPageService.searchMainRoomResList(userId);
@@ -54,10 +59,17 @@ public class MyPageController {
 	} // searchMainRoomResList
 
 	@GetMapping("/roomResList.do")
-	public String searchRoomResList() {
+	public String searchRoomResList(HttpServletRequest request, HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		String roomResStatus = request.getParameter("searchCtgry");
+		System.out.println(roomResStatus);
+		
+		List<RoomResDomain> roomResList = myPageService.searchRoomResList(userId, roomResStatus);
+		
+		model.addAttribute("roomResList", roomResList);
+		model.addAttribute("roomResListSize", roomResList.size());
 		
 		return "user/cnfirm/mber/room/reserveList";
-		
 	} // searchRoomResList
 	
 	@GetMapping("/roomResView.do")

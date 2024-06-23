@@ -37,7 +37,7 @@
 <div id="container" class="container mypage">
 
 <script type="text/javascript">
-	$(document).ready(function(){
+	$(function(){
 		fncLnbInfoApi();
 		fncMainRoomRes();
 	}); // ready
@@ -45,7 +45,7 @@
 	function fncMainRoomRes() {
 		$.ajax({
 			url : "mainRoomResList.do",
-			type : "POST",
+			type : "GET",
 			contentType : "application/json",
 			dataType : "json",
 			success : function(jsonObj) {
@@ -58,7 +58,7 @@
 					var myReserveBox = $('<div></div>').addClass('myReserveBox');
 					
 					var title = $('<strong></strong>').text('객실 예약 내역').addClass('tit');
-					var txtGuide = $('<p></p>').text('체크아웃 날짜를 기준으로 현재부터 3개월 이후의 예약 내역을 확인할 수 있습니다.').addClass('txtGuide');
+					var txtGuide = $('<p></p>').text('예약일자를 기준으로 현재부터 3개월 이후의 예약 내역을 확인할 수 있습니다.').addClass('txtGuide');
 					var ul = $('<ul></ul>').addClass('myReserveList');
 					
 					$.each(jsonObj.data, function(index, res) {
@@ -76,7 +76,7 @@
 						ul.append(li);
 					})
 					
-					var searchAllA = $('<a></a>').attr('href', 'mypage/roomResList.do');
+					var searchAllA = $('<a></a>').attr('href', 'roomResList.do');
 					var btn = $('<button></button>').attr('type', 'button').addClass('btnLine').text('전체보기');
 					
 					searchAllA.append(btn);

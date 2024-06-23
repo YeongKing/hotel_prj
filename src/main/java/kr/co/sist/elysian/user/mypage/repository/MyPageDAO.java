@@ -1,6 +1,7 @@
 package kr.co.sist.elysian.user.mypage.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
@@ -41,5 +42,18 @@ public class MyPageDAO {
 		myBatisDAO.closeHandler(ss);
 		return mainRoomResList;
 	} // selectMainRoomResList
+	
+	/**
+	 * MyBatis와 매핑하여 로그인한 아이디의 마이페이지 객실 예약 내역에 들어갈 예약 내역 조회
+	 * @param userId, roomResStatus
+	 * @return roomResList
+	 * @throws PersistenceException
+	 */
+	public List<RoomResDomain> selectRoomResList(Map<String, String> map) throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(false);
+		List<RoomResDomain> roomResList = ss.selectList("kr.co.sist.elysian.member.mypage.selectRoomResList", map);
+		myBatisDAO.closeHandler(ss);
+		return roomResList;
+	} // selectRoomResList
 
 } // class

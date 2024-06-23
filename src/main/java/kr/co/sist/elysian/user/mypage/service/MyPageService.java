@@ -1,6 +1,8 @@
 package kr.co.sist.elysian.user.mypage.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.json.simple.JSONArray;
@@ -35,6 +37,11 @@ public class MyPageService{
 		return jsonObj.toJSONString();
 	} // searchUserName
 	
+	/**
+	 * DAO에서 가져온 mainRoomResList를 jsonObj에 담아 반환
+	 * @param userId
+	 * @return flag, data(mainRoomResList), dataSize를 포함한 jsonObj
+	 */
 	public String searchMainRoomResList(String userId) {
 		JSONObject jsonObj = new JSONObject();
 		
@@ -63,6 +70,28 @@ public class MyPageService{
 			pe.printStackTrace();
 		} // end catch
 		return jsonObj.toJSONString();
-	} // 
+	} // searchMainRoomResList
+	
+	/**
+	 * DAO에서 가져온 roomResList를 반환
+	 * @param userId
+	 * @param roomResStatus
+	 * @return roomResList
+	 */
+	public List<RoomResDomain> searchRoomResList(String userId, String roomResStatus) {
+		List<RoomResDomain> roomResList = null;
+		Map<String, String> map = new HashMap<String, String>();
+		
+		System.out.println(roomResStatus);
+		map.put("userId", userId);
+		map.put("roomResStatus", roomResStatus != null ? roomResStatus : "ALL");
+		System.out.println(map);
+		try {
+			roomResList = myPageDAO.selectRoomResList(map);
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		return roomResList;
+	} // searchRoomResList
 	
 } // class

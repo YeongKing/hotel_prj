@@ -36,16 +36,16 @@
 <script>
 	function fncSearch(){
 		$("#resvForm").attr("method", "get");
-		$("#resvForm").attr("action", "/hotel_prj/user/roomResList.do");
+		$("#resvForm").attr("action", "roomResList.do");
 		$("#resvForm").submit();
 	}
 	
-	function fncResvDetail(confirmNo, hotlSysCode){
+	function fncResvDetail(confirmNo){
 		$("#confirmationNumber").val(confirmNo);
-		$("#hotlSysCode").val(hotlSysCode);
+		//$("#hotlSysCode").val(hotlSysCode);
 		//$("#resvForm").attr("method", "post");
 		$("#resvForm").attr("method", "get");
-		$("#resvForm").attr("action", "/hotel_prj/user/roomResView.do");
+		$("#resvForm").attr("action", "roomResView.do");
 		$("#resvForm").submit();
 	}
 	
@@ -88,7 +88,7 @@
 <div id="container" class="container mypage">
 
 <script type="text/javascript">
-	$(document).ready(function(){
+	$(function(){
 		fncLnbInfoApi();
 	}); 
 </script> 
@@ -198,46 +198,40 @@
 			<!-- listBox -->
 			<div class="listBox">
 			<div class="countList">
-				<span class="count">총 <em>0</em>건</span>
+				<span class="count">총 <em><c:out value="${roomResListSize}"/></em>건</span>
 				<div class="selectWrap" style="width:200px;">
 					<select title="목록정렬" data-height="150px" id="searchCtgry" name="searchCtgry" onchange="fncSearch();">
-						<option value="">ALL</option>
+						<option value>ALL</option>
 						<option value="RESERVED" >RESERVED</option>
 						<option value="CANCELED" >CANCELED</option>
 					</select>
 				</div>
 			</div>
-					
+			
+			<c:set var="roomResList" value="${roomResList}"/>
 			<ul class="cardList reserveInfo">
-				<li class="noData"><p class="txt">검색 결과가 없습니다.</p></li>
-				
-				<!-- <li id="show_0" >
-					<div class="cardInner">
-					<span class="status" >RESERVED</span>
-					<em class="tit">
-						<a href="#none" onclick="fncResvDetail('411665', 'GJJ');">ROOM ONLY</a>
-					</em>
-					<p class="info">엘리시안 서울 / 객실 1개 / 성인  2, 어린이  0</p>
-					<p class="number">예약번호
-						<em>411665</em>
-					</p>
-					<p class="date">2024.07.16 - 2024.07.17</p>
-					</div>
-				</li>
-				
-				<li id="show_1" >
-					<div class="cardInner">
-					<span class="status" style="color:#B01414;">CANCELED</span>
-					<em class="tit">
-						<a href="#none" onclick="fncResvDetail('411665', 'GJJ');">ROOM ONLY</a>
-					</em>
-					<p class="info">엘리시안 서울 / 객실 1개 / 성인 2, 어린이 0</p>
-					<p class="number">예약번호
-						<em>411665</em>
-					</p>
-					<p class="date">2024.07.16 - 2024.07.17</p>
-					</div>
-				</li> -->
+			<c:choose>
+				<c:when test="${not empty roomResList}">
+				<c:forEach items="${roomResList}" var="rrl" varStatus="i">
+					<li id="show_${i.count}">
+						<div class="cardInner">
+						<span class="status"><c:out value="${rrl.roomResStatus}"/></span>
+						<em class="tit">
+							<a href="#none" onclick="fncResvDetail('${rrl.payNum}');"><c:out value="${rrl.roomInfo}"/></a>
+						</em>
+						<p class="info">엘리시안 서울 / 객실 1개 / 성인 <c:out value="${rrl.adultsNum}"/>, 어린이 <c:out value="${rrl.kidsNum}"/></p>
+						<p class="number">예약번호
+							<em><c:out value="${rrl.payNum}"/></em>
+						</p>
+						<p class="date"><c:out value="${rrl.checkIn}"/> - <c:out value="${rrl.checkOut}"/></p>
+						</div>
+					</li>
+				</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<li class="noData"><p class="txt">검색 결과가 없습니다.</p></li>
+				</c:otherwise>
+			</c:choose>	
 			</ul>
 			</div>
 			<!-- listBox -->

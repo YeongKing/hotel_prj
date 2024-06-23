@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.sist.elysian.member.mypage">
+
+	<select id="selectUserName" resultType="String" parameterType="String">
+		select name userName
+		from member
+		where member_id = #{userId}
+	</select>
+	
+	<select id="selectMainRoomResList" resultType="myPageRoomResDomain" parameterType="String">
+		<![CDATA[
+		select rr.pay_num payNum, r.room_rank_name || ' | ' || r.bed_cnt || ' ' || r.bed_name || ' | ' || r.view_name roomInfo,
+			 to_char(rr.checkin, 'yyyy.mm.dd') checkIn, to_char(rr.checkout, 'yyyy.mm.dd') checkOut
+		from room_reservation rr
+		inner join room r
+		on r.room_id = rr.room_id
+		where rr.user_id = #{userId} and rr.room_res_status = 'RESERVED' and rr.checkout <= add_months(sysdate, 3)
+		]]>
+	</select>
+	
+</mapper>

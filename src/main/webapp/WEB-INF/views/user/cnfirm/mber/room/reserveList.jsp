@@ -27,124 +27,6 @@
 <div class="skip"><a href="#container">본문 바로가기</a></div>
 <div class="wrapper ">
 
-<script>
-	jQuery(function(){
-		jQuery.ajax({
-			type : "GET",
-			url : "/massPromotion/get.json",
-			cache : false,
-			dataType : "json",
-			global : false,
-			beforeSend: function() {
-			},
-			complete: function() {
-			},
-			success : function(data){
-                var massPromtn = data.bean;
-                //조회 결과에 따라 랜더링
-                if(massPromtn != null && massPromtn != ""){
-                    var url = getMassPromtnUrl();
-                    var menuNm = massPromtn.promtnNm;
-                    var sysCode = massPromtn.sysCode;
-                    appendMassPromotionMenu(url, menuNm, sysCode);
-                }
-			},
-			error:function(r, s, e){
-			}
-		});
-	});
-
-    function getMassPromtnUrl(){
-        var url = "";
-        var sysCode = jQuery("#sysCode").val();
-
-        if(gfncIsApp()){
-            //앱일 경우
-            url = "/m/massPromotion/list.do";
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/m/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/m/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/m/massPromotion/list.do";
-                }
-            }
-        }else {
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/massPromotion/list.do";
-                }
-            }
-        }
-        return url;
-    }
-
-    function appendMassPromotionMenu(url, menuNm, sysCode){
-        if(gfncIsApp()){
-            //앱일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-
-            var pathname = window.location.pathname;
-            if(pathname.indexOf("/app/main.do") == 0){
-                jQuery(".gnbArea ul.toggleList > li > .titArea:contains('패키지')").closest("ul").append(menuHtml);
-            }else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-
-            /*if(jQuery(".gnbArea ul.toggleList li:contains('패키지')").length > jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").length){
-                jQuery(".gnbArea ul.toggleList li:contains('패키지')").closest("ul").append(menuHtml);
-            } else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }*/
-
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-            jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-        }else{
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL" || sysCode == "JPY"){
-                //해당 페이지가 HUB거나 JPY일 경우
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".allMenu ul.menuDepth01 ul.menuDepth02 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }else {
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".headArea .utilMenu .gnbDepth1 .gnbDepth2 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-        }
-    }
-
-</script>
-
-<script>
-	//2022-05-23 조선라운지 추가
-	//헤더 메뉴 버튼 클릭 이벤트
-	jQuery(document).on("click",".headArea .btnMenu" ,function(){
-	
-	    //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-	    if(jQuery(this).hasClass("menuOn")){
-	        var expsrCount = 3;
-	        var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
-	        var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
-	
-	        $loungeList.addClass("hidden");
-	        $loungeList.each(function(index){
-	            if(randomArray.indexOf(index) > -1){
-	                jQuery(this).removeClass("hidden");
-	            }
-	        });
-	    }
-	})
-</script>
-
 <!--S header  -->
 <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
 <!--E header  -->
@@ -209,36 +91,6 @@
 	$(document).ready(function(){
 		fncLnbInfoApi();
 	}); 
-	  
-	//LNB정보조회(쿠폰수,가용포인트) API호출
-	function fncLnbInfoApi() {
-		var formData =  jQuery("#formLnb").serialize();
-		jQuery.ajax({
-			type : "POST",
-			url : "/mypage/lnbInfoApi.do",
-			cache : false,
-			data : formData, 
-			dataType : "json",
-			global : false,
-			success : function(data) {
-				if(data.statusR==200 && data.codeR=='S00000') { 
-					  //회원명 세팅
-					  var nameHtml = ''+data.name;
-				      /* $('.name').html(nameHtml); */
-				      $('#nm1').html(nameHtml);
-				      //가용포인트 세팅 
-				      $('#usefulPointSpan').html(fncComma(data.usefulPoint));
-				      //보유쿠폰수 세팅 
-				      $('#couponCntDiv').html(fncComma(data.couponCnt));
-				}else{
-					alert(data.statusR + " : 관리자에게 문의하세요");
-				}
-			},
-			error:function(){
-				alert("관리자에게 문의하세요.");
-			}
-		});
-	}
 </script> 
 
 <script type="text/javascript">
@@ -346,7 +198,7 @@
 			<!-- listBox -->
 			<div class="listBox">
 			<div class="countList">
-				<span class="count">총 <em>2</em>건</span>
+				<span class="count">총 <em>0</em>건</span>
 				<div class="selectWrap" style="width:200px;">
 					<select title="목록정렬" data-height="150px" id="searchCtgry" name="searchCtgry" onchange="fncSearch();">
 						<option value="">ALL</option>
@@ -357,9 +209,9 @@
 			</div>
 					
 			<ul class="cardList reserveInfo">
-				<!-- <li class="noData"><p class="txt">검색 결과가 없습니다.</p></li> -->
+				<li class="noData"><p class="txt">검색 결과가 없습니다.</p></li>
 				
-				<li id="show_0" >
+				<!-- <li id="show_0" >
 					<div class="cardInner">
 					<span class="status" >RESERVED</span>
 					<em class="tit">
@@ -385,7 +237,7 @@
 					</p>
 					<p class="date">2024.07.16 - 2024.07.17</p>
 					</div>
-				</li>
+				</li> -->
 			</ul>
 			</div>
 			<!-- listBox -->

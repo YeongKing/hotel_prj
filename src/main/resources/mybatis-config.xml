@@ -42,6 +42,7 @@
     	<typeAlias type="kr.co.sist.elysian.user.login.model.vo.UserVO" alias="uv"/> 
 		<typeAlias type="kr.co.sist.elysian.user.login.model.domain.UserDomain" alias="ud"/>
   		<typeAlias type="kr.co.sist.elysian.user.dining.model.domain.DiningDomain" alias="dDomain"/> 
+  		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain" alias="myPageRoomResDomain"/> 
   		
 	</typeAliases>
   
@@ -75,6 +76,7 @@
     
     <!-- user -->
     <mapper resource="mapper/member/LoginMapper.xml"/>
+    <mapper resource="mapper/member/MypageMapper.xml"/>
     
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
 <!--     

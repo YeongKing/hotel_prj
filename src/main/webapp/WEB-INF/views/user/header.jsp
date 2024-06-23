@@ -67,7 +67,8 @@
     		</script>
 		</c:if>
 
-				<li><a href="http://localhost/hotel_prj/user/join.do" id="join">회원가입</a></li>
+			<li><a href="http://localhost/hotel_prj/user/join.do" id="join">회원가입</a></li>
+			<li><a href="http://localhost/hotel_prj/user/mypage.do" id="mypage">마이페이지</a></li>
 			<li><a href="http://localhost/hotel_prj/user/roomResList.do" id="confirmReserv">예약확인</a></li>
 		</ul>
 					

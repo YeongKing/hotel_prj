@@ -29,123 +29,7 @@
 	<div class="skip"><a href="#container">본문 바로가기</a></div>
 	<div class="wrapper ">
 
-<script>
-	jQuery(function(){
-		jQuery.ajax({
-			type : "GET",
-			url : "/massPromotion/get.json",
-			cache : false,
-			dataType : "json",
-			global : false,
-			beforeSend: function() {
-			},
-			complete: function() {
-			},
-			success : function(data){
-                var massPromtn = data.bean;
-                //조회 결과에 따라 랜더링
-                if(massPromtn != null && massPromtn != ""){
-                    var url = getMassPromtnUrl();
-                    var menuNm = massPromtn.promtnNm;
-                    var sysCode = massPromtn.sysCode;
-                    appendMassPromotionMenu(url, menuNm, sysCode);
-                }
-			},
-			error:function(r, s, e){
-			}
-		});
-	});
 
-    function getMassPromtnUrl(){
-        var url = "";
-        var sysCode = jQuery("#sysCode").val();
-
-        if(gfncIsApp()){
-            //앱일 경우
-            url = "/m/massPromotion/list.do";
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/m/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/m/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/m/massPromotion/list.do";
-                }
-            }
-        }else {
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/massPromotion/list.do";
-                }
-            }
-        }
-        return url;
-    }
-
-    function appendMassPromotionMenu(url, menuNm, sysCode){
-        if(gfncIsApp()){
-            //앱일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-
-            var pathname = window.location.pathname;
-            if(pathname.indexOf("/app/main.do") == 0){
-                jQuery(".gnbArea ul.toggleList > li > .titArea:contains('패키지')").closest("ul").append(menuHtml);
-            }else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-
-            /*if(jQuery(".gnbArea ul.toggleList li:contains('패키지')").length > jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").length){
-                jQuery(".gnbArea ul.toggleList li:contains('패키지')").closest("ul").append(menuHtml);
-            } else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }*/
-
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-            jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-        }else{
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL" || sysCode == "JPY"){
-                //해당 페이지가 HUB거나 JPY일 경우
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".allMenu ul.menuDepth01 ul.menuDepth02 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }else {
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".headArea .utilMenu .gnbDepth1 .gnbDepth2 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-        }
-    }
-
-</script>
-
-<script>
-        //2022-05-23 조선라운지 추가
-        //헤더 메뉴 버튼 클릭 이벤트
-        jQuery(document).on("click",".headArea .btnMenu" ,function(){
-
-            //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-            if(jQuery(this).hasClass("menuOn")){
-                var expsrCount = 3;
-                var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
-                var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
-
-                $loungeList.addClass("hidden");
-                $loungeList.each(function(index){
-                    if(randomArray.indexOf(index) > -1){
-                        jQuery(this).removeClass("hidden");
-                    }
-                });
-            }
-        })
-</script>
  <!--S header  -->
 <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
  <!--E header  -->
@@ -197,13 +81,8 @@ jQuery(function(){
 		fncSetCalendarDate(initToday);
 		
 	});
-	/*
-		프로모션 타입 수정 이벤트
-	*/
-	jQuery("#promoType").on("change", function(){
-		var value = jQuery(this).val();
-		jQuery("#promoCode").attr("name", value);
-	});
+
+	
 	/*
 		호텔 선택 AREA 클릭 이벤트
 	*/
@@ -240,28 +119,7 @@ jQuery(function(){
 		// ============== 객실 및 인원 선택 초기화 start ==================
 		
 		
-		
-		if(hotlSysCode != "GJB" && hotlSysCode != "GJJ"){
-			var link = "";
-			if(hotlSysCode == "TWC"){
-				link = "https://www.marriott.co.kr/hotels/travel/selwi-the-westin-chosun-seoul";
-			}else if(hotlSysCode == "TWCB"){
-				link = "https://www.marriott.co.kr/hotels/travel/puswi-the-westin-chosun-busan";
-			}else if(hotlSysCode == "LESCAPE"){
-				link = "https://lescapehotel.com/main";
-			}else if(hotlSysCode == "FPBSS"){
-				link = "https://www.marriott.co.kr/hotels/travel/selfp-four-points-seoul-namsan";
-			}else if(hotlSysCode == "FPBSM"){
-				link = "https://www.marriott.co.kr/hotels/travel/selfd-four-points-seoul-myeongdong";
-			}else if(hotlSysCode == "GRP"){
-				link = "https://www.marriott.co.kr/hotels/travel/selay-gravity-seoul-pangyo-autograph-collection";
-			}else if(hotlSysCode == "JPY"){
-				link = "https://www.marriott.co.kr/hotels/travel/sellc-josun-palace-a-luxury-collection-hotel-seoul-gangnam";
-			}
-			
-			window.open(link);
-			return false;
-		}else{
+	
 			jQuery('.rsvList li.toggleOn').next('li').find('.btnToggle').trigger('click_checkDate');
 			jQuery("#hotelNm").html(hotelNm);
 			jQuery("#hotlSysCode").val(hotlSysCode);
@@ -269,21 +127,7 @@ jQuery(function(){
 			/* 그랜드 조선 제주 티져 오픈 날짜 대응 */
 			var today = new Date(); //오늘 날짜
 			
-			if(hotlSysCode == "GJJ"){
-				//인원수 안내 문구 변경
-				jQuery("#ageTxtGuide").text('어린이 기준 : 37개월 ~ 12세');
-				
-				//오늘날짜가 티져 오픈일 보다 빠를때
-				if(today < gjjOpenDate){
-					fncSetCalendarDate(gjjOpenDate);
-				}
-			}else if(hotlSysCode == "GJB"){
-				//인원수 안내 문구 변경
-				jQuery("#ageTxtGuide").text('어린이 기준 : 1세 ~ 12세');
-				
-				fncSetCalendarDate(today);
-			}
-		}
+		
 	});
 	/**
 		성인,어린이 인원 수 추가/감소 Click Event
@@ -300,11 +144,6 @@ jQuery(function(){
 		var maxAdlt = jQuery("#maxAdlt").val();
 		var maxChld = jQuery("#maxChld").val();
 
-        //2022-09-19 호텔별 최대 인원 수 변경
-        if(hotlSysCodeValue == "GJJ"){
-            maxAdlt = 6;
-            maxChld = 4;
-        }
 		
 		if(roomNum != "1" && jQuery(".roomSel:eq("+parseInt(roomNum-2)+") input[name='adltCntArr']").val() == "0"){
 			//alert("이전객실부터 선택하셈");
@@ -325,19 +164,7 @@ jQuery(function(){
 				}
 			}
 
-            //2022-09-19 수정 , GJJ일 경우 최대 투숙인원 변경
-			if (hotlSysCodeValue == "GJJ") {
-				var adltCntValue = target == "adult" ? peopleCnt : jQuery("input[name='adltCntArr']:eq("+parseInt(roomNum-1)+")").val();
-				var chldCntValue = target == "child" ? peopleCnt : jQuery("input[name='chldCntArr']:eq("+parseInt(roomNum-1)+")").val();
-				var totalCntValue = parseInt(adltCntValue) + parseInt(chldCntValue);
-				
-				//alert(hotlSysCode + ", " + adltCntValue + ", " + chldCntValue);
-                //2022-09-19 수정 , GJJ일 경우 최대 투숙인원 변경
-				if(totalCntValue > 8) {
-					alert("온라인상 선택가능한 인원 수 이상 투숙하시는 경우에는 유선으로 문의 부탁드립니다.\n(그랜드 조선 제주 예약실 : 1811-0511)"); 
-					return false;
-				}
-			}
+
 			
 		//인원 감소
 		}else{
@@ -454,6 +281,9 @@ function fncSetCalendarDate(startDate){
 }
 
 function fncSearchList(){
+	
+	$('#adultsNum').val($('input[name="adltCntArr"]').val());
+	$('#kidsNum').val( $('input[name="chldCntArr"]').val());
 	//validation check
 	if(jQuery("#hotlSysCode").val() == ""){
 		// 호텔 시스템 코드 없음
@@ -465,34 +295,42 @@ function fncSearchList(){
 		alert("투숙기간을 선택해주세요."); 
 		return false;
 	}
-	/*if(jQuery(".promInt input[type='text']").val() != "" && jQuery("#promoType").val() == ""){
-		alert("프로모션 타입을 선택해주세요."); 
-		return false;
-	}*/
 	commonJs.showLoadingBar();
-	jQuery("#step0Form").attr("action", "/hotel_prj/user/resve/room/step1.jsp");
-	alert("선택된 호텔코드 : "+$("#hotlSysCode").val() + "\n" + 
-			"체크인 날짜 : " +$("#ckinDate").val() + "\n" +
-			"체크아웃 날짜 : " + $("#ckoutDate").val() + "\n" +
-			"어른 : " +  $('input[name="adltCntArr"]').val() + "\n" +
-			"어린이 : " +  $('input[name="chldCntArr"]').val());
+	jQuery("#step0Form").attr("action", "http://localhost/hotel_prj/user/room1.do");
+	 		alert("선택된 호텔코드 : "+$("#hotlSysCode").val() + "\n" + 
+	"체크인 날짜 : " +$("#ckinDate").val() + "\n" +
+	"체크아웃 날짜 : " + $("#ckoutDate").val() + "\n" +
+	"어른 : " +   $('input[name="adltCntArr"]').val() + "\n" +
+	"어린이 : " +  $('input[name="chldCntArr"]').val()); 
 	jQuery("#step0Form").submit();
 }
 </script>
 <form id="step0Form" name="step0Form" method="post" >
 	
 		
-			<input type="hidden" name="hotlSysCode" id="hotlSysCode" value="ELS"/> 	
-		
-		
-	
-	
+	<input type="hidden" name="hotlSysCode" id="hotlSysCode" value="ELS"/> 	
 	<input type="hidden" name="ckinDate" id="ckinDate" value="" /> 				
 	<input type="hidden" name="ckoutDate" id="ckoutDate" value="" /> 			
 	<input type="hidden" name="night" id="night" value="" />					
 	<input type="hidden" name="roomCnt" id="roomCnt" value="1" />				
-	<input type="hidden" id="maxAdlt" value="3" />								
-	<input type="hidden" id="maxChld" value="2" />								
+	<input type="hidden" name="maxAdlt" id="maxAdlt" value="6" />								
+	<input type="hidden" name="maxChld" id="maxChld" value="2" />		
+	
+						
+	<input type="hidden" name="adultsNum" id="adultsNum" value="" />				
+	<input type="hidden" name="kidsNum" id="kidsNum" value="" />	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+							
 	<div id="container" class="container">
 		<!-- 컨텐츠 S --> 
 		<h1 class="hidden">예약<!-- 예약 --></h1>
@@ -517,80 +355,11 @@ function fncSearchList(){
 							<div class="toggleInner">
 								<div class="hotelSel">
 									<ul class="frmList">
-										
-										
-										
-											
 												<li class="frmRadio">
-													<input type="radio" id="hotelCode0" name="frmRdo" value="JPY"  >
-													<label for="hotelCode0">조선 팰리스</label>
+													<input type="radio" id="hotelCode1" name="frmRdo" value="ELS" checked="checked" >
+													<label for="hotelCode1">엘리시안 서울</label>
 												</li>
-											
-										
-											
-												<li class="frmRadio">
-													<input type="radio" id="hotelCode1" name="frmRdo" value="TWC"  >
-													<label for="hotelCode1">웨스틴 조선 서울</label>
-												</li>
-											
-										
-											
-												<li class="frmRadio">
-													<input type="radio" id="hotelCode2" name="frmRdo" value="TWCB"  >
-													<label for="hotelCode2">웨스틴 조선 부산</label>
-												</li>
-											
-										
-											
-												<li class="frmRadio">
-													<input type="radio" id="hotelCode3" name="frmRdo" value="GJB"  >
-													<label for="hotelCode3">그랜드 조선 부산</label>
-												</li>
-											
-										
-											
-												<li class="frmRadio">
-													<input type="radio" id="hotelCode4" name="frmRdo" value="GJJ" checked="checked" >
-													<label for="hotelCode4">그랜드 조선 제주</label>
-												</li>
-											
-										
-											
-												<li class="frmRadio">
-													<input type="radio" id="hotelCode5" name="frmRdo" value="LESCAPE"  >
-													<label for="hotelCode5">레스케이프</label>
-												</li>
-											
-										
-											
-												<li class="frmRadio">
-													<input type="radio" id="hotelCode6" name="frmRdo" value="GRP"  >
-													<label for="hotelCode6">그래비티 서울 판교</label>
-												</li>
-											
-										
-											
-												<li class="frmRadio">
-													<input type="radio" id="hotelCode7" name="frmRdo" value="FPBSS"  >
-													<label for="hotelCode7">포포인츠 바이 쉐라톤 조선 서울역</label>
-												</li>
-											
-										
-											
-												<li class="frmRadio">
-													<input type="radio" id="hotelCode8" name="frmRdo" value="FPBSM"  >
-													<label for="hotelCode8">포포인츠 바이 쉐라톤 조선, 서울 명동</label>
-												</li>
-											
-										
-											
-										
-											
-										
-											
-										
 									</ul>
-									<p class="txtGuide">메리어트 브랜드 및 레스케이프 호텔 선택 시, 해당 사이트로 이동 됩니다.</p>
 								</div>
 							</div>
 						</div>
@@ -613,14 +382,9 @@ function fncSearchList(){
 				<li>
 					<strong class="listTit">객실 및 인원 선택</strong>
 					<em class="intValue" id="roomText">
-						객실 1
-						
-							개
-						
+						객실 1개
 						<span>
-							성인 2
-							
-								명
+							성인 2명
 							
 						</span>
 					</em> 
@@ -652,14 +416,7 @@ function fncSearchList(){
 									</div>
 								</div>
 								<!-- //roomWrap -->
-								<ul class="txtGuide">
-									
-										
-											<li id="ageTxtGuide">어린이 기준 : 37개월 ~ 12세</li>
-										
-										
-									
-								</ul>
+
 							</div>
 							<!-- //roomContainer -->
 							<div class="btnArea">
@@ -689,81 +446,6 @@ function fncSearchList(){
 	</div>
 	<!-- //wrapper -->
 
-<!-- 호텔 찾기 Layer -->
-<div id="hotelFindLayer" class="layerPop">
-	<div class="layerCont">
-		<div class="hotelFindPop">
-			<h2>호텔 찾기</h2>
-			<ul class="hotelSelect">
-								<li>
-					<a href="https://jpg.josunhotel.com/main.do" target="_blank" title="새창열림">		
-						<span class="hotelLogo palace">
-						</span>
-						<span class="hotelTit">조선 팰리스<!-- 조선 팰리스 --></span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selwi-the-westin-chosun-seoul" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo westinSeoul">
-						</span>
-						<span class="hotelTit">웨스틴 조선 서울</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/puswi-the-westin-chosun-busan" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo westinBusan">
-						</span>
-						<span class="hotelTit">웨스틴 조선 부산</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://gjb.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo grandBusan">
-						</span>
-						<span class="hotelTit">그랜드 조선 부산</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://gjj.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo grandJeju">
-						</span>
-						<span class="hotelTit">그랜드 조선 제주</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://lescapehotel.com/main" target="_blank" title="새창열림">
-						<span class="hotelLogo lescape">
-						</span>
-						<span class="hotelTit">레스케이프 호텔</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://grp.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo gravityPangyo">
-						</span>
-						<span class="hotelTit">그래비티 서울 판교</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selfp-four-points-seoul-namsan" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo sheratonSeoulstation">
-						</span>
-						<span class="hotelTit">포포인츠 바이 쉐라톤 조선 서울역</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selfd-four-points-seoul-myeongdong" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo sheratonMyeongdong">
-						</span>
-						<span class="hotelTit">포포인츠 바이 쉐라톤 조선, 서울 명동</span>
-					</a>
-				</li>
-			</ul>
-		</div>
-		<button type="button" class="btnClose" onclick="commonJs.popClose($('#hotelFindLayer'))">닫기</button>
-	</div>
-</div>
-<!-- //호텔 찾기 Layer -->
 <div class="dimmed"></div>
 </body>
 </html>

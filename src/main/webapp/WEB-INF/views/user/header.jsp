@@ -65,7 +65,7 @@
 		</div>
 		
 		<ul class="item_list" role="listbox">
-			<li role="option"><a href="http://localhost/hotel_prj/user/room.do" id="roomSearchGNB">ROOM</a></li>
+			<li role="option"><a href="http://localhost/hotel_prj/user/room0.do" id="roomSearchGNB">ROOM</a></li>
 			<li role="option"><a href="http://localhost/hotel_prj/user/dining.do" id="diningSearchGNB">DINING</a></li>                             
 		</ul>
 		</div>

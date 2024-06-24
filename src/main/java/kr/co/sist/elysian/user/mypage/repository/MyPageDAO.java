@@ -55,5 +55,31 @@ public class MyPageDAO {
 		myBatisDAO.closeHandler(ss);
 		return roomResList;
 	} // selectRoomResList
+	
+	/**
+	 * MyBatis와 매핑하여 로그인한 아이디의 마이페이지 객실 예약 내역 - 객실 상세조회 시 들어갈 예약 정보 조회
+	 * @param payNum
+	 * @return roomResDetail
+	 * @throws PersistenceException
+	 */
+	public RoomResDomain selectRoomResDetail(String payNum) throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(false);
+		RoomResDomain roomResDetail = ss.selectOne("kr.co.sist.elysian.member.mypage.selectRoomResDetail", payNum);
+		myBatisDAO.closeHandler(ss);
+		return roomResDetail;
+	} // selectRoomResDetail
+	
+	/**
+	 * MyBatis와 매핑하여 예약 취소 처리
+	 * @param payNum
+	 * @return result(처리 여부)
+	 * @throws PersistenceException
+	 */
+	public int updateRoomResToCancel(String payNum) throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(true);
+		int result = ss.update("kr.co.sist.elysian.member.mypage.cancelRoomRes", payNum);
+		myBatisDAO.closeHandler(ss);
+		return result;
+	} // updateRoomResToCancel
 
 } // class

@@ -16,6 +16,69 @@
 		order by payNum
 	</select>
 	
+	<select id="roomResDetail" resultType="rrd" parameterType="String">
+        <![CDATA[
+		select rr.pay_num payNum, r.room_id roomId, r.room_rank_name || ' | ' || r.bed_cnt || ' ' || r.bed_name || ' | ' || r.view_name room,
+			 rr.room_res_status roomResStatus, rr.adults_num adultsNum, rr.kids_num kidsNum,
+			 rr.checkin checkIn, rr.checkout checkOut,
+			 m.eng_fname || ' ' || m.eng_lname engName, rr.guest_phone guestPhone, rr.guest_email guestEmail, rr.guest_request guestRequest,
+			 c.code_name cardName, p.card_num cardNum, p.pay_price payPrice, p.pay_time payTime
+		from room_reservation rr
+		inner join room r
+		on r.room_id = rr.room_id
+		inner join member m
+		on m.member_id = rr.user_id
+		inner join pay p
+		on p.pay_num = rr.pay_num
+		inner join common_code c
+		on substr(card_code, 0, instr(card_code, '_')-1) = c.code_type and substr(p.card_code, instr(p.card_code, '_')+1) = c.code_val
+		where rr.pay_num = #{payNum}
+		]]>
+	</select>
+	
+	<select id="roomInfoList" resultType="rid" parameterType="Map">
+		<![CDATA[
+		select room_id roomId, room_id || '호(' || room_rank_name || ' | ' || bed_cnt || ' ' || bed_name || ' | ' || view_name || ')' roomInfo
+		from room
+		where room_id not in (
+							select room_id
+							from room_reservation
+							where to_char(checkin, 'yyyy.mm.dd') = #{checkIn}
+							AND to_char(checkout, 'yyyy.mm.dd') = #{checkOut}
+							AND room_res_status = 'RESERVED'
+							)
+		and delete_status = 'N'
+		]]>
+	</select>
+	
+	<update id="updateRoomRes" parameterType="Map">
+		update room_reservation
+		set room_id = #{roomResVO.roomId},
+			admin_id = #{adminId},
+			guest_phone = #{roomResVO.guestPhone},
+			guest_email = #{roomResVO.guestEmail},
+			guest_Request = #{roomResVO.guestRequest}
+		where pay_num = #{roomResVO.payNum}
+	</update>
+	
+	<update id="checkin" parameterType="Map">
+		update room_reservation
+		set room_res_status = 'CHECK IN', checkin = sysdate, admin_id = #{adminId}
+		where pay_num = #{payNum}
+	</update>
+	
+	<update id="checkout" parameterType="Map">
+		update room_reservation
+		set room_res_status = 'CHECK OUT', checkout = sysdate, admin_id = #{adminId}
+		where pay_num = #{payNum}
+	</update>
+	
+	<update id="cancelRoomRes" parameterType="Map">
+		update room_reservation
+		set room_res_status = 'CANCELED', admin_id = #{adminId}
+		where pay_num = #{payNum}
+	</update>
+	
 	<select id="diningResList" resultType="drd">
 		select row_number() over(order by dr.pay_num) num,
 			 dr.pay_num payNum, dr.dining_res_status diningResStatus,
@@ -26,4 +89,45 @@
 		and dr.user_id = m.member_id
 		order by payNum
 	</select>
+	
+	<select id="diningResDetail" resultType="drd" parameterType="String">
+		<![CDATA[
+		select dr.pay_num payNum, dr.dining_res_status diningResStatus, d.dining_name diningName, dr.visit_people || '명' visitPeopleStr,
+			dr.adult_cnt || '명' adultsCntStr, dr.child_cnt || '명' childCntStr, dr.baby_cnt || '명' babyCntStr,
+			to_char(dr.visit_datetime, 'yyyy.mm.dd') visitDate, to_char(dr.visit_datetime, 'am hh:mi') visitTime,
+			dr.visitor_name visitorName, dr.visitor_phone visitorPhone, dr.visitor_email visitorEmail, dr.visitor_request visitorRequest,
+			c.code_name cardName, p.card_num cardNum, to_char(p.pay_price, 'FM999,999,999') || '원' payPriceStr,
+			to_char(dr.dining_res_date, 'yyyy.mm.dd') diningResDateStr
+		from  dining_reservation dr
+		inner join dining d
+		on d.dining_id = dr.dining_id
+		inner join pay p
+		on p.pay_num = dr.pay_num
+		inner join common_code c
+		on substr(card_code, 0, instr(card_code, '_')-1) = c.code_type and substr(p.card_code, instr(p.card_code, '_')+1) = c.code_val
+		where dr.pay_num = #{payNum}
+		]]>
+	</select>
+	
+	<update id="updateDiningRes" parameterType="Map">
+		update dining_reservation
+		set visitor_name = #{diningResVO.visitorName},
+			visitor_phone = #{diningResVO.visitorPhone},
+			visitor_email = #{diningResVO.visitorEmail},
+			visitor_Request = #{diningResVO.visitorRequest},
+			admin_id = #{adminId}
+		where pay_num = #{diningResVO.payNum}
+	</update>
+	
+	<update id="completeDiningRes" parameterType="Map">
+		update dining_reservation
+		set dining_res_status = 'COMPLETED', admin_id = #{adminId}
+		where pay_num = #{payNum}
+	</update>
+	
+	<update id="cancelDiningRes" parameterType="Map">
+		update dining_reservation
+		set dining_res_status = 'CANCELED', admin_id = #{adminId}
+		where pay_num = #{payNum}
+	</update>
 </mapper>

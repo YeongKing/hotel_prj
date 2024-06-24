@@ -5,61 +5,85 @@
 <configuration>
     <properties resource="database.properties" />
 
-    <!-- typeAlias 예시 -->
-    <typeAliases>
-        <typeAlias type="kr.co.sist.elysian.admin.member.model.domain.MemberListDomain" alias="mld"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.member.model.vo.MemberVO" alias="mVO"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.member.model.domain.MemberDomain" alias="md"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.room.model.domain.RoomListDomain" alias="rld"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.room.model.domain.RoomDomain" alias="rd"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.room.model.vo.UpdateRoomVO" alias="urVO"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.room.model.vo.RoomVO" alias="rVO"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.dining.model.domain.DiningListDomain" alias="dld"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.dining.model.domain.DiningDomain" alias="dd"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.board.event.model.domain.EventListDomain" alias="eld"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.board.event.model.domain.EventDomain" alias="ed"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.board.qna.model.domain.QnaListDomain" alias="qld"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.board.qna.model.domain.QnaDomain" alias="qd"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.board.qna.model.vo.QnaVO" alias="qVO"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.board.notice.model.domain.NoticeListDomain" alias="nld"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.board.notice.model.domain.NoticeDomain" alias="nd"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.board.notice.model.vo.NoticeVO" alias="nVO"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.login.model.vo.AdminVO" alias="av"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.login.model.domain.AdminDomain" alias="ad"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.RoomResDomain" alias="rrd"/> 
-        <typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain" alias="drd"/>
+ 
         
-        
-        
-        
-        <typeAlias type="kr.co.sist.elysian.user.room.model.domain.RoomListDomain" alias="urld"/>
-        <typeAlias type="kr.co.sist.elysian.user.room.model.vo.RoomResVO" alias="rrVO"/> 
-    </typeAliases>
   
-    <!-- 환경 설정 -->
-    <environments default="development">
-        <environment id="development">
-            <transactionManager type="JDBC"/>
-            <dataSource type="POOLED">
-                <property name="driver" value="${driver}"/>
-                <property name="url" value="${connectionURL}"/>
-                <property name="username" value="${username}"/>
-                <property name="password" value="${password}"/>
-            </dataSource>
-        </environment>
-    </environments>
+	<!-- typeAlias예시 -->
+	<typeAliases>
+		<!-- admin -->
+		<typeAlias type="kr.co.sist.elysian.admin.member.model.domain.MemberListDomain" alias="mld"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.member.model.vo.MemberVO" alias="mVO"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.member.model.domain.MemberDomain" alias="md"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.room.model.domain.RoomListDomain" alias="rld"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.room.model.domain.RoomDomain" alias="rd"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.room.model.vo.UpdateRoomVO" alias="urVO"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.room.model.vo.RoomVO" alias="rVO"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.dining.model.domain.DiningListDomain" alias="dld"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.dining.model.domain.DiningDomain" alias="dd"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.dining.model.vo.DiningVO" alias="dVO"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.event.model.domain.EventListDomain" alias="eld"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.event.model.domain.EventDomain" alias="ed"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.event.model.vo.EventVO" alias="eVO"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.qna.model.domain.QnaListDomain" alias="qld"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.qna.model.domain.QnaDomain" alias="qd"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.qna.model.vo.QnaVO" alias="qVO"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.notice.model.domain.NoticeListDomain" alias="nld"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.notice.model.domain.NoticeDomain" alias="nd"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.notice.model.vo.NoticeVO" alias="nVO"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.login.model.vo.AdminVO" alias="av"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.login.model.domain.AdminDomain" alias="ad"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.RoomResDomain" alias="rrd"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.RoomInfoDomain" alias="rid"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain" alias="drd"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.RoomResVO" alias="roomResVO"/>
+		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.DiningResVO" alias="diningResVO"/> 
+  
+    <!-- user -->
+    <typeAlias type="kr.co.sist.elysian.user.login.model.vo.UserVO" alias="uv"/> 
+    <typeAlias type="kr.co.sist.elysian.user.login.model.domain.UserDomain" alias="ud"/>
+    <typeAlias type="kr.co.sist.elysian.user.dining.model.domain.DiningDomain" alias="dDomain"/> 
+    <typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain" alias="myPageRoomResDomain"/> 
+  		
+	</typeAliases>
 
-    <!-- 매퍼 위치 설정 -->
-    <mappers>
-        <mapper resource="mapper/admin/DashboardMapper.xml"/>
-        <mapper resource="mapper/admin/MemberMapper.xml"/>
-        <mapper resource="mapper/admin/RoomMapper.xml"/>
-        <mapper resource="mapper/admin/DiningMapper.xml"/>
-        <mapper resource="mapper/admin/EventMapper.xml"/>
-        <mapper resource="mapper/admin/QnaMapper.xml"/>
-        <mapper resource="mapper/admin/NoticeMapper.xml"/>
-        <mapper resource="mapper/admin/LoginMapper.xml"/>
-        <mapper resource="mapper/admin/ResMapper.xml"/>
-        <mapper resource="mapper/user/RoomMapper.xml"/>
-    </mappers>
+
+  <!-- 환경 설정 -->
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${connectionURL}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+
+  <!-- 매퍼 위치 설정 -->
+  <mappers>
+  	<!-- admin -->
+    <mapper resource="mapper/admin/DashboardMapper.xml"/>
+    <mapper resource="mapper/admin/MemberMapper.xml"/>
+    <mapper resource="mapper/admin/RoomMapper.xml"/>
+    <mapper resource="mapper/admin/DiningMapper.xml"/>
+	<mapper resource="mapper/admin/EventMapper.xml"/>
+	<mapper resource="mapper/admin/QnaMapper.xml"/>
+	<mapper resource="mapper/admin/NoticeMapper.xml"/>
+	
+    <mapper resource="mapper/admin/LoginMapper.xml"/>
+    <mapper resource="mapper/admin/ResMapper.xml"/>
+    
+    <!-- user -->
+    <mapper resource="mapper/member/LoginMapper.xml"/>
+    <mapper resource="mapper/member/MypageMapper.xml"/>
+    
+    <!-- 매퍼 추가되면 활성화 시켜주세요! -->
+<!--     
+    <mapper resource="mapper/admin/HomeMapper.xml"/>
+     -->
+
+  </mappers>
+  
+
 </configuration>

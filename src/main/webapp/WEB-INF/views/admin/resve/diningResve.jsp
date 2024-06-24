@@ -144,7 +144,7 @@
 		
 		// 현재 페이지 DataTable 인스턴스 생성
 		var table = $('#table1').DataTable({
-			processing : true,
+			processing: true,
 			serverSide: false,
 			ajax: {
 		       'url':'diningResList.do', 
@@ -286,7 +286,11 @@
 		} // createDateRangeFilter
 	    
 		// 테이블의 예약번호 클릭시
-		$(document).on('click', '.resNum', function() {
+		$(document).on('click', '.payNum', function() {
+			var payNum = $(this).text();
+			
+			loadData(payNum);
+			
 			// 모달 내의 모든 'is-invalid' 클래스 제거
 			$('#diningResDetail').find('.is-invalid').removeClass('is-invalid');
 	         
@@ -296,6 +300,54 @@
 			// Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
 	        $('#diningResDetail').modal('show');
 	    });
+		
+		function loadData(payNum) {
+			$.ajax({
+				url: 'diningResDetail.do',
+				type: 'POST',
+				contentType: 'application/json',
+				dataType: 'JSON',
+				data: JSON.stringify({payNum: payNum}),
+				error: function(xhr) {
+					console.log(xhr.status);
+					alert("문제가 발생했습니다. 담당자에게 문의해주세요.");
+				},
+				success: function(jsonObj) {
+					$("#payNum").val(jsonObj.payNum);
+					$("#diningName").val(jsonObj.diningName);
+					$("#visitDate").val(jsonObj.visitDate);
+					$("#diningResStatus").val(jsonObj.diningResStatus);
+					$("#visitPeople").val(jsonObj.visitPeopleStr);
+					$("#adultsCnt").val(jsonObj.adultsCntStr);
+					$("#childCnt").val(jsonObj.childCntStr);
+					$("#babyCnt").val(jsonObj.babyCntStr);
+					$("#visitTime").val(jsonObj.visitTime);
+					$("#visitorName").val(jsonObj.visitorName);
+					$("#visitorPhone").val(jsonObj.visitorPhone);
+					$("#visitorEmail").val(jsonObj.visitorEmail);
+					$("#visitorRequest").val(jsonObj.visitorRequest);
+					$("#cardName").val(jsonObj.cardName);
+					$("#cardNum").val(jsonObj.cardNum);
+					$("#payPrice").val(jsonObj.payPriceStr);
+					$("#diningResDate").val(jsonObj.diningResDateStr);
+					
+					// flatpickr 인스턴스를 가져와서 업데이트
+					$("#visitDate").flatpickr().setDate(jsonObj.visitDate);
+					$("#diningResDate").flatpickr().setDate(jsonObj.diningResDateStr);
+	    			
+					// flatpickr 인스턴스 생성 시 초기 값 설정
+					$("#visitDate").flatpickr({
+						defaultDate: jsonObj.visitDate,
+						dateFormat: "Y.m.d"
+					});
+
+					$("#diningResDate").flatpickr({
+						defaultDate: jsonObj.diningResDateStr,
+						dateFormat: "Y.m.d"
+					});
+				}
+			}); // ajax
+		} // loadData
 	 	
 	 	// 확인 모달창 불러오기
 	    var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
@@ -311,77 +363,217 @@
             confirmModal.show();
         }
 
-        function updateAction() {
-            console.log('수정 동작 수행');
-            // 서버로 수정 요청 보내기
-            // $.ajax({
-            //     url: 'delete_url',
-            //     method: 'POST',
-            //     data: { id: itemId },
-            //     success: function(response) {
-            //         console.log('수정 성공');
-            //     },
-            //     error: function(error) {
-            //         console.log('수정 실패', error);
-            //     }
-            // });
-        }
-
-        function cancelAction() {
-            console.log('취소 동작 수행');
-            // 서버로 삭제 요청 보내기
-            // $.ajax({
-            //     url: 'delete_url',
-            //     method: 'POST',
-            //     data: { id: itemId },
-            //     success: function(response) {
-            //         console.log('삭제 성공');
-            //     },
-            //     error: function(error) {
-            //         console.log('삭제 실패', error);
-            //     }
-            // });
-        }
+		// 예약 수정 버튼 클릭 시
+		$('#chkUpdateBtn').on('click', function() {
+			showModal('예약 수정 확인', '예약 정보를 수정하시겠습니까?', '예', function() {
+				var diningResStatus = $("#diningResStatus").val();
+				
+				if(diningResStatus !== '예약') {
+					alert("예약 수정은 예약 상태에서만 가능합니다.");
+					return;
+				} // end if
+				
+				updateAction();
+			});
+		});
         
-        function checkoutAction() {
-            console.log('체크아웃 동작 수행');
-            // 서버로 체크아웃 요청 보내기
-            // $.ajax({
-            //     url: 'update_url',
-            //     method: 'POST',
-            //     data: { id: itemId, data: newData },
-            //     success: function(response) {
-            //         console.log('체크아웃 성공');
-            //     },
-            //     error: function(error) {
-            //         console.log('체크아웃 실패', error);
-            //     }
-            // });
-        }
+		// 이용 완료 처리 버튼 클릭 시
+		$("#chkCompleteBtn").on('click', function() {
+			showModal('이용완료 처리 확인', '이용완료 처리하시겠습니까?', '예', function() {
+				var diningResStatus = $("#diningResStatus").val();
+				var visitDate = $("#visitDate").val();
+				var today = new Date();
+				var todayDateOnly = today.getFullYear() + '.' + String(today.getMonth()+1).padStart(2, '0') + '.' + String(today.getDate()).padStart(2, '0');
 
-        // 예약 수정 버튼 클릭 시
-        $('#chkUpdateBtn').on('click', function() {
-            showModal('수정 확인', '수정하시겠습니까?', '예', function() {
-                updateAction();
-                alert('수정 동작 수행');
-            });
-        });
-	 	
-	 	// 예약 삭제 버튼 클릭 시
-        $('#chkCancelBtn').on('click', function() {
-            showModal('취소 확인', '취소하시겠습니까?', '예', function() {
-            	cancelAction();
-                alert('취소 동작 수행');
-            });
-        });
+				if(diningResStatus === '이용완료') {
+					alert("이미 이용 완료된 예약입니다.");
+					return;
+				} // end if
+				
+				if(diningResStatus !== '예약') {
+					alert("이용완료 처리는 예약 상태에서만 가능합니다.");
+					return;
+				} // end if
+				
+				if(visitDate !== todayDateOnly) {
+	    			alert("이용완료 처리는 방문일 당일에만 가능합니다.");
+	    			return;
+	    		} // end if
+				
+	    		completeAction();
+			});
+		})
+        
+		// 예약 취소 버튼 클릭 시
+		$("#chkCancelBtn").on('click', function() {
+			showModal('예약 취소 확인', '예약을 취소처리하시겠습니까?', '예', function() {
+				var diningResStatus = $("#diningResStatus").val();
+				
+				if(diningResStatus === '이용완료') {
+					alert("이미 이용 완료된 예약입니다. 취소 불가합니다.");
+					return;
+				} // end if
 
-	 	// 체크아웃 처리 버튼 클릭 시
-        $('#chkCheckoutBtn').on('click', function() {
-            showModal('체크아웃 확인', '체크아웃 처리하시겠습니까?', '예', function() {
-                checkoutAction();
-                alert('체크아웃 동작 수행');
-            });
-        });
+				if(diningResStatus !== '예약') {
+					alert("예약 취소는 예약 상태에서만 가능합니다.");
+					return;
+				} // end if
+				
+				cancelAction();
+			});
+		})
+        
+		// 모달이 닫혔을 때 데이터 테이블 다시 로드
+		$("#diningResDetail").on('hidden.bs.modal', function() {
+			$("#table1").DataTable().ajax.reload(null, false); // false는 페이징 유지
+		});
+		
+		// 예약 정보 수정 처리 함수
+		function updateAction() {
+			var payNum = $("#payNum").val();
+			
+			// 수정 가능한 데이터
+			var visitorName = $("#visitorName").val();
+			var visitorPhone = $("#visitorPhone").val();
+			var visitorEmail = $("#visitorEmail").val();
+			var visitorRequest = $("#visitorRequest").val();
+			
+			if(visitorName === '') {
+				alert("방문자 이름을 입력해주세요.");
+				
+				setTimeout(function() {
+					$("#visitorName").focus();
+				}, 100); // 100ms 후에 focus 설정
+				
+				return;
+			} // end if
+			
+			if(visitorPhone === '') {
+				alert("예약자의 연락처를 입력해주세요.");
+	    		
+				setTimeout(function() {
+					$("#visitorPhone").focus();
+				}, 100); // 100ms 후에 focus 설정
+	    		
+				return;
+			} // end if
+			
+			var patternPhone = /010-[^0][0-9]{3}-[0-9]{4}$/;
+	    	
+			if(!patternPhone.test(visitorPhone)) {
+				alert("연락처의 형식(010-1234-5678)을 확인해주세요.");
+	    		
+				setTimeout(function() {
+					$("#visitorPhone").focus();
+				}, 100); // 100ms 후에 focus 설정
+	    		
+				return;
+			} // end if
+	    	
+			if(visitorEmail === '') {
+				alert("예약자의 이메일을 입력해주세요.");
+	    		
+				setTimeout(function() {
+					$("#visitorEmail").focus();
+				}, 100); // 100ms 후에 focus 설정
+	    		
+				return;
+			} // end if
+	    	
+			var patternEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+	    	
+			if(visitorEmail.length < 6 || !patternEmail.test(visitorEmail)) {
+				alert("이메일 형식이 맞지 않습니다. 확인해주세요.");
+	    		
+	    		setTimeout(function() {
+					$("#visitorEmail").focus();
+				}, 100); // 100ms 후에 focus 설정
+	    		
+				return;
+			} // end if
+			
+			var diningResVO = {
+				payNum: payNum,
+				visitorName: visitorName,
+				visitorPhone: visitorPhone,
+				visitorEmail: visitorEmail,
+				visitorRequest: visitorRequest
+			}
+			
+			$.ajax({
+				url: 'modifyDiningRes.do',
+				type: 'POST',
+				contentType: 'application/json',
+				dataType: 'JSON',
+				data: JSON.stringify(diningResVO),
+				error: function(xhr) {
+					console.log(xhr.status);
+					alert("문제가 발생했습니다. 담당자에게 문의해주세요.");
+				},
+				success: function(jsonObj) {
+					if(jsonObj === true) {
+						alert("예약 정보가 정상적으로 수정되었습니다.");
+					} else {
+						alert("예약 정보가 정상적으로 수정되지 않았습니다. 담당자에게 문의해주세요.");
+					} // end else
+					// 예약 정보 수정은 이미 수정할 값으로 선택되거나 수정된 값이 입력되어있는 상태이므로 reload 불필요
+				}
+			}); // ajax
+		} // updateAction
+		
+		// 이용완료 처리 함수
+		function completeAction() {
+			var payNum = $("#payNum").val();
+			$.ajax({
+				url: 'completeDiningRes.do',
+				type: 'POST',
+				contentType: 'application/json',
+				dataType: 'JSON',
+				data: JSON.stringify({payNum : payNum}),
+				error: function(xhr) {
+					console.log(xhr.status);
+					alert("문제가 발생했습니다. 담당자에게 문의해주세요.");
+				},
+				success: function(jsonObj) {
+					if(jsonObj === true) {
+			            alert("이용완료 처리되었습니다.");
+			            loadData(payNum);
+					} else {
+						alert("이용완료 처리가 정상적으로 처리되지 않았습니다. 담당자에게 문의해주세요.");
+					} // end else
+				},
+				complete: function() {
+					$("#diningResStatus").load(location.href + ' #diningResStatus');
+				}
+			}); // ajax
+		} // confirmAction
+		
+		// 예약 취소 처리 함수
+		function cancelAction() {
+			var payNum = $("#payNum").val();
+			$.ajax({
+				url: 'cancelDiningRes.do',
+				type: 'POST',
+				contentType: 'application/json',
+				dataType: 'JSON',
+				data: JSON.stringify({payNum : payNum}),
+				error: function(xhr) {
+					console.log(xhr.status);
+					alert("문제가 발생했습니다. 담당자에게 문의해주세요.");
+				},
+				success: function(jsonObj) {
+					if(jsonObj === true) {
+			            alert("예약 취소 처리되었습니다.");
+			            loadData(payNum);
+					} else {
+						alert("예약 취소가 정상적으로 처리되지 않았습니다. 담당자에게 문의해주세요.");
+					} // end else
+				},
+				complete: function() {
+					$("#diningResStatus").load(location.href + ' #diningResStatus');
+				}
+			}); // ajax
+		} // cancelAction
 	 	
 		// 동적으로 생성된 input type="text"에 flatpickr 스크립트 파일을 적용하기 위해 파일 추가
 		$.getScript("/hotel_prj/admin/assets/extensions/flatpickr/flatpickr.min.js")

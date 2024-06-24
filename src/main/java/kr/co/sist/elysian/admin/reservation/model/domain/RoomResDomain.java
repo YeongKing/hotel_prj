@@ -13,10 +13,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RoomResDomain {
 
-	private int num, roomFloor, roomId, adultsNum, kidsNum, cardNum, payPrice, bedCnt ;
-	private String payNum, roomResStatus, engLName, engFName, guestPhone, guestEmail, guestRequest, cardCode, roomRankName, viewName, bedName ;
-	private Date checkIn, checkOut, roomResDate ;
+	private int num, roomFloor, roomId, adultsNum, kidsNum, payPrice, bedCnt ;
+	private String payNum, roomResStatus, engLName, engFName, guestPhone, guestEmail, guestRequest, cardName, cardNum, roomRankName, viewName, bedName ;
+	private Date checkIn, checkOut, roomResDate, payTime ;
 	
 	private String room, engName, checkInStr, checkOutStr, roomResDateStr;
+	private String adultsNumStr, kidsNumStr, payPriceStr, payTimeStr;
 	
 } // class

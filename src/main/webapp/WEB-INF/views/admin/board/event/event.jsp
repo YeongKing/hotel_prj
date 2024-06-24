@@ -55,7 +55,6 @@
 </style>
 
 <script type="text/javascript">
-
 </script>
 </head>
 
@@ -169,25 +168,25 @@
             <div class="modal-header">
                 <h5 class="modal-title">이벤트 등록</h5>
             </div>
-            <form id="evnetDetailForm" action="#" class="form px-5" data-parsley-validate>
+            <form id="eventDetailForm" action="#" class="form px-5" data-parsley-validate>
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <div>
                             <div class="form-group">
                                 <label for="addEventNum">이벤트 아이디</label>
-                                <input type="text" class="form-control" id="addEventNum" placeholder="event" disabled>
+                                <input type="text" class="form-control" id="addEventNum" name="eventNum" placeholder="event" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="addEventTitle">이벤트명</label>
-                                <input type="text" class="form-control" id="addEventTitle" placeholder="">
+                                <input type="text" class="form-control" id="addEventTitle" name="eventTitle" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="openTime">이벤트 시작일</label>
-                                <input type="text" class="form-control" id="addEventStartDate" placeholder="yyyy-mm-dd">
+                                <input type="text" class="form-control" id="addEventStartDate" name="eventStartDate" placeholder="yyyy-mm-dd">
                             </div>
                             <div class="form-group">
                                 <label for="closeTime">이벤트 종료일</label>
-                                <input type="text" class="form-control" id="addEventEndDate" placeholder="yyyy-mm-dd">
+                                <input type="text" class="form-control" id="addEventEndDate" name="eventEndDate" placeholder="yyyy-mm-dd">
                             </div>
 
                         </div>
@@ -195,18 +194,18 @@
                     <div class="col-12 col-lg-6">
 						<div class="form-group">
    							 <label for="addEventContent">이벤트 내용</label>
-   							 <textarea class="form-control" id="addEventContent" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
+   							 <textarea class="form-control" id="addEventContent" name="eventContent" rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
 						</div>
 						<div class="form-group">
                                <label for="addEventImg">이벤트 대표 이미지</label>
                                <div class="input-group">
-                                   <input type="file" class="form-control" id="addEventImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                   <input type="file" class="form-control" id="addEventImg" name="eventMainImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                                    <button class="btn btn-primary" type="button" id="inputGroupFileAddon04">Upload</button>
                                 </div>
                         </div>	<div class="form-group">
                                <label for="addEventSubImg">이벤트 부 이미지</label>
                                <div class="input-group">
-                                   <input type="file" class="form-control" id="addEventSubImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                   <input type="file" class="form-control" id="addEventSubImg" name="eventSubImg" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                                    <button class="btn btn-primary" type="button" id="inputGroupFileAddon04">Upload</button>
                                 </div>
                         </div>
@@ -235,13 +234,10 @@
 						<div class="modal-header">
 							<h5 class="modal-title">이벤트 상세 조회</h5>
 							<div class="d-flex justify-content-end">
-								<button type="button" id="chkDeleteBtn" class="btn btn-danger">
-									<i class="bx bx-x d-block d-sm-none"></i> <span
-										class="d-none d-sm-block">이벤트 삭제</span>
-								</button>
+
 							</div>
 						</div>
-						<form id="evnetDetailForm" action="#" class="form px-5"
+						<form id="eventDetailFormUpdate" action="#" class="form px-5"
 							data-parsley-validate>
 							<div class="row">
 								<div class="col-12 col-lg-6">
@@ -252,27 +248,30 @@
 									</div>
 									<div class="form-group">
 										<label for="updateEventTitle">이벤트명</label> <input type="text"
-											class="form-control" id="updateEventTitle" placeholder="">
+											class="form-control" id="updateEventTitle" name="eventTitle" placeholder="">
 									</div>
 									<div class="form-group">
 										<label for="updateEventStartDate">이벤트 시작일</label> <input type="text"
-											class="form-control" id="updateEventStartDate" placeholder="00:00">
+											class="form-control" id="updateEventStartDate" name="eventStartDate" placeholder="00:00">
 									</div>
 									<div class="form-group">
 										<label for="updateEventEndDate">이벤트 종료일</label> <input type="text"
-											class="form-control" id="updateEventEndDate" placeholder="00:00">
+											class="form-control" id="updateEventEndDate" name="eventEndDate" placeholder="00:00">
 									</div>
 								</div>
 								<div class="col-12 col-lg-6">
 									<div class="form-group">
 										<label for="updateEventContent">이벤트 내용</label>
-										<textarea class="form-control" id="updateEventContent"
+										<textarea class="form-control" id="updateEventContent" name="eventContent"
 											rows="10" style="max-height: 200px; overflow-y: auto;"></textarea>
 									</div>
 									<div class="form-group">
 										<label for="updateEventImg">이벤트 대표 이미지</label>
+										<br>
+										<input id="updateEventImgText" name="eventMainImg" class="upload-name" value="기존 파일" disabled="disabled">
+										<label style="color: red; margin-bottom: 20px" ><small>*기존 이미지</small></label>
 										<div class="input-group">
-											<input type="file" class="form-control" id="updateEventImg"
+											<input type="file" class="form-control" id="updateEventImg" name="eventMainImg"
 												aria-describedby="GroupFileAddon04" aria-label="Upload">
 											<button class="btn btn-primary" type="button"
 												id="updateGroupFileAddon04">Upload</button>
@@ -280,8 +279,11 @@
 									</div>
 									<div class="form-group">
 										<label for="updateEventSubImg">이벤트 부 이미지</label>
+										<br>
+										<input id="updateEventSubImgText"  class="upload-name" value="기존 파일" disabled="disabled">
+                                        <label style="color: red; margin-bottom: 20px" ><small>*기존 이미지</small></label>
 										<div class="input-group">
-											<input type="file" class="form-control" id="updateEventSubImg"
+											<input type="file" class="form-control" id="updateEventSubImg" name="eventSubImg"
 												aria-describedby="GroupFileAddon04" aria-label="Upload">
 											<button class="btn btn-primary" type="button"
 												id="updateGroupFileAddon04">Upload</button>
@@ -355,6 +357,17 @@ $(document).ready(function() {
        // Bootstrap 모달 메소드를 사용하여 모달을 보여줍니다.
        $('#addEventModal').modal('show');
 		
+       $.ajax({
+           url: 'addEventModal.do',
+           method: 'GET',
+           success: function(data) {
+               $("#addEventNum").val(data);
+           },
+           error: function(xhr, status, error) {
+               alert("Ajax Error: ", status, error); // 디버그 로그
+               alert("문제가 발생했습니다.");
+           }
+       });
 	})
 	
 	 // 테이블의 이벤트 번호 클릭시
@@ -380,39 +393,14 @@ $(document).ready(function() {
         		$("#updateEventStartDate").val(jsonObj.eventStartDate);
         		$("#updateEventEndDate").val(jsonObj.eventEndDate);
         		$("#updateEventContent").val(jsonObj.eventContent);
-        		/* $("#updateEventImg").val(jsonObj.eventMainImg);
-        		$("#updateEventSubImg").val(jsonObj.eventSubImg); */
+        		$("#updateEventImgText").val(jsonObj.eventMainImg);
+        		$("#updateEventSubImgText").val(jsonObj.eventSubImg);
         		
 
         	}
         	
-        	
-        	
         })//ajax
     	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-
       // 이 부분에서 모달이 열리기 전에 모든 'is-invalid' 클래스를 제거합니다.
          // 모달 내의 모든 'is-invalid' 클래스 제거
          $('#eventDetailModal').find('.is-invalid').removeClass('is-invalid');
@@ -435,6 +423,79 @@ $(document).ready(function() {
         });
         confirmModal.show();
     }
+    
+    //이벤트 등록 ajax
+    function registerAction() {
+				var form = $("#eventDetailForm")[0];
+				var formData = new FormData(form);
+				var adminId = "${adminId}";
+				
+				// adminId를 FormData에 추가
+			    formData.append("adminId", adminId);
+			    // eventNum을 생성하여 FormData에 추가
+				formData.append("eventNum",$("#addEventNum").val());
+              
+			    $.ajax({
+                     url: 'addEvent.do',
+                     method: 'POST',
+                     processData: false,
+                     contentType: false,
+                     data: formData,
+                     success: function(response) {
+                    	 if(response){
+                         alert('등록을 성공적으로 마쳤습니다');
+						 window.location.reload();     
+                    	 }else{
+                    		 alert('등록에 실패하였씁니다');
+                    	 }
+                     },
+                     error: function(error) {
+                    	 alert('문제가 발생했습니다', error);
+                     }
+                 });
+            }//ajax
+            
+      //이벤트 수정 ajax
+      function updateAction() {
+				var form = $("#eventDetailFormUpdate")[0];
+				var formData = new FormData(form);
+				formData.append("eventNum", $("#updateEventNum").val());
+					
+				//파일을 고르지 않았을시 기존 이미지 파일을 formData에 담는다
+				var mainImgInput = $("#updateEventImg")[0];
+				var subImgInput = $("#updateEventSubImg")[0];
+				
+				if(mainImgInput.files.length === 0){
+					formData.append("existMainImg", $("#updateEventImgText").val());
+				}
+				if(subImgInput.files.length === 0){
+					formData.append("existSubImg", $("#updateEventSubImgText").val());
+				}
+				
+                 $.ajax({
+                     url: 'updateEvent.do',
+                     method: 'POST',
+                     data: formData,
+                     processData: false, // 필수: 파일 업로드를 위해 false로 설정
+                     contentType: false, // 필수: 파일 업로드를 위해 false로 설정
+                     success: function(response) {
+                         if(response){
+                    		 alert('수정을 성공적으로 마쳤습니다');  
+    						 window.location.reload();     
+                         }else{
+                        	 alert('수정에 실패하였습니다')
+                         }
+                     },
+                     error: function(error) {
+                         alert('문제가 발생했습니다', error);
+                     }
+                 });
+            }//ajax  
+            
+            
+	  
+
+    
 	
 	 // 등록 버튼 클릭 시
     $('#chkAddBtn').on('click', function() {
@@ -444,14 +505,7 @@ $(document).ready(function() {
         });
     });
 
-    // 삭제 버튼 클릭 시
-    $('#chkDeleteBtn').on('click', function() {
-        showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
-            deleteAction();
-            alert('삭제 동작 수행');
-        });
-    });
-
+  
     // 수정 버튼 클릭 시
     $('#chkUpdateBtn').on('click', function() {
         showModal('수정 확인', '수정하시겠습니까?', '예', function() {

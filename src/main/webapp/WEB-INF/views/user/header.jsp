@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8" trimDirectiveWhitespaces="true"
  info="" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="header">
 <!-- header type02 추가 되는 경우 mainArea02, mainArea03, mainArea05  -->
@@ -52,8 +53,22 @@
 		<!-- //allMenu -->
 		<div class="gnbUtil">
 		<ul>
-			<li><a href="http://localhost/hotel_prj/user/login.do" id="login">로그인</a></li>
+		<c:choose>
+            <c:when test="${not empty userId}">
+                <li><a href="http://localhost/hotel_prj/user/logout.do" id="logout">로그아웃</a></li>
+            </c:when>
+            <c:otherwise>
+                <li><a href="http://localhost/hotel_prj/user/login.do" id="login">로그인</a></li>
+            </c:otherwise>
+        </c:choose>
+		<c:if test="${not empty error}">
+    		<script type="text/javascript">
+        		alert('${error}');
+    		</script>
+		</c:if>
+
 			<li><a href="http://localhost/hotel_prj/user/join.do" id="join">회원가입</a></li>
+			<li><a href="http://localhost/hotel_prj/user/mypage.do" id="mypage">마이페이지</a></li>
 			<li><a href="http://localhost/hotel_prj/user/roomResList.do" id="confirmReserv">예약확인</a></li>
 		</ul>
 					

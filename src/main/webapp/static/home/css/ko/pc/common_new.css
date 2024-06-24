@@ -308,7 +308,7 @@ p.listDep1 em, ul.listDep1 li em, p.listDep2 em, ul.listDep2 li em{color:#989442
 .listDep1 li+li, .listDep2, .listDep1 li > .listDep2{margin-top:7px}
 
 p.txtGuide, .txtGuide li{position:relative;color:#888;padding-left:16px;font:16px gothamL, notokrL, playfair;letter-spacing:-.01em}
-p.txtGuide:before, .txtGuide li:before{content:'＊';position:absolute;left:0;top:4px;font:600 15px gothamL} /* font 수정 yjs */
+p.txtGuide:before, .txtGuide li:before{content:'*';position:absolute;left:0;top:4px;font:600 15px gothamL} /* font 수정 yjs */
 .txtGuide li + li{margin-top:6px}
 
 p.txtReference {position:relative;color:#000;padding-left:16px;font:16px gothamL, notokrL, playfair;letter-spacing:-.01em}

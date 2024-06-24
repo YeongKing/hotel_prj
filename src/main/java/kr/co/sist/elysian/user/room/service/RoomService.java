@@ -1,5 +1,6 @@
 package kr.co.sist.elysian.user.room.service;
 
+
 import java.util.List;
 
 import org.apache.ibatis.exceptions.PersistenceException;
@@ -12,6 +13,7 @@ import kr.co.sist.elysian.user.room.repository.RoomDAO;
 
 @Service("userRoomService")
 public class RoomService {
+
 
 	@Autowired(required = false)
 	private RoomDAO rDAO;

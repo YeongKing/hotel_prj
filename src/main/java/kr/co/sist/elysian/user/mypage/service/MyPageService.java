@@ -1,6 +1,5 @@
 package kr.co.sist.elysian.user.mypage.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,14 +77,9 @@ public class MyPageService{
 	 * @param roomResStatus
 	 * @return roomResList
 	 */
-	public List<RoomResDomain> searchRoomResList(String userId, String roomResStatus) {
+	public List<RoomResDomain> searchRoomResList(Map<String, String> map) {
 		List<RoomResDomain> roomResList = null;
-		Map<String, String> map = new HashMap<String, String>();
 		
-		System.out.println(roomResStatus);
-		map.put("userId", userId);
-		map.put("roomResStatus", roomResStatus != null ? roomResStatus : "ALL");
-		System.out.println(map);
 		try {
 			roomResList = myPageDAO.selectRoomResList(map);
 		} catch (PersistenceException pe) {
@@ -93,5 +87,37 @@ public class MyPageService{
 		} // end catch
 		return roomResList;
 	} // searchRoomResList
+	
+	/**
+	 * DAO에서 가져온 roomResDetail을 반환
+	 * @param payNum
+	 * @return roomResDetail
+	 */
+	public RoomResDomain searchRoomResDetail(String payNum) {
+		RoomResDomain roomResDetail = null;
+		try {
+			roomResDetail = myPageDAO.selectRoomResDetail(payNum);
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		return roomResDetail;
+	} // searchRoomResDetail
+	
+	public String modifyRoomResToCancel(String payNum) {
+		JSONObject jsonObj = new JSONObject();
+		String resultCode = "ERROR";
+		
+		try {
+			int result = myPageDAO.updateRoomResToCancel(payNum);
+			if(result == 1) {
+				resultCode = "SUCCESS";
+			} // end if
+		} catch(PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		
+		jsonObj.put("resultCode", resultCode);
+		return jsonObj.toJSONString();
+	} // modifyRoomResToCancel
 	
 } // class

@@ -42,165 +42,45 @@
 		$("#printDateText").append(ckin+" - "+ckout+" ("+diffDay+"박)");
 	}); // ready
 
-	//렌딩 라이브러리 클릭 이벤트
-	/* $(document).on("click", "input[type='checkbox'][id^='landing']", function(){
-		//랜딩라이브러리 3개 초과 선택시 alert
-		if(4 <= jQuery("input[type='checkbox'][id^='landing']:checked").length){
-			alert('렌딩 라이브러리는 최대 3개까지 선택 가능합니다.'); //렌딩 라이브러리는 최대 3개까지 선택 가능합니다.
-			return false;
-		}
-	}); */
-
-	/*
-	랜딩라이브러리 레이어 팝업 OPEN
-	*/
-	/* function fncOpenGrslayer(hotlSysCode, confirmNo, legNum){
-		commonJs.showLoadingBar();
-		
-		var param = {
-			hotlSysCode : hotlSysCode,
-			confirmationNumber : confirmNo,
-			legNumber : legNum
-		}
-		
-		$("#legNumber").val("");
-		
-		jQuery.ajax({
-			type : "POST",
-			url : "/resve/room/getGrsList.json",
-			cache : false,
-			dataType : "json",
-			data : param,
-			global : false,
-			success : function(data){
-				var resultCode = data.resultCode;
-				var resultMsg = data.resultMsg;
-				
-				if(resultCode == "SUCCESS"){
-					
-					
-					$("#landingArea").html("");
-					
-					var landingHtml = "";
-					
-					var list = data.grsList;
-					if(list.length > 0){
-						for(var i = 0; i < list.length; i++){
-							
-							landingHtml += "<li class=\"frmCheck\">";
-							var isChecked = list[i].checked == "checked" ? list[i].checked : "";
-							
-							console.log("isChecked : " + isChecked);
-							
-							if(Number(list[i].availableLandingLibrary) > 0){
-								landingHtml += "<input type=\"checkbox\" id=\"landing"+i+"\" "+isChecked+" value=\""+list[i].itemCode+"\">";	
-							}else{
-								
-								if(isChecked == "checked"){
-									landingHtml += "<input type=\"checkbox\" id=\"landing"+i+"\" "+isChecked+" value=\""+list[i].itemCode+"\">";
-								}else{
-									landingHtml += "<input type=\"checkbox\" id=\"landing"+i+"\" disabled=\"disabled\" value=\""+list[i].itemCode+"\">";	
-								}
-							}
-							
-							landingHtml += "<label for=\"landing"+i+"\">"+list[i].itemName+"</label>";
-							landingHtml += "</li>";
-						}
-						$("#legNumber").val(legNum);
-						$("#landingArea").html(landingHtml);
-					}
-					commonJs.closeLoadingBar();
-					commonJs.popShow($('#layerPop1'));
-				}else{
-					alert(resultMsg);
-				}
-			},
-			error:function(r, s, e){
-				alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
-			}
-		});
-	} */
-
-	/* function fncUpdateLib(){
-		commonJs.showLoadingBar();
-		
-		var bpArr = new Array();
-		var bpNmArr = new Array();
-		var checkLength = $("input[id^='landing']:checked").length;
-		var legNumber = jQuery("#legNumber").val()
-		
-			
-		$("input[id^='landing']").each(function(){
-			if($(this).is(":checked")){
-				bpArr.push($(this).val());
-				bpNmArr.push(jQuery(this).closest("li.frmCheck").find("label").text());
-			}
-		});
-		
-		if(checkLength > 0){
-			$("#bp").val(bpArr.toString());
-			$("#bpNm").val(bpNmArr.toString());	
-		}else{
-			$("#bp").val("");
-			$("#bpNm").val("");
-		}
-		
-		var param = {
-			hotlSysCode : jQuery("#hotlSysCode").val()
-			,ckinDate : jQuery("#ckinDate").val()
-			,ckoutDate : jQuery("#ckoutDate").val()
-			,confirmationNumber : jQuery("#confirmationNumber").val()
-			,legNumber : legNumber
-			,bp : jQuery("#bp").val()
-			,bpNm : jQuery("#bpNm").val()
-		};
-		
-		jQuery.ajax({
-			type : "POST",
-			url : "/resve/room/updateGrs.json",
-			cache : false,
-			dataType : "json",
-			data : param,
-			global : false,
-			success : function(data){
-				var resultCode = data.resultCode;
-				var resultMsg = data.resultMsg;
-				
-				if(resultCode == "SUCCESS"){
-					alert('수정되었습니다.');
-					$("#bpNm"+legNumber).text(bpNmArr.toString());
-					commonJs.popClose($('#layerPop1'));
-				}else{
-					alert(resultMsg);
-				}
-				
-				commonJs.closeLoadingBar(); //로딩바 hide
-			},
-			error:function(r, s, e){
-				alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
-				commonJs.closeLoadingBar(); //로딩바 hide
-			}
-		});
-	} */
-
 	function fncResveCancel(){
 		commonJs.showLoadingBar(); //로딩바 show
 		var payNum = $("#payNum").val();
+		
+		// 취소 규정 날짜 유효성 검증
+		var checkIn = $("#checkIn").val();
+		var today = new Date();
+		var todayDateOnly = today.getFullYear() + '.' + String(today.getMonth()+1).padStart(2, '0') + '.' + String(today.getDate()).padStart(2, '0');
+		var tomorrow = new Date(today);
+		tomorrow.setDate(today.getDate()+1);
+		var tomorrowDateOnly = tomorrow.getFullYear() + '.' + String(tomorrow.getMonth()+1).padStart(2, '0') + '.' + String(tomorrow.getDate()).padStart(2, '0');
+		
+		if(todayDateOnly === checkIn) {
+			alert("당일 취소는 불가합니다.");
+			commonJs.closeLoadingBar(); //로딩바 hide
+			commonJs.popClose($('#layerPop2'));
+			return;
+		} // end if
+		
+		if(tomorrowDateOnly === checkIn) {
+			var result = confirm("1일 전 취소는 50% 환불됩니다. 취소하시겠습니까?");
+
+			if(result === false) {
+				commonJs.closeLoadingBar(); //로딩바 hide
+				commonJs.popClose($('#layerPop2'));
+				return;
+			} // end if
+		} // end if
+		
 		var param = {
 				payNum : payNum,
 			}
 	
-	    //2022-12-26 추가 seo ga4
-	    //gfncPushRoomCancelSeoData(payNum);
-		
 		$.ajax({
 			type : "POST",
 			url : "resvCancel.do",
-			//cache : false,
 			dataType : "json",
 			contentType : 'application/json',
 			data : JSON.stringify({payNum : payNum}),
-			//global : false,
 			success : function(jsonObj){
 				var resultCode = jsonObj.resultCode;
 				if(resultCode == "SUCCESS"){
@@ -255,19 +135,11 @@
 		
 	<form id="form" name="form">
 		<input type="hidden" name="payNum" id="payNum" value="${roomResDomain.payNum}" />
-		<%-- <input type="hidden" name="checkIn" id="checkIn" value="${roomResDomain.checkIn}" />
+		<input type="hidden" name="checkIn" id="checkIn" value="${roomResDomain.checkIn}" />
 		<input type="hidden" name="checkOut" id="checkOut" value="${roomResDomain.checkOut}" />
-		<input type="hidden" name="engLName" id="engLName" value="${roomResDomain.engLName}" />
-		<input type="hidden" name="engFName" id="engFName" value="${roomResDomain.engFName}" /> --%>
 		<input type="hidden" name="searchDataType" value="SEOUL" />
-		<!-- <input type="hidden" name="searchDataBeginDe" value="2024.06.24"/>
-		<input type="hidden" name="searchDataEndDe" value="2024.09.24"/> -->
 		<input type="hidden" name="agoMonth" value="3"/>
-		<!-- <input type="hidden" name="searchCtgry" value="ALL"/> -->
-		<!-- <input type="hidden" name="roomResveSn" id="roomResveSn" value="2044066" />
-		<input type="hidden" name="legNumber" id="legNumber" />
-		<input type="hidden" name="bp" id="bp" />
-		<input type="hidden" name="bpNm" id="bpNm" /> -->
+		<input type="hidden" name="searchCtgry" value="ALL"/>
 	</form>
 			
 		<h2 class="titDep2"><c:out value="${roomResDomain.roomInfo}"/></h2>
@@ -426,26 +298,6 @@
 </div>
 <!-- //container -->
 
-<!-- 랜딩 라이브러리(추가/수정) Layer -->
-<!-- <div id="layerPop1" class="layerPop">
-	<div class="layerCont">
-		<div class="reserveOpArea">
-			<strong class="tit">렌딩 라이브러리 추가/수정</strong>
-			<ul class="frmList type03" id="landingArea">
-			</ul>
-				<p class="txtGuide">렌딩 라이브러리 사전 예약은 3개까지 가능하며, 추가로 물품 예약을 원하시는 경우 현장에서 요청 부탁드립니다.</p>
-				<p class="txtGuide">숙박 날짜에 수량이 소진된 물품은 선택이 불가능합니다.</p>
-				<p class="txtGuide">체크인 당일 재고 상황에 따라 대여가 어려울 수 있습니다.</p>
-				<div class="btnArea">
-					<button type="button" class="btnSC btnM" onclick="commonJs.popClose($('#layerPop1'));">취소</button>
-					<button type="button" class="btnSC btnM active" onclick="fncUpdateLib();">수정</button>
-				</div>
-		</div>
-		<button type="button" class="btnClose" onclick="commonJs.popClose($('#layerPop1'));">닫기</button>
-	</div>
-</div> -->
-<!-- //랜딩 라이브러리(추가/수정) Layer -->
-	
 <!-- 예약취소 Layer -->
 <div id="layerPop2" class="layerPop">
 	<div class="layerCont">
@@ -502,4 +354,3 @@
 
 </body>
 </html>
-

@@ -12,7 +12,7 @@ import kr.co.sist.elysian.admin.room.model.vo.RoomVO;
 import kr.co.sist.elysian.admin.room.model.vo.UpdateRoomVO;
 import kr.co.sist.elysian.admin.room.repository.RoomDAO;
 
-@Service
+@Service("adminRoomService")
 public class RoomService {
 
 	

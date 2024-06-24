@@ -1176,7 +1176,7 @@ function fncGoResv(){
                                     <div class="intArea">
                                         <div class="intBox">
 			                                <span class="frm">
-												<input type="radio" id="cardType01" name="cardType2" value="cardtp01"><label for="cardType01">개인</label>
+												<input type="radio" id="cardType01" name="cardType2" value="cardtp01" checked="checked"><label for="cardType01" >개인</label>
 											</span>
 
                                         </div>
@@ -1365,21 +1365,7 @@ function fncGoResv(){
 								</li>
 
 							</ul>
-							<p class="txtGuide">
-								위 개인정보 수집 · 이용에 대한 동의를 거부할 수 있으나 동의 거부 시 객실 예약이 불가합니다.
-							</p>
 
-                            <ul class="toggleList agreeCont" style="margin-top : 50px;">
-                                <li class="toggleOn">
-									<span class="frm type02">
-										<input type="checkbox" id="creditCardAgree" name="creditCardAgree" value="Y">
-										<label for="creditCardAgree">[선택] 다음번 신용카드정보 재사용을 위해 위 신용카드 정보를 저장하는데 동의하십니까?</label>
-									</span>
-                                </li>
-                            </ul>
-                            <p class="txtGuide">
-                                동의 거부 시 신용카드정보 재사용이 제한됩니다.
-                            </p>
 
 
 
@@ -1513,22 +1499,7 @@ function fncGoResv(){
                                                                         </li>
                                                                     
                                                                     
-                                                                    
-                                                                
-                                                            
-                                                            
-                                                        
-													
-                                                        
-                                                            
-                                                                
-                                                                    
-                                                                    
-                                                                    
-                                                                
-                                                            
-                                                            
-                                                        
+
 													
 												</ul>
 											
@@ -1566,6 +1537,56 @@ function fncGoResv(){
 	</div>
 </form>
 
+
+
+	<div id="loginLayerPop" class="layerPop login" style="display:none;">
+		<div class="layerCont" style="top: 50%; left: 50%; margin-top: -319.5px; margin-left: -520px;">
+			<div class="compLayer">
+				<h2 class="compTit">로그인<!-- 로그인 --></h2>
+				<div class="compCont"><!-- 20200528 수정 : width(삭제) -->
+					<div class="loginBox">
+						<div class="membersLogin">
+							<p class="loginFrm"><!-- 필수입력서식에 미입력 발생 시, error 클래스 추가 alertMessage 노출, 포커스가 가면 error 클래스 제거 -->
+								<span class="alertMessage" style="display:none;">아이디를 입력해주세요.<!-- 아이디를 입력해주세요. --></span>
+								<label class="hidden" for="frm_userid">아이디</label>
+								<input type="text" id="frm_userid" placeholder="아이디" aria-required="true" />
+							</p>
+							<p class="loginFrm"><!-- 필수입력서식에 미입력 발생 시, error 클래스 추가 alertMessage 노출, 포커스가 가면 error 클래스 제거 -->
+								<span class="alertMessage" style="display:none">비밀번호를 입력해주세요.</span><!-- 비밀번호를 입력해주세요. -->
+								<label class="hidden" for="frm_userpw">비밀번호</label><!-- 비밀번호 -->
+								<input type="password" id="frm_userpw" placeholder="비밀번호" aria-required="true" onkeydown="javascript:if(event.keyCode == 13){PageScript.fncLogin('ID');}" />
+							</p>
+							<!-- 20200528 수정 : 아이디저장(추가) -->
+							<span class="frm">
+								<input type="checkbox" id="idSaveCheck"><label for="idSaveCheck">아이디 저장</label><!-- 아이디 저장 -->
+							</span>
+							<!-- //20200528 수정 : 아이디저장(추가) -->
+							<button type="button" class="btnSC btnL active btnFull" onclick="PageScript.fncLogin('ID'); return false;">로그인<!-- 로그인 --></button>
+							<div class="loginLink">
+								<a href="/identify/identifyIntro.do" class="btnS icoArr">회원가입<!-- 회원가입 --></a>
+								<a href="/identify/findIdentifyIntro.do" class="btnS icoArr">아이디 / 비밀번호 찾기<!-- 아이디 / 비밀번호 찾기 --></a>
+							</div>
+						</div>
+						<div class="snsLogin">
+							<a href="javascript:void(0);" class="google">구글 로그인<!-- 구글 로그인 --></a>
+							<a href="javascript:void(0);" class="facebook">페이스북 로그인<!-- 페이스북 로그인 --></a>
+							
+								<a href="javascript:void(0);" class="naver">네이버 로그인<!-- 네이버 로그인 --></a>
+								<a href="javascript:void(0);" class="kakao">카카오톡 로그인<!-- 카카오톡 로그인 --></a>
+							
+							<a href="javascript:void(0);" class="apple">애플 로그인<!-- 애플 로그인 --></a><!-- 20200528 수정 : 애플로그인(추가) -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<ul class="txtGuide">
+				<li>이용자 비밀번호 5회 연속 오류시 계정이 잠기게 됩니다.<!-- 이용자 비밀번호 5회 연속 오류시 계정이 잠기게 됩니다. --></li>
+				<li>오프라인 회원의 경우 온라인 회원가입 후 계정연동 가능합니다.<!-- 오프라인 회원의 경우 온라인 회원가입 후 계정연동 가능합니다. --></li>
+                <li>메리어트 호텔에서 예약하신 경우, 메리어트 사이트에서만 예약 확인이 가능합니다.<!-- 메리어트 호텔에서 예약하신 경우, 메리어트 사이트에서만 예약 확인이 가능합니다. --></li><!-- 20200528 수정 : 가이드(문구변경) -->
+			</ul>
+			<button type="button" class="btnClose" onclick="commonJs.popClose($('#loginLayerPop'));">닫기</button>
+		</div>
+	</div>
 
 		<!-- //container -->
 

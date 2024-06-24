@@ -29,123 +29,7 @@
 	<div class="skip"><a href="#container">본문 바로가기</a></div>
 	<div class="wrapper ">
 
-<script>
-	jQuery(function(){
-		jQuery.ajax({
-			type : "GET",
-			url : "/massPromotion/get.json",
-			cache : false,
-			dataType : "json",
-			global : false,
-			beforeSend: function() {
-			},
-			complete: function() {
-			},
-			success : function(data){
-                var massPromtn = data.bean;
-                //조회 결과에 따라 랜더링
-                if(massPromtn != null && massPromtn != ""){
-                    var url = getMassPromtnUrl();
-                    var menuNm = massPromtn.promtnNm;
-                    var sysCode = massPromtn.sysCode;
-                    appendMassPromotionMenu(url, menuNm, sysCode);
-                }
-			},
-			error:function(r, s, e){
-			}
-		});
-	});
 
-    function getMassPromtnUrl(){
-        var url = "";
-        var sysCode = jQuery("#sysCode").val();
-
-        if(gfncIsApp()){
-            //앱일 경우
-            url = "/m/massPromotion/list.do";
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/m/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/m/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/m/massPromotion/list.do";
-                }
-            }
-        }else {
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/massPromotion/list.do";
-                }
-            }
-        }
-        return url;
-    }
-
-    function appendMassPromotionMenu(url, menuNm, sysCode){
-        if(gfncIsApp()){
-            //앱일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-
-            var pathname = window.location.pathname;
-            if(pathname.indexOf("/app/main.do") == 0){
-                jQuery(".gnbArea ul.toggleList > li > .titArea:contains('패키지')").closest("ul").append(menuHtml);
-            }else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-
-            /*if(jQuery(".gnbArea ul.toggleList li:contains('패키지')").length > jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").length){
-                jQuery(".gnbArea ul.toggleList li:contains('패키지')").closest("ul").append(menuHtml);
-            } else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }*/
-
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-            jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-        }else{
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL" || sysCode == "JPY"){
-                //해당 페이지가 HUB거나 JPY일 경우
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".allMenu ul.menuDepth01 ul.menuDepth02 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }else {
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".headArea .utilMenu .gnbDepth1 .gnbDepth2 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-        }
-    }
-
-</script>
-
-<script>
-        //2022-05-23 조선라운지 추가
-        //헤더 메뉴 버튼 클릭 이벤트
-        jQuery(document).on("click",".headArea .btnMenu" ,function(){
-
-            //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-            if(jQuery(this).hasClass("menuOn")){
-                var expsrCount = 3;
-                var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
-                var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
-
-                $loungeList.addClass("hidden");
-                $loungeList.each(function(index){
-                    if(randomArray.indexOf(index) > -1){
-                        jQuery(this).removeClass("hidden");
-                    }
-                });
-            }
-        })
-</script>
  
  
  <!--S header  -->
@@ -156,38 +40,32 @@
 
 
 
-
-
-
-
-
-
-
-
 <script type="text/javascript">
 	
-	jQuery(function(){
-		jQuery(document).ready(function(){
-			jQuery("button").attr("type", "button");
+jQuery(function(){
+    jQuery(document).ready(function(){
+        jQuery("button").attr("type", "button");
 
-			var selectCont = jQuery(".roomList li div.toggleCont:visible").closest("li");
+        var selectCont = jQuery(".roomList li div.toggleCont:visible").closest("li");
 
-			
-				
-				
-			
+        jQuery("#dateText").html(
+            jQuery("#ckinDate").val() + "&nbsp;" + 
+            dUtils.getDateToDay(jQuery("#ckinDate").val()) + "&nbsp;-&nbsp;" + 
+            jQuery("#ckoutDate").val() + "&nbsp;" + 
+            dUtils.getDateToDay(jQuery("#ckoutDate").val()) + 
+            "<span>" + jQuery("#night").val() + "&nbsp;박</span>"
+        );
+    });
+});
 
 
-			jQuery("#dateText").html(jQuery("#ckinDate").val() + "&nbsp;" + dUtils.getDateToDay(jQuery("#ckinDate").val()) +"&nbsp;-&nbsp;"+ jQuery("#ckoutDate").val() + "&nbsp;" + dUtils.getDateToDay(jQuery("#ckoutDate").val())+"<span>"+jQuery("#night").val()+"&nbsp;박</span>")
-		});
-	});
-	
+
 	/**
 		객실 다시 검색 버튼 				
 	*/
 	function fncResvReset(){
 		if(confirm("다시 검색하시겠습니까?")){ 
-			location.href = "/hotel_prj/resve/room/step0.do";
+			location.href = "http://localhost/hotel_prj/user/room0.do";
 			return false;
 		}
 	}
@@ -198,18 +76,6 @@
 	function fncViewTab(idx){
 		jQuery(".tabType01 li").removeClass("on");
 		jQuery(".roomContainer").hide();
-		//[TO-DO] 회원 전용 상품 임시로 3번으로 이동 요청
-		/*jQuery(".tabType01 li:eq("+idx+")").addClass("on");
-		jQuery(".roomContainer:eq("+idx+")").show();
-		if(idx == 2 ) {
-			jQuery("#productSort").insertAfter("#roomSort");
-			jQuery("#productSort").hide();
-			jQuery("#roomSort").show();
-		}else {
-			jQuery("#roomSort").insertAfter("#productSort");
-			jQuery("#productSort").show();
-			jQuery("#roomSort").hide();
-		}*/
 
 		jQuery("#tab"+idx).addClass("on");
 		jQuery("#roomContainer"+idx).show();
@@ -232,206 +98,23 @@
 		@param roomCode 객실코드
 		@param rateCode 레이트 코드
 	*/
-	function fncGoStep2(roomCode, rateCode, packageSn){
-		jQuery("#roomCode").val(roomCode);
-		jQuery("#rateCode").val(rateCode);
-		jQuery("#packageSn").val(packageSn);
-		jQuery("#step1Form").attr("action", "/resve/room/step2.do");
+	function fncGoStep2(roomRankCode,roomRankName,bedCode,bedName,viewCode,viewName,payPrice){
+		jQuery("#roomRankCode").val(roomRankCode);
+		jQuery("#roomRankName").val(roomRankName);
+		jQuery("#bedCode").val(bedCode);
+		jQuery("#bedName").val(bedName);
+		jQuery("#viewCode").val(viewCode);
+		jQuery("#viewName").val(viewName);
+		
+		jQuery("#payPrice").val(payPrice);
+		
+		jQuery("#step1Form").attr("action", "http://localhost/hotel_prj/user/room2.do");
 		jQuery("#step1Form").submit();
 	}
 	
-	/**
-	상품 비교함 빼기
 	
-	@param type 상품타입 (ex 상품 : product , 객실 : room)
-	@param index 메인 인덱스
-	@param subIndex 서브 인덱스
-	*/
-	function fncSubCompareProduct(type, index, subIndex, roomCode, rateCode, packageSn){
-		var removeTarget = jQuery(".compList li[role='"+type+"_"+index+"_"+subIndex+"']");
-		var removeTargetDetail = jQuery(".compList02 li[role='"+type+"_"+index+"_"+subIndex+"']");
-		var renameTarget = jQuery("#"+type+"_"+index+"_"+subIndex);
-		var newFloatingStr = ""; //새로 그려줄 영역 Str
-		var compareCnt = 0; //비교함 갯수
-		
-		removeTarget.remove();
-		removeTargetDetail.remove();
-		
-		newFloatingStr += "<li>";
-		newFloatingStr += "	<div class=\"compWrap noCont\">"
-		newFloatingStr += "		<p class=\"txt\">비교할 상품을 추가하실 수 있습니다.</p>";
-		newFloatingStr += "		<span class=\"thum\"></span>";
-		newFloatingStr += "	</div>";
-		newFloatingStr += "</li>";
-		
-		jQuery(".compList").append(newFloatingStr);
-		renameTarget.find("button.btnComparison").text("비교함 담기"); 
-		renameTarget.find("button.btnComparison").attr("onclick", "fncAddCompareProduct('"+type+"','"+index+"','"+subIndex+"','"+rateCode+"','"+rateCode+"','"+packageSn+"')");
-		
-		jQuery(".compList li").each(function(idx){
-			jQuery(this).attr("data-index", idx);
-		});
-		jQuery(".compList").find(".compWrap").each(function(){
-			if(!jQuery(this).hasClass("noCont")){
-				compareCnt++;
-			}
-		});
 
-		
-			
-				jQuery(".comparison .btnArea button").text(compareCnt+"개 비교하기"); //비교하기 갯수 추가				
-			
-			
-		
-	
-		if(compareCnt < 2){
-			jQuery(".comparison .btnWrap button").attr("onclick", "alert('비교할 상품을 2개 이상 담아주세요.'); return false;"); 
-			commonJs.popClose(jQuery('#layerPop1'));
-		}
-		if(compareCnt == 0){
-			jQuery(".comparison").hide();
-		}
-	}
-	
-	/**
-		상품 비교함 담기
-		
-		@param type 상품타입 (ex 상품 : product , 객실 : room)
-		@param index 메인 인덱스
-		@param subIndex 서브 인덱스
-		@param roomCode 객실코드
-		@param rateCode 레이트코드
-		@param packageSn 패키지 고유번호
-	*/
-	function fncAddCompareProduct(type, index, subIndex, roomCode, rateCode, packageSn){
-		var targetIdx = -1;
-		var addTarget = jQuery(".compList");
-		var addLayTarget = jQuery(".compLayer");
-		var compareTarget = jQuery("#"+type+"_"+index);
-		var compareTargetDetail = jQuery("#"+type+"_"+index+"_"+subIndex);
-		var compareCnt = 0; //비교함 갯수
-		var compareStr = ""; //플로팅 영역 str 
-		var compareDetailStr = ""; //layerPopup str
-		var duplicateYn = false;
-		
-		var resvEvent = $(compareTargetDetail).find("a").attr("onclick");
-		
-		//동일한 상품이 비교하기 함에 들어있는지 확인
-		addTarget.find("li").each(function(){
-			if(jQuery(this).attr("role") == type+"_"+index+"_"+subIndex){
-				duplicateYn = true;
-				return false;
-			}
-		});
-		
-		if(duplicateYn){
-			alert("동일한 상품이 이미 들어가 있습니다.");  
-			return false;
-		}
-		//비교함 추가할 영역 찾기
-		addTarget.find(".compWrap").each(function(){
-			compareCnt++;
-			if(jQuery(this).hasClass("noCont")){
-				targetIdx = jQuery(this).closest("li").data("index");
-				return false;
-			}
-		});
-		
-		if(targetIdx == -1){
-			alert("상품은 최대 3개까지 추가 가능합니다."); 
-			return false;
-		}
-		
-		compareTargetDetail.find("button.btnComparison").text("비교함 빼기"); 
-		compareTargetDetail.find("button.btnComparison").attr("onclick", "fncSubCompareProduct('"+type+"','"+index+"','"+subIndex+"','"+rateCode+"','"+rateCode+"','"+packageSn+"')");
-		
-		
-		
-			
-				jQuery(".comparison .btnArea button").text(compareCnt+"개 비교하기"); //비교하기 갯수 추가				
-			
-			
-		
-		
-		if(compareCnt > 1){
-			jQuery(".comparison .btnWrap button").attr("onclick", "commonJs.popShow(jQuery('#layerPop1'));");
-		}
-		if(type == "product"){
-			
-			//비교하기 함 플로팅 메뉴 그리기
-			compareStr += "<div class=\"compWrap\">";
-			compareStr += "	<strong class=\"tit\">"+compareTarget.find(".roomName").text()+"</strong>";
-			compareStr += "	<span class=\"txt\">"+compareTargetDetail.find(".titArea .tit").text()+"</span>";
-			compareStr += "	<span class=\"thum\"><img src=\""+compareTarget.find(".thum img").attr("src")+"\" alt=\"\"></span>";
-			compareStr += "</div>";
-			compareStr += "<button type=\"button\" class=\"btnDel\" onclick=\"fncSubCompareProduct('"+type+"','"+index+"','"+subIndex+"','"+roomCode+"','"+rateCode+"','"+packageSn+"');\">비교함 삭제</button>";
-			
-			//비교하기 레이어 팝업 그리기
-			compareDetailStr += "<li role=\""+type+"_"+index+"_"+subIndex+"\">";
-			compareDetailStr += "	<dl>";
- 			compareDetailStr += "		<dt class=\"tit\">"+compareTarget.find(".roomName").text()+"</dt>";
-			compareDetailStr += "		<dd class=\"thum\"><img src=\""+compareTarget.find(".thum img").attr("src")+"\" alt=\"\"></dd>";
-			compareDetailStr += "		<dd class=\"txt\">"+compareTargetDetail.find(".roomBenefit").text()+"</dd>";
-			compareDetailStr += "		<dd class=\"benefit\"><strong>BENEFIT</strong>"+compareTarget.find(".roomIntro .roomBenefit").text()+"</dd>";
-			compareDetailStr += "		<dd class=\"date\">"+compareTarget.find(".date").text()+"</dd>";
-			compareDetailStr += "		<dd class=\"price\">"+compareTargetDetail.find(".price").text().replace("~","")+"</dd>";
-			compareDetailStr += "		<dd class=\"btn\">";
-			compareDetailStr += "			<a href=\"#none\" class=\"btnSC btnM active\" onclick=\""+resvEvent+"\">예약하기</a>"; 
-			compareDetailStr += "			<button type=\"button\" class=\"btnDel btnLine\" onclick=\"fncSubCompareProduct('"+type+"','"+index+"','"+subIndex+"','"+roomCode+"','"+rateCode+"','"+packageSn+"');\">상품은 최대 3개까지 추가 가능합니다.</button>"; 
-			compareDetailStr += "		</dd>";
-			compareDetailStr += "	</dl>";
-			compareDetailStr += "</li>";
-			
-		}else if(type == "room"){
-			
-			//비교하기 함 플로팅 메뉴 그리기
-			compareStr += "<div class=\"compWrap\">";
-			compareStr += "	<strong class=\"tit\">"+compareTargetDetail.find(".roomInfor .tit").text()+"</strong>";
-			compareStr += "	<span class=\"txt\">"+compareTarget.find(".roomName").text()+"</span>";
-			compareStr += "	<span class=\"thum\"><img src=\""+compareTarget.find(".thum img").attr("src")+"\" alt=\"\"></span>";
-			compareStr += "</div>";
-			compareStr += "<button type=\"button\" class=\"btnDel\" onclick=\"fncSubCompareProduct('"+type+"','"+index+"','"+subIndex+"','"+roomCode+"','"+rateCode+"','"+packageSn+"');\">비교함 삭제</button>";
-			
-			//비교하기 레이어 팝업 그리기
-			compareDetailStr += "<li role=\""+type+"_"+index+"_"+subIndex+"\">";
-			compareDetailStr += "	<dl>";
-			compareDetailStr += "		<dt class=\"tit\">"+compareTargetDetail.find(".roomInfor .tit").text()+"</dt>";
-			compareDetailStr += "		<dd class=\"thum\"><img src=\""+compareTarget.find(".thum img").attr("src")+"\" alt=\"\"></dd>";
-			compareDetailStr += "		<dd class=\"txt\">"+compareTarget.find(".roomIntro .roomBenefit").text()+"</dd>";
-			compareDetailStr += "		<dd class=\"benefit\"><strong>BENEFIT</strong>"+compareTargetDetail.find(".roomInfor .roomBenefit").text()+"</dd>";
-			compareDetailStr += "		<dd class=\"date\">"+compareTargetDetail.find(".date").text()+"</dd>";
-			compareDetailStr += "		<dd class=\"price\">"+compareTargetDetail.find(".price").text().replace("~","")+"</dd>";
-			compareDetailStr += "		<dd class=\"btn\">";
-			compareDetailStr += "			<a href=\"#none\" class=\"btnSC btnM active\" onclick=\""+resvEvent+"\">예약하기</a>"; 
-			compareDetailStr += "			<button type=\"button\" class=\"btnDel btnLine\" onclick=\"fncSubCompareProduct('"+type+"','"+index+"','"+subIndex+"','"+roomCode+"','"+rateCode+"','"+packageSn+"');\">상품은 최대 3개까지 추가 가능합니다.</button>"; 
-			compareDetailStr += "		</dd>";
-			compareDetailStr += "	</dl>";
-			compareDetailStr += "</li>";
-			
-		}
-		
-		addTarget.find("li[data-index='"+targetIdx+"']").attr("role", type+"_"+index+"_"+subIndex);
-		addTarget.find("li[data-index='"+targetIdx+"']").html(compareStr);
-		addLayTarget.find(".compList02").append(compareDetailStr);
-	}
-	/**
-		환율 가격 적용
-	*/
-	function fncChangeExrate(ele){
-		var currencyCd = jQuery(ele).val();
-		var exchangeUnit = currencyCd;
-		if("CNH" == currencyCd){
-			exchangeUnit = "CNY";
-		}
-		
-		jQuery(".roomList li .priceWrap .price").each(function(){
-			jQuery(this).html(fncComma(jQuery(this).attr("data-"+currencyCd.toLowerCase()))+"<em>"+exchangeUnit+" ~</em>");
-		});
-		
-		jQuery(".roomList li .roomInfor .price").each(function(){
-			jQuery(this).html("<em>"+fncComma(jQuery(this).attr("data-"+currencyCd.toLowerCase()))+"</em>"+exchangeUnit+" ~");
-		});
-	}
+
 	/**
 		상품 정렬
 	*/
@@ -531,166 +214,235 @@
 	/*
 		상품정보 보기 레이어 팝업
 	*/
-	function fncOpenRoomInfo(hotlSysCode, roomCode , roomClCode){
+ 	function fncOpenRoomInfo(roomCode){
 		
-		var param = {
-				"hotlSysCode" : hotlSysCode
-				,"roomCode" : roomCode
-				,"roomClCode" : roomClCode
-		}
+ 	// roomCode 변수의 값을 설정 (예시: "STK", "STT","DSK", "DST", "SWK", "SWT")
+ 		//var roomCode = "STT"; // 이 값을 실제 데이터에 따라 변경
 
-		jQuery.ajax({
-			
-			type : "GET",
-			url : "/resve/room/getRoomContent.json",
-			cache : false,
-			dataType : "json",
-			data : param,
-			async: false,
-			global : false,
+ 		// roomCode에 따라 roomType을 설정
+ 		var roomType = "";
+ 		if (roomCode === "STK" || roomCode === "STT") {
+ 			roomType = "STANDARD";
+ 			roomSize = "25"
+ 			bedOption = "킹 1 또는 더블 2"
+ 	 	 	img2 = "http://localhost/hotel_prj/util/file/STANDARD_2.jpg"
+ 			if (roomCode==="STK"){
+ 				alt = "스탠다드 킹"
+ 	 	 		img1 = "http://localhost/hotel_prj/util/file/STANDARD_KING_2.jpg"
+ 			}else if (roomCode ==="STT"){
+ 				alt = "스탠다드 트윈"
+ 	 	 		img1 = "http://localhost/hotel_prj/util/file/STANDARD_TWIN_2.jpg"
+ 			}
+ 			
+ 		} else if (roomCode === "DSK" || roomCode === "DST") {
+ 		    roomType = "DELUXE";
+ 			roomSize = "35"
+ 	 		bedOption = "킹 1 또는 더블 2"
+ 	 		img2 = "http://localhost/hotel_prj/util/file/DELUXE_2.jpg"
+ 	 		if (roomCode==="DSK"){
+ 	 			alt = "디럭스 킹"	
+ 	 			img1 = "http://localhost/hotel_prj/util/file/DELUXE_KING_2.jpg"
+ 	 		}else if (roomCode ==="DST"){
+ 	 			alt = "디럭스 트윈"			
+ 	 			img1 = "http://localhost/hotel_prj/util/file/DELUXE_TWIN_2.jpg"
+ 	 				
+ 	 		}
+ 	 		
+ 		} else if (roomCode === "SWK" || roomCode === "SWT") {
+ 		    roomType = "SUITE";
+ 			roomSize = "55"
+ 	 		bedOption = "킹 2 또는 더블 4"
+ 	 	 	img2 = "http://localhost/hotel_prj/util/file/SUITE_2.jpg"
+ 	 		if (roomCode==="SWK"){
+ 	 			alt = "스위트 킹"	
+ 	 	 		img1 = "http://localhost/hotel_prj/util/file/SUITE_KING_2.jpg"
+ 	 		}else if (roomCode ==="SWT"){
+ 	 			alt = "스위트 트윈"	
+ 	 	 		img1 = "http://localhost/hotel_prj/util/file/SUITE_TWIN_2.jpg"
+ 	 				
+ 	 		}
+ 		}
 
-			success : function(data){
-				
-				var resultCode = data.resultCode;
-				var resultMsg = data.resultMsg;
-				if(resultCode == "SUCCESS"){
+		
+		
+		
+		
+		
+		
 
-					var content = data.content;
-					var roomInfo = data.roomInfo;
-					
-					var galleryList = data.galleryImgList;
-					
 
-					var html =	"			<h2 class=\"compTit\">"+content.topTitle+"</h2>";
-					html +=		"			<div class=\"scrollArea\">";
-					html +=		"				<div class=\"scrollWrap\">";
-					html +=		"					<div class=\"txtCont\">";
-					html +=		"						<p>"+content.pageGuide+"</p>";
-					html +=		"					</div>";
+					var html = "        <div class=\"layerCont\" style=\"top: 50%; left: 50%; margin-top: -375.438px; margin-left: -540px; user-select: auto !important;\" tabindex=\"0\" data-gtm-vis-recent-on-screen36519946_61=\"2378\" data-gtm-vis-first-on-screen36519946_61=\"2378\" data-gtm-vis-total-visible-time36519946_61=\"100\" data-gtm-vis-has-fired36519946_61=\"1\">";
+					html += "            <div class=\"detailCont\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                <h2 class=\"compTit\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">" + roomType + "</h2>";
+					html += "                <div class=\"scrollArea\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                    <div class=\"designScroll\" style=\"height: 500px; width: 100%; overflow: hidden; user-select: auto !important;\" data-gtm-vis-has-fired36519946_61=\"1\">";
+					html += "                        <div class=\"scrollWrap\" style=\"margin-right: -25px; overflow-y: scroll; padding-right: 40px; box-sizing: border-box; user-select: auto !important;\" tabindex=\"0\" data-gtm-vis-has-fired36519946_61=\"1\">";
+					html += "                            <div class=\"customScrollBox\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                <div class=\"txtCont\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                    <p data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">전망에 따라 완벽한 엘리시안의 비경을 감상하실 수 있습니다.</p>";
+					html += "                                </div>";
+					html += "                                <div class=\"swipeWrap gallery ppGallery\" style=\"width: 940px; height: 561px; margin-top: 50px; user-select: auto !important;\" data-gtm-vis-has-fired36519946_61=\"1\">";
+					html += "                                    <button type=\"button\" class=\"btnSwipe btnPrev\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                        <span class=\"hidden\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">이전</span>";
+					html += "                                    </button>";
+					html += "                                    <ul class=\"swipeCont\" style=\"position: absolute; width: 940px; overflow: visible; user-select: auto !important;\" data-gtm-vis-has-fired36519946_61=\"1\">";
+					html += "                                        <li class=\"swipeSlide\" style=\"width: 940px; float: none; position: absolute; top: 0px; left: 0px; opacity: 1; transition: none 0s ease 0s; transform: translate3d(0px, 0px, 0px); user-select: auto !important;\" aria-hidden=\"false\" data-gtm-vis-has-fired36519946_61=\"1\">";
+					html += "                                            <img src=\""+img1+"\" alt=\""+alt+"\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                        </li>";
+					html += "                                        <li class=\"swipeSlide\" style=\"width: 940px; float: none; position: absolute; top: 0px; left: 0px; opacity: 1; transition: none 0s ease 0s; transform: translate3d(940px, 0px, 0px); user-select: auto !important;\" aria-hidden=\"true\" data-gtm-vis-has-fired36519946_61=\"1\">";
+					html += "                                            <img src=\""+img2+"\" alt=\""+alt+"\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                        </li>";
+					html += "                                    </ul>";
+					html += "                                    <button type=\"button\" class=\"btnSwipe btnNext\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                        <span class=\"hidden\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">다음</span>";
+					html += "                                    </button>";
+					html += "                                </div>";
+					html += "                                <p class=\"txtGuide\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">상기 이미지는 이해를 돕기 위한 이미지 컷으로 실제와 다를 수 있습니다.</p>";
+					html += "                                <div class=\"propertyInfo\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                    <h2 class=\"hidden\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">객실개요</h2>";
+					html += "                                    <ul data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                            <dl data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                                <dt data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">LOCATION</dt>";
+					html += "                                                <dd data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">32층 - 34층</dd>";
+					html += "                                            </dl>";
+					html += "                                        </li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                            <dl data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                                <dt data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">BEDS</dt>";
+					html += "                                                <dd data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">"+ bedOption +"</dd>";
+					html += "                                            </dl>";
+					html += "                                        </li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                            <dl data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                                <dt data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">SIZE</dt>";
+					html += "                                                <dd data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">"+ roomSize+"m<sup data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">2</sup></dd>";
+					html += "                                            </dl>";
+					html += "                                        </li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                            <dl data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                                <dt data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">ROOM FEATURES</dt>";
+					html += "                                                <dd data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">침실 1, 화장실 1, 발코니 1</dd>";
+					html += "                                            </dl>";
+					html += "                                        </li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                            <dl data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                                <dt data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">VIEW</dt>";
+					html += "                                                <dd data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">스탠다드, 가든뷰, 풀사이드뷰</dd>";
+					html += "                                            </dl>";
+					html += "                                        </li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                            <dl data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                                <dt data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">CHECK-IN/CHECK-OUT</dt>";
+					html += "                                                <dd data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">15:00 / 10:00</dd>";
+					html += "                                            </dl>";
+					html += "                                        </li>";
+					html += "                                    </ul>";
+					html += "                                </div>";
+					html += "                                <h2 class=\"titDep2\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">객실 어메니티</h2>";
+					html += "                                <ul class=\"tabType01 tabType02 tabToggle\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                    <li class=\"on\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                        <a href=\"#tab01\" role=\"button\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">Bath Room</a>";
+					html += "                                    </li>";
+					html += "                                    <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                        <a href=\"#tab02\" role=\"button\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">Bed Room</a>";
+					html += "                                    </li>";
+					html += "                                    <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                        <a href=\"#tab03\" role=\"button\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">Mini Bar</a>";
+					html += "                                    </li>";
+					html += "                                    <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                        <a href=\"#tab04\" role=\"button\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">Closet</a>";
+					html += "                                    </li>";
+					html += "                                </ul>";
+					html += "                                <div id=\"tab01\" class=\"tabCont\" style=\"display: block; user-select: auto !important;\" data-gtm-vis-has-fired36519946_61=\"1\">";
+					html += "                                    <h4 class=\"hidden\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">Bath Room</h4>";
+					html += "                                    <ul class=\"tabRoomInfo\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">목욕가운</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">바스타월</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">페이스 타월</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">핸드 타월</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">샴푸</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">컨디셔너</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">바디로션</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">바디워시</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">샤워캡</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">헤어 드라이어</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">핸드워시</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">머리빗</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">헤어밴드</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">코튼 퍼프</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">면봉</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">비데</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">샤워부스&amp;욕조</li>";
+					html += "                                    </ul>";
+					html += "                                </div>";
+					html += "                                <div id=\"tab02\" class=\"tabCont\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                    <h4 class=\"hidden\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">Bed Room</h4>";
+					html += "                                    <ul class=\"tabRoomInfo\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">TV</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">침대</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">거위털 이불</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">거위털&amp;솜 베개</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">알람시계</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">에어컨</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">220V</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">음성 사서함</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">러기지랙</li>";
+					html += "                                    </ul>";
+					html += "                                </div>";
+					html += "                                <div id=\"tab03\" class=\"tabCont\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                    <h4 class=\"hidden\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">Mini Bar</h4>";
+					html += "                                    <ul class=\"tabRoomInfo\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">냉장고</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">전기 포트</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">물컵</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">커피메이커</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">커피 캡슐</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">무료 티</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">무료 생수</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">웰컴쿠키</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">커피 머그</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">와인잔</li>";
+					html += "                                    </ul>";
+					html += "                                </div>";
+					html += "                                <div id=\"tab04\" class=\"tabCont\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                    <h4 class=\"hidden\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">Closet</h4>";
+					html += "                                    <ul class=\"tabRoomInfo\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">안전금고</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">구둣주걱</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">슬리퍼</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">옷걸이</li>";
+					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">소방 비상용품</li>";
+					html += "                                    </ul>";
+					html += "                                </div>";
+					html += "                            </div>";
+					html += "                            <div class=\"scrollbar-wrap\" style=\"height: 561px; user-select: auto !important;\" data-gtm-vis-has-fired36519946_61=\"1\">";
+					html += "                                <div class=\"scrollbar\" style=\"height: 180.333px; user-select: auto !important; top: 0px;\" data-gtm-vis-has-fired36519946_61=\"1\"></div>";
+					html += "                            </div>";
+					html += "                        </div>";
+					html += "                    </div>";
+					html += "                </div>";
+					html += "                <button type=\"button\" class=\"btnClose\" onclick=\"commonJs.popClose($('#layerPop2'));\" data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
+					html += "                    닫기";
+					html += "                </button>";
+					html += "            </div>";
+					html += "        </div>";
 
-					if(galleryList.length == 0){
-						html +=		"				<div class=\"imgCont\">";
-						html +=		"					<img src=\"/util/file/image.do?fileSn="+roomInfo.repImgSn+"&sysCode="+roomInfo.sysCode+"\" alt=\""+roomInfo.repImgDc+"\">";
-						html +=		"				</div>";
-					}else {
-						html +=		"					<div class=\"swipeWrap gallery ppGallery\" style=\"width: 940px;\">";
-						html +=		"						<button type=\"button\" class=\"btnSwipe btnPrev\"><span class=\"hidden\">이전</span></button>";
-						html +=		"						<ul class=\"swipeCont\">";
-						for(var i=0; i < galleryList.length; i++){
-							var fileSn = galleryList[i].fileSn;
-							var subFileSn = galleryList[i].subFileSn;
-							html +=		"						<li class=\"swipeSlide\" style=\"width: 940px;\">";
-							html += 	'							<img src="/util/file/download.do?fileSn='+fileSn+'&subFileSn='+subFileSn+'&sysCode='+roomInfo.sysCode+'" alt="'+roomInfo.galleryImgDc+'">';
-							html +=		"						</li>";
-						}
-						html +=		"						</ul>";
-						html += 	"						<button type=\"button\" class=\"btnSwipe btnNext\"><span class=\"hidden\">다음</span></button>";
-						html +=		"					</div>";
-					}
-
-					html +=		"					<p class=\"txtGuide\">상기 이미지는 이해를 돕기 위한 이미지 컷으로 실제와 다를 수 있습니다.</p>"; /*상기 이미지는 이해를 돕기 위한 이미지 컷으로 실제와 다를 수 있습니다.*/
-					html +=		"					";
-					html +=		"					<div class=\"propertyInfo\">";
-					html +=		"						<h2 class=\"hidden\">객실개요</h2>";
-					html +=		"						<ul>";
-					html +=		"							"+content.propertyinfo;
-					html +=		"						</ul>";
-					html +=		"					</div>";
-					html +=		"					<h2 class=\"titDep2\">객실 어메니티</h2>"; /*객실 어메니티*/
-					html +=		"					"+content.tab;
-					html +=		"					<div id=\"tab01\" class=\"tabCont\" style=\"display:block;\">";
-					html +=		"						"+content.tab01;
-					html +=		"					</div>";
-					html +=		"					<div id=\"tab02\" class=\"tabCont\">";
-					html +=		"						"+content.tab02;
-					html +=		"						<p class=\"txtGuide\">"+content.txtguide+"</p>";
-					html +=		"					</div>";
-					html +=		"					<div id=\"tab03\" class=\"tabCont\">";
-					html +=		"						"+content.tab03;
-					html +=		"					</div>";
-					html +=		"					<div id=\"tab04\" class=\"tabCont\">";
-					html +=		"						"+content.tab04;
-					html +=		"					</div>";
-					if(content.tit01 != null || content.tit02 != null || content.tit03 != null || content.tit04 != null || content.tit05 != null){
-						html +=		"					<h2 class=\"titDep2\">특별 서비스</h2>"; /* 특별 서비스 */
-						html +=		"					<ul class=\"packageCont22\">";
-							if(content.tit01 != null ){
-							html +=		"						<li>";
-							html +=		"							<dl>";
-							html +=		"								<dt>"+content.tit01+"</dt>";
-							html +=		"								<dd class=\"txtArea\">";
-							html +=		"									"+content.tetarea01;
-							html +=		"								</dd>";
-							html +=		"							</dl>";
-							html +=		"						</li>";
-							}
-							if(content.tit02 != null ){
-							html +=		"						<li>";
-							html +=		"							<dl>";
-							html +=		"								<dt>"+content.tit02+"</dt>";
-							html +=		"								<dd class=\"txtArea\">";
-							html +=		"									"+content.tetarea02;
-							html +=		"								</dd>";
-							html +=		"							</dl>";
-							html +=		"						</li>";
-							}
-							if(content.tit03 != null ){
-							html +=		"						<li>";
-							html +=		"							<dl>";
-							html +=		"								<dt>"+content.tit03+"</dt>";
-							html +=		"								<dd class=\"txtArea\">";
-							html +=		"									"+content.tetarea03;
-							html +=		"								</dd>";
-							html +=		"							</dl>";
-							html +=		"						</li>";
-							}
-							if(content.tit04 != null ){
-							html +=		"						<li>";
-							html +=		"							<dl>";
-							html +=		"								<dt>"+content.tit04+"</dt>";
-							html +=		"								<dd class=\"txtArea\">";
-							html +=		"									"+content.tetarea04;
-							html +=		"								</dd>";
-							html +=		"							</dl>";
-							html +=		"						</li>";
-							}
-							if(content.tit05 != null ){
-							html +=		"						<li>";
-							html +=		"							<dl>";
-							html +=		"								<dt>"+content.tit05+"</dt>";
-							html +=		"								<dd class=\"txtArea\">";
-							html +=		"									"+content.tetarea05;
-							html +=		"								</dd>";
-							html +=		"							</dl>";
-							html +=		"						</li>";
-							}
-						html +=		"					</ul>";
-					}
-					html +=		"				</div>";
-					html +=		"			</div>";
-
-					jQuery("#layerPop2 .detailCont").html(html);
+					jQuery("#layerPop2").html(html);
 					commonJs.popShow(jQuery('#layerPop2'));
 					commonJs.initDesignScroll($('.scrollWrap'));
 					commonJs.initTab($('.tabToggle'));
 
 
-				}else{
-					alert(data.resultMsg);
-					commonJs.closeLoadingBar(); //로딩바 hide
-					return false;
-				}
-			},
-			complete: function() {
+			
+
 				commonJs.initSwipe(jQuery(".swipeWrap"));
 				jQuery(".swipeWrap").css("height", "561px");
 				jQuery(".swipeWrap").css("margin-top", "50px");
-			},
-			error:function(r, s, e){
-				alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
-			}
-		 })
-	}
+
+
+		  
+	} 
 
 
 	/*
@@ -898,34 +650,38 @@
 	}
 </script>
 <form action="" name="step1Form" id="step1Form" method="post">
-	<input type="hidden" name="hotlSysCode" id="hotlSysCode" value="GJJ" /> 		
-	<input type="hidden" name="ckinDate" id="ckinDate" value="2024.05.21" />	 				
-	<input type="hidden" name="ckoutDate" id="ckoutDate" value="2024.05.22" /	> 			
-	<input type="hidden" name="night" id="night" value="1" />	 						
-	<input type="hidden" name="roomCnt" id="roomCnt" value="1" />						
-	
-		<input type="hidden" name="adltCntArr" id="adltCntArr0" value="2" />				
-	
-		<input type="hidden" name="adltCntArr" id="adltCntArr1" value="0" />				
-	
-		<input type="hidden" name="adltCntArr" id="adltCntArr2" value="0" />				
+	<input type="hidden" name="hotlSysCode" id="hotlSysCode" value="ELS" /> 		
+	<input type="hidden" name="ckinDate" id="ckinDate" value="${rrVO.ckinDate}" />	 				
+	<input type="hidden" name="ckoutDate" id="ckoutDate" value="${rrVO.ckoutDate}"/> 			
+	<input type="hidden" name="night" id="night" value="${rrVO.night}" />	 						
+	<input type="hidden" name="adltCntArr" id="adltCntArr0" value="${rrVO.adultsNum}" />				
+	<input type="hidden" name="chldCntArr" id="chldCntArr0" value="${rrVO.kidsNum}" />				
+	<input type="hidden" name="adultsNum" id="adultsNum" value="${rrVO.adultsNum}" />						
+	<input type="hidden" name="kidsNum" id="kidsNum" value="${rrVO.kidsNum}" />						
 	
 	
-		<input type="hidden" name="chldCntArr" id="chldCntArr0" value="0" />				
 	
-		<input type="hidden" name="chldCntArr" id="chldCntArr1" value="0" />				
 	
+	<input type="hidden" name="roomRankCode" id="roomRankCode" value="" />
+	<input type="hidden" name="roomRankName" id="roomRankName" value="" />
+	<input type="hidden" name="bedCode" id="bedCode" value="" />
+	<input type="hidden" name="bedName" id="bedName" value="" />
+	<input type="hidden" name="viewCode" id="viewCode" value="" />
+	<input type="hidden" name="viewName" id="viewName" value="" />
+	<input type="hidden" name="payPrice" id="payPrice" value="" />
+														
+	
+<!-- 	<input type="hidden" name="roomCnt" id="roomCnt" value="1" />	 -->					
+<!-- 	<input type="hidden" name="adltCntArr" id="adltCntArr1" value="0" />				
+		<input type="hidden" name="adltCntArr" id="adltCntArr2" value="0" />			
+		<input type="hidden" name="chldCntArr" id="chldCntArr1" value="0" />					
 		<input type="hidden" name="chldCntArr" id="chldCntArr2" value="0" />				
-	
-	<input type="hidden" name="sortCd" id="sortCd" value="" />						
-	<input type="hidden" name="curruncyCd" id="curruncyCd" value="" />			
-	<input type="hidden" name="roomCode" id="roomCode" value="" />													
-	<input type="hidden" name="rateCode" id="rateCode" value="" />													
-	<input type="hidden" name="adltSum" id="adltSum" value="2" />						
-	<input type="hidden" name="chldSum" id="chldSum" value="0" />						
-	<input type="hidden" name="packageSn" id="packageSn" value="" />
-	<input type="hidden" name="companyCode" id="companyCode" value="" />
-	<input type="hidden" name="promotionCode" id="promotionCode" value="" />
+	 	<input type="hidden" name="sortCd" id="sortCd" value="" />						
+		<input type="hidden" name="curruncyCd" id="curruncyCd" value="" />			
+ 		<input type="hidden" name="rateCode" id="rateCode" value="" />													
+ 		<input type="hidden" name="packageSn" id="packageSn" value="" />
+		<input type="hidden" name="companyCode" id="companyCode" value="" />
+		<input type="hidden" name="promotionCode" id="promotionCode" value="" /> -->
 	
 	<div id="container" class="container">
 		<!-- 컨텐츠 S -->
@@ -967,11 +723,11 @@
 					</dl>
 					<dl class="dlType03">
 						<dt>ADULTS</dt>
-						<dd>2</dd>
+						<dd>${rrVO.adultsNum}</dd>
 					</dl>
 					<dl class="dlType03">
 						<dt>CHILDREN</dt>
-						<dd>0</dd>
+						<dd>${rrVO.kidsNum}</dd>
 					</dl>
 				</div>
 				<a href="#none" class="btnSC btnM icoArr" onclick="fncResvReset();">객실 다시 검색</a>
@@ -1016,352 +772,20 @@
 			
 			
 			
-			<div class="roomContainer" id="roomContainer1" >
-				<h3 class="hidden">상품으로 보기</h3>
-				
-				
-				<ul class="toggleList roomList" id="productList">
-					<li class="noData" style="display:none;">
-						<p class="txt">
-							예약 가능한 패키지 상품이 없습니다.<br>다시 검색해주세요.
-						</p>
-						
-					</li>
-					
-						<li id="product_0" data-kwrdsn="K05" >
-							<dl class="roomIntro">
-								<dt class="roomName">
-									ROOM ONLY
-								</dt>
-								<dd class="keyword">
-									
-										
-									
-										
-									
-										
-									
-										
-									
-										
-										
-									
-										
-									
-									<!-- 2021-04-20 패키지 키워드 추가 -->
-									
-										<span>Room Only</span>
-									
-									
-								</dd>
-								<dd class="roomBenefit">
-									본관 1박
-								</dd>
-								
-								
-									<dd class="btnView">
-										<a href="#none" class="btnS icoArr" onclick="fncOpenPackBenefit('531357','GJJ');">
-											자세히 보기
-										</a>
-									</dd>
-								
-								
-								
-								<dd class="date">2024.01.01 - 2024.11.30</dd>
-								<dd class="priceWrap">
-									<span class="price" data-krw="212500" data-jpy="24400" data-usd="156" data-cnh="1136" data-eur="144">
-										212,500<em>KRW ~</em>
-									</span>
-									
-										
-											<span class="day">1박 / 세금 별도</span>
-										
-										
-									
-								</dd>
-								<dd class="thum">
-									
-										
-										
-											<img src="/util/file/download.do?fileSn=531479&sysCode=GJJ" alt="Room Only">										
-										
-									
-									
-								</dd>
-								<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
-							</dl>
-							<div class="toggleCont" >
-								<div class="toggleInner">
-									<div class="roomDetail">
-										<ul class="optionList">
-											
-												
-												
-													
-													
-														
-													
-													
-												
-												<li class="type02" id="product_0_0" data-test="D04">
-													<div class="roomInfor">
-															<div class="titArea">
-															<strong class="tit">DELUXE TWIN, STANDARD VIEW </strong>
-														</div>
-														<p class="roomBenefit">Standard View |  Size: 46.7㎡</p>
-														<span class="price" data-krw="212500" data-jpy="24400" data-usd="156" data-cnh="1136" data-eur="144">
-															<em>212,500</em>KRW ~
-														</span>
-														<button type="button" class="btnLine" onclick="fncOpenRoomInfo('GJJ','DST' ,'B01');">
-															객실 상세보기
-														</button>
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('product','0','0','DST','31BFR1N','531357');">비교함 담기</button>
-													</div>
-													
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DST','31BFR1N','531357');"><span>예약하기</span></a>
-															
-														
-													
-												</li>																
-											
-												
-												
-													
-														
-													
-													
-													
-												
-												<li class="type01" id="product_0_1" data-test="D02">
-													<div class="roomInfor">
-															<div class="titArea">
-															<strong class="tit">DELUXE KING, STANDARD VIEW</strong>
-														</div>
-														<p class="roomBenefit">Standard View |  Size: 46.7㎡</p>
-														<span class="price" data-krw="212500" data-jpy="24400" data-usd="156" data-cnh="1136" data-eur="144">
-															<em>212,500</em>KRW ~
-														</span>
-														<button type="button" class="btnLine" onclick="fncOpenRoomInfo('GJJ','DSK' ,'B01');">
-															객실 상세보기
-														</button>
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('product','0','1','DSK','31BFR1N','531357');">비교함 담기</button>
-													</div>
-													
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DSK','31BFR1N','531357');"><span>예약하기</span></a>
-															
-														
-													
-												</li>																
-											
-												
-												
-													
-														
-													
-													
-													
-												
-												<li class="type01" id="product_0_2" data-test="D02">
-													<div class="roomInfor">
-															<div class="titArea">
-															<strong class="tit">DELUXE KING, GARDEN VIEW</strong>
-														</div>
-														<p class="roomBenefit">Garden View |  Size: 46.7㎡</p>
-														<span class="price" data-krw="238000" data-jpy="27400" data-usd="175" data-cnh="1272" data-eur="161">
-															<em>238,000</em>KRW ~
-														</span>
-														<button type="button" class="btnLine" onclick="fncOpenRoomInfo('GJJ','DGK' ,'B01');">
-															객실 상세보기
-														</button>
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('product','0','2','DGK','31BFR1N','531357');">비교함 담기</button>
-													</div>
-													
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DGK','31BFR1N','531357');"><span>예약하기</span></a>
-															
-														
-													
-												</li>																
-											
-												
-												
-													
-														
-													
-													
-													
-												
-												<li class="type01" id="product_0_3" data-test="D02">
-													<div class="roomInfor">
-															<div class="titArea">
-															<strong class="tit">DELUXE KING, POOLSIDE VIEW </strong>
-														</div>
-														<p class="roomBenefit">Poolside View |  Size: 46.7㎡</p>
-														<span class="price" data-krw="255000" data-jpy="29300" data-usd="188" data-cnh="1363" data-eur="173">
-															<em>255,000</em>KRW ~
-														</span>
-														<button type="button" class="btnLine" onclick="fncOpenRoomInfo('GJJ','DPK' ,'B01');">
-															객실 상세보기
-														</button>
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('product','0','3','DPK','31BFR1N','531357');">비교함 담기</button>
-													</div>
-													
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DPK','31BFR1N','531357');"><span>예약하기</span></a>
-															
-														
-													
-												</li>																
-											
-												
-												
-													
-													
-														
-													
-													
-												
-												<li class="type02" id="product_0_4" data-test="D04">
-													<div class="roomInfor">
-															<div class="titArea">
-															<strong class="tit">DELUXE TWIN,  POOLSIDE VIEW </strong>
-														</div>
-														<p class="roomBenefit">Poolside View |  Size: 46.7㎡</p>
-														<span class="price" data-krw="255000" data-jpy="29300" data-usd="188" data-cnh="1363" data-eur="173">
-															<em>255,000</em>KRW ~
-														</span>
-														<button type="button" class="btnLine" onclick="fncOpenRoomInfo('GJJ','DPT' ,'B01');">
-															객실 상세보기
-														</button>
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('product','0','4','DPT','31BFR1N','531357');">비교함 담기</button>
-													</div>
-													
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DPT','31BFR1N','531357');"><span>예약하기</span></a>
-															
-														
-													
-												</li>																
-											
-												
-												
-													
-													
-														
-													
-													
-												
-												<li class="type02" id="product_0_5" data-test="D05">
-													<div class="roomInfor">
-															<div class="titArea">
-															<strong class="tit">ROYAL SUITE</strong>
-														</div>
-														<p class="roomBenefit">Poolside View |  Size: 202㎡</p>
-														<span class="price" data-krw="1275000" data-jpy="146800" data-usd="940" data-cnh="6818" data-eur="865">
-															<em>1,275,000</em>KRW ~
-														</span>
-														<button type="button" class="btnLine" onclick="fncOpenRoomInfo('GJJ','RS' ,'B07');">
-															객실 상세보기
-														</button>
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('product','0','5','RS','31BFR1N','531357');">비교함 담기</button>
-													</div>
-													
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('RS','31BFR1N','531357');"><span>예약하기</span></a>
-															
-														
-													
-												</li>																
-											
-												
-												
-													
-													
-														
-													
-													
-												
-												<li class="type02" id="product_0_6" data-test="D05">
-													<div class="roomInfor">
-															<div class="titArea">
-															<strong class="tit">THE SUITE</strong>
-														</div>
-														<p class="roomBenefit">Poolside View |  Size: 267.5㎡</p>
-														<span class="price" data-krw="1487500" data-jpy="171300" data-usd="1096" data-cnh="7954" data-eur="1009">
-															<em>1,487,500</em>KRW ~
-														</span>
-														<button type="button" class="btnLine" onclick="fncOpenRoomInfo('GJJ','PS' ,'B08');">
-															객실 상세보기
-														</button>
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('product','0','6','PS','31BFR1N','531357');">비교함 담기</button>
-													</div>
-													
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('PS','31BFR1N','531357');"><span>예약하기</span></a>
-															
-														
-													
-												</li>																
-											
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
-				
-				</ul>
-				<!-- //roomList -->
-			</div>
 			<!-- //roomContainer -->
 			
 			
 			
-			<div class="roomContainer" id="roomContainer2" style="display:none;">
+			<div class="roomContainer" id="roomContainer2" style="">
 				<h3 class="hidden">객실로 보기</h3>
+				
+				<div class="joinBanner">
+					<div>
+						<span class="bannerTit">엘리시안 리워드 헤택<!-- 클럽조선 리워드 헤택 --></span>멤버십 가입을 하시면 투숙 시, 할인 바우처를 발급해드립니다.<!-- 멤버십 가입을 하시면 투숙 시, 할인 바우처를 발급해드립니다. -->
+						<!-- <a href="" class="btnLine" target="_blank">멤버십 가입하기</a> -->
+					</div>
+				</div>
+				<!-- roomList S  -->
 				
 				
 				<ul class="toggleList roomList" id="roomList">
@@ -1370,21 +794,139 @@
 						
 					</li>
 					
-						<li id="room_0" data-roomlclas="A01" >
+				    	<c:forEach var="room" items="${roomList}" varStatus="i">
+				        <c:set var="totalPeople" value="${rrVO.adultsNum + rrVO.kidsNum}" />
+				        <c:set var="extraPeople" value="${totalPeople - 2}" />
+				        <c:set var="extraCharge" value="${extraPeople > 0 ? extraPeople * room.roomAddPrice : 0}" />
+				        <c:set var="totalPrice" value="${room.roomBasicPrice + extraCharge}" />
+				        
+				        <c:choose>
+				            <c:when test="${room.roomRankCode == '30_001' && room.bedCode == '50_003'}">
+				                <c:set var="img" value="http://localhost/hotel_prj/util/file/DELUXE_KING_2.jpg" />
+				                <c:set var="roomCode" value="DSK" />
+				            </c:when>
+				            <c:when test="${room.roomRankCode == '30_001' && room.bedCode == '50_002'}">
+				                <c:set var="img" value="http://localhost/hotel_prj/util/file/DELUXE_TWIN_2.jpg" />
+				                <c:set var="roomCode" value="DST" />
+				            </c:when>
+				            <c:when test="${room.roomRankCode == '30_002' && room.bedCode == '50_003'}">
+				                <c:set var="img" value="http://localhost/hotel_prj/util/file/STANDARD_KING_2.jpg" />
+				                <c:set var="roomCode" value="STK" />
+				            </c:when>
+				            <c:when test="${room.roomRankCode == '30_002' && room.bedCode == '50_002'}">
+				                <c:set var="img" value="http://localhost/hotel_prj/util/file/STANDARD_TWIN_2.jpg" />
+				                <c:set var="roomCode" value="STT" />
+				            </c:when>
+				            <c:when test="${room.roomRankCode == '30_003' && room.bedCode == '50_003'}">
+				                <c:set var="img" value="http://localhost/hotel_prj/util/file/SUITE_KING_2.jpg" />
+				                <c:set var="roomCode" value="SWK" />
+				            </c:when>
+				            <c:when test="${room.roomRankCode == '30_003' && room.bedCode == '50_002'}">
+				                <c:set var="img" value="http://localhost/hotel_prj/util/file/SUITE_TWIN_2.jpg" />
+				                <c:set var="roomCode" value="SWT" />
+				            </c:when>
+				        </c:choose>
+
+					
+						<li id="room_${status.index}" data-roomlclas="A01" >
+								<dl class="roomIntro">
+									<dt class="roomName">
+										${room.roomRankName } ${room.bedName}, ${room.viewName} 
+									</dt>
+									<dd class="keyword"><span>ROOM</span></dd>
+									<dd class="roomBenefit">${room.viewName} |  ${room.roomSize}㎡</dd>
+									<dd class="btnView">
+										<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('${roomCode}');">
+											객실 상세보기
+										</a>
+									</dd>
+									<dd class="priceWrap">
+										<span class="price" data-krw="${totalPrice}">
+											${totalPrice}<em>KRW</em>
+										</span>
+										
+											
+												<span class="day">1박</span>
+											
+											
+										
+									</dd>
+									<dd class="thum">
+										
+											
+											
+												<img src="${img}" alt="mainImg">										
+											
+										
+									</dd>
+									<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
+								</dl>
+							
+								<div class="toggleCont"  >
+									<div class="toggleInner">
+										<div class="roomDetail">
+											<ul class="optionList type02">
+												
+													<li id="room_0_0">
+														<div class="roomInfor">
+															<div class="titArea">
+																<strong class="tit">ROOM ONLY</strong>
+																
+															</div>
+															<p class="roomBenefit">본관 1박</p>
+															
+															<div class="date">
+																${rrVO.ckinDate} - ${rrVO.ckoutDate} 
+															</div>
+															<span class="price" data-krw="${totalPrice}">
+																<em>${totalPrice}</em>KRW
+															</span>
+														</div>
+														
+																
+																	<a href="#none" class="btnBook" onclick="fncGoStep2('${room.roomRankCode}','${room.roomRankName}','${room.bedCode}','${room.bedName}','${room.viewCode}','${room.viewName}','${totalPrice}');"><span>예약하기</span></a>
+															
+													</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</li>
+					
+					
+					
+					
+					
+					
+					</c:forEach>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+<!-- 						<li id="room_0" data-roomlclas="A01" >
 							<dl class="roomIntro">
 								<dt class="roomName">
-									DELUXE TWIN, STANDARD VIEW 
+									DELUXE TWIN, CITY VIEW 
 								</dt>
 								<dd class="keyword"><span>ROOM</span></dd>
-								<dd class="roomBenefit">Standard View |  Size: 46.7㎡</dd>
+								<dd class="roomBenefit">City View |  Size: 46.7㎡</dd>
 								<dd class="btnView">
-									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('GJJ', 'DST' ,'B01');">
+									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('DST');">
 										객실 상세보기
 									</a>
 								</dd>
 								<dd class="priceWrap">
-									<span class="price" data-krw="212500" data-jpy="24400" data-usd="156" data-cnh="1136" data-eur="144">
-										212,500<em>KRW ~</em>
+									<span class="price" data-krw="250000" data-jpy="28500" data-usd="181" data-cnh="1315" data-eur="169">
+										250,000<em>KRW ~</em>
 									</span>
 									
 										
@@ -1397,20 +939,16 @@
 									
 										
 										
-											<img src="http://localhost/hotel_prj/util/file/DELUXE_TWIN_Mountain.jpg" alt="디럭스 트윈">										
+											<img src="http://localhost/hotel_prj/util/file/DELUXE_TWIN.jpg" alt="디럭스 트윈">										
 										
 									
 								</dd>
 								<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
 							</dl>
-							<!-- //roomIntro -->
+							//roomIntro
 							<div class="toggleCont"  >
 								<div class="toggleInner">
 									<div class="roomDetail">
-										<div class="roomDetailTit">
-											<h4 class="titDep3">OFFERS</h4>
-											
-										</div>
 										<ul class="optionList type02">
 											
 												<li id="room_0_0">
@@ -1425,8 +963,8 @@
 														<div class="date">
 															2024.01.01 - 2024.11.30
 														</div>
-														<span class="price" data-krw="212500" data-jpy="24400" data-usd="156" data-cnh="1136" data-eur="144">
-															<em>212,500</em>KRW ~
+														<span class="price" data-krw="250000" data-jpy="28500" data-usd="181" data-cnh="1315" data-eur="169">
+															<em>250,000</em>KRW ~
 														</span>
 														
 															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('531357','GJJ');">
@@ -1436,19 +974,10 @@
 														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','0','0','DST','31BFR1N','531357');">비교함 담기</button>
 													</div>
 													
-													
-													
-														
-															
-															
 															
 																<a href="#none" class="btnBook" onclick="fncGoStep2('DST','31BFR1N','531357');"><span>예약하기</span></a>
-															
 														
-													
 												</li>
-											
-											
 										</ul>
 									</div>
 								</div>
@@ -1458,18 +987,18 @@
 						<li id="room_1" data-roomlclas="A01" >
 							<dl class="roomIntro">
 								<dt class="roomName">
-									DELUXE KING, STANDARD VIEW
+									DELUXE KING, CITY VIEW
 								</dt>
 								<dd class="keyword"><span>ROOM</span></dd>
-								<dd class="roomBenefit">Standard View |  Size: 46.7㎡</dd>
+								<dd class="roomBenefit">City View |  Size: 46.7㎡</dd>
 								<dd class="btnView">
-									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('GJJ', 'DSK' ,'B01');">
+									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('DSK');">
 										객실 상세보기
 									</a>
 								</dd>
 								<dd class="priceWrap">
-									<span class="price" data-krw="212500" data-jpy="24400" data-usd="156" data-cnh="1136" data-eur="144">
-										212,500<em>KRW ~</em>
+									<span class="price" data-krw="250000" data-jpy="28500" data-usd="181" data-cnh="1315" data-eur="169">
+										250,000<em>KRW ~</em>
 									</span>
 									
 										
@@ -1482,20 +1011,16 @@
 									
 										
 										
-											<img src="/util/file/download.do?fileSn=553751&sysCode=GJJ" alt="디럭스 킹">										
+											<img src="http://localhost/hotel_prj/util/file/DELUXE_KING.jpg" alt="디럭스 킹">										
 										
 									
 								</dd>
 								<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
 							</dl>
-							<!-- //roomIntro -->
+							//roomIntro
 							<div class="toggleCont"  >
 								<div class="toggleInner">
 									<div class="roomDetail">
-										<div class="roomDetailTit">
-											<h4 class="titDep3">OFFERS</h4>
-											<p class="roomDetail-reference"><span class="badge-info reward">리워드 혜택</span>표시는 회원전용 상품입니다.</p>
-										</div>
 										<ul class="optionList type02">
 											
 												<li id="room_1_0">
@@ -1510,8 +1035,8 @@
 														<div class="date">
 															2024.01.01 - 2024.11.30
 														</div>
-														<span class="price" data-krw="212500" data-jpy="24400" data-usd="156" data-cnh="1136" data-eur="144">
-															<em>212,500</em>KRW ~
+														<span class="price" data-krw="250000" data-jpy="28500" data-usd="181" data-cnh="1315" data-eur="169">
+															<em>250,000</em>KRW ~
 														</span>
 														
 															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('531357','GJJ');">
@@ -1519,88 +1044,9 @@
 															</button>
 														
 														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','1','0','DSK','31BFR1N','531357');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
+													</div>				
 																<a href="#none" class="btnBook" onclick="fncGoStep2('DSK','31BFR1N','531357');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_1_1">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">Mindful Stay - Basic Package.</strong>
-															
-														</div>
-														<p class="roomBenefit">리사이클링 한정판 굿즈와 함께, 지속 가능한 가치 있는 쉼의 여정을 즐겨보세요..</p>
-														
-														
-														<div class="date">
-															2024.04.22 - 2024.11.30
-														</div>
-														<span class="price" data-krw="217500" data-jpy="25000" data-usd="160" data-cnh="1163" data-eur="147">
-															<em>217,500</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1980937','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','1','1','DSK','41MINDRO','1980937');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DSK','41MINDRO','1980937');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_1_2">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">BED &amp; BREAKFAST</strong>
-															
-														</div>
-														<p class="roomBenefit">본관 1박 + 조식 2인</p>
-														
-														
-														<div class="date">
-															2020.12.01 - 2024.12.31
-														</div>
-														<span class="price" data-krw="230000" data-jpy="26400" data-usd="169" data-cnh="1229" data-eur="156">
-															<em>230,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('371799','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','1','2','DSK','31BFRB1N','371799');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DSK','31BFRB1N','371799');"><span>예약하기</span></a>
-															
-														
-													
+
 												</li>
 											
 										</ul>
@@ -1617,13 +1063,13 @@
 								<dd class="keyword"><span>ROOM</span></dd>
 								<dd class="roomBenefit">Garden View |  Size: 46.7㎡</dd>
 								<dd class="btnView">
-									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('GJJ', 'DGK' ,'B01');">
+									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('DGK');">
 										객실 상세보기
 									</a>
 								</dd>
 								<dd class="priceWrap">
-									<span class="price" data-krw="238000" data-jpy="27400" data-usd="175" data-cnh="1272" data-eur="161">
-										238,000<em>KRW ~</em>
+									<span class="price" data-krw="280000" data-jpy="31900" data-usd="203" data-cnh="1473" data-eur="189">
+										280,000<em>KRW ~</em>
 									</span>
 									
 										
@@ -1636,20 +1082,16 @@
 									
 										
 										
-											<img src="/util/file/download.do?fileSn=961228&sysCode=GJJ" alt="디럭스 킹">										
+											<img src="http://localhost/hotel_prj/util/file/DELUXE_KING.jpg" alt="디럭스 킹">										
 										
 									
 								</dd>
 								<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
 							</dl>
-							<!-- //roomIntro -->
+							//roomIntro
 							<div class="toggleCont"  >
 								<div class="toggleInner">
 									<div class="roomDetail">
-										<div class="roomDetailTit">
-											<h4 class="titDep3">OFFERS</h4>
-											<p class="roomDetail-reference"><span class="badge-info reward">리워드 혜택</span>표시는 회원전용 상품입니다.</p>
-										</div>
 										<ul class="optionList type02">
 											
 												<li id="room_2_0">
@@ -1664,8 +1106,8 @@
 														<div class="date">
 															2024.01.01 - 2024.11.30
 														</div>
-														<span class="price" data-krw="238000" data-jpy="27400" data-usd="175" data-cnh="1272" data-eur="161">
-															<em>238,000</em>KRW ~
+														<span class="price" data-krw="280000" data-jpy="31900" data-usd="203" data-cnh="1473" data-eur="189">
+															<em>280,000</em>KRW ~
 														</span>
 														
 															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('531357','GJJ');">
@@ -1684,78 +1126,8 @@
 																<a href="#none" class="btnBook" onclick="fncGoStep2('DGK','31BFR1N','531357');"><span>예약하기</span></a>
 															
 														
-													
 												</li>
-											
-												<li id="room_2_1">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">Mindful Stay - Basic Package.</strong>
-															
-														</div>
-														<p class="roomBenefit">리사이클링 한정판 굿즈와 함께, 지속 가능한 가치 있는 쉼의 여정을 즐겨보세요..</p>
-														
-														
-														<div class="date">
-															2024.04.22 - 2024.11.30
-														</div>
-														<span class="price" data-krw="243600" data-jpy="28000" data-usd="179" data-cnh="1302" data-eur="165">
-															<em>243,600</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1980937','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','2','1','DGK','41MINDRO','1980937');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DGK','41MINDRO','1980937');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_2_2">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">BED &amp; BREAKFAST</strong>
-															
-														</div>
-														<p class="roomBenefit">본관 1박 + 조식 2인</p>
-														
-														
-														<div class="date">
-															2020.12.01 - 2024.12.31
-														</div>
-														<span class="price" data-krw="257600" data-jpy="29600" data-usd="189" data-cnh="1377" data-eur="174">
-															<em>257,600</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('371799','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','2','2','DGK','31BFRB1N','371799');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DGK','31BFRB1N','371799');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
+
 											
 										</ul>
 									</div>
@@ -1766,18 +1138,18 @@
 						<li id="room_3" data-roomlclas="A01" >
 							<dl class="roomIntro">
 								<dt class="roomName">
-									DELUXE KING, POOLSIDE VIEW 
+									DELUXE TWIN, GARDEN VIEW 
 								</dt>
 								<dd class="keyword"><span>ROOM</span></dd>
-								<dd class="roomBenefit">Poolside View |  Size: 46.7㎡</dd>
+								<dd class="roomBenefit">Garden View |  Size: 46.7㎡</dd>
 								<dd class="btnView">
-									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('GJJ', 'DPK' ,'B01');">
+									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('DGT');">
 										객실 상세보기
 									</a>
 								</dd>
 								<dd class="priceWrap">
-									<span class="price" data-krw="255000" data-jpy="29300" data-usd="188" data-cnh="1363" data-eur="173">
-										255,000<em>KRW ~</em>
+									<span class="price" data-krw="280000" data-jpy="31900" data-usd="203" data-cnh="1473" data-eur="189">
+										280,000<em>KRW ~</em>
 									</span>
 									
 										
@@ -1790,13 +1162,13 @@
 									
 										
 										
-											<img src="/util/file/download.do?fileSn=553705&sysCode=GJJ" alt="그랜드 조선 제주 디럭스 풀사이드뷰 킹">										
+											<img src="http://localhost/hotel_prj/util/file/DELUXE_TWIN.jpg" alt="디럭스 트윈 ">										
 										
 									
 								</dd>
 								<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
 							</dl>
-							<!-- //roomIntro -->
+							//roomIntro
 							<div class="toggleCont"  >
 								<div class="toggleInner">
 									<div class="roomDetail">
@@ -1818,15 +1190,15 @@
 														<div class="date">
 															2024.01.01 - 2024.11.30
 														</div>
-														<span class="price" data-krw="255000" data-jpy="29300" data-usd="188" data-cnh="1363" data-eur="173">
-															<em>255,000</em>KRW ~
+														<span class="price" data-krw="280000" data-jpy="31900" data-usd="203" data-cnh="1473" data-eur="189">
+															<em>280,000</em>KRW ~
 														</span>
 														
 															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('531357','GJJ');">
 																상품 상세보기
 															</button>
 														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','3','0','DPK','31BFR1N','531357');">비교함 담기</button>
+														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','3','0','DGT','31BFR1N','531357');">비교함 담기</button>
 													</div>
 													
 													
@@ -1835,82 +1207,12 @@
 															
 															
 															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DPK','31BFR1N','531357');"><span>예약하기</span></a>
+																<a href="#none" class="btnBook" onclick="fncGoStep2('DGT','31BFR1N','531357');"><span>예약하기</span></a>
 															
 														
 													
 												</li>
-											
-												<li id="room_3_1">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">Mindful Stay - Basic Package.</strong>
-															
-														</div>
-														<p class="roomBenefit">리사이클링 한정판 굿즈와 함께, 지속 가능한 가치 있는 쉼의 여정을 즐겨보세요..</p>
-														
-														
-														<div class="date">
-															2024.04.22 - 2024.11.30
-														</div>
-														<span class="price" data-krw="261000" data-jpy="30000" data-usd="192" data-cnh="1395" data-eur="177">
-															<em>261,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1980937','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','3','1','DPK','41MINDRO','1980937');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DPK','41MINDRO','1980937');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_3_2">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">BED &amp; BREAKFAST</strong>
-															
-														</div>
-														<p class="roomBenefit">본관 1박 + 조식 2인</p>
-														
-														
-														<div class="date">
-															2020.12.01 - 2024.12.31
-														</div>
-														<span class="price" data-krw="276000" data-jpy="31700" data-usd="203" data-cnh="1475" data-eur="187">
-															<em>276,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('371799','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','3','2','DPK','31BFRB1N','371799');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DPK','31BFRB1N','371799');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
+
 										</ul>
 									</div>
 								</div>
@@ -1920,18 +1222,18 @@
 						<li id="room_4" data-roomlclas="A01" >
 							<dl class="roomIntro">
 								<dt class="roomName">
-									DELUXE TWIN,  POOLSIDE VIEW 
+									DELUXE KING, POOLSIDE VIEW 
 								</dt>
 								<dd class="keyword"><span>ROOM</span></dd>
 								<dd class="roomBenefit">Poolside View |  Size: 46.7㎡</dd>
 								<dd class="btnView">
-									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('GJJ', 'DPT' ,'B01');">
+									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('DPK');">
 										객실 상세보기
 									</a>
 								</dd>
 								<dd class="priceWrap">
-									<span class="price" data-krw="255000" data-jpy="29300" data-usd="188" data-cnh="1363" data-eur="173">
-										255,000<em>KRW ~</em>
+									<span class="price" data-krw="300000" data-jpy="34200" data-usd="217" data-cnh="1578" data-eur="202">
+										300,000<em>KRW ~</em>
 									</span>
 									
 										
@@ -1944,20 +1246,16 @@
 									
 										
 										
-											<img src="/util/file/download.do?fileSn=553727&sysCode=GJJ" alt="그랜드 조선 제주 디럭스 풀사이드뷰 트윈">										
+											<img src="http://localhost/hotel_prj/util/file/DELUXE_KING.jpg" alt="디럭스 킹">										
 										
 									
 								</dd>
 								<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
 							</dl>
-							<!-- //roomIntro -->
+							//roomIntro
 							<div class="toggleCont"  >
 								<div class="toggleInner">
 									<div class="roomDetail">
-										<div class="roomDetailTit">
-											<h4 class="titDep3">OFFERS</h4>
-											<p class="roomDetail-reference"><span class="badge-info reward">리워드 혜택</span>표시는 회원전용 상품입니다.</p>
-										</div>
 										<ul class="optionList type02">
 											
 												<li id="room_4_0">
@@ -1972,15 +1270,92 @@
 														<div class="date">
 															2024.01.01 - 2024.11.30
 														</div>
-														<span class="price" data-krw="255000" data-jpy="29300" data-usd="188" data-cnh="1363" data-eur="173">
-															<em>255,000</em>KRW ~
+														<span class="price" data-krw="300000" data-jpy="34200" data-usd="217" data-cnh="1578" data-eur="202">
+															<em>300,000</em>KRW ~
 														</span>
 														
 															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('531357','GJJ');">
 																상품 상세보기
 															</button>
 														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','4','0','DPT','31BFR1N','531357');">비교함 담기</button>
+														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','4','0','DPK','31BFR1N','531357');">비교함 담기</button>
+													</div>
+													
+													
+													
+														
+															
+															
+															
+																<a href="#none" class="btnBook" onclick="fncGoStep2('DPK','31BFR1N','531357');"><span>예약하기</span></a>
+												</li>
+											
+										</ul>
+									</div>
+								</div>
+							</div>
+						</li>
+					
+						<li id="room_5" data-roomlclas="A01" >
+							<dl class="roomIntro">
+								<dt class="roomName">
+									DELUXE TWIN,  POOLSIDE VIEW 
+								</dt>
+								<dd class="keyword"><span>ROOM</span></dd>
+								<dd class="roomBenefit">Poolside View |  Size: 46.7㎡</dd>
+								<dd class="btnView">
+									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('DPT');">
+										객실 상세보기
+									</a>
+								</dd>
+								<dd class="priceWrap">
+									<span class="price" data-krw="300000" data-jpy="34200" data-usd="217" data-cnh="1578" data-eur="202">
+										300,000<em>KRW ~</em>
+									</span>
+									
+										
+											<span class="day">1박 / 세금 별도</span>
+										
+										
+									
+								</dd>
+								<dd class="thum">
+									
+										
+										
+											<img src="http://localhost/hotel_prj/util/file/DELUXE_TWIN.jpg" alt="디럭스 트윈">										
+										
+									
+								</dd>
+								<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
+							</dl>
+							//roomIntro
+							<div class="toggleCont"  >
+								<div class="toggleInner">
+									<div class="roomDetail">
+										<ul class="optionList type02">
+											
+												<li id="room_5_0">
+													<div class="roomInfor">
+														<div class="titArea">
+															<strong class="tit">ROOM ONLY</strong>
+															
+														</div>
+														<p class="roomBenefit">본관 1박</p>
+														
+														
+														<div class="date">
+															2024.01.01 - 2024.11.30
+														</div>
+														<span class="price" data-krw="300000" data-jpy="34200" data-usd="217" data-cnh="1578" data-eur="202">
+															<em>300,000</em>KRW ~
+														</span>
+														
+															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('531357','GJJ');">
+																상품 상세보기
+															</button>
+														
+														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','5','0','DPT','31BFR1N','531357');">비교함 담기</button>
 													</div>
 													
 													
@@ -1990,1097 +1365,15 @@
 															
 															
 																<a href="#none" class="btnBook" onclick="fncGoStep2('DPT','31BFR1N','531357');"><span>예약하기</span></a>
-															
-														
-													
 												</li>
-											
-												<li id="room_4_1">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">Mindful Stay - Basic Package.</strong>
-															
-														</div>
-														<p class="roomBenefit">리사이클링 한정판 굿즈와 함께, 지속 가능한 가치 있는 쉼의 여정을 즐겨보세요..</p>
-														
-														
-														<div class="date">
-															2024.04.22 - 2024.11.30
-														</div>
-														<span class="price" data-krw="261000" data-jpy="30000" data-usd="192" data-cnh="1395" data-eur="177">
-															<em>261,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1980937','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','4','1','DPT','41MINDRO','1980937');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DPT','41MINDRO','1980937');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_4_2">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">BED &amp; BREAKFAST</strong>
-															
-														</div>
-														<p class="roomBenefit">본관 1박 + 조식 2인</p>
-														
-														
-														<div class="date">
-															2020.12.01 - 2024.12.31
-														</div>
-														<span class="price" data-krw="276000" data-jpy="31700" data-usd="203" data-cnh="1475" data-eur="187">
-															<em>276,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('371799','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','4','2','DPT','31BFRB1N','371799');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('DPT','31BFRB1N','371799');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
 										</ul>
 									</div>
 								</div>
 							</div>
-						</li>
-					
-						<li id="room_5" data-roomlclas="A04" >
-							<dl class="roomIntro">
-								<dt class="roomName">
-									HILL STUDIO SUITE SUPER KING, GARDEN VIEW
-								</dt>
-								<dd class="keyword"><span>HILL SUITE</span></dd>
-								<dd class="roomBenefit">Garden View |  Size: 89㎡</dd>
-								<dd class="btnView">
-									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('GJJ', 'HSGK' ,'B09');">
-										객실 상세보기
-									</a>
-								</dd>
-								<dd class="priceWrap">
-									<span class="price" data-krw="382500" data-jpy="44000" data-usd="282" data-cnh="2045" data-eur="259">
-										382,500<em>KRW ~</em>
-									</span>
-									
-										
-											<span class="day">1박 / 세금 별도</span>
-										
-										
-									
-								</dd>
-								<dd class="thum">
-									
-										
-										
-											<img src="/util/file/download.do?fileSn=966505&sysCode=GJJ" alt="힐 스튜디오 스위트 킹">										
-										
-									
-								</dd>
-								<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
-							</dl>
-							<!-- //roomIntro -->
-							<div class="toggleCont"  >
-								<div class="toggleInner">
-									<div class="roomDetail">
-										<div class="roomDetailTit">
-											<h4 class="titDep3">OFFERS</h4>
-											<p class="roomDetail-reference"><span class="badge-info reward">리워드 혜택</span>표시는 회원전용 상품입니다.</p>
-										</div>
-										<ul class="optionList type02">
-											
-												<li id="room_5_0">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">Hill Suite Room Only</strong>
-															
-														</div>
-														<p class="roomBenefit">Hill Suite Room Only</p>
-														
-														
-														<div class="date">
-															2023.10.17 - 2024.12.31
-														</div>
-														<span class="price" data-krw="382500" data-jpy="44000" data-usd="282" data-cnh="2045" data-eur="259">
-															<em>382,500</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1724391','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','5','0','HSGK','31HBFR1N','1724391');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HSGK','31HBFR1N','1724391');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_5_1">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">HILL SUITE BED &amp; BREAKFAST</strong>
-															
-														</div>
-														<p class="roomBenefit">힐 스위트 1박  + 조식 2인</p>
-														
-														
-														<div class="date">
-															2023.10.06 - 2024.12.31
-														</div>
-														<span class="price" data-krw="414000" data-jpy="47600" data-usd="305" data-cnh="2213" data-eur="281">
-															<em>414,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1673541','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','5','1','HSGK','31HBFR1NB','1673541');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HSGK','31HBFR1NB','1673541');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_5_2">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">ALMOST HEAVEN</strong>
-															
-														</div>
-														<p class="roomBenefit">힐 스위트 1박 + 그랑제이 Access (조식 + 커피 &amp; 티 서비스 + 그랑 초이스)</p>
-														
-														
-														<div class="date">
-															2016.10.30 - 2024.08.31
-														</div>
-														<span class="price" data-krw="600000" data-jpy="69100" data-usd="442" data-cnh="3208" data-eur="407">
-															<em>600,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('347825','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','5','2','HSGK','31PKGHN','347825');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HSGK','31PKGHN','347825');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
-					
-						<li id="room_6" data-roomlclas="A04" >
-							<dl class="roomIntro">
-								<dt class="roomName">
-									HILL SUITE TWIN, GARDEN VIEW
-								</dt>
-								<dd class="keyword"><span>HILL SUITE</span></dd>
-								<dd class="roomBenefit">Garden View |  Size: 89㎡</dd>
-								<dd class="btnView">
-									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('GJJ', 'HHGT' ,'B10');">
-										객실 상세보기
-									</a>
-								</dd>
-								<dd class="priceWrap">
-									<span class="price" data-krw="382500" data-jpy="44000" data-usd="282" data-cnh="2045" data-eur="259">
-										382,500<em>KRW ~</em>
-									</span>
-									
-										
-											<span class="day">1박 / 세금 별도</span>
-										
-										
-									
-								</dd>
-								<dd class="thum">
-									
-										
-										
-											<img src="/util/file/download.do?fileSn=966532&sysCode=GJJ" alt="힐 스위트">										
-										
-									
-								</dd>
-								<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
-							</dl>
-							<!-- //roomIntro -->
-							<div class="toggleCont"  >
-								<div class="toggleInner">
-									<div class="roomDetail">
-										<div class="roomDetailTit">
-											<h4 class="titDep3">OFFERS</h4>
-											<p class="roomDetail-reference"><span class="badge-info reward">리워드 혜택</span>표시는 회원전용 상품입니다.</p>
-										</div>
-										<ul class="optionList type02">
-											
-												<li id="room_6_0">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">Hill Suite Room Only</strong>
-															
-														</div>
-														<p class="roomBenefit">Hill Suite Room Only</p>
-														
-														
-														<div class="date">
-															2023.10.17 - 2024.12.31
-														</div>
-														<span class="price" data-krw="382500" data-jpy="44000" data-usd="282" data-cnh="2045" data-eur="259">
-															<em>382,500</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1724391','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','6','0','HHGT','31HBFR1N','1724391');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HHGT','31HBFR1N','1724391');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_6_1">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">HILL SUITE BED &amp; BREAKFAST</strong>
-															
-														</div>
-														<p class="roomBenefit">힐 스위트 1박  + 조식 2인</p>
-														
-														
-														<div class="date">
-															2023.10.06 - 2024.12.31
-														</div>
-														<span class="price" data-krw="414000" data-jpy="47600" data-usd="305" data-cnh="2213" data-eur="281">
-															<em>414,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1673541','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','6','1','HHGT','31HBFR1NB','1673541');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HHGT','31HBFR1NB','1673541');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_6_2">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">ALMOST HEAVEN</strong>
-															
-														</div>
-														<p class="roomBenefit">힐 스위트 1박 + 그랑제이 Access (조식 + 커피 &amp; 티 서비스 + 그랑 초이스)</p>
-														
-														
-														<div class="date">
-															2016.10.30 - 2024.08.31
-														</div>
-														<span class="price" data-krw="600000" data-jpy="69100" data-usd="442" data-cnh="3208" data-eur="407">
-															<em>600,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('347825','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','6','2','HHGT','31PKGHN','347825');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HHGT','31PKGHN','347825');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
-					
-						<li id="room_7" data-roomlclas="A04" >
-							<dl class="roomIntro">
-								<dt class="roomName">
-									HILL STUDIO SUITE TWIN, OCEAN VIEW
-								</dt>
-								<dd class="keyword"><span>HILL SUITE</span></dd>
-								<dd class="roomBenefit">Ocean View |  Size: 89㎡</dd>
-								<dd class="btnView">
-									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('GJJ', 'HSOT' ,'B09');">
-										객실 상세보기
-									</a>
-								</dd>
-								<dd class="priceWrap">
-									<span class="price" data-krw="450500" data-jpy="51900" data-usd="332" data-cnh="2409" data-eur="305">
-										450,500<em>KRW ~</em>
-									</span>
-									
-										
-											<span class="day">1박 / 세금 별도</span>
-										
-										
-									
-								</dd>
-								<dd class="thum">
-									
-										
-										
-											<img src="/util/file/download.do?fileSn=897968&sysCode=GJJ" alt="힐 스튜디오 스위트 트윈">										
-										
-									
-								</dd>
-								<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
-							</dl>
-							<!-- //roomIntro -->
-							<div class="toggleCont"  >
-								<div class="toggleInner">
-									<div class="roomDetail">
-										<div class="roomDetailTit">
-											<h4 class="titDep3">OFFERS</h4>
-											<p class="roomDetail-reference"><span class="badge-info reward">리워드 혜택</span>표시는 회원전용 상품입니다.</p>
-										</div>
-										<ul class="optionList type02">
-											
-												<li id="room_7_0">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">Hill Suite Room Only</strong>
-															
-														</div>
-														<p class="roomBenefit">Hill Suite Room Only</p>
-														
-														
-														<div class="date">
-															2023.10.17 - 2024.12.31
-														</div>
-														<span class="price" data-krw="450500" data-jpy="51900" data-usd="332" data-cnh="2409" data-eur="305">
-															<em>450,500</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1724391','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','7','0','HSOT','31HBFR1N','1724391');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HSOT','31HBFR1N','1724391');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_7_1">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">HILL SUITE BED &amp; BREAKFAST</strong>
-															
-														</div>
-														<p class="roomBenefit">힐 스위트 1박  + 조식 2인</p>
-														
-														
-														<div class="date">
-															2023.10.06 - 2024.12.31
-														</div>
-														<span class="price" data-krw="487600" data-jpy="56100" data-usd="359" data-cnh="2607" data-eur="331">
-															<em>487,600</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1673541','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','7','1','HSOT','31HBFR1NB','1673541');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HSOT','31HBFR1NB','1673541');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_7_2">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">ALMOST HEAVEN</strong>
-															
-														</div>
-														<p class="roomBenefit">힐 스위트 1박 + 그랑제이 Access (조식 + 커피 &amp; 티 서비스 + 그랑 초이스)</p>
-														
-														
-														<div class="date">
-															2016.10.30 - 2024.08.31
-														</div>
-														<span class="price" data-krw="680000" data-jpy="78300" data-usd="501" data-cnh="3636" data-eur="461">
-															<em>680,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('347825','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','7','2','HSOT','31PKGHN','347825');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HSOT','31PKGHN','347825');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
-					
-						<li id="room_8" data-roomlclas="A04" >
-							<dl class="roomIntro">
-								<dt class="roomName">
-									PRESTIGE HILL SUITE, GARDEN VIEW
-								</dt>
-								<dd class="keyword"><span>HILL SUITE</span></dd>
-								<dd class="roomBenefit">Garden View |  Size: 193.1㎡</dd>
-								<dd class="btnView">
-									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('GJJ', 'HPG' ,'B11');">
-										객실 상세보기
-									</a>
-								</dd>
-								<dd class="priceWrap">
-									<span class="price" data-krw="722500" data-jpy="83200" data-usd="532" data-cnh="3863" data-eur="490">
-										722,500<em>KRW ~</em>
-									</span>
-									
-										
-											<span class="day">1박 / 세금 별도</span>
-										
-										
-									
-								</dd>
-								<dd class="thum">
-									
-										
-										
-											<img src="/util/file/download.do?fileSn=966558&sysCode=GJJ" alt="프레스티지 힐 스위트 ">										
-										
-									
-								</dd>
-								<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
-							</dl>
-							<!-- //roomIntro -->
-							<div class="toggleCont"  >
-								<div class="toggleInner">
-									<div class="roomDetail">
-										<div class="roomDetailTit">
-											<h4 class="titDep3">OFFERS</h4>
-											<p class="roomDetail-reference"><span class="badge-info reward">리워드 혜택</span>표시는 회원전용 상품입니다.</p>
-										</div>
-										<ul class="optionList type02">
-											
-												<li id="room_8_0">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">Hill Suite Room Only</strong>
-															
-														</div>
-														<p class="roomBenefit">Hill Suite Room Only</p>
-														
-														
-														<div class="date">
-															2023.10.17 - 2024.12.31
-														</div>
-														<span class="price" data-krw="722500" data-jpy="83200" data-usd="532" data-cnh="3863" data-eur="490">
-															<em>722,500</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1724391','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','8','0','HPG','31HBFR1N','1724391');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HPG','31HBFR1N','1724391');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_8_1">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">HILL SUITE BED &amp; BREAKFAST</strong>
-															
-														</div>
-														<p class="roomBenefit">힐 스위트 1박  + 조식 2인</p>
-														
-														
-														<div class="date">
-															2023.10.06 - 2024.12.31
-														</div>
-														<span class="price" data-krw="782000" data-jpy="90000" data-usd="576" data-cnh="4181" data-eur="530">
-															<em>782,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1673541','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','8','1','HPG','31HBFR1NB','1673541');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HPG','31HBFR1NB','1673541');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_8_2">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">ALMOST HEAVEN</strong>
-															
-														</div>
-														<p class="roomBenefit">힐 스위트 1박 + 그랑제이 Access (조식 + 커피 &amp; 티 서비스 + 그랑 초이스)</p>
-														
-														
-														<div class="date">
-															2016.10.30 - 2024.08.31
-														</div>
-														<span class="price" data-krw="1000000" data-jpy="115200" data-usd="737" data-cnh="5347" data-eur="678">
-															<em>1,000,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('347825','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','8','2','HPG','31PKGHN','347825');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HPG','31PKGHN','347825');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
-					
-						<li id="room_9" data-roomlclas="A04" >
-							<dl class="roomIntro">
-								<dt class="roomName">
-									PRESTIGE HILL SUITE, OCEAN VIEW
-								</dt>
-								<dd class="keyword"><span>HILL SUITE</span></dd>
-								<dd class="roomBenefit">Ocean View |  Size: 193.1㎡</dd>
-								<dd class="btnView">
-									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('GJJ', 'HPO' ,'B11');">
-										객실 상세보기
-									</a>
-								</dd>
-								<dd class="priceWrap">
-									<span class="price" data-krw="807500" data-jpy="93000" data-usd="595" data-cnh="4318" data-eur="548">
-										807,500<em>KRW ~</em>
-									</span>
-									
-										
-											<span class="day">1박 / 세금 별도</span>
-										
-										
-									
-								</dd>
-								<dd class="thum">
-									
-										
-										
-											<img src="/util/file/download.do?fileSn=553935&sysCode=GJJ" alt="프레스티지 힐 스위트 ">										
-										
-									
-								</dd>
-								<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
-							</dl>
-							<!-- //roomIntro -->
-							<div class="toggleCont"  >
-								<div class="toggleInner">
-									<div class="roomDetail">
-										<div class="roomDetailTit">
-											<h4 class="titDep3">OFFERS</h4>
-											<p class="roomDetail-reference"><span class="badge-info reward">리워드 혜택</span>표시는 회원전용 상품입니다.</p>
-										</div>
-										<ul class="optionList type02">
-											
-												<li id="room_9_0">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">Hill Suite Room Only</strong>
-															
-														</div>
-														<p class="roomBenefit">Hill Suite Room Only</p>
-														
-														
-														<div class="date">
-															2023.10.17 - 2024.12.31
-														</div>
-														<span class="price" data-krw="807500" data-jpy="93000" data-usd="595" data-cnh="4318" data-eur="548">
-															<em>807,500</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1724391','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','9','0','HPO','31HBFR1N','1724391');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HPO','31HBFR1N','1724391');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_9_1">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">HILL SUITE BED &amp; BREAKFAST</strong>
-															
-														</div>
-														<p class="roomBenefit">힐 스위트 1박  + 조식 2인</p>
-														
-														
-														<div class="date">
-															2023.10.06 - 2024.12.31
-														</div>
-														<span class="price" data-krw="874000" data-jpy="100600" data-usd="644" data-cnh="4673" data-eur="593">
-															<em>874,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('1673541','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','9','1','HPO','31HBFR1NB','1673541');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HPO','31HBFR1NB','1673541');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_9_2">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">ALMOST HEAVEN</strong>
-															
-														</div>
-														<p class="roomBenefit">힐 스위트 1박 + 그랑제이 Access (조식 + 커피 &amp; 티 서비스 + 그랑 초이스)</p>
-														
-														
-														<div class="date">
-															2016.10.30 - 2024.08.31
-														</div>
-														<span class="price" data-krw="1100000" data-jpy="126700" data-usd="811" data-cnh="5882" data-eur="746">
-															<em>1,100,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('347825','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','9','2','HPO','31PKGHN','347825');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('HPO','31PKGHN','347825');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
-					
-						<li id="room_10" data-roomlclas="A02" >
-							<dl class="roomIntro">
-								<dt class="roomName">
-									ROYAL SUITE
-								</dt>
-								<dd class="keyword"><span>SUITE</span></dd>
-								<dd class="roomBenefit">Poolside View |  Size: 202㎡</dd>
-								<dd class="btnView">
-									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('GJJ', 'RS' ,'B07');">
-										객실 상세보기
-									</a>
-								</dd>
-								<dd class="priceWrap">
-									<span class="price" data-krw="1275000" data-jpy="146800" data-usd="940" data-cnh="6818" data-eur="865">
-										1,275,000<em>KRW ~</em>
-									</span>
-									
-										
-											<span class="day">1박 / 세금 별도</span>
-										
-										
-									
-								</dd>
-								<dd class="thum">
-									
-										
-										
-											<img src="/util/file/download.do?fileSn=897861&sysCode=GJJ" alt="그랜드 조선 제주 로얄 스위트">										
-										
-									
-								</dd>
-								<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
-							</dl>
-							<!-- //roomIntro -->
-							<div class="toggleCont"  >
-								<div class="toggleInner">
-									<div class="roomDetail">
-										<div class="roomDetailTit">
-											<h4 class="titDep3">OFFERS</h4>
-											<p class="roomDetail-reference"><span class="badge-info reward">리워드 혜택</span>표시는 회원전용 상품입니다.</p>
-										</div>
-										<ul class="optionList type02">
-											
-												<li id="room_10_0">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">ROOM ONLY</strong>
-															
-														</div>
-														<p class="roomBenefit">본관 1박</p>
-														
-														
-														<div class="date">
-															2024.01.01 - 2024.11.30
-														</div>
-														<span class="price" data-krw="1275000" data-jpy="146800" data-usd="940" data-cnh="6818" data-eur="865">
-															<em>1,275,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('531357','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','10','0','RS','31BFR1N','531357');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('RS','31BFR1N','531357');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_10_1">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">BED &amp; BREAKFAST</strong>
-															
-														</div>
-														<p class="roomBenefit">본관 1박 + 조식 2인</p>
-														
-														
-														<div class="date">
-															2020.12.01 - 2024.12.31
-														</div>
-														<span class="price" data-krw="1380000" data-jpy="158900" data-usd="1017" data-cnh="7379" data-eur="936">
-															<em>1,380,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('371799','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','10','1','RS','31BFRB1N','371799');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('RS','31BFRB1N','371799');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
-					
-						<li id="room_11" data-roomlclas="A02" >
-							<dl class="roomIntro">
-								<dt class="roomName">
-									THE SUITE
-								</dt>
-								<dd class="keyword"><span>SUITE</span></dd>
-								<dd class="roomBenefit">Poolside View |  Size: 267.5㎡</dd>
-								<dd class="btnView">
-									<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo('GJJ', 'PS' ,'B08');">
-										객실 상세보기
-									</a>
-								</dd>
-								<dd class="priceWrap">
-									<span class="price" data-krw="1487500" data-jpy="171300" data-usd="1096" data-cnh="7954" data-eur="1009">
-										1,487,500<em>KRW ~</em>
-									</span>
-									
-										
-											<span class="day">1박 / 세금 별도</span>
-										
-										
-									
-								</dd>
-								<dd class="thum">
-									
-										
-										
-											<img src="/util/file/download.do?fileSn=1173141&sysCode=GJJ" alt="그랜드 조선 제주 The Suite 더 스위트">										
-										
-									
-								</dd>
-								<button type="button" class="btnToggle btnSC btnRsv">RESERVE<span class="hidden">상세내용 보기</span></button>
-							</dl>
-							<!-- //roomIntro -->
-							<div class="toggleCont"  >
-								<div class="toggleInner">
-									<div class="roomDetail">
-										<div class="roomDetailTit">
-											<h4 class="titDep3">OFFERS</h4>
-											<p class="roomDetail-reference"><span class="badge-info reward">리워드 혜택</span>표시는 회원전용 상품입니다.</p>
-										</div>
-										<ul class="optionList type02">
-											
-												<li id="room_11_0">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">ROOM ONLY</strong>
-															
-														</div>
-														<p class="roomBenefit">본관 1박</p>
-														
-														
-														<div class="date">
-															2024.01.01 - 2024.11.30
-														</div>
-														<span class="price" data-krw="1487500" data-jpy="171300" data-usd="1096" data-cnh="7954" data-eur="1009">
-															<em>1,487,500</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('531357','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','11','0','PS','31BFR1N','531357');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('PS','31BFR1N','531357');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-												<li id="room_11_1">
-													<div class="roomInfor">
-														<div class="titArea">
-															<strong class="tit">BED &amp; BREAKFAST</strong>
-															
-														</div>
-														<p class="roomBenefit">본관 1박 + 조식 2인</p>
-														
-														
-														<div class="date">
-															2020.12.01 - 2024.12.31
-														</div>
-														<span class="price" data-krw="1610000" data-jpy="185400" data-usd="1187" data-cnh="8609" data-eur="1093">
-															<em>1,610,000</em>KRW ~
-														</span>
-														
-															<button type="button" class="btnLine" onclick="fncOpenPackBenefit('371799','GJJ');">
-																상품 상세보기
-															</button>
-														
-														<button type="button" class="btnComparison btnLine" onclick="fncAddCompareProduct('room','11','1','PS','31BFRB1N','371799');">비교함 담기</button>
-													</div>
-													
-													
-													
-														
-															
-															
-															
-																<a href="#none" class="btnBook" onclick="fncGoStep2('PS','31BFRB1N','371799');"><span>예약하기</span></a>
-															
-														
-													
-												</li>
-											
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
-					
+						</li> -->
+
 				</ul>
-				<!-- //roomList -->
+				<!-- roomList E-->
 			</div>					
 		</div>
 	
@@ -3133,17 +1426,13 @@
 		</div>
 	</div>
 	<!-- //비교하기 Layer -->
-	<div id="layerPop2" class="layerPop">
-		<div class="layerCont" style="top: 50%; left: 50%; margin-top: -395px; margin-left: -540px;">
-			<div class="detailCont">
-			</div>
-			<button type="button" class="btnClose" onclick="commonJs.popClose($('#layerPop2'));">
-				닫기
-			</button>
-		</div>
-	</div>
+<div id="layerPop2" class="layerPop" style="display: block; user-select: auto !important;">
+   
+</div>
 	<!-- //패키지 혜택 상세보기 레이어 -->
-	<div id="layerPop3" class="layerPop"></div>
+	<div id="layerPop3" class="layerPop">
+	아아
+	</div>
 	
 	<!-- 회원특가상품 Layer -->
 	<div id="layerPop4" class="layerPop">

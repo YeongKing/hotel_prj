@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.sist.elysian.user.room">
+    <select id="roomList" resultType="urld" parameterType="rrVO">
+        WITH AvailableRooms AS (
+            SELECT ROOM_ID
+            FROM ROOM_RESERVATION
+            WHERE
+                (CHECKOUT &lt; TO_DATE(#{ckinDate}, 'YYYY-MM-DD') OR CHECKIN &gt; TO_DATE(#{ckoutDate}, 'YYYY-MM-DD'))
+                OR
+                (CHECKOUT = TO_DATE(#{ckinDate}, 'YYYY-MM-DD') OR CHECKIN = TO_DATE(#{ckoutDate}, 'YYYY-MM-DD'))
+            GROUP BY ROOM_ID
+        ),
+        FilteredRooms AS (
+            SELECT R.ROOM_ID, R.ROOM_RANK_CODE, R.ROOM_RANK_NAME, R.ROOM_SIZE, R.ROOM_BASIC_CAPACITY,
+                   R.ROOM_MAX_CAPACITY, R.ROOM_BASIC_PRICE, R.VIEW_CODE, R.VIEW_NAME,
+                   R.ROOM_ADD_PRICE, R.BED_CODE, R.BED_NAME, R.BED_CNT, R.DELETE_STATUS,
+                   ROW_NUMBER() OVER (PARTITION BY R.ROOM_RANK_CODE, R.VIEW_CODE, R.BED_CODE ORDER BY R.ROOM_ID) AS rn
+            FROM ROOM R
+            LEFT JOIN AvailableRooms AR ON R.ROOM_ID = AR.ROOM_ID
+            WHERE (R.ROOM_BASIC_CAPACITY &lt;= (#{adultsNum} + #{kidsNum}) AND R.ROOM_MAX_CAPACITY &gt;= (#{adultsNum} + #{kidsNum}))
+              AND (AR.ROOM_ID IS NOT NULL OR R.ROOM_ID NOT IN (SELECT ROOM_ID FROM ROOM_RESERVATION))
+        )
+        SELECT ROOM_ID AS roomId, ROOM_RANK_CODE AS roomRankCode, ROOM_RANK_NAME AS roomRankName, ROOM_SIZE AS roomSize,
+               ROOM_BASIC_CAPACITY AS roomBasicCapacity, ROOM_MAX_CAPACITY AS roomMaxCapacity, ROOM_BASIC_PRICE AS roomBasicPrice,
+               VIEW_CODE AS viewCode, VIEW_NAME AS viewName, ROOM_ADD_PRICE AS roomAddPrice, BED_CODE AS bedCode,
+               BED_NAME AS bedName, BED_CNT AS bedCnt, DELETE_STATUS AS deleteStatus
+        FROM FilteredRooms
+        WHERE rn = 1
+    </select>
+    
+    
+    
+</mapper>

@@ -13,7 +13,7 @@ import kr.co.sist.elysian.admin.dining.model.domain.DiningListDomain;
 import kr.co.sist.elysian.admin.dining.model.vo.DiningVO;
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
 
-@Repository
+@Repository("adminDiningDAO")
 public class DiningDAO {
 	
 	@Autowired(required = false)

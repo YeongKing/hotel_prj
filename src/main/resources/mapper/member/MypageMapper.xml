@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.sist.elysian.member.mypage">
+
+	<select id="selectUserName" resultType="String" parameterType="String">
+		select name userName
+		from member
+		where member_id = #{userId}
+	</select>
+	
+	<select id="selectMainRoomResList" resultType="myPageRoomResDomain" parameterType="String">
+		<![CDATA[
+		select rr.pay_num payNum, r.room_rank_name || ' | ' || r.bed_cnt || ' ' || r.bed_name || ' | ' || r.view_name roomInfo,
+			 to_char(rr.checkin, 'yyyy.mm.dd') checkIn, to_char(rr.checkout, 'yyyy.mm.dd') checkOut
+		from room_reservation rr
+		inner join room r
+		on r.room_id = rr.room_id
+		where rr.user_id = #{userId} and rr.room_res_status = 'RESERVED' and rr.checkin <= add_months(sysdate, 3)
+		order by rr.pay_num
+		]]>
+	</select>
+	
+	<select id="selectRoomResList" resultType="myPageRoomResDomain" parameterType="java.util.HashMap">
+		<![CDATA[
+		select rr.room_res_status roomResStatus, r.room_rank_name || ' | ' || r.bed_cnt || ' ' || r.bed_name || ' | ' || r.view_name roomInfo,
+			 rr.adults_num adultsNum, rr.kids_num kidsNum, rr.pay_num payNum,
+			 to_char(rr.checkin, 'yyyy.mm.dd') checkIn, to_char(rr.checkout, 'yyyy.mm.dd') checkOut
+		from room_reservation rr
+		inner join room r
+		on r.room_id = rr.room_id
+		where rr.user_id = #{userId}
+		]]>
+		<choose>
+			<when test="roomResStatus == 'RESERVED'">
+				<![CDATA[and rr.room_res_status = 'RESERVED']]>
+			</when>
+			<when test="roomResStatus == 'CANCELED'">
+				<![CDATA[and rr.room_res_status = 'CANCELED']]>
+			</when>
+			<otherwise>
+				<![CDATA[and rr.room_res_status in ('RESERVED', 'CANCELED')]]>
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="searchDataBeginDe eq null and searchDataEndDe eq null">
+				<![CDATA[and rr.checkin >= to_date(sysdate) and rr.checkin <= to_date(add_months(sysdate, 3))]]>
+			</when>
+			<otherwise>
+				<![CDATA[and rr.checkin >= to_date(#{searchDataBeginDe}) and rr.checkin <= to_date(#{searchDataEndDe})]]>
+			</otherwise>
+		</choose>
+		<![CDATA[
+		order by rr.pay_num
+		]]>
+	</select>
+	
+	<select id="selectRoomResDetail" resultType="myPageRoomResDomain" parameterType="String">
+		<![CDATA[
+		select r.room_rank_name || ' | ' || r.bed_cnt || ' ' || r.bed_name || ' | ' || r.view_name roomInfo,
+			 rr.pay_num payNum, rr.room_res_status roomResStatus, to_char(rr.checkin, 'yyyy.mm.dd') checkIn, to_char(rr.checkout, 'yyyy.mm.dd') checkOut,
+			 rr.adults_num adultsNum, rr.kids_num kidsNum, to_char(rr.room_res_date, 'yyyy.mm.dd') roomResDate,
+			 p.pay_price payPrice, p.pay_price-r.room_basic_price addPrice, r.room_basic_price roomBasicPrice,
+			 m.eng_fname || ' ' || m.eng_lname engName, m.eng_fname engFName, m.eng_lname engLName,
+			 rr.guest_phone guestPhone, rr.guest_email guestEmail, c.code_name cardName, p.card_num cardNum
+		from room_reservation rr
+		inner join room r
+		on r.room_id = rr.room_id
+		inner join member m
+		on m.member_id = rr.user_id
+		inner join pay p
+		on p.pay_num = rr.pay_num
+		inner join common_code c
+		on substr(card_code, 0, instr(card_code, '_')-1) = c.code_type and substr(p.card_code, instr(p.card_code, '_')+1) = c.code_val
+		where rr.pay_num = #{payNum}
+		]]>
+	</select>
+	
+	<update id="cancelRoomRes" parameterType="String">
+		update room_reservation
+		set room_res_status = 'CANCELED'
+		where pay_num = #{payNum}
+	</update>
+	
+</mapper>

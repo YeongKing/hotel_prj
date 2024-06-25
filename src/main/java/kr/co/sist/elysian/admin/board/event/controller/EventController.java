@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oreilly.servlet.MultipartRequest;
@@ -157,13 +156,7 @@ public class EventController {
 		return isUpdated;
 	}//updateEvent
 	
-	//이벤트 삭제 메서드
-	@ResponseBody
-	@GetMapping("deleteEvent.do")
-	public boolean deleteEvent(@RequestParam("eventNum")String eventNum ,Model model) {
-		boolean isDeleted = es.removeEvent(eventNum);
-		return isDeleted;
-	}//deleteEvent
+
 	
 	
 	

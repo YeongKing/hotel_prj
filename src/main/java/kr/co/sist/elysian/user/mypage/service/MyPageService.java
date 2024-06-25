@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 import kr.co.sist.elysian.user.mypage.repository.MyPageDAO;
 
@@ -103,6 +104,11 @@ public class MyPageService{
 		return roomResDetail;
 	} // searchRoomResDetail
 	
+	/**
+	 * DAO에서 가져온 예약 취소 결과를 json으로 변환하여 반환
+	 * @param payNum
+	 * @return result(예약 취소 결과)
+	 */
 	public String modifyRoomResToCancel(String payNum) {
 		JSONObject jsonObj = new JSONObject();
 		String resultCode = "ERROR";
@@ -119,5 +125,71 @@ public class MyPageService{
 		jsonObj.put("resultCode", resultCode);
 		return jsonObj.toJSONString();
 	} // modifyRoomResToCancel
+	
+	/**
+	 * DAO에서 가져온 diningResList를 json으로 변환하여 반환
+	 * @param userId
+	 * @param roomResStatus
+	 * @return roomResList
+	 */
+	public String searchDiningResList(Map<String, String> map) {
+		JSONObject jsonObj = new JSONObject();
+		
+		try {
+			List<DiningResDomain> diningResList = myPageDAO.selectDiningResList(map);
+			JSONArray jsonArr = new JSONArray();
+			JSONObject jsonTemp = null;
+			
+			for(DiningResDomain diningResDomain : diningResList) {
+				jsonTemp = new JSONObject();
+				
+				switch(diningResDomain.getDiningResStatus()) {
+				case "CONFIRMED" : diningResDomain.setDiningResStatus("예약"); break;
+				case "COMPLETED" : diningResDomain.setDiningResStatus("이용완료"); break;
+				case "CANCELED" : diningResDomain.setDiningResStatus("취소"); break;
+				} // end case
+				
+				jsonTemp.put("payNum", diningResDomain.getPayNum());
+				jsonTemp.put("payPrice", diningResDomain.getPayPrice());
+				jsonTemp.put("diningResStatus", diningResDomain.getDiningResStatus());
+				jsonTemp.put("diningName", diningResDomain.getDiningName());
+				jsonTemp.put("visitDate", diningResDomain.getVisitDate());
+				jsonTemp.put("visitTime", diningResDomain.getVisitTime());
+				jsonTemp.put("visitPeople", diningResDomain.getVisitPeople());
+				
+				jsonArr.add(jsonTemp);
+			} // end for
+			
+			jsonObj.put("result", jsonArr);
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		return jsonObj.toJSONString();
+	} // searchDiningResList
+	
+	/**
+	 * DAO에서 가져온 diningResDetail을 json으로 변환하여 반환
+	 * @param payNum
+	 * @return diningResDetail
+	 */
+	public DiningResDomain searchDiningResDetail(String payNum) {
+		 //JSONObject jsonObj = new JSONObject();
+		DiningResDomain diningResDetail = null;
+		try {
+			//DiningResDomain 
+			diningResDetail = myPageDAO.selectDiningResDetail(payNum);
+			
+			switch(diningResDetail.getDiningResStatus()) {
+			case "CONFIRMED" : diningResDetail.setDiningResStatus("예약"); break;
+			case "COMPLETED" : diningResDetail.setDiningResStatus("이용완료"); break;
+			case "CANCELED" : diningResDetail.setDiningResStatus("취소"); break;
+			} // end case
+			
+			//jsonObj.put("jsonObj", diningResDetail);
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		return diningResDetail;
+	} // searchRoomResDetail
 	
 } // class

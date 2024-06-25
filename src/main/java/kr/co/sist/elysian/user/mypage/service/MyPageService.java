@@ -134,26 +134,24 @@ public class MyPageService{
 	 */
 	public String searchDiningResList(Map<String, String> map) {
 		JSONObject jsonObj = new JSONObject();
-		//String resultCode = "ERROR";
 		
 		try {
 			List<DiningResDomain> diningResList = myPageDAO.selectDiningResList(map);
-			
-			//if(!diningResList.isEmpty()) {
-		//		resultCode = "SUCCESS";
-		//	} // end if
-			
-		//	jsonObj.put("resultCode", resultCode);
-			
 			JSONArray jsonArr = new JSONArray();
 			JSONObject jsonTemp = null;
 			
 			for(DiningResDomain diningResDomain : diningResList) {
 				jsonTemp = new JSONObject();
 				
+				switch(diningResDomain.getDiningResStatus()) {
+				case "CONFIRMED" : diningResDomain.setDiningResStatus("예약"); break;
+				case "COMPLETED" : diningResDomain.setDiningResStatus("이용완료"); break;
+				case "CANCELED" : diningResDomain.setDiningResStatus("취소"); break;
+				} // end case
+				
 				jsonTemp.put("payNum", diningResDomain.getPayNum());
 				jsonTemp.put("payPrice", diningResDomain.getPayPrice());
-				jsonTemp.put("diningResStatus", diningResDomain.getDiningResStatus()); // Str로 바꿔줘야 하나???
+				jsonTemp.put("diningResStatus", diningResDomain.getDiningResStatus());
 				jsonTemp.put("diningName", diningResDomain.getDiningName());
 				jsonTemp.put("visitDate", diningResDomain.getVisitDate());
 				jsonTemp.put("visitTime", diningResDomain.getVisitTime());

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class DiningResDomain {
 	
 	private int payPrice, visitPeople, adultCnt, childCnt, babyCnt;
-	private String payNum, diningName, diningResStatus, diningResStatusStr, diningResDate,
+	private String payNum, diningName, diningResStatus, diningResDate,
 				visitorName, visitorPhone, visitorEmail, visitorReqeust,
 				visitDate, visitTime;
 

@@ -137,25 +137,31 @@ public class MyPageController {
 	/**
 	 * 선택한 예약 번호의 예약 취소
 	 * @param request
-	 * @return
+	 * @return 예약 취소 결과
 	 */
 	@ResponseBody
 	@PostMapping(value="/resvCancel.do", produces="application/json; charset=UTF-8")
 	public String modifyRoomResToCancel(@RequestBody Map<String, Object> requestData) {
 		String payNum = (String)requestData.get("payNum");
-		
 		String jsonObj = myPageService.modifyRoomResToCancel(payNum);
-		
 		return jsonObj;
 	} // modifyRoomResToCancel
 	
-	// 다이닝 리스트 조회
+	/**
+	 * 다이닝 예약 리스트 매핑
+	 * @return 다이닝 예약 리스트 view jsp
+	 */
 	@GetMapping("/diningResList.do")
-	public String searchDiningResList(HttpServletRequest request, Model model) {
+	public String searchDiningResList() {
 		return "user/cnfirm/mber/dining/reserveList";
 	} // searchDiningResList
 	
-	// 다이닝 리스트 조회 결과 ajax
+	/**
+	 * 로그인한 아이디의 다이닝 예약 리스트 조회 ajax
+	 * @param requestData(diningResStatus, searchDateBeginDe, searchDateEndDe)
+	 * @param session
+	 * @return 다이닝 예약 리스트
+	 */
 	@ResponseBody
 	@PostMapping(value="/diningResListResult.do", produces="application/json; charset=UTF-8")
 	public String searchDiningResListResult(@RequestBody Map<String, Object> requestData, HttpSession session) {
@@ -171,11 +177,8 @@ public class MyPageController {
 		map.put("searchDataBeginDe", searchDataBeginDe);
 		map.put("searchDataEndDe", searchDataEndDe);
 		
-		System.out.println(map);
-		
 		String jsonObj = myPageService.searchDiningResList(map);
-		
-		System.out.println(jsonObj);
+
 		return jsonObj;
 	} // searchDiningResListResult
 

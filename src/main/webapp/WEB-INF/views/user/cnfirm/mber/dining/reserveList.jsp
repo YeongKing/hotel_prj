@@ -92,7 +92,7 @@
 
                         html += `<li>
                                     <div class="cardInner">
-                                        <span class="status" \${result[i].diningResStatus == 'CANCELED' ? "style='color:#B01414'" : ""}>\${result[i].diningResStatus}</span>
+                                        <span class="status" \${result[i].diningResStatus == '취소' ? "style='color:#B01414'" : ""}>\${result[i].diningResStatus}</span>
                                         <em class="tit">
                                         	<a href="javascript:fncView('\${result[i].payNum}')">\${result[i].diningName}</a>
                                        	</em>

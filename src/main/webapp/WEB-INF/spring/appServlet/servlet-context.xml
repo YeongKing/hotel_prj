@@ -36,6 +36,7 @@
 			<exclude-mapping path="/user/login.do"/>
 			<exclude-mapping path="/user/index.do"/>
 			<exclude-mapping path="/user/join.do"/>
+			<exclude-mapping path="/user/findIdentifyIntro.do"/>
 			<exclude-mapping path="/user/set_session.do"/>
 			<beans:bean id="ui" class="kr.co.sist.elysian.user.login.interceptor.UserInterceptor"/>
 		</interceptor>

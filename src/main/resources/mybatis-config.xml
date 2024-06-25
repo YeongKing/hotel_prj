@@ -43,6 +43,7 @@
 		<typeAlias type="kr.co.sist.elysian.user.login.model.domain.UserDomain" alias="ud"/>
   		<typeAlias type="kr.co.sist.elysian.user.dining.model.domain.DiningDomain" alias="dDomain"/> 
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain" alias="myPageRoomResDomain"/> 
+  		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain" alias="myPageDiningResDomain"/> 
   		
 	</typeAliases>
   

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 import kr.co.sist.elysian.user.mypage.service.MyPageService;
@@ -83,6 +84,13 @@ public class MyPageController {
 		String searchDataBeginDe = request.getParameter("searchDataBeginDe");
 		String searchDataEndDe = request.getParameter("searchDataEndDe");
 		
+		// 처음 진입 시에만 3개월 선택, agoMonth가 아닌 다른 날짜 입력이라면 선택X
+		if(agoMonth == null && searchDataBeginDe == null && searchDataEndDe == null) {
+			agoMonth = "3";
+		} else if (agoMonth == null) {
+			agoMonth = "";
+		} // end else
+		
 		Map<String, String> map = new HashMap<String, String>();
 		
 		map.put("userId", userId);
@@ -105,7 +113,7 @@ public class MyPageController {
 		model.addAttribute("roomResList", roomResList);
 		model.addAttribute("roomResListSize", roomResList.size());
 		model.addAttribute("selectedCategory", roomResStatus);
-		model.addAttribute("checkedMonth", agoMonth == null ? "3" : agoMonth);
+		model.addAttribute("checkedMonth", agoMonth);
 		model.addAttribute("searchDataBeginDe", searchDataBeginDe);
 		model.addAttribute("searchDataEndDe", searchDataEndDe);
 		
@@ -126,7 +134,6 @@ public class MyPageController {
 		return "user/cnfirm/mber/room/reserveView";
 	} // detailRoomRes
 	
-
 	/**
 	 * 선택한 예약 번호의 예약 취소
 	 * @param request
@@ -142,12 +149,35 @@ public class MyPageController {
 		return jsonObj;
 	} // modifyRoomResToCancel
 	
+	// 다이닝 리스트 조회
 	@GetMapping("/diningResList.do")
-	public String searchDiningResList() {
-		
+	public String searchDiningResList(HttpServletRequest request, Model model) {
 		return "user/cnfirm/mber/dining/reserveList";
-		
 	} // searchDiningResList
+	
+	// 다이닝 리스트 조회 결과 ajax
+	@ResponseBody
+	@PostMapping(value="/diningResListResult.do", produces="application/json; charset=UTF-8")
+	public String searchDiningResListResult(@RequestBody Map<String, Object> requestData, HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		String diningResStatus = (String)requestData.get("searchCtgry");
+		String searchDataBeginDe = (String)requestData.get("searchDataBeginDe");
+		String searchDataEndDe = (String)requestData.get("searchDataEndDe");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		
+		map.put("userId", userId);
+		map.put("diningResStatus", diningResStatus == null ? "ALL" : diningResStatus);
+		map.put("searchDataBeginDe", searchDataBeginDe);
+		map.put("searchDataEndDe", searchDataEndDe);
+		
+		System.out.println(map);
+		
+		String jsonObj = myPageService.searchDiningResList(map);
+		
+		System.out.println(jsonObj);
+		return jsonObj;
+	} // searchDiningResListResult
 
 	@GetMapping("/diningResView.do")
 	public String detailDiningRes() {

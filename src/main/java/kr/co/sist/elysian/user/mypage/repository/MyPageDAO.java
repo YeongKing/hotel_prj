@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
+import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 
 @Repository
@@ -81,5 +82,18 @@ public class MyPageDAO {
 		myBatisDAO.closeHandler(ss);
 		return result;
 	} // updateRoomResToCancel
+	
+	/**
+	 * MyBatis와 매핑하여 로그인한 아이디의 마이페이지 다이닝 예약 내역에 들어갈 예약 내역 조회
+	 * @param userId, diningResStatus
+	 * @return diningResList
+	 * @throws PersistenceException
+	 */
+	public List<DiningResDomain> selectDiningResList(Map<String, String> map) throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(false);
+		List<DiningResDomain> diningResList = ss.selectList("kr.co.sist.elysian.member.mypage.selectDiningResList", map);
+		myBatisDAO.closeHandler(ss);
+		return diningResList;
+	} // selectDiningResList
 
 } // class

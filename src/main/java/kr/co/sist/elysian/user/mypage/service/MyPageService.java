@@ -167,4 +167,29 @@ public class MyPageService{
 		return jsonObj.toJSONString();
 	} // searchDiningResList
 	
+	/**
+	 * DAO에서 가져온 diningResDetail을 json으로 변환하여 반환
+	 * @param payNum
+	 * @return diningResDetail
+	 */
+	public DiningResDomain searchDiningResDetail(String payNum) {
+		 //JSONObject jsonObj = new JSONObject();
+		DiningResDomain diningResDetail = null;
+		try {
+			//DiningResDomain 
+			diningResDetail = myPageDAO.selectDiningResDetail(payNum);
+			
+			switch(diningResDetail.getDiningResStatus()) {
+			case "CONFIRMED" : diningResDetail.setDiningResStatus("예약"); break;
+			case "COMPLETED" : diningResDetail.setDiningResStatus("이용완료"); break;
+			case "CANCELED" : diningResDetail.setDiningResStatus("취소"); break;
+			} // end case
+			
+			//jsonObj.put("jsonObj", diningResDetail);
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		return diningResDetail;
+	} // searchRoomResDetail
+	
 } // class

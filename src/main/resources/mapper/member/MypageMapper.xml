@@ -123,4 +123,21 @@
 		]]>
 	</select>
 	
+	<select id="selectDiningResDetail" resultType="myPageDiningResDomain" parameterType="String">
+		<![CDATA[
+		select dr.pay_num payNum, p.pay_price payPrice, dr.dining_res_status diningResStatus, d.dining_name diningName,
+			 to_char(dr.visit_datetime, 'yyyy.mm.dd') || '(' || INITCAP(TO_CHAR(dr.visit_datetime, 'dy', 'NLS_DATE_LANGUAGE=ENGLISH')) || ')' visitDate,
+			 to_char(dr.visit_datetime, 'am HH24:MI', 'NLS_DATE_LANGUAGE=ENGLISH') visitTime,
+			 to_char(dr.dining_res_date, 'yyyy.mm.dd') diningResDate, dr.visit_people visitPeople, dr.visitor_name visitorName,
+			 dr.visitor_phone visitorPhone, dr.visitor_email visitorEmail, dr.visitor_request visitorRequest,
+			 dr.adult_cnt adultCnt, dr.child_cnt childCnt, dr.baby_cnt babyCnt
+		from dining_reservation dr
+		inner join dining d
+		on d.dining_id = dr.dining_id
+		inner join pay p
+		on p.pay_num = dr.pay_num
+		where dr.pay_num = #{payNum}
+		]]>
+	</select>
+	
 </mapper>

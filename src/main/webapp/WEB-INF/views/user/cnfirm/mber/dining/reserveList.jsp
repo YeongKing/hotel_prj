@@ -33,12 +33,12 @@
 
 <!--(페이지 URL)-->
 <script>
-    $(function(){
-    	setDate();
-        fncGetList();
-    }); // ready
+	$(function(){
+		setDate();
+		fncGetList();
+	}); // ready
     
-    function setDate() {
+	function setDate() {
 		const today = new Date();
 		
 		const year = today.getFullYear();
@@ -52,72 +52,71 @@
 		$("#agoMonth3").prop('checked', true);	
 		$("#datepickerFrom").val(todayString);
 		$("#datepickerTo").val(after3monthString);
-    } // setDate
+	} // setDate
 
-    function fncGetList() {
-        const searchCtgry = $("#searchCtgry").val();
-        const searchDataBeginDe = $("#datepickerFrom").val();
-        const searchDataEndDe = $("#datepickerTo").val();
+	function fncGetList() {
+		const searchCtgry = $("#searchCtgry").val();
+		const searchDataBeginDe = $("#datepickerFrom").val();
+		const searchDataEndDe = $("#datepickerTo").val();
 
-        $.ajax({
-            url : "diningResListResult.do",
-            type : "POST",
-            contentType : "application/json",
-            dataType : "text",
-            data : JSON.stringify({
-            	searchCtgry  : searchCtgry,
-            	searchDataBeginDe : searchDataBeginDe,
-            	searchDataEndDe : searchDataEndDe,
-            }),
-	        beforeSend: function() {
+		$.ajax({
+			url : "diningResListResult.do",
+			type : "POST",
+			contentType : "application/json",
+			dataType : "json",
+			data : JSON.stringify({
+				searchCtgry  : searchCtgry,
+				searchDataBeginDe : searchDataBeginDe,
+				searchDataEndDe : searchDataEndDe,
+			}),
+			beforeSend: function() {
 				commonJs.showLoadingBar(); //로딩바 show
-         	},
-            complete: function() {
+			},
+			complete: function() {
 				commonJs.closeLoadingBar(); //로딩바 hide
-            },
-            success : function(jsonObj){
-            	var jsonObj = JSON.parse(jsonObj);
-                const result = jsonObj.result;
-                let html = "";
-                let count = 0;
+			},
+			success : function(jsonObj){
+				const result = jsonObj.result;
+				let html = "";
+				let count = 0;
                 
-                //리스트 없을 경우
-                if(result == null || result.length == 0) {
-                    html = `<li class="noData"><p class="txt">검색 결과가 없습니다. </p></li>`;
-                } else {
-                    for (let i = 0; i < result.length; i++) {
-                        const visitPeople = `방문 인원 \${result[i].visitPeople}명`;
-                        const payPrice = result[i].payPrice;
-                        const depositInfoHtml  = result[i].payPrice ? `<br/>예약금: \${fncComma(result[i].payPrice)}KRW` : '';
+				//리스트 없을 경우
+				if(result == null || result.length == 0) {
+					html = `<li class="noData"><p class="txt">검색 결과가 없습니다. </p></li>`;
+				} else {
+					for (let i = 0; i < result.length; i++) {
+						const visitPeople = `방문 인원 \${result[i].visitPeople}명`;
+						const payPrice = result[i].payPrice;
+						const depositInfoHtml  = result[i].payPrice ? `<br/>예약금: \${fncComma(result[i].payPrice)}KRW` : '';
 
-                        html += `<li>
-                                    <div class="cardInner">
-                                        <span class="status" \${result[i].diningResStatus == '취소' ? "style='color:#B01414'" : ""}>\${result[i].diningResStatus}</span>
-                                        <em class="tit">
-                                        	<a href="javascript:fncView('\${result[i].payNum}')">\${result[i].diningName}</a>
-                                       	</em>
-                                        <p class="info">엘리시안 서울</p>
-                                        <p class="date">\${result[i].visitDate} | \${result[i].visitTime} | \${visitPeople} \${depositInfoHtml}</p>
-                                    </div>
-                                </li>`;
-                    } // end for
-                    count = result.length;
-                } // end else
-                $(".count").text("총 {1}건".replace("{1}", count.toString())); //총 n 건
-                $(".cardList").html(html);
-            },
-            error:function(r, s, e){
-                alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
-            }
-        }); // ajax
-    } // fncGetList
+						html += `<li>
+									<div class="cardInner">
+										<span class="status" \${result[i].diningResStatus == '취소' ? "style='color:#B01414'" : ""}>\${result[i].diningResStatus}</span>
+										<em class="tit">
+											<a href="javascript:fncView('\${result[i].payNum}')">\${result[i].diningName}</a>
+										</em>
+										<p class="info">엘리시안 서울</p>
+										<p class="date">\${result[i].visitDate} | \${result[i].visitTime} | \${visitPeople} \${depositInfoHtml}</p>
+									</div>
+								</li>`;
+					} // end for
+					count = result.length;
+				} // end else
+				$(".count").text("총 {1}건".replace("{1}", count.toString())); //총 n건
+				$(".cardList").html(html);
+			},
+			error:function(r, s, e){
+				alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
+			}
+		}); // ajax
+	} // fncGetList
 
 	// 예약 상세페이지
 	function fncView(payNum) {
-        $("#payNum").val(payNum);
+		$("#payNum").val(payNum);
 		$("#form").attr("action", "diningResView.do");
-	    $("#form").attr("method", "get");
-	    $("#form").submit();
+		$("#form").attr("method", "get");
+		$("#form").submit();
 	} // fncView
 	
 	function fncSetMonth(agoMonth){
@@ -137,7 +136,7 @@
 	
 	function fncChangeDate(){
 		$("input[id^=agoMonth]:checked").prop("checked", false);
-	}
+	} // fncChangeDate
 </script>
 
 <form id="form" name="form">

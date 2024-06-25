@@ -27,124 +27,6 @@
 <div class="skip"><a href="#container">본문 바로가기</a></div>
 <div class="wrapper ">
 
-<script>
-	jQuery(function(){
-		jQuery.ajax({
-			type : "GET",
-			url : "/massPromotion/get.json",
-			cache : false,
-			dataType : "json",
-			global : false,
-			beforeSend: function() {
-			},
-			complete: function() {
-			},
-			success : function(data){
-                var massPromtn = data.bean;
-                //조회 결과에 따라 랜더링
-                if(massPromtn != null && massPromtn != ""){
-                    var url = getMassPromtnUrl();
-                    var menuNm = massPromtn.promtnNm;
-                    var sysCode = massPromtn.sysCode;
-                    appendMassPromotionMenu(url, menuNm, sysCode);
-                }
-			},
-			error:function(r, s, e){
-			}
-		});
-	});
-
-    function getMassPromtnUrl(){
-        var url = "";
-        var sysCode = jQuery("#sysCode").val();
-
-        if(gfncIsApp()){
-            //앱일 경우
-            url = "/m/massPromotion/list.do";
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/m/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/m/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/m/massPromotion/list.do";
-                }
-            }
-        }else {
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/massPromotion/list.do";
-                }
-            }
-        }
-        return url;
-    }
-
-    function appendMassPromotionMenu(url, menuNm, sysCode){
-        if(gfncIsApp()){
-            //앱일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-
-            var pathname = window.location.pathname;
-            if(pathname.indexOf("/app/main.do") == 0){
-                jQuery(".gnbArea ul.toggleList > li > .titArea:contains('패키지')").closest("ul").append(menuHtml);
-            }else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-
-            /*if(jQuery(".gnbArea ul.toggleList li:contains('패키지')").length > jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").length){
-                jQuery(".gnbArea ul.toggleList li:contains('패키지')").closest("ul").append(menuHtml);
-            } else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }*/
-
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-            jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-        }else{
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL" || sysCode == "JPY"){
-                //해당 페이지가 HUB거나 JPY일 경우
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".allMenu ul.menuDepth01 ul.menuDepth02 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }else {
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".headArea .utilMenu .gnbDepth1 .gnbDepth2 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-        }
-    }
-
-</script>
-
-<script>
-	//2022-05-23 조선라운지 추가
-	//헤더 메뉴 버튼 클릭 이벤트
-	jQuery(document).on("click",".headArea .btnMenu" ,function(){
-	
-	    //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-	    if(jQuery(this).hasClass("menuOn")){
-	        var expsrCount = 3;
-	        var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
-	        var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
-	
-	        $loungeList.addClass("hidden");
-	        $loungeList.each(function(index){
-	            if(randomArray.indexOf(index) > -1){
-	                jQuery(this).removeClass("hidden");
-	            }
-	        });
-	    }
-	})
-</script>
-
 <!--S header  -->
 <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
 <!--E header  -->
@@ -153,172 +35,119 @@
 <script>
 	$(function(){
 		getDetail();
-	});
+	}); // ready
 
 	//예약 내역 상세 조회 api
 	function getDetail() {
-	    jQuery.ajax({
-	        type : "GET",
-	        url : "/resve/dining/detail.json",
-	        cache : false,
-	        dataType : "json",
-	        data : {
-	            reservationId: jQuery("#reservationId").val()
-	        },
-	        global : false,
-	        beforeSend: function() {
+		$.ajax({
+			type : "POST",
+			url : "diningResViewResult.do",
+			contentType : "application/json",
+			dataType : "json",
+			data : JSON.stringify({
+				payNum : $("#payNum").val()
+			}),
+			beforeSend: function() {
 				commonJs.showLoadingBar(); //로딩바 show
-	     	},
-	        complete: function() {
+			},
+			complete: function() {
 				commonJs.closeLoadingBar(); //로딩바 hide
-	        },
-	        success : function(data){
-	
-	            const result = data.result;
-	
-	            if (data.resultCode != "SUCCESS") {
-	                alert(data.resultMsg);
-	            }else {
-	                const langCode = jQuery("#langCode").val();
-	
-	                const hotelNm = result.hotelNm;
-	                const diningNm = result.diningNm;
-	                const visitFullDate = result.visitFullDate;
-	                const visitDateTimeStr = result.visitDateTime;
-	                const personCount = result.personCount;         //방문 인원
-	                const refundPolicy = result.shopInfo.refundPolicy;       //취소 정책
-	                const isCancellable = result.isCancellable;     //취소 가능 여부
-	                const isModifiable = result.isModifiable;       //정보 변경 가능 여부
-	                const statusNm = result.statusNm;
-	
-	                //방문자 정보
-	                const visitor = result.visitor;
-	                const visitorEmail = visitor.email;
-	                const visitorNm = visitor.name;
-	                const visitorPhone = visitor.phone;
-	                const requests = result.requests;
-	
-	                jQuery(".titDep2").text(diningNm);                      //다이닝 이름
-	                jQuery(".titDep4").text(statusNm);                      //예약 상태 명
-	                const visitorCount = '방문 인원 {1}명'.replace("{1}", personCount);
-	                jQuery(".reserveInfo .txt").text(`\${hotelNm} | \${visitFullDate} | \${visitorCount}`);        //호텔 명 | 예약 시간
-	
-	                jQuery(".visitorEmail").text(visitorEmail);
-	                jQuery(".visitorNm").text(visitorNm);
-	                jQuery(".visitorPhone").text(visitorPhone);
-	                jQuery(".requests").text(requests);
-	
-					const sellType = result.sellType;
-					if (sellType === "C") {
-						const selectedMenus = result.selectedMenus;
-						if (selectedMenus && selectedMenus.length > 0) {
-							const menuSetName = langCode === "ko" ? selectedMenus[0].menuSetName : selectedMenus[0].menuSetNameEn;
-							const menuItemList = selectedMenus.map(menu => `\${menu[langCode === "ko" ? "menuItemName" : "menuItemNameEn"]}(\${menu.amount})`).join(", ");
-							jQuery(".selectedMenus").text(`\${menuSetName} | \${menuItemList}`);
-							jQuery(".selectedMenus").closest("tr").show();
-						}
-					}
-	
-	                //취소 가능
-	                if (isCancellable) {
-	                    jQuery("#cancelBtn").show();
-	                }
-	                
-	                //정보 수정 가능
-	                if (isModifiable) {
-	                    jQuery("#updateBtn").show();
-	                }
-	
-	                //방문일
-	                let visitDate = new Date(visitDateTimeStr);
-	                visitDate.setHours(0);
-	                visitDate.setMinutes(0);
-	                visitDate.setSeconds(0);
-	                visitDate.setMilliseconds(0);
-	
-	                //조회일
-	                let nowDate = new Date();
-	                nowDate.setHours(0);
-	                nowDate.setMinutes(0);
-	                nowDate.setSeconds(0);
-	                nowDate.setMilliseconds(0);
-	
-	                //방문일과 조회일의 날짜 차이
-	                let diffDay = (visitDate - nowDate) / (1000 * 60 * 60 * 24);
-	
-	                let refundRate = 1;     //환불률
-	                if(refundPolicy != null && refundPolicy.length != 0){
-	                    jQuery(".refundPolicyTitle").show();
-	                    let refundHtml = "";
-	                    refundPolicy.reverse().forEach(function (item, idx){
-	                        let baseDay = item.baseDay;
-	                        let itemRefundRate = item.refundRate;
-	                        let dayNm = "";
-	                        let rateNm = "";
-	
-	                        // 날짜차이에 맞는 환불 규정이 있을 경우 세팅
-	                        if (diffDay == baseDay) {
-	                            refundRate = itemRefundRate;
-	                        }
-	
-	                        switch (baseDay) {
-	                            case -1:
-	                                dayNm = "노쇼 시";
-	                                break;
-	                            case 0:
-	                                dayNm = "당일 취소";
-	                                break;
-	                            default:
-	                                dayNm = baseDay+"일 전 취소 ";
-	                                break;
-	                        }
-	
-	                        if (itemRefundRate > 0) {
-	                            rateNm = (itemRefundRate * 100) +"% 환불 ";
-	                        } else if (itemRefundRate == 0) {
-	                            rateNm = "환불 불가 ";
-	                        }
-	
-	                        refundHtml += `<li>${dayNm} : \${rateNm}</li>`;
-	                    });
-	                    $(".refundPolicy").html(refundHtml);
-	                }
-	
-	                //결제금 정보
-	                const deposit = result.deposit;
-	                if(deposit != null){
-	                    const amount = deposit.amount;                  //예약금액
-	                    const refundAmount = amount * refundRate;       //최종 환불 금액
-	                    const refundFee = amount - refundAmount;        //취소 수수료
-	
-	                    jQuery("#amount").text(fncComma(amount));
-	                    jQuery("#refundAmount").text(fncComma(refundAmount));
-	                    jQuery("#refundFee").text(fncComma(refundFee));
-	                    jQuery("#timeInfoMsg").text("수수료 계산 기준 일시  : " + new Date().format("yyyy-MM-dd HH:mm"));
-	                    jQuery(".depositAmount").text(fncComma(amount));
-	                }else {
-	                    //예약금이 없을 경우 예약금 부분 숨김처리
-	                    jQuery(".total").hide();
-	                    jQuery("#timeInfoMsgLi").hide();
-	                }
-	            }
-	        },
-	        error:function(r, s, e){
-	            alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
-	        }
-	    })
-	}
+			},
+			success : function(jsonObj){
+				const diningName = jsonObj.diningName;
+				const visitDate = jsonObj.visitDate;
+				const visitTime = jsonObj.visitTime;
+				const diningResStatus = jsonObj.diningResStatus;
+				const isCancellable = diningResStatus === '예약' ? true : false;     //취소 가능 여부
+				const isModifiable = diningResStatus === '예약' ? true : false;       //정보 변경 가능 여부
+				
+				//방문자 정보
+				const visitorEmail = jsonObj.visitorEmail;
+				const visitorName = jsonObj.visitorName;
+				const visitorPhone = jsonObj.visitorPhone;
+				const visitorReqeust = jsonObj.visitorReqeust;
+				const adultCnt = jsonObj.adultCnt;
+				const childCnt = jsonObj.childCnt;
+				const babyCnt = jsonObj.babyCnt;
+				const visitPeople = '방문 인원 {1}명'.replace("{1}", jsonObj.visitPeople);
+				const visitorCnt = `어른 \${adultCnt}명 | 어린이 \${childCnt}명 | 영유아 \${babyCnt}명`;
+				
+				$(".titDep2").text(diningName); //다이닝 이름
+				$(".titDep4").text(diningResStatus); //예약 상태
+				$(".reserveInfo .txt").text(`엘리시안 서울 | \${visitDate} | \${visitTime} | \${visitPeople}`); //호텔 명 | 예약 시간
+				$(".visitorEmail").text(visitorEmail);
+				$(".visitorName").text(visitorName);
+				$(".visitorPhone").text(visitorPhone);
+				$(".visitorReqeust").text(visitorReqeust);
+				$(".visitorCnt").text(visitorCnt);
+				
+				//취소 가능
+				if(isCancellable) {
+					$("#cancelBtn").show();
+				} // end if
+                
+				//정보 수정 가능
+				if(isModifiable) {
+					$("#updateBtn").show();
+				} // end if
+
+				//방문일
+				let visitDay = new Date(visitDate);
+				visitDay.setHours(0);
+				visitDay.setMinutes(0);
+				visitDay.setSeconds(0);
+				visitDay.setMilliseconds(0);
+				
+				//조회일
+				let nowDate = new Date();
+				nowDate.setHours(0);
+				nowDate.setMinutes(0);
+				nowDate.setSeconds(0);
+				nowDate.setMilliseconds(0);
+				
+				//방문일과 조회일의 날짜 차이
+				let diffDay = (visitDay - nowDate) / (1000 * 60 * 60 * 24);
+				let refundRate = 1; // 환불률
+				 
+				if(diffDay <= 0) {
+					refundRate = 0;
+				} else if(diffDay == 1) {
+					refundRate = 0.5;
+				} // end else
+                
+				//결제금 정보
+				const deposit = jsonObj.payPrice;
+				if(deposit != null){
+					const refundAmount = deposit * refundRate;       //최종 환불 금액
+					const refundFee = deposit - refundAmount;        //취소 수수료
+					
+					$("#amount").text(fncComma(deposit));
+					$("#refundAmount").text(fncComma(refundAmount));
+					$("#refundFee").text(fncComma(refundFee));
+					$("#timeInfoMsg").text("수수료 계산 기준 일시  : " + new Date().format("yyyy-MM-dd HH:mm"));
+					$(".depositAmount").text(fncComma(deposit));
+				} else {
+					//예약금이 없을 경우 예약금 부분 숨김처리
+					$(".total").hide();
+					$("#timeInfoMsgLi").hide();
+				} // end else
+			},
+			error:function(r, s, e){
+				alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
+			}
+		}); // ajax
+	} // getDetail
 
 	//예약 취소
-	function fncCancel(){
-	    jQuery.ajax({
+	/* function fncCancel(){
+	    $.ajax({
 	        type : "POST",
 	        url : "/resve/dining/cancel.json",
 	        cache : false,
 	        dataType : "json",
 	        data : {
-	            reservationId: jQuery("#reservationId").val(),
-	            cancelReasonText: jQuery("#cancelReasonText").val()
+	            reservationId: $("#reservationId").val(),
+	            cancelReasonText: $("#cancelReasonText").val()
 	        },
 	        global : false,
 	        beforeSend: function() {
@@ -332,7 +161,7 @@
 	
 	            if (data.resultCode != "SUCCESS") {
 	                alert(data.resultMsg);
-	            }else {
+	            } else {
 	                alert("취소 처리 되었습니다. ");
 	                location.reload();
 	            }
@@ -341,55 +170,26 @@
 	            alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
 	        }
 	    })
-	}
+	 }*/
 
 	function fncUpdateForm() {
-	    location.href = "/cnfirm/mber/dining/infoUpdateForm.do?reservationId=" + jQuery("#reservationId").val();
-	};
+		location.href = "${pageContext.request.contextPath}/user/infoUpdateForm.do?payNum=" + $("#payNum").val();
+	} // fncUpdateForm
 
 	function fncList(){
-	    location.href = '${pageContext.request.contextPath}/user/diningResList.do';
-	}
+		location.href = '${pageContext.request.contextPath}/user/diningResList.do';
+	} // fncList
 </script>
 
-<input type="hidden" id="reservationId" name="reservationId" value="_8XFRjsyWJnW2DzLHDwN7w">
+<c:set var="payNum" value="${payNum}"/>
+<input type="hidden" id="payNum" name="payNum" value="${payNum}">
 
 <div id="container" class="container mypage">
 
 <script type="text/javascript">
-	$(document).ready(function(){
+	$(function(){
 		fncLnbInfoApi();
-	}); 
-	  
-	//LNB정보조회(쿠폰수,가용포인트) API호출
-	function fncLnbInfoApi() {
-		var formData =  jQuery("#formLnb").serialize();
-		jQuery.ajax({
-			type : "POST",
-			url : "/mypage/lnbInfoApi.do",
-			cache : false,
-			data : formData, 
-			dataType : "json",
-			global : false,
-			success : function(data) {
-				if(data.statusR==200 && data.codeR=='S00000') { 
-					  //회원명 세팅
-					  var nameHtml = ''+data.name;
-				      /* $('.name').html(nameHtml); */
-				      $('#nm1').html(nameHtml);
-				      //가용포인트 세팅 
-				      $('#usefulPointSpan').html(fncComma(data.usefulPoint));
-				      //보유쿠폰수 세팅 
-				      $('#couponCntDiv').html(fncComma(data.couponCnt));
-				}else{
-					alert(data.statusR + " : 관리자에게 문의하세요");
-				}
-			},
-			error:function(){
-				alert("관리자에게 문의하세요.");
-			}
-		});
-	}
+	}); // ready
 </script> 
 
 <h1 class="hidden">마이페이지</h1>
@@ -423,7 +223,7 @@
 	<!-- 방문자 정보 -->
 	<h3 class="titDep3">
 		방문자 정보
-		<button type="button" id="updateBtn" class="btnModify" onclick="fncUpdateForm();" style="display: none;">정보수정</button>
+		<button type="button" id="updateBtn" class="btnModify" onclick="fncUpdateForm();" style="display: none">정보수정</button>
 	</h3>
 
 	<table class="tblV">
@@ -437,7 +237,7 @@
 		<tbody>
 			<tr>
 			    <th scope="row">이름</th>
-			    <td class="visitorNm"></td>
+			    <td class="visitorName"></td>
 			</tr>
                     
  			<tr>
@@ -452,12 +252,12 @@
                     
 			<tr>
 				<th scope="row">요청사항</th>
-				<td class="requests"></td>
+				<td class="visitorRequest"></td>
 			</tr>
                     
-			<tr style="display: none;">
+			<tr>
 				<th scope="row">내역</th>
-				<td class="selectedMenus"></td>
+				<td class="visitorCnt"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -474,8 +274,13 @@
 	<!-- //금액 정보 -->
 
 	<!-- 취소 규정 -->
-	<h3 class="titDep3 refundPolicyTitle" style="display: none">취소 규정</h3>
-		<ul class="listDep1 refundPolicy"></ul>
+	<h3 class="titDep3 refundPolicyTitle">취소 규정</h3>
+	<ul class="listDep1 refundPolicy">
+		<li>노쇼 시 : 환불 불가</li>
+		<li>당일 취소 : 환불 불가</li>
+		<li>1일 전 취소 : 50% 환불</li>
+		<li>2일 전 취소 : 100% 환불</li>
+	</ul>
 	<!-- // 취소 규정 -->
 		
 	<div class="btnArea">
@@ -542,5 +347,9 @@
 
 </div>
 <!-- //wrapper -->
+
+<!-- layer 생성 시 배경 어둡게 -->
+<div class="dimmed" style="display: none;"></div>
+
 </body>
 </html>

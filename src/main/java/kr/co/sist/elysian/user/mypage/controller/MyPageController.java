@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 import kr.co.sist.elysian.user.mypage.service.MyPageService;
 
@@ -182,12 +183,31 @@ public class MyPageController {
 		return jsonObj;
 	} // searchDiningResListResult
 
+	/**
+	 * 다이닝 예약 상세조회 매핑
+	 * @return 다이닝 예약 상세조회 view jsp
+	 */
 	@GetMapping("/diningResView.do")
-	public String detailDiningRes() {
-		
+	public String detailDiningRes(HttpServletRequest request, Model model) {
+		String payNum = (String)request.getParameter("payNum");
+		System.out.println(payNum);
+		model.addAttribute("payNum", payNum);
 		return "user/cnfirm/mber/dining/reserveView";
-		
 	} // detailDiningRes
+	
+	/**
+	 * 선택한 결제번호(예약번호)의 다이닝 예약 상세 조회 ajax
+	 * @param requestData(payNum)
+	 * @return 다이닝 예약 상세 정보
+	 */
+	@ResponseBody
+	@PostMapping(value="/diningResViewResult.do", produces="application/json; charset=UTF-8")
+	public DiningResDomain detailDiningResResult(@RequestBody Map<String, Object> requestData) {
+		String payNum = (String)requestData.get("payNum");
+		DiningResDomain jsonObj = myPageService.searchDiningResDetail(payNum);
+		System.out.println(jsonObj);
+		return jsonObj;
+	} // detailDiningResResult
 	
 	@GetMapping("/infoUpdateForm.do")
 	public String updateVisitorInfo() {

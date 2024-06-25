@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
@@ -205,7 +203,6 @@ public class MyPageController {
 	public DiningResDomain detailDiningResResult(@RequestBody Map<String, Object> requestData) {
 		String payNum = (String)requestData.get("payNum");
 		DiningResDomain jsonObj = myPageService.searchDiningResDetail(payNum);
-		System.out.println(jsonObj);
 		return jsonObj;
 	} // detailDiningResResult
 	

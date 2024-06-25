@@ -65,7 +65,7 @@
 				const visitorEmail = jsonObj.visitorEmail;
 				const visitorName = jsonObj.visitorName;
 				const visitorPhone = jsonObj.visitorPhone;
-				const visitorReqeust = jsonObj.visitorReqeust;
+				const visitorRequest = jsonObj.visitorRequest;
 				const adultCnt = jsonObj.adultCnt;
 				const childCnt = jsonObj.childCnt;
 				const babyCnt = jsonObj.babyCnt;
@@ -78,7 +78,7 @@
 				$(".visitorEmail").text(visitorEmail);
 				$(".visitorName").text(visitorName);
 				$(".visitorPhone").text(visitorPhone);
-				$(".visitorReqeust").text(visitorReqeust);
+				$(".visitorRequest").text(visitorRequest);
 				$(".visitorCnt").text(visitorCnt);
 				
 				//취소 가능

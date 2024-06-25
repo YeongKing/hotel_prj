@@ -13,7 +13,7 @@ public class DiningResDomain {
 	
 	private int payPrice, visitPeople, adultCnt, childCnt, babyCnt;
 	private String payNum, diningName, diningResStatus, diningResDate,
-				visitorName, visitorPhone, visitorEmail, visitorReqeust,
+				visitorName, visitorPhone, visitorEmail, visitorRequest,
 				visitDate, visitTime;
 
 } // class

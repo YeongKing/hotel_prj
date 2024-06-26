@@ -140,4 +140,13 @@
 		]]>
 	</select>
 	
+	<update id="updateDiningVisitorInfo" parameterType="java.util.HashMap">
+		update dining_reservation
+		set visitor_name = #{myPageDiningResVO.visitorName}, 
+			visitor_phone = #{myPageDiningResVO.visitorPhone},
+			visitor_email = #{myPageDiningResVO.visitorEmail},
+			visitor_request = #{myPageDiningResVO.visitorRequest}
+		where pay_num = #{myPageDiningResVO.payNum}
+	</update>
+	
 </mapper>

@@ -22,8 +22,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
+import kr.co.sist.elysian.user.mypage.model.vo.DiningResVO;
 import kr.co.sist.elysian.user.mypage.service.MyPageService;
 
 @Controller("userMyPageController")
@@ -188,7 +191,6 @@ public class MyPageController {
 	@GetMapping("/diningResView.do")
 	public String detailDiningRes(HttpServletRequest request, Model model) {
 		String payNum = (String)request.getParameter("payNum");
-		System.out.println(payNum);
 		model.addAttribute("payNum", payNum);
 		return "user/cnfirm/mber/dining/reserveView";
 	} // detailDiningRes
@@ -202,22 +204,38 @@ public class MyPageController {
 	@PostMapping(value="/diningResViewResult.do", produces="application/json; charset=UTF-8")
 	public DiningResDomain detailDiningResResult(@RequestBody Map<String, Object> requestData) {
 		String payNum = (String)requestData.get("payNum");
-		DiningResDomain jsonObj = myPageService.searchDiningResDetail(payNum);
-		return jsonObj;
+		DiningResDomain diningResDomain = myPageService.searchDiningResDetail(payNum);
+		return diningResDomain;
 	} // detailDiningResResult
 	
-	@GetMapping("/infoUpdateForm.do")
-	public String updateVisitorInfo() {
-		
+	/**
+	 * 다이닝 예약 정보수정 매핑
+	 * @return 다이닝 예약 정보수정 view jsp
+	 */
+	@RequestMapping(value="/infoUpdateForm.do", method= {GET, POST})
+	public String modifyVisitorInfoForm(HttpServletRequest request, Model model) {
+		String payNum = (String)request.getParameter("payNum");
+		model.addAttribute("payNum", payNum);
 		return "user/cnfirm/mber/dining/infoUpdateForm";
-		
-	} // updateVisitorInfo
+	} // updateVisitorInfoForm
 
+	/**
+	 * 다이닝 예약 방문자 정보 수정
+	 * @param diningResVO 다이닝 예약 방문자 정보
+	 * @return result 수정 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/modifyVisitorInfo.do", produces="application/json; charset=UTF-8")
+	public String modifyVisitorInfo(@RequestBody DiningResVO diningResVO) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("myPageDiningResVO", diningResVO);
+		String jsonObj = myPageService.modifyDiningVisitorInfo(paramMap);
+		return jsonObj;
+	} // modifyVisitorInfo
+	
 	@GetMapping("/myInfoForm.do")
 	public String detailUserInfo() {
-		
-		return "user/mypage/myInfoForm";
-		
+		return "user/myPage/myInfoForm";
 	} // detailUserInfo
 
 	@GetMapping("/pwChngForm.do")

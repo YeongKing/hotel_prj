@@ -99,14 +99,27 @@ public class MyPageDAO {
 	/**
 	 * MyBatis와 매핑하여 로그인한 아이디의 마이페이지 다이닝 예약 내역 - 다이닝 상세조회 시 들어갈 예약 정보 조회
 	 * @param payNum
-	 * @return diningResDetail
+	 * @return diningResDomain
 	 * @throws PersistenceException
 	 */
 	public DiningResDomain selectDiningResDetail(String payNum) throws PersistenceException {
 		SqlSession ss = myBatisDAO.getMyBatisHandler(false);
-		DiningResDomain diningResDetail = ss.selectOne("kr.co.sist.elysian.member.mypage.selectDiningResDetail", payNum);
+		DiningResDomain diningResDomain = ss.selectOne("kr.co.sist.elysian.member.mypage.selectDiningResDetail", payNum);
 		myBatisDAO.closeHandler(ss);
-		return diningResDetail;
+		return diningResDomain;
 	} // selectDiningResDetail
+	
+	/**
+	 * 다이닝 예약 방문자 정보 수정 처리
+	 * @param paramMap
+	 * @return result(처리 여부)
+	 * @throws PersistenceException
+	 */
+	public int updateDiningVisitorInfo(Map<String, Object> paramMap) throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(true);
+		int result = ss.update("kr.co.sist.elysian.member.mypage.updateDiningVisitorInfo", paramMap);
+		myBatisDAO.closeHandler(ss);
+		return result;
+	} // updateDiningVisitorInfo
 
 } // class

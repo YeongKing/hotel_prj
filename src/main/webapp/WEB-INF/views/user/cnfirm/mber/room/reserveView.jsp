@@ -81,6 +81,12 @@
 			dataType : "json",
 			contentType : 'application/json',
 			data : JSON.stringify({payNum : payNum}),
+			beforeSend: function() {
+				commonJs.showLoadingBar(); //로딩바 show
+			},
+			complete: function() {
+				commonJs.closeLoadingBar(); //로딩바 hide
+			},
 			success : function(jsonObj){
 				var resultCode = jsonObj.resultCode;
 				if(resultCode == "SUCCESS"){
@@ -91,8 +97,7 @@
 					$("#form").submit();
 				} else{
 					alert("죄송합니다. 예약 취소가 정상적으로 처리되지 않았습니다. 관리자에게 문의해주세요.");
-				}
-				commonJs.closeLoadingBar(); //로딩바 hide
+				} // end else
 			},
 			error:function(r, s, e){
 				console.log(r.status);

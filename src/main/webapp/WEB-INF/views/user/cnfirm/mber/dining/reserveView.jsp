@@ -164,7 +164,7 @@
 				if (resultCode == "SUCCESS") {
 					alert("예약이 취소 처리되었습니다.");
 					commonJs.popClose($('#layerPop2'));
-					location.href = '${pageContext.request.contextPath}/user/diningResList.do';
+					fncList();
 				} else {
 					alert("죄송합니다. 예약 취소가 정상적으로 처리되지 않았습니다. 관리자에게 문의해주세요.");
 				} // end else

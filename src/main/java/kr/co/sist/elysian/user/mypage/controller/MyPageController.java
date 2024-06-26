@@ -20,10 +20,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
+import kr.co.sist.elysian.user.mypage.model.vo.DiningResVO;
 import kr.co.sist.elysian.user.mypage.service.MyPageService;
 
 @Controller("userMyPageController")
@@ -188,7 +192,6 @@ public class MyPageController {
 	@GetMapping("/diningResView.do")
 	public String detailDiningRes(HttpServletRequest request, Model model) {
 		String payNum = (String)request.getParameter("payNum");
-		System.out.println(payNum);
 		model.addAttribute("payNum", payNum);
 		return "user/cnfirm/mber/dining/reserveView";
 	} // detailDiningRes
@@ -202,22 +205,80 @@ public class MyPageController {
 	@PostMapping(value="/diningResViewResult.do", produces="application/json; charset=UTF-8")
 	public DiningResDomain detailDiningResResult(@RequestBody Map<String, Object> requestData) {
 		String payNum = (String)requestData.get("payNum");
-		DiningResDomain jsonObj = myPageService.searchDiningResDetail(payNum);
-		return jsonObj;
+		DiningResDomain diningResDomain = myPageService.searchDiningResDetail(payNum);
+		return diningResDomain;
 	} // detailDiningResResult
 	
-	@GetMapping("/infoUpdateForm.do")
-	public String updateVisitorInfo() {
-		
+	/**
+	 * 다이닝 예약 정보수정 매핑
+	 * @return 다이닝 예약 정보수정 view jsp
+	 */
+	@RequestMapping(value="/infoUpdateForm.do", method= {GET, POST})
+	public String modifyVisitorInfoForm(HttpServletRequest request, Model model) {
+		String payNum = (String)request.getParameter("payNum");
+		model.addAttribute("payNum", payNum);
 		return "user/cnfirm/mber/dining/infoUpdateForm";
-		
-	} // updateVisitorInfo
+	} // updateVisitorInfoForm
 
-	@GetMapping("/myInfoForm.do")
+	/**
+	 * 다이닝 예약 방문자 정보 수정
+	 * @param diningResVO 다이닝 예약 방문자 정보
+	 * @return result 수정 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/modifyVisitorInfo.do", produces="application/json; charset=UTF-8")
+	public String modifyVisitorInfo(@RequestBody DiningResVO diningResVO) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("myPageDiningResVO", diningResVO);
+		String jsonObj = myPageService.modifyDiningVisitorInfo(paramMap);
+		return jsonObj;
+	} // modifyVisitorInfo
+	
+	/**
+	 * 선택한 다이닝 예약 번호의 예약 취소
+	 * @param request
+	 * @return 예약 취소 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/diningResvCancel.do", produces="application/json; charset=UTF-8")
+	public String modifyDiningResToCancel(@RequestBody Map<String, Object> requestData) {
+		String payNum = (String)requestData.get("payNum");
+		String jsonObj = myPageService.modifyDiningResToCancel(payNum);
+		return jsonObj;
+	} // modifyDiningResToCancel
+	
+	/**
+	 * 회원 정보 수정 비밀번호 확인 매핑
+	 * @return 회원 정보 수정 비밀번호 확인 view jsp
+	 */
+	@GetMapping("/myInfoPwCfmForm.do")
+	public String checkPwUserInfoForm() {
+		return "user/mypage/myInfoPwCfmForm";
+	} // checkPwUserInfoForm
+	
+	/**
+	 * 회원 정보 수정 진입 전 비밀번호 확인
+	 * @param session
+	 * @return 비밀번호 확인 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/checkPwUserInfo.do", produces="application/json; charset=UTF-8")
+	public String checkPwUserInfo(@RequestParam String loginPassword, HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		String inputPw = loginPassword;
+		Map<String, String> paramMap = new HashMap<String, String>();
+		
+		paramMap.put("userId", userId);
+		paramMap.put("inputPw", inputPw);
+		
+		String jsonObj = myPageService.selectMemberPw(paramMap);
+		
+		return jsonObj;
+	} // checkPwUserInfo
+	
+	@PostMapping("/myInfoForm.do")
 	public String detailUserInfo() {
-		
 		return "user/mypage/myInfoForm";
-		
 	} // detailUserInfo
 
 	@GetMapping("/pwChngForm.do")
@@ -228,17 +289,17 @@ public class MyPageController {
 	} // modifyPw
 	
 	@GetMapping("/withdraPwCfmForm.do")
-	public String removeUserInfo() {
+	public String checkRemove() {
 		
 		return "user/mypage/withdraPwCfmForm";
 		
-	} // removeUserInfo
+	} // checkRemove
 
 	@GetMapping("/withdraCfmForm.do")
-	public String checkRemove() {
+	public String removeUserInfo() {
 		
 		return "user/mypage/withdraCfmForm";
 		
-	} // checkRemove
+	} // removeUserInfo
 	
 } // class

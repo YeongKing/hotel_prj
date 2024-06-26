@@ -326,7 +326,7 @@
 					$("#visitorPhone").val(jsonObj.visitorPhone);
 					$("#visitorEmail").val(jsonObj.visitorEmail);
 					$("#visitorRequest").val(jsonObj.visitorRequest);
-					$("#cardName").val(jsonObj.cardName);
+					//$("#cardName").val(jsonObj.cardName);
 					$("#cardNum").val(jsonObj.cardNum);
 					$("#payPrice").val(jsonObj.payPriceStr);
 					$("#diningResDate").val(jsonObj.diningResDateStr);

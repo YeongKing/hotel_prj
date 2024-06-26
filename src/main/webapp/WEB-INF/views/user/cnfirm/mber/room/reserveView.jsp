@@ -81,21 +81,25 @@
 			dataType : "json",
 			contentType : 'application/json',
 			data : JSON.stringify({payNum : payNum}),
+			beforeSend: function() {
+				commonJs.showLoadingBar(); //로딩바 show
+			},
+			complete: function() {
+				commonJs.closeLoadingBar(); //로딩바 hide
+			},
 			success : function(jsonObj){
 				var resultCode = jsonObj.resultCode;
 				if(resultCode == "SUCCESS"){
-					alert('예약이 취소되었습니다.');
+					alert('예약이 취소 처리되었습니다.');
 					commonJs.popClose($('#layerPop2'));
 					$("#form").attr("method", "get");
 					$("#form").attr("action", "roomResList.do");
 					$("#form").submit();
 				} else{
 					alert("죄송합니다. 예약 취소가 정상적으로 처리되지 않았습니다. 관리자에게 문의해주세요.");
-				}
-				commonJs.closeLoadingBar(); //로딩바 hide
+				} // end else
 			},
 			error:function(r, s, e){
-				console.log(r.status);
 				alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
 			}
 		});
@@ -260,10 +264,10 @@
 			<caption>결재 신용카드 정보 목록</caption>
 			<thead>
 			<tbody>
-				<tr>
+				<%-- <tr>
 					<th scope="row">신용카드 종류</th>
 					<td><c:out value="${roomResDomain.cardName}"/></td>
-				</tr>
+				</tr> --%>
 				
 				<tr>
 					<th scope="row">신용카드 번호</th>
@@ -274,7 +278,7 @@
 		
 		<ul class="txtGuide">
 			<li>신용카드 정보는 고객님의 프로그램에 의한 개런티 외에는 어떤 목적으로도 사용되지 않습니다.</li>
-			<li>본 정보는 온라인 예약 시직접 결제가 이루어지지 않으며, 체크아웃 시 동일한 신용카드 지참을 부탁드립니다.</li>
+			<!-- <li>본 정보는 온라인 예약 시 직접 결제가 이루어지지 않으며, 체크아웃 시 동일한 신용카드 지참을 부탁드립니다.</li> -->
 		</ul>
 		
 		<h3 class="titDep3">취소 규정</h3>

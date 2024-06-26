@@ -211,4 +211,26 @@ public class MyPageService{
 		return jsonObj.toJSONString();
 	} // modifyDiningVisitorInfo
 	
+	/**
+	 * DAO에서 가져온 다이닝 예약 취소 결과를 json으로 변환하여 반환
+	 * @param payNum
+	 * @return result(다이닝 예약 취소 결과)
+	 */
+	public String modifyDiningResToCancel(String payNum) {
+		JSONObject jsonObj = new JSONObject();
+		String resultCode = "ERROR";
+		
+		try {
+			int result = myPageDAO.updateDiningResToCancel(payNum);
+			if(result == 1) {
+				resultCode = "SUCCESS";
+			} // end if
+		} catch(PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		
+		jsonObj.put("resultCode", resultCode);
+		return jsonObj.toJSONString();
+	} // modifyDiningResToCancel
+	
 } // class

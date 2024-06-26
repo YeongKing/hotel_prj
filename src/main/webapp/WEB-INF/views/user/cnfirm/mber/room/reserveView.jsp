@@ -90,7 +90,7 @@
 			success : function(jsonObj){
 				var resultCode = jsonObj.resultCode;
 				if(resultCode == "SUCCESS"){
-					alert('예약이 취소되었습니다.');
+					alert('예약이 취소 처리되었습니다.');
 					commonJs.popClose($('#layerPop2'));
 					$("#form").attr("method", "get");
 					$("#form").attr("action", "roomResList.do");
@@ -100,7 +100,6 @@
 				} // end else
 			},
 			error:function(r, s, e){
-				console.log(r.status);
 				alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
 			}
 		});

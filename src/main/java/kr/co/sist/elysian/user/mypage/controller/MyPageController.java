@@ -233,6 +233,19 @@ public class MyPageController {
 		return jsonObj;
 	} // modifyVisitorInfo
 	
+	/**
+	 * 선택한 다이닝 예약 번호의 예약 취소
+	 * @param request
+	 * @return 예약 취소 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/diningResvCancel.do", produces="application/json; charset=UTF-8")
+	public String modifyDiningResToCancel(@RequestBody Map<String, Object> requestData) {
+		String payNum = (String)requestData.get("payNum");
+		String jsonObj = myPageService.modifyDiningResToCancel(payNum);
+		return jsonObj;
+	} // modifyDiningResToCancel
+	
 	@GetMapping("/myInfoForm.do")
 	public String detailUserInfo() {
 		return "user/myPage/myInfoForm";

@@ -74,6 +74,11 @@
 				
 				$(".titDep2").text(diningName); //다이닝 이름
 				$(".titDep4").text(diningResStatus); //예약 상태
+				
+				if(diningResStatus === '취소') {
+					$(".titDep4").attr('style', 'color:#B01414');
+				} // end if
+				
 				$(".reserveInfo .txt").text(`엘리시안 서울 | \${visitDate} | \${visitTime} | \${visitPeople}`); //호텔 명 | 예약 시간
 				$(".visitorEmail").text(visitorEmail);
 				$(".visitorName").text(visitorName);
@@ -139,38 +144,36 @@
 	} // getDetail
 
 	//예약 취소
-	/* function fncCancel(){
-	    $.ajax({
-	        type : "POST",
-	        url : "/resve/dining/cancel.json",
-	        cache : false,
-	        dataType : "json",
-	        data : {
-	            reservationId: $("#reservationId").val(),
-	            cancelReasonText: $("#cancelReasonText").val()
-	        },
-	        global : false,
-	        beforeSend: function() {
+	function fncCancel(){
+		$.ajax({
+			type : "POST",
+			url : "diningResvCancel.do",
+			contentType : "application/json",
+			dataType : "json",
+			data : JSON.stringify({
+				payNum: $("#payNum").val(),
+			}),
+			beforeSend: function() {
 				commonJs.showLoadingBar(); //로딩바 show
-	     	},
-	        complete: function() {
+			},
+			complete: function() {
 				commonJs.closeLoadingBar(); //로딩바 hide
-	        },
-	        success : function(data){
-	            const result = data.result;
-	
-	            if (data.resultCode != "SUCCESS") {
-	                alert(data.resultMsg);
-	            } else {
-	                alert("취소 처리 되었습니다. ");
-	                location.reload();
-	            }
-	        },
-	        error:function(r, s, e){
-	            alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
-	        }
-	    })
-	 }*/
+			},
+			success : function(jsonObj){
+				var resultCode = jsonObj.resultCode;
+				if (resultCode == "SUCCESS") {
+					alert("예약이 취소 처리되었습니다.");
+					commonJs.popClose($('#layerPop2'));
+					location.href = '${pageContext.request.contextPath}/user/diningResList.do';
+				} else {
+					alert("죄송합니다. 예약 취소가 정상적으로 처리되지 않았습니다. 관리자에게 문의해주세요.");
+				} // end else
+			},
+			error:function(r, s, e){
+				alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
+			}
+		}); // ajax
+	} // fncCancel
 
 	function fncUpdateForm() {
 		location.href = "${pageContext.request.contextPath}/user/infoUpdateForm.do?payNum=" + $("#payNum").val();

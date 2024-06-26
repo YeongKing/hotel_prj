@@ -121,5 +121,18 @@ public class MyPageDAO {
 		myBatisDAO.closeHandler(ss);
 		return result;
 	} // updateDiningVisitorInfo
+	
+	/**
+	 * MyBatis와 매핑하여 다이닝 예약 취소 처리
+	 * @param payNum
+	 * @return result(처리 여부)
+	 * @throws PersistenceException
+	 */
+	public int updateDiningResToCancel(String payNum) throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(true);
+		int result = ss.update("kr.co.sist.elysian.member.mypage.cancelDiningRes", payNum);
+		myBatisDAO.closeHandler(ss);
+		return result;
+	} // updateDiningResToCancel
 
 } // class

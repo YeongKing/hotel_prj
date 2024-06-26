@@ -149,4 +149,10 @@
 		where pay_num = #{myPageDiningResVO.payNum}
 	</update>
 	
+	<update id="cancelDiningRes" parameterType="String">
+		update dining_reservation
+		set dining_res_status = 'CANCELED'
+		where pay_num = #{payNum}
+	</update>
+	
 </mapper>

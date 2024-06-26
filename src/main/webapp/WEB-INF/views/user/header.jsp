@@ -34,7 +34,7 @@
 			<ul class="menuDepth02">
 				<li><a href="http://localhost/hotel_prj/user/mypage.do">MY PAGE</a></li>
 				<li><a href="http://localhost/hotel_prj/user/roomResList.do">예약확인</a></li>
-				<li><a href="http://localhost/hotel_prj/user/myInfoForm.do">개인정보관리</a></li>
+				<li><a href="http://localhost/hotel_prj/user/myInfoPwCfmForm.do">개인정보관리</a></li>
 			</ul>
 			</li>
 							

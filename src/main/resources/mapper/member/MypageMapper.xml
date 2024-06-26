@@ -155,4 +155,14 @@
 		where pay_num = #{payNum}
 	</update>
 	
+	<select id="selectMemberInfo" resultType="myPageMemberDomain" parameterType="String">
+		<![CDATA[
+		select password, name, to_char(birthday, 'yyyy.mm.dd') birthday, gender, eng_lname engLName, eng_fname engFName,
+			 substr(national_code, instr(national_code, '_')+1) nationalCode,
+			 phone, zipcode, address, addr_detail addressDetail, email
+		from member	
+		where member_id = #{userId}
+		]]>
+	</select>
+	
 </mapper>

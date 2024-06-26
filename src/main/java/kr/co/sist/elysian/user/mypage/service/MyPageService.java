@@ -7,9 +7,12 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
+import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 import kr.co.sist.elysian.user.mypage.repository.MyPageDAO;
 
@@ -232,5 +235,33 @@ public class MyPageService{
 		jsonObj.put("resultCode", resultCode);
 		return jsonObj.toJSONString();
 	} // modifyDiningResToCancel
+	
+	/**
+	 * DAO에서 가져온 DB의 비밀번호와 입력한 비밀번호의 일치 여부를 json으로 변환하여 반환
+	 * @param paramMap (id, 비밀번호)
+	 * @return result(비밀번호 일치여부)
+	 */
+	public String selectMemberPw(Map<String, String> paramMap) {
+		JSONObject jsonObj = new JSONObject();
+		String result = "FAIL";
+		PasswordEncoder pwEncoder = new BCryptPasswordEncoder();
+		
+		try {
+			MemberDomain memberDomain = myPageDAO.selectMemberInfo(paramMap.get("userId"));
+			String encryptedPw = memberDomain.getPassword();
+			String uncodePass = paramMap.get("inputPw");
+			boolean matchFlag = pwEncoder.matches(uncodePass, encryptedPw);
+			
+			if(matchFlag) {
+				result = "SUCCESS";
+			} // end if
+			
+			jsonObj.put("result", result);
+		} catch(PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		
+		return jsonObj.toJSONString();
+	} // selectMemberPw
 	
 } // class

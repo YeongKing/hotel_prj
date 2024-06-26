@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
@@ -246,9 +247,38 @@ public class MyPageController {
 		return jsonObj;
 	} // modifyDiningResToCancel
 	
-	@GetMapping("/myInfoForm.do")
+	/**
+	 * 회원 정보 수정 비밀번호 확인 매핑
+	 * @return 회원 정보 수정 비밀번호 확인 view jsp
+	 */
+	@GetMapping("/myInfoPwCfmForm.do")
+	public String checkPwUserInfoForm() {
+		return "user/mypage/myInfoPwCfmForm";
+	} // checkPwUserInfoForm
+	
+	/**
+	 * 회원 정보 수정 진입 전 비밀번호 확인
+	 * @param session
+	 * @return 비밀번호 확인 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/checkPwUserInfo.do", produces="application/json; charset=UTF-8")
+	public String checkPwUserInfo(@RequestParam String loginPassword, HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		String inputPw = loginPassword;
+		Map<String, String> paramMap = new HashMap<String, String>();
+		
+		paramMap.put("userId", userId);
+		paramMap.put("inputPw", inputPw);
+		
+		String jsonObj = myPageService.selectMemberPw(paramMap);
+		
+		return jsonObj;
+	} // checkPwUserInfo
+	
+	@PostMapping("/myInfoForm.do")
 	public String detailUserInfo() {
-		return "user/myPage/myInfoForm";
+		return "user/mypage/myInfoForm";
 	} // detailUserInfo
 
 	@GetMapping("/pwChngForm.do")
@@ -259,17 +289,17 @@ public class MyPageController {
 	} // modifyPw
 	
 	@GetMapping("/withdraPwCfmForm.do")
-	public String removeUserInfo() {
+	public String checkRemove() {
 		
 		return "user/mypage/withdraPwCfmForm";
 		
-	} // removeUserInfo
+	} // checkRemove
 
 	@GetMapping("/withdraCfmForm.do")
-	public String checkRemove() {
+	public String removeUserInfo() {
 		
 		return "user/mypage/withdraCfmForm";
 		
-	} // checkRemove
+	} // removeUserInfo
 	
 } // class

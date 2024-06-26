@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
+import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 
 @Repository
@@ -134,5 +135,18 @@ public class MyPageDAO {
 		myBatisDAO.closeHandler(ss);
 		return result;
 	} // updateDiningResToCancel
+	
+	/**
+	 * MyBatis와 매핑하여 개인정보관리에 필요한 회원 정보 조회
+	 * @param userId
+	 * @return memberDomain
+	 * @throws PersistenceException
+	 */
+	public MemberDomain selectMemberInfo(String userId) throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(false);
+		MemberDomain memberDomain = ss.selectOne("kr.co.sist.elysian.member.mypage.selectMemberInfo", userId);
+		myBatisDAO.closeHandler(ss);
+		return memberDomain;
+	} // selectMemberInfo
 
 } // class

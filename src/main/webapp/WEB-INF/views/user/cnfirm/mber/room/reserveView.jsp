@@ -260,10 +260,10 @@
 			<caption>결재 신용카드 정보 목록</caption>
 			<thead>
 			<tbody>
-				<tr>
+				<%-- <tr>
 					<th scope="row">신용카드 종류</th>
 					<td><c:out value="${roomResDomain.cardName}"/></td>
-				</tr>
+				</tr> --%>
 				
 				<tr>
 					<th scope="row">신용카드 번호</th>
@@ -274,7 +274,7 @@
 		
 		<ul class="txtGuide">
 			<li>신용카드 정보는 고객님의 프로그램에 의한 개런티 외에는 어떤 목적으로도 사용되지 않습니다.</li>
-			<li>본 정보는 온라인 예약 시직접 결제가 이루어지지 않으며, 체크아웃 시 동일한 신용카드 지참을 부탁드립니다.</li>
+			<!-- <li>본 정보는 온라인 예약 시 직접 결제가 이루어지지 않으며, 체크아웃 시 동일한 신용카드 지참을 부탁드립니다.</li> -->
 		</ul>
 		
 		<h3 class="titDep3">취소 규정</h3>

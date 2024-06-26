@@ -344,7 +344,7 @@
 					$("#guestPhone").val(jsonObj.guestPhone);
 					$("#guestEmail").val(jsonObj.guestEmail);
 					$("#guestRequest").val(jsonObj.guestRequest);
-					$("#cardName").val(jsonObj.cardName);
+					//$("#cardName").val(jsonObj.cardName);
 					$("#cardNum").val(jsonObj.cardNum);
 					$("#payPrice").val(jsonObj.payPriceStr);
 					$("#payTime").val(jsonObj.payTimeStr);

@@ -111,10 +111,10 @@
 					<label>결제 정보</label>
 					<div class="table-responsive">
                 		<table class="table table-bordered modal-table">
-                			<tr>
+                			<!-- <tr>
                 			<th>카드사</th>
                 			<td><input type="text" class="form-control" id="cardName" disabled></td>
-                			</tr>
+                			</tr> -->
 
                 			<tr>
                 			<th>신용카드 번호</th>

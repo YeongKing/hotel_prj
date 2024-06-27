@@ -11,7 +11,7 @@ import kr.co.sist.elysian.admin.board.qna.model.domain.QnaListDomain;
 import kr.co.sist.elysian.admin.board.qna.model.vo.QnaVO;
 import kr.co.sist.elysian.admin.board.qna.repository.QnaDAO;
 
-@Service
+@Service("adminQnaService")
 public class QnaService {
 	
 

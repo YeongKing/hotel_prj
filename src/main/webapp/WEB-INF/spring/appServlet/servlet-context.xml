@@ -33,16 +33,19 @@
 			<beans:bean id="ai" class="kr.co.sist.elysian.admin.login.interceptor.AdminInterceptor"/>
 		</interceptor>
 		
-<!-- 	<interceptor>
+	<interceptor>
 			<mapping path="/user/**"/>
 			<exclude-mapping path="/user/login.do"/>
 			<exclude-mapping path="/user/index.do"/>
 			<exclude-mapping path="/user/set_session.do"/>
-			<exclude-mapping path="http://localhost/hotel_prj/user/step0.do"/>
+			<exclude-mapping path="/user/searchPopupLogin.do"/>
+			<exclude-mapping path="/user/room0.do"/>
+			<exclude-mapping path="/user/room1.do"/>
+			<exclude-mapping path="/user/room2.do"/>
 			<exclude-mapping path="/user/step1.do"/>
 			<exclude-mapping path="/user/step2.do"/>
 			<beans:bean id="ui" class="kr.co.sist.elysian.user.login.interceptor.UserInterceptor"/>
-		</interceptor>-->
+		</interceptor>
 	</interceptors> 
 	
 	

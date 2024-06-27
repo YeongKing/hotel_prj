@@ -58,12 +58,12 @@
 					var myReserveBox = $('<div></div>').addClass('myReserveBox');
 					
 					var title = $('<strong></strong>').text('객실 예약 내역').addClass('tit');
-					var txtGuide = $('<p></p>').text('예약일자를 기준으로 현재부터 3개월 이후의 예약 내역을 확인할 수 있습니다.').addClass('txtGuide');
+					var txtGuide = $('<p></p>').text('체크인일 기준으로 현재부터 3개월 이후의 예약 내역을 확인할 수 있습니다.').addClass('txtGuide');
 					var ul = $('<ul></ul>').addClass('myReserveList');
 					
 					$.each(jsonObj.data, function(index, res) {
 						var li  = $('<li></li>');
-						var a = $('<a></a>').attr('href', '#');
+						var a = $('<a></a>').attr('href', 'http://localhost/hotel_prj/user/roomResView.do?payNum='+res.payNum);
 						var myReserveInfo = $('<div></div>').addClass('myReserveInfo');
 						var dl = $('<dl></dl>');
 						var dt = $('<dt></dt>').text('[' + res.payNum + '] ' + res.roomInfo);

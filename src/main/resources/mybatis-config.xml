@@ -37,16 +37,20 @@
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain" alias="drd"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.RoomResVO" alias="roomResVO"/>
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.DiningResVO" alias="diningResVO"/> 
-  
-    <!-- user -->
-    <typeAlias type="kr.co.sist.elysian.user.login.model.vo.UserVO" alias="uv"/> 
-    <typeAlias type="kr.co.sist.elysian.user.login.model.domain.UserDomain" alias="ud"/>
-    <typeAlias type="kr.co.sist.elysian.user.dining.model.domain.DiningDomain" alias="dDomain"/> 
-    <typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain" alias="myPageRoomResDomain"/> 
-    <typeAlias type="kr.co.sist.elysian.user.room.model.vo.RoomResVO" alias="rrVO"/> 
-    <typeAlias type="kr.co.sist.elysian.user.room.model.domain.RoomListDomain" alias="urld"/> 
-    <typeAlias type="kr.co.sist.elysian.user.room.model.domain.MemberDomain" alias="umd"/> 
-    <typeAlias type="kr.co.sist.elysian.user.pay.model.vo.PayVO" alias="pVO"/> 
+
+  		<!-- user -->
+    	<typeAlias type="kr.co.sist.elysian.user.login.model.vo.UserVO" alias="uv"/> 
+		  <typeAlias type="kr.co.sist.elysian.user.login.model.domain.UserDomain" alias="ud"/>
+  		<typeAlias type="kr.co.sist.elysian.user.dining.model.domain.DiningDomain" alias="dDomain"/> 
+  		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain" alias="myPageRoomResDomain"/> 
+  		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain" alias="myPageDiningResDomain"/> 
+  		<typeAlias type="kr.co.sist.elysian.user.mypage.model.vo.DiningResVO" alias="myPageDiningResVO"/>
+  		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.MemberDomain" alias="myPageMemberDomain"/>
+      <typeAlias type="kr.co.sist.elysian.user.room.model.vo.RoomResVO" alias="rrVO"/> 
+      <typeAlias type="kr.co.sist.elysian.user.room.model.domain.RoomListDomain" alias="urld"/> 
+      <typeAlias type="kr.co.sist.elysian.user.room.model.domain.MemberDomain" alias="umd"/> 
+      <typeAlias type="kr.co.sist.elysian.user.pay.model.vo.PayVO" alias="pVO"/>
+
   		
 	</typeAliases>
 

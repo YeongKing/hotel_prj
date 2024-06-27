@@ -17,7 +17,7 @@
 		from room_reservation rr
 		inner join room r
 		on r.room_id = rr.room_id
-		where rr.user_id = #{userId} and rr.room_res_status = 'RESERVED' and rr.room_res_date <= add_months(sysdate, 3)
+		where rr.user_id = #{userId} and rr.room_res_status = 'RESERVED' and rr.checkin <= add_months(sysdate, 3)
 		order by rr.pay_num
 		]]>
 	</select>
@@ -43,9 +43,125 @@
 				<![CDATA[and rr.room_res_status in ('RESERVED', 'CANCELED')]]>
 			</otherwise>
 		</choose>
+		<choose>
+			<when test="searchDataBeginDe eq null and searchDataEndDe eq null">
+				<![CDATA[and rr.checkin >= to_date(sysdate) and rr.checkin <= to_date(add_months(sysdate, 3))]]>
+			</when>
+			<otherwise>
+				<![CDATA[and rr.checkin >= to_date(#{searchDataBeginDe}) and rr.checkin <= to_date(#{searchDataEndDe})]]>
+			</otherwise>
+		</choose>
 		<![CDATA[
-		and rr.room_res_date <= add_months(sysdate, 12)
 		order by rr.pay_num
+		]]>
+	</select>
+	
+	<select id="selectRoomResDetail" resultType="myPageRoomResDomain" parameterType="String">
+		<![CDATA[
+		select r.room_rank_name || ' | ' || r.bed_cnt || ' ' || r.bed_name || ' | ' || r.view_name roomInfo,
+			 rr.pay_num payNum, rr.room_res_status roomResStatus, to_char(rr.checkin, 'yyyy.mm.dd') checkIn, to_char(rr.checkout, 'yyyy.mm.dd') checkOut,
+			 rr.adults_num adultsNum, rr.kids_num kidsNum, to_char(rr.room_res_date, 'yyyy.mm.dd') roomResDate,
+			 p.pay_price payPrice, p.pay_price-r.room_basic_price addPrice, r.room_basic_price roomBasicPrice,
+			 m.eng_fname || ' ' || m.eng_lname engName, m.eng_fname engFName, m.eng_lname engLName,
+			 rr.guest_phone guestPhone, rr.guest_email guestEmail, c.code_name cardName, p.card_num cardNum
+		from room_reservation rr
+		inner join room r
+		on r.room_id = rr.room_id
+		inner join member m
+		on m.member_id = rr.user_id
+		inner join pay p
+		on p.pay_num = rr.pay_num
+		inner join common_code c
+		on substr(card_code, 0, instr(card_code, '_')-1) = c.code_type and substr(p.card_code, instr(p.card_code, '_')+1) = c.code_val
+		where rr.pay_num = #{payNum}
+		]]>
+	</select>
+	
+	<update id="cancelRoomRes" parameterType="String">
+		update room_reservation
+		set room_res_status = 'CANCELED'
+		where pay_num = #{payNum}
+	</update>
+	
+	<select id="selectDiningResList" resultType="myPageDiningResDomain" parameterType="java.util.HashMap">
+		<![CDATA[
+		select dr.pay_num payNum, p.pay_price payPrice, dr.dining_res_status diningResStatus, d.dining_name diningName,
+			 to_char(dr.visit_datetime, 'yyyy.mm.dd') || '(' || INITCAP(TO_CHAR(dr.visit_datetime, 'dy', 'NLS_DATE_LANGUAGE=ENGLISH')) || ')' visitDate,
+			 to_char(dr.visit_datetime, 'am HH24:MI', 'NLS_DATE_LANGUAGE=ENGLISH') visitTime,
+			 dr.visit_people visitPeople
+		from dining_reservation dr
+		inner join dining d
+		on d.dining_id = dr.dining_id
+		inner join pay p
+		on p.pay_num = dr.pay_num
+		where dr.user_id = #{userId}
+		]]>
+		<choose>
+			<when test="diningResStatus == 'CONFIRMED'">
+				<![CDATA[and dr.dining_res_status = 'CONFIRMED']]>
+			</when>
+			<when test="diningResStatus == 'COMPLETED'">
+				<![CDATA[and dr.dining_res_status = 'COMPLETED']]>
+			</when>
+			<when test="diningResStatus == 'CANCELED'">
+				<![CDATA[and dr.dining_res_status = 'CANCELED']]>
+			</when>
+			<otherwise>
+				<![CDATA[and dr.dining_res_status in ('CONFIRMED', 'COMPLETED', 'CANCELED')]]>
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="searchDataBeginDe eq null and searchDataEndDe eq null">
+				<![CDATA[and dr.visit_datetime >= to_date(sysdate) and dr.visit_datetime <= to_date(add_months(sysdate, 3))]]>
+			</when>
+			<otherwise>
+				<![CDATA[and dr.visit_datetime >= to_date(#{searchDataBeginDe}) and dr.visit_datetime <= to_date(#{searchDataEndDe})]]>
+			</otherwise>
+		</choose>
+		<![CDATA[
+		order by dr.pay_num
+		]]>
+	</select>
+	
+	<select id="selectDiningResDetail" resultType="myPageDiningResDomain" parameterType="String">
+		<![CDATA[
+		select dr.pay_num payNum, p.pay_price payPrice, dr.dining_res_status diningResStatus, d.dining_name diningName,
+			 to_char(dr.visit_datetime, 'yyyy.mm.dd') || '(' || INITCAP(TO_CHAR(dr.visit_datetime, 'dy', 'NLS_DATE_LANGUAGE=ENGLISH')) || ')' visitDate,
+			 to_char(dr.visit_datetime, 'am HH24:MI', 'NLS_DATE_LANGUAGE=ENGLISH') visitTime,
+			 to_char(dr.dining_res_date, 'yyyy.mm.dd') diningResDate, dr.visit_people visitPeople, dr.visitor_name visitorName,
+			 dr.visitor_phone visitorPhone, dr.visitor_email visitorEmail, dr.visitor_request visitorRequest,
+			 dr.adult_cnt adultCnt, dr.child_cnt childCnt, dr.baby_cnt babyCnt
+		from dining_reservation dr
+		inner join dining d
+		on d.dining_id = dr.dining_id
+		inner join pay p
+		on p.pay_num = dr.pay_num
+		where dr.pay_num = #{payNum}
+		]]>
+	</select>
+	
+	<update id="updateDiningVisitorInfo" parameterType="java.util.HashMap">
+		update dining_reservation
+		set visitor_name = #{myPageDiningResVO.visitorName}, 
+			visitor_phone = #{myPageDiningResVO.visitorPhone},
+			visitor_email = #{myPageDiningResVO.visitorEmail},
+			visitor_request = #{myPageDiningResVO.visitorRequest}
+		where pay_num = #{myPageDiningResVO.payNum}
+	</update>
+	
+	<update id="cancelDiningRes" parameterType="String">
+		update dining_reservation
+		set dining_res_status = 'CANCELED'
+		where pay_num = #{payNum}
+	</update>
+	
+	<select id="selectMemberInfo" resultType="myPageMemberDomain" parameterType="String">
+		<![CDATA[
+		select password, name, to_char(birthday, 'yyyy.mm.dd') birthday, gender, eng_lname engLName, eng_fname engFName,
+			 substr(national_code, instr(national_code, '_')+1) nationalCode,
+			 phone, zipcode, address, addr_detail addressDetail, email
+		from member	
+		where member_id = #{userId}
 		]]>
 	</select>
 	

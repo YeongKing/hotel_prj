@@ -38,7 +38,7 @@
 	
     <li>개인정보관리
 		<ul>
-			<li><a href="http://localhost/hotel_prj/user/myInfoForm.do">회원 정보 수정 </a></li>
+			<li><a href="http://localhost/hotel_prj/user/myInfoPwCfmForm.do">회원 정보 수정 </a></li>
 			<li><a href="http://localhost/hotel_prj/user/pwChngForm.do">비밀번호 변경</a></li>
 			<li><a href="http://localhost/hotel_prj/user/withdraPwCfmForm.do">회원 탈퇴</a></li>
 		</ul>

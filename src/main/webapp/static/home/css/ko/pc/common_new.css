@@ -671,7 +671,7 @@ table td.lower{text-transform:lowercase !important} /* 20200817 소문자 예외
 /*.numPeople.type02 button[disabled]+span{color:#aaa} 텍스트비활성없음 */
 
 .swipeWrap.gallery{width:1400px}
-.swipeWrap.gallery .btnSwipe{position:absolute;top:50%;margin-top:-20px;width:40px;height:40px;background:url(../../../images/ko/pc/common/btn_swipe_40x40.png) no-repeat 0 0;z-index:1}
+.swipeWrap.gallery .btnSwipe{position:absolute;top:50%;margin-top:-20px;width:40px;height:40px;background:url(http://localhost/hotel_prj/static/home/images/ko/pc/common/btn_swipe_40x40.png) no-repeat 0 0;z-index:1}
 .swipeWrap.gallery .btnPrev{left:40px}
 .swipeWrap.gallery .btnNext{right:40px;background-position:-40px 0; left:auto;}/* left:auto 220722 추가 */
 .swipeWrap.gallery .numPaging{display:none;position:absolute;right:40px;bottom:30px;font-size:16px;font-family:gothamL} /* display:none -> yjs */

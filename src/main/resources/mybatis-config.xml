@@ -3,11 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<properties resource="database.properties" />
-	
+    <properties resource="database.properties" />
 
+ 
+        
   
-	
 	<!-- typeAlias예시 -->
 	<typeAliases>
 		<!-- admin -->
@@ -37,19 +37,24 @@
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain" alias="drd"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.RoomResVO" alias="roomResVO"/>
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.DiningResVO" alias="diningResVO"/> 
-  		
+
   		<!-- user -->
     	<typeAlias type="kr.co.sist.elysian.user.login.model.vo.UserVO" alias="uv"/> 
-		<typeAlias type="kr.co.sist.elysian.user.login.model.domain.UserDomain" alias="ud"/>
+		  <typeAlias type="kr.co.sist.elysian.user.login.model.domain.UserDomain" alias="ud"/>
   		<typeAlias type="kr.co.sist.elysian.user.dining.model.domain.DiningDomain" alias="dDomain"/> 
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain" alias="myPageRoomResDomain"/> 
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain" alias="myPageDiningResDomain"/> 
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.vo.DiningResVO" alias="myPageDiningResVO"/>
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.MemberDomain" alias="myPageMemberDomain"/>
+      <typeAlias type="kr.co.sist.elysian.user.room.model.vo.RoomResVO" alias="rrVO"/> 
+      <typeAlias type="kr.co.sist.elysian.user.room.model.domain.RoomListDomain" alias="urld"/> 
+      <typeAlias type="kr.co.sist.elysian.user.room.model.domain.MemberDomain" alias="umd"/> 
+      <typeAlias type="kr.co.sist.elysian.user.pay.model.vo.PayVO" alias="pVO"/>
+
   		
 	</typeAliases>
-  
-  
+
+
   <!-- 환경 설정 -->
   <environments default="development">
     <environment id="development">
@@ -80,6 +85,8 @@
     <!-- user -->
     <mapper resource="mapper/member/LoginMapper.xml"/>
     <mapper resource="mapper/member/MypageMapper.xml"/>
+    <mapper resource="mapper/member/RoomMapper.xml"/>
+    <mapper resource="mapper/member/PayMapper.xml"/>
     
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
 <!--     

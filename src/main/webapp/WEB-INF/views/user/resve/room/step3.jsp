@@ -2,6 +2,8 @@
  pageEncoding="UTF-8" 
  info="" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -12,6 +14,12 @@
 <meta name="format-detection" content="telephone=no">
 
 <title>객실 예약 - 고객 정보 입력 | 엘리시안호텔</title>
+
+<!-- iam port 결제 등록 -->
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<!-- jquery cdn -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
@@ -146,6 +154,292 @@
         })
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+
+function getTokenAndPayment(pg, pay_method){
+    $.ajax({
+        url: "http://localhost/hotel_prj/user/getToken.do",
+        method: 'GET',
+        success: function(response) {
+            //$('#tokenDisplay').text('받아온 토큰: ' + response);
+            payment(pg, pay_method, response); // 토큰을 받은 후 결제 호출
+        },
+        error: function() {
+        	alert("토큰 받기 실패")
+            //$('#tokenDisplay').text('토큰을 받아오는데 실패했습니다.');
+        }
+    });
+}
+
+function payment(pg, pay_method, token){
+    IMP.init('imp25425801');
+    IMP.request_pay({
+        pg: pg,
+        pay_method: pay_method,
+        amount: ${rrVO.payPrice * rrVO.night}, // 변수 값을 적절히 삽입하는 방법 확인 필요
+        buyer_name: '${umd.name}', // 변수 값을 적절히 삽입하는 방법 확인 필요
+        buyer_email: jQuery("#email").val(),
+        buyer_tel: jQuery("#phone").val(),
+        name: '객실예약'
+    }, function(response) {
+        // 결제 후 호출되는 callback함수
+        if (response.success) { // 결제 성공
+            //console.log(response);
+        	commonJs.showLoadingBar();
+            sendPaymentData(response, token);
+        } else {
+            alert('결제실패 : ' + response.error_msg);
+            commonJs.closeLoadingBar();
+			$(".btnArea").find("a").css({
+			    'pointer-events': '',
+			    'cursor': '',
+			    'opacity': ''
+			});
+			
+            
+        }
+    });
+}
+
+function sendPaymentData(paymentData, token) {
+    const impUid = paymentData.imp_uid;
+   // alert(JSON.stringify(paymentData));
+    $.ajax({
+        type: "POST",
+        url: "http://localhost/hotel_prj/user/payment.do",
+        data: JSON.stringify({
+            imp_uid: impUid,
+            payment_data: paymentData,
+            token: token
+        }),
+        dataType: "JSON",
+        contentType: "application/json; charset=utf-8",
+        success: function(data) {
+            //alert("결제 데이터가 성공적으로 전송되었습니다!");
+            //displayPaymentInfo(data); // 결제 정보 화면에 출력
+            insertPaymentInfo(data); // 결제 정보 DB저장
+        },
+        error: function(err) {
+            let errorMessage = "결제 데이터 전송 오류: " + err.status + " " + err.statusText + " - " + err.responseText;
+            alert(errorMessage);
+            console.log("에러 상세: ", err);
+        }
+    });
+}
+
+// 결제 정보를 화면에 출력하는 함수
+function displayPaymentInfo(paymentInfo) {
+    var paymentInfoText =
+        '상태: ' + paymentInfo.status + '\n' +
+        '금액: ' + paymentInfo.amount + '\n' +
+        '구매자 이름: ' + paymentInfo.buyer_name + '\n' +
+        '구매자 전화번호: ' + paymentInfo.buyer_phone + '\n' +
+        '구매자 이메일: ' + paymentInfo.member_email + '\n' +
+        '결제 시간: ' + paymentInfo.paid_at + '\n' +
+        '상품명: ' + paymentInfo.buy_product_name + '\n' +
+        '구매자 ID: ' + paymentInfo.buyer_buyid + '\n' +
+        'Merchant ID: ' + paymentInfo.buyer_merid + '\n' +
+        '카드 번호: ' + paymentInfo.buyer_card_num + '\n' +
+        '결제 상태: ' + paymentInfo.buyer_pay_ok;
+
+    alert(paymentInfoText);
+}
+
+// 결제 정보를 DB에 저장하는 함수
+function insertPaymentInfo(paymentInfo) {
+	//alert("DB저장함수 진입");
+	var cardNum = paymentInfo.buyer_card_num
+	
+	
+    if (!cardNum || cardNum.length !== 16) {
+    	
+    	var random16Digits = generateRandomNumber(16);
+    	
+         cardNum = random16Digits.substring(0, 6) + '*********' + random16Digits.substring(15);
+    	
+        
+    }//end if
+	
+	
+    
+    var payPrice = ${rrVO.payPrice * rrVO.night};
+
+    
+    var payStatus = 'Y';
+    var payTime = paymentInfo.paid_at;
+    var impUid = paymentInfo.buyer_buyid;
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost/hotel_prj/user/insertPayInfo.do",
+        data: JSON.stringify({
+        	cardNum : cardNum,
+        	payPrice : payPrice,
+        	payStatus : payStatus,
+        	payTime : payTime,
+        	impUid : impUid
+
+        }),
+        dataType: "JSON",
+        contentType: "application/json; charset=utf-8",
+        success: function(data) {
+			//alert("payNum : " + data.payNum);
+			insertRoomRes(data.payNum);
+
+            
+        }
+    });
+}
+
+// 랜덤 숫자 생성 함수
+function generateRandomNumber(length) {
+    let result = '';
+    const characters = '0123456789';
+    const charactersLength = characters.length;
+    
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    
+    return result;
+}
+
+//객실예약 함수
+function insertRoomRes(payNumber) {
+	//alert("객실예약 함수 진입");
+    var payNum = payNumber;
+    var roomId = 0;
+    var roomResStatus = 'RESERVED';
+    var guestEmail = jQuery("#email").val();
+    var guestPhone = jQuery("#phone").val();
+    var guestBirthday = "${umd.birthday}"; 
+
+   
+    
+    jQuery.ajax({
+        type: "POST",
+        url: "http://localhost/hotel_prj/user/resveValid.do",
+        cache: false,
+        dataType: "json",
+        global: false,
+        beforeSend: function(xhr, opts) {
+            RESV_STATUS = true;
+            $(".btnArea").find("a").css({
+                'pointer-events': 'none',
+                'cursor': 'default',
+                'opacity': '0.6'
+            });
+        },
+        complete: function() {
+            RESV_STATUS = false;
+        },
+        success: function(response) {
+            // 여기서 roomid 값을 받아오는 부분을 정확히 처리해야 합니다.
+            roomId = response; // 예약 가능한 객실의 ID를 받아온다고 가정합니다. 실제로는 서버 응답에 따라 수정 필요
+            if (roomId != 0) {
+                // 예약 가능한 객실이 있을 경우
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/hotel_prj/user/insertRoomRes.do",
+                    data: JSON.stringify({
+                        payNum: payNum,
+                        roomId: roomId,
+                        roomResStatus: roomResStatus,
+                        guestEmail: guestEmail,
+                        guestPhone: guestPhone,
+                        guestBirthday: guestBirthday
+                    }),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function(result) {
+                        //alert(payNum + " 으로 " + roomId + " 번 객실 객실등록 완료");
+                		jQuery("#step3Form").attr("action", "http://localhost/hotel_prj/user/room4.do");
+                		jQuery("#step3Form").submit();
+                        
+                        
+                    },
+                    error: function(xhr, status, error) {
+                        alert("객실 등록에 실패했습니다: " + error);
+                    }
+                });
+            } else {
+                // 예약 가능한 객실이 없을 경우
+                $(".btnArea").find("a").css({
+                    'pointer-events': '',
+                    'cursor': '',
+                    'opacity': ''
+                });
+                alert("입실 가능한 객실이 존재하지 않습니다.");
+            }
+        },
+        error: function(xhr, status, error) {
+            alert("객실 예약 유효성 체크 중 오류가 발생했습니다: " + error);
+            $(".btnArea").find("a").css({
+                'pointer-events': '',
+                'cursor': '',
+                'opacity': ''
+            });
+        }
+    });
+}
+
+
+
+
+
+jQuery(function(){
+	jQuery(document).ready(function(){
+		
+		//체크인 체크아웃 날짜 html 주입
+		jQuery("#dateText").html(jQuery("#ckinDate").val() + "&nbsp;" + dUtils.getDateToDay(jQuery("#ckinDate").val()) +"&nbsp;-&nbsp;"+ jQuery("#ckoutDate").val() + "&nbsp;" + dUtils.getDateToDay(jQuery("#ckoutDate").val())+"<span>"+jQuery("#night").val()+"&nbsp;박</span>")
+
+	});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
 		
 		
 		<!--S header  -->
@@ -167,172 +461,15 @@
 
 
 <script type="text/javascript">
-jQuery(function(){
-	jQuery(document).ready(function(){
-		
-		if("" != ""){
-			alert("");
-		}
-		
-		//체크인 체크아웃 날짜 html 주입 
-		jQuery("#dateText").html(jQuery("#ckinDate").val() + "&nbsp;" + dUtils.getDateToDay(jQuery("#ckinDate").val()) +"&nbsp;-&nbsp;"+ jQuery("#ckoutDate").val() + "&nbsp;" + dUtils.getDateToDay(jQuery("#ckoutDate").val())+"<span>"+jQuery("#night").val()+"&nbsp;박</span>")
-		
-		//카드번호, 생년월일  maxlength만큼 입력 시 다음 input 으로 이동
-		jQuery("input[id^='cardNo'], input[type='text'][id^='birth']").keyup(function(idx){
-	        var charLimit = jQuery(this).attr("maxlength");
-	        if(jQuery(this).attr("role") != "last"){
-		        if(this.value.length >= charLimit) {
-		        	jQuery(this).parent().next().find("input").focus();
-		            return false;
-		        }
-	        }
-	    });
-		
-		//카드번호, 생년월일  maxlength만큼 입력 시 다음 input 으로 이동
-		jQuery("input[id^='moblphonTelno']").keyup(function(idx){
-	        var charLimit;
-	        var id = jQuery(this).attr("id");
-	        if(id == "moblphonTelno"){
-	        	charLimit = 3;
-	        }else{
-	        	charLimit = 4;
-	        }
-	        if(jQuery(this).attr("role") != "last"){
-		        if(this.value.length >= charLimit) {
-		        	jQuery(this).parent().next().next().find("input").focus();
-		            return false;
-		        }
-	        }
-	    });
-		
-		/*
-			이메일 도메인 정보 수정 시
-			직접입력인 경우 email2 input disabled 제거
-			도메인 선택 시 도메인 email2 input에 주입 후 disabled
-		*/
-		jQuery("[name='emailType']").on("change", function(){
-			var value = jQuery(this).val();
-			if(value == ""){
-				jQuery("#email2").val("");
-				jQuery("#email2").prop("readonly", false);
-			}else{
-				jQuery("#email2").val(value);
-				jQuery("#email2").prop("readonly", true);
-			}
-		});
-		
-		// 마케팅 동의여부 클릭시 하위 체크박스 전체선택, 해제
-		jQuery("#marketingYn").click(function(){
-			if(jQuery(this).is(":checked")){
-				jQuery("#chldCheckbox").find("span").each(function(){
-					jQuery(this).find("input").prop("checked", true);
-				});
-			}else{
-				jQuery("#chldCheckbox").find("span").each(function(){
-					jQuery(this).find("input").prop("checked", false);
-				});
-			}
-		});
-		
-		// 마케팅 동의여부 하위 체크박스 전체선택된경우 마케팅 동의여부 체크박스 선택, 해제 
-		jQuery("#chldCheckbox").find("span > input").click(function(){
-			if(jQuery("#chldCheckbox").find("span > input:checked").length > 0){
-				jQuery("#marketingYn").prop("checked", true);
-			}else{
-				jQuery("#marketingYn").prop("checked", false);
-			}
-		});
-		
-		jQuery("input[type='text'],input[type='password'], select").on("keyup change", function(){
-			var validFlag = true;
-			jQuery(this).closest("li").find("input[type='text'],input[type='password'], select").each(function(idx){
-				if(jQuery(this).val() == "" && jQuery(this).attr("id") != "emailType"){
-					validFlag = false;
-				}	
-			});
-		
-			if(validFlag && jQuery(this).closest("li").hasClass("error")){
-				jQuery(this).closest("li").removeClass("error");
-				jQuery(this).closest("li").find(".alertMessage").hide();
-			}
-		});
-
-        //카드 타입에 따라 생년월일 영역 변경
-        $('.cardTypeDepth.depth2').hide();
-        $('input[type=radio][name=cardType2]').change(function() {
-            if (this.value == 'cardtp03') {
-                $(".cardTypeDepth").hide();
-                $(".cardTypeDepth.depth2").show();
-                $("#creditCardAgree").closest("ul").hide();
-                $("#businessNumber").attr("data-valid", "Y");
-                $("#birthArea input").each(function(){
-                    $(this).attr("data-valid", "N");
-                })
-            }else{
-                $(".cardTypeDepth").hide();
-                $(".cardTypeDepth.depth1").show();
-                $("#creditCardAgree").closest("ul").show();
-                $("#businessNumber").attr("data-valid", "N");
-                $("#birthArea input").each(function(){
-                    $(this).attr("data-valid", "Y");
-                })
-            }
-        });
-
-
-	});
-});
 
 
 
-/* 
-function validateCardNumber(cardNumber){
-	var flag = true;
-    var match = /^(?:(94[0-9]{14})|(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2}|2[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$/.exec(cardNumber);
-    if(match) {
-        for(var i = 1; i < match.length; i++) {
-            if(match[i]) {
-                flag = true;
-                break;
-            }
-        }
-        flag = luhn(cardNumber);
-    } else {
-        flag = false;
-    }
-    return flag;
-}
-
-function luhn(cardNumber){
-    var digits = cardNumber.split('');
-    for (var i = 0; i < digits.length; i++) {
-        digits[i] = parseInt(digits[i], 10);
-    }
-    var sum = 0;
-    var alt = false;
-    for (var i = digits.length - 1; i >= 0 ; i-- ) {
-        if (alt) {
-            digits[i] *= 2;
-            if(digits[i] > 9) {
-                digits[i] -= 9;
-            }
-        }
-        sum += digits[i];
-        alt = !alt;
-    }
-    if(sum % 10 == 0) {
-        return true;
-    } else {
-        return false;
-    }
-}
- */
 /**
 객실 재검색 이동
 */
 function fncResvReset(){
 	if(confirm("다시 검색하시겠습니까?")){ 
-		location.href = "/resve/room/step0.do";
+		location.href = "http://localhost/hotel_prj/resve/room/step0.do";
 		return false;
 	}
 }
@@ -379,7 +516,7 @@ function checkInputValid(){
 	예약!		
 */
 let RESV_STATUS = false;
-function fncGoResv(){
+function fncGoPay(){
 
     if (RESV_STATUS == true) {
         alert("이미 처리중입니다. 잠시만 기다려 주세요. ");
@@ -407,43 +544,14 @@ function fncGoResv(){
         }
 		
 	
-	
-	
 
-    //2022-08-30 추가
-    //사업자 등록번호 입력시
-	if($('input[type=radio][name=cardType2]:checked').val() == "cardtp03"){
-        if(jQuery("#businessNumber").val().length != 10){
-            alert("사업자 등록번호를 확인해 주세요."); 
-            return false;
-        }
-
-        jQuery("#idNo").val(jQuery("#businessNumber").val());	//사업자 등록 번호
-    }else {
-        var birthExp = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
-        var birthMonth = parseInt(jQuery("#birth2").val()) > 9 ? jQuery("#birth2").val() : "0" + parseInt(jQuery("#birth2").val());
-        var birthDay = parseInt(jQuery("#birth3").val()) > 9 ? jQuery("#birth3").val() : "0" + parseInt(jQuery("#birth3").val());
-        var birth = jQuery("#birth1").val()+birthMonth+birthDay;
-
-        if(!birthExp.test(birth)){
-            alert("생년월일을 확인해주세요."); 
-            return false;
-        }
-
-        jQuery("#birth").val(birth);
-        jQuery("#idNo").val(birth);	//생년월일 취합
-    }
 
 	
 	jQuery("#email").val(jQuery("#email1").val().trim()+"@"+jQuery("#email2").val().trim());	// 이메일 취합
-	jQuery("#cardNo").val(jQuery("#cardNo1").val()+"-"+jQuery("#cardNo2").val()+"-"+jQuery("#cardNo3").val()+"-"+jQuery("#cardNo4").val()); //카드번호 취합
-	/* 
-	if(!validateCardNumber(jQuery("#cardNo").val())){
-		alert("유효한 카드번호가 아닙니다.\n다시 확인해주세요.");
-		jQuery("#cardNo1").focus();
-		return false;
-	}
-	 */
+
+	
+	jQuery("#phone").val(jQuery("#moblphonTelno").val().trim()+"-"+jQuery("#moblphonTelno1").val().trim()+"-"+jQuery("#moblphonTelno2").val().trim());	// 이메일 취합
+
 
 	
 	/*
@@ -458,10 +566,9 @@ function fncGoResv(){
 	
 	jQuery.ajax({
 		type : "POST",
-		url : "/resve/room/resveValid.json",
+		url : "http://localhost/hotel_prj/user/resveValid.do",
 		cache : false,
 		dataType : "json",
-		data : jQuery("#step3Form").serialize(),
 		global : false,
 		beforeSend : function(xhr, opts) {
             RESV_STATUS = true;
@@ -474,17 +581,35 @@ function fncGoResv(){
 		complete : function(){
           RESV_STATUS = false;
 		},
-		success : function(data){
-			var resultCode = data.resultCode;
-			var resultMsg = data.resultMsg;
+		success : function(roomId){
 			
-			if(resultCode == "SUCCESS"){
-				commonJs.showLoadingBar();
-				jQuery("input[type='radio']").prop("disabled", false);
-				jQuery("#bidRegistReqSn").val(data.bidRegistReqSn);		//빌링 키 세팅
-				jQuery("#operaCardCode").val(data.operaCardCode );
-				jQuery("#step3Form").attr("action", "/resve/room/save.do");
-				jQuery("#step3Form").submit();
+			//alert(roomId);
+
+			
+			if(roomId!=0){
+				//commonJs.showLoadingBar();
+				
+				var pay_type = $('input[name="payType2"]:checked').val()
+				
+				if(pay_type=="kakaopay"){
+					
+					//alert("카카오페이");
+					
+					getTokenAndPayment('kakaopay.TC0ONETIME', 'kakaopay'); // 카카오페이
+					
+					
+				}else if(pay_type=="inicis"){
+					
+					//alert("이니시스");
+					
+					getTokenAndPayment('html5_inicis', 'card'); // KG 이니시스
+					
+				}
+				
+				
+				
+				
+				
 			}else{
 				
 				$(".btnArea").find("a").css({
@@ -493,16 +618,18 @@ function fncGoResv(){
 				    'opacity': ''
 				});
 				
-				alert(resultMsg);
+				alert("입실가능한 객실이 존재하지않습니다.");
 			}
 		},
 		error:function(r, s, e){
+			alert("실패");
+			
 			$(".btnArea").find("a").css({
 			    'pointer-events': '',
 			    'cursor': '',
 			    'opacity': ''
 			});
-			alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
+			alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText)); 
 		}
 	});
 	
@@ -510,34 +637,20 @@ function fncGoResv(){
 </script>
 
 <form action="" name="step3Form" id="step3Form" method="post">
-	<input type="hidden" name="hotlSysCode" id="hotlSysCode" value="GJJ" /> 
-	<input type="hidden" name="ckinDate" id="ckinDate" value="2024.05.23" /> 			
-	<input type="hidden" name="ckoutDate" id="ckoutDate" value="2024.05.24" /> 		
-	<input type="hidden" name="night" id="night" value="1" /> 					
+	<input type="hidden" name="hotlSysCode" id="hotlSysCode" value="ELS" /> 
+	<input type="hidden" name="ckinDate" id="ckinDate" value="${rrVO.ckinDate}" /> 			
+	<input type="hidden" name="ckoutDate" id="ckoutDate" value="${rrVO.ckoutDate}" /> 		
+	<input type="hidden" name="night" id="night" value="${rrVO.night}" /> 					
 	<input type="hidden" name="roomCnt" id="roomCnt" value="1" />			
 	
-		<input type="hidden" name="adltCntArr" value="2"/>						
+		<input type="hidden" name="adltCntArr" value="${rrVO.adultsNum}"/>						
+
 	
-		<input type="hidden" name="adltCntArr" value="0"/>						
+		<input type="hidden" name="chldCntArr" value="${rrVO.kidsNum}"/>						
+					
 	
-		<input type="hidden" name="adltCntArr" value="0"/>						
-	
-	
-		<input type="hidden" name="chldCntArr" value="0"/>						
-	
-		<input type="hidden" name="chldCntArr" value="0"/>						
-	
-		<input type="hidden" name="chldCntArr" value="0"/>						
-	
-	<input type="hidden" name="sortCd" id="sortCd" value=""/>				
-	<input type="hidden" name="curruncyCd" id="curruncyCd" value=""/>	
-	<input type="hidden" name="roomCode" id="roomCode" value="DST"/>			
-	<input type="hidden" name="rateCode" id="rateCode" value="31BFR1N"/>			
-	<input type="hidden" name="adltSum" id="adltSum" value="2"/>				
-	<input type="hidden" name="chldSum" id="chldSum" value="0"/>				
-	<input type="hidden" name="packageSn" id="packageSn" value="531357"/>		
-	<input type="hidden" name="companyCode" id="companyCode" value="" />
-	<input type="hidden" name="promotionCode" id="promotionCode" value="" />
+	<input type="hidden" name="adltSum" id="adltSum" value="${rrVO.adultsNum}"/>				
+	<input type="hidden" name="chldSum" id="chldSum" value="${rrVO.kidsNum}"/>				
 	
 		<input type="hidden" name="optAArr" value="BK"/>								
 	
@@ -546,12 +659,8 @@ function fncGoResv(){
 	
 	
 		<input type="hidden" name="optEArr" value="0"/>								
-	
-		<input type="hidden" name="optEArr" value="0"/>								
-	
-		<input type="hidden" name="optEArr" value="0"/>								
-	
-	
+							
+
 		<input type="hidden" name="optAQtyArr" value="2"/>						
 	
 	
@@ -559,74 +668,37 @@ function fncGoResv(){
 	
 	
 		<input type="hidden" name="optEQtyArr" value="0"/>						
+						
 	
-		<input type="hidden" name="optEQtyArr" value="0"/>						
+		<input type="hidden" name="email" id="email" value="" />												
+		<input type="hidden" name="phone" id="phone" value="" />												
 	
-		<input type="hidden" name="optEQtyArr" value="0"/>						
-	
-	<input type="hidden" name="email" id="email" value="" />												
-	<input type="hidden" name="cardNo" id="cardNo" value="" />												
-	<input type="hidden" name="birth" id="birth" value="" /> 												
-    <input type="hidden" name="idNo" id="idNo" value="" /> 												    
-	
-		<input type="hidden" name="bpArr" value=""/>									
-	
-	
-		<input type="hidden" name="bpNmArr" value=""/>								
-	
-	
-		<input type="hidden" name="chldAgeArr" value=""/>						
 	
 	
 		<input type="hidden" name="contArr" value=""/>								
 	
-	<input type="hidden" name="bidRegistReqSn" id="bidRegistReqSn" value="" /> 								
-	<input type="hidden" name="operaCardCode" id="operaCardCode" value="" />
-	<input type="hidden" name="mberNo" id="mberNo" value="2400618856" />
-	 <!-- 한글 이름 -->
-		<!-- 영문회원명(성)-->
-	 <!-- 영문회원명(이름)-->
-	 <!-- 대표카드번호  -->
-	 <!-- 로그인ID -->
-	 <!-- 국적코드 -->
-	 <!-- 국가코드  -->
-	 <!-- 국가코드  -->
-	 <!-- 국가코드  -->
-	 <!-- 전화국번호 -->
-	 <!-- 전화중간번호 -->
-	 <!-- 전화개별번호 --> 
-	 <!-- String -->
-	 <!-- 이메일 -->
-	
-	
-	
-		
-		
-	
-	
-		
+	<!-- 한글 이름 -->
+	<!-- 영문회원명(성)-->
+	<!-- 영문회원명(이름)-->
+	<!-- 대표카드번호  -->
+	<!-- 로그인ID -->
+	<!-- 국적코드 -->
+	<!-- 국가코드  -->
+	<!-- 국가코드  -->
+	<!-- 국가코드  -->
+	<!-- 전화국번호 -->
+	<!-- 전화중간번호 -->
+	<!-- 전화개별번호 --> 
+	<!-- String -->
+	<!-- 이메일 -->
 			
-				<input type="hidden" name="gender" value="Mr." />
-				
-			
-			
-		
-			<input type="hidden" name="korNm" value="영무짱" />
-			<input type="hidden" name="countryCode" value="KR" />
-			<input type="hidden" name="lastName" value="KIM">
-			<input type="hidden" name="firstName" value="MUYEONG">
+			<input type="hidden" name="gender" value="${ umd.gender}" />
+			<input type="hidden" name="korNm" value="${ umd.name}" />
+			<input type="hidden" name="countryCode" value="${ umd.nationalCode}" />
+			<input type="hidden" name="lastName" value="${ umd.engLname}">
+			<input type="hidden" name="firstName" value="${umd.engFname}">
 	
-	
-		
-			
-			
-		
-		
-		
-		
-		
-		
-	
+
 	<div id="container" class="container">
 		<!-- 컨텐츠 S -->
 		<h1 class="hidden">예약</h1>
@@ -657,7 +729,7 @@ function fncGoResv(){
 				<div class="infoArea">
 					<dl class="dlType01">
 						<dt>HOTEL</dt>
-						<dd>그랜드 조선 제주</dd>
+						<dd>엘리시안 서울</dd>
 					</dl>
 					<dl class="dlType02">
 						<dt>DATE</dt>
@@ -669,11 +741,11 @@ function fncGoResv(){
 					</dl>
 					<dl class="dlType03">
 						<dt>ADULTS</dt>
-						<dd>2</dd>
+						<dd>${rrVO.adultsNum}</dd>
 					</dl>
 					<dl class="dlType03">
 						<dt>CHILDREN</dt>
-						<dd>0</dd>
+						<dd>${rrVO.kidsNum}</dd>
 					</dl>
 				</div>
 				<a href="#none" class="btnSC btnM icoArr" onclick="fncResvReset();">객실 다시 검색</a>
@@ -686,9 +758,7 @@ function fncGoResv(){
 				<div class="lCont">
 					<h2 class="titDep2">ROOM ONLY</h2>
 					<p class="categoryTxt">
-						DELUXE /
-						2DOUBLE /  
-						STANDARD VIEW  
+						${rrVO.roomRankName} /	${rrVO.bedName}	/	${rrVO.viewName}	
 					</p>
 					<ul class="intList">
 						
@@ -704,10 +774,8 @@ function fncGoResv(){
 									<span class="intArea">
 										
 											
-												<input type="text" class="readOn" data-valid="Y" style="width:440px" aria-required="true" value="영무짱 (MUYEONG KIM) / MALE / 대한민국" readonly>
+												<input type="text" class="readOn" data-valid="Y" style="width:440px" aria-required="true" value="${umd.name} (${umd.engFname } ${umd.engLname }) / ${umd.gender} / ${umd.nationalCode } " readonly>
 											
-											
-										
 										
 									</span>
 								</div>
@@ -1138,15 +1206,34 @@ function fncGoResv(){
 									</select>
 								</div>
 								<span class="intArea">
-									<input type="text" id="moblphonTelno" name="moblphonTelno" data-valid="Y" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="010">
+								
+								<c:set var="phone" value="${umd.phone}" />
+								
+								<%-- 첫 번째 부분: "010" --%>
+								<c:set var="phonePart1" value="${fn:substring(phone, 0, fn:indexOf(phone, '-'))}" />
+								
+								<%-- 나머지 부분 추출 --%>
+								<c:set var="remainingPhone" value="${fn:substring(phone, fn:indexOf(phone, '-') + 1, fn:length(phone))}" />
+								
+								<%-- 두 번째 부분: "7427" --%>
+								<c:set var="phonePart2" value="${fn:substring(remainingPhone, 0, fn:indexOf(remainingPhone, '-'))}" />
+								
+								<%-- 세 번째 부분: "0406" --%>
+								<c:set var="phonePart3" value="${fn:substring(remainingPhone, fn:indexOf(remainingPhone, '-') + 1, fn:length(remainingPhone))}" />
+								
+								
+								
+								
+								
+									<input type="text" id="moblphonTelno" name="moblphonTelno" data-valid="Y" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="${phonePart1}">
 								</span>
 								<span class="dash"></span>
 								<span class="intArea">
-									<input type="text" id="moblphonTelno1" name="moblphonTelno1" data-valid="Y" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="7427">
+									<input type="text" id="moblphonTelno1" name="moblphonTelno1" data-valid="Y" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="${phonePart2}">
 								</span>
 								<span class="dash"></span>
 								<span class="intArea">
-									<input type="text" id="moblphonTelno2" name="moblphonTelno2" data-valid="Y" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" role="last" value="0406">
+									<input type="text" id="moblphonTelno2" name="moblphonTelno2" data-valid="Y" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" role="last" value="${phonePart3}">
 								</span>
 								<span class="alertMessage">휴대폰 번호를 입력해주세요.</span>
 							</div>
@@ -1159,157 +1246,58 @@ function fncGoResv(){
 								</span>
 							</div>
 							<div class="intInner emailInp">
-								<span class="intArea"><input type="text" id="email1" style="width:273px" data-valid="Y" aria-required="true" onkeyup="this.value=this.value.replace((/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/), '');" value="whdcks208"></span>
+							
+								<c:set var="email" value="${umd.email}" />
+								
+								<%-- 첫 번째 부분: "아이디" --%>
+								<c:set var="emailPart1" value="${fn:substring(email, 0, fn:indexOf(email, '@'))}" />
+								
+								<%-- 나머지 부분 추출 : "이메일"--%>
+								<c:set var="emailPart2" value="${fn:substring(email, fn:indexOf(email, '@') + 1, fn:length(email))}" />
+
+							
+							
+							
+							
+							
+							
+								<span class="intArea"><input type="text" id="email1" style="width:273px" data-valid="Y" aria-required="true" onkeyup="this.value=this.value.replace((/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/), '');" value="${emailPart1}"></span>
 								<span class="dash">@</span>
-								<span class="intArea"><input type="text" id="email2" style="width:273px" data-valid="Y" aria-required="true" onkeyup="this.value=this.value.replace((/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/), '');" value="naver.com"/></span>
+								<span class="intArea"><input type="text" id="email2" style="width:273px" data-valid="Y" aria-required="true" onkeyup="this.value=this.value.replace((/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/), '');" value="${emailPart2}"/></span>
 								<div class="intArea selectWrap" style="width:273px">	
 									
-									<select name="emailType" id="emailType" class="form-control"    ><option value="">직접 입력</option><option value="naver.com" >naver.com</option><option value="hanmail.net" >hanmail.net</option><option value="hotmail.com" >hotmail.com</option><option value="nate.com" >nate.com</option><option value="gmail.com" >gmail.com</option></select>
+									<select name="emailType" id="emailType" class="form-control"    >
+									<option value="">직접 입력</option>
+									<option value="naver.com" >naver.com</option>
+									<option value="hanmail.net" >hanmail.net</option>
+									<option value="hotmail.com" >hotmail.com</option>
+									<option value="nate.com" >nate.com</option>
+									<option value="gmail.com" >gmail.com</option>
+									<option value="sist.co.kr" >gmail.com</option>
+									</select>
 								</div>
 								<span class="alertMessage">이메일을 입력해주세요.</span>
 							</div>
 						</li>
                         
-                            <li>
-                                <div class="intWrap"><span class="tit"><label for="cardType2">CREDIT CARD TYPE</label><span class="essential">필수</span></span></div>
+                             <li>
+                                <div class="intWrap"><span class="tit"><label for="payType2">PAY TYPE</label><span class="essential">필수</span></span></div>
                                 <div class="intInner">
-                                    <div class="intArea">
-                                        <div class="intBox">
-			                                <span class="frm">
-												<input type="radio" id="cardType01" name="cardType2" value="cardtp01"><label for="cardType01">개인</label>
-											</span>
-
-                                        </div>
-                                    </div>
-                                    <span class="alertMessage">신용카드 타입을 선택해 주세요.</span>
+									<div class="intArea">
+									    <div class="intBox">
+									        <span class="frm">
+									            <input type="radio" id="payType01" name="payType2" value="kakaopay" checked="checked">
+									            <label for="payType01">카카오페이</label>
+									            <input type="radio" id="payType02" name="payType2" value="inicis">
+									            <label for="payType02">KG이니시스</label>
+									        </span>
+									    </div>
+									</div>
+                                    <span class="alertMessage">결제 타입을 선택해 주세요.</span>
                                 </div>
-                            </li>
+                            </li> 
                         
-						<li>
-							<div class="intWrap">
-								<div class="titArea">
-									<span class="tit">
-										<label for="cardType">CREDIT CARD COMPANY</label>
-										<span class="essential">필수</span>
-									</span>
-									
-								</div>
-							</div>
-							<div class="intArea intInner">
-								<div class="selectWrap" style="width:900px">
-									
-									<select name="cardCode" id="cardCode" class="form-control"    ><option value="">카드 선택</option><option value="01" >비씨</option><option value="02" >국민</option><option value="03" >하나(외환)</option><option value="04" >삼성</option><option value="06" >신한</option><option value="07" >현대</option><option value="08" >롯데</option><option value="09" >한미</option><option value="10" >신세계한미</option><option value="11" >시티</option><option value="12" >농협</option><option value="13" >수협</option><option value="14" >평화</option><option value="15" >우리</option><option value="16" >하나</option><option value="17" >동남(주택)</option><option value="18" >주택</option><option value="19" >조흥(강원)</option><option value="20" >축협(농협)</option><option value="21" >광주</option><option value="22" >전북</option><option value="23" >제주</option><option value="24" >산은</option><option value="37" >카카오뱅크</option><option value="26" >해외(MASTER)</option><option value="25" >해외(VISA)</option><option value="29" >해외(JCB)</option></select>
-								</div>
-								<span class="alertMessage">신용카드 종류를 선택해주세요.</span>
-							</div>
-						</li>
-						<li>
-							<div class="intWrap">
-								<span class="tit">
-									<label for="cdNum">CARD NUMBER</label>
-									<span class="essential">필수</span>
-								</span>
-							</div>
-							<div class="intInner duobuleInp">
-								<span class="intArea"><input type="text" id="cardNo1" data-valid="Y" style="width:165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" maxlength="4"></span>
-								<span class="intArea"><input type="text" id="cardNo2" data-valid="Y" style="width:165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" maxlength="4"></span>
-								<span class="intArea"><input type="text" id="cardNo3" data-valid="Y" style="width:165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" maxlength="4"></span>
-								<span class="intArea"><input type="text" id="cardNo4" data-valid="Y" role="last" style="width:165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" maxlength="4"></span>
-								<span class="alertMessage">신용카드 번호를 입력해주세요.</span><!-- 20200420 수정 -->
-							</div>
-						</li>
-						<li>
-							<div class="intWrap">
-								<span class="tit">
-									<label for="cdMonth">EXPIRY DATE</label>
-									<span class="essential">필수</span>
-								</span>
-							</div>
-							<div class="intInner duobuleSelect">
-								
-									
-										
-									
-									
-									
-								<div class="intArea selectWrap" style="width:440px">
-			   						<select name="expMonth" id="expMonth" class="form-control"    ><option value="">월</option><option value="01" >1월</option><option value="02" >2월</option><option value="03" >3월</option><option value="04" >4월</option><option value="05" >5월</option><option value="06" >6월</option><option value="07" >7월</option><option value="08" >8월</option><option value="09" >9월</option><option value="10" >10월</option><option value="11" >11월</option><option value="12" >12월</option></select>
-								</div>
-								<div class="intArea selectWrap" style="width:440px">
-									<select id="expYear" name="expYear">
-										<option value="">년</option> 
-										
-											<option value="2024">2024년</option>												
-										
-											<option value="2025">2025년</option>												
-										
-											<option value="2026">2026년</option>												
-										
-											<option value="2027">2027년</option>												
-										
-											<option value="2028">2028년</option>												
-										
-											<option value="2029">2029년</option>												
-										
-											<option value="2030">2030년</option>												
-										
-											<option value="2031">2031년</option>												
-										
-											<option value="2032">2032년</option>												
-										
-											<option value="2033">2033년</option>												
-										
-											<option value="2034">2034년</option>												
-										
-									</select>
-								</div>
-								<span class="alertMessage">신용카드 유효기간을 선택해주세요.</span>
-							</div>
-						</li>
-						<li>
-							<div class="intWrap">
-								<span class="tit">
-									<label for="cdPassword">CARD PASSWORD</label>
-									<span class="essential">필수필수</span>
-								</span>
-							</div>
-							<div class="intInner">
-								
-								
-								<span class="intArea">
-									<input type="password" id="cardPw" name="cardPw" data-valid="Y" placeholder="비밀번호 앞 2자리" style="width:165px" aria-required="true" maxlength="2">
-								</span>
-								<span class="alertMessage">카드 비밀번호를 입력해주세요.(비밀번호 앞 2자리)</span><!-- 20200420 수정 --><!-- 카드 비밀번호를 입력해주세요.(비밀번호 앞 2자리) -->
-							</div>
-						</li>
-                        <li class="cardTypeDepth depth1">
-							<div class="intWrap">
-								<span class="tit">
-									<label for="dateBirth">DATE OF BIRTH</label>
-		                            <span class="essential">필수필수</span>
-								</span>
-							</div>
-							<div id="birthArea" class="intInner duobuleInp">
-								<span class="intArea"><input type="text" id="birth1" data-valid="Y" placeholder="YYYY" style="width:165px" aria-required="true" maxlength="4" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');"></span>
-								<span class="intArea"><input type="text" id="birth2" data-valid="Y" placeholder="MM" style="width:165px" aria-required="true" maxlength="2" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');"></span>
-								<span class="intArea"><input type="text" id="birth3" data-valid="Y" placeholder="DD" style="width:165px" aria-required="true" maxlength="2" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');"></span>
-								<span class="alertMessage">생년월일을 입력해주세요.</span><!-- 생년월일을 입력해주세요. -->
-							</div>
-						</li>
-                        <li class="cardTypeDepth depth2">
-                            <div class="intWrap">
-									<span class="tit">
-										<label for="businessNumber">BUSINESS REGISTRATION NUMBER</label>
-										<span class="essential">필수</span>
-									</span>
-                            </div>
-                            <div class="intInner">
-                                <span class="intArea">
-                                    <input type="text" id="businessNumber" data-valid="N" placeholder="사업자 등록 번호" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" style="width:440px" aria-required="true" maxlength="10">
-                                </span>
-                                <span class="alertMessage">사업자 등록 번호를 입력해주세요.</span>
-                            </div>
-                        </li>
+
 					</ul>
 					<p class="txtGuide">객실 재판매 행위는 법적 제재를 받을 수 있습니다.</p>
 					
@@ -1365,21 +1353,7 @@ function fncGoResv(){
 								</li>
 
 							</ul>
-							<p class="txtGuide">
-								위 개인정보 수집 · 이용에 대한 동의를 거부할 수 있으나 동의 거부 시 객실 예약이 불가합니다.
-							</p>
 
-                            <ul class="toggleList agreeCont" style="margin-top : 50px;">
-                                <li class="toggleOn">
-									<span class="frm type02">
-										<input type="checkbox" id="creditCardAgree" name="creditCardAgree" value="Y">
-										<label for="creditCardAgree">[선택] 다음번 신용카드정보 재사용을 위해 위 신용카드 정보를 저장하는데 동의하십니까?</label>
-									</span>
-                                </li>
-                            </ul>
-                            <p class="txtGuide">
-                                동의 거부 시 신용카드정보 재사용이 제한됩니다.
-                            </p>
 
 
 
@@ -1473,8 +1447,10 @@ function fncGoResv(){
 							
 							<li class="toggleOn"> <!-- 기본으로 펼쳐진 경우 toggleOn  추가 -->
 								<strong class="listTit">
-									객실1
-									<span class="price" id="roomAmount0"><em>359,748</em>KRW</span>
+									객실
+									<span class="price" id="roomAmount0"><em>
+									<fmt:formatNumber value="${rrVO.payPrice}" pattern="#,##0"/>
+									</em>KRW</span>
 								</strong>
 								<button type="button" class="btnToggle"><span class="hidden">상세내용 보기</span></button>
 								<div class="toggleCont" style="display: block;">
@@ -1484,58 +1460,12 @@ function fncGoResv(){
 												
 													
 													<li>
-														<span class="lfData">2024.05.23</span>
-														<span class="rtData">212,500</span>
+														<span class="lfData"><fmt:formatNumber value="${rrVO.payPrice}" pattern="#,##0"/> KRW * ${rrVO.night} 박</span>
 													</li>
 												
 											</ul>
 											
-												<ul class="infoData" id="roomOptInfo0">
-													
-                                                        
-                                                            
-                                                                
-                                                                    
-                                                                    
-                                                                    
-                                                                
-                                                            
-                                                            
-                                                        
-													
-                                                        
-                                                            
-                                                                
-                                                                    
-                                                                        <li>
-                                                                            <span class="lfData">성인 조식</span> 
-                                                                            <span class="rtData">114,544</span>
-                                                                        </li>
-                                                                    
-                                                                    
-                                                                    
-                                                                
-                                                            
-                                                            
-                                                        
-													
-                                                        
-                                                            
-                                                                
-                                                                    
-                                                                    
-                                                                    
-                                                                
-                                                            
-                                                            
-                                                        
-													
-												</ul>
 											
-											<ul class="infoData" >
-												<li><span class="lfData">세금</span><span class="rtData" id="roomTax0">32,704</span></li>
-												<li style="display: none;"><span class="lfData">봉사료</span><span class="rtData" id="roomService0">0</span></li>
-											</ul>
 										</div>
 									</div>
 								</div>
@@ -1547,14 +1477,15 @@ function fncGoResv(){
 							<span class="txt">총 예약금액</span>
 							
 								
-									<span class="subTxt">+ 세금(10%)</span>
 								
 								
 							
-							<span class="price"><em>359,748</em>KRW</span>
+							<span class="price"><em>
+							<fmt:formatNumber value="${rrVO.payPrice * rrVO.night}" pattern="#,##0"></fmt:formatNumber>
+							</em>KRW</span>
 						</div>
 						<div class="btnArea">
-							<div><a href="#none" class="btnSC btnL active" onclick="fncGoResv();">예약 완료</a></div> <!-- 예약완료 -->
+							<div><a href="#none" class="btnSC btnL active" onclick="fncGoPay();">결제</a></div> <!-- 결제 -->
 						</div>
 					</div>
 				</div>
@@ -1565,7 +1496,6 @@ function fncGoResv(){
 		<!-- 컨텐츠 E -->
 	</div>
 </form>
-
 
 		<!-- //container -->
 

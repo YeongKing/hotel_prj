@@ -11,7 +11,6 @@ import kr.co.sist.elysian.admin.board.event.model.domain.EventDomain;
 import kr.co.sist.elysian.admin.board.event.model.domain.EventListDomain;
 import kr.co.sist.elysian.admin.board.event.model.vo.EventVO;
 import kr.co.sist.elysian.admin.board.event.repository.EventDAO;
-import kr.co.sist.elysian.admin.member.model.domain.MemberDomain;
 
 @Service
 public class EventService {

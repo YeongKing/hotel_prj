@@ -22,7 +22,7 @@
 			 rr.room_res_status roomResStatus, rr.adults_num adultsNum, rr.kids_num kidsNum,
 			 rr.checkin checkIn, rr.checkout checkOut,
 			 m.eng_fname || ' ' || m.eng_lname engName, rr.guest_phone guestPhone, rr.guest_email guestEmail, rr.guest_request guestRequest,
-			 c.code_name cardName, p.card_num cardNum, p.pay_price payPrice, p.pay_time payTime
+			 p.card_num cardNum, p.pay_price payPrice, p.pay_time payTime
 		from room_reservation rr
 		inner join room r
 		on r.room_id = rr.room_id
@@ -30,8 +30,8 @@
 		on m.member_id = rr.user_id
 		inner join pay p
 		on p.pay_num = rr.pay_num
-		inner join common_code c
-		on substr(card_code, 0, instr(card_code, '_')-1) = c.code_type and substr(p.card_code, instr(p.card_code, '_')+1) = c.code_val
+		--inner join common_code c
+		--on substr(card_code, 0, instr(card_code, '_')-1) = c.code_type and substr(p.card_code, instr(p.card_code, '_')+1) = c.code_val
 		where rr.pay_num = #{payNum}
 		]]>
 	</select>
@@ -96,15 +96,15 @@
 			dr.adult_cnt || '명' adultsCntStr, dr.child_cnt || '명' childCntStr, dr.baby_cnt || '명' babyCntStr,
 			to_char(dr.visit_datetime, 'yyyy.mm.dd') visitDate, to_char(dr.visit_datetime, 'am hh:mi') visitTime,
 			dr.visitor_name visitorName, dr.visitor_phone visitorPhone, dr.visitor_email visitorEmail, dr.visitor_request visitorRequest,
-			c.code_name cardName, p.card_num cardNum, to_char(p.pay_price, 'FM999,999,999') || '원' payPriceStr,
+			p.card_num cardNum, to_char(p.pay_price, 'FM999,999,999') || '원' payPriceStr,
 			to_char(dr.dining_res_date, 'yyyy.mm.dd') diningResDateStr
 		from  dining_reservation dr
 		inner join dining d
 		on d.dining_id = dr.dining_id
 		inner join pay p
 		on p.pay_num = dr.pay_num
-		inner join common_code c
-		on substr(card_code, 0, instr(card_code, '_')-1) = c.code_type and substr(p.card_code, instr(p.card_code, '_')+1) = c.code_val
+		--inner join common_code c
+		--on substr(card_code, 0, instr(card_code, '_')-1) = c.code_type and substr(p.card_code, instr(p.card_code, '_')+1) = c.code_val
 		where dr.pay_num = #{payNum}
 		]]>
 	</select>

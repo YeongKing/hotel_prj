@@ -1,5 +1,6 @@
 package kr.co.sist.elysian.user.mypage.service;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,8 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,13 +18,26 @@ import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 import kr.co.sist.elysian.user.mypage.repository.MyPageDAO;
+import net.nurigo.sdk.NurigoApp;
+import net.nurigo.sdk.message.model.Message;
+import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
+import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+import net.nurigo.sdk.message.service.DefaultMessageService;
 
 @Service
+@PropertySource("classpath:auth.properties")
 public class MyPageService{
 
 	@Autowired(required = false)
 	private MyPageDAO myPageDAO;
 	
+	final DefaultMessageService messageService;
+	
+	public MyPageService(@Value("${api.key}") String key,  @Value("${api.secret.key}") String secretKey) {
+		// 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
+		this.messageService = NurigoApp.INSTANCE.initialize(key, secretKey, "https://api.coolsms.co.kr");
+	} // MyPageService
+
 	/**
 	 * DAO에서 가져온 userName을 jsonObj에 담아 반환
 	 * @param userId
@@ -263,5 +279,34 @@ public class MyPageService{
 		
 		return jsonObj.toJSONString();
 	} // selectMemberPw
+	
+	//public String selectMemberInfo(Map<String, String> paramMap) {
+		
+	//}
+
+	public String checkPhoneRequestNum(String phoneNumber) {
+		JSONObject jsonObj = new JSONObject();
+		Message message = new Message();
+		
+		// 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+        message.setFrom("01039299258");
+        message.setTo(phoneNumber);
+        
+        SecureRandom secureRandom = new SecureRandom();
+        int randomNum = secureRandom.nextInt((int)Math.pow(10, 6));
+        StringBuilder smsMessage = new StringBuilder();
+        smsMessage.append("[Eysian호텔] SMS인증번호는 ").append(randomNum).append("입니다. 정확히 입력해주세요.");
+        
+        message.setText(smsMessage.toString());
+        
+        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+        System.out.println(response);
+        
+        jsonObj.put("randomNum", randomNum);
+        jsonObj.put("statusMessage", response.component5());
+        jsonObj.put("statusCode", response.component8());
+		
+		return jsonObj.toJSONString();
+	} // checkPhoneRequestNum
 	
 } // class

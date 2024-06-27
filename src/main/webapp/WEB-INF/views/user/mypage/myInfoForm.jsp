@@ -28,125 +28,6 @@
 <div class="skip"><a href="#container">본문 바로가기</a></div>
 <div class="wrapper ">
 
-<script>
-	jQuery(function(){
-		jQuery.ajax({
-			type : "GET",
-			url : "/massPromotion/get.json",
-			cache : false,
-			dataType : "json",
-			global : false,
-			beforeSend: function() {
-			},
-			complete: function() {
-			},
-			success : function(data){
-                var massPromtn = data.bean;
-                //조회 결과에 따라 랜더링
-                if(massPromtn != null && massPromtn != ""){
-                    var url = getMassPromtnUrl();
-                    var menuNm = massPromtn.promtnNm;
-                    var sysCode = massPromtn.sysCode;
-                    appendMassPromotionMenu(url, menuNm, sysCode);
-                }
-			},
-			error:function(r, s, e){
-			}
-		});
-	});
-
-    function getMassPromtnUrl(){
-        var url = "";
-        var sysCode = jQuery("#sysCode").val();
-
-        if(gfncIsApp()){
-            //앱일 경우
-            url = "/m/massPromotion/list.do";
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/m/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/m/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/m/massPromotion/list.do";
-                }
-            }
-        }else {
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/massPromotion/list.do";
-                }
-            }
-        }
-        return url;
-    }
-
-    function appendMassPromotionMenu(url, menuNm, sysCode){
-        if(gfncIsApp()){
-            //앱일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-
-            var pathname = window.location.pathname;
-            if(pathname.indexOf("/app/main.do") == 0){
-                jQuery(".gnbArea ul.toggleList > li > .titArea:contains('패키지')").closest("ul").append(menuHtml);
-            }else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-
-            /*if(jQuery(".gnbArea ul.toggleList li:contains('패키지')").length > jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").length){
-                jQuery(".gnbArea ul.toggleList li:contains('패키지')").closest("ul").append(menuHtml);
-            } else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }*/
-
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-            jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-        }else{
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL" || sysCode == "JPY"){
-                //해당 페이지가 HUB거나 JPY일 경우
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".allMenu ul.menuDepth01 ul.menuDepth02 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }else {
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".headArea .utilMenu .gnbDepth1 .gnbDepth2 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-        }
-    }
-
-</script>
-
-<script>
-//2022-05-23 조선라운지 추가
-//헤더 메뉴 버튼 클릭 이벤트
-jQuery(document).on("click",".headArea .btnMenu" ,function(){
-
-	//메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-	if(jQuery(this).hasClass("menuOn")){
-		var expsrCount = 3;
-        var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
-        var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
-
-        $loungeList.addClass("hidden");
-        $loungeList.each(function(index){
-            if(randomArray.indexOf(index) > -1){
-                jQuery(this).removeClass("hidden");
-            }
-        });
-    }
-})
-</script>
-
-
 <!-- S header -->
 <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
 <!-- E header -->
@@ -154,44 +35,26 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script type="text/javascript">
-	// 본인인증 콜백 함수
-	function fncSirenCallback(data) {
-		var result = data.result;	// 결과: 인증성공(1)
-		
-		if (result == "1") {
-			var _vNameKor = data.name;	// 성명
-			var _vMobile  = data.cellNo;	// 휴대전화번호
-			//alert("성명1 : " + _vNameKor + ", 휴대전화번호 : " + _vMobile);
-			
-		    //본인인증 리턴받은 휴대전화번호로 표기
-			jQuery("#telFrstNo").val(_vMobile.substring(0,3));
-			jQuery("#telMidNo").val(_vMobile.substring(3,7));
-			jQuery("#telIndNo").val(_vMobile.substring(7,11));
-		} else {
-			alert("본인인증에 실패하였습니다.");
-		}
-	}
-	
 	//체크박스 클릭시 실행
-	$(document).ready(function() {
+	$(function() {
         //입력된 주소가 없을 경우 색상 강조 표시
-        if (jQuery("#oriZip").val() == ""
-                && jQuery("#oriAdres").val() == ""
-                && jQuery("#oriInputAdres").val() ==""
-                && jQuery("#anoZip").val() == ""
-                && jQuery("#anoAdres").val() == ""
-                && jQuery("#anoInputAdres").val() == ""){
-            jQuery(".intList-address").find(".alertMessage").show();
+        if ($("#oriZip").val() == ""
+                && $("#oriAdres").val() == ""
+                && $("#oriInputAdres").val() ==""
+                && $("#anoZip").val() == ""
+                && $("#anoAdres").val() == ""
+                && $("#anoInputAdres").val() == ""){
+            $(".intList-address").find(".alertMessage").show();
         }
 
 		//이메일유형 선택시 처리
 		$("#emailType").on("change", function() {
-			var value = jQuery(this).val();
-			if(value == ""){
-				jQuery("#email2").val("");
-				jQuery("#email2").prop("readonly", false);
-			}else{
-				jQuery("#email2").val(value);
+			var value = $(this).val();
+			if(value == "") {
+				$("#email2").val("");
+				$("#email2").prop("readonly", false);
+			} else{
+				$("#email2").val(value);
 				jQuery("#email2").prop("readonly", true);
 			}
 		});
@@ -241,7 +104,6 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 	        } else { // 사용자가 지번 주소를 선택했을 경우(J)
 	            addr = data.jibunAddress;
 	        }
-	        
 	
 	        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
 	        if(data.userSelectedType === 'R'){
@@ -282,7 +144,6 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 	    element_layer.style.display = 'none';
 	}
 	
-	
 	// 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
 	// resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
 	// 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
@@ -303,27 +164,25 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 	    
 	//이메일 중복체크 API호출
  	function fncEmlDupChk() {
-		 var email1		= jQuery.trim(jQuery("#email1").val());			// 이메일1 입력
-		 var email2		= jQuery.trim(jQuery("#email2").val());			// 이메일2 입력
+		 var email1		= $.trim($("#email1").val());			// 이메일1 입력
+		 var email2		= $.trim($("#email2").val());			// 이메일2 입력
 		 var email 		= email1 + "@" + email2;						       // 이메일조합
-		 jQuery("#email").val(email);
-		var formData =  jQuery("#formMypage").serialize();
- 		jQuery.ajax({
+		 $("#email").val(email);
+		var formData =  $("#formMypage").serialize();
+ 		$.ajax({
 			type : "POST",
 			 url : "/join/emlDupChkApi.do", 
-			 cache : false,
 			data : formData, 
 			dataType : "json",
-			global : false,
 			success : function(data) {
 				
 				if(data.statusR==200 && data.codeR=='S00000') { 
                       alert("사용가능한 email입니다.");			
                       //이메일 중복체크 확인여부
-                      jQuery("#emailDupChkYn").val("Y");
-				}else if(data.statusR==400){
+                      $("#emailDupChkYn").val("Y");
+				} else if(data.statusR==400) {
 					alert("이미 사용중인 email입니다.");
-				}else {
+				} else {
 					alert(data.statusR+" : 관리자에게 문의하세요.");
 				}
 			},
@@ -335,26 +194,26 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
  	
 	//개인정보 수정 API호출
  	function fncMyInfoUpdApi() {
- 		 var email1		= jQuery.trim(jQuery("#email1").val());			// 이메일1 입력
-		 var email2		= jQuery.trim(jQuery("#email2").val());			// 이메일2 입력
+ 		 var email1		= $.trim($("#email1").val());			// 이메일1 입력
+		 var email2		= $.trim($("#email2").val());			// 이메일2 입력
 		 var email 		= email1 + "@" + email2;						       // 이메일조합
-		 var nationCode =  jQuery("#nationCode option:selected").val();
+		 var nationCode =  $("#nationCode option:selected").val();
 		 var addressType = $('input[name="addressType"]:checked').val();
 		 //국가코드세팅
-		 jQuery("#nationCodeH").val(nationCode);
+		 $("#nationCodeH").val(nationCode);
 		 //주소유형(집/회사)
-		 jQuery("#addressTypeH").val(addressType);
+		 $("#addressTypeH").val(addressType);
 		
 		 /*----------입력된 이메일 기입력된 이메일과 다를시 중복체크 실행체크 start--------------  */
 		 //기 중복체그 이메일정보 
-		 var exEmail = jQuery("#email").val();
+		 var exEmail = $("#email").val();
 		 if(email!=exEmail) {
 			 alert("이메일 중복체크가 필요합니다.");
-			 jQuery("#emlDupChkBtn").focus();
+			 $("#emlDupChkBtn").focus();
 			 return;
 		 }else{
 		  //이메일세팅
-		  jQuery("#email").val(email);
+		  $("#email").val(email);
 		 }
 		 /*----------입력된 이메일 기입력된 이메일과 다를시 중복체크 실행체크 end--------------  */
 		 
@@ -374,40 +233,38 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
          
         //2022-04-19 추가
         //address 선택값 없을 경우
-        if(jQuery("[name='addressType']:checked").length == 0){
-            alert("ADDRESS의 자택 또는 회사를 선택해주세요.");
-            jQuery("#address-01").focus();
+        if($("[name='addressType']:checked").length == 0){
+            $("ADDRESS의 자택 또는 회사를 선택해주세요.");
+            $("#address-01").focus();
             return;
         }
         //주소 validation
-        if(jQuery("#postcode").val() == ""
-            || jQuery("#address").val() == ""
-            || jQuery("#detailAddress").val() == ""){
+        if($("#postcode").val() == ""
+            || $("#address").val() == ""
+            || $("#detailAddress").val() == ""){
             alert("주소를 입력해주세요.");
-            jQuery("#postcode").focus();
+            $("#postcode").focus();
             return;
         }
          
 		//ajax전송
-		var formData =  jQuery("#formMypage").serialize();
- 	 	jQuery.ajax({
+		var formData =  $("#formMypage").serialize();
+ 	 	$.ajax({
 			type : "POST",
 			url : "/mypage/myInfoUpdApi.do",
-			cache : false,
 			data : formData, 
 			dataType : "json",
-			global : false,
 			success : function(data) {
 				if(data.statusR==200 && data.codeR=='S00000') { 
                       alert("회원정보가 수정되었습니다.");
                     //fncMberUpdPage();
                     //2022-04-19 수정요청, 수정 후 인트로 페이지로
                     location.href = "/intro.do";
-				}else{
+				} else{
 					alert(data.codeR + " : " + data.messageR);
 				}
 			},
-			error:function(){
+			error:function() {
 				alert("관리자에게 문의하세요.");
 			}
 		});  
@@ -415,86 +272,141 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
  	 
  	//회원정보 수정페이지 이동
 	function fncMberUpdPage() {
-		jQuery("#formMypage").attr("action", "/mypage/myInfoForm.do");
-	    jQuery("#formMypage").attr("method", "post");
-	    jQuery("#formMypage").submit();	
+		$("#formMypage").attr("action", "/mypage/myInfoForm.do");
+	    $("#formMypage").attr("method", "post");
+	    $("#formMypage").submit();	
 	}
+ 	
+ 	// 인증번호 요청 ajax 및 번호 확인 창 동적 추가
+ 	function fncCheckRequestNum() {
+ 		var authName = $("#authName").val();
+ 		var authPhone = $("#authPhone").val();
+ 		var defaultInfo = $(".defaultInfo").text();
+ 		var phonePattern = /^010([0-9]{4})([0-9]{4})$/;
+ 		
+ 		if(authName === '' || authName.length === 1) {
+ 			alert("이름을 정확히 입력해주세요.");
+ 			return;
+		} // end if
+		
+		if(authName !== defaultInfo.substring(0, defaultInfo.indexOf("/"))) {
+			alert("가입자와 동일한 이름이 아닙니다.");
+			return;
+		} // end if
+		
+		if(!phonePattern.test(authPhone)) {
+			alert("휴대폰번호 11자리를 정확히 입력해주세요.");
+			return;
+		} // end if
+ 		
+		$.ajax({
+			url : "send-one.do",
+			type : "POST",
+			contentType : "application/json",
+			dataType : "json",
+			data : JSON.stringify({authPhone : authPhone}),
+			beforeSend: function() {
+				commonJs.showLoadingBar(); //로딩바 show
+			},
+			complete: function() {
+				commonJs.closeLoadingBar(); //로딩바 hide
+			},
+			success : function(jsonObj) {
+				var randomNum = jsonObj.randomNum;
+				var statusMessage = jsonObj.statusMessage;
+				var statusCode = jsonObj.statusCode;
+				
+				if(statusCode !== '2000') { // 문자 전송 실패
+					alert("죄송합니다. 잠시 후 다시 시도해주세요. 문제가 지속될 경우 관리자에게 문의주시기 바랍니다.");
+					console.log(statusMessage);
+					$(".dimmed").show();
+					return;
+				} // end if
+				
+				// 문자 전송 성공이라면
+		 		$("#btnRequestNum").prop('disabled', true);
+		 		var html = `<li>
+								<div class="intWrap">
+								<span class="txtConfirm">
+									<label for=authNumber>인증번호</label>
+									<span class="essential">*</span>
+								</span>
+								</div>
+							
+								<div class="intInner authNumberInput">
+									<span class="intArea">
+										<input type="text" id="authNumber" placeholder="숫자 6자리" style="width:500px" onkeyup="this.value=this.value.replace(/[^0-9]/gi, '').slice(0, 6);">
+									</span>
+						       	 	<button type="button" class="btnSC btnM active" onclick="fncCheckAuthNumber(); return false;">확인</button>
+						        </div>
+					    	</li>`;
+				$("#layerPop2 .intList").append(html);
+				alert("인증 문자가 발송되었습니다.");
+		 		$("#newNumber").val(authPhone);
+				$("#randomNum").val(randomNum);
+				$(".dimmed").show();
+			},
+			error:function(r, s, e){
+				alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
+			}
+		}); // ajax
+ 	} // fncCheckRequestNum
+ 	
+ 	// 번호 확인 ajax
+ 	function fncCheckAuthNumber() {
+ 		if($("#authNumber").val() === $("#randomNum").val()){
+ 			alert("인증 성공");
+ 			var newNumber = $("#newNumber").val();
+ 			var telFrstNo = newNumber.substring(0, 3);
+ 			var telMidNo = newNumber.substring(3, 7);
+ 			var telIndNo = newNumber.substring(7);
+ 			
+ 			$("#telFrstNo").val(telFrstNo);
+ 			$("#telMidNo").val(telMidNo);
+ 			$("#telIndNo").val(telIndNo);
+ 			commonJs.popClose($('#layerPop2'));
+ 		} else {
+ 			alert("본인인증에 실패하였습니다. 다시 시도해주세요.");
+ 			location.reload();
+ 		} // end else
+ 	}
 </script>
  
- <!-- 본인인증 소스 include Start -->
-<form method="post" name="reqPCCForm">
-	<input type='hidden' name='reqInfo' value='D63C34ACF8FF86563B659A9FA5AEC0EB38BBBB2620884E5AA6521F8383225A0EE85AB03CD4972728648B38BBDAB68A98B75224236DAD28004A5D32C41D53F3B6AE50E1FE78CFF2D05DFDC90AFDEB2B2B0733D8A011AC384B0D7EF61F8E1317BB467E48E9D875E149B3B62B5C84832CB8680C6AF6B377E1105C4FDFAD99F3E63F985170F981AB7D687E01969056E34BA4E9D96E62E3BCAE643B53B4BEE3121FA84A16F6D8DB66FE32FB801918E848821E7FF55547C67D60553DBFEDE5060BEBE71C54510AFE4083086DB1DFD374C3D165660E89D82A2B66ED42DED657483A57BF' /> 
-	<input type='hidden' name='retUrl' value='32https://josunhotel.com/common/selfCrtfc/nameCallback.do?pageType=mypage' /> 
-	<input type='hidden' name='chk_type' value='' /> 
-	<input type='hidden' name='rcv_method' value='' />
-</form>
- <!-- 본인인증 소스 include End -->
+<!--  본인인증 사용 -->
+<input type='hidden' id='randomNum' value='' />
+<input type='hidden' id='newNumber' value='' />
+<!--  본인인증 사용 -->
  
 <form id="formMypage" >
-<!-- 본인인증 사용유형 -->
-<input type="hidden" id="certiType" name="certiType" value="" />
-<input type="hidden" id="sonSeqs" name="sonSeqs" value="" />
 <!--이메일 중복체크 실행여부  -->
-<input type="hidden" id="emailDupChkYn" name="emailDupChkYn" value="N"  />
+<input type="hidden" id="emailDupChkYn" name="emailDupChkYn"  />
 <!-- 수정 hidden 입력값(이메일/한글이름/국가코드)  --> 
-<input type="hidden" id="email" name="email" value="dudandudan@naver.com" />
-<input type="hidden" id="kName" name="kName" value="영무짱"  />
-<input type="hidden" id="nationCodeH" name="nationCodeH" value=""  />
-<input type="hidden" id="birthdayH" name="birthdayH" value="19960320"  />
-<input type="hidden" id="sexSeCode" name="sexSeCode" value="01"  />
-<input type="hidden" id="ciNo" name="ciNo" value=""  />
-<input type="hidden" id="diNo" name="diNo" value=""  />
-<input type="hidden" id="cellNo" name="cellNo" value="" />
-<input type="hidden" id="addressTypeH" name="addressTypeH" value="" />
+<input type="hidden" id="email" name="email" />
+<input type="hidden" id="kName" name="kName" />
+<input type="hidden" id="nationCodeH" name="nationCodeH" />
+<input type="hidden" id="birthdayH" name="birthdayH" />
+<input type="hidden" id="sexSeCode" name="sexSeCode" />
+<input type="hidden" id="ciNo" name="ciNo" />
+<input type="hidden" id="diNo" name="diNo" />
+<input type="hidden" id="cellNo" name="cellNo" />
+<input type="hidden" id="addressTypeH" name="addressTypeH" />
 
-<input type="hidden" id="oriAdresTyCode" value="01"/>
-<input type="hidden" id="oriZip" value="08793"/>
-<input type="hidden" id="oriAdres" value="서울 관악구 남부순환로244가길 9"/>
-<input type="hidden" id="oriInputAdres" value="301호"/>
+<input type="hidden" id="oriAdresTyCode" />
+<input type="hidden" id="oriZip" />
+<input type="hidden" id="oriAdres" />
+<input type="hidden" id="oriInputAdres" />
 
-<input type="hidden" id="anoAdresTyCode" value="02"/>
-<input type="hidden" id="anoZip" value=""/>
-<input type="hidden" id="anoAdres" value=""/>
-<input type="hidden" id="anoInputAdres" value=""/>
+<input type="hidden" id="anoAdresTyCode" />
+<input type="hidden" id="anoZip" />
+<input type="hidden" id="anoAdres" />
+<input type="hidden" id="anoInputAdres" />
   
 <div id="container" class="container mypage">
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		 
+	$(function(){
 		fncLnbInfoApi();
-	 	   
 	}); 
-  
-  	//LNB정보조회(쿠폰수,가용포인트) API호출
- 	function fncLnbInfoApi() {
-		var formData =  jQuery("#formLnb").serialize();
- 		jQuery.ajax({
-			type : "POST",
-			url : "/mypage/lnbInfoApi.do",
-			cache : false,
-			data : formData, 
-			dataType : "json",
-			global : false,
-			success : function(data) {
-				if(data.statusR==200 && data.codeR=='S00000') { 
-					  //회원명 세팅
-					  var nameHtml = ''+data.name;
-				      /* $('.name').html(nameHtml); */
-				      $('#nm1').html(nameHtml);
-				      //가용포인트 세팅 
-				      $('#usefulPointSpan').html(fncComma(data.usefulPoint));
-				      //보유쿠폰수 세팅 
-				      $('#couponCntDiv').html(fncComma(data.couponCnt));
-				}else{
-					alert(data.statusR + " : 관리자에게 문의하세요");
-				}
-			},
-			error:function(){
-				alert("관리자에게 문의하세요.");
-			}
-		});
- 	}
 </script> 
  
 <h1 class="hidden">마이페이지</h1>
@@ -520,7 +432,7 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 		<ul class="intList">
 			<li>
 				<div class="defaultTit">MY INFORMATION</div>
-				<div class="defaultInfo">영무짱/1996.03.20/남자</div>
+				<div class="defaultInfo">이주희/1992.10.15/여자</div>
 			</li>
 
 			<li>
@@ -533,12 +445,12 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
                                 
 				<div class="intInner duobuleInp">
 					<span class="intArea">
-						<input type="text" id="eName1" name="eName1" style="width:490px" readonly aria-required="true" value="KIM" onkeyup="this.value=this.value.replace(/[^a-z]/gi, '').toUpperCase();">
+						<input type="text" id="eName1" name="eName1" style="width:490px" aria-required="true" onkeyup="this.value=this.value.replace(/[^a-z]/gi, '').slice(0, 10).toUpperCase();">
 						<span class="alertMessage">영문만 입력 가능하며, 띄어쓰기도 문자로 인식됩니다.</span>
 					</span>
 	                                    
 					<span class="intArea">
-						<input type="text" id="eName2" name="eName2" style="width:490px" readonly aria-required="true" value="MUYEONG" onkeyup="this.value=this.value.replace(/[^a-z]/gi, '').toUpperCase();">
+						<input type="text" id="eName2" name="eName2" style="width:490px" aria-required="true" onkeyup="this.value=this.value.replace(/[^a-z]/gi, '').slice(0, 20).toUpperCase();">
 					</span>
 				</div>
 			</li>
@@ -797,8 +709,8 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 							<option value="PH"  >필리핀[PH]</option>
 							<option value="PN"  >핏케언 제도[PN]</option>
 							<option value="HM"  >허드 맥도널드 제도[HM]</option>
-	<option value="HU"  >헝가리[HU]</option>
-	<option value="HK"  >홍콩[HK]</option>
+							<option value="HU"  >헝가리[HU]</option>
+							<option value="HK"  >홍콩[HK]</option>
 </select>
 					</div>
 				</div>
@@ -814,18 +726,18 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
                                 
 				<div class="intInner phoneInp">
 					<span class="intArea">
-						<input type="text" id="telFrstNo" name="telFrstNo" title="first phone number" style="width:165px" aria-required="true" readonly value="010">
+						<input type="text" id="telFrstNo" name="telFrstNo" title="first phone number" style="width:165px" aria-required="true" readonly >
 					</span>
 					<span class="dash"></span>
 					<span class="intArea">
-						<input type="text" id="telMidNo" name="telMidNo" title="second phone number" style="width:165px" aria-required="true" readonly value="7427">
+						<input type="text" id="telMidNo" name="telMidNo" title="second phone number" style="width:165px" aria-required="true" readonly >
 					</span>
 					<span class="dash"></span>
 					<span class="intArea">
-						<input type="text" id="telIndNo" name="telIndNo" title="last phone number" style="width:165px" aria-required="true" readonly value="0406">
+						<input type="text" id="telIndNo" name="telIndNo" title="last phone number" style="width:165px" aria-required="true" readonly >
 					</span>
                                     
-					<button type="button" class="btnSC btnM" onclick="gfncNameCert(); return false;">연락처 수정</button>
+					<button type="button" class="btnSC btnM" onclick="commonJs.popShow($('#layerPop2'))">연락처 수정</button>
 				</div>
 			</li>
 			
@@ -907,6 +819,54 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 	<!-- //myContents -->
 </div>
 <!-- //inner -->
+
+<!-- 휴대폰 본인인증 Layer -->
+<div id="layerPop2" class="layerPop">
+	<div class="layerCont">
+		<div class="reserveOpArea">
+			<strong class="tit">휴대폰 본인인증</strong>
+			<ul class="intList">
+			<li>
+				<div class="intWrap">
+					<span class="txtConfirm">
+						<label for="name">이름</label>
+						<span class="essential">*</span>
+					</span>
+				</div>
+				
+				<div class="intInner nameInput">
+					<span class="intArea">
+						<input type="text" id="authName" style="width:500px" placeholder="이름 입력" onkeyup="this.value=this.value.replace(/[^가-힣]/gi, '').slice(0, 5);">
+					</span>
+	            </div>
+            </li>
+            
+            <li>
+				<div class="intWrap">
+					<span class="txtConfirm">
+						<label for="phone">휴대폰번호</label>
+						<span class="essential">*</span>
+					</span>
+				</div>
+				
+				<div class="intInner phoneInput">
+					<span class="intArea">
+						<input type="text" id="authPhone" style="width:500px" placeholder="숫자만 입력" onkeyup="this.value=this.value.replace(/[^0-9]/gi, '').slice(0, 11);">
+					</span>
+					<button type="button" id="btnRequestNum" class="btnSC btnM" onclick="fncCheckRequestNum(); return false;">인증번호 요청</button>
+	            </div>
+            </li>
+            </ul>
+            
+			<div class="btnArea">
+				<button type="button" class="btnSC btnM" onclick="commonJs.popClose($('#layerPop2'))">취소</button>
+			</div>
+		</div>
+	<button type="button" class="btnClose" onclick="commonJs.popClose($('#layerPop2'))">닫기</button>
+	</div>
+</div>
+<!-- //휴대폰 본인인증 Layer -->
+
 </div>
 <!-- //container -->
 </form>
@@ -918,5 +878,8 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 
 </div>
 <!-- //wrapper -->
+
+<!-- layer 생성 시 배경 어둡게 -->
+<div class="dimmed" style="display: none;"></div>
 </body>
 </html>

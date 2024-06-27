@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 import kr.co.sist.elysian.user.mypage.model.vo.DiningResVO;
@@ -275,6 +273,19 @@ public class MyPageController {
 		
 		return jsonObj;
 	} // checkPwUserInfo
+	
+	/**
+	 * 휴대폰 번호 변경을 위해 문자 인증 전송
+	 * @param requestData 입력한 휴대폰 번호
+	 * @return 문자 전송 정보
+	 */
+	@ResponseBody
+	@PostMapping(value="/send-one.do", produces="application/json; charset=UTF-8")
+	public String checkPhoneRequestNum(@RequestBody Map<String, Object> requestData) {
+		String phoneNumber = (String)requestData.get("authPhone");
+		String jsonObj = myPageService.checkPhoneRequestNum(phoneNumber);
+		return jsonObj;
+	} // checkPhoneRequestNum
 	
 	@PostMapping("/myInfoForm.do")
 	public String detailUserInfo() {

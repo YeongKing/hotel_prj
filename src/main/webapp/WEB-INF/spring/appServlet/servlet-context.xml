@@ -44,6 +44,7 @@
 			<exclude-mapping path="/user/room2.do"/>
 			<exclude-mapping path="/user/step1.do"/>
 			<exclude-mapping path="/user/step2.do"/>
+			<exclude-mapping path="/user/join.do"/>
 			<beans:bean id="ui" class="kr.co.sist.elysian.user.login.interceptor.UserInterceptor"/>
 		</interceptor>
 	</interceptors> 

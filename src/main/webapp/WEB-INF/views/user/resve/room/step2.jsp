@@ -712,6 +712,7 @@ function getLoginCookie(cookieName) {
 		                    error: function(xhr, status, error) {
 		                        alert("로그인 수행중 서버 오류가 발생하였습니다.");
 
+
 		                    }
 		                });
 		            }

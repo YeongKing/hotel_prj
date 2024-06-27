@@ -43,6 +43,10 @@
     <typeAlias type="kr.co.sist.elysian.user.login.model.domain.UserDomain" alias="ud"/>
     <typeAlias type="kr.co.sist.elysian.user.dining.model.domain.DiningDomain" alias="dDomain"/> 
     <typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain" alias="myPageRoomResDomain"/> 
+    <typeAlias type="kr.co.sist.elysian.user.room.model.vo.RoomResVO" alias="rrVO"/> 
+    <typeAlias type="kr.co.sist.elysian.user.room.model.domain.RoomListDomain" alias="urld"/> 
+    <typeAlias type="kr.co.sist.elysian.user.room.model.domain.MemberDomain" alias="umd"/> 
+    <typeAlias type="kr.co.sist.elysian.user.pay.model.vo.PayVO" alias="pVO"/> 
   		
 	</typeAliases>
 
@@ -77,6 +81,8 @@
     <!-- user -->
     <mapper resource="mapper/member/LoginMapper.xml"/>
     <mapper resource="mapper/member/MypageMapper.xml"/>
+    <mapper resource="mapper/member/RoomMapper.xml"/>
+    <mapper resource="mapper/member/PayMapper.xml"/>
     
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
 <!--     

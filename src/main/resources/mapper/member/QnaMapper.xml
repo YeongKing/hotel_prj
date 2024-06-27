@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.sist.elysian.member.board.qna">
+
+
+	<select id="selectQnaList" resultType="mqd" parameterType="mqVO">
+		SELECT NUM num,QNA_TITLE qnaTitle, QNA_TYPE qnaType, QNA_CONTENT
+		qnaContent
+		FROM (
+		SELECT ROW_NUMBER() OVER (ORDER BY QNA_NUM) AS
+		NUM,QNA_TITLE,QNA_TYPE,QNA_CONTENT FROM QNA
+		<where>
+			<if test="searchDataValue != null">
+				AND QNA_TITLE LIKE '%' || #{searchDataValue} || '%'
+			</if>
+			
+
+			<if test="searchCtgry == 'F01'">
+				AND QNA_TYPE ='예약'
+			</if>
+			<if test="searchCtgry == 'F02'">
+				AND QNA_TYPE ='결제'
+			</if>
+			<if test="searchCtgry == 'F03'">
+				AND QNA_TYPE ='계정'
+			</if>
+			<if test="searchCtgry == 'F04'">
+				AND QNA_TYPE ='전환회원'
+			</if>
+			<if test="searchCtgry == 'F05'">
+				AND QNA_TYPE ='바우처'
+			</if>
+			<if test="searchCtgry == 'F06'">
+				AND QNA_TYPE ='기타'
+			</if>
+			
+			
+		</where>
+
+		)
+		<where>
+<!-- 			<if test="page == 0">
+				AND NUM >= 1 AND NUM &lt;= 10
+			</if> -->
+			<if test="page != 0">
+				AND NUM >= #{startRow} AND NUM &lt;= #{endRow}
+			</if>
+		</where>
+
+	</select>
+	
+	
+	
+	<select id="selectPage" resultType="int" parameterType="mqVO">
+		select ceil(count(*)/10)
+		from QNA
+		<where>
+			<if test="searchDataValue != null">
+				AND QNA_TITLE LIKE '%' || #{searchDataValue} || '%'
+			</if>
+			
+
+			<if test="searchCtgry == 'F01'">
+				AND QNA_TYPE ='예약'
+			</if>
+			<if test="searchCtgry == 'F02'">
+				AND QNA_TYPE ='결제'
+			</if>
+			<if test="searchCtgry == 'F03'">
+				AND QNA_TYPE ='계정'
+			</if>
+			<if test="searchCtgry == 'F04'">
+				AND QNA_TYPE ='전환회원'
+			</if>
+			<if test="searchCtgry == 'F05'">
+				AND QNA_TYPE ='바우처'
+			</if>
+			<if test="searchCtgry == 'F06'">
+				AND QNA_TYPE ='기타'
+			</if>
+			
+			
+		</where>
+	
+	
+	
+	
+	
+	
+
+	</select>
+	
+	
+	
+	
+
+
+
+</mapper>
+
+
+

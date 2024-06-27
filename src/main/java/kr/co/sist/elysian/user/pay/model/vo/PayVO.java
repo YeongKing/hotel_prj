@@ -1,4 +1,5 @@
-package kr.co.sist.elysian.admin.member.model.vo;
+package kr.co.sist.elysian.user.pay.model.vo;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MemberVO {
+public class PayVO {
 
-	private String memberId, name, engLname, engFname, address, addrDetail, email, phone, zipcode;
+	private int payPrice;
+	private String payNum,cardNum,cardCode,payStatus,payTime,impUid;
 
+	
 }
+

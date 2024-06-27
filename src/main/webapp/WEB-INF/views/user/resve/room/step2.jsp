@@ -30,31 +30,35 @@
 	<div class="wrapper ">
 
 <script>
-	jQuery(function(){
-		jQuery.ajax({
-			type : "GET",
-			url : "/massPromotion/get.json",
-			cache : false,
-			dataType : "json",
-			global : false,
-			beforeSend: function() {
-			},
-			complete: function() {
-			},
-			success : function(data){
-                var massPromtn = data.bean;
-                //조회 결과에 따라 랜더링
-                if(massPromtn != null && massPromtn != ""){
-                    var url = getMassPromtnUrl();
-                    var menuNm = massPromtn.promtnNm;
-                    var sysCode = massPromtn.sysCode;
-                    appendMassPromotionMenu(url, menuNm, sysCode);
-                }
-			},
-			error:function(r, s, e){
-			}
-		});
-	});
+
+
+function getMemberSession() {
+	//alert("회원 예약 버튼 클릭")
+    var userId = "${sessionScope.userId}";
+    
+    if (!userId) {
+    	//alert("회원 세션 x");
+        commonJs.popShow($('#loginLayerPop'));
+    } else {
+    	//alert("회원 세션 o");
+        fncGoStep3();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     function getMassPromtnUrl(){
         var url = "";
@@ -172,40 +176,7 @@
 			//체크인 체크아웃 날짜 html 주입
 			jQuery("#dateText").html(jQuery("#ckinDate").val() + "&nbsp;" + dUtils.getDateToDay(jQuery("#ckinDate").val()) +"&nbsp;-&nbsp;"+ jQuery("#ckoutDate").val() + "&nbsp;" + dUtils.getDateToDay(jQuery("#ckoutDate").val())+"<span>"+jQuery("#night").val()+"&nbsp;박</span>")
 			
-			//랜딩라이브러리 클릭 이벤트
-			jQuery("input[type='checkbox']").on("click", function(){
-				var id = jQuery(this).attr("id");
-				var itemCode = jQuery(this).val();
-				var availItem = parseInt(jQuery("#"+itemCode).val());
-				
-				//2020-11-10 추가
-				//랜딩라이브러리 3개 초과 선택시 alert
-				if(4 <= jQuery(this).closest("ul").find("input[type='checkbox']:checked").length){
-					alert("렌딩 라이브러리는 최대 3개까지 선택 가능합니다."); //렌딩 라이브러리는 최대 3개까지 선택 가능합니다.
-					return false;
-				}
-				
-				
-				if(jQuery(this).is(":checked")){
-					availItem--;
-				}else{
-					availItem++;
-				}
-				
-				jQuery("ul[id^='landingList'] input[type='checkbox'][value='"+itemCode+"']").each(function(idx){
-					if(jQuery(this).attr("id") != id){
-						if(availItem == 0){
-							jQuery(this).attr("disabled", true);
-						}else{
-							jQuery(this).attr("disabled", false);
-						}
-					}
-				});
-				
-				jQuery("#"+itemCode).val(availItem);
-			});
-			
-			
+
 			
 			//옵션 추가, 감소 버튼 이벤트
 			jQuery("#optInfo .addOption button").on("click", function(){
@@ -516,7 +487,7 @@
 												
 													
 													<li>
-														<span class="lfData"><fmt:formatNumber value="${rrVO.payPrice}" pattern="#,##0"/> * ${rrVO.night} 박</span>
+														<span class="lfData"><fmt:formatNumber value="${rrVO.payPrice}" pattern="#,##0"/> KRW * ${rrVO.night} 박</span>
 													</li>
 												
 											</ul>
@@ -550,7 +521,7 @@
 									</a>
 								</div> -->
 									<div>
-										<a href="#none" class="btnSC btnL active" onclick="commonJs.popShow($('#loginLayerPop')); return false;">
+										<a href="#none" class="btnSC btnL active" onclick="getMemberSession()">
 												회원 예약
 										</a>
 									</div>
@@ -683,78 +654,70 @@ function getLoginCookie(cookieName) {
 				}
 				return bResult;
 			}
-			,fncLogin : function(param_loginSeCode) {
-				
-				
-				var frm_userid = "";
-				var frm_userpw = "";
-				var param_nextUrl = "";
-	
-				// 아이디 로그인시
-				if (param_loginSeCode != "SNS") {
-					if(PageScript.validate()){
-						frm_userid = jQuery("#frm_userid").val(); // 입력된 아이디
-						frm_userpw = jQuery("#frm_userpw").val(); // 입력된 비밀번호
-		
-						// 아이디 입력 화인
-						if (frm_userid == "") {
-							alert("아이디를 입력해주세요.");
-							jQuery("#frm_userid").focus();
-							return;
-						}
-		
-						// 비밀번호 입력 확인
-						if (frm_userpw == "") {
-							alert("비밀번호를 입력해주세요.");
-							jQuery("#frm_userpw").focus();
-							return;
-						}
-						
-						var param = {
-							loginSeCode : param_loginSeCode
-							,loginId : frm_userid
-							,loginPassword : frm_userpw
-							,fromPageType : 'LOGIN'
-							,nextURL : param_nextUrl
-						}
-						
-						/****************************
-						 * post 날리기 전에 요청전과 후의 동작을 정의
-						 ****************************/
-						$.ajaxSetup({
-							beforeSend : function(xhr, settings) {
-								commonJs.showLoadingBar();
-								//alert('before=>xhr:' + JSON.stringify(xhr));
-								//							   alert('before=>xhr:' + JSON.stringify(xhr) + "settings:"+JSON.stringify(settings));
-							},
-							complete : function(xhr, textStatus) {
-								//alert('complete=>xhr:' + JSON.stringify(xhr) + ":textStatus:" + textStatus);
-							}
-						});
+			,fncLogin: function(param_loginSeCode) {
+		        var frm_userid = "";
+		        var frm_userpw = "";
+		        var param_nextUrl = "";
+
+		        // 아이디 로그인시
+		        if (param_loginSeCode != "SNS") {
+		            if (PageScript.validate()) {
+		                frm_userid = jQuery("#frm_userid").val(); // 입력된 아이디
+		                frm_userpw = jQuery("#frm_userpw").val(); // 입력된 비밀번호
+
+		                // 아이디 입력 확인
+		                if (frm_userid == "") {
+		                    alert("아이디를 입력해주세요.");
+		                    jQuery("#frm_userid").focus();
+		                    return;
+		                }
+
+		                // 비밀번호 입력 확인
+		                if (frm_userpw == "") {
+		                    alert("비밀번호를 입력해주세요.");
+		                    jQuery("#frm_userpw").focus();
+		                    return;
+		                }
+
+		                var uVO = {
+		               		 
+		                	userId: frm_userid,  
+		                	userPw: frm_userpw
+		                    }; 
+
+		                $.ajax({
+		                    url: "http://localhost/hotel_prj/user/searchPopupLogin.do",
+		                    type: "POST",
+		                    data: uVO,
+		                    dataType: "json",
+		                    beforeSend: function(xhr, settings) {
+		                        //commonJs.showLoadingBar();
+		                        // alert('before=>xhr:' + JSON.stringify(xhr));
+		                        // alert('before=>xhr:' + JSON.stringify(xhr) + "settings:" + JSON.stringify(settings));
+		                    },
+		                    success: function(result) {
+		                        commonJs.closeLoadingBar();
+		                        if (result.result === "fail") {
+		                            alert("로그인에 실패하였습니다.");
+		                            jQuery('.dimmed').show();
+		                        } else if (result.result === "success") {
+		                            alert("로그인에 성공하였습니다.");
+		                            fncLoginCallBack(); // 로그인 콜백이 필요한 경우 해당 이름으로 function 정의해서 사용하면 가능함
+		                            PageScript.fncCloseLayerPopup();
+		                        }
+		                    },
+		                    complete: function(xhr, textStatus) {
+		                        // alert('complete=>xhr:' + JSON.stringify(xhr) + ":textStatus:" + textStatus);
+		                    },
+		                    error: function(xhr, status, error) {
+		                        alert("로그인 수행중 서버 오류가 발생하였습니다.");
+
+		                    }
+		                });
+		            }
+		        }
+		    }
 			
-						/**********************************
-						 * post 요청
-						 **********************************/
-						$.post("/login/api/login.json", param, function(data, status, xhr) {
-							commonJs.closeLoadingBar();				
-							if (data.loginYn == "N") {
-								alert(data.msg);
-								jQuery('.dimmed').show();
-							}else{
-								fncLoginCallBack(); //로그인 콜백이 필요한 경우 해당 이름으로 function 정의해서 사용하면 가능함
-								PageScript.fncCloseLayerPopup();
-							}
-			
-						}, "json")
-			
-						// error handling
-						.fail(function(xhr, status, error) {
-							alert("로그인 수행중 서버 오류가 발생하였습니다.");
-						});
-					}
-				}
-	
-			}
 			,bindSnsLinkEvent : function() {
 				$('.snsLogin > a').each(
 					function() {
@@ -836,7 +799,7 @@ function getLoginCookie(cookieName) {
 								<input type="checkbox" id="idSaveCheck"><label for="idSaveCheck">아이디 저장</label><!-- 아이디 저장 -->
 							</span>
 							<!-- //20200528 수정 : 아이디저장(추가) -->
-							<button type="button" class="btnSC btnL active btnFull" onclick="PageScript.fncLogin('ID'); return false;">로그인<!-- 로그인 --></button>
+							<button type="button" class="btnSC btnL active btnFull" onclick= "PageScript.fncLogin('ID'); return false;" >로그인<!-- 로그인 --></button>
 							<div class="loginLink">
 								<a href="/identify/identifyIntro.do" class="btnS icoArr">회원가입<!-- 회원가입 --></a>
 								<a href="/identify/findIdentifyIntro.do" class="btnS icoArr">아이디 / 비밀번호 찾기<!-- 아이디 / 비밀번호 찾기 --></a>

@@ -235,7 +235,7 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 <div class="topArea">
 	<div class="topInner">
 	<h2 class="titDep1">My Page</h2>
-	<p class="pageGuide">멤버십 회원을 위한 다양한 혜택이 준비되어 있습니다.</p>
+	<p class="pageGuide">회원을 위한 다양한 혜택이 준비되어 있습니다.</p>
 	</div>
 </div> 
 			

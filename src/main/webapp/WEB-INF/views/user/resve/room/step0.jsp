@@ -297,7 +297,7 @@ function fncSearchList(){
 	}
 	commonJs.showLoadingBar();
 	jQuery("#step0Form").attr("action", "http://localhost/hotel_prj/user/room1.do");
-	 		alert("선택된 호텔코드 : "+$("#hotlSysCode").val() + "\n" + 
+	 		//alert("선택된 호텔코드 : "+$("#hotlSysCode").val() + "\n" + 
 	"체크인 날짜 : " +$("#ckinDate").val() + "\n" +
 	"체크아웃 날짜 : " + $("#ckoutDate").val() + "\n" +
 	"어른 : " +   $('input[name="adltCntArr"]').val() + "\n" +

@@ -1,5 +1,8 @@
 package kr.co.sist.elysian.user.login.controller;
 
+import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -7,8 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -69,6 +74,56 @@ public class LoginController {
 	        return "user/login/loginForm"; //로그인 페이지로 이동
 	    }
 	}
+	
+	
+
+	@ResponseBody
+	@PostMapping(value="/searchPopupLogin.do", produces="application/json; charset=UTF-8")
+	public String searchPopupLogin(@ModelAttribute UserVO uVO,HttpSession session) {
+	    JSONObject resultJson = new JSONObject();
+	    // 암호화 객체 생성
+	    PasswordEncoder pe = new BCryptPasswordEncoder();
+	    
+	    UserDomain udm = ls.searchLogin(uVO);
+	    
+	    if (udm != null) {
+	        String encryptedPassword = udm.getUserPw(); // DB에서 가져온 비밀번호
+	        String uncodePass = uVO.getUserPw();
+	        boolean matchFlag = pe.matches(uncodePass, encryptedPassword);
+	        
+	        if (matchFlag) {
+	            session.setAttribute("userId", udm.getUserId());
+	            resultJson.put("result", "success");
+	        } else {
+	            resultJson.put("result", "fail");
+	        }
+	    } else {
+	        resultJson.put("result", "fail");
+	    }
+
+	    
+	    return resultJson.toJSONString();
+	}//searchPopupLogin
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@GetMapping("/logout.do")
 	public String logout(SessionStatus ss) {

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.sist.elysian.member.room">
+    <select id="roomList" resultType="urld" parameterType="rrVO">
+		SELECT ROOM_ID AS roomId, ROOM_RANK_CODE AS roomRankCode, ROOM_RANK_NAME AS roomRankName, ROOM_SIZE AS roomSize,
+		               ROOM_BASIC_CAPACITY AS roomBasicCapacity, ROOM_MAX_CAPACITY AS roomMaxCapacity, ROOM_BASIC_PRICE AS roomBasicPrice,
+		               VIEW_CODE AS viewCode, VIEW_NAME AS viewName, ROOM_ADD_PRICE AS roomAddPrice, BED_CODE AS bedCode,
+		               BED_NAME AS bedName, BED_CNT AS bedCnt, DELETE_STATUS AS deleteStatus
+		FROM (
+		    SELECT R.*,
+		           ROW_NUMBER() OVER (PARTITION BY R.ROOM_RANK_CODE, R.VIEW_CODE, R.BED_CODE ORDER BY R.ROOM_ID) AS rn
+		    FROM ROOM R
+		    WHERE R.ROOM_ID NOT IN (
+		        SELECT RR.ROOM_ID
+		        FROM ROOM_RESERVATION RR
+		        WHERE (RR.CHECKIN &lt; TO_DATE(#{ckoutDate}, 'YYYY-MM-DD') AND RR.CHECKOUT > TO_DATE(#{ckinDate}, 'YYYY-MM-DD'))
+		           OR (RR.CHECKIN &lt;= TO_DATE(#{ckinDate}, 'YYYY-MM-DD') AND RR.CHECKOUT >= TO_DATE(#{ckoutDate}, 'YYYY-MM-DD'))
+		    )
+		) Subquery
+		WHERE rn = 1
+
+
+    </select>
+    
+    
+	<select id="memberDetail" resultType="umd" parameterType="String">
+		select 
+		MEMBER_ID memberId,
+		EMAIL email,
+		NAME name,
+		GENDER gender,
+		ENG_LNAME engLname, 
+		ENG_FNAME engFname, 
+		ZIPCODE zipcode, 
+		PHONE phone,
+		ADDRESS address, 
+		to_char(BIRTHDAY,'yyyy-MM-dd') birthday, 
+		ADDR_DETAIL addrDetail ,
+		to_char(SIGNUP_DATE,'yyyy-MM-dd') signupDate,
+		SUBSTR(NATIONAL_CODE,4) nationalCode
+		from MEMBER
+		where MEMBER_ID =#{memberId}
+	</select>
+	
+	    <select id="resveValid" resultType="int" parameterType="rrVO">
+		SELECT ROOM_ID AS roomId
+		FROM (
+		    SELECT R.*,
+		           ROW_NUMBER() OVER (PARTITION BY R.ROOM_RANK_CODE, R.VIEW_CODE, R.BED_CODE ORDER BY R.ROOM_ID) AS rn
+		    FROM ROOM R
+		    WHERE R.ROOM_ID NOT IN (
+		        SELECT RR.ROOM_ID
+		        FROM ROOM_RESERVATION RR
+		        WHERE (RR.CHECKIN &lt; TO_DATE(#{ckoutDate}, 'YYYY-MM-DD') AND RR.CHECKOUT > TO_DATE(#{ckinDate}, 'YYYY-MM-DD'))
+		           OR (RR.CHECKIN &lt;= TO_DATE(#{ckinDate}, 'YYYY-MM-DD') AND RR.CHECKOUT >= TO_DATE(#{ckoutDate}, 'YYYY-MM-DD'))
+		    )
+		) Subquery
+		WHERE rn = 1
+		and ROOM_RANK_CODE = #{roomRankCode}
+		and VIEW_CODE = #{viewCode}
+		and BED_CODE = #{bedCode}
+    </select>
+	
+<insert id="insertRoomRes" parameterType="rrVO">
+    INSERT INTO ROOM_RESERVATION 
+        (PAY_NUM, USER_ID, ROOM_ID, ROOM_RES_STATUS, CHECKIN, CHECKOUT, ROOM_RES_DATE, ADULTS_NUM, KIDS_NUM, GUEST_PHONE, GUEST_EMAIL, GUEST_BIRTHDAY, GUEST_REQUEST, MODIFY_DATE)
+    VALUES
+        (#{payNum}, #{userId}, #{roomId}, #{roomResStatus}, 
+         TO_DATE(#{ckinDate}||'15:00:00', 'YYYY-MM-DD HH24:MI:SS'), 
+         TO_DATE(#{ckoutDate}||'10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 
+         SYSDATE, 
+         #{adultsNum}, #{kidsNum}, #{guestPhone}, #{guestEmail}, #{guestBirthday}, #{guestRequest}, 
+         SYSDATE)
+</insert>
+    
+    
+    
+    
+    
+</mapper>

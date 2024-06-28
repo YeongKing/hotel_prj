@@ -4,11 +4,17 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.sist.elysian.member.login">
 
-  <!-- 관리자 로그인 시 해당 관리자가 테이블에 존재하는 지 -->
-	<select id="searchLogin" resultType="ud" parameterType="uv">
-		select member_id userId, password userPw, name userName
-		from member
-		where member_id = #{ userId }
-	</select>
-	
+  <!-- 회원 로그인 시 해당 관리자가 테이블에 존재하는 지 -->
+  <select id="searchLogin" resultType="ud" parameterType="uv">
+    select member_id userId, password userPw, name userName
+    from member
+    where member_id = #{ userId }
+  </select>
+  
+  <!-- 회원 아이디/비번 찾기 시 해당 회원 정보가 존재하는 지 -->
+  <select id="searchPhone" resultType="ud" parameterType="uv">
+    select member_id userId, name userName
+    from member
+    where trim(phone) = #{ userPhone }
+  </select>
 </mapper>

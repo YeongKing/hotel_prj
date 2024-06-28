@@ -4,11 +4,40 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="kr.co.sist.elysian.member.dining">
+
 	<select id="randomDiningDetail" resultType="dDomain">
-    	SELECT DINING_ID, DINING_NAME, DINING_TYPE, HALL_TABLE, ROOM_TABLE, OPEN_TIME, CLOSE_TIME, LOCATION, DEPOSIT, DINING_IMG, DINING_COMMENT, MENU
+    	SELECT DINING_ID diningId, DINING_NAME diningName, DINING_TYPE diningType, HALL_TABLE hallTable, ROOM_TABLE roomTable, OPEN_TIME openTime, CLOSE_TIME closeTime, LOCATION, DEPOSIT, DINING_IMG diningImg, DINING_COMMENT diningComment, MENU
     	FROM DINING
     	WHERE DELETE_STATUS = 'N'
     	ORDER BY DBMS_RANDOM.VALUE
     	FETCH FIRST 1 ROWS ONLY	
 	</select>
+	
+	<select id="allDiningNameList" resultType="dOptionDomain">
+		SELECT DINING_ID diningId, DINING_NAME diningName
+		FROM DINING
+		WHERE DELETE_STATUS ='N'
+	</select>
+	
+	<select id="oneDiningDetail" resultType="dDomain" parameterType="String" >
+		SELECT DINING_ID diningId, DINING_NAME diningName, DINING_TYPE diningType, HALL_TABLE hallTable, ROOM_TABLE roomTable, OPEN_TIME openTime, CLOSE_TIME closeTime, LOCATION, DEPOSIT, DINING_IMG diningImg, DINING_COMMENT diningComment, MENU
+    	FROM DINING
+    	WHERE DELETE_STATUS = 'N' AND DINING_ID = #{diningId}
+	</select>
+	
+<select id="oneDiningSeatCnt" resultType="int" parameterType="map">
+    SELECT 
+        <choose>
+            <when test="table == 'AVAILABLE_HALL_TABLE'">
+                AVAILABLE_HALL_TABLE
+            </when>
+            <when test="table == 'AVAILABLE_ROOM_TABLE'">
+                AVAILABLE_ROOM_TABLE
+            </when>
+        </choose>
+    FROM DINING_SEATS
+    WHERE DINING_ID = #{diningId, jdbcType=VARCHAR} 
+    AND DINING_DATE = #{date, jdbcType=DATE}
+    AND DINING_TIME = #{part, jdbcType=INTEGER}
+</select>
 </mapper>

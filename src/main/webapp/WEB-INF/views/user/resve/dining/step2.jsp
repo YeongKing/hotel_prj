@@ -23,6 +23,7 @@
     <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
     <script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
     <script>
+    
         // 헤더 메뉴 버튼 클릭 이벤트
         jQuery(document).on("click", ".headArea .btnMenu", function() {
             // 메뉴 펼쳐질 때 라운지 리스트 3가지 무작위 노출
@@ -39,6 +40,132 @@
                 });
             }
         });
+        
+        $(document).ready(function() {
+        	console.log($(".personNum").val());
+            // 라디오 버튼 변경 이벤트 처리
+            $('input[name="tableType"]').on('change', function() {
+                // 선택된 라디오 버튼에 checked 속성 부여
+                $(this).prop('checked', true);
+
+                // 다른 라디오 버튼의 checked 속성 해제
+                $('input[name="tableType"]').not(this).prop('checked', false);
+                var value = $(":input:radio[name=tableType]:checked").val()
+                alert(value); // Debugging log
+            });
+            
+        });
+        
+        var maxCount = ${personCount}; // 최대 인원 수
+        var totalPersonCount = 0;
+		var totalPrice = 0;
+		personPrice = parseInt(${diningDetail.deposit});
+        // 인원 수 증가 및 감소 함수
+        function fncBtnUpDown(button) {
+            var $span = $(button).siblings('.personNum');
+            var count = parseInt($span.attr('data-count'));
+            var $btnDown = $(button).siblings('.btnDown');
+            var $btnUp = $(button).siblings('.btnUp');
+            var $parentLi = $(button).closest('li');
+            var menuType = $parentLi.data('menutype');
+            
+            if ($(button).data('prop') === 'up') {
+                if (totalPersonCount < maxCount) {
+                    count++;
+                    if (menuType !== 'infant') {
+                    	totalPrice += personPrice;
+                    }
+                    $("#popTotalPrice").text(totalPrice);
+                }
+                if (count >= maxCount) {
+                    count = maxCount;
+                    $btnUp.prop('disabled', true);
+                }
+            } else if ($(button).data('prop') === 'down') {
+                if (count > 0) {
+                    count--;
+                    if (menuType !== 'infant') {
+                   		 totalPrice -= personPrice;
+                    }
+                    $("#popTotalPrice").text(totalPrice);
+                }
+                if (count <= 0) {
+                    count = 0;
+                    $btnDown.prop('disabled', true);
+                }
+            }
+
+            // 인원 수 업데이트
+            $span.attr('data-count', count);
+            $span.text(count);
+
+            // 총 인원 수 업데이트
+            updateTotalPersonCount();
+
+            if (totalPersonCount <= 0) {
+                $('.btnDown').prop('disabled', true);
+            } else {
+            	$('.btnDown').prop('disabled', false);
+            }
+
+            if (totalPersonCount >= maxCount) {
+                $('.btnUp').prop('disabled', true);
+            } else {
+                $('.btnUp').prop('disabled', false);
+            }
+        }
+
+        // 총 인원 수 계산 및 업데이트 함수
+        function updateTotalPersonCount() {
+            totalPersonCount = 0;
+
+            $('.personNum').each(function() {
+                totalPersonCount += parseInt($(this).attr('data-count'));
+            });
+        }
+
+        $(document).ready(function() {
+            // 초기 상태 설정
+            $('.personNum').each(function() {
+                var count = parseInt($(this).attr('data-count'));
+                var $btnDown = $(this).siblings('.btnDown');
+                var $btnUp = $(this).siblings('.btnUp');
+
+                if (count <= 0) {
+                    $btnDown.prop('disabled', true);
+                } else {
+                    $btnDown.prop('disabled', false);
+                }
+
+                if (count >= maxCount) {
+                    $btnUp.prop('disabled', true);
+                } else {
+                    $btnUp.prop('disabled', false);
+                }
+            });
+
+            // 총 인원 수 초기화
+            updateTotalPersonCount();
+          
+        });
+        
+        테
+        function fncCompleteMenuSelect() {
+        	if(totalPersonCount != maxCount){
+            	alert("정원에 맞게 인원을 추가해주시길 바랍니다");
+        	}
+        	else{
+                $('#menuPop').hide();
+                $('.dimmed').hide();
+                
+                // body 스타일 변경하여 스크롤 가능하게 만들기
+                $('body').css({
+                    'overflow': '',
+                    'position': '',
+                    'width': ''
+                });
+        	}
+        }
     </script>
 </head>
  <body style="overflow: hidden; position: fixed; width: 100%;">
@@ -58,18 +185,16 @@
     let emptyTableType = false; // 모든 테이블이 비어있을경우 true
     let emptyMenuSet = false;
     let snsValidation = false; // 전화번호 인증
-    let timer // 타이머
 
     $(document).ready(function () {
         fncBrowserBtn(); // 브라우저 버튼
         fncTranceText();
-
         
-
         fncDrawReady(); // 예약 준비 화면
         fncBtnNoPay(); // 예약, 결제 버튼 구분
 	    //메뉴 선택 없는 업장 정보 호출 용
         fncCatchDiningInfo(); // 업장정보(취소규정)
+        
     });
 
 
@@ -248,6 +373,7 @@
 
 
     }
+
 
     // 예약
     function fncReservation() {
@@ -532,9 +658,6 @@
 
 
 
-
-
-
     //예약 팝업에서 성공시 실행되는 함수
     function fncGoComplete(reservationId) {
         location.href = "/resve/dining/complete.do?reservationId="+reservationId;
@@ -544,7 +667,7 @@
         $("#personCntTitle").html('방문인원 총 {1}명'.replace('{1}', $("#personCount").val()));
         $("#nTypeGide").html('{1}표시가 있는 메뉴는 단독으로 선택이 되지 않습니다.'.replace('{1}', `<strong class="ico_ampersand"></strong>`));
     }
-
+    
 </script>
 <form id="form" name="form">
     <input type="hidden" id="searchSysCode" name="searchSysCode" value="TWC">
@@ -603,13 +726,9 @@
                 <div class="chkValue"><span>웨스틴 조선 서울<!--  그랜드 조선 부산 --></span><span>ARIA <!-- The Ninth Gate --></span></div>
                 <div class="chkValue_prev">
                     <div class="leftInfo">
-                        <span>2024.06.17(월) <!-- 2022.10.27(금) --></span>
-                        <span>오후 8:00 <!-- 오전 10:00 --></span>
+                        <span>${visitDate}</span>
+                        <span>${visitTime} <!-- 오전 10:00 --></span>
                         <span id="personCntTitle">방문인원 총 2명</span>
-                    </div>
-                    <div class="rightInfo">
-                        <strong name="timerText">시간 내 예약을 완료해 주세요</strong><!-- 시간 내 예약을 완료해 주세요 -->
-                        <span class="chkTime" id="holdingTimer" name="holdingTimer">3:21</span>
                     </div>
                 </div>
                 <!-- rsvRoomWrap -->
@@ -891,123 +1010,78 @@
 
 <!-- 메뉴선택 Layer -->
 <div id="menuPop" class="layerPop diningSelectPop" style="display: block;">
-    <div class="layerCont" tabindex="0" style="top: 50%; left: 50%; margin-top: -469.427px; margin-left: -540px;" data-gtm-vis-recent-on-screen36519946_61="107" data-gtm-vis-first-on-screen36519946_61="107" data-gtm-vis-total-visible-time36519946_61="100" data-gtm-vis-has-fired36519946_61="1">
-        <div class="compTit" data-gtm-vis-has-fired36519946_61="1">
-            <span id="menuTitle" data-gtm-vis-has-fired36519946_61="1">메뉴 선택</span>
-            
-            <div class="rightInfo" data-gtm-vis-has-fired36519946_61="1">
-                <strong name="timerText" data-gtm-vis-has-fired36519946_61="1">시간 내 예약을 완료해 주세요</strong><!-- 시간 내 예약을 완료해 주세요 -->
-                <span class="chkTime" name="holdingTimer" data-gtm-vis-has-fired36519946_61="1">3:21</span>
-            </div>
+    <div class="layerCont" tabindex="0" style="top: 50%; left: 50%; margin-top: -473.429px; margin-left: -540px;" data-gtm-vis-recent-on-screen36519946_61="135" data-gtm-vis-first-on-screen36519946_61="135" data-gtm-vis-total-visible-time36519946_61="100" >
+        <div class="compTit" >
+            <span id="menuTitle" >테이블 타입 &amp; 인원 상세 선택</span>
         </div>
-        <div class="compLayer dnSelectScroll" data-gtm-vis-has-fired36519946_61="1">
-            <!-- 221230 수동예약 인벤토리일 경우 문구 출력 -->
-            <div class="manualInfoWrap" id="manualInfoWrap" style="display:none;" data-gtm-vis-has-fired36519946_61="1">
-                <div class="txtWrap" data-gtm-vis-has-fired36519946_61="1">
-                    <strong data-gtm-vis-has-fired36519946_61="1">다이닝 업장의 좌석 확인이 필요한 예약이며, 예약확정까지 다소 시간이 소요됩니다.</strong><!-- 다이닝 업장의 좌석 확인이 필요한 예약이며, 예약확정까지 다소 시간이 소요됩니다. -->
-                    <div class="order_txt" data-gtm-vis-has-fired36519946_61="1">① 예약신청 &gt; ② 업장 예약 가능 여부 확인 &gt; ③ 예약확정</div><!-- ① 예약신청 > ② 예약 가능 여부 확인 > ③ 예약확정 -->
-                    <p class="txtGuide" data-gtm-vis-has-fired36519946_61="1">예약 진행 과정은 알림톡/SMS로 안내해 드립니다.</p><!-- 예약 진행 과정은 알림톡/SMS로 안내 드립니다. -->
-                </div>
-            </div>
-            <!-- // 221230 수동예약 인벤토리일 경우 문구 출력 -->
+        <div class="compLayer dnSelectScroll" >
+            
             <!--  선택타입 15 - 테이블선택  -->
-            <div class="dnSelectBox" id="tableTypeDiv1" style="display: none;" data-gtm-vis-has-fired36519946_61="1">
-                <h2 class="boxTit" data-gtm-vis-has-fired36519946_61="1">테이블 선택</h2><!-- 테이블 선택 -->
-                <div class="txtSelectBox" data-gtm-vis-has-fired36519946_61="1">
-                    <ul class="frmList" id="tableTypeUl1" data-gtm-vis-has-fired36519946_61="1"></ul>
+            <div class="dnSelectBox" id="tableTypeDiv1" >
+                <h2 class="boxTit" >테이블 선택</h2><!-- 테이블 선택 -->
+                <div class="txtSelectBox" >
+                    <ul class="frmList" id="tableTypeUl1" >
+                    <li class="frmRadio" ><input type="radio" id="table0" value="Hall" name="tableType" data-tabletype="H" checked="checked" ><label for="table0" >홀</label></li>
+                    <li class="frmRadio" ><input type="radio" id="table1" value="Room" name="tableType" data-tabletype="R" ><label for="table1" >룸</label></li>
+                    </ul>
                 </div>
             </div>
-            <!-- //  선택타입 15 - 테이블선택  -->
-            <div class="dnSelectBox" name="menuListDiv" style="display: none;" data-gtm-vis-has-fired36519946_61="1">
-                <h2 class="boxTit sSelects" data-gtm-vis-has-fired36519946_61="1">세트 선택</h2><!-- 세트 선택 -->
-                <div class="txtSelectBox" data-gtm-vis-has-fired36519946_61="1">
-                    <div class="selectWrap" style="width:487px" first="true" data-gtm-vis-has-fired36519946_61="1">
-                        <select id="menuListSelect" data-height="150px" data-direction="down" aria-required="true" style="display: none;" data-gtm-vis-has-fired36519946_61="1"><option name="menuSet" value="BBg9ONqfJAzE-wJ6TxdRBA" data-gtm-vis-has-fired36519946_61="1">일반 예약</option></select><button tabindex="0" id="menuListSelect-button" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-owns="menuListSelect-menu" aria-haspopup="true" class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget" type="button" data-gtm-vis-has-fired36519946_61="1"><span class="ui-selectmenu-text" data-gtm-vis-has-fired36519946_61="1">일반 예약</span></button>
-                    <div class="ui-selectmenu-menu ui-front" data-gtm-vis-has-fired36519946_61="1"><div class="tweenDiv" data-gtm-vis-has-fired36519946_61="1"><ul aria-hidden="true" aria-labelledby="menuListSelect-button" id="menuListSelect-menu" role="listbox" tabindex="0" class="ui-menu ui-corner-bottom ui-widget ui-widget-content" style="max-height: 150px;" data-gtm-vis-has-fired36519946_61="1"></ul></div></div></div>
-                </div>
-            </div>
-            <div class="dnSelectBox" id="tableTypeDiv2" style="display: none;" data-gtm-vis-has-fired36519946_61="1">
-                <h2 class="boxTit" data-gtm-vis-has-fired36519946_61="1">테이블 선택</h2><!-- 테이블 선택 -->
-                <div class="txtSelectBox" data-gtm-vis-has-fired36519946_61="1">
-                    <ul class="frmList" id="tableTypeUl2" data-gtm-vis-has-fired36519946_61="1"></ul>
-                </div>
-            </div>
-            <div class="dnSelectBox" id="menuItemDiv" data-gtm-vis-has-fired36519946_61="1">
+           
+            <div class="dnSelectBox" id="menuItemDiv" >
                 <!-- 230112 &메뉴 가이드설명 -->
                 <!-- 메뉴 선택 --><!-- 표시가 있는 메뉴는 단독으로 선택이 되지 않습니다. -->
-                <h2 class="boxTit" data-gtm-vis-has-fired36519946_61="1">메뉴 선택<span class="smallTxt" id="nTypeGide" style="display: none;" data-gtm-vis-has-fired36519946_61="1"><strong class="ico_ampersand" data-gtm-vis-has-fired36519946_61="1"></strong>표시가 있는 메뉴는 단독으로 선택이 되지 않습니다.</span><span class="hidden" data-gtm-vis-has-fired36519946_61="1">타입02</span></h2>
+                <h2 class="boxTit" >인원 선택<span class="smallTxt" id="nTypeGide" style="display: none;" ><strong class="ico_ampersand" ></strong>표시가 있는 메뉴는 단독으로 선택이 되지 않습니다.</span><span class="hidden" >타입02</span></h2>
                 <!-- // 230112 &메뉴 가이드설명 -->
-                <div class="txtSelectBox" data-gtm-vis-has-fired36519946_61="1">
-                    <ul class="menuSelcet type02 badge_all" id="popMenuUl" data-gtm-vis-has-fired36519946_61="1"><li data-menuitemid="OnfHDUAzSnW_9cpfS9jRpA" data-price="20000" data-tabletype="N" data-fixedperson="1" data-menutype="main" data-gtm-vis-has-fired36519946_61="1">
-                                                                <div class="menuSelcet_li" data-gtm-vis-has-fired36519946_61="1">
-                                                                    <span class="txt" data-gtm-vis-has-fired36519946_61="1"><span class="badge_txt" data-gtm-vis-has-fired36519946_61="1">위 결제금액은 예약금입니다.</span>            성인</span>
-                                                                    <span class="price" data-gtm-vis-has-fired36519946_61="1">20,000 KRW</span>
-                                                                    <div class="numPeople type02" data-gtm-vis-has-fired36519946_61="1">
-                                                                        <button type="button" class="btnDown count" data-prop="down" onclick="fncBtnUpDown(this);" disabled="disabled" data-gtm-vis-has-fired36519946_61="1">인원 수 감소</button>
-                                                                        <span class="personNum" data-count="0" data-gtm-vis-has-fired36519946_61="1">0</span>
-                                                                        <button type="button" class="btnUp count" data-prop="up" onclick="fncBtnUpDown(this)" data-gtm-vis-has-fired36519946_61="1">인원 수 증가</button>
+                <div class="txtSelectBox" >
+                    <ul class="menuSelcet type02 badge_all" id="popMenuUl" ><li data-menuitemid="NRuSo1ddONc859L-uFQ53w" data-price="20000" data-tabletype="N" data-fixedperson="1" data-menutype="adult" >
+                                                                <div class="menuSelcet_li" >
+                                                                    <span class="txt" ><span class="badge_txt" >위 결제 금액은 예약금 입니다.</span>            성인</span>
+                                                                    <span class="price" >${diningDetail.deposit} KRW</span>
+                                                                    <div class="numPeople type02" >
+                                                                        <button type="button" class="btnDown count" data-prop="down" onclick="fncBtnUpDown(this);" disabled="disabled" >인원 수 감소</button>
+                                                                        <span class="personNum" data-count="0" >0</span>
+                                                                        <button type="button" class="btnUp count" data-prop="up" onclick="fncBtnUpDown(this)" >인원 수 증가</button>
                                                                     </div>
-                                                                </div></li><li data-menuitemid="l0ljPCWyuLp73646rTZU3w" data-price="0" data-tabletype="N" data-fixedperson="1" data-menutype="main" data-gtm-vis-has-fired36519946_61="1">
-                                                                <div class="menuSelcet_li" data-gtm-vis-has-fired36519946_61="1">
-                                                                    <span class="txt" data-gtm-vis-has-fired36519946_61="1">            어린이</span>
-                                                                    <span class="price" data-gtm-vis-has-fired36519946_61="1">0 KRW</span>
-                                                                    <div class="numPeople type02" data-gtm-vis-has-fired36519946_61="1">
-                                                                        <button type="button" class="btnDown count" data-prop="down" onclick="fncBtnUpDown(this);" disabled="disabled" data-gtm-vis-has-fired36519946_61="1">인원 수 감소</button>
-                                                                        <span class="personNum" data-count="0" data-gtm-vis-has-fired36519946_61="1">0</span>
-                                                                        <button type="button" class="btnUp count" data-prop="up" onclick="fncBtnUpDown(this)" data-gtm-vis-has-fired36519946_61="1">인원 수 증가</button>
+                                                                </div></li><li data-menuitemid="-eke34LaldD_Ei456jGWow" data-price="20000" data-tabletype="N" data-fixedperson="1" data-menutype="child" >
+                                                                <div class="menuSelcet_li" >
+                                                                    <span class="txt" ><span class="badge_txt" >위 결제 금액은 예약금 입니다.</span>            어린이</span>
+                                                                    <span class="price" >${diningDetail.deposit} KRW</span>
+                                                                    <div class="numPeople type02" >
+                                                                        <button type="button" class="btnDown count" data-prop="down" onclick="fncBtnUpDown(this);" disabled="disabled" >인원 수 감소</button>
+                                                                        <span class="personNum" data-count="0" >0</span>
+                                                                        <button type="button" class="btnUp count" data-prop="up" onclick="fncBtnUpDown(this)" >인원 수 증가</button>
                                                                     </div>
-                                                                </div><div class="add_Description" data-gtm-vis-has-fired36519946_61="1">37개월 이상 12세 이하(초등학생)</div></li><li data-menuitemid="kvUt09mqm8fXUfrdeA_1wA" data-price="0" data-tabletype="N" data-fixedperson="1" data-menutype="main" data-gtm-vis-has-fired36519946_61="1">
-                                                                <div class="menuSelcet_li" data-gtm-vis-has-fired36519946_61="1">
-                                                                    <span class="txt" data-gtm-vis-has-fired36519946_61="1">            36개월 이하</span>
-                                                                    <span class="price" data-gtm-vis-has-fired36519946_61="1">0 KRW</span>
-                                                                    <div class="numPeople type02" data-gtm-vis-has-fired36519946_61="1">
-                                                                        <button type="button" class="btnDown count" data-prop="down" onclick="fncBtnUpDown(this);" disabled="disabled" data-gtm-vis-has-fired36519946_61="1">인원 수 감소</button>
-                                                                        <span class="personNum" data-count="0" data-gtm-vis-has-fired36519946_61="1">0</span>
-                                                                        <button type="button" class="btnUp count" data-prop="up" onclick="fncBtnUpDown(this)" data-gtm-vis-has-fired36519946_61="1">인원 수 증가</button>
+                                                                </div></li><li data-menuitemid="fpz49GgkhnLcr5VOGEy64Q" data-price="20000" data-tabletype="N" data-fixedperson="1" data-menutype="infant" >
+                                                                <div class="menuSelcet_li" >
+                                                                    <span class="txt" ><span class="badge_txt" >위 결제 금액은 예약금 입니다.</span>            유아</span>
+                                                                    <span class="price" >0 KRW</span>
+                                                                    <div class="numPeople type02" >
+                                                                        <button type="button" class="btnDown count" data-prop="down" onclick="fncBtnUpDown(this);" disabled="disabled" >인원 수 감소</button>
+                                                                        <span class="personNum" data-count="0" >0</span>
+                                                                        <button type="button" class="btnUp count" data-prop="up" onclick="fncBtnUpDown(this)" >인원 수 증가</button>
                                                                     </div>
                                                                 </div></li></ul>
-                    <p class="txtGuide" id="menuDesc" data-gtm-vis-has-fired36519946_61="1">메뉴명(메뉴가격) 메뉴별 예약금 확인 후 총 방문인원 수만큼 입력해 주세요.</p><!-- 메뉴명(메뉴가격) 메뉴별 예약금 확인 후 총 방문인원 수만큼 입력해 주세요. -->
+                    <p class="txtGuide" id="menuDesc" >인원별 예약금 확인 후 총 방문인원 수만큼 입력해 주세요.</p><!-- 메뉴명(메뉴가격) 메뉴별 예약금 확인 후 총 방문인원 수만큼 입력해 주세요. -->
                 </div>
             </div>
-  
-            <div class="dnSelectBox" id="amountDiv" data-gtm-vis-has-fired36519946_61="1">
-                <h2 class="boxTit" data-gtm-vis-has-fired36519946_61="1">예약금액</h2><!-- 예약금액 -->
-                <div class="txtSelectBox" data-gtm-vis-has-fired36519946_61="1">
-                    <table class="tblV" data-gtm-vis-has-fired36519946_61="1">
-                        <colgroup data-gtm-vis-has-fired36519946_61="1">
-                            <col style="width:33.3%" data-gtm-vis-has-fired36519946_61="1">
-                            <col style="width:33.3%" data-gtm-vis-has-fired36519946_61="1">
-                            <col style="width:33.3%" data-gtm-vis-has-fired36519946_61="1">
-                        </colgroup>
-                        <tbody id="popCalcUl" data-gtm-vis-has-fired36519946_61="1"><tr class="popMenuList" id="pop_OnfHDUAzSnW_9cpfS9jRpA" data-id="OnfHDUAzSnW_9cpfS9jRpA" data-tabletype="N" data-menutype="main" style="display: none;" data-gtm-vis-has-fired36519946_61="1">
-                                                            <th data-gtm-vis-has-fired36519946_61="1">성인</th>
-                                                            <td class="person" data-gtm-vis-has-fired36519946_61="1">20,000 x <span class="amount" data-gtm-vis-has-fired36519946_61="1">0</span>명</td> <!-- 2명 -->
-                                                            <td class="price" data-gtm-vis-has-fired36519946_61="1">KRW <span class="popMenuPrice" data-gtm-vis-has-fired36519946_61="1">0</span></td>
-                                                        </tr><tr class="popMenuList" id="pop_l0ljPCWyuLp73646rTZU3w" data-id="l0ljPCWyuLp73646rTZU3w" data-tabletype="N" data-menutype="main" style="display: none;" data-gtm-vis-has-fired36519946_61="1">
-                                                            <th data-gtm-vis-has-fired36519946_61="1">어린이</th>
-                                                            <td class="person" data-gtm-vis-has-fired36519946_61="1">0 x <span class="amount" data-gtm-vis-has-fired36519946_61="1">0</span>명</td> <!-- 2명 -->
-                                                            <td class="price" data-gtm-vis-has-fired36519946_61="1">KRW <span class="popMenuPrice" data-gtm-vis-has-fired36519946_61="1">0</span></td>
-                                                        </tr><tr class="popMenuList" id="pop_kvUt09mqm8fXUfrdeA_1wA" data-id="kvUt09mqm8fXUfrdeA_1wA" data-tabletype="N" data-menutype="main" style="display: none;" data-gtm-vis-has-fired36519946_61="1">
-                                                            <th data-gtm-vis-has-fired36519946_61="1">36개월 이하</th>
-                                                            <td class="person" data-gtm-vis-has-fired36519946_61="1">0 x <span class="amount" data-gtm-vis-has-fired36519946_61="1">0</span>명</td> <!-- 2명 -->
-                                                            <td class="price" data-gtm-vis-has-fired36519946_61="1">KRW <span class="popMenuPrice" data-gtm-vis-has-fired36519946_61="1">0</span></td>
-                                                        </tr></tbody>
-                    </table>
-                    <div class="total noMember" data-gtm-vis-has-fired36519946_61="1">
-                        <div class="totalWrap type02" data-gtm-vis-has-fired36519946_61="1">
-                            <span class="tit" data-gtm-vis-has-fired36519946_61="1">총 예약금액</span><strong class="pay" data-gtm-vis-has-fired36519946_61="1"><em name="popTotalPrice" data-gtm-vis-has-fired36519946_61="1">0</em>KRW</strong><!-- 총 예약 금액 -->
+            <div class="dnSelectBox" id="amountDiv" >
+                <h2 class="boxTit" >예약금액</h2><!-- 예약금액 -->
+                <div class="txtSelectBox" >
+                    <div class="total noMember" >
+                        <div class="totalWrap type02" >
+                            <span class="tit" >총 예약금액</span><strong class="pay" ><em name="popTotalPrice" id="popTotalPrice" >0</em>KRW</strong><!-- 총 예약 금액 -->
                         </div>
                     </div>
-                    <div data-gtm-vis-has-fired36519946_61="1">
-                        <p class="txtGuide" id="priceDesc" data-gtm-vis-has-fired36519946_61="1">메뉴별 예약금 x 총 예약인원</p><!-- 메뉴별 예약금 x 총 예약인원 -->
-                        <p class="txtGuide" data-gtm-vis-has-fired36519946_61="1">예약확정에 필요한 인원당 예약금 안내 입니다.</p><!-- 예약확정에 필요한 인원당 예약금 안내 입니다. -->
+                    <div >
+                        <p class="txtGuide" id="priceDesc" >메뉴별 예약금 x 총 예약인원</p><!-- 메뉴별 예약금 x 총 예약인원 -->
+                        <p class="txtGuide" >예약확정에 필요한 인원당 예약금 안내 입니다.</p><!-- 예약확정에 필요한 인원당 예약금 안내 입니다. -->
                     </div>
                 </div>
             </div>
         </div>
-        <div class="btnArea" data-gtm-vis-has-fired36519946_61="1">
-            <a href="javascript:void(0)" class="btnSC btnL" onclick="fncGoStep0();" data-gtm-vis-has-fired36519946_61="1">이전</a><!-- 이전 -->
-            <a href="javascript:void(0)" class="btnSC btnL active" onclick="fncCompleteMenuSelect();" data-gtm-vis-has-fired36519946_61="1">다음</a><!-- 다음 -->
+        <div class="btnArea" >
+            <a href="javascript:void(0)" class="btnSC btnL" onclick="fncGoStep0();" >이전</a><!-- 이전 -->
+            <a href="javascript:void(0)" class="btnSC btnL active" onclick="fncCompleteMenuSelect();" >다음</a><!-- 다음 -->
         </div>
     </div>
 </div>

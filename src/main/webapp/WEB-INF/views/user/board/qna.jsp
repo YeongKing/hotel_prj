@@ -160,12 +160,11 @@
                     </div>
                 </div>
                 <div class="inner">
-                    <div class="lnbArea">
+<!--                     <div class="lnbArea">
                         <ul class="lnb ctmType">
-                            <li><a href="http://localhost/hotel_prj/user/notice.do">공지사항</a></li>
                             <li class="on"><a href="#none">QNA</a></li>
                         </ul>
-                    </div>
+                    </div> -->
                     <div class="myContents">
                         <h3 class="titDep2">QNA</h3>
                         <h4 class="titDep3 hidden">QNA</h4>
@@ -185,13 +184,18 @@
                                 </div>
                                 <div class="intWord">
                                     <span class="intArea">
-                                        <input type="text" id="searchDataValue" name="searchDataValue" style="width:675px" title="검색어 입력" placeholder="검색어를 입력해주세요." onkeypress="fncKeyEvent();" value="">
+                                        <input type="text" id="searchDataValue" name="searchDataValue" style="width:837px" title="검색어 입력" placeholder="검색어를 입력해주세요." onkeypress="fncKeyEvent();" value="">
                                     </span>
-                                </div>                     
+										<a href="#search" class="btnSC btnM" role="button"
+											onclick="fncSearch(); return false;">검색</a>
+
+									<div class="btnWrap">
+
+									</div>
+								</div>
+								                     
                             </div>
-                            <div class="btnWrap">
-                                <a href="#search" class="btnSC btnM" role="button" onclick="fncSearch(); return false;">검색</a>
-                            </div>
+
                         </div>
                         <ul class="tabType01 tabType02 tabToggle" id="tabArea">
                             <li id="F00" class="on"><a href="#tab01-F00">전체</a></li>

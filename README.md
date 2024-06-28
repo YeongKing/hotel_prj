@@ -10,7 +10,7 @@
 ## 👫 멤버 소개 및 업무 분장
 - 김무영 📍[github](https://github.com/YeongKing)  
   ✔ 사용자 : 객실 예약, 결제  
-  ✔ 관리자 : 객실 관리, 사용자 관리
+  ✔ 관리자 : 객실 관리, 사용자 관리 , 사용자 관리
 - 손지민 📍[github](https://github.com/iuiwiff)  
   ✔ 사용자 : 로그인, ID/PW찾기, 회원가입  
   ✔ 관리자 : 로그인  

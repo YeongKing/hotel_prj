@@ -156,15 +156,16 @@
                 <div class="topArea">
                     <div class="topInner">
                         <h2 class="titDep1">Customer Service</h2>
-                        <p class="pageGuide">호텔 이용과 관련된 궁금한 사항을 남겨주시면 신속하게 답변 드리겠습니다.<br>항상 고객의 소리에 귀 기울이는 조선호텔앤리조트가 되겠습니다.</p>
+                        <p class="pageGuide">호텔 이용과 관련된 궁금한 사항을 남겨주시면 신속하게 답변 드리겠습니다.<br>항상 고객의 소리에 귀 기울이는 엘리시안 서울이 되겠습니다.</p>
                     </div>
                 </div>
                 <div class="inner">
-<!--                     <div class="lnbArea">
+                    <div class="lnbArea">
                         <ul class="lnb ctmType">
-                            <li class="on"><a href="#none">QNA</a></li>
+                            <li class="on"><a href="http://localhost/hotel_prj/user/notice.do">공지사항</a></li>
+                            <li class="on"><a href="http://localhost/hotel_prj/user/qna.do">QNA</a></li>
                         </ul>
-                    </div> -->
+                    </div>
                     <div class="myContents">
                         <h3 class="titDep2">QNA</h3>
                         <h4 class="titDep3 hidden">QNA</h4>
@@ -184,15 +185,13 @@
                                 </div>
                                 <div class="intWord">
                                     <span class="intArea">
-                                        <input type="text" id="searchDataValue" name="searchDataValue" style="width:837px" title="검색어 입력" placeholder="검색어를 입력해주세요." onkeypress="fncKeyEvent();" value="">
+                                        <input type="text" id="searchDataValue" name="searchDataValue" style="width:675px" title="검색어 입력" placeholder="검색어를 입력해주세요." onkeypress="fncKeyEvent();" value="">
                                     </span>
-										<a href="#search" class="btnSC btnM" role="button"
-											onclick="fncSearch(); return false;">검색</a>
 
-									<div class="btnWrap">
-
-									</div>
-								</div>
+                                </div>                     
+                            </div>
+                            <div class="btnWrap">
+                                <a href="#search" class="btnSC btnM" role="button" onclick="fncSearch(); return false;">검색</a>
 								                     
                             </div>
 

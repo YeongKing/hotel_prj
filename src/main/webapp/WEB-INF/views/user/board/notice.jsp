@@ -109,38 +109,30 @@ function fncKeyEvent(){
 
 function fncPage(page){
     jQuery("#page").val(page);
-    jQuery("#_method").val("list");
-    jQuery("#form").attr("action", "/membership/news.do");
+    jQuery("#form").attr("action", "http://localhost/hotel_prj/user/notice.do");
     jQuery("#form").attr("method", "get");
     jQuery("#form").submit();	
 }
 
 
-function fncGoView(bbsSn){
-    jQuery("#bbsSn").val(bbsSn);
-    jQuery("#_method").val("view");
-    jQuery("#form").attr("action", "/membership/news.do");
+function fncGoView(noticeNum,num){
+    jQuery("#noticeNum").val(noticeNum);
+    jQuery("#num").val(num);
+    jQuery("#form").attr("action", "http://localhost/hotel_prj/user/noticeDetail.do");
     jQuery("#form").attr("method", "get");
     jQuery("#form").submit();	
 
 }
 
 function fncSearch(ctgry) {
-	jQuery("#_method").val("list");
     jQuery("#page").val(1);
     jQuery("#searchCtgry").val(ctgry);
-    jQuery("#form").attr("action", "/membership/news.do");
+    jQuery("#form").attr("action", "http://localhost/hotel_prj/user/notice.do");
     jQuery("#form").attr("method", "get");
     jQuery("#form").submit();	
 }
 
-function fncFileDownload(sn, code){
-	$("#fileSn").val(sn);
-	$("#sysCode").val(code);
-	$("#fileForm").attr("method", "get");
-	$("#fileForm").attr("action", "/util/file/download.do");
-	$("#fileForm").submit();
-}
+
 
 </script>
         
@@ -152,13 +144,12 @@ function fncFileDownload(sn, code){
         
         
         
-<form action="/membership/news.do" method="get" id="form">
-<input type="hidden" name="_method" id="_method" />
-<input type="hidden" value="251648" name="bbsMstrSn" />
-<input type="hidden" name="bbsSn" id="bbsSn" />
-<input type="hidden" name="deleteYn" id="deleteYn" value="N" />
-<input type="hidden" name="page" id="page" value="1" />
-<input type="hidden" name="searchDataType" value="01"/>
+<form action="http://localhost/hotel_prj/user/notice.do" method="get" id="form">
+
+<input type="hidden" name="noticeNum" id="noticeNum" />
+<input type="hidden" name="page" id="page" value="${nVO.page}" />
+<input type="hidden" name="num" id="num" value="" />
+
 <div id="container" class="container membership">
 	<!-- 컨텐츠 S -->
 	<h1 class="hidden">통합 멤버십</h1>
@@ -180,7 +171,7 @@ function fncFileDownload(sn, code){
 				</div>
 				<div class="intWord">
 					<span class="intArea">
-						<input type="text" style="width:873px" id="searchDataValue" name="searchDataValue" title="검색어 입력" placeholder="검색어를 입력해주세요." onkeypress="fncKeyEvent();" value=""/>
+						<input type="text" style="width:873px" id="searchDataValue" name="searchDataValue" title="검색어 입력" placeholder="검색어를 입력해주세요." onkeypress="fncKeyEvent();" value="${nVO.searchDataValue }"/>
 					</span>
 					<button type="button" class="btnSC btnM" onclick="fncPage(1); return false;">조회</button>
 				</div>
@@ -215,129 +206,41 @@ function fncFileDownload(sn, code){
 			</thead>
 			<tbody>
 				
-				
+							<c:if test="${totalPage==0}">
+								<tr>
+									<td colspan="4" class="tcenter">검색된 결과가 존재하지 않습니다.</td>
+								</tr>
+							</c:if>
+				<c:forEach var="nna" items="${noticeList}" varStatus="i">
 					<tr>
-						<td>1</td>
+						<td>${(nVO.page * 10)-9 + i.index}</td>
 						<td class="tcenter">
-							<a href="#none" onclick="fncGoView(2078421); return false;">
-								와인샵 환경 개선 공사 안내
+							<a href="#none" onclick="fncGoView('${nna.noticeNum}',${(nVO.page * 10)-9 + i.index}); return false;">
+								${nna.noticeTitle}
 							</a>
 						</td>
-						<td class="date">2024.06.18</td>
+						<td class="date">${nna.noticeInputdate}</td>
+						<td>${nna.noticeViewCnt}</td>
 					</tr>
-				
-					<tr>
-						<td>2</td>
-						<td class="tcenter">
-							<a href="#none" onclick="fncGoView(2033639); return false;">
-								클럽조선 VIP 혜택 추가 안내
-							</a>
-						</td>
-
-						<td class="date">2024.05.14</td>
-						
-					</tr>
-				
-					<tr>
-						<td>3</td>
-						<td class="tcenter">
-							<a href="#none" onclick="fncGoView(1900559); return false;">
-								클럽조선 VIP SUB 카드 이용 약관 개정 안내
-							</a>
-						</td>
-
-						<td class="date">2024.02.20</td>
-					</tr>
-				
-					<tr>
-						<td>4</td>
-						<td class="tcenter">
-							<a href="#none" onclick="fncGoView(1899370); return false;">
-								클럽조선 VIP 혜택 추가 안내
-							</a>
-						</td>
-
-						<td class="date">2024.02.19</td>
-					</tr>
-				
-					<tr>
-						<td>5</td>
-						<td class="tcenter">
-							<a href="#none" onclick="fncGoView(1884803); return false;">
-								클럽조선 Rewards 이용 약관 개정 안내
-							</a>
-						</td>
-
-						<td class="date">2024.02.06</td>
-					</tr>
-				
-					<tr>
-						<td>6</td>
-						<td class="tcenter">
-							<a href="#none" onclick="fncGoView(1884801); return false;">
-								클럽조선 VIP 이용 약관 개정 안내
-							</a>
-						</td>
-						<td class="date">2024.02.06</td>
-					</tr>
-				
-					<tr>
-						<td>7</td>
-						<td class="tcenter">
-							<a href="#none" onclick="fncGoView(1884793); return false;">
-								클럽조선 VIP 멤버십 개편 안내
-							</a>
-						</td>
-
-						<td class="date">2024.02.06</td>
-					</tr>
-				
-					<tr>
-						<td>8</td>
-						<td class="tcenter">
-							<a href="#none" onclick="fncGoView(1865140); return false;">
-								24년도 클럽조선 VIP 전용 객실 가격 안내
-							</a>
-						</td>
-						<td class="date">2024.01.18</td>
-					</tr>
-				
-					<tr>
-						<td>9</td>
-						<td class="tcenter">
-							<a href="#none" onclick="fncGoView(1860264); return false;">
-								그래비티 서울 판교 호무랑 영업 종료 안내
-							</a>
-						</td>
-
-						<td class="date">2024.01.12</td>
-					</tr>
-				
-					<tr>
-						<td>10</td>
-						<td class="tcenter">
-							<a href="#none" onclick="fncGoView(1839331); return false;">
-								클럽조선 VIP Wine Corkage Free 이용권 사용처 확대 안내
-							</a>
-						</td>
-						<td class="date">2023.12.26</td>
-					</tr>
-				
+				</c:forEach>
+	
 			</tbody>
 		</table>
 		<div class="pagination">
-			
-			<a  class="first"><span class="hidden">first</span></a>
-		
-			<a  class="prev"><span class="hidden">prev</span></a>
-		
-			<span class="current"><span class="hidden">현재페이지</span>1</span>
-		
-			<a href="javascript:fncPage(2);">2</a> 
-		
-			<a  class="next"><span class="hidden">next</span></a> 
-		
-			<a  class="last"><span class="hidden">last</span></a> 
+							<c:if test="${totalPage==0}">
+								<span class="current"><span class="hidden">현재페이지</span>1</span>
+							</c:if>
+							<c:forEach var="page" begin="1" end="${totalPage}"
+								varStatus="status">
+								<c:choose>
+									<c:when test="${page == nVO.page}">
+										<span class="current"><span class="hidden">현재페이지</span>${page}</span>
+									</c:when>
+									<c:otherwise>
+										<a href="javascript:fncPage(${page});">${page}</a>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
 		
 		</div>
 	</div>

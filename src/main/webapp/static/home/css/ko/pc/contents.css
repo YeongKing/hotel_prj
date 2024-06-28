@@ -910,7 +910,7 @@ abbr[title="Josun Point"], abbr[title="Point"]{display:inline-block;margin:0 2px
 .watchListCont.expiration .roomIntro .btnBottom{font-size:17px}
 
 /* My Page > myContents(list) */
-.mypage .myContents{position:relative;min-height:900px}
+.mypage .myContents{position:relative;min-height:900px;margin-left: 400px}
 .mypage .myContents.noMember{margin-left:0}
 .mypage .myContents > h3.titDep2{line-height:1;letter-spacing:-.01em}
 .myContents .pageGuide{margin:-15px 0 45px;font-size:18px}

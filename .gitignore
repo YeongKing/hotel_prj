@@ -314,8 +314,10 @@ $RECYCLE.BIN/
 *.lnk
 
 # properties file
+*.properties
 /database.properties
 /application.properties
+/auth.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,intellij,eclipse,java,visualstudiocode,vuejs
 /build/

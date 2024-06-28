@@ -1,5 +1,6 @@
 package kr.co.sist.elysian.user.mypage.service;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
 
@@ -7,21 +8,37 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
+import kr.co.sist.elysian.user.mypage.model.domain.NationalDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 import kr.co.sist.elysian.user.mypage.repository.MyPageDAO;
+import net.nurigo.sdk.NurigoApp;
+import net.nurigo.sdk.message.model.Message;
+import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
+import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+import net.nurigo.sdk.message.service.DefaultMessageService;
 
 @Service
+@PropertySource("classpath:auth.properties")
 public class MyPageService{
 
 	@Autowired(required = false)
 	private MyPageDAO myPageDAO;
 	
+	final DefaultMessageService messageService;
+	
+	public MyPageService(@Value("${api.key}") String key,  @Value("${api.secret.key}") String secretKey) {
+		// 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
+		this.messageService = NurigoApp.INSTANCE.initialize(key, secretKey, "https://api.coolsms.co.kr");
+	} // MyPageService
+
 	/**
 	 * DAO에서 가져온 userName을 jsonObj에 담아 반환
 	 * @param userId
@@ -263,5 +280,99 @@ public class MyPageService{
 		
 		return jsonObj.toJSONString();
 	} // selectMemberPw
+	
+	/**
+	 * DAO에서 가져온 userId의 개인정보를 회원정보수정에 뿌려주기 위해 반환
+	 * @param paramMap
+	 * @return 개인정보
+	 */
+	public MemberDomain selectMemberInfo(String userId) {
+		MemberDomain memberDomain = null;
+		try {
+			memberDomain = myPageDAO.selectMemberInfo(userId);
+			
+			memberDomain.setPassword(null);
+			
+			String fullPhone = memberDomain.getPhone();
+			memberDomain.setFirstPhoneNum(fullPhone.substring(0, fullPhone.indexOf("-")));
+			memberDomain.setSecondPhoneNum(fullPhone.substring(fullPhone.indexOf("-")+1, fullPhone.lastIndexOf("-")));
+			memberDomain.setLastPhoneNum(fullPhone.substring(fullPhone.lastIndexOf("-")+1));
+			
+			String fullEmail = memberDomain.getEmail();
+			memberDomain.setFirstEmail(fullEmail.substring(0, fullEmail.indexOf("@")));
+			memberDomain.setLastEmail(fullEmail.substring(fullEmail.indexOf("@")+1));
+			
+		} catch(PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		return memberDomain;
+	} // selectMemberInfo
+
+	/**
+	 * coolsms를 이용하여 휴대폰 인증번호 발송을 위한 service
+	 * @param phoneNumber
+	 * @return 인증번호6자리, 전송결과
+	 */
+	public String checkPhoneRequestNum(String phoneNumber) {
+		JSONObject jsonObj = new JSONObject();
+		Message message = new Message();
+		
+		// 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+        message.setFrom("01039299258");
+        message.setTo(phoneNumber);
+        
+        SecureRandom secureRandom = new SecureRandom();
+        int randomNum = secureRandom.nextInt((int)Math.pow(10, 6));
+        String formattedNum = String.format("%06d", randomNum);
+        StringBuilder smsMessage = new StringBuilder();
+        smsMessage.append("[Eysian호텔] SMS인증번호는 ").append(formattedNum).append("입니다. 정확히 입력해주세요.");
+        
+        message.setText(smsMessage.toString());
+        
+        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+        System.out.println(response);
+        
+        jsonObj.put("randomNum", formattedNum);
+        jsonObj.put("statusMessage", response.component5());
+        jsonObj.put("statusCode", response.component8());
+		
+		return jsonObj.toJSONString();
+	} // checkPhoneRequestNum
+	
+	/**
+	 * DAO에서 가져온 전체 국가 정보를 반환
+	 * @return 전체 국가정보
+	 */
+	public List<NationalDomain> selectAllNationalInfo() {
+		List<NationalDomain> allnationalInfo = null;
+		try {
+			allnationalInfo = myPageDAO.selectAllNationlInfo();
+		} catch(PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		return allnationalInfo;
+	} // selectAllNationalInfo
+	
+	/**
+	 * DAO에서 가져온 전체 이메일과 뷰에서 받아온 이메일의 중복을 확인하여 결과를 반환
+	 * @param userEmail
+	 * @return 중복확인 결과
+	 */
+	/*
+	 * public String checkDupEmail(String userEmail) { JSONObject jsonObj = new
+	 * JSONObject();
+	 * 
+	 * String dupResult = "FAIL";
+	 * 
+	 * List<MemberDomain> allMemberEmail = myPageDAO.selectAllEmail();
+	 * 
+	 * for(MemberDomain memberDomain : allMemberEmail) {
+	 * if(!userEmail.equals(memberDomain.getEmail())) {
+	 * 
+	 * } }
+	 * 
+	 * 
+	 * }
+	 */ // checkDupEmail
 	
 } // class

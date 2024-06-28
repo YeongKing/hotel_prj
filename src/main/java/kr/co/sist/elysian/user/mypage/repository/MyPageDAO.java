@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
+import kr.co.sist.elysian.user.mypage.model.domain.NationalDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 
 @Repository
@@ -148,5 +149,29 @@ public class MyPageDAO {
 		myBatisDAO.closeHandler(ss);
 		return memberDomain;
 	} // selectMemberInfo
+	
+	/**
+	 * MyBatis와 매핑하여 전체 국가코드, 국가명 조회
+	 * @return allnationalInfo
+	 * @throws PersistenceException
+	 */
+	public List<NationalDomain> selectAllNationlInfo() throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(false);
+		List<NationalDomain> allnationalInfo = ss.selectList("kr.co.sist.elysian.member.mypage.selectAllNationalInfo");
+		myBatisDAO.closeHandler(ss);
+		return allnationalInfo;
+	} // selectAllNationlInfo
+	
+	/**
+	 * MyBatis와 매핑하여 모든 사용자의 이메일을 조회
+	 * @return allMemberEmail
+	 * @throws PersistenceException
+	 */
+	public List<MemberDomain> selectAllEmail() throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(false);
+		List<MemberDomain> allMemberEmail = ss.selectList("kr.co.sist.elysian.member.mypage.selectAllEmail");
+		myBatisDAO.closeHandler(ss);
+		return allMemberEmail;
+	}
 
 } // class

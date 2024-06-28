@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 public class MemberDomain {
 	
 	private String password, name, birthday, gender, engLName, engFName,
-					nationalCode, phone, zipcode, address, addressDetail, email;
+					nationalCode, phone, zipcode, address, addressDetail, email,
+					firstPhoneNum, secondPhoneNum, lastPhoneNum,
+					firstEmail, lastEmail;
 
 } // class

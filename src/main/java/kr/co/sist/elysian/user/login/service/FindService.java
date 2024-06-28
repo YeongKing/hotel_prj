@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import kr.co.sist.elysian.user.login.model.domain.UserDomain;
@@ -16,15 +17,16 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.apache.ibatis.exceptions.PersistenceException;
 
 @Service
+@PropertySource("classpath:memberAuth.properties")
 public class FindService {
 
     @Autowired
     private UserDAO userDAO;
     
-    @Value("sms.api.key")
+    @Value("${sms.api.key}")
     private String api_key;
     
-    @Value("sms.api.secret.key")
+    @Value("${sms.api.secret.key}")
     private String api_secret;
 
     public void certifiedPhoneNumber(String userPhone, int randomNumber) {

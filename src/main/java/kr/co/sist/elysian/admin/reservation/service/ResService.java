@@ -112,6 +112,25 @@ public class ResService {
 		} // end catch
 		return roomInfoList;
 	} // searchRoomInfo
+
+	/**
+	 * DAO에서 예약 수정 처리 후 결과 반환(결과가 1일 때만 true)
+	 * @param roomResVO(예약 정보 VO)
+	 * @return updateFlag(처리 여부)
+	 */
+	public boolean modifyRoomRes(Map<String, Object> paramMap) {
+		boolean updateFlag = false;
+		try {
+			int result = resDAO.updateRoomRes(paramMap);
+			if(result == 1) {
+				updateFlag = true;
+			} // end if
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+			updateFlag = false;
+		} // end catch
+		return updateFlag;
+	} // modifyRoomRes
 	
 	/**
 	 * DAO에서 checkin 처리 후 결과 반환(결과가 1일 때만 true)
@@ -171,25 +190,6 @@ public class ResService {
 	} // modifyRoomResToCancel
 
 	/**
-	 * DAO에서 예약 수정 처리 후 결과 반환(결과가 1일 때만 true)
-	 * @param roomResVO(예약 정보 VO)
-	 * @return updateFlag(처리 여부)
-	 */
-	public boolean modifyRoomRes(Map<String, Object> paramMap) {
-		boolean updateFlag = false;
-		try {
-			int result = resDAO.updateRoomRes(paramMap);
-			if(result == 1) {
-				updateFlag = true;
-			} // end if
-		} catch (PersistenceException pe) {
-			pe.printStackTrace();
-			updateFlag = false;
-		} // end catch
-		return updateFlag;
-	} // modifyRoomRes
-	
-	/**
 	 * DAO에서 가져온 DiningResDomain을 view List column에 맞게 변환
 	 * @return diningResResponseList
 	 */
@@ -202,9 +202,9 @@ public class ResService {
 			
 			for(DiningResDomain diningResDomain : diningResList) {
 				switch(diningResDomain.getDiningResStatus()) {
-				case "COMPLETED" : diningResDomain.setDiningResStatus("<span class='badge bg-success'>이용 완료</span>"); break;
+				case "COMPLETED" : diningResDomain.setDiningResStatus("<span class='badge bg-success'>이용완료</span>"); break;
 				case "CONFIRMED" : diningResDomain.setDiningResStatus("<span class='badge bg-light'>예약</span>"); break;
-				case "CANCELLED" : diningResDomain.setDiningResStatus("<span class='badge bg-danger'>취소</span>"); break;
+				case "CANCELED" : diningResDomain.setDiningResStatus("<span class='badge bg-danger'>취소</span>"); break;
 				case "NO SHOW" : diningResDomain.setDiningResStatus("<span class='badge bg-secondary'>NO SHOW</span>"); break;
 				} // end case
 				
@@ -229,16 +229,108 @@ public class ResService {
 		return diningResResponseList;
 	} // searchDiningResList
 
+	/**
+	 * DAO에서 가져온 RoomResDomain을 예약번호별 view에 맞게 변환
+	 * @param payNum
+	 * @return diningResResponseDomain
+	 */
 	public DiningResDomain detailDiningRes(String payNum) {
-		return null;
+		DiningResDomain diningResResponseDomain = null;
+		try {
+			DiningResDomain diningResDomain = resDAO.selectOneDiningRes(payNum);
+			
+			String diningResStatus = "";
+			switch(diningResDomain.getDiningResStatus()) {
+			case "COMPLETED" : diningResStatus = "이용완료"; break;
+			case "CONFIRMED" : diningResStatus = "예약"; break;
+			case "CANCELED" : diningResStatus = "취소"; break;
+			case "NO SHOW" : diningResStatus = "NO SHOW"; break;
+			} // end case
+			
+			diningResResponseDomain = DiningResDomain.builder()
+							.payNum(diningResDomain.getPayNum())
+							.diningResStatus(diningResStatus)
+							.diningName(diningResDomain.getDiningName())
+							.visitPeopleStr(diningResDomain.getVisitPeopleStr())
+							.adultsCntStr(diningResDomain.getAdultsCntStr())
+							.childCntStr(diningResDomain.getChildCntStr())
+							.babyCntStr(diningResDomain.getBabyCntStr())
+							.visitDate(diningResDomain.getVisitDate())
+							.visitTime(diningResDomain.getVisitTime())
+							.visitorName(diningResDomain.getVisitorName())
+							.visitorPhone(diningResDomain.getVisitorPhone())
+							.visitorEmail(diningResDomain.getVisitorEmail())
+							.visitorRequest(diningResDomain.getVisitorRequest())
+							.cardName(diningResDomain.getCardName())
+							.cardNum(diningResDomain.getCardNum())
+							.payPriceStr(diningResDomain.getPayPriceStr())
+							.diningResDateStr(diningResDomain.getDiningResDateStr())
+							.build();
+		} catch(PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		return diningResResponseDomain;
 	} // detailDiningRes
-
+	
 	public int modifyDiningRes(DiningResVO diningResVO) {
 		return 0;
 	} // modifyDiningRes
-
-	public int removeDiningRes(String payNum) {
-		return 0;
-	} // removeDiningRes
+	
+	/**
+	 * DAO에서 예약 수정 처리 후 결과 반환(결과가 1일 때만 true)
+	 * @param diningResVO(예약 정보 VO)
+	 * @return updateFlag(처리 여부)
+	 */
+	public boolean modifyDiningRes(Map<String, Object> paramMap) {
+		boolean updateFlag = false;
+		try {
+			int result = resDAO.updateDiningRes(paramMap);
+			if(result == 1) {
+				updateFlag = true;
+			} // end if
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+			updateFlag = false;
+		} // end catch
+		return updateFlag;
+	} // modifyDiningRes
+	
+	/**
+	 * DAO에서 이용완료 처리 후 결과 반환(결과가 1일 때만 true)
+	 * @param paramMap(예약 번호, 세션 아이디)
+	 * @return updateFlag(처리 여부)
+	 */
+	public boolean modifyDiningResToComplete(Map<String, String> paramMap) {
+		boolean updateFlag = false;
+		try {
+			int result = resDAO.updateDiningResToComplete(paramMap);
+			if(result == 1) {
+				updateFlag = true;
+			} // end if
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+			updateFlag = false;
+		} // end catch
+		return updateFlag;
+	} // modifyDiningResToComplete
+	
+	/**
+	 * DAO에서 예약 취소 처리 후 결과 반환(결과가 1일 때만 true)
+	 * @param paramMap(예약 번호, 세션 아이디)
+	 * @return updateFlag(처리 여부)
+	 */
+	public boolean modifyDiningResToCancel(Map<String, String> paramMap) {
+		boolean updateFlag = false;
+		try {
+			int result = resDAO.updateDiningResToCancel(paramMap);
+			if(result == 1) {
+				updateFlag = true;
+			} // end if
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+			updateFlag = false;
+		} // end catch
+		return updateFlag;
+	} // modifyDiningResToCancel
 	
 } // class

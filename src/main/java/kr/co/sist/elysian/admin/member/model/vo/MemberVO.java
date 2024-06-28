@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MemberVO {
 
-	private String memberId, name, engLname, engFname, address, addrDetail, email, phone;
-	private int zipcode ;
+	private String memberId, name, engLname, engFname, address, addrDetail, email, phone, zipcode;
+
 }

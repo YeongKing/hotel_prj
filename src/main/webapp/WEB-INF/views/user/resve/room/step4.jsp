@@ -2,6 +2,7 @@
  pageEncoding="UTF-8" 
  info="" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
  
 <!DOCTYPE html>
 <html lang="ko">
@@ -253,11 +254,9 @@
 	<div class="topArea">
 		<div class="topInner">
 			<p class="f75">예약이 완료되었습니다.</p>
-			<div class="revNumber">예약번호<em>411665</em></div>
+			<div class="revNumber">예약번호<em>${rrVO.payNum}</em></div>
 			<p class="pageGuide">요청하신 예약은 정상적으로 처리되었으며, 예약번호는 예약 조회 및 취소 시<br> 반드시 필요하니, 프린트 또는 메모해 주시기 바랍니다.</p>
-			<!-- 20200420 수정 -->
-			<button type="button" class="btnPrint" onClick="commonJs.popShow(jQuery('#layerPop1'))">인쇄하기</button>
-			<!-- //20200420 수정 -->
+
 		</div>
 	</div>
 	<!-- //topArea -->
@@ -268,7 +267,7 @@
 				<dt>엘리시안 서울</dt>
 				<dd>
 					<span class="txt">
-						서울특별시 중문관광로 72번길 60
+						서울특별시 강남구 테헤란로 132(역삼동) 한독약품빌딩 8층 엘리시안호텔
 					</span>
 					<span class="thum">
 						<img src="http://localhost/hotel_prj/static/home/images/ko/pc/HOTEL/img_visual_jjchosun.png" alt="그랜드 조선 제주 전경 이미지">
@@ -280,32 +279,25 @@
 				<dd>
 					
 					
-					<input type="hidden" id="chkinDe" value="2024.07.16" />
-					<input type="hidden" id="chcktDe" value="2024.07.17" />
+					<input type="hidden" id="chkinDe" value="${rrVO.ckinDate}" />
+					<input type="hidden" id="chcktDe" value="${rrVO.ckoutDate}" />
 					<span class="txt" id="dateTxt"></span>
 					<span class="txt">ROOM ONLY</span>
 					<span class="txt">1 Rooms</span>
 					<span class="txt">
-						DELUXE /
-						2DOUBLE /  
-						STANDARD VIEW 
+						${rrVO.roomRankName} /	${rrVO.bedName}	/	${rrVO.viewName}	
 					</span>
-					<span class="txt">2 Adults, 0 Children</span>
+					<span class="txt">${rrVO.adultsNum} Adults, ${rrVO.kidsNum} Children</span>
 				</dd>
 			</dl>
 			<dl class="commlist">
 				<dt>고객정보</dt>
 				<dd>
-					<span class="txt">
-						
-							
-								김무영
-							
-							
-						
-					</span>
-					<span class="txt">010-7427-0406</span>
-					<span class="txt">whdcks208@naver.com</span>
+					<span class="txt">		
+								"${umd.name}"
+						</span>
+					<span class="txt">"${rrVO.guestPhone}"</span>
+					<span class="txt">"${rrVO.guestEmail}"</span>
 				</dd>
 			</dl>
 		</div>
@@ -315,10 +307,10 @@
 		<ul class="toggleList rsvList">
 			
 				<li class="toggleOn">
-					<strong class="listTit">객실 1</strong>
-					<span class="opValue">2 Adults, 0 Children</span>
+					<strong class="listTit">객실</strong>
+					<span class="opValue">${rrVO.adultsNum} Adults, ${rrVO.kidsNum} Children</span>
 					<em class="intValue pay">
-						299,200<em class="unit">KRW</em>
+						 <fmt:formatNumber value="${rrVO.payPrice}" type="number" maxFractionDigits="0"/><em class="unit">KRW</em>
 					</em> 
 					<button type="button" class="btnToggle">
 						<span class="hidden">상세내용 보기</span>
@@ -332,18 +324,17 @@
 										<ul class="infoData">
 											
 												<li>
-													<span class="lfData">2024.07.16</span>
-													<span class="rtData">272,000</span>
+													<span class="lfData"><fmt:formatNumber value="${rrVO.payPrice}" type="number" maxFractionDigits="0"/></span>
 												</li>
 											
 										</ul>
 									</dd>
 								</dl>
 								<dl class="commlist">
-									<dt>옵션 금액</dt>
+									<dt>박</dt>
 									<dd>
 										<ul class="infoData">
-											
+											<span class="lfData">${rrVO.night}박</span>
 											
 											
 										</ul>
@@ -353,12 +344,12 @@
 									
 										
 										
-											<dt>세금</dt>
+											<dt> </dt>
 											<dd>
 												<ul class="infoData">
 													<li>
-														<span class="lfData">세금(10%)</span>
-														<span class="rtData">27,200</span>
+														<span class="lfData"></span>
+														<span class="rtData"></span>
 													</li>
 													<!-- <li>
 														<span class="lfData">봉사료(10%)</span>
@@ -383,34 +374,19 @@
 		<div class="total noMember">
 			<div class="totalWrap type02">
 				<span class="tit">총 예약금액</span>
-				<strong class="pay"><em>299,200</em>KRW</strong>
+				<strong class="pay"><em> <fmt:formatNumber value="${rrVO.payPrice * rrVO.night}" type="number" maxFractionDigits="0"/></em>KRW</strong>
 			</div>
 		</div>
-		<!-- //비회원 예약 일 경우 -->
 
-		<!-- 포인트 할인 적용 일 경우 -->
-		<!-- <div class="total">
-			<div class="totalWrap">
-				<span class="tit">예약 금액</span><strong class="pay"><em>1,964,050</em></strong>
-			</div>
-			<div class="totalWrap">
-				<span class="tit">포인트 할인</span><strong class="pay"><em>230,000</em></strong>
-			</div>
-			<div class="totalWrap type02">
-				<span class="tit">최종 결제 금액</span><strong class="pay"><em>1,734,050</em>KRW</strong>
-			</div>
-		</div> -->
-		<!-- //포인트 할인 적용 일 경우 -->
-		<!-- <p class="txtGuide">상기 요금은 포인트 사용 시 예상되는 결제 금액으로 실제와는 다를 수 있습니다.</p> -->
 
 		<div class="btnArea">
-			<a href="/main.do" class="btnSC btnL">
+			<a href="http://localhost/hotel_prj/user/index.do" class="btnSC btnL">
 				메인
 			</a>
 			
-				<a href="https://josunhotel.com/cnfirm/mber/room/reserveList.do" class="btnSC btnL active">
-					예약내역 확인
-				</a>
+			<a href="http://localhost/hotel_prj/user/roomResList.do" class="btnSC btnL active">
+				예약내역 확인
+			</a>
 			
 			
 		</div>
@@ -437,157 +413,6 @@
 	<!-- 컨텐츠 E -->
 </div>
 <!-- //wrapper -->
-<div id="layerPop1" class="layerPop">
-	<div class="layerCont printLayer">
-		<div class="printCont">
-			<div class="printIntro">
-				본 페이지를 인쇄합니다.
-				<a href="#none" class="btnPrint02">인쇄하기</a>
-			</div>
-			<div class="topArea">
-				<div class="topInner">
-					<p class="f75">예약이 완료되었습니다.</p>
-					<div class="revNumber">예약번호<em>411665</em></div>
-					<p class="pageGuide">요청하신 예약은 정상적으로 처리되었으며, 예약번호는 예약 조회 및 취소 시<br> 반드시 필요하니, 프린트 또는 메모해 주시기 바랍니다.</p>
-				</div>
-			</div>
-			<!-- //topArea -->
-			<div class="inner">
-				<h2 class="titDep2">예약 정보</h2>
-				<div class="commWrap rsvInfo">
-					<dl class="commlist">
-						<dt>그랜드 조선 제주<!-- 그랜드 조선 부산 --></dt>
-						<dd>
-							<span class="txt">제주특별자치도 서귀포시 중문관광로 72번길 60<!-- 부산광역시 해운대구 해운대해변로 292 --></span>
-							<span class="thum">
-								<img src="/static/home/images/ko/pc/HOTEL/img_visual_jjchosun.png " alt="그랜드 조선 제주 전경 이미지">
-							</span>
-						</dd>
-					</dl>
-					<dl class="commlist">
-						<dt>예약 상세 정보</dt>
-						<dd>
-							<span class="txt" id="dateTxtLayer"></span>
-							<span class="txt">ROOM ONLY</span>
-							<span class="txt">1 Rooms</span>
-							<span class="txt">
-								DELUXE /
-								2DOUBLE /  
-								STANDARD VIEW
-							</span>
-							<span class="txt">2 Adults, 0 Children</span>
-						</dd>
-					</dl>
-					<dl class="commlist">
-						<dt>고객정보</dt>
-						<dd>
-							<span class="txt">
-								
-									
-										김무영
-									
-									
-								
-							</span>
-							<span class="txt">010-7427-0406</span>
-							<span class="txt">whdcks208@naver.com</span>
-						</dd>
-					</dl>
-				</div>
-				<!-- //rsvInfo -->
-
-				<h2 class="titDep2">객실 상세 내역</h2>
-				<ul class="toggleList rsvList">
-					
-						<li class="toggleOn">
-							<strong class="listTit">객실 1</strong>
-							<span class="opValue">2 Adults, 0 Children</span>
-							<em class="intValue pay">
-								299,200<em class="unit">KRW</em>
-							</em> 
-							<div class="toggleCont">
-								<div class="toggleInner">
-									<div class="commWrap">
-										<dl class="commlist">
-											<dt>객실 금액</dt>
-											<dd>
-												<ul class="infoData">
-													
-														<li>
-															<span class="lfData">2024.07.16</span>
-															<span class="rtData">272,000</span>
-														</li>
-													
-												</ul>
-											</dd>
-										</dl>
-										<dl class="commlist">
-											<dt>옵션 금액</dt>
-											<dd>
-												<ul class="infoData">
-													
-													
-													
-												</ul>
-											</dd>
-										</dl>
-										<dl class="commlist">
-											
-												
-												
-													<dt>세금</dt>
-													<dd>
-														<ul class="infoData">
-															<li>
-																<span class="lfData">세금(10%)</span>
-																<span class="rtData">27,200</span>
-															</li>
-														</ul>
-													</dd>
-												
-											
-										</dl>
-									</div>
-									
-	                                
-	                                
-								</div>
-							</div>
-						</li>
-					
-				</ul>
-				<!-- //toggleList -->
-				<!-- 비회원 예약 일 경우 -->
-				<div class="total noMember">
-					<div class="totalWrap type02">
-						<span class="tit">총 예약금액</span>
-						<strong class="pay"><em>299,200</em>KRW</strong>
-					</div>
-				</div>
-				<!-- //비회원 예약 일 경우 -->
-
-				<!-- 포인트 할인 적용 일 경우 -->
-				<!-- <div class="total">
-					<div class="totalWrap">
-						<span class="tit">예약 금액</span><strong class="pay"><em>1,964,050</em></strong>
-					</div>
-					<div class="totalWrap">
-						<span class="tit">포인트 할인</span><strong class="pay"><em>230,000</em></strong>
-					</div>
-					<div class="totalWrap type02">
-						<span class="tit">최종 결제 금액</span><strong class="pay"><em>1,734,050</em>KRW</strong>
-					</div>
-				</div> -->
-				<!-- //포인트 할인 적용 일 경우 -->
-				<!-- <p class="txtGuide">상기 요금은 포인트 사용 시 예상되는 결제 금액으로 실제와는 다를 수 있습니다.</p> -->
-			</div>
-			<!-- //inner -->
-		</div>
-		<button type="button" class="btnClose" onclick="commonJs.popClose(jQuery('#layerPop1'))">
-			닫기
-		</button> 
-	</div>
-</div>
 
 
 		<!-- //container -->
@@ -603,81 +428,7 @@
 	</div>
 	<!-- //wrapper -->
 
-<!-- 호텔 찾기 Layer -->
-<div id="hotelFindLayer" class="layerPop">
-	<div class="layerCont">
-		<div class="hotelFindPop">
-			<h2>호텔 찾기</h2>
-			<ul class="hotelSelect">
-								<li>
-					<a href="https://jpg.josunhotel.com/main.do" target="_blank" title="새창열림">		
-						<span class="hotelLogo palace">
-						</span>
-						<span class="hotelTit">조선 팰리스<!-- 조선 팰리스 --></span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selwi-the-westin-chosun-seoul" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo westinSeoul">
-						</span>
-						<span class="hotelTit">웨스틴 조선 서울</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/puswi-the-westin-chosun-busan" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo westinBusan">
-						</span>
-						<span class="hotelTit">웨스틴 조선 부산</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://gjb.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo grandBusan">
-						</span>
-						<span class="hotelTit">그랜드 조선 부산</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://gjj.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo grandJeju">
-						</span>
-						<span class="hotelTit">그랜드 조선 제주</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://lescapehotel.com/main" target="_blank" title="새창열림">
-						<span class="hotelLogo lescape">
-						</span>
-						<span class="hotelTit">레스케이프 호텔</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://grp.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo gravityPangyo">
-						</span>
-						<span class="hotelTit">그래비티 서울 판교</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selfp-four-points-seoul-namsan" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo sheratonSeoulstation">
-						</span>
-						<span class="hotelTit">포포인츠 바이 쉐라톤 조선 서울역</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selfd-four-points-seoul-myeongdong" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo sheratonMyeongdong">
-						</span>
-						<span class="hotelTit">포포인츠 바이 쉐라톤 조선, 서울 명동</span>
-					</a>
-				</li>
-			</ul>
-		</div>
-		<button type="button" class="btnClose" onclick="commonJs.popClose($('#hotelFindLayer'))">닫기</button>
-	</div>
-</div>
-<!-- //호텔 찾기 Layer -->
+
 <div class="dimmed"></div>
 </body>
 </html>

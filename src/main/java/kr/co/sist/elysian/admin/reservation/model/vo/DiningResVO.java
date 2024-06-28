@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DiningResVO {
 
-	private String diningResStatus, visitorName, visitorPhone, visitorEmail, visitorRequest;
-	
+	private String payNum, visitorName, visitorPhone, visitorEmail, visitorRequest;
 	
 }//class

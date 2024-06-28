@@ -1762,7 +1762,7 @@ commonJs.popClose = function (popupElement) {
  */
 commonJs.showLoadingBar = function () {
     var st = $(window).scrollTop();
-    var loadingImgUri = "/static/home/images/ko/pc/common/img_loadingbar.gif";
+    var loadingImgUri = "http://localhost/hotel_prj/static/home/images/ko/pc/common/img_loadingbar.gif";
     var html = '<div class="loadingBar"><div class="img"><img src=' +
         loadingImgUri + ' alt=""></div><div class="dimmed" style="display:block;"></div' +
         '></div>';

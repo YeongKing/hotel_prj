@@ -23,7 +23,9 @@
 	
 	<context:component-scan base-package="kr.co.sist.elysian" />
 	
+
 	<interceptors>
+
 		<interceptor>
 			<mapping path="/admin/**"/>
 			<exclude-mapping path="/admin/login_frm.do"/>
@@ -36,9 +38,16 @@
 			<exclude-mapping path="/user/login.do"/>
 			<exclude-mapping path="/user/index.do"/>
 			<exclude-mapping path="/user/set_session.do"/>
+			<exclude-mapping path="/user/searchPopupLogin.do"/>
+			<exclude-mapping path="/user/room0.do"/>
+			<exclude-mapping path="/user/room1.do"/>
+			<exclude-mapping path="/user/room2.do"/>
+			<exclude-mapping path="/user/step1.do"/>
+			<exclude-mapping path="/user/step2.do"/>
+			<exclude-mapping path="/user/join.do"/>
 			<beans:bean id="ui" class="kr.co.sist.elysian.user.login.interceptor.UserInterceptor"/>
 		</interceptor>
-	</interceptors>
+	</interceptors> 
 	
 	
 	

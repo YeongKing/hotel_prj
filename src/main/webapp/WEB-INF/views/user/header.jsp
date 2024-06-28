@@ -34,7 +34,7 @@
 			<ul class="menuDepth02">
 				<li><a href="http://localhost/hotel_prj/user/mypage.do">MY PAGE</a></li>
 				<li><a href="http://localhost/hotel_prj/user/roomResList.do">예약확인</a></li>
-				<li><a href="http://localhost/hotel_prj/user/myInfoForm.do">개인정보관리</a></li>
+				<li><a href="http://localhost/hotel_prj/user/myInfoPwCfmForm.do">개인정보관리</a></li>
 			</ul>
 			</li>
 							
@@ -67,7 +67,8 @@
     		</script>
 		</c:if>
 
-				<li><a href="http://localhost/hotel_prj/user/join.do" id="join">회원가입</a></li>
+			<li><a href="http://localhost/hotel_prj/user/join.do" id="join">회원가입</a></li>
+			<li><a href="http://localhost/hotel_prj/user/mypage.do" id="mypage">마이페이지</a></li>
 			<li><a href="http://localhost/hotel_prj/user/roomResList.do" id="confirmReserv">예약확인</a></li>
 		</ul>
 					
@@ -79,7 +80,7 @@
 		</div>
 		
 		<ul class="item_list" role="listbox">
-			<li role="option"><a href="http://localhost/hotel_prj/user/room.do" id="roomSearchGNB">ROOM</a></li>
+			<li role="option"><a href="http://localhost/hotel_prj/user/room0.do" id="roomSearchGNB">ROOM</a></li>
 			<li role="option"><a href="http://localhost/hotel_prj/user/dining.do" id="diningSearchGNB">DINING</a></li>                             
 		</ul>
 		</div>

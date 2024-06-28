@@ -209,46 +209,68 @@ $(document).ready(function() {
     
     
     //객실 등록에서 객실등급 변경시
-    $('#addRoomRankName').change(function() {
-        var roomRankName = $(this).val();
-        var roomRankCode = '';
-        
-        switch (roomRankName) {
-            case 'DELUXE':
-            	roomRankCode = '30_001';
-            	$('#addRoomBasicCapacity').val(2);
-            	$('#addRoomMaxCapacity').val(4);
-            	$('#addRoomBasicPrice').val(200000);
-            	$('#addRoomAddPrice').val(20000);
-            	$('#addRoomSize').val(35);
-                break;
-            case 'STANDARD':
-            	roomRankCode = '30_002';
-            	$('#addRoomBasicCapacity').val(2);
-            	$('#addRoomMaxCapacity').val(4);
-            	$('#addRoomBasicPrice').val(150000);
-            	$('#addRoomAddPrice').val(20000);
-            	$('#addRoomSize').val(25);
-                break;
-            case 'SUITE':
-            	roomRankCode = '30_003';
-            	$('#addRoomBasicCapacity').val(2);
-            	$('#addRoomMaxCapacity').val(8);
-            	$('#addRoomBasicPrice').val(500000);
-            	$('#addRoomAddPrice').val(20000);
-            	$('#addRoomSize').val(55);
-                break;
-            default:
-            	roomRankCode = '';
-        		$('#addRoomBasicCapacity').val('');
-        		$('#addRoomMaxCapacity').val('');
-        		$('#addRoomBasicPrice').val('');
-        		$('#addRoomAddPrice').val('');
-        		$('#addRoomSize').val('');
-        }
-        
-        $('#addRoomRankCode').val(roomRankCode);
-    });//change
+$('#addRoomRankName').change(function() {
+    var roomRankName = $(this).val();
+    var roomRankCode = '';
+    
+    var viewName = $('#addViewName').val();
+    var basicPrice = 0;
+    
+    switch (roomRankName) {
+        case 'DELUXE':
+            roomRankCode = '30_001';
+            $('#addRoomBasicCapacity').val(1);
+            $('#addRoomMaxCapacity').val(4);
+            $('#addRoomAddPrice').val(20000);
+            $('#addRoomSize').val(35);
+            if (viewName === 'CITY VIEW') {
+                basicPrice = 200000;
+            } else if (viewName === 'GARDEN VIEW') {
+                basicPrice = 230000;
+            } else if (viewName === 'POLLSIDE VIEW') {
+                basicPrice = 250000;
+            }
+            break;
+        case 'STANDARD':
+            roomRankCode = '30_002';
+            $('#addRoomBasicCapacity').val(1);
+            $('#addRoomMaxCapacity').val(4);
+            $('#addRoomAddPrice').val(20000);
+            $('#addRoomSize').val(25);
+            if (viewName === 'CITY VIEW') {
+                basicPrice = 150000;
+            } else if (viewName === 'GARDEN VIEW') {
+                basicPrice = 180000;
+            } else if (viewName === 'POLLSIDE VIEW') {
+                basicPrice = 200000;
+            }
+            break;
+        case 'SUITE':
+            roomRankCode = '30_003';
+            $('#addRoomBasicCapacity').val(1);
+            $('#addRoomMaxCapacity').val(8);
+            $('#addRoomAddPrice').val(20000);
+            $('#addRoomSize').val(55);
+            if (viewName === 'CITY VIEW') {
+                basicPrice = 500000;
+            } else if (viewName === 'GARDEN VIEW') {
+                basicPrice = 530000;
+            } else if (viewName === 'POLLSIDE VIEW') {
+                basicPrice = 550000;
+            }
+            break;
+        default:
+            roomRankCode = '';
+            $('#addRoomBasicCapacity').val('');
+            $('#addRoomMaxCapacity').val('');
+            $('#addRoomBasicPrice').val('');
+            $('#addRoomAddPrice').val('');
+            $('#addRoomSize').val('');
+    }
+    
+    $('#addRoomBasicPrice').val(basicPrice);
+    $('#addRoomRankCode').val(roomRankCode);
+});//change
     
     
     
@@ -265,9 +287,9 @@ $(document).ready(function() {
         var bedCode = '';
         
         switch (bedName) {
-            case 'DOUBLE':
+/*             case 'DOUBLE':
                 bedCode = '50_001';
-                break;
+                break; */
             case 'TWIN':
                 bedCode = '50_002';
                 break;
@@ -283,26 +305,64 @@ $(document).ready(function() {
     
     
     //객실 등록에서 뷰종류 변경시
-    $('#addViewName').change(function() {
-        var viewName = $(this).val();
-        var viewCode = '';
-        
-        switch (viewName) {
-            case 'CITY VIEW':
-            	viewCode = '40_001';
-                break;
-            case 'GARDEN VIEW':
-            	viewCode = '40_002';
-                break;
-            case 'POLLSIDE VIEW':
-            	viewCode = '40_003';
-                break;
-            default:
-            	viewCode = '';
-        }
-        
-        $('#addViewCode').val(viewCode);
-    });//change
+$('#addViewName').change(function() {
+    var viewName = $(this).val();
+    var viewCode = '';
+
+    switch (viewName) {
+        case 'CITY VIEW':
+            viewCode = '40_001';
+            break;
+        case 'GARDEN VIEW':
+            viewCode = '40_002';
+            break;
+        case 'POLLSIDE VIEW':
+            viewCode = '40_003';
+            break;
+        default:
+            viewCode = '';
+    }
+    
+    $('#addViewCode').val(viewCode);
+
+    // 현재 선택된 객실 등급을 기반으로 기본 가격 설정
+    var roomRankName = $('#addRoomRankName').val();
+    var basicPrice = 0;
+
+    switch (roomRankName) {
+        case 'DELUXE':
+            if (viewName === 'CITY VIEW') {
+                basicPrice = 200000;
+            } else if (viewName === 'GARDEN VIEW') {
+                basicPrice = 230000;
+            } else if (viewName === 'POLLSIDE VIEW') {
+                basicPrice = 250000;
+            }
+            break;
+        case 'STANDARD':
+            if (viewName === 'CITY VIEW') {
+                basicPrice = 150000;
+            } else if (viewName === 'GARDEN VIEW') {
+                basicPrice = 180000;
+            } else if (viewName === 'POLLSIDE VIEW') {
+                basicPrice = 200000;
+            }
+            break;
+        case 'SUITE':
+            if (viewName === 'CITY VIEW') {
+                basicPrice = 500000;
+            } else if (viewName === 'GARDEN VIEW') {
+                basicPrice = 530000;
+            } else if (viewName === 'POLLSIDE VIEW') {
+                basicPrice = 550000;
+            }
+            break;
+        default:
+            basicPrice = '';
+    }
+
+    $('#addRoomBasicPrice').val(basicPrice);
+});//change
     
     
     
@@ -672,12 +732,12 @@ function changePage(pageNumber) {
 									
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="addRoomBasicCapacity">객실 기본 인원</label> 
+											<label for="addRoomBasicCapacity">객실 최소 인원</label> 
 												<input
 						                        type="text"
 						                        id="addRoomBasicCapacity"
 						                        class="form-control"
-						                        placeholder="객실 기본 인원"
+						                        placeholder="객실 최소 인원"
 						                        name="addRoomBasicCapacity"
 						                        Disabled
 						                     />
@@ -752,7 +812,7 @@ function changePage(pageNumber) {
 						                     <option>침대 유형</option>
 						                     <option>KING</option>
 						                     <option>TWIN</option>
-						                     <option>DOUBLE</option>
+<!-- 						                     <option>DOUBLE</option> -->
 						                     </select>
 						                     <input type="hidden" id="addBedCode" name="addBedCode" value="">
 										</div>
@@ -873,12 +933,12 @@ function changePage(pageNumber) {
 									
 									<div class="col-md-6 col-12">
 										<div class="form-group">
-											<label for="updateRoomBasicCapacity">객실 기본 인원</label> 
+											<label for="updateRoomBasicCapacity">객실 최소 인원</label> 
 												<input
 						                        type="text"
 						                        id="updateRoomBasicCapacity"
 						                        class="form-control"
-						                        placeholder="객실 기본 인원"
+						                        placeholder="객실 최소 인원"
 						                        name="updateRoomBasicCapacity"
 						                        Disabled
 						                     />
@@ -948,7 +1008,7 @@ function changePage(pageNumber) {
 						                      id="updateBedName">
 						                     <option>KING</option>
 						                     <option>TWIN</option>
-						                     <option>DOUBLE</option>
+						                     <!-- <option>DOUBLE</option> -->
 						                     </select>
 						                     <input type="hidden" id="updateBedCode" name="updateBedCode" value="">
 										</div>

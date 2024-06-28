@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
+import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
+import kr.co.sist.elysian.user.mypage.model.domain.NationalDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 import kr.co.sist.elysian.user.mypage.model.vo.DiningResVO;
 import kr.co.sist.elysian.user.mypage.service.MyPageService;
@@ -275,6 +277,23 @@ public class MyPageController {
 	} // checkPwUserInfo
 	
 	/**
+	 * 로그인한 아이디의 회원정보수정 뷰와 상세 정보
+	 * @param session 로그인한 아이디
+	 * @param model 상세 정보
+	 * @return 회원정보수정 뷰
+	 */
+	@PostMapping("/myInfoForm.do")
+	public String detailUserInfo(HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		MemberDomain memberDomain = myPageService.selectMemberInfo(userId);
+		List<NationalDomain> allnationalInfo = myPageService.selectAllNationalInfo();
+		
+		model.addAttribute(memberDomain);
+		model.addAttribute("allnationalInfo", allnationalInfo);
+		return "user/mypage/myInfoForm";
+	} // detailUserInfo
+	
+	/**
 	 * 휴대폰 번호 변경을 위해 문자 인증 전송
 	 * @param requestData 입력한 휴대폰 번호
 	 * @return 문자 전송 정보
@@ -287,11 +306,18 @@ public class MyPageController {
 		return jsonObj;
 	} // checkPhoneRequestNum
 	
-	@PostMapping("/myInfoForm.do")
-	public String detailUserInfo() {
-		return "user/mypage/myInfoForm";
-	} // detailUserInfo
-
+	/**
+	 * 회원정보 수정 내 이메일 중복확인
+	 * @param userEmail
+	 * @return 이메일 중복확인 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/checkDupEmail.do", produces="application/json; charset=UTF-8")
+//	public String checkDupEmail(@RequestParam String userEmail) {
+//		String jsonObj = myPageService.checkDupEmail(userEmail);
+//		return jsonObj;
+//	} // checkDupEmail
+	
 	@GetMapping("/pwChngForm.do")
 	public String modifyPw() {
 		

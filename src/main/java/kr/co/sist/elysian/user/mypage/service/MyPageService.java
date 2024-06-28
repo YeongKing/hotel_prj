@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
+import kr.co.sist.elysian.user.mypage.model.domain.NationalDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 import kr.co.sist.elysian.user.mypage.repository.MyPageDAO;
 import net.nurigo.sdk.NurigoApp;
@@ -280,10 +281,38 @@ public class MyPageService{
 		return jsonObj.toJSONString();
 	} // selectMemberPw
 	
-	//public String selectMemberInfo(Map<String, String> paramMap) {
-		
-	//}
+	/**
+	 * DAO에서 가져온 userId의 개인정보를 회원정보수정에 뿌려주기 위해 반환
+	 * @param paramMap
+	 * @return 개인정보
+	 */
+	public MemberDomain selectMemberInfo(String userId) {
+		MemberDomain memberDomain = null;
+		try {
+			memberDomain = myPageDAO.selectMemberInfo(userId);
+			
+			memberDomain.setPassword(null);
+			
+			String fullPhone = memberDomain.getPhone();
+			memberDomain.setFirstPhoneNum(fullPhone.substring(0, fullPhone.indexOf("-")));
+			memberDomain.setSecondPhoneNum(fullPhone.substring(fullPhone.indexOf("-")+1, fullPhone.lastIndexOf("-")));
+			memberDomain.setLastPhoneNum(fullPhone.substring(fullPhone.lastIndexOf("-")+1));
+			
+			String fullEmail = memberDomain.getEmail();
+			memberDomain.setFirstEmail(fullEmail.substring(0, fullEmail.indexOf("@")));
+			memberDomain.setLastEmail(fullEmail.substring(fullEmail.indexOf("@")+1));
+			
+		} catch(PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		return memberDomain;
+	} // selectMemberInfo
 
+	/**
+	 * coolsms를 이용하여 휴대폰 인증번호 발송을 위한 service
+	 * @param phoneNumber
+	 * @return 인증번호6자리, 전송결과
+	 */
 	public String checkPhoneRequestNum(String phoneNumber) {
 		JSONObject jsonObj = new JSONObject();
 		Message message = new Message();
@@ -309,5 +338,41 @@ public class MyPageService{
 		
 		return jsonObj.toJSONString();
 	} // checkPhoneRequestNum
+	
+	/**
+	 * DAO에서 가져온 전체 국가 정보를 반환
+	 * @return 전체 국가정보
+	 */
+	public List<NationalDomain> selectAllNationalInfo() {
+		List<NationalDomain> allnationalInfo = null;
+		try {
+			allnationalInfo = myPageDAO.selectAllNationlInfo();
+		} catch(PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		return allnationalInfo;
+	} // selectAllNationalInfo
+	
+	/**
+	 * DAO에서 가져온 전체 이메일과 뷰에서 받아온 이메일의 중복을 확인하여 결과를 반환
+	 * @param userEmail
+	 * @return 중복확인 결과
+	 */
+	/*
+	 * public String checkDupEmail(String userEmail) { JSONObject jsonObj = new
+	 * JSONObject();
+	 * 
+	 * String dupResult = "FAIL";
+	 * 
+	 * List<MemberDomain> allMemberEmail = myPageDAO.selectAllEmail();
+	 * 
+	 * for(MemberDomain memberDomain : allMemberEmail) {
+	 * if(!userEmail.equals(memberDomain.getEmail())) {
+	 * 
+	 * } }
+	 * 
+	 * 
+	 * }
+	 */ // checkDupEmail
 	
 } // class

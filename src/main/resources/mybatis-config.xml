@@ -52,7 +52,7 @@
       	<typeAlias type="kr.co.sist.elysian.user.pay.model.vo.PayVO" alias="pVO"/>
       	<typeAlias type="kr.co.sist.elysian.user.board.qna.model.domain.QnaDomain" alias="mqd"/> 
   		<typeAlias type="kr.co.sist.elysian.user.board.qna.model.vo.QnaVO" alias="mqVO"/>
-
+		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.NationalDomain" alias="nationalDomain"/>
   		
 	</typeAliases>
 

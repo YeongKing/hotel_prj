@@ -165,4 +165,15 @@
 		]]>
 	</select>
 	
+	<select id="selectAllNationalInfo" resultType="nationalDomain">
+		select code_val nationalCode, code_name nationalName
+		from common_code
+		where code_type = 10 and code_val != '000' and code_status = 'Y'
+		order by code_name
+	</select>
+	
+	<select id="selectAllEmail" resultType="myPageMemberDomain">
+		select email from member
+	</select>
+	
 </mapper>

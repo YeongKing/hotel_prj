@@ -13,7 +13,7 @@ import kr.co.sist.elysian.admin.room.model.vo.RoomVO;
 import kr.co.sist.elysian.admin.room.model.vo.UpdateRoomVO;
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
 
-@Repository
+@Repository("adminRoomDAO")
 public class RoomDAO {
 
 	@Autowired(required = false)

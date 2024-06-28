@@ -294,15 +294,16 @@ public class MyPageService{
         
         SecureRandom secureRandom = new SecureRandom();
         int randomNum = secureRandom.nextInt((int)Math.pow(10, 6));
+        String formattedNum = String.format("%06d", randomNum);
         StringBuilder smsMessage = new StringBuilder();
-        smsMessage.append("[Eysian호텔] SMS인증번호는 ").append(randomNum).append("입니다. 정확히 입력해주세요.");
+        smsMessage.append("[Eysian호텔] SMS인증번호는 ").append(formattedNum).append("입니다. 정확히 입력해주세요.");
         
         message.setText(smsMessage.toString());
         
         SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
         System.out.println(response);
         
-        jsonObj.put("randomNum", randomNum);
+        jsonObj.put("randomNum", formattedNum);
         jsonObj.put("statusMessage", response.component5());
         jsonObj.put("statusCode", response.component8());
 		

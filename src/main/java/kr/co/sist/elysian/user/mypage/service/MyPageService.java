@@ -358,21 +358,44 @@ public class MyPageService{
 	 * @param userEmail
 	 * @return 중복확인 결과
 	 */
-	/*
-	 * public String checkDupEmail(String userEmail) { JSONObject jsonObj = new
-	 * JSONObject();
-	 * 
-	 * String dupResult = "FAIL";
-	 * 
-	 * List<MemberDomain> allMemberEmail = myPageDAO.selectAllEmail();
-	 * 
-	 * for(MemberDomain memberDomain : allMemberEmail) {
-	 * if(!userEmail.equals(memberDomain.getEmail())) {
-	 * 
-	 * } }
-	 * 
-	 * 
-	 * }
-	 */ // checkDupEmail
+	public String checkDupEmail(String userEmail) {
+		JSONObject jsonObj = new JSONObject();
+		List<MemberDomain> allMemberEmail = myPageDAO.selectAllEmail();
+		
+		String dupResult = "SUCCESS";
+		
+		for(MemberDomain memberDomain : allMemberEmail) {
+			if(userEmail.equals(memberDomain.getEmail())) {
+				dupResult = "FAIL";
+				break;
+			} // end if
+		} // end for
+		
+		jsonObj.put("dupResult", dupResult);
+		
+		return jsonObj.toJSONString();
+	} // checkDupEmail
+	
+	/**
+	 * DAO에서 가져온 회원 정보 수정 결과를 JSON으로 변환하여 반환
+	 * @param paramMap 회원정보
+	 * @return result 처리결과
+	 */
+	public String modifyMemberInfo(Map<String, Object> paramMap) {
+		JSONObject jsonObj = new JSONObject();
+		String resultCode = "ERROR";
+		
+		try {
+			int result = myPageDAO.updateMemberInfo(paramMap);
+			if(result == 1) {
+				resultCode = "SUCCESS";
+			} // end if
+		} catch(PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		
+		jsonObj.put("resultCode", resultCode);
+		return jsonObj.toJSONString();
+	} // modifyMemberInfo
 	
 } // class

@@ -191,7 +191,7 @@ function gfncUncomma(str) {
  */
 /*
 function gfncPatternCheck(str, min, max) {
-	var reg_pwd = /^.*(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+	var reg_pwd = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~`!@#$%^&*()-_+={}[\]:;"'<>,.?/]).*$/;
 	
 	if(reg_pwd.test(str)){
 		if (str.length >= min && str.length <= max) {

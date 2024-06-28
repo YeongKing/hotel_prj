@@ -313,16 +313,33 @@ public class MyPageController {
 	 */
 	@ResponseBody
 	@PostMapping(value="/checkDupEmail.do", produces="application/json; charset=UTF-8")
-//	public String checkDupEmail(@RequestParam String userEmail) {
-//		String jsonObj = myPageService.checkDupEmail(userEmail);
-//		return jsonObj;
-//	} // checkDupEmail
+	public String checkDupEmail(@RequestParam String email) {
+		String jsonObj = myPageService.checkDupEmail(email);
+		return jsonObj;
+	} // checkDupEmail
 	
+	@ResponseBody
+	@PostMapping(value="/modifyMemberInfo.do", produces="application/json; charset=UTF-8")
+	public String modifyMemberInfo(@RequestBody MemberDomain memberDomain, HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("userId", userId);
+		paramMap.put("memberDomain", memberDomain);
+		String jsonObj = myPageService.modifyMemberInfo(paramMap);
+		return jsonObj;
+	} // modifyMemberInfo
+	 
+	/**
+	 * 비밀번호 변경 페이지 view 매핑
+	 * @param session userId
+	 * @param model 
+	 * @return 비밀번호 변경 페이지 view jsp
+	 */
 	@GetMapping("/pwChngForm.do")
-	public String modifyPw() {
-		
+	public String modifyPw(HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		model.addAttribute("userId", userId);
 		return "user/mypage/pwChngForm";
-		
 	} // modifyPw
 	
 	@GetMapping("/withdraPwCfmForm.do")

@@ -176,4 +176,16 @@
 		select email from member
 	</select>
 	
+	<update id="updateMemberInfo" parameterType="java.util.HashMap">
+		<![CDATA[
+		update member
+		set eng_lname = #{memberDomain.engLName}, eng_fname = #{memberDomain.engFName},
+			national_code = '10_' || #{memberDomain.nationalCode},
+			phone = #{memberDomain.phone}, zipcode = #{memberDomain.zipcode},
+			address = #{memberDomain.address}, addr_detail = #{memberDomain.addressDetail},
+			email = #{memberDomain.email}
+		where member_id = #{userId}
+		]]> 
+	</update>
+	
 </mapper>

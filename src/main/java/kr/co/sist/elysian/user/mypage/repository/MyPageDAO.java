@@ -172,6 +172,19 @@ public class MyPageDAO {
 		List<MemberDomain> allMemberEmail = ss.selectList("kr.co.sist.elysian.member.mypage.selectAllEmail");
 		myBatisDAO.closeHandler(ss);
 		return allMemberEmail;
-	}
+	} // selectAllEmail
+	
+	/**
+	 * MyBatis와 매핑하여 로그인한 아이디의 회원 정보 수정
+	 * @param paramMap 로그인한 아이디, 회원 정보
+	 * @return 수정 처리 결과
+	 * @throws PersistenceException
+	 */
+	public int updateMemberInfo(Map<String, Object> paramMap) throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(true);
+		int result = ss.update("kr.co.sist.elysian.member.mypage.updateMemberInfo", paramMap);
+		myBatisDAO.closeHandler(ss);
+		return result;
+	} // updateMemberInfo
 
 } // class

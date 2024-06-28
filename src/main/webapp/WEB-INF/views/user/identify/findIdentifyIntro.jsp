@@ -6,6 +6,17 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<style type="text/css">
+.findId + .frm{display:block;margin:16px 0 7px}
+.findId{position:relative;margin-bottom:10px}
+.findId input{width:50%;height:65px;padding:20px;border:none}
+.findId input::placeholder{color:#666}
+.findId input:-ms-input-placeholder{color:#666}
+.findId input + input{margin-left:6px}
+.findId.error input{border:1px solid #b01414}
+.findId .alertMessage, .selectWrap .alertMessage{display:none;width:100%;color:#b01414;font:500 14px/32px notokrR}
+
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -121,7 +132,24 @@
             }
         }
     }
+    
 
+
+    /* 본인인증 팝업창 띄우기 */
+    function verifyPopup() {
+        // 화면 중앙에 팝업 창을 띄우기 위한 계산
+        var width = 600;
+        var height = 400;
+        var left = (window.screen.width - width) / 2;
+        var top = (window.screen.height - height) / 2;
+        var specs = "width=" + width + ",height=" + height + ",top=" + top + ",left=" + left + ",scrollbars=no,resizable=no";
+
+        window.open(
+            "<c:url value='/user/verify.do' />", 
+            "verificationPopupWindow", 
+            specs // specs 문자열을 사용하여 위치와 크기를 설정합니다.
+        );
+    }
 </script>
 
 <script>
@@ -211,30 +239,33 @@
 						<p class="txtBoxDescription">휴대폰 문자인증의 경우 인증번호 일치여부에 따라<br>본인확인 과정을 거치게 됩니다.<br>가입되어 있는 회원님의 개인정보와<br>일치하지 않는 휴대폰 번호일 경우,<br>확인이 이루어지지 않습니다.</p>
 						
 						
-						<div class="textBox">
-						<div class="findId">
+<!-- 						<div class="textBox1">
+						<div class="findId" style="text-align: center !important">
 							<p class="findIdFrm">
-								<!-- 필수입력서식에 미입력 발생 시, error 클래스 추가 alertMessage 노출, 포커스가 가면 error 클래스 제거 -->
+								필수입력서식에 미입력 발생 시, error 클래스 추가 alertMessage 노출, 포커스가 가면 error 클래스 제거
 								<span class="alertMessage">
-								휴대폰 번호를 입력해주세요.<!-- 아이디를 입력해주세요. -->
+								휴대폰 번호를 입력해주세요.아이디를 입력해주세요.
 								</span> 
 								<label class="hidden" for="frm_userPhone">휴대폰 번호</label> 
-								<input type="text" id="frm_userPhone" placeholder="휴대폰 번호" aria-required="true" /><!-- 아이디 -->
+								<input type="text" id="frm_userPhone" placeholder="휴대폰 번호" aria-required="true" style="margin-bottom: 20px !important"/>아이디
+								<div class="sendBtn">
+									<button type="button" class="btnSC btnL active" onclick="gfncNameCert(); return false;" style="">인증번호 보내기</button>
+								</div>
 							</p>
 							<p class="findIdFrm">
-								<span class="alertMessage">인증번호를 입력해주세요.<!-- 비밀번호를 입력해주세요. --></span> 
-								<label class="hidden" for="frm_verificationNum">인증번호</label><!-- 비밀번호 --> 
-								<input type="password" id="frm_verificationNum" placeholder="인증번호" aria-required="true" onkeydown="javascript:if(event.keyCode == 13){PageScript.fncLogin('ID');}" /><!-- 비밀번호 -->
+								<span class="alertMessage">인증번호를 입력해주세요.비밀번호를 입력해주세요.</span> 
+								<label class="hidden" for="frm_verificationNum">인증번호</label>비밀번호 
+								<input type="password" id="frm_verificationNum" placeholder="인증번호" aria-required="true" onkeydown="javascript:if(event.keyCode == 13){PageScript.fncLogin('ID');}" />비밀번호
 							</p>
 						</div>
-						</div>
+						</div> -->
 						
 						
 						
 						
 						
 						<div class="btnArea">
-							<button type="button" class="btnSC btnL active" onclick="gfncNameCert(); return false;">휴대폰 문자 인증</button>
+							<button type="button" class="btnSC btnL active" onclick="verifyPopup(); return false;">휴대폰 문자 인증</button>
 						</div>
 					</div>
 				</div>

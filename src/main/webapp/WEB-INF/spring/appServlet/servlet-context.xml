@@ -47,6 +47,10 @@
 			<exclude-mapping path="/user/step1.do"/>
 			<exclude-mapping path="/user/step2.do"/>
 			<exclude-mapping path="/user/join.do"/>
+			<exclude-mapping path="/user/verify.do"/>
+			<exclude-mapping path="/user/phoneCheck.do"/>
+			<exclude-mapping path="/user/getUserDetails.do"/>
+
 			<beans:bean id="ui" class="kr.co.sist.elysian.user.login.interceptor.UserInterceptor"/>
 		</interceptor>
 	</interceptors> 

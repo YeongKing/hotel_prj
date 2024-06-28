@@ -9,6 +9,13 @@
 
     <!-- 프로퍼티 파일 로드 -->
     <context:property-placeholder location="classpath:database.properties"/>
+    <context:property-placeholder location="classpath:auth.properties"/>
+
+	<!-- sms 인증을 위한 소스 설정 -->
+	<bean id="smsSource" class="kr.co.sist.eylsian.user.mypage.MyPageService">
+		<property name="key" value="${api.key}"/>
+		<property name="secretKey" value="${api.secret.key}"/>
+	</bean>
 
     <!-- 데이터 소스 설정 -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

@@ -336,10 +336,31 @@ public class MyPageController {
 	 * @return 비밀번호 변경 페이지 view jsp
 	 */
 	@GetMapping("/pwChngForm.do")
-	public String modifyPw(HttpSession session, Model model) {
+	public String modifyPwForm(HttpSession session, Model model) {
 		String userId = (String)session.getAttribute("userId");
 		model.addAttribute("userId", userId);
 		return "user/mypage/pwChngForm";
+	} // modifyPwForm
+	
+	/**
+	 * 비밀번호 변경
+	 * @param curLoginPassword 현재 비밀번호
+	 * @param loginPassword 새로 바꿀 비밀번호
+	 * @param session
+	 * @return 처리 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/modifyMemberpw.do", produces="application/json; charset=UTF-8")
+	public String modifyPw(@RequestParam(value="curLoginPassword")String curLoginPassword,
+							@RequestParam(value="newLoginPassword")String newLoginPassword,
+							HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("userId", userId);
+		paramMap.put("curLoginPassword", curLoginPassword);
+		paramMap.put("newLoginPassword", newLoginPassword);
+		String jsonObj = myPageService.modifyMemberPass(paramMap);
+		return jsonObj;
 	} // modifyPw
 	
 	@GetMapping("/withdraPwCfmForm.do")

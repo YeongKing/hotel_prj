@@ -101,20 +101,15 @@
 				return;
 			} // end if
 			
-			var continuedNumberPattern = /\d{3,}/;
-			var continuedCharacterPattern = /[a-zA-Z]{3,}/;
-			
-			console.log(userPw);
-			
 			// 비밀번호1 연속된 숫자 또는 문자 검증
-			if(containsSameCharMaxCnt(userPw) >= 3 || containsContinuosCharMaxCn(userPwRe) >= 3) {
+			if(containsSameCharMaxCnt(userPw) >= 3 || containsContinuosCharMaxCnt(userPwRe) >= 3) {
 				alert("비밀번호에 연속된 숫자 또는 문자를 사용할 수 없습니다.");
 				$("#loginPassword").focus();
 				return;
 			} // end if
 			
 			// 비밀번호2 연속된 숫자 또는 문자 검증
-			if(containsSameCharMaxCnt(userPwRe) >= 3 || containsContinuosCharMaxCn(userPwRe) >= 3) {
+			if(containsSameCharMaxCnt(userPwRe) >= 3 || containsContinuosCharMaxCnt(userPwRe) >= 3) {
 				alert("비밀번호에 연속된 숫자 또는 문자를 사용할 수 없습니다.");
 				$("#loginPasswordRe").focus();
 				return;
@@ -128,90 +123,31 @@
 			} // end if
 		
     	//-----------------패스워드 변경API 호출-------------------
- 		var formData =  jQuery("#formPwChng").serialize();
- 		jQuery.ajax({
+ 		var formData =  $("#formPwChng").serialize();
+ 		$.ajax({
 			type : "POST",
-			url : "/identify/chngPwApi.do",
-			cache : false,
+			url : "modifyMemberpw.do",
 		    data : formData, 
 			dataType : "json",
-			global : false,
-			success : function(data) {
+			success : function(jsonObj) {
 				//신규회원 
-				if(data.statusR==200 && data.codeR=='S00000' ) { 
-
+				if(jsonObj.resultCode=='SUCCESS' ) { 
 					alert('비밀번호가 변경되었습니다. 다시 로그인해주세요.');
 					goLogout();
-					
-				}else if(data.statusR==400 && data.codeR=='FC1007' ){
+				} else if(jsonObj.resultCode=='NOTCURPASS'){
 					alert('현재 사용중인 비밀번호가 아닙니다.');
 				
-				}else if(data.statusR==400 && data.codeR=='FC1008' ){
-					/* alert("변경 할 비밀번호가 이전 비밀번호와 동일합니다."); */
-					alert('변경 할 비밀번호가 이전 비밀번호와 동일합니다.');
-					
-				}else if(data.statusR==400 && data.codeR=='FC1009' ){
+				}else if(jsonObj.resultCode=='SAMEASCUR'){
 					alert('변경 할 비밀번호가 이전 비밀번호와 동일합니다.');
 					
 				}else{
-					alert(data.messageR + ' : 처리가 실패하였습니다. 잠시 후 재시도 해주세요. 지속적으로 문제발생 시 관리자에게 문의해 주세요.');
+					alert('처리가 실패하였습니다. 잠시 후 재시도 해주세요. 지속적으로 문제발생 시 관리자에게 문의해 주세요.');
 				}
 			},
 			error:function(){
 				alert('처리가 실패하였습니다. 잠시 후 재시도 해주세요. 지속적으로 문제발생 시 관리자에게 문의해 주세요.');
 			}
 		});
- 	}
-    
- 	// 연속된 동일한 문자열 개수
- 	function containsSameCharMaxCnt(src) {
- 	  let localMaxCnt = 0;
- 	  let globalMaxCnt = 0;
- 	  let dummy = '';
- 	  for(var i=0; i<src.length; i++) {
- 	    if(src[i] == dummy) {
- 	      localMaxCnt++;
- 	      globalMaxCnt = Math.max(globalMaxCnt, localMaxCnt);
- 	    } else {
- 	      localMaxCnt = 0;
- 	    }
- 	    dummy = src[i];
- 	  }
- 	  return globalMaxCnt+1;
- 	}
-
- 	// 연속된 문자열 개수
- 	function containsContinuosCharMaxCnt(src) {
- 	  let checkTarget = [
- 	    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
- 	    "abcdefghijklmnopqrstuvwxyz",
- 	    "01234567890"];
-
- 	  let localMaxCnt = 0;
- 	  let globalMaxCnt = 0;
- 	  let dummy = '';
- 	  let hasContinuos = false;
-
- 	  for(var i=0; i<src.length; i++) {
- 	    const currentChar = src[i];
- 	    for(var j=0; j<checkTarget.length; j++) {
- 	      const targetIndex =  checkTarget[j].indexOf(currentChar)
- 	      if(targetIndex > -1) {
- 	        if(dummy == checkTarget[j][targetIndex-1]) {
- 	          localMaxCnt++;
- 	          globalMaxCnt = Math.max(globalMaxCnt, localMaxCnt);
- 	          hasContinuos = true;
- 	          continue;
- 	        }
- 	      }
- 	    }
- 	    if(!hasContinuos) {
- 	      localMaxCnt = 0;
- 	    }
- 	    hasContinuos = false;
- 	    dummy = src[i];
- 	  }
- 	  return globalMaxCnt+1;
  	}
     
  	//회원탈퇴 처리후 로그아웃 실행
@@ -278,7 +214,7 @@
                                
      			<div class="intInner">
 					<span class="intArea">
-						<input type="password" id="loginPassword" name="loginPassword" placeholder="영문, 숫자, 특수문자 조합 8~12자리를 입력해주세요." style="width:487px" aria-required="true">
+						<input type="password" id="newLoginPassword" name="newLoginPassword" placeholder="영문, 숫자, 특수문자 조합 8~12자리를 입력해주세요." style="width:487px" aria-required="true">
 						<span class="alertMessage">비밀번호를 입력해주세요.</span>
 					</span>
 				</div>   

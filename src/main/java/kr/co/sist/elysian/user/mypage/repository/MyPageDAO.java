@@ -186,5 +186,18 @@ public class MyPageDAO {
 		myBatisDAO.closeHandler(ss);
 		return result;
 	} // updateMemberInfo
+	
+	/**
+	 * MyBatis와 매핑하여 로그인한 아이디의 비밀번호 수정
+	 * @param paramMap 로그인한 아이디, 비밀번호
+	 * @return 수정처리 결과
+	 * @throws PersistenceException
+	 */
+	public int updateMemberPass(Map<String, String> paramMap) throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(true);
+		int result = ss.update("kr.co.sist.elysian.member.mypage.updateMemberPw", paramMap);
+		myBatisDAO.closeHandler(ss);
+		return result;
+	} // updateMemberPass
 
 } // class

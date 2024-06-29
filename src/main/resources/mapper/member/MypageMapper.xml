@@ -188,4 +188,10 @@
 		]]> 
 	</update>
 	
+	<update id="updateMemberPw" parameterType="java.util.HashMap">
+		update member
+		set password = #{cipherNewPass}
+		where member_id = #{userId}
+	</update>
+	
 </mapper>

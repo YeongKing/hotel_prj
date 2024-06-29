@@ -398,4 +398,50 @@ public class MyPageService{
 		return jsonObj.toJSONString();
 	} // modifyMemberInfo
 	
+	/**
+	 * DAO에서 가져온 로그인한 아이디의 비밀번호와의 일치여부 확인 후
+	 * 새로운 비밀번호로 변경 처리
+	 * @param paramMap
+	 * @return result 처리결과
+	 */
+	public String modifyMemberPass(Map<String, String> paramMap) {
+		JSONObject jsonObj = new JSONObject();
+		String resultCode = "ERROR";
+		PasswordEncoder pwEncoder = new BCryptPasswordEncoder();
+		
+		try {
+			MemberDomain memberDomain = myPageDAO.selectMemberInfo(paramMap.get("userId"));
+			String encryptedPw = memberDomain.getPassword();
+			String uncodePass = paramMap.get("curLoginPassword");
+			String newPass = paramMap.get("newLoginPassword");
+			
+			// 입력한 기존 비밀번호와 저장된 비밀번호가 같은지 비교
+			boolean matchCurFlag = pwEncoder.matches(uncodePass, encryptedPw);
+			
+			// 입력한 새 비밀번호와 저장된 비밀번호가 같은지 비교
+			boolean matchNewFlag = pwEncoder.matches(newPass, encryptedPw);
+			
+			if(!matchCurFlag) { // 기존 비번 = 저장된 비번이 아니라면
+				resultCode = "NOTCURPASS";
+			} else { // 기존 비번 = 저장된 비번이라면
+				// 새 비밀번호 = 저장된 비번인지 확인
+				if(matchNewFlag) { // 새 비밀번호 = 저장된 비번이라면
+					resultCode = "SAMEASCUR";
+				} else { // 새 비밀번호 = 저장된 비번이 아니라면
+					String cipherNewPass = pwEncoder.encode(newPass);
+					paramMap.put("cipherNewPass", cipherNewPass);
+					int result = myPageDAO.updateMemberPass(paramMap);
+					if(result == 1) {
+						resultCode = "SUCCESS";
+					} // end if
+				} // end else
+			} // end else
+			
+			jsonObj.put("resultCode", resultCode);
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		return jsonObj.toJSONString();
+	} // modifyMemberPass
+	
 } // class

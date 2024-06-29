@@ -156,7 +156,7 @@ function fncSearch(ctgry) {
 	<div class="topArea">
 		<div class="topInner">
 			<h2 class="titDep1">News</h2>
-			<p class="pageGuide">조선호텔앤리조트 멤버를 위한 다양한 소식을 만나보세요.</p>
+			<p class="pageGuide">엘리시안 서울의 다양한 소식을 만나보세요.</p>
 		</div>
 	</div>
 	<!-- //topArea -->

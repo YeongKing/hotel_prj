@@ -52,6 +52,12 @@
       	<typeAlias type="kr.co.sist.elysian.user.pay.model.vo.PayVO" alias="pVO"/>
       	<typeAlias type="kr.co.sist.elysian.user.board.qna.model.domain.QnaDomain" alias="mqd"/> 
   		<typeAlias type="kr.co.sist.elysian.user.board.qna.model.vo.QnaVO" alias="mqVO"/>
+      	<typeAlias type="kr.co.sist.elysian.user.board.notice.model.domain.NoticeDomain" alias="mnd"/> 
+  		<typeAlias type="kr.co.sist.elysian.user.board.notice.model.vo.NoticeVO" alias="mnVO"/>
+  		
+  		
+  		
+  		
 		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.NationalDomain" alias="nationalDomain"/>
   		
 	</typeAliases>
@@ -90,6 +96,7 @@
     <mapper resource="mapper/member/RoomMapper.xml"/>
     <mapper resource="mapper/member/PayMapper.xml"/>
     <mapper resource="mapper/member/QnaMapper.xml"/>
+    <mapper resource="mapper/member/NoticeMapper.xml"/>
     
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
 <!--     

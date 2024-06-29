@@ -34,39 +34,35 @@
 <script type="text/javascript">
 	//회원탈퇴API 실행(무료회원)
 	function withdrawalApi() {
-		var formData =  jQuery("#withdraCfmForm").serialize();
+		var formData = $("#withdraCfmForm").serialize();
+		
 		$.ajax({
 		type : "POST",
-		url : "/mypage/withdrawalApi.do",
-		cache : false,
+		url : "removeUserInfo.do",
 		data : formData, 
 		dataType : "json",
-		global : false,
-		success : function(data) {
-			if(data.statusR==200 && data.codeR=='S00000') { 
-				/* alert("회원 탈퇴 되었습니다."); */
+		success : function(jsonObj) {
+			var resultCode = jsonObj.resultCode;
+			if(resultCode == 'SUCCESS') { 
 				alert('회원 탈퇴 되었습니다');
-				goLogout();
-				
-			}else if(data.statusR==400){
-			/* 	alert(data.statusR + " : 패스워드가 일치하지 않습니다."); */
-				alert(data.statusR + '패스워드가 일치하지 않습니다.');
-			}else{ 
-				alert(data.statusR +" : " +data.codeR+" : "+data.messageR);
-			}
+                location.href = "${pageContext.request.contextPath}/user/logout.do";
+			} else{ 
+				alert("죄송합니다. 회원탈퇴가 정상적으로 처리되지 않았습니다. 관리자에게 문의해 주세요.");
+			} // end else
 		},
 		error:function(){
-			alert('처리가 실패하였습니다. 잠시 후 재시도 해주세요. 지속적으로 문제발생 시 관리자에게 문의해 주세요.');
+			alert('죄송합니다. 잠시 후 재시도 해주세요. 지속적으로 문제발생 시 관리자에게 문의해 주세요.');
 		}
 	});
-	}
-
-	//회원탈퇴 처리후 로그아웃 실행
-	function goLogout() {
-		jQuery("#withdraCfmForm").attr("action", "/login/logout.do");
-	    jQuery("#withdraCfmForm").attr("method", "post");
-	    jQuery("#withdraCfmForm").submit();
-	}
+	} // withdrawalApi
+	
+	function checkOneMore() {
+		if(confirm("정말 탈퇴하시겠습니까? 탈퇴 후 번복이 불가능합니다.")) {
+			withdrawalApi();
+		} else {
+			return;
+		} // end else
+	} // checkOneMore
 </script> 
 
 <form id="withdraCfmForm">
@@ -75,41 +71,9 @@
 <div id="container" class="container mypage">
 
 <script type="text/javascript">
- 	$(document).ready(function(){
-	 
+ 	$(function(){
 		fncLnbInfoApi();
- 	   
 	}); 
-  
-  	//LNB정보조회(쿠폰수,가용포인트) API호출
- 	function fncLnbInfoApi() {
-		var formData =  jQuery("#formLnb").serialize();
- 		jQuery.ajax({
-			type : "POST",
-			url : "/mypage/lnbInfoApi.do",
-			cache : false,
-			data : formData, 
-			dataType : "json",
-			global : false,
-			success : function(data) {
-				if(data.statusR==200 && data.codeR=='S00000') { 
-					  //회원명 세팅
-					  var nameHtml = ''+data.name;
-				      /* $('.name').html(nameHtml); */
-				      $('#nm1').html(nameHtml);
-				      //가용포인트 세팅 
-				      $('#usefulPointSpan').html(fncComma(data.usefulPoint));
-				      //보유쿠폰수 세팅 
-				      $('#couponCntDiv').html(fncComma(data.couponCnt));
-				}else{
-					alert(data.statusR + " : 관리자에게 문의하세요");
-				}
-			},
-			error:function(){
-				alert("관리자에게 문의하세요.");
-			}
-		});
- 	}
  </script> 
  
                  
@@ -140,7 +104,7 @@
 		</div>
 
 		<div class="btnArea">
-			<button type="button" class="btnSC btnL active" onclick="withdrawalApi();">탈퇴</button>
+			<button type="button" class="btnSC btnL active" onclick="checkOneMore();">탈퇴</button>
 		</div>
                     
 	</div>

@@ -18,6 +18,7 @@ import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.NationalDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
+import kr.co.sist.elysian.user.mypage.model.vo.MemberVO;
 import kr.co.sist.elysian.user.mypage.repository.MyPageDAO;
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
@@ -381,12 +382,12 @@ public class MyPageService{
 	 * @param paramMap 회원정보
 	 * @return result 처리결과
 	 */
-	public String modifyMemberInfo(Map<String, Object> paramMap) {
+	public String modifyMemberInfo(MemberVO memberVO) {
 		JSONObject jsonObj = new JSONObject();
 		String resultCode = "ERROR";
 		
 		try {
-			int result = myPageDAO.updateMemberInfo(paramMap);
+			int result = myPageDAO.updateMemberInfo(memberVO);
 			if(result == 1) {
 				resultCode = "SUCCESS";
 			} // end if
@@ -443,5 +444,27 @@ public class MyPageService{
 		} // end catch
 		return jsonObj.toJSONString();
 	} // modifyMemberPass
+	
+	/**
+	 * DAO에서 가져온 회원 탈퇴 결과를 JSON으로 변환하여 반환
+	 * @param userId
+	 * @return 처리 결과
+	 */
+	public String removeMemberInfo(String userId) {
+		JSONObject jsonObj = new JSONObject();
+		String resultCode = "ERROR";
+		
+		try {
+			int result = myPageDAO.removeMemberInfo(userId);
+			if(result == 1) {
+				resultCode = "SUCCESS";
+			} // end if
+		} catch(PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		
+		jsonObj.put("resultCode", resultCode);
+		return jsonObj.toJSONString();
+	} // removeMemberInfo
 	
 } // class

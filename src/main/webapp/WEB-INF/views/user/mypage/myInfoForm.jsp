@@ -37,13 +37,16 @@
 <script type="text/javascript">
 	//체크박스 클릭시 실행
 	$(function() {
+		changeEmail();
 		// 페이지 로딩 시 선택된 이메일 유형이 직접입력이라면 readonly false, 그렇지 않으면 true
 		if($("#emailType").val() == "") {
-			("#email2").prop("readonly", false);
+			$("#email2").prop("readonly", false);
 		} else {
 			$("#email2").prop("readonly", true);
 		} // end else
-		
+	}); // ready
+	
+	function changeEmail() {
 		// 이메일 유형 선택 시 처리
 		$("#emailType").on("change", function() {
 			var value = $(this).val();
@@ -55,7 +58,7 @@
 				$("#email2").prop("readonly", true);
 			} // end else
 		});
-	});
+	} // changeEmail
 	
     /*---------------주소검색 시작--------------------------------- */
 	var themeObj = {
@@ -249,11 +252,11 @@
                     alert("회원정보가 수정되었습니다.");
                     location.href = "${pageContext.request.contextPath}/user/mypage.do";
 				} else{
-					alert("죄송합니다. 회원정보수정이 정상적으로 처리되지 않았습니다. 관리자에게 문의해주세요.");
+					alert("죄송합니다. 회원정보수정이 정상적으로 처리되지 않았습니다. 관리자에게 문의해 주세요.");
 				}
 			},
 			error: function() {
-				alert("관리자에게 문의하세요.");
+				alert("죄송합니다. 잠시 후 재시도 해주세요. 지속적으로 문제발생 시 관리자에게 문의해 주세요.");
 			}
 		});  
  	} 
@@ -273,7 +276,7 @@
  		var phonePattern = /^010([0-9]{4})([0-9]{4})$/;
  		
  		if(authName === '' || authName.length === 1) {
- 			alert("이름을 정확히 입력해주세요.");
+ 			alert("이름을 정확히 입력해 주세요.");
  			return;
 		} // end if
 		
@@ -286,7 +289,7 @@
 		} // end if
 		
 		if(!phonePattern.test(authPhone)) {
-			alert("휴대폰번호 11자리를 정확히 입력해주세요.");
+			alert("휴대폰번호 11자리를 정확히 입력해 주세요.");
 			return;
 		} // end if
  		
@@ -308,7 +311,7 @@
 				var statusCode = jsonObj.statusCode;
 				
 				if(statusCode !== '2000') { // 문자 전송 실패
-					alert("죄송합니다. 잠시 후 다시 시도해주세요. 문제가 지속될 경우 관리자에게 문의주시기 바랍니다.");
+					alert("죄송합니다. 잠시 후 다시 시도해 주세요. 문제가 지속될 경우 관리자에게 문의주시기 바랍니다.");
 					console.log(statusMessage);
 					$(".dimmed").show();
 					return;
@@ -357,7 +360,7 @@
  			$("#telIndNo").val(telIndNo);
  			commonJs.popClose($('#layerPop2'));
  		} else {
- 			alert("본인인증에 실패하였습니다. 다시 시도해주세요.");
+ 			alert("본인인증에 실패하였습니다. 다시 시도해 주세요.");
  			location.reload();
  		} // end else
  	}

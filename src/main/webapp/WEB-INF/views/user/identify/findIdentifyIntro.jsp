@@ -6,6 +6,17 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<style type="text/css">
+.findId + .frm{display:block;margin:16px 0 7px}
+.findId{position:relative;margin-bottom:10px}
+.findId input{width:50%;height:65px;padding:20px;border:none}
+.findId input::placeholder{color:#666}
+.findId input:-ms-input-placeholder{color:#666}
+.findId input + input{margin-left:6px}
+.findId.error input{border:1px solid #b01414}
+.findId .alertMessage, .selectWrap .alertMessage{display:none;width:100%;color:#b01414;font:500 14px/32px notokrR}
+
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -121,7 +132,24 @@
             }
         }
     }
+    
 
+
+    /* 본인인증 팝업창 띄우기 */
+    function verifyPopup() {
+        // 화면 중앙에 팝업 창을 띄우기 위한 계산
+        var width = 600;
+        var height = 400;
+        var left = (window.screen.width - width) / 2;
+        var top = (window.screen.height - height) / 2;
+        var specs = "width=" + width + ",height=" + height + ",top=" + top + ",left=" + left + ",scrollbars=no,resizable=no";
+
+        window.open(
+            "<c:url value='/user/verify.do' />", 
+            "verificationPopupWindow", 
+            specs // specs 문자열을 사용하여 위치와 크기를 설정합니다.
+        );
+    }
 </script>
 
 <script>
@@ -158,80 +186,6 @@
  
   <script type="text/javascript">
   
-	// 본인인증 콜백 함수
-	function fncSirenCallback(data) {
-		
-		var result = data.result;	// 결과: 인증성공(1)
-		
-		if (result == "1") {
-			var _vNameKor = data.name;	// 성명
-			var _vMobile  = data.cellNo;	// 휴대전화번호
-			//alert("성명1 : " + _vNameKor + ", 휴대전화번호 : " + _vMobile);
-			
-			// 2021-10-13 수정
-			// 휴면회원 여부를 체크하기 위해 비밀번호 찾기일때도 id찾기 api 호출
-			//아이디찾기 api호출
-			fncIdFind();
-			
-			//패스워드 변경화면으로 이동
-			//goPwChngPage();
-
-		} else {
-			alert("본인인증에 실패하였습니다.");
-		}
-	}
-	
-	
-	//아이디 찾기API 호출
- 	function fncIdFind() {
- 		var formData =  jQuery("#formIdentify").serialize();
- 		jQuery.ajax({
-			type : "POST",
-			url : "/identify/findIdApi.do",
-			cache : false,
-		    data : formData, 
-			dataType : "json",
-			global : false,
-			success : function(data) {
-
-				//아이디(이름)확인 화면에 전달할 정보
-				jQuery("#loginId").val(data.loginId);
-				jQuery("#korMberNm").val(data.korMberNm);
-
-				if(data.statusR==200 && data.codeR=='S00000' && data.mberSttusSeCode=='01') {
-					var tabSe =  jQuery("#tabSe").val();
-					// 2021-10-13 수정
-					// 휴면회원 여부를 체크하기 위해 비밀번호 찾기일때도 id찾기 api 호출
-					if(tabSe == "id"){
-						//아이디 확인페이지 이동
-						goIdPage();
-					}else {
-						//패스워드 변경화면으로 이동
-						goPwChngPage();
-					}
-
-				}else if(data.statusR==200 && data.codeR=='S00000' && data.mberSttusSeCode=='02'){
-					if(confirm("회원님은 조선호텔앤리조트 계정에 1년 이상 로그인하지 않아 휴면상태로 전환되었습니다.\n휴면 해제를 진행하시겠습니까?")){
-						fncReleaseApi();
-					}
-				}else if(data.statusR==200 && data.codeR=='S00000' && data.mberSttusSeCode=='03'){
-					alert("탈퇴회원 입니다.");
-					
-				}else{
-					
-					if ("FC1006" == data.codeR) {
-						alert("등록된 회원이 아닙니다.");
-					} else {
-						alert(data.statusR +" : " +data.codeR+" : "+data.messageR);
-					}
-				}
-			},
-			error:function(){
-				 alert('처리가 실패하였습니다. 잠시 후 재시도 해주세요. 지속적으로 문제발생 시 관리자에게 문의해 주세요.');
-			}
-		});
- 	}
-	
 	//아이디확인 페이지이동
     function goIdPage() {
     	jQuery("#formIdentify").attr("action", "/identify/findIdPage.do");
@@ -264,77 +218,8 @@
 	     }
 	}
 
-
-  //휴면계정 해제API 호출
-  function fncReleaseApi() {
-	  var formData =  jQuery("#formIdentify").serialize();
-	  jQuery.ajax({
-		  type : "POST",
-		  url : "/identify/releaseApi.do",
-		  cache : false,
-		  data : formData,
-		  dataType : "json",
-		  global : false,
-		  success : function(data) {
-
-			  if(data.statusR==200 && data.codeR=='S00000') {
-				  var tabSe =  jQuery("#tabSe").val();
-				  if(tabSe == "id"){
-					  //아이디 확인페이지 이동
-					  goIdPage();
-				  }else{
-					  //패스워드 변경화면으로 이동
-					  goPwChngPage();
-				  }
-			  }else{
-				  alert(data.statusR +" : " +data.codeR+" : "+data.messageR);
-			  }
-		  },
-		  error:function(){
-			  alert('처리가 실패하였습니다. 잠시 후 재시도 해주세요. 지속적으로 문제발생 시 관리자에게 문의해 주세요.');
-		  }
-	  });
-  }
-
-
-  // 휴면해제 확인 페이지이동
-  function goReleaseRsltPage() {
-	  jQuery("#formIdentify").attr("action", "/identify/releaseRsltPage.do");
-	  jQuery("#formIdentify").attr("method", "post");
-	  jQuery("#formIdentify").submit();
-  }
   </script>
 	
-	
- <form id="formIdentify" >
-  <!-- 본인인증 사용유형 -->
-  <input type="hidden" id="loginId" name="loginId" value="" />
-  <input type="hidden" id="korMberNm" name="korMberNm" value="" />
-  <input type="hidden" id="tabSe" name="tabSe" value="id" />
-  </form>
-  
- 
-  <!-- 본인인증 소스 include Start -->
- 
-
-
-
-
-
-
-
-
-
-<form method="post" name="reqPCCForm">
-	<input type='hidden' name='reqInfo' value='FDD8B4244814A6C0A018CA0F26A4FF01100875729E1ED83997607129B0BC1A95F1CFB6726E647BC2DAA427333A94BA1049108E1DFBFE75D65FF06580AF99AB80B5C38B3E67A7A53192EAD169667F27AC7F5B4241CAC084842B8FA1DC4B81AE8E56E90389AD97065B98B0E2710C2AA01EC788306C60A4B4DFBB5DDB336A0C652A53813C4BCA0CB5997B196ABB9C10C92C859A845FCCC04B7BA8B002657E346DF568CAEEEC2F2B282E6CE54D699084E8C0A0D871234334A86B8A904156EA0C17063155618021313A0890FA773A10DE312FF5D1591DFC9C53767D34FCA7E8EBA7A9' /> 
-	<input type='hidden' name='retUrl' value='32https://www.josunhotel.com/common/selfCrtfc/nameCallback.do?pageType=find' /> 
-	<input type='hidden' name='chk_type' value='' /> 
-	<input type='hidden' name='rcv_method' value='' />
-</form>
-
-
- <!-- 본인인증 소스 include End -->
-
 		<div id="container" class="container findingBox">
 			<!-- 컨텐츠 S -->
 			<h1 class="hidden">아이디 찾기</h1>
@@ -350,10 +235,37 @@
 				<div id="tab01" class="tabCont" style="display: block;">
 					<h3 class="hidden">아이디 찾기</h3>
 					<div class="txtBox">
-						<p class="txtBoxTitle">아이디를 잊으셨나요?<br>휴대폰 본인인증을 통해<br>아이디를 확인하실 수 있습니다.</p>
-						<p class="txtBoxDescription">휴대폰 인증의 경우 회원님 명의로 되어있는<br>휴대폰 번호를 통해서 본인확인 과정을 거치게 됩니다.<br>회원님의 개인정보와 일치하지 않는 소유자의 휴대폰일 경우,<br>확인이 이루어지지 않습니다.</p>
+						<p class="txtBoxTitle">아이디를 잊으셨나요?<br>휴대폰 문자인증을 통해<br>아이디를 확인하실 수 있습니다.</p>
+						<p class="txtBoxDescription">휴대폰 문자인증의 경우 인증번호 일치여부에 따라<br>본인확인 과정을 거치게 됩니다.<br>가입되어 있는 회원님의 개인정보와<br>일치하지 않는 휴대폰 번호일 경우,<br>확인이 이루어지지 않습니다.</p>
+						
+						
+<!-- 						<div class="textBox1">
+						<div class="findId" style="text-align: center !important">
+							<p class="findIdFrm">
+								필수입력서식에 미입력 발생 시, error 클래스 추가 alertMessage 노출, 포커스가 가면 error 클래스 제거
+								<span class="alertMessage">
+								휴대폰 번호를 입력해주세요.아이디를 입력해주세요.
+								</span> 
+								<label class="hidden" for="frm_userPhone">휴대폰 번호</label> 
+								<input type="text" id="frm_userPhone" placeholder="휴대폰 번호" aria-required="true" style="margin-bottom: 20px !important"/>아이디
+								<div class="sendBtn">
+									<button type="button" class="btnSC btnL active" onclick="gfncNameCert(); return false;" style="">인증번호 보내기</button>
+								</div>
+							</p>
+							<p class="findIdFrm">
+								<span class="alertMessage">인증번호를 입력해주세요.비밀번호를 입력해주세요.</span> 
+								<label class="hidden" for="frm_verificationNum">인증번호</label>비밀번호 
+								<input type="password" id="frm_verificationNum" placeholder="인증번호" aria-required="true" onkeydown="javascript:if(event.keyCode == 13){PageScript.fncLogin('ID');}" />비밀번호
+							</p>
+						</div>
+						</div> -->
+						
+						
+						
+						
+						
 						<div class="btnArea">
-							<button type="button" class="btnSC btnL active" onclick="gfncNameCert(); return false;">휴대폰 본인 인증</button>
+							<button type="button" class="btnSC btnL active" onclick="verifyPopup(); return false;">휴대폰 문자 인증</button>
 						</div>
 					</div>
 				</div>

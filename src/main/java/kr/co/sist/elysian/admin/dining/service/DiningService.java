@@ -11,20 +11,19 @@ import kr.co.sist.elysian.admin.dining.model.domain.DiningDomain;
 import kr.co.sist.elysian.admin.dining.model.domain.DiningListDomain;
 import kr.co.sist.elysian.admin.dining.model.vo.DiningVO;
 import kr.co.sist.elysian.admin.dining.repository.DiningDAO;
-import oracle.net.aso.l;
 
-@Service
+@Service("adminDiningService")
 public class DiningService{
 	
 	
 	@Autowired(required = false)
-	private DiningDAO dDAO;
+	private DiningDAO adminDiningDAO;
 
-	//´ÙÀÌ´× »ó¼¼Á¶È¸
+	//ë‹¤ì´ë‹ ìƒì„¸ì¡°íšŒ
 	public DiningDomain searchDiningDetail(String diningId) {
 		DiningDomain dd = null;
 		try {
-			dd =dDAO.selectDiningDetail(diningId);
+			dd =adminDiningDAO.selectDiningDetail(diningId);
 		}catch(PersistenceException pe){
 			pe.printStackTrace();
 			
@@ -32,11 +31,11 @@ public class DiningService{
 		return dd;
 	}//searchDiningDetail
 
-	//´ÙÀÌ´× ¸ñ·Ï Á¶È¸
+	//ë‹¤ì´ë‹ ëª©ë¡ ì¡°íšŒ
 	public List<DiningListDomain> searchDiningList() {
 		List<DiningListDomain> list = null;
 		try {
-			list =dDAO.selectDiningList();
+			list =adminDiningDAO.selectDiningList();
 		}catch(PersistenceException pe){
 			pe.printStackTrace();
 			
@@ -44,17 +43,17 @@ public class DiningService{
 		return list;
 	}//searchDiningList
 	
-	//´ÙÀÌ´× ¸¶Áö¸·¹øÈ£+1 ¸Ş¼­µå
+	//ë‹¤ì´ë‹ ë§ˆì§€ë§‰ë²ˆí˜¸+1 ë©”ì„œë“œ
 	public String searchLastDiningId() {
 		String nextDiningId = "";
 		try {
-			String lastDiningId = dDAO.selectLastDiningId();
-			//¼ıÀÚ ÃßÃâ °úÁ¤
+			String lastDiningId = adminDiningDAO.selectLastDiningId();
+			//ìˆ«ì ì¶”ì¶œ ê³¼ì •
 			String prefix = "DINING";
 			String numberStr = lastDiningId.substring(prefix.length());
 			int number = Integer.parseInt(numberStr);
 			number++;
-			//Áõ°¡µÈ ¼ıÀÚ Çü½Ä¿¡ ¸ÂÃç ¹®ÀÚ¿­ º¯È¯
+			//ì¦ê°€ëœ ìˆ«ì í˜•ì‹ì— ë§ì¶° ë¬¸ìì—´ ë³€í™˜
 			nextDiningId = String.format("%s%04d", prefix,number);
 			
 		}catch(PersistenceException pe) {
@@ -62,34 +61,43 @@ public class DiningService{
 		}
 		
 		return nextDiningId;
-	}
+	}//searchLastDiningId
 	
 	
-	//´ÙÀÌ´× µî·Ï ¸Ş¼­µå
+	//ë‹¤ì´ë‹ ë“±ë¡ ë©”ì„œë“œ
 	public boolean registerDining(DiningVO dVO) {
-		
 		try {
-			dDAO.insertDining(dVO);
+			adminDiningDAO.insertDining(dVO);
 			return true;
 		}catch(PersistenceException pe) {
 			pe.printStackTrace();
 			return false;
 		}
-	}
+	}//registerDining
 	
-	//´ÙÀÌ´× ¼öÁ¤ ¸Ş¼­µå
+	//ë‹¤ì´ë‹ ìˆ˜ì • ë©”ì„œë“œ
 	public boolean modifyDining(HashMap<String, Object>param) {
 		try {
-			dDAO.updateDining(param);
+			adminDiningDAO.updateDining(param);
 			return true;
 		}catch(PersistenceException pe) {
 			pe.printStackTrace();
 			return false;
 		}
-	}
+	}//modifyDining
+
+	//ë‹¤ì´ë‹ ì‚­ì œ ë©”ì„œë“œ
+	public boolean removeDining(String diningId) {
+		try {
+			adminDiningDAO.deleteDining(diningId);
+			return true;
+		}catch(PersistenceException pe) {
+			pe.printStackTrace();
+			return false;
+		}
+	}//removeDining
 	
-//	//ÆÄÀÏ ¾÷·Îµå ¸Ş¼­µå
-//	public String uploadFile(mu)
+
 	
 	
 	

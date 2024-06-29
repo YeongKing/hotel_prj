@@ -9,6 +9,7 @@
 	 <select id="diningList" resultType="dld">
 		select DINING_ID diningId, DINING_TYPE diningType, DINING_NAME diningName
 		from DINING
+		where DELETE_STATUS ='N'
 	 </select>
 	 
 	 <!-- 다이닝 상세 조회 쿼리 -->
@@ -58,7 +59,14 @@
 		DEPOSIT = #{dVO.deposit, jdbcType=INTEGER},
 		DINING_IMG = #{dVO.diningImg, jdbcType=VARCHAR},
 		DINING_COMMENT = #{dVO.diningComment, jdbcType=VARCHAR},
-		MENU = #{dVO.menu, jdbcType=VARCHAR}
+		MENU = #{dVO.menu, jdbcType=VARCHAR},
 		WHERE DINING_ID = #{diningId, jdbcType=VARCHAR}
+	</update>
+	
+	<update id="deleteDining" parameterType="String">
+		UPDATE DINING
+ 		SET
+		DELETE_STATUS = 'Y'
+ 		WHERE DINING_ID = #{diningId}
 	</update>
 </mapper>

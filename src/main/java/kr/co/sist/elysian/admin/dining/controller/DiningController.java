@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oreilly.servlet.MultipartRequest;
@@ -30,12 +31,12 @@ import kr.co.sist.elysian.admin.dining.service.DiningService;
 public class DiningController {
 	
 	@Autowired(required = false)
-	private DiningService ds;
+	private DiningService adminDiningService;
 	
-	//´ÙÀÌ´× ¸®½ºÆ® °¡Á®¿À´Â ¸Ş¼­µå
+	//ë‹¤ì´ë‹ ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ëŠ” ë©”ì„œë“œ
 	@GetMapping("/dining.do")
 	public String searchDiningList(Model model) {
-		List<DiningListDomain> list = ds.searchDiningList();
+		List<DiningListDomain> list = adminDiningService.searchDiningList();
 		model.addAttribute("diningList",list);
 
 		
@@ -44,35 +45,35 @@ public class DiningController {
 
 
 	
-	//´ÙÀÌ´× »ó¼¼ Á¶È¸ ¸Ş¼­µå
+	//ë‹¤ì´ë‹ ìƒì„¸ ì¡°íšŒ ë©”ì„œë“œ
 	@ResponseBody
 	@PostMapping(value="/diningDetail.do", produces="application/json; charset=UTF-8")
 	public DiningDomain selectDiningDetail(@RequestBody Map<String, Object> requestData, Model model) {
 		 String diningId = (String) requestData.get("diningId");
-	     DiningDomain dd = ds.searchDiningDetail(diningId);
+	     DiningDomain dd = adminDiningService.searchDiningDetail(diningId);
 	     
 		return dd;
 	}//selectDiningDetail
 	
 	
-	//´ÙÀÌ´× µî·Ï¹öÆ° Å¬¸¯½Ã ¸¶Áö¸·¾ÆÀÌµğ°¡Á®¿À±â ¸Ş¼­µå
+	//ë‹¤ì´ë‹ ë“±ë¡ë²„íŠ¼ í´ë¦­ì‹œ ë§ˆì§€ë§‰ì•„ì´ë””ê°€ì ¸ì˜¤ê¸° ë©”ì„œë“œ
 	@ResponseBody
 	@GetMapping("/addDiningModal.do")
 	public String selectLastDiningId() {
-		String nextDiningId = ds.searchLastDiningId();
+		String nextDiningId = adminDiningService.searchLastDiningId();
 		return nextDiningId;
 	}//addDining
 	
 	
-	//´ÙÀÌ´× µî·Ï ¸Ş¼­µå
+	//ë‹¤ì´ë‹ ë“±ë¡ ë©”ì„œë“œ
 	@PostMapping("/addDining.do")
 	@ResponseBody
 	public boolean addDining(DiningVO dVO, Model model, HttpServletRequest request) throws IOException {
 		    
 		    File uploadRepository = new File("C:/dev/workspace/hotel_prj/src/main/webapp/util/dining_img");
-		    //°æ·Î°¡ ¾øÀ» ½Ã ¿¹¿Ü¸¦ ´øÁø´Ù.
+		    //ê²½ë¡œê°€ ì—†ì„ ì‹œ ì˜ˆì™¸ë¥¼ ë˜ì§„ë‹¤.
 		    if (!uploadRepository.exists()) {
-		    	throw new IOException("Ã£À»¼ö ¾ø´Â °æ·ÎÀÔ´Ï´Ù");
+		    	throw new IOException("ì°¾ì„ìˆ˜ ì—†ëŠ” ê²½ë¡œì…ë‹ˆë‹¤");
 		    }
 		    int maxSize= 100*1024*1024;
 		    
@@ -93,10 +94,10 @@ public class DiningController {
 		            .menu(mr.getParameter("menu"))
 		            .build();
 		    File tempFile = new File(uploadRepository.getAbsolutePath()+"/"+ updateDiningImg);
-		    if(tempFile.length() > maxSize) { //¾÷·Îµå Á¦ÇÑ
+		    if(tempFile.length() > maxSize) { //ì—…ë¡œë“œ ì œí•œ
 				tempFile.delete();
 			}
-		boolean isInserted = ds.registerDining(dVO);
+		boolean isInserted = adminDiningService.registerDining(dVO);
 	
 		return isInserted;
 	}//addDining
@@ -106,9 +107,9 @@ public class DiningController {
 	public boolean updateDining(DiningVO dVO, HttpServletRequest request, Model model) throws IOException {
 		
 		 File uploadRepository = new File("C:/dev/workspace/hotel_prj/src/main/webapp/util/dining_img");
-		 //°æ·Î°¡ ¾øÀ» ½Ã ¿¹¿Ü¸¦ ´øÁø´Ù.
+		 //ê²½ë¡œê°€ ì—†ì„ ì‹œ ì˜ˆì™¸ë¥¼ ë˜ì§„ë‹¤.
 		 if (!uploadRepository.exists()) {
-		    	throw new IOException("Ã£À»¼ö ¾ø´Â °æ·ÎÀÔ´Ï´Ù");
+		    	throw new IOException("ì°¾ì„ìˆ˜ ì—†ëŠ” ê²½ë¡œì…ë‹ˆë‹¤");
 		    }
 		 
 		 int maxSize= 100*1024*1024;
@@ -116,6 +117,8 @@ public class DiningController {
 		 
 		 String updateDiningImg = mr.getFilesystemName("diningImg");
 		 String existingDiningImg = mr.getParameter("existDiningImg");
+		 
+		 //ìƒˆë¡œ ë“±ë¡í•œ ì´ë¯¸ì§€ê°€ ì—†ì„ê²½ìš° ë³¸ë˜ ì´ë¯¸ì§€ë¡œ ëŒ€ì²´
 		 if(updateDiningImg == null && existingDiningImg != null) {
 			 updateDiningImg = existingDiningImg;
 		 }
@@ -133,22 +136,25 @@ public class DiningController {
 		            .menu(mr.getParameter("menu"))
 		            .build();
 		    File tempFile = new File(uploadRepository.getAbsolutePath()+"/"+ updateDiningImg);
-			if(tempFile.length() > maxSize) { //¾÷·Îµå Á¦ÇÑ
+			if(tempFile.length() > maxSize) { //ì—…ë¡œë“œ ì œí•œ
 				tempFile.delete();
 			}
 
-			//HashMap¿¡ ¾ÆÀÌµğ¿Í, VO ´ã±â
+			//HashMapì— ì•„ì´ë””ì™€, VO ë‹´ê¸°
 			HashMap< String, Object> param = new HashMap<String, Object>();
 			param.put("diningId", mr.getParameter("diningId"));
 			param.put("dVO", dVO);
-			boolean isUpdated = ds.modifyDining(param);
+			boolean isUpdated = adminDiningService.modifyDining(param);
 			
 		return isUpdated;
 	}//updateDining
 	
-	
-		public String deleteDining(int diningId, Model model) {
-			return "";
+	//ë‹¤ì´ë‹ ì‚­ì œ ë©”ì„œë“œ
+	@ResponseBody
+	@GetMapping("deleteDining.do")
+	public boolean deleteDining(@RequestParam("diningId") String diningId, Model model) {
+		boolean isDeleted = adminDiningService.removeDining(diningId);
+		return isDeleted;
 	}//deleteDining
 	
 	

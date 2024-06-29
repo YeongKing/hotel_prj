@@ -29,8 +29,10 @@
 <div class="wrapper mainWrapper topBanner">
 <!-- mass promotion 메뉴 동적 노출 -->
 
-<script>
+<!-- <script>
 	jQuery(function(){
+		
+		
 		jQuery.ajax({
 			type : "GET",
 			url : "/massPromotion/get.json",
@@ -123,9 +125,9 @@
             }
         }
     }
-</script>
+</script> -->
 
-<script>
+<!-- <script>
         //2022-05-23 조선라운지 추가
         //헤더 메뉴 버튼 클릭 이벤트
         jQuery(document).on("click",".headArea .btnMenu" ,function(){
@@ -144,7 +146,8 @@
                 });
             }
         })
-</script>
+</script> -->
+
  <!--S header  -->
 <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
  <!--E header  -->
@@ -154,7 +157,7 @@
 
 jQuery(function(){
 
-	handleActiveAnchor(".js-active", "메리어트 사이트로 이동"); //메리어트 사이트로 이동
+	//handleActiveAnchor(".js-active", "메리어트 사이트로 이동"); //메리어트 사이트로 이동
 
 	var defaultHotelCode = "ELS";
 
@@ -172,7 +175,7 @@ jQuery(function(){
 
 	jQuery(document).ready(function(){
 
-		// 해상도 팝업 닫기 버튼 이벤트
+/* 		// 해상도 팝업 닫기 버튼 이벤트
 		jQuery("#deviceCloseBtn").on("click", function(){
 			var sysCode = jQuery("#sysCode").val();
 			var isTodayClose = jQuery("#fnc02").is(":checked");
@@ -180,7 +183,7 @@ jQuery(function(){
 				setCookie(sysCode+"_device","done", 1);
 			}
 			jQuery(".deviceCheck").remove();
-		});
+		}); */
 
 		jQuery("[name='selectVal']").prop('selectedIndex', 0).seletMenuUpdate(); // 페이지 로딩시 예약바 room 선택되도록
 		//getCookie('JOSUNHOTEL_banner'); //오늘 하루 열지않기 여부 확인
@@ -225,7 +228,7 @@ jQuery(function(){
 
 			// ============== 객실 및 인원 선택 초기화 start ==================
 
-			if(hotlSysCode == "ELS"||hotlSysCode == "GJB" || hotlSysCode == "GJJ"){
+			if(hotlSysCode == "ELS"){
 				jQuery(".hotelSelect li").removeClass("on");
 				jQuery(this).addClass("on");
 				jQuery("#hotlSysCode").val(hotlSysCode);
@@ -234,7 +237,7 @@ jQuery(function(){
 				/* 그랜드 조선 제주 티져 오픈 날짜 대응 */
 				var today = new Date(); //오늘 날짜
 
-				if(hotlSysCode == "GJJ"){
+/* 				if(hotlSysCode == "GJJ"){
 					//인원수 안내 문구 변경
 					jQuery("#ageTxtGuide").closest("ul").removeClass("gjb");
 					jQuery("#ageTxtGuide").text('어린이 기준 : 37개월 ~ 12세');
@@ -249,17 +252,17 @@ jQuery(function(){
 					jQuery("#ageTxtGuide").text('어린이 기준 : 1세 ~ 12세');
 
 					fncSetCalendarDate(today);
-				}
+				} */
 			}
 		});
 
 		/*
 		프로모션 타입 수정 이벤트
 		*/
-		jQuery("#promoType").on("change", function(){
+/* 		jQuery("#promoType").on("change", function(){
 			var value = jQuery(this).val();
 			jQuery("#promoCode").attr("name", value);
-		});
+		}); */
 
 		/**
 		성인,어린이 인원 수 추가/감소 Click Event
@@ -532,11 +535,17 @@ function fncSelectDining(){
 function fncSearchList(resveType){
 	//validation check
 	if(resveType == "R"){
-		alert("선택된 호텔코드 : "+$("#hotlSysCode").val() + "\n" + 
+		
+		$('#adultsNum').val($("#adultCntText").text());
+		$('#kidsNum').val($("#childCntText").text());
+		
+		
+		
+/* 		alert("선택된 호텔코드 : "+$("#hotlSysCode").val() + "\n" + 
 				"체크인 날짜 : " +$("#ckinDate").val() + "\n" +
 				"체크아웃 날짜 : " + $("#ckoutDate").val() + "\n" +
-				"어른 : " +  $("#adultCntText").text() + "\n" +
-				"어린이 : " +  $("#childCntText").text());
+				"어른 : " +  $("#adultsNum").val() + "\n" +
+				"어린이 : " +  $("#kidsNum").val()); */
 		if(jQuery("#hotlSysCode").val() == ""){
 			// 호텔 시스템 코드 없음
 			alert("호텔을 선택해주세요."); 
@@ -549,7 +558,7 @@ function fncSearchList(resveType){
 			return false;
 		}
 
-		jQuery("#mainResveForm").attr("action", "/hotel_prj/user/resve/room/step1.jsp");
+		jQuery("#mainResveForm").attr("action", "http://localhost/hotel_prj/user/room1.do");
 		jQuery("#mainResveForm").submit();
 	}else if(resveType == "D"){
 		jQuery("#mainDiningForm").attr("action", "/hotel_prj/user/resve/dining/step0.jsp");
@@ -794,15 +803,18 @@ function closeHubPopup(){
 		</div>
 
 		<div class="selectInner">
-			<form id="mainResveForm" name="mainResveForm" method="post" >
+			<form id="mainResveForm" name="mainResveForm" method="Post" >
 				<input type="hidden" name="sysCode" id="sysCode" value="ELYSIANYHOTEL"/>
 				<input type="hidden" name="hotlSysCode" id="hotlSysCode" value="ELS" /> 	
 				<input type="hidden" name="ckinDate" id="ckinDate" value="" /> 				
 				<input type="hidden" name="ckoutDate" id="ckoutDate" value="" /> 			
 				<input type="hidden" name="night" id="night" value="" />					
 				<input type="hidden" name="roomCnt" id="roomCnt" value="1" />				
-				<input type="hidden" id="maxAdlt" value="6" />				
-				<input type="hidden" id="maxChld" value="2" />				
+				<input type="hidden" name="maxAdlt" id="maxAdlt" value="6" />				
+				<input type="hidden" name="maxChld" id="maxChld" value="2" />
+								
+				<input type="hidden" name="adultsNum" id="adultsNum" value="" />				
+				<input type="hidden" name="kidsNum" id="kidsNum" value="" />				
 				
 				<div class="selectRoom" role="area">
 					<div class="selectHotel">
@@ -848,6 +860,7 @@ function closeHubPopup(){
 							<span class="rBox">
 								<strong class="tit">CHILDREN</strong>
 								<span id="childCntText">0</span>
+								<!-- <span id="kidsNum">0</span> -->
 							</span>
 						</a> <!-- 클릭 시 하단 mainRoom 펼쳐짐 -->
 									
@@ -957,6 +970,12 @@ function closeHubPopup(){
 <!--E footer  -->
 
 </div>
+
+<script type="text/javascript">
+    <c:if test="${not empty error}">
+        alert('${error}');
+    </c:if>
+</script>
 <!-- //wrapper -->
 
 </body>

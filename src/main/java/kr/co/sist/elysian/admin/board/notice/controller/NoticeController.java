@@ -100,7 +100,7 @@ public class NoticeController {
 	@ResponseBody
 	@PostMapping(value="/insertNotice.do", produces="application/json; charset=UTF-8")
 	public boolean insertNotice(@RequestBody NoticeVO nVO) {
-		System.out.println(nVO);
+//		System.out.println(nVO);
 	    boolean result = ns.insertNotice(nVO);
 	    
 		return result;

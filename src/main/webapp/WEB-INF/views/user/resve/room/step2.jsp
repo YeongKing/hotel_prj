@@ -2,6 +2,7 @@
  pageEncoding="UTF-8" 
  info="" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -29,31 +30,35 @@
 	<div class="wrapper ">
 
 <script>
-	jQuery(function(){
-		jQuery.ajax({
-			type : "GET",
-			url : "/massPromotion/get.json",
-			cache : false,
-			dataType : "json",
-			global : false,
-			beforeSend: function() {
-			},
-			complete: function() {
-			},
-			success : function(data){
-                var massPromtn = data.bean;
-                //조회 결과에 따라 랜더링
-                if(massPromtn != null && massPromtn != ""){
-                    var url = getMassPromtnUrl();
-                    var menuNm = massPromtn.promtnNm;
-                    var sysCode = massPromtn.sysCode;
-                    appendMassPromotionMenu(url, menuNm, sysCode);
-                }
-			},
-			error:function(r, s, e){
-			}
-		});
-	});
+
+
+function getMemberSession() {
+	//alert("회원 예약 버튼 클릭")
+    var userId = "${sessionScope.userId}";
+    
+    if (!userId) {
+    	//alert("회원 세션 x");
+        commonJs.popShow($('#loginLayerPop'));
+    } else {
+    	//alert("회원 세션 o");
+        fncGoStep3();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     function getMassPromtnUrl(){
         var url = "";
@@ -171,40 +176,7 @@
 			//체크인 체크아웃 날짜 html 주입
 			jQuery("#dateText").html(jQuery("#ckinDate").val() + "&nbsp;" + dUtils.getDateToDay(jQuery("#ckinDate").val()) +"&nbsp;-&nbsp;"+ jQuery("#ckoutDate").val() + "&nbsp;" + dUtils.getDateToDay(jQuery("#ckoutDate").val())+"<span>"+jQuery("#night").val()+"&nbsp;박</span>")
 			
-			//랜딩라이브러리 클릭 이벤트
-			jQuery("input[type='checkbox']").on("click", function(){
-				var id = jQuery(this).attr("id");
-				var itemCode = jQuery(this).val();
-				var availItem = parseInt(jQuery("#"+itemCode).val());
-				
-				//2020-11-10 추가
-				//랜딩라이브러리 3개 초과 선택시 alert
-				if(4 <= jQuery(this).closest("ul").find("input[type='checkbox']:checked").length){
-					alert("렌딩 라이브러리는 최대 3개까지 선택 가능합니다."); //렌딩 라이브러리는 최대 3개까지 선택 가능합니다.
-					return false;
-				}
-				
-				
-				if(jQuery(this).is(":checked")){
-					availItem--;
-				}else{
-					availItem++;
-				}
-				
-				jQuery("ul[id^='landingList'] input[type='checkbox'][value='"+itemCode+"']").each(function(idx){
-					if(jQuery(this).attr("id") != id){
-						if(availItem == 0){
-							jQuery(this).attr("disabled", true);
-						}else{
-							jQuery(this).attr("disabled", false);
-						}
-					}
-				});
-				
-				jQuery("#"+itemCode).val(availItem);
-			});
-			
-			
+
 			
 			//옵션 추가, 감소 버튼 이벤트
 			jQuery("#optInfo .addOption button").on("click", function(){
@@ -292,7 +264,7 @@
 	*/
 	function fncResvReset(){
 		if(confirm("다시 검색하시겠습니까?")){ 
-			location.href = "/resve/room/step0.do";
+			location.href = "http://localhost/hotel_prj/user/room0.do";
 		}
 	}
 	
@@ -375,52 +347,26 @@
 		스텝 3으로 이동			
 	*/
 	function fncGoStep3(){
-		jQuery("#optInfo > li").each(function(idx){
-			var landingStr = new Array();
-			var landingNmStr = new Array();
-			jQuery(this).find("input[type='checkbox']").each(function(){
-				if(jQuery(this).is(":checked")){
-					landingStr.push(jQuery(this).val());
-					landingNmStr.push(jQuery(this).closest("li").find("label").text());
-				}
-			});
-			jQuery("#bpArr"+idx).val(landingStr);
-			jQuery("#bpNmArr"+idx).val(landingNmStr);
-		});
 		
-		jQuery("#step2Form").attr("action", "/resve/room/step3.do");
+		
+		jQuery("#step2Form").attr("action", "http://localhost/hotel_prj/user/room3.do");
 		jQuery("#step2Form").submit();
 	}
 </script>
 <form action="" name="step2Form" id="step2Form" method="post">
-	<input type="hidden" name="hotlSysCode" id="hotlSysCode" value="GJJ" /> 		
-	<input type="hidden" name="ckinDate" id="ckinDate" value="2024.05.23" /> 				
-	<input type="hidden" name="ckoutDate" id="ckoutDate" value="2024.05.24" /> 			
-	<input type="hidden" name="night" id="night" value="1" /> 						
+	<input type="hidden" name="ckinDate" id="ckinDate" value="${rrVO.ckinDate}" /> 				
+	<input type="hidden" name="ckoutDate" id="ckoutDate" value="${rrVO.ckoutDate}" /> 			
+	<input type="hidden" name="night" id="night" value="${rrVO.night}" /> 						
 	<input type="hidden" name="roomCnt" id="roomCnt" value="1" />					
 	
-		<input type="hidden" name="adltCntArr" value="2" />							
+		<input type="hidden" name="adltCntArr" value="${rrVO.adultsNum}" />							
 	
-		<input type="hidden" name="adltCntArr" value="0" />							
-	
-		<input type="hidden" name="adltCntArr" value="0" />							
+		<input type="hidden" name="chldCntArr" value="${rrVO.kidsNum}" />							
 	
 	
-		<input type="hidden" name="chldCntArr" value="0" />							
-	
-		<input type="hidden" name="chldCntArr" value="0" />							
-	
-		<input type="hidden" name="chldCntArr" value="0" />							
-	
-	<input type="hidden" name="sortCd" id="sortCd" value="" />						
-	<input type="hidden" name="curruncyCd" id="curruncyCd" value="" />			
-	<input type="hidden" name="roomCode" id="roomCode" value="DST" />				
-	<input type="hidden" name="rateCode" id="rateCode" value="31BFR1N" />				
-	<input type="hidden" name="adltSum" id="adltSum" value="2" />					
-	<input type="hidden" name="chldSum" id="chldSum" value="0" />					
-	<input type="hidden" name="packageSn" id="packageSn" value="531357" />					
-	<input type="hidden" name="companyCode" id="companyCode" value="" />
-	<input type="hidden" name="promotionCode" id="promotionCode" value="" />
+	<%-- <input type="hidden" name="roomCode" id="roomCode" value="${rrVO.roomCode}" />				 --%>
+	<input type="hidden" name="adltSum" id="adltSum" value="${rrVO.adultsNum}" />					
+	<input type="hidden" name="chldSum" id="chldSum" value="${rrVO.kidsNum}" />					
 	
 	<div id="container" class="container">
 		<!-- 컨텐츠 S -->
@@ -462,11 +408,11 @@
 					</dl>
 					<dl class="dlType03">
 						<dt>ADULTS</dt>
-						<dd>2</dd>
+						<dd>${rrVO.adultsNum}</dd>
 					</dl>
 					<dl class="dlType03">
 						<dt>CHILDREN</dt>
-						<dd>0</dd>
+						<dd>${rrVO.kidsNum}</dd>
 					</dl>
 				</div>
 				<a href="#none" class="btnSC btnM icoArr" onclick="fncResvReset();">객실 다시 검색</a>
@@ -479,9 +425,10 @@
 				<div class="lCont">
 					<h2 class="titDep2">ROOM ONLY</h2>
 					<p class="categoryTxt">
-						DELUXE /
-						2DOUBLE /  
-						STANDARD VIEW  
+
+						${rrVO.roomRankName} /	${rrVO.bedName}	/	${rrVO.viewName}	
+						
+
 					</p>
 					<ul class="toggleList rsvList roomRsv" id="optInfo">
 						
@@ -507,7 +454,7 @@
 										<h3 class="opTit">
 											<label for="request01">REQUESTS</label>
 										</h3>
-										<textarea name="contArr" placeholder="호텔 이용 시 문의하실 사항이 있으시면 입력해 주세요." ></textarea>
+										<textarea name="contArr"  placeholder="호텔 이용 시 문의하실 사항이 있으시면 입력해 주세요." ></textarea>
 										<p class="txtGuide">전달해주신 요청사항을 최대한 반영하도록 최선을 다하겠습니다.<br/>다만, 부득이하게 반영되지 않을 수 있는 점, 양해 부탁드립니다.</p> 
 									</div>
 								</div>
@@ -527,11 +474,10 @@
 								
 							
 							
-							<input type="hidden" id="roomAmount0" value="212500.0" />
 							<li class="toggleOn"> <!-- 기본으로 펼쳐진 경우 toggleOn  추가 -->
 								<strong class="listTit">
-									객실1
-									<span class="price" id="roomAmount0"><em>233,750</em>KRW</span>
+									객실
+									<span class="price" id="roomAmount0"><em>${rrVO.payPrice}</em>KRW</span>
 								</strong>
 								<button type="button" class="btnToggle"><span class="hidden">상세내용 보기</span></button>
 								<div class="toggleCont" style="display: block;">
@@ -541,16 +487,12 @@
 												
 													
 													<li>
-														<span class="lfData">2024.05.23</span>
-														<span class="rtData">212,500</span>
+														<span class="lfData"><fmt:formatNumber value="${rrVO.payPrice}" pattern="#,##0"/> KRW * ${rrVO.night} 박</span>
 													</li>
 												
 											</ul>
 											<ul class="infoData" id="roomOptInfo0" style="display:none;"></ul>
-											<ul class="infoData" >
-												<li><span class="lfData">세금</span><span class="rtData" id="roomTax0">21,250</span></li>
-												<li style="display: none;"><span class="lfData">봉사료</span><span class="rtData" id="roomService0">0</span></li>
-											</ul>
+
 										</div>
 									</div>
 								</div>
@@ -561,25 +503,31 @@
 						<div class="totalPrice">
 							<span class="txt">총 예약금액</span>
 							
-								
-									<span class="subTxt">+ 세금(10%)</span>										
-								
-								
-							
-							<span class="price"><em id="resvTotalAmount">233,750</em>KRW</span>
-						</div>
+
+
+							    <span class="price">
+							    	<em id="resvTotalAmount">
+							        	<fmt:formatNumber value="${rrVO.payPrice * rrVO.night}" pattern="#,##0"/>
+							    	</em> KRW
+							    </span>
+							</div>
 						<div class="btnArea">
 							
 							
 							
-								<div>
+<!-- 								<div>
 									<a href="#none" class="btnSC btnL active" onclick="fncGoStep3();">
 										회원 예약
 									</a>
-								</div>
+								</div> -->
+									<div>
+										<a href="#none" class="btnSC btnL active" onclick="getMemberSession()">
+												회원 예약
+										</a>
+									</div>
 							
 						</div>
-						<p class="txtReference">회원 예약 시 현장 사용 할인 쿠폰이 즉시 발급됩니다.</p>
+
 					</div>
 				</div>
 			</div>
@@ -591,103 +539,6 @@
 
 	
 </form>
-<div id="layerPop1" class="layerPop">
-	<div class="layerCont layerClear">
-		<div class="swipeWrap">
-			<button type="button" class="btnSwipe btnPrev"><span class="hidden">이전</span></button>
-			<!-- 20200609 수정 -->
-			<ul class="swipeCont">
-				<li class="swipeSlide">
-					<dl class="itemImg">
-						<dt class="tit">모빌<!-- 모빌 --></dt>
-						<dd class="thum"><img src="/static/home/images/ko/pc/HURE/img_lending_library01.jpg" alt=""></dd>
-						<dd class="txt">
-							7가지 핵심 발달 단계 시스템을 기초로 아기의 호기심을 만족시켜 줍니다.
-							
-						</dd>
-					</dl>
-				</li>
-				<li class="swipeSlide">
-					<dl class="itemImg">
-						<dt class="tit">유아용 의자<!-- 유아용 의자 --></dt>
-						<dd class="thum"><img src="/static/home/images/ko/pc/HURE/img_lending_library02.jpg" alt=""></dd>
-						<dd class="txt">
-							넓은 시트 폭으로 장시간 앉아있어도 편안하고 올바른 자세를 유지할 수 있습니다.
-							
-						</dd>
-					</dl>
-				</li>
-				<li class="swipeSlide">
-					<dl class="itemImg">
-						<dt class="tit">젖병 소독기<!--  젖병 소독기 --></dt>
-						<dd class="thum"><img src="/static/home/images/ko/pc/HURE/img_lending_library03.jpg" alt=""></dd>
-						<dd class="txt">
-							상·하 UV 자외선 살균 시스템을 갖추고 있습니다.
-							
-						</dd>
-					</dl>
-				</li>
-				<li class="swipeSlide">
-					<dl class="itemImg">
-						<dt class="tit">바운서<!-- 바운서 --></dt>
-						<dd class="thum"><img src="/static/home/images/ko/pc/HURE/img_lending_library04.jpg" alt=""></dd>
-						<dd class="txt">
-							엄마품에 있듯이 최상의 안정감을 선사합니다.
-							
-						</dd>
-					</dl>
-				</li>
-				<li class="swipeSlide">
-					<dl class="itemImg">
-						<dt class="tit">유아용 침대<!-- 유아용 침대 --></dt>
-						<dd class="thum"><img src="/static/home/images/ko/pc/HURE/img_lending_library05.jpg" alt=""></dd>
-						<dd class="txt">
-							아이의 쾌적하고 편안한 수면을 위해 디자인된 침대입니다.
-							
-						</dd>
-					</dl>
-				</li>
-				<li class="swipeSlide">
-					<dl class="itemImg">
-						<dt class="tit">아기 욕조<!-- 아기 욕조 --></dt>
-						<dd class="thum"><img src="/static/home/images/ko/pc/HURE/img_lending_library06.jpg" alt=""></dd>
-						<dd class="txt">
-							미끄럼 방지 처리되어 안전한 목욕이 가능한 접이식 제품 입니다.
-							
-						</dd>
-					</dl>
-				</li>
-				<li class="swipeSlide">
-					<dl class="itemImg">
-						<dt class="tit">침대안전가드<!-- 침대안전가드 --></dt>
-						<dd class="thum"><img src="/static/home/images/ko/pc/HURE/img_lending_library07.jpg" alt=""></dd>
-						<dd class="txt">
-							튼튼한 강철 프레임으로 안전사고를 방지하는 제품입니다.
-							
-						</dd>
-					</dl>
-				</li>
-				<li class="swipeSlide">
-					<dl class="itemImg">
-						<dt class="tit">유아용 분유포트<!-- 유아용 분유포트 --></dt>
-						<dd class="thum"><img src="/static/home/images/ko/pc/HURE/img_lending_library08.jpg" alt=""></dd>
-						<dd class="txt">
-							정확한 온도 조절이 가능하며, 보온 기능을 갖춘 무선주전자입니다.
-							
-						</dd>
-					</dl>
-				</li>
-			</ul>
-			<!-- //20200609 수정 -->
-			<button type="button" class="btnSwipe btnNext"><span class="hidden">다음</span></button>
-			<div class="numPaging"><span class="hidden">현재 이미지</span><span class="num now">05</span> / <span class="hidden">총 이미지 개수</span><span class="num">10</span></div>
-		</div>
-		<button type="button" class="btnClose" onclick="commonJs.popClose(jQuery('#layerPop1'))">
-			닫기
-		</button>
-	</div>
-</div>
-
 
 
 
@@ -803,77 +654,71 @@ function getLoginCookie(cookieName) {
 				}
 				return bResult;
 			}
-			,fncLogin : function(param_loginSeCode) {
-				
-				var frm_userid = "";
-				var frm_userpw = "";
-				var param_nextUrl = "";
-	
-				// 아이디 로그인시
-				if (param_loginSeCode != "SNS") {
-					if(PageScript.validate()){
-						frm_userid = jQuery("#frm_userid").val(); // 입력된 아이디
-						frm_userpw = jQuery("#frm_userpw").val(); // 입력된 비밀번호
-		
-						// 아이디 입력 화인
-						if (frm_userid == "") {
-							alert("아이디를 입력해주세요.");
-							jQuery("#frm_userid").focus();
-							return;
-						}
-		
-						// 비밀번호 입력 확인
-						if (frm_userpw == "") {
-							alert("비밀번호를 입력해주세요.");
-							jQuery("#frm_userpw").focus();
-							return;
-						}
-						
-						var param = {
-							loginSeCode : param_loginSeCode
-							,loginId : frm_userid
-							,loginPassword : frm_userpw
-							,fromPageType : 'LOGIN'
-							,nextURL : param_nextUrl
-						}
-						
-						/****************************
-						 * post 날리기 전에 요청전과 후의 동작을 정의
-						 ****************************/
-						$.ajaxSetup({
-							beforeSend : function(xhr, settings) {
-								commonJs.showLoadingBar();
-								//alert('before=>xhr:' + JSON.stringify(xhr));
-								//							   alert('before=>xhr:' + JSON.stringify(xhr) + "settings:"+JSON.stringify(settings));
-							},
-							complete : function(xhr, textStatus) {
-								//alert('complete=>xhr:' + JSON.stringify(xhr) + ":textStatus:" + textStatus);
-							}
-						});
+			,fncLogin: function(param_loginSeCode) {
+		        var frm_userid = "";
+		        var frm_userpw = "";
+		        var param_nextUrl = "";
+
+		        // 아이디 로그인시
+		        if (param_loginSeCode != "SNS") {
+		            if (PageScript.validate()) {
+		                frm_userid = jQuery("#frm_userid").val(); // 입력된 아이디
+		                frm_userpw = jQuery("#frm_userpw").val(); // 입력된 비밀번호
+
+		                // 아이디 입력 확인
+		                if (frm_userid == "") {
+		                    alert("아이디를 입력해주세요.");
+		                    jQuery("#frm_userid").focus();
+		                    return;
+		                }
+
+		                // 비밀번호 입력 확인
+		                if (frm_userpw == "") {
+		                    alert("비밀번호를 입력해주세요.");
+		                    jQuery("#frm_userpw").focus();
+		                    return;
+		                }
+
+		                var uVO = {
+		               		 
+		                	userId: frm_userid,  
+		                	userPw: frm_userpw
+		                    }; 
+
+		                $.ajax({
+		                    url: "http://localhost/hotel_prj/user/searchPopupLogin.do",
+		                    type: "POST",
+		                    data: uVO,
+		                    dataType: "json",
+		                    beforeSend: function(xhr, settings) {
+		                        //commonJs.showLoadingBar();
+		                        // alert('before=>xhr:' + JSON.stringify(xhr));
+		                        // alert('before=>xhr:' + JSON.stringify(xhr) + "settings:" + JSON.stringify(settings));
+		                    },
+		                    success: function(result) {
+		                        commonJs.closeLoadingBar();
+		                        if (result.result === "fail") {
+		                            alert("로그인에 실패하였습니다.");
+		                            jQuery('.dimmed').show();
+		                        } else if (result.result === "success") {
+		                            alert("로그인에 성공하였습니다.");
+		                            fncLoginCallBack(); // 로그인 콜백이 필요한 경우 해당 이름으로 function 정의해서 사용하면 가능함
+		                            PageScript.fncCloseLayerPopup();
+		                        }
+		                    },
+		                    complete: function(xhr, textStatus) {
+		                        // alert('complete=>xhr:' + JSON.stringify(xhr) + ":textStatus:" + textStatus);
+		                    },
+		                    error: function(xhr, status, error) {
+		                        alert("로그인 수행중 서버 오류가 발생하였습니다.");
+
+
+		                    }
+		                });
+		            }
+		        }
+		    }
 			
-						/**********************************
-						 * post 요청
-						 **********************************/
-						$.post("/login/api/login.json", param, function(data, status, xhr) {
-							commonJs.closeLoadingBar();				
-							if (data.loginYn == "N") {
-								alert(data.msg);
-								jQuery('.dimmed').show();
-							}else{
-								fncLoginCallBack(); //로그인 콜백이 필요한 경우 해당 이름으로 function 정의해서 사용하면 가능함
-								PageScript.fncCloseLayerPopup();
-							}
-			
-						}, "json")
-			
-						// error handling
-						.fail(function(xhr, status, error) {
-							alert("로그인 수행중 서버 오류가 발생하였습니다.");
-						});
-					}
-				}
-	
-			}
 			,bindSnsLinkEvent : function() {
 				$('.snsLogin > a').each(
 					function() {
@@ -955,7 +800,7 @@ function getLoginCookie(cookieName) {
 								<input type="checkbox" id="idSaveCheck"><label for="idSaveCheck">아이디 저장</label><!-- 아이디 저장 -->
 							</span>
 							<!-- //20200528 수정 : 아이디저장(추가) -->
-							<button type="button" class="btnSC btnL active btnFull" onclick="PageScript.fncLogin('ID'); return false;">로그인<!-- 로그인 --></button>
+							<button type="button" class="btnSC btnL active btnFull" onclick= "PageScript.fncLogin('ID'); return false;" >로그인<!-- 로그인 --></button>
 							<div class="loginLink">
 								<a href="/identify/identifyIntro.do" class="btnS icoArr">회원가입<!-- 회원가입 --></a>
 								<a href="/identify/findIdentifyIntro.do" class="btnS icoArr">아이디 / 비밀번호 찾기<!-- 아이디 / 비밀번호 찾기 --></a>
@@ -973,11 +818,6 @@ function getLoginCookie(cookieName) {
 					</div>
 				</div>
 			</div>
-			<ul class="txtGuide">
-				<li>이용자 비밀번호 5회 연속 오류시 계정이 잠기게 됩니다.<!-- 이용자 비밀번호 5회 연속 오류시 계정이 잠기게 됩니다. --></li>
-				<li>오프라인 회원의 경우 온라인 회원가입 후 계정연동 가능합니다.<!-- 오프라인 회원의 경우 온라인 회원가입 후 계정연동 가능합니다. --></li>
-                <li>메리어트 호텔에서 예약하신 경우, 메리어트 사이트에서만 예약 확인이 가능합니다.<!-- 메리어트 호텔에서 예약하신 경우, 메리어트 사이트에서만 예약 확인이 가능합니다. --></li><!-- 20200528 수정 : 가이드(문구변경) -->
-			</ul>
 			<button type="button" class="btnClose" onclick="commonJs.popClose($('#loginLayerPop'));">닫기</button>
 		</div>
 	</div>
@@ -994,81 +834,7 @@ function getLoginCookie(cookieName) {
 	</div>
 	<!-- //wrapper -->
 
-<!-- 호텔 찾기 Layer -->
-<div id="hotelFindLayer" class="layerPop">
-	<div class="layerCont">
-		<div class="hotelFindPop">
-			<h2>호텔 찾기</h2>
-			<ul class="hotelSelect">
-								<li>
-					<a href="https://jpg.josunhotel.com/main.do" target="_blank" title="새창열림">		
-						<span class="hotelLogo palace">
-						</span>
-						<span class="hotelTit">조선 팰리스<!-- 조선 팰리스 --></span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selwi-the-westin-chosun-seoul" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo westinSeoul">
-						</span>
-						<span class="hotelTit">웨스틴 조선 서울</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/puswi-the-westin-chosun-busan" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo westinBusan">
-						</span>
-						<span class="hotelTit">웨스틴 조선 부산</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://gjb.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo grandBusan">
-						</span>
-						<span class="hotelTit">그랜드 조선 부산</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://gjj.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo grandJeju">
-						</span>
-						<span class="hotelTit">그랜드 조선 제주</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://lescapehotel.com/main" target="_blank" title="새창열림">
-						<span class="hotelLogo lescape">
-						</span>
-						<span class="hotelTit">레스케이프 호텔</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://grp.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo gravityPangyo">
-						</span>
-						<span class="hotelTit">그래비티 서울 판교</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selfp-four-points-seoul-namsan" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo sheratonSeoulstation">
-						</span>
-						<span class="hotelTit">포포인츠 바이 쉐라톤 조선 서울역</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selfd-four-points-seoul-myeongdong" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo sheratonMyeongdong">
-						</span>
-						<span class="hotelTit">포포인츠 바이 쉐라톤 조선, 서울 명동</span>
-					</a>
-				</li>
-			</ul>
-		</div>
-		<button type="button" class="btnClose" onclick="commonJs.popClose($('#hotelFindLayer'))">닫기</button>
-	</div>
-</div>
-<!-- //호텔 찾기 Layer -->
+
 <div class="dimmed"></div>
 </body>
 </html>

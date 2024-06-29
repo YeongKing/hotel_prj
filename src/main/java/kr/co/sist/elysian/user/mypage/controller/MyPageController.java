@@ -28,6 +28,7 @@ import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.NationalDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 import kr.co.sist.elysian.user.mypage.model.vo.DiningResVO;
+import kr.co.sist.elysian.user.mypage.model.vo.MemberVO;
 import kr.co.sist.elysian.user.mypage.service.MyPageService;
 
 @Controller("userMyPageController")
@@ -248,7 +249,7 @@ public class MyPageController {
 	} // modifyDiningResToCancel
 	
 	/**
-	 * 회원 정보 수정 비밀번호 확인 매핑
+	 * 회원 정보 수정 비밀번호 확인 페이지 매핑
 	 * @return 회원 정보 수정 비밀번호 확인 view jsp
 	 */
 	@GetMapping("/myInfoPwCfmForm.do")
@@ -257,7 +258,7 @@ public class MyPageController {
 	} // checkPwUserInfoForm
 	
 	/**
-	 * 회원 정보 수정 진입 전 비밀번호 확인
+	 * 회원 정보 수정, 회원 탈퇴 진입 전 비밀번호 확인
 	 * @param session
 	 * @return 비밀번호 확인 결과
 	 */
@@ -318,14 +319,19 @@ public class MyPageController {
 		return jsonObj;
 	} // checkDupEmail
 	
+	/**
+	 * 회원정보 변경
+	 * @param memberVO 회원정보
+	 * @param session
+	 * @return 수정 처리 결과
+	 */
 	@ResponseBody
 	@PostMapping(value="/modifyMemberInfo.do", produces="application/json; charset=UTF-8")
-	public String modifyMemberInfo(@RequestBody MemberDomain memberDomain, HttpSession session) {
+	public String modifyMemberInfo(@RequestBody MemberVO memberVO, HttpSession session) {
 		String userId = (String)session.getAttribute("userId");
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("userId", userId);
-		paramMap.put("memberDomain", memberDomain);
-		String jsonObj = myPageService.modifyMemberInfo(paramMap);
+		memberVO.setId(userId);
+		
+		String jsonObj = myPageService.modifyMemberInfo(memberVO);
 		return jsonObj;
 	} // modifyMemberInfo
 	 
@@ -363,16 +369,36 @@ public class MyPageController {
 		return jsonObj;
 	} // modifyPw
 	
+	/**
+	 * 회원 탈퇴 비밀번호 확인 페이지 매핑
+	 * @return 회원 탈퇴 비밀번호 확인 view jsp
+	 */
 	@GetMapping("/withdraPwCfmForm.do")
 	public String checkRemove() {
 		return "user/mypage/withdraPwCfmForm";
 	} // checkRemove
 
+	/**
+	 * 회원 탈퇴 페이지 매핑
+	 * @return 회원 탈퇴 view jsp
+	 */
 	@PostMapping("/withdraCfmForm.do")
-	public String removeUserInfo() {
-		
+	public String removeUserInfoForm() {
 		return "user/mypage/withdraCfmForm";
-		
+	} // removeUserInfoForm
+	
+	/**
+	 * 회원 탈퇴 요청
+	 * @param session 로그인한 아이디
+	 * @return 회원 탈퇴 결과 
+	 */
+	@ResponseBody
+	@PostMapping(value="/removeUserInfo.do", produces="application/json; charset=UTF-8")
+	public String removeUserInfo(HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		String jsonObj = myPageService.removeMemberInfo(userId);
+		return jsonObj;
 	} // removeUserInfo
+	
 	
 } // class

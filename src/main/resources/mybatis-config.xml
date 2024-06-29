@@ -46,6 +46,7 @@
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain" alias="myPageDiningResDomain"/> 
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.vo.DiningResVO" alias="myPageDiningResVO"/>
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.MemberDomain" alias="myPageMemberDomain"/>
+  		<typeAlias type="kr.co.sist.elysian.user.mypage.model.vo.MemberVO" alias="myPageMemberVO"/>
       	<typeAlias type="kr.co.sist.elysian.user.room.model.vo.RoomResVO" alias="rrVO"/> 
       	<typeAlias type="kr.co.sist.elysian.user.room.model.domain.RoomListDomain" alias="urld"/> 
      	<typeAlias type="kr.co.sist.elysian.user.room.model.domain.MemberDomain" alias="umd"/> 

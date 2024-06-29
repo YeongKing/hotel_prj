@@ -133,7 +133,7 @@
 				//신규회원 
 				if(jsonObj.resultCode=='SUCCESS' ) { 
 					alert('비밀번호가 변경되었습니다. 다시 로그인해주세요.');
-					goLogout();
+					location.href = "${pageContext.request.contextPath}/user/logout.do";
 				} else if(jsonObj.resultCode=='NOTCURPASS'){
 					alert('현재 사용중인 비밀번호가 아닙니다.');
 				
@@ -149,14 +149,6 @@
 			}
 		});
  	}
-    
- 	//회원탈퇴 처리후 로그아웃 실행
-    function goLogout() {
-        location.href = "${pageContext.request.contextPath}/user/logout.do";
- 		//jQuery("#formPwChng").attr("action", "/login/logout.do");
-	    //jQuery("#formPwChng").attr("method", "post");
-	    //jQuery("#formPwChng").submit();
-	} // goLogout
 </script>
 
 <form id="formPwChng" >

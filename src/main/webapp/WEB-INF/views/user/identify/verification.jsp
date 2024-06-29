@@ -103,45 +103,50 @@ body {
 <script type="text/javascript">
 var code2 = "";
 
-//팝업 창 크기 조정 불가능하게 설정
+// 팝업 창 크기 조정 불가능하게 설정
 window.onload = function() {
- window.resizeTo(600, 800);
- window.moveTo((screen.width - 600) / 2, (screen.height - 400) / 2);
+    window.resizeTo(600, 800);
+    window.moveTo((screen.width - 600) / 2, (screen.height - 400) / 2);
 };
 
 window.onresize = function() {
- window.resizeTo(600, 550);
+    window.resizeTo(600, 550);
 };
 
 function validateInput(inputSelector, errorClass) {
- var isValid = true;
- var $input = $(inputSelector);
- if ($input.val().trim() === '') {
-     $input.closest(errorClass).addClass('error');
-     isValid = false;
- } else {
-     $input.closest(errorClass).removeClass('error');
- }
- return isValid;
+    var isValid = true;
+    var $input = $(inputSelector);
+    if ($input.val().trim() === '') {
+        $input.closest(errorClass).addClass('error');
+        isValid = false;
+    } else {
+        $input.closest(errorClass).removeClass('error');
+    }
+    return isValid;
 }
 
 function isValidPhoneFormat(phone) {
- var phonePattern = /^\d{3}-\d{4}-\d{4}$/;
- return phonePattern.test(phone);
+    var phonePattern = /^\d{3}-\d{4}-\d{4}$/;
+    return phonePattern.test(phone);
 }
 
 function removeHyphens(phone) {
- return phone.replace(/-/g, '');
+    return phone.replace(/-/g, '');
 }
 
 function gfncNameCert() {
- var phone = $("#frm_userPhone").val();
- if (validateInput('#frm_userPhone', '.verifyPhoneFrm') && isValidPhoneFormat(phone)) {
-     var sanitizedPhone = removeHyphens(phone);
-     sendSMS(sanitizedPhone);
- } else {
-     $('#frm_userPhone').closest('.verifyPhoneFrm').addClass('error');
- }
+    var phone = $("#frm_userPhone").val();
+    console.log("Phone number:", phone);  // Debugging line
+    if (validateInput('#frm_userPhone', '.verifyPhoneFrm') && isValidPhoneFormat(phone)) {
+        var sanitizedPhone = removeHyphens(phone);
+        console.log("Sanitized phone number:", sanitizedPhone);  // Debugging line
+        // sendSMS(sanitizedPhone); // 실제 SMS 전송 (추후 테스트 완료 후 사용)
+
+        // SMS 전송 성공 시의 로직을 직접 호출합니다.
+        simulateSMSSuccess(sanitizedPhone); // 현재 테스트용 함수 사용
+    } else {
+        $('#frm_userPhone').closest('.verifyPhoneFrm').addClass('error');
+    }
 }
 
 function verifyPopup() {
@@ -154,7 +159,9 @@ function verifyPopup() {
         } else {
             alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다."); // 인증번호가 일치하지 않을 경우
             $("#phoneDoubleChk").val("false");
-            $(this).attr("autofocus", true);
+            $("#frm_userPhone").attr("readonly", false); // 휴대폰 번호 입력 필드 활성화
+            $("#phoneChk").attr("disabled", false); // 인증번호 전송 버튼 활성화
+            $('#frm_userNum').closest('.verifyNumFrm').addClass('error');
         }
     } else {
         $(".verifyNumFrm .alertMessage").css("display", "block");
@@ -162,12 +169,12 @@ function verifyPopup() {
     }
 }
 
-
-//회원 정보 조회 함수
+// 회원 정보 조회 함수
 function fetchUserInfo(phone) {
+    console.log("Executing query with phone: " + phone); // Debugging line
     $.ajax({
         type: "GET",
-        url: "/hotel_prj/user/getUserDetails.do?phone=" + phone, // 휴대폰 번호를 포함한 GET 요청
+        url: "/hotel_prj/user/getUserDetails.do?phone=" + phone, // 하이픈 포함된 전화번호를 사용
         cache: false,
         success: function(data) {
             console.log("AJAX success, received data: ", data);
@@ -179,26 +186,30 @@ function fetchUserInfo(phone) {
                 $("#verificationForm").css("display", "none"); // 본인인증 창 숨기기
             } else {
                 alert("회원 정보를 가져오지 못했습니다."); // 회원 정보 조회 실패 시 알림
+                $("#frm_userPhone").attr("readonly", false); // 휴대폰 번호 입력 필드 활성화
+                $("#phoneChk").attr("disabled", false); // 인증번호 전송 버튼 활성화
             }
         },
         error: function(xhr, status, error) {
             console.error("AJAX Error: ", status, error); // AJAX 요청 실패 시 오류 메시지 출력
+            alert("회원 정보를 가져오지 못했습니다."); // 회원 정보 조회 실패 시 알림
+            $("#frm_userPhone").attr("readonly", false); // 휴대폰 번호 입력 필드 활성화
+            $("#phoneChk").attr("disabled", false); // 인증번호 전송 버튼 활성화
         }
     });
 }
 
-
-
-//팝업창에서 부모창으로 이동 및 팝업창 닫기
+// 팝업창에서 부모창으로 이동 및 팝업창 닫기
 function moveToLogin() {
-	window.opener.location.href = "/hotel_prj/user/login.do"; // 부모 페이지에서 리다이렉션
+    window.opener.location.href = "/hotel_prj/user/login.do"; // 부모 페이지에서 리다이렉션
     window.close(); // 팝업 창 닫기
 }
 
+// 실제 SMS 전송 함수 (추후 테스트 완료 후 사용)
 function sendSMS(phone) {
     $.ajax({
         type: "GET",
-        url: "/hotel_prj/user/phoneCheck.do?phone=" + phone, // 휴대폰 번호를 포함한 GET 요청
+        url: "/hotel_prj/user/phoneCheck.do?phone=" + phone, // 하이픈이 제거된 전화번호를 사용
         cache: false,
         success: function(data) {
             if (data === "error") {
@@ -209,6 +220,7 @@ function sendSMS(phone) {
                 alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오."); // 인증번호 발송 완료 알림
                 $("#frm_userNum").attr("disabled", false); // 인증번호 입력 필드 활성화
                 $("#frm_userPhone").attr("readonly", true); // 휴대폰 번호 입력 필드 읽기 전용으로 설정
+                $("#phoneChk").attr("disabled", true); // 인증번호 전송 버튼 비활성화
                 code2 = data; // 전송된 인증번호 저장
             }
         },
@@ -218,47 +230,58 @@ function sendSMS(phone) {
     });
 }
 
+// SMS 전송 성공을 시뮬레이션하는 함수 (현재 테스트용)
+function simulateSMSSuccess(phone) {
+    console.log("Simulating SMS success for phone:", phone);  // Debugging line
+    alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오."); // 인증번호 발송 완료 알림
+    $("#frm_userNum").attr("disabled", false); // 인증번호 입력 필드 활성화
+    $("#frm_userPhone").attr("readonly", true); // 휴대폰 번호 입력 필드 읽기 전용으로 설정
+    $("#phoneChk").attr("disabled", true); // 인증번호 전송 버튼 비활성화
+    code2 = "123456"; // 테스트용 인증번호 설정
+}
+
 $(document).ready(function() {
- $('#frm_userPhone').on('focus', function() {
-     $(this).closest('.verifyPhoneFrm').removeClass('error');
- });
+    $('#frm_userPhone').on('focus', function() {
+        $(this).closest('.verifyPhoneFrm').removeClass('error');
+    });
 
- $('#frm_userNum').on('focus', function() {
-     $(this).closest('.verifyNumFrm').removeClass('error');
- });
+    $('#frm_userNum').on('focus', function() {
+        $(this).closest('.verifyNumFrm').removeClass('error');
+    });
 
- $('#frm_userPhone').on('input', function() {
-     var input = $(this).val().replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
-     var formatted = '';
+    $('#frm_userPhone').on('input', function() {
+        var input = $(this).val().replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+        var formatted = '';
 
-     if (input.length > 3) {
-         formatted += input.substr(0, 3) + '-';
-         input = input.substr(3);
-     }
+        if (input.length > 3) {
+            formatted += input.substr(0, 3) + '-';
+            input = input.substr(3);
+        }
 
-     if (input.length > 4) {
-         formatted += input.substr(0, 4) + '-';
-         input = input.substr(4);
-     }
+        if (input.length > 4) {
+            formatted += input.substr(0, 4) + '-';
+            input = input.substr(4);
+        }
 
-     formatted += input;
-     $(this).val(formatted);
+        formatted += input;
+        $(this).val(formatted);
 
-     if (formatted.length >= 13) {
-         $(this).val(formatted.substr(0, 13)); // 최대 길이 제한
-     }
- });
+        if (formatted.length >= 13) {
+            $(this).val(formatted.substr(0, 13)); // 최대 길이 제한
+        }
+    });
 
- $("#phoneChk").click(function() {
-     gfncNameCert();
- });
+    $("#phoneChk").click(function() {
+        gfncNameCert();
+    });
 
- $("#phoneChk2").click(function() {
-     verifyPopup();
- });
+    $("#phoneChk2").click(function() {
+        verifyPopup();
+    });
 });
-
 </script>
+
+
 </head>
 <body>
 

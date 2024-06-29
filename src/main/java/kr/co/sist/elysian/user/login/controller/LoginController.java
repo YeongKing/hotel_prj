@@ -1,5 +1,8 @@
 package kr.co.sist.elysian.user.login.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -12,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -83,10 +87,16 @@ public class LoginController {
 
     ///////////아이디 비밀번호 찾기//////////
     
-    /* 본인인증 팝업창 띄우기 */
+    /* 아이디 찾기 본인인증 팝업창 띄우기 */
     @GetMapping("/verify.do")
     public String verifyPopup() {
         return "user/identify/verification"; // identify/verification.jsp로 매핑됨
+    }
+    
+    /* 비밀번호 찾기 본인인증 팝업창 띄우기 */
+    @GetMapping("/verifyPw.do")
+    public String verifyPopupPw() {
+        return "user/identify/verificationPw";
     }
     
     /* 본인인증 하기 */
@@ -109,40 +119,27 @@ public class LoginController {
         return findService.getUserDetails(userPhoneNumber);  // 사용자 정보 가져오기 서비스 호출
     }
 
-	@ResponseBody
-	@PostMapping(value="/searchPopupLogin.do", produces="application/json; charset=UTF-8")
-	public String searchPopupLogin(@ModelAttribute UserVO uVO,HttpSession session) {
-	    JSONObject resultJson = new JSONObject();
-	    // 암호화 객체 생성
-	    PasswordEncoder pe = new BCryptPasswordEncoder();
-	    
-	    UserDomain udm = ls.searchLogin(uVO);
-	    
-	    if (udm != null) {
-	        String encryptedPassword = udm.getUserPw(); // DB에서 가져온 비밀번호
-	        String uncodePass = uVO.getUserPw();
-	        boolean matchFlag = pe.matches(uncodePass, encryptedPassword);
-	        
-	        if (matchFlag) {
-	            session.setAttribute("userId", udm.getUserId());
-	            resultJson.put("result", "success");
-	        } else {
-	            resultJson.put("result", "fail");
-	        }
-	    } else {
-	        resultJson.put("result", "fail");
-	    }
+    @ResponseBody
+    @PostMapping(value = "/modifyUserPw.do", produces = "application/json; charset=UTF-8")
+    public String modifyPw(@RequestBody Map<String, String> requestData, HttpSession session) {
+        String userId = requestData.get("userId");
+        String newLoginPassword = requestData.get("newLoginPassword");
+        System.out.println("Received userId: " + userId);
+        System.out.println("Received newLoginPassword: " + newLoginPassword);
 
-	    
-	    return resultJson.toJSONString();
-	}//searchPopupLogin
-    
-    
-    
-    
-    
-    
-    
+        if (userId == null || newLoginPassword == null) {
+            System.out.println("Error: userId or newLoginPassword is null");
+            return "{\"resultCode\":\"ERROR\"}";
+        }
+
+        UserVO uVO = new UserVO();
+        uVO.setUserId(userId);
+        String jsonObj = findService.modifyUserPw(uVO, newLoginPassword);
+        System.out.println("Response JSON: " + jsonObj);
+
+        return jsonObj;
+    }
+
 
 
 }

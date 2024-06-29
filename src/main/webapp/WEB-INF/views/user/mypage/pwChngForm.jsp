@@ -27,123 +27,6 @@
 <div class="skip"><a href="#container">본문 바로가기</a></div>
 <div class="wrapper ">
 
-<script>
-	jQuery(function(){
-		jQuery.ajax({
-			type : "GET",
-			url : "/massPromotion/get.json",
-			cache : false,
-			dataType : "json",
-			global : false,
-			beforeSend: function() {
-			},
-			complete: function() {
-			},
-			success : function(data){
-                var massPromtn = data.bean;
-                //조회 결과에 따라 랜더링
-                if(massPromtn != null && massPromtn != ""){
-                    var url = getMassPromtnUrl();
-                    var menuNm = massPromtn.promtnNm;
-                    var sysCode = massPromtn.sysCode;
-                    appendMassPromotionMenu(url, menuNm, sysCode);
-                }
-			},
-			error:function(r, s, e){
-			}
-		});
-	});
-
-    function getMassPromtnUrl(){
-        var url = "";
-        var sysCode = jQuery("#sysCode").val();
-
-        if(gfncIsApp()){
-            //앱일 경우
-            url = "/m/massPromotion/list.do";
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/m/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/m/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/m/massPromotion/list.do";
-                }
-            }
-        }else {
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/massPromotion/list.do";
-                }
-            }
-        }
-        return url;
-    }
-
-    function appendMassPromotionMenu(url, menuNm, sysCode){
-        if(gfncIsApp()){
-            //앱일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-
-            var pathname = window.location.pathname;
-            if(pathname.indexOf("/app/main.do") == 0){
-                jQuery(".gnbArea ul.toggleList > li > .titArea:contains('패키지')").closest("ul").append(menuHtml);
-            }else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-
-            /*if(jQuery(".gnbArea ul.toggleList li:contains('패키지')").length > jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").length){
-                jQuery(".gnbArea ul.toggleList li:contains('패키지')").closest("ul").append(menuHtml);
-            } else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }*/
-
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-            jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-        }else{
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL" || sysCode == "JPY"){
-                //해당 페이지가 HUB거나 JPY일 경우
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".allMenu ul.menuDepth01 ul.menuDepth02 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }else {
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".headArea .utilMenu .gnbDepth1 .gnbDepth2 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-        }
-    }
-</script>
-
-<script>
-//2022-05-23 조선라운지 추가
-//헤더 메뉴 버튼 클릭 이벤트
-jQuery(document).on("click",".headArea .btnMenu" ,function(){
-
-    //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-    if(jQuery(this).hasClass("menuOn")){
-        var expsrCount = 3;
-        var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
-        var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
-
-        $loungeList.addClass("hidden");
-        $loungeList.each(function(index){
-            if(randomArray.indexOf(index) > -1){
-                jQuery(this).removeClass("hidden");
-            }
-        });
-    }
-})
-</script>
-
 <!-- S header -->
 <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
 <!-- E header -->
@@ -151,93 +34,114 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 <script type="text/javascript">
     //패스워드 변경버튼 
  	function fnChngPwApi() {
-    	
  		/*
 		사용자 입력정보 VALIDATION 체크
 		해당 열  input, select 박스가 하나라도 미기재 된 경우 validation false
 		최초 미입력 된 element로 focus 이동됨
 		*/
 		var frstIdx = "";
-		jQuery(".intList span").each(function(){
-			var $this = jQuery(this);
+		$(".intList span").each(function(){
+			var $this = $(this);
 			var validYn = true;
 			$this.find("input[type='text'],input[type='password']").each(function(idx){
-				var value = jQuery(this).val();
-				var id = jQuery(this).attr("id");
+				var value = $(this).val();
+				var id = $(this).attr("id");
 				if(value == "" && id != "emailType"){
 					validYn = false;
 					if(frstIdx == ""){
-						frstIdx = jQuery(this);
-					}
-				}
+						frstIdx = $(this);
+					} // end if
+				} // end if
 			});
 			
-			if(!validYn){
+			if(!validYn) {
 				$this.addClass("error");
 				$this.find(".alertMessage").show();
-			}else{
+			} else{
 				$this.removeClass("error");
 				$this.find(".alertMessage").hide();
-			}
+			} // end if
 		});
+		
 		if(frstIdx != ""){
 			frstIdx.focus();
 			return false;
-		}
+		} // end if
     	
         //--------비밀번호 형식검증------------		
-		 var userPw 	= jQuery.trim(jQuery("#loginPassword").val());		// 비밀번호 입력
-		 var userPwRe 	= jQuery.trim(jQuery("#loginPasswordRe").val());		// 비밀번호 재입력 확인
-			
+		 var userPw 	= $.trim($("#newLoginPassword").val());		// 비밀번호 입력
+		 var userPwRe 	= $.trim($("#loginPasswordRe").val());		// 비밀번호 재입력 확인
+		 var userId = $("#userId").val();
+		 
 		 	// 비밀번호1 형식 검증
-			if (!gfncPatternCheck(userPw)) {
+			if(!gfncPatternCheck(userPw, 8, 12)) {
 				alert('비밀번호는 영문/숫자/특수문자 조합 8~12자리까지 입력 가능합니다.');
-				jQuery("#loginPassword").focus();
+				$("#newLoginPassword").focus();
 				return;
-			}
+			} // end if
+			
 			// 비밀번호2 형식 검증
-			if (!gfncPatternCheck(userPwRe)) {
+			if(!gfncPatternCheck(userPwRe, 8, 12)) {
 				alert('비밀번호는 영문/숫자/특수문자 조합 8~12자리까지 입력 가능합니다.');
-				jQuery("#loginPasswordRe").focus();
+				$("#loginPasswordRe").focus();
 				return;
-			}
+			} // end if
+			
+			// 비밀번호1 아이디 포함 검증
+			if(userPw.includes(userId)) {
+				alert("비밀번호에 아이디를 포함할 수 없습니다.");
+				$("#newLoginPassword").focus();
+				return;
+			} // end if
+
+			// 비밀번호2 아이디 포함 검증
+			if(userPwRe.includes(userId)) {
+				alert("비밀번호에 아이디를 포함할 수 없습니다.");
+				$("#loginPasswordRe").focus();
+				return;
+			} // end if
+			
+			// 비밀번호1 연속된 숫자 또는 문자 검증
+			if(containsSameCharMaxCnt(userPw) >= 3 || containsContinuosCharMaxCnt(userPwRe) >= 3) {
+				alert("비밀번호에 연속된 숫자 또는 문자를 사용할 수 없습니다.");
+				$("#newLoginPassword").focus();
+				return;
+			} // end if
+			
+			// 비밀번호2 연속된 숫자 또는 문자 검증
+			if(containsSameCharMaxCnt(userPwRe) >= 3 || containsContinuosCharMaxCnt(userPwRe) >= 3) {
+				alert("비밀번호에 연속된 숫자 또는 문자를 사용할 수 없습니다.");
+				$("#loginPasswordRe").focus();
+				return;
+			} // end if
 			
 			// 비밀번호 확인 일치 검증
-			if (userPw != userPwRe) {
+			if(userPw != userPwRe) {
 				alert('비밀번호 확인이 일치하지 않습니다.');
-				jQuery("#loginPasswordRe").focus();
+				$("#loginPasswordRe").focus();
 				return;
-			}
-			
+			} // end if
 		
     	//-----------------패스워드 변경API 호출-------------------
- 		var formData =  jQuery("#formPwChng").serialize();
- 		jQuery.ajax({
+ 		var formData =  $("#formPwChng").serialize();
+ 		$.ajax({
 			type : "POST",
-			url : "/identify/chngPwApi.do",
-			cache : false,
+			url : "modifyMemberpw.do",
 		    data : formData, 
 			dataType : "json",
-			global : false,
-			success : function(data) {
+			success : function(jsonObj) {
 				//신규회원 
-				if(data.statusR==200 && data.codeR=='S00000' ) { 
-
+				if(jsonObj.resultCode=='SUCCESS' ) { 
 					alert('비밀번호가 변경되었습니다. 다시 로그인해주세요.');
 					goLogout();
-					
-				}else if(data.statusR==400 && data.codeR=='FC1007' ){
+				} else if(jsonObj.resultCode=='NOTCURPASS'){
 					alert('현재 사용중인 비밀번호가 아닙니다.');
 				
-				}else if(data.statusR==400 && data.codeR=='FC1008' ){
-					/* alert("변경 할 비밀번호가 이전 비밀번호와 동일합니다."); */
-					alert('변경 할 비밀번호가 이전 비밀번호와 동일합니다.');
-					
-				}else if(data.statusR==400 && data.codeR=='FC1009' ){
+				}else if(jsonObj.resultCode=='SAMEASCUR'){
 					alert('변경 할 비밀번호가 이전 비밀번호와 동일합니다.');
 					
 				}else{
-					alert(data.messageR + ' : 처리가 실패하였습니다. 잠시 후 재시도 해주세요. 지속적으로 문제발생 시 관리자에게 문의해 주세요.');
+					alert('처리가 실패하였습니다. 잠시 후 재시도 해주세요. 지속적으로 문제발생 시 관리자에게 문의해 주세요.');
 				}
 			},
 			error:function(){
@@ -248,51 +152,21 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
     
  	//회원탈퇴 처리후 로그아웃 실행
     function goLogout() {
-    	jQuery("#formPwChng").attr("action", "/login/logout.do");
-	    jQuery("#formPwChng").attr("method", "post");
-	    jQuery("#formPwChng").submit();
-	} 
+        location.href = "${pageContext.request.contextPath}/user/logout.do";
+ 		//jQuery("#formPwChng").attr("action", "/login/logout.do");
+	    //jQuery("#formPwChng").attr("method", "post");
+	    //jQuery("#formPwChng").submit();
+	} // goLogout
 </script>
 
 <form id="formPwChng" >
+<input type="hidden" id="userId" value="${userId}">
 <div id="container" class="container mypage">
  
 <script type="text/javascript">
 	$(document).ready(function(){
-	 
 		fncLnbInfoApi();
- 	   
 	}); 
-  
-  	//LNB정보조회(쿠폰수,가용포인트) API호출
- 	function fncLnbInfoApi() {
-		var formData =  jQuery("#formLnb").serialize();
- 		jQuery.ajax({
-			type : "POST",
-			url : "/mypage/lnbInfoApi.do",
-			cache : false,
-			data : formData, 
-			dataType : "json",
-			global : false,
-			success : function(data) {
-				if(data.statusR==200 && data.codeR=='S00000') { 
-					  //회원명 세팅
-					  var nameHtml = ''+data.name;
-				      /* $('.name').html(nameHtml); */
-				      $('#nm1').html(nameHtml);
-				      //가용포인트 세팅 
-				      $('#usefulPointSpan').html(fncComma(data.usefulPoint));
-				      //보유쿠폰수 세팅 
-				      $('#couponCntDiv').html(fncComma(data.couponCnt));
-				}else{
-					alert(data.statusR + " : 관리자에게 문의하세요");
-				}
-			},
-			error:function(){
-				alert("관리자에게 문의하세요.");
-			}
-		});
- 	}
 </script> 
 
 <h1 class="hidden">마이페이지</h1>
@@ -324,7 +198,7 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
                                 
 				<div class="intInner">
 					<span class="intArea">
-						<input type="password" id="curLoginPassword" name="curLoginPassword" placeholder="현재 비밀번호를 입력해주세요." style="width:487px" aria-required="true">
+						<input type="password" id="curLoginPassword" name="curLoginPassword" placeholder="현재 비밀번호를 입력해주세요." style="width:487px" aria-required="true" onkeydown="javascript: if(event.keyCode == 13) {fnChngPwApi();}">
 						<span class="alertMessage">비밀번호를 입력해주세요.</span>
 					</span>
 				</div>
@@ -340,7 +214,7 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
                                
      			<div class="intInner">
 					<span class="intArea">
-						<input type="password" id="loginPassword" name="loginPassword" placeholder="영문, 숫자, 특수문자 조합 8~12자리를 입력해주세요." style="width:487px" aria-required="true">
+						<input type="password" id="newLoginPassword" name="newLoginPassword" placeholder="영문, 숫자, 특수문자 조합 8~12자리를 입력해주세요." style="width:487px" aria-required="true" onkeydown="javascript: if(event.keyCode == 13) {fnChngPwApi();}">
 						<span class="alertMessage">비밀번호를 입력해주세요.</span>
 					</span>
 				</div>   
@@ -358,7 +232,7 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 
 				<div class="intInner">
 					<span class="intArea">
-						<input type="password" id="loginPasswordRe" name="loginPasswordRe" placeholder="동일한 비밀번호를 입력해주세요." style="width:487px" aria-required="true">
+						<input type="password" id="loginPasswordRe" name="loginPasswordRe" placeholder="동일한 비밀번호를 입력해주세요." style="width:487px" aria-required="true" onkeydown="javascript: if(event.keyCode == 13) {fnChngPwApi();}">
 						<span class="alertMessage">동일한 비밀번호를 입력해주세요.</span>
 					</span>
  				</div>

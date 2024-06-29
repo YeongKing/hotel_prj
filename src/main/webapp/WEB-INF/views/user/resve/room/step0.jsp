@@ -301,7 +301,7 @@ function fncSearchList(){
 	"체크인 날짜 : " +$("#ckinDate").val() + "\n" +
 	"체크아웃 날짜 : " + $("#ckoutDate").val() + "\n" +
 	"어른 : " +   $('input[name="adltCntArr"]').val() + "\n" +
-	"어린이 : " +  $('input[name="chldCntArr"]').val()); 
+	"어린이 : " +  $('input[name="chldCntArr"]').val(); 
 	jQuery("#step0Form").submit();
 }
 </script>

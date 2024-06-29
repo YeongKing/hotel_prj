@@ -26,123 +26,6 @@
 <body>
 <div class="skip"><a href="#container">본문 바로가기</a></div>
 <div class="wrapper ">
-
-<script>
-	jQuery(function(){
-		jQuery.ajax({
-			type : "GET",
-			url : "/massPromotion/get.json",
-			cache : false,
-			dataType : "json",
-			global : false,
-			beforeSend: function() {
-			},
-			complete: function() {
-			},
-			success : function(data){
-                var massPromtn = data.bean;
-                //조회 결과에 따라 랜더링
-                if(massPromtn != null && massPromtn != ""){
-                    var url = getMassPromtnUrl();
-                    var menuNm = massPromtn.promtnNm;
-                    var sysCode = massPromtn.sysCode;
-                    appendMassPromotionMenu(url, menuNm, sysCode);
-                }
-			},
-			error:function(r, s, e){
-			}
-		});
-	});
-
-    function getMassPromtnUrl(){
-        var url = "";
-        var sysCode = jQuery("#sysCode").val();
-
-        if(gfncIsApp()){
-            //앱일 경우
-            url = "/m/massPromotion/list.do";
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/m/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/m/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/m/massPromotion/list.do";
-                }
-            }
-        }else {
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/massPromotion/list.do";
-                }
-            }
-        }
-        return url;
-    }
-
-    function appendMassPromotionMenu(url, menuNm, sysCode){
-        if(gfncIsApp()){
-            //앱일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-
-            var pathname = window.location.pathname;
-            if(pathname.indexOf("/app/main.do") == 0){
-                jQuery(".gnbArea ul.toggleList > li > .titArea:contains('패키지')").closest("ul").append(menuHtml);
-            }else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-
-            /*if(jQuery(".gnbArea ul.toggleList li:contains('패키지')").length > jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").length){
-                jQuery(".gnbArea ul.toggleList li:contains('패키지')").closest("ul").append(menuHtml);
-            } else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }*/
-
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-            jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-        }else{
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL" || sysCode == "JPY"){
-                //해당 페이지가 HUB거나 JPY일 경우
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".allMenu ul.menuDepth01 ul.menuDepth02 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }else {
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".headArea .utilMenu .gnbDepth1 .gnbDepth2 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-        }
-    }
-</script>
-
-<script>
-//2022-05-23 조선라운지 추가
-//헤더 메뉴 버튼 클릭 이벤트
-jQuery(document).on("click",".headArea .btnMenu" ,function(){
-
-    //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-    if(jQuery(this).hasClass("menuOn")){
-        var expsrCount = 3;
-        var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
-        var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
-
-        $loungeList.addClass("hidden");
-        $loungeList.each(function(index){
-            if(randomArray.indexOf(index) > -1){
-                jQuery(this).removeClass("hidden");
-            }
-        });
-    }
-})
-</script>
 	
 <!-- S header -->
 <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
@@ -151,43 +34,49 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 <script type="text/javascript">
     //회원탈퇴 신청화면 진입전 패스워드 재확인
 	function fncWithDraPwCfmApi() {
-    	
-	var password = jQuery("#password").val();
-	if(password.length == 0) {
-      alert('비밀번호를 입력해주세요.');		
-      return;
-	}
-    jQuery("#loginPassword").val(password);
-    
-	var formData =  jQuery("#formWithPwForm").serialize();
-		jQuery.ajax({
-		type : "POST",
-		url : "/mypage/pwCheckApi.do",
-		cache : false,
-		data : formData, 
-		dataType : "json",
-		global : false,
-		success : function(data) {
-			if(data.statusR==200 && data.codeR=='S00000') { 
-				goConvertPage();
-			}else if(data.statusR==400){
-				alert(data.statusR +" : " +data.codeR+" : "+data.messageR);
-			}else{ 
-				alert(data.statusR +" : " +data.codeR+" : "+data.messageR);
+		var password = $("#password").val();
+		
+		if(password.length == 0) {
+	      alert('비밀번호를 입력해주세요.');		
+	      return;
+		} // end if
+		
+	    $("#loginPassword").val(password);
+	    
+		var formData =  $("#formWithPwForm").serialize();
+		
+		$.ajax({
+			type : "POST",
+			url : "checkPwUserInfo.do",
+			data : formData, 
+			dataType : "json",
+			beforeSend: function() {
+				commonJs.showLoadingBar(); //로딩바 show
+			},
+			complete: function() {
+				commonJs.closeLoadingBar(); //로딩바 hide
+			},
+			success : function(jsonObj) {
+				var result = jsonObj.result;
+				if(result == "SUCCESS") { 
+					goConvertPage();
+				} else { 
+					alert("비밀번호가 틀렸습니다. 다시 확인해주세요.");
+					$("#password").focus();
+				} // end else
+			},
+			error:function(){
+				alert('처리가 실패하였습니다. 잠시 후 재시도 해주세요. 지속적으로 문제발생 시 관리자에게 문의해 주세요.');
 			}
-		},
-		error:function(){
-			alert('처리가 실패하였습니다. 잠시 후 재시도 해주세요. 지속적으로 문제발생 시 관리자에게 문의해 주세요.');
-		}
-	});
-	}
+		});
+	} // fncWithDraPwCfmApi
     
 	//회원탈퇴 페이지 이동
     function goConvertPage() {
-    	jQuery("#formWithPwForm").attr("action", "/user/mypage/withdraCfmForm.do");
-	    jQuery("#formWithPwForm").attr("method", "post");
-	    jQuery("#formWithPwForm").submit();
-	} 
+    	$("#formWithPwForm").attr("action", "withdraCfmForm.do");
+	    $("#formWithPwForm").attr("method", "post");
+	    $("#formWithPwForm").submit();
+	} // goConvertPage
 </script> 
 
 <form id="formWithPwForm">
@@ -197,42 +86,10 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
 <div id="container" class="container mypage">
 
 <script type="text/javascript">
- 	$(document).ready(function(){
-	 
+ 	$(function(){
 		fncLnbInfoApi();
- 	   
 	}); 
-  
-  	//LNB정보조회(쿠폰수,가용포인트) API호출
- 	function fncLnbInfoApi() {
-		var formData =  jQuery("#formLnb").serialize();
- 		jQuery.ajax({
-			type : "POST",
-			url : "/mypage/lnbInfoApi.do",
-			cache : false,
-			data : formData, 
-			dataType : "json",
-			global : false,
-			success : function(data) {
-				if(data.statusR==200 && data.codeR=='S00000') { 
-					  //회원명 세팅
-					  var nameHtml = ''+data.name;
-				      /* $('.name').html(nameHtml); */
-				      $('#nm1').html(nameHtml);
-				      //가용포인트 세팅 
-				      $('#usefulPointSpan').html(fncComma(data.usefulPoint));
-				      //보유쿠폰수 세팅 
-				      $('#couponCntDiv').html(fncComma(data.couponCnt));
-				}else{
-					alert(data.statusR + " : 관리자에게 문의하세요");
-				}
-			},
-			error:function(){
-				alert("관리자에게 문의하세요.");
-			}
-		});
- 	}
- </script> 
+</script> 
  
                  
 <h1 class="hidden">마이페이지</h1>
@@ -264,7 +121,7 @@ jQuery(document).on("click",".headArea .btnMenu" ,function(){
                                 
 				<div class="intInner">
 					<span class="intArea">
-						<input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요." style="width:1000px" aria-required="true">
+						<input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요." style="width:1000px" aria-required="true" onkeydown="javascript: if(event.keyCode == 13) {fncWithDraPwCfmApi();}">
 						<span class="alertMessage">비밀번호를 입력해주세요.</span>
 					</span>
 				</div>

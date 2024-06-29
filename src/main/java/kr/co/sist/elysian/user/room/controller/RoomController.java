@@ -70,7 +70,7 @@ public class RoomController {
         session.setAttribute("rrVO", rrVO);
 
 
-        System.out.println("rrVO :---------------"+rrVO);
+//        System.out.println("rrVO :---------------"+rrVO);
 		
 		return "user/resve/room/step2";
 		
@@ -110,7 +110,7 @@ public class RoomController {
 		
 		rrVO.setUserId(umd.getMemberId());
 		
-		System.out.println("umd ----------------" + umd);
+//		System.out.println("umd ----------------" + umd);
 		
 		
 		
@@ -120,7 +120,7 @@ public class RoomController {
         session.setAttribute("rrVO", rrVO);
 
 
-        System.out.println("rrVO :---------------"+rrVO);
+//        System.out.println("rrVO :---------------"+rrVO);
 		
 		return "user/resve/room/step3";
 		

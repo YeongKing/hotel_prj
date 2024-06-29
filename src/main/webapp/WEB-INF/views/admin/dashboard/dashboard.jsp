@@ -314,7 +314,7 @@
 	                        </div>
 	                        <div class="ms-3 name">
 	                            <h5 class="font-bold"><c:out value="${ requestScope.adminId }"/></h5>
-	                            <h6 class="text-muted mb-0"><c:out value="${ requestScope.adminAuthority }"/></h6>
+	                            <h6 class="text-muted mb-0"><c:out value="${ adminAuthority }"/> 관리자</h6>
 	                        </div>
 	                    </div>
 	                </div>

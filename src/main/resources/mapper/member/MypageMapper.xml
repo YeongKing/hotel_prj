@@ -199,5 +199,4 @@
 		set exit_flag = 'Y'
 		where member_id = #{userId}
 	</update>
-	
 </mapper>

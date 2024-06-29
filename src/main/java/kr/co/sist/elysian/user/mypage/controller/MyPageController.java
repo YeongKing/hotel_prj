@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
@@ -31,6 +32,7 @@ import kr.co.sist.elysian.user.mypage.model.vo.DiningResVO;
 import kr.co.sist.elysian.user.mypage.model.vo.MemberVO;
 import kr.co.sist.elysian.user.mypage.service.MyPageService;
 
+@SessionAttributes("userId")
 @Controller("userMyPageController")
 @RequestMapping("/user")
 public class MyPageController {
@@ -338,13 +340,10 @@ public class MyPageController {
 	/**
 	 * 비밀번호 변경 페이지 view 매핑
 	 * @param session userId
-	 * @param model 
 	 * @return 비밀번호 변경 페이지 view jsp
 	 */
 	@GetMapping("/pwChngForm.do")
-	public String modifyPwForm(HttpSession session, Model model) {
-		String userId = (String)session.getAttribute("userId");
-		model.addAttribute("userId", userId);
+	public String modifyPwForm(HttpSession session) {
 		return "user/mypage/pwChngForm";
 	} // modifyPwForm
 	

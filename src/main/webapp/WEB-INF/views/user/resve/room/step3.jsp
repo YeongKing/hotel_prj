@@ -37,7 +37,7 @@
 	<div class="wrapper ">
 
 <script>
-	jQuery(function(){
+/* 	jQuery(function(){
 		jQuery.ajax({
 			type : "GET",
 			url : "/massPromotion/get.json",
@@ -61,9 +61,9 @@
 			error:function(r, s, e){
 			}
 		});
-	});
+	}); */
 
-    function getMassPromtnUrl(){
+/*     function getMassPromtnUrl(){
         var url = "";
         var sysCode = jQuery("#sysCode").val();
 
@@ -94,9 +94,9 @@
             }
         }
         return url;
-    }
+    } */
 
-    function appendMassPromotionMenu(url, menuNm, sysCode){
+/*     function appendMassPromotionMenu(url, menuNm, sysCode){
         if(gfncIsApp()){
             //앱일 경우
             var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
@@ -114,7 +114,7 @@
                 jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
             }*/
 
-        }else if(gfncIsMobile()){
+/*         }else if(gfncIsMobile()){
             //모바일일 경우
             var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
             jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
@@ -128,11 +128,11 @@
                 var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
                 jQuery(".headArea .utilMenu .gnbDepth1 .gnbDepth2 li:contains('PACKAGE')").closest("ul").append(menuHtml);
             }
-        }
-    }
-
+        } */
+ /*    } */
+ 
 </script>
-
+<!-- 
 <script>
         //2022-05-23 조선라운지 추가
         //헤더 메뉴 버튼 클릭 이벤트
@@ -156,12 +156,78 @@
 
 
 
+ -->
+
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function() {
+    const moblphonTelno = document.getElementById("moblphonTelno");
+    const moblphonTelno1 = document.getElementById("moblphonTelno1");
+    const moblphonTelno2 = document.getElementById("moblphonTelno2");
+
+    function moveFocus(nextField) {
+        nextField.focus();
+    }
+
+    function limitInputLength(input, maxLength) {
+        if (input.value.length > maxLength) {
+            input.value = input.value.slice(0, maxLength);
+        }
+    }
+
+    moblphonTelno.addEventListener("input", function() {
+        if (this.value.length >= 3) {
+            moveFocus(moblphonTelno1);
+        }
+        limitInputLength(this, 3);
+    });
+
+    moblphonTelno1.addEventListener("input", function() {
+        if (this.value.length >= 4) {
+            moveFocus(moblphonTelno2);
+        }
+        limitInputLength(this, 4);
+    });
+
+    moblphonTelno2.addEventListener("input", function() {
+        limitInputLength(this, 4);
+    });
+});
+</script>
 
 
 
+<script>
+$(document).ready(function() {
+    var flag = true; // flag 변수 선언 및 초기화
 
+    // 초기 설정 함수 호출
+    handleEmailTypeChange();
 
+    // 이메일 타입 변경 시 이벤트 핸들러
+    $('#emailType').change(function() {
+        handleEmailTypeChange();
+    });
 
+    // 이메일 타입에 따라 #email2 필드 상태 제어하는 함수
+    function handleEmailTypeChange() {
+        var emailType = $('#emailType').val();
+        var email2 = $('#email2');
+
+        // 최초 상태에서 emailType이 ''이고 email2에 값이 있는 경우에만 flag를 alert하고 flag를 false로 변경한다.
+        if (emailType === '' && email2.val() !== '' && flag) {
+            flag = false;
+            return;
+        }
+
+        // emailType 값에 따라 #email2 필드 제어
+        if (emailType === '') {
+            email2.prop('disabled', false).val('');
+        } else {
+            email2.prop('disabled', true).val(emailType);
+        }
+    }
+});
+</script>
 
 
 
@@ -415,32 +481,10 @@ jQuery(function(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
 
 
-
-
-
-
-		
+	
 		
 		<!--S header  -->
 <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
@@ -481,7 +525,7 @@ function checkInputValid(){
 		data-valid 가 Y 인 경우에만 체크
 		해당 열  input, select 박스가 하나라도 미기재 된 경우 validation false
 	*/
-
+/* 
     $(".intList li").each(function(){
 
         var isValid = true;
@@ -500,7 +544,7 @@ function checkInputValid(){
             $this.removeClass("error");
             $this.find(".alertMessage").hide();
         }
-    })
+    }) */
 
     if($(".error").length != 0){
         $(".error").first().attr("tabindex" , -1 ).focus();
@@ -542,18 +586,88 @@ function fncGoPay(){
             jQuery("#policyAgree").focus();
             return false;
         }
+        
+        
+        
+        
+        
+        
 		
+     // 휴대폰 유효성 검사
+        var phonePart1 = jQuery("#moblphonTelno").val().trim();
+        var phonePart2 = jQuery("#moblphonTelno1").val().trim();
+        var phonePart3 = jQuery("#moblphonTelno2").val().trim();
+        var phone = phonePart1 + "-" + phonePart2 + "-" + phonePart3;
+
+        if (phonePart1 === "") {
+            alert("전화번호는 필수 입력입니다.");
+            jQuery("#moblphonTelno").focus();
+            return false;
+        } else if (phonePart2 === "") {
+            alert("전화번호는 필수 입력입니다.");
+            jQuery("#moblphonTelno1").focus();
+            return false;
+        } else if (phonePart3 === "") {
+            alert("전화번호는 필수 입력입니다.");
+            jQuery("#moblphonTelno2").focus();
+            return false;
+        }
+
+        jQuery("#phone").val(phone);
+
+        // 이메일 유효성 검사
+        var emailPart1 = jQuery("#email1").val().trim();
+        var emailPart2 = jQuery("#email2").val().trim();
+        var emailType = jQuery("#emailType").val().trim();
+        var email;
+
+        if (emailPart1 === "") {
+            alert("이메일은 필수 입력입니다.");
+            jQuery("#email1").focus();
+            return false;
+        }
+
+        if (emailType === "") {
+            if (emailPart2 === "") {
+                alert("이메일은 필수 입력입니다.");
+                jQuery("#email2").focus();
+                return false;
+            }
+            email = emailPart1 + "@" + emailPart2;
+        } else {
+            email = emailPart1 + "@" + emailType;
+        }
+
+        // 이메일 길이 유효성 검사
+        if (email.length > 100) {
+            alert("이메일 주소가 너무 깁니다. 다시 입력해주세요.");
+            jQuery("#email1").val("");
+            jQuery("#email2").val("");
+            jQuery("#email1").focus();
+            return false;
+        }
+
+        jQuery("#email").val(email);
+
+        alert(email);
+        alert(phone);
+
+        
+        
+        
+        
+        
+        
+        
 	
 
 
-	
-	jQuery("#email").val(jQuery("#email1").val().trim()+"@"+jQuery("#email2").val().trim());	// 이메일 취합
 
 	
-	jQuery("#phone").val(jQuery("#moblphonTelno").val().trim()+"-"+jQuery("#moblphonTelno1").val().trim()+"-"+jQuery("#moblphonTelno2").val().trim());	// 이메일 취합
-
-
-	
+    
+    
+    
+    
 	/*
 		예약 유효성 검사
 	*/
@@ -652,22 +766,22 @@ function fncGoPay(){
 	<input type="hidden" name="adltSum" id="adltSum" value="${rrVO.adultsNum}"/>				
 	<input type="hidden" name="chldSum" id="chldSum" value="${rrVO.kidsNum}"/>				
 	
-		<input type="hidden" name="optAArr" value="BK"/>								
+<!-- 		<input type="hidden" name="optAArr" value="BK"/>								
 	
 	
 		<input type="hidden" name="optCArr" value="CHBK"/>								
+	 -->
 	
-	
-		<input type="hidden" name="optEArr" value="0"/>								
+<!-- 		<input type="hidden" name="optEArr" value="0"/>		 -->						
 							
 
 		<input type="hidden" name="optAQtyArr" value="2"/>						
 	
 	
-		<input type="hidden" name="optCQtyArr" value="0"/>						
+<!-- 		<input type="hidden" name="optCQtyArr" value="0"/>						
 	
 	
-		<input type="hidden" name="optEQtyArr" value="0"/>						
+		<input type="hidden" name="optEQtyArr" value="0"/> -->						
 						
 	
 		<input type="hidden" name="email" id="email" value="" />												
@@ -793,7 +907,7 @@ function fncGoPay(){
 								<div class="intArea selectWrap">
 									<select id="cntryPhNbr" name="cntryPhNbr" style="width:319px;" > <!--  국가 코드 -->
 										
-									 		<option value="233" >가나(233)</option>
+<!-- 									 		<option value="233" >가나(233)</option>
 										
 									 		<option value="241" >가봉(241)</option>
 										
@@ -843,10 +957,10 @@ function fncGoPay(){
 										
 									 		<option value="505" >니카라과(505)</option>
 										
-									 		<option value="886" >대만(886)</option>
+									 		<option value="886" >대만(886)</option> -->
 										
 									 		<option value="82" selected="selected">대한민국(82)</option>
-										
+	<!-- 									
 									 		<option value="45" >덴마크(45)</option>
 										
 									 		<option value="1+809" >도미니카 공화국(1+809)</option>
@@ -1201,7 +1315,7 @@ function fncGoPay(){
 										
 									 		<option value="61" >호주(61)</option>
 										
-									 		<option value="852" >홍콩(852)</option>
+									 		<option value="852" >홍콩(852)</option> -->
 										
 									</select>
 								</div>
@@ -1273,13 +1387,15 @@ function fncGoPay(){
 									<option value="hotmail.com" >hotmail.com</option>
 									<option value="nate.com" >nate.com</option>
 									<option value="gmail.com" >gmail.com</option>
-									<option value="sist.co.kr" >gmail.com</option>
+									<option value="sist.co.kr" >sist.co.kr</option>
 									</select>
 								</div>
 								<span class="alertMessage">이메일을 입력해주세요.</span>
 							</div>
 						</li>
-                        
+						
+
+	
                              <li>
                                 <div class="intWrap"><span class="tit"><label for="payType2">PAY TYPE</label><span class="essential">필수</span></span></div>
                                 <div class="intInner">

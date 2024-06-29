@@ -69,14 +69,14 @@
 		} // end if
     	
         //--------비밀번호 형식검증------------		
-		 var userPw 	= $.trim($("#loginPassword").val());		// 비밀번호 입력
+		 var userPw 	= $.trim($("#newLoginPassword").val());		// 비밀번호 입력
 		 var userPwRe 	= $.trim($("#loginPasswordRe").val());		// 비밀번호 재입력 확인
 		 var userId = $("#userId").val();
 		 
 		 	// 비밀번호1 형식 검증
 			if(!gfncPatternCheck(userPw, 8, 12)) {
 				alert('비밀번호는 영문/숫자/특수문자 조합 8~12자리까지 입력 가능합니다.');
-				$("#loginPassword").focus();
+				$("#newLoginPassword").focus();
 				return;
 			} // end if
 			
@@ -90,7 +90,7 @@
 			// 비밀번호1 아이디 포함 검증
 			if(userPw.includes(userId)) {
 				alert("비밀번호에 아이디를 포함할 수 없습니다.");
-				$("#loginPassword").focus();
+				$("#newLoginPassword").focus();
 				return;
 			} // end if
 
@@ -104,7 +104,7 @@
 			// 비밀번호1 연속된 숫자 또는 문자 검증
 			if(containsSameCharMaxCnt(userPw) >= 3 || containsContinuosCharMaxCnt(userPwRe) >= 3) {
 				alert("비밀번호에 연속된 숫자 또는 문자를 사용할 수 없습니다.");
-				$("#loginPassword").focus();
+				$("#newLoginPassword").focus();
 				return;
 			} // end if
 			
@@ -198,7 +198,7 @@
                                 
 				<div class="intInner">
 					<span class="intArea">
-						<input type="password" id="curLoginPassword" name="curLoginPassword" placeholder="현재 비밀번호를 입력해주세요." style="width:487px" aria-required="true">
+						<input type="password" id="curLoginPassword" name="curLoginPassword" placeholder="현재 비밀번호를 입력해주세요." style="width:487px" aria-required="true" onkeydown="javascript: if(event.keyCode == 13) {fnChngPwApi();}">
 						<span class="alertMessage">비밀번호를 입력해주세요.</span>
 					</span>
 				</div>
@@ -214,7 +214,7 @@
                                
      			<div class="intInner">
 					<span class="intArea">
-						<input type="password" id="newLoginPassword" name="newLoginPassword" placeholder="영문, 숫자, 특수문자 조합 8~12자리를 입력해주세요." style="width:487px" aria-required="true">
+						<input type="password" id="newLoginPassword" name="newLoginPassword" placeholder="영문, 숫자, 특수문자 조합 8~12자리를 입력해주세요." style="width:487px" aria-required="true" onkeydown="javascript: if(event.keyCode == 13) {fnChngPwApi();}">
 						<span class="alertMessage">비밀번호를 입력해주세요.</span>
 					</span>
 				</div>   
@@ -232,7 +232,7 @@
 
 				<div class="intInner">
 					<span class="intArea">
-						<input type="password" id="loginPasswordRe" name="loginPasswordRe" placeholder="동일한 비밀번호를 입력해주세요." style="width:487px" aria-required="true">
+						<input type="password" id="loginPasswordRe" name="loginPasswordRe" placeholder="동일한 비밀번호를 입력해주세요." style="width:487px" aria-required="true" onkeydown="javascript: if(event.keyCode == 13) {fnChngPwApi();}">
 						<span class="alertMessage">동일한 비밀번호를 입력해주세요.</span>
 					</span>
  				</div>

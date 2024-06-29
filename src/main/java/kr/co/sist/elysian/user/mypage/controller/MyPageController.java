@@ -365,12 +365,10 @@ public class MyPageController {
 	
 	@GetMapping("/withdraPwCfmForm.do")
 	public String checkRemove() {
-		
 		return "user/mypage/withdraPwCfmForm";
-		
 	} // checkRemove
 
-	@GetMapping("/withdraCfmForm.do")
+	@PostMapping("/withdraCfmForm.do")
 	public String removeUserInfo() {
 		
 		return "user/mypage/withdraCfmForm";

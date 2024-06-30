@@ -54,7 +54,7 @@ public class LoginController {
     
     /* 세션 설정 후 로그인 페이지 이동 - 로그인 완료 */
     @PostMapping("/set_session.do")
-    public String searchLogin(UserVO uVO, Model model, RedirectAttributes redirectAttributes) {
+    public String searchLogin(UserVO uVO, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
         // 암호화 객체 생성
         PasswordEncoder pe = new BCryptPasswordEncoder();
         
@@ -75,7 +75,12 @@ public class LoginController {
         if (matchFlag) {
             model.addAttribute("userId", udm.getUserId());
             model.addAttribute("userName", udm.getUserName());
-            return "forward:index.do"; //메인 페이지로 이동
+            
+            // 세션에 저장되어 있는 요청한 페이지 URI 가져오기 
+            String requestedURI = (String)session.getAttribute("requestedURI");
+            String movePath = requestedURI.substring(requestedURI.lastIndexOf("/")+1);
+            
+            return "forward:"+movePath; //요청했던 페이지로 이동
         } else {
             model.addAttribute("error", "잘못된 비밀번호 입니다.");
             return "user/login/loginForm"; //로그인 페이지로 이동

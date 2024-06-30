@@ -44,7 +44,7 @@ public class MyPageController {
 	 * 마이페이지 메인 매핑
 	 * @return 마이페이지 view jsp
 	 */
-	@GetMapping("/mypage.do")
+	@RequestMapping(value="/mypage.do", method= {GET, POST})
 	public String main() {
 		return "user/mypage/main";
 	} // main
@@ -254,7 +254,7 @@ public class MyPageController {
 	 * 회원 정보 수정 비밀번호 확인 페이지 매핑
 	 * @return 회원 정보 수정 비밀번호 확인 view jsp
 	 */
-	@GetMapping("/myInfoPwCfmForm.do")
+	@RequestMapping(value="/myInfoPwCfmForm.do", method= {GET, POST})
 	public String checkPwUserInfoForm() {
 		return "user/mypage/myInfoPwCfmForm";
 	} // checkPwUserInfoForm

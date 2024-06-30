@@ -135,7 +135,7 @@
     
 
 
-    /* 본인인증 팝업창 띄우기 */
+    /* 아이디 찾기 본인인증 팝업창 띄우기 */
     function verifyPopup() {
         // 화면 중앙에 팝업 창을 띄우기 위한 계산
         var width = 600;
@@ -148,6 +148,22 @@
             "<c:url value='/user/verify.do' />", 
             "verificationPopupWindow", 
             specs // specs 문자열을 사용하여 위치와 크기를 설정합니다.
+        );
+    }
+    
+    /* 비밀번호 찾기 본인인증 팝업창 띄우기 */
+    function verifyPopupPw() {
+        // 화면 중앙에 팝업 창을 띄우기 위한 계산
+        var width = 600;
+        var height = 400;
+        var left = (window.screen.width - width) / 2;
+        var top = (window.screen.height - height) / 2;
+        var specs = "width=" + width + ",height=" + height + ",top=" + top + ",left=" + left + ",scrollbars=no,resizable=no";
+
+        window.open(
+            "<c:url value='/user/verifyPw.do' />", 
+            "verificationPwPopupWindow", 
+            specs
         );
     }
 </script>
@@ -238,32 +254,7 @@
 						<p class="txtBoxTitle">아이디를 잊으셨나요?<br>휴대폰 문자인증을 통해<br>아이디를 확인하실 수 있습니다.</p>
 						<p class="txtBoxDescription">휴대폰 문자인증의 경우 인증번호 일치여부에 따라<br>본인확인 과정을 거치게 됩니다.<br>가입되어 있는 회원님의 개인정보와<br>일치하지 않는 휴대폰 번호일 경우,<br>확인이 이루어지지 않습니다.</p>
 						
-						
-<!-- 						<div class="textBox1">
-						<div class="findId" style="text-align: center !important">
-							<p class="findIdFrm">
-								필수입력서식에 미입력 발생 시, error 클래스 추가 alertMessage 노출, 포커스가 가면 error 클래스 제거
-								<span class="alertMessage">
-								휴대폰 번호를 입력해주세요.아이디를 입력해주세요.
-								</span> 
-								<label class="hidden" for="frm_userPhone">휴대폰 번호</label> 
-								<input type="text" id="frm_userPhone" placeholder="휴대폰 번호" aria-required="true" style="margin-bottom: 20px !important"/>아이디
-								<div class="sendBtn">
-									<button type="button" class="btnSC btnL active" onclick="gfncNameCert(); return false;" style="">인증번호 보내기</button>
-								</div>
-							</p>
-							<p class="findIdFrm">
-								<span class="alertMessage">인증번호를 입력해주세요.비밀번호를 입력해주세요.</span> 
-								<label class="hidden" for="frm_verificationNum">인증번호</label>비밀번호 
-								<input type="password" id="frm_verificationNum" placeholder="인증번호" aria-required="true" onkeydown="javascript:if(event.keyCode == 13){PageScript.fncLogin('ID');}" />비밀번호
-							</p>
-						</div>
-						</div> -->
-						
-						
-						
-						
-						
+						<!-- 비밀번호 찾기 -->
 						<div class="btnArea">
 							<button type="button" class="btnSC btnL active" onclick="verifyPopup(); return false;">휴대폰 문자 인증</button>
 						</div>
@@ -274,10 +265,10 @@
 				<div id="tab02" class="tabCont" style="display: none;">
 					<h3 class="hidden">비밀번호 찾기</h3>
 					<div class="txtBox">
-						<p class="txtBoxTitle">비밀번호를 잊으셨나요?<br>휴대폰 본인인증을 통해 고객님의 비밀번호를 안전하게 재설정 가능합니다.</p>
-						<p class="txtBoxDescription">휴대폰 인증의 경우 회원님 명의로 되어있는<br>휴대폰 번호를 통해서 본인확인 과정을 거치게 됩니다.<br>회원님의 개인정보와 일치하지 않는 소유자의 휴대폰일 경우,<br>확인이 이루어지지 않습니다.</p>
+						<p class="txtBoxTitle">비밀번호를 잊으셨나요?<br>휴대폰 문자인증을 통해<br>고객님의 비밀번호를 안전하게 재설정 가능합니다.</p>
+						<p class="txtBoxDescription">휴대폰 문자인증의 경우 인증번호 일치여부에 따라<br>본인확인 과정을 거치게 됩니다.<br>가입되어 있는 회원님의 개인정보와<br>일치하지 않는 휴대폰 번호일 경우,<br>확인이 이루어지지 않습니다.</p>
 						<div class="btnArea">
-							<button type="button" class="btnSC btnL active" onclick="gfncNameCert(); return false;">휴대폰 본인 인증</button>
+							<button type="button" class="btnSC btnL active" onclick="verifyPopupPw(); return false;">휴대폰 문자 인증</button>
 						</div>
 					</div>
 				</div>

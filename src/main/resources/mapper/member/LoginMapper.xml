@@ -8,13 +8,20 @@
   <select id="searchLogin" resultType="ud" parameterType="uv">
     select member_id userId, password userPw, name userName
     from member
-    where member_id = #{ userId }
+    where member_id = #{ userId } and exit_flag = 'N'
   </select>
   
   <!-- 회원 아이디/비번 찾기 시 해당 회원 정보가 존재하는 지 -->
   <select id="searchPhone" resultType="ud" parameterType="uv">
-    select member_id userId, name userName
+    select member_id userId, name userName, password userPw
     from member
     where trim(phone) = #{ userPhone }
+  </select>
+  
+  <!-- 비밀번호 재설정 -->
+  <select id="modifyPw" parameterType="uv">
+	update member
+	set password = #{ userPw, jdbcType=VARCHAR }
+	where member_id = #{ userId, jdbcType=VARCHAR }
   </select>
 </mapper>

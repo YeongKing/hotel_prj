@@ -78,7 +78,10 @@ public class LoginController {
             
             // 세션에 저장되어 있는 요청한 페이지 URI 가져오기 
             String requestedURI = (String)session.getAttribute("requestedURI");
-            String movePath = requestedURI.substring(requestedURI.lastIndexOf("/")+1);
+            String movePath = "index.do";
+            if(requestedURI != null) {
+            	requestedURI.substring(requestedURI.lastIndexOf("/")+1);
+            } // end if
             
             return "forward:"+movePath; //요청했던 페이지로 이동
         } else {

@@ -53,38 +53,7 @@
         
         <script>
             $(document).ready(function(){
-/*             	//json데이터로 화면구성 --> 임시로 구성해놨음 수정필요!!
-            	$.getJSON('notice.json',function(data){
-            		
-            		
-            		var noticeList = '';
-            		$.each(data, function(key, value){
-            	          noticeList += '<li>' +
-                          '<div class="titArea">' +
-                              '<strong class="listTit">' + value.category + '</strong>' +
-                              '<span class="opValue">' + value.question + '</span>' +
-                          '</div>' +
-                          '<button type="button" class="btnToggle">' +
-                              '<span class="hidden">상세내용 보기</span>' +
-                          '</button>' +
-                          '<div class="toggleCont">' +
-                              '<div class="toggleInner">' + value.answer + '</div>' +
-                          '</div>' +
-                         '</li>';
-            		});
-                    $('.toggleList').html(noticeList);
-                   
-                    // Toggle 기능 추가
-                    $('.btnToggle').click(function() {
-                        var $toggleCont = $(this).next('.toggleCont');
-                        if ($toggleCont.is(':visible')) {
-                            $toggleCont.slideUp();
-                        } else {
-                            $('.toggleCont').slideUp(); // 다른 열려 있는 답변 닫기
-                            $toggleCont.slideDown();
-                        }
-                    });
-            	}); */
+
             	
             	//상단 카테고리 클릭시 이벤트
                 $("#tabArea > li").click(function(){

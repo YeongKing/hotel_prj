@@ -49,109 +49,7 @@ function getMemberSession() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-    function getMassPromtnUrl(){
-        var url = "";
-        var sysCode = jQuery("#sysCode").val();
-
-        if(gfncIsApp()){
-            //앱일 경우
-            url = "/m/massPromotion/list.do";
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/m/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/m/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/m/massPromotion/list.do";
-                }
-            }
-        }else {
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/massPromotion/list.do";
-                }
-            }
-        }
-        return url;
-    }
-
-    function appendMassPromotionMenu(url, menuNm, sysCode){
-        if(gfncIsApp()){
-            //앱일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-
-            var pathname = window.location.pathname;
-            if(pathname.indexOf("/app/main.do") == 0){
-                jQuery(".gnbArea ul.toggleList > li > .titArea:contains('패키지')").closest("ul").append(menuHtml);
-            }else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-
-            /*if(jQuery(".gnbArea ul.toggleList li:contains('패키지')").length > jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").length){
-                jQuery(".gnbArea ul.toggleList li:contains('패키지')").closest("ul").append(menuHtml);
-            } else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }*/
-
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-            jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-        }else{
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL" || sysCode == "JPY"){
-                //해당 페이지가 HUB거나 JPY일 경우
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".allMenu ul.menuDepth01 ul.menuDepth02 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }else {
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".headArea .utilMenu .gnbDepth1 .gnbDepth2 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-        }
-    }
-
 </script>
-
-<script>
-        //2022-05-23 조선라운지 추가
-        //헤더 메뉴 버튼 클릭 이벤트
-        jQuery(document).on("click",".headArea .btnMenu" ,function(){
-
-            //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-            if(jQuery(this).hasClass("menuOn")){
-                var expsrCount = 3;
-                var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
-                var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
-
-                $loungeList.addClass("hidden");
-                $loungeList.each(function(index){
-                    if(randomArray.indexOf(index) > -1){
-                        jQuery(this).removeClass("hidden");
-                    }
-                });
-            }
-        })
-</script>
-
-
 
 
 <!--S header  -->
@@ -253,9 +151,7 @@ function getMemberSession() {
 		});
 	});
 	
-	/**
-		비회원 회원 전환 콜백
-	*/
+
 	function fncLoginCallBack(){
 		fncGoStep3();	
 	}
@@ -267,82 +163,7 @@ function getMemberSession() {
 			location.href = "http://localhost/hotel_prj/user/room0.do";
 		}
 	}
-	
-	/**
-		옵션 가격 계산				
-	*/
-	function fncOptCalculate(){
-		var roomCnt = jQuery("#roomCnt").val();					//객실 수
-		var nightCnt = parseInt(jQuery("#night").val());					//박 수
-		var resvTotalAmount = 0;								//전체 객실 총 합계 가격
-		var hotlSysCode = jQuery("#hotlSysCode").val();
-		for(var i = 0; i < roomCnt; i++){
-			var target = jQuery("#optInfo").children("li:eq("+i+")");
-			var optACnt, optCCnt, optECnt = 0;					//성인, 어린이, 엑스트라베드 갯수
-			var optAAmount, optCAmount, optEAmount = 0;			//성인, 어린이, 엑스트라베드 가격
-			var optHtml = "";									//객실별 정보 옵션 영역 html 
-			var roomAmount = parseInt(jQuery("#roomAmount"+i).val());		//객실별 객실 가격
-			
-			var roomTotlAmount = 0;								//객실 총 합계 가격
-			var roomOptAmount = 0;								//객실,옵션 합계
-			var taxAmount = 0;									//세금
-			var serviceAmount = 0;								//봉사료
-			//각 옵션 별 가격 및 갯수 확인
-			target.find(".addOption").each(function(idx){
-				if(idx == 0){
-					optACnt = jQuery(this).find("[name='optAQtyArr']").val();
-					optAAmount = jQuery(this).find("[name='optAAmount']").val();
-				}else if(idx == 1){
-					optCCnt = jQuery(this).find("[name='optCQtyArr']").val();
-					optCAmount = jQuery(this).find("[name='optCAmount']").val();
-				}else if(idx == 2){
-					optECnt = jQuery(this).find("[name='optEQtyArr']").val();
-					optEAmount = jQuery(this).find("[name='optEAmount']").val();
-				}
-			});
-			// 성인 조식 우측 아코디언 영역 추가
-			if(optACnt > 0){
-				optHtml += "<li><span class=\"lfData\">성인 조식</span><span class=\"rtData\">"+fncComma(parseInt(optAAmount * optACnt * nightCnt))+"</span></li>"; //성인 조식
-			}
-			// 어린이 조식 우측 아코디언 영역 추가
-			if(optCCnt > 0){
-				optHtml += "<li><span class=\"lfData\">어린이 조식</span><span class=\"rtData\">"+fncComma(parseInt(optCAmount * optCCnt * nightCnt))+"</span></li>"; //어린이 조식
-			}
-			// 엑스트라베드 우측 아코디언 영역 추가
-			if(optECnt > 0){
-				optHtml += "<li><span class=\"lfData\">엑스트라 베드</span><span class=\"rtData\">"+fncComma(parseInt(optEAmount * optECnt * nightCnt))+"</span></li>"; //엑스트라 베드
-			}
-			
-			// 옵션이 하나도 선택안됐을경우 옵션 영역 hide
-			if(optHtml != ""){
-				jQuery("#roomOptInfo"+i).show();
-				jQuery("#roomOptInfo"+i).html(optHtml);
-			}else{
-				jQuery("#roomOptInfo"+i).hide();
-			}
-			
-			
-			
-			roomOptAmount = roomAmount + parseInt(optAAmount * optACnt * nightCnt) + parseInt(optCAmount * optCCnt * nightCnt) + parseInt(optEAmount * optECnt * nightCnt);
-			taxAmount = roomOptAmount / 10;
-			if(hotlSysCode != "GJB" && hotlSysCode != "GJJ"){
-				serviceAmount = (roomOptAmount + taxAmount) / 10;
-			}
-			roomTotlAmount = roomOptAmount + taxAmount + serviceAmount;	//객실 별 예약금액 합계
-			resvTotalAmount += roomTotlAmount;	//총 예약금액 합계
-			
-			taxAmount = Math.round(taxAmount);					// 세금 반올림
-			serviceAmount = Math.round(serviceAmount);			// 봉사료 반올림
-			roomTotlAmount = Math.round(roomTotlAmount);		// 전체 객실요금 반올림
-			resvTotalAmount = Math.round(resvTotalAmount);		// 전체 예약요금 반올림
-			
-			jQuery("#roomTax"+i).html(fncComma(taxAmount));
-			jQuery("#roomService"+i).html(fncComma(serviceAmount));
-			//jQuery("#roomAmount"+i).html(fncComma(roomTotlAmount));
-			jQuery("#roomInfo").children("li:eq("+i+")").find(".listTit .price em").text(fncComma(roomTotlAmount));
-		}
-			jQuery("#resvTotalAmount").html(fncComma(resvTotalAmount));
-	}
+
 	/**
 		스텝 3으로 이동			
 	*/
@@ -802,8 +623,8 @@ function getLoginCookie(cookieName) {
 							<!-- //20200528 수정 : 아이디저장(추가) -->
 							<button type="button" class="btnSC btnL active btnFull" onclick= "PageScript.fncLogin('ID'); return false;" >로그인<!-- 로그인 --></button>
 							<div class="loginLink">
-								<a href="/identify/identifyIntro.do" class="btnS icoArr">회원가입<!-- 회원가입 --></a>
-								<a href="/identify/findIdentifyIntro.do" class="btnS icoArr">아이디 / 비밀번호 찾기<!-- 아이디 / 비밀번호 찾기 --></a>
+								<a href="http://localhost/hotel_prj/user/join.do" class="btnS icoArr">회원가입<!-- 회원가입 --></a>
+								<a href="http://localhost/hotel_prj/user/findIdentifyIntro.do" class="btnS icoArr">아이디 / 비밀번호 찾기<!-- 아이디 / 비밀번호 찾기 --></a>
 							</div>
 						</div>
 						<div class="snsLogin">

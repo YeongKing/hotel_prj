@@ -62,6 +62,7 @@
 					goConvertPage();
 				} else { 
 					alert("비밀번호가 틀렸습니다. 다시 확인해주세요.");
+					$("#password").focus();
 				} // end else
 			},
 			error:function(){
@@ -119,7 +120,7 @@
                                 
 				<div class="intInner">
 					<span class="intArea">
-						<input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요." style="width:1000px" aria-required="true">
+						<input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요." style="width:1000px" aria-required="true" onkeydown="javascript: if(event.keyCode == 13) {fncMyInfoPwCfmApi();}">
 						<span class="alertMessage">비밀번호를 입력해주세요.</span>
 					</span>
 				</div>

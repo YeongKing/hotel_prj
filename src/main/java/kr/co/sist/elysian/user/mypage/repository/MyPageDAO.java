@@ -13,6 +13,7 @@ import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.NationalDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
+import kr.co.sist.elysian.user.mypage.model.vo.MemberVO;
 
 @Repository
 public class MyPageDAO {
@@ -172,6 +173,45 @@ public class MyPageDAO {
 		List<MemberDomain> allMemberEmail = ss.selectList("kr.co.sist.elysian.member.mypage.selectAllEmail");
 		myBatisDAO.closeHandler(ss);
 		return allMemberEmail;
-	}
+	} // selectAllEmail
+	
+	/**
+	 * MyBatis와 매핑하여 로그인한 아이디의 회원 정보 수정
+	 * @param memberVO 로그인한 아이디, 회원 정보
+	 * @return 수정 처리 결과
+	 * @throws PersistenceException
+	 */
+	public int updateMemberInfo(MemberVO memberVO) throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(true);
+		int result = ss.update("kr.co.sist.elysian.member.mypage.updateMemberInfo", memberVO);
+		myBatisDAO.closeHandler(ss);
+		return result;
+	} // updateMemberInfo
+	
+	/**
+	 * MyBatis와 매핑하여 로그인한 아이디의 비밀번호 수정
+	 * @param paramMap 로그인한 아이디, 비밀번호
+	 * @return 수정처리 결과
+	 * @throws PersistenceException
+	 */
+	public int updateMemberPass(Map<String, String> paramMap) throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(true);
+		int result = ss.update("kr.co.sist.elysian.member.mypage.updateMemberPw", paramMap);
+		myBatisDAO.closeHandler(ss);
+		return result;
+	} // updateMemberPass
+	
+	/**
+	 * MyBatis와 매핑하여 로그인한 아이디의 회원 탈퇴 처리 
+	 * @param userId 로그인한 아이디
+	 * @return 탈퇴 처리 결과
+	 * @throws PersistenceException
+	 */
+	public int removeMemberInfo(String userId) throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(true);
+		int result = ss.update("kr.co.sist.elysian.member.mypage.removeMemberInfo", userId);
+		myBatisDAO.closeHandler(ss);
+		return result;
+	} // removeMemberInfo
 
 } // class

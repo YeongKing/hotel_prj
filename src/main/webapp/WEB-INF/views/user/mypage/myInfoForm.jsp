@@ -37,13 +37,16 @@
 <script type="text/javascript">
 	//체크박스 클릭시 실행
 	$(function() {
+		changeEmail();
 		// 페이지 로딩 시 선택된 이메일 유형이 직접입력이라면 readonly false, 그렇지 않으면 true
 		if($("#emailType").val() == "") {
-			("#email2").prop("readonly", false);
+			$("#email2").prop("readonly", false);
 		} else {
 			$("#email2").prop("readonly", true);
 		} // end else
-		
+	}); // ready
+	
+	function changeEmail() {
 		// 이메일 유형 선택 시 처리
 		$("#emailType").on("change", function() {
 			var value = $(this).val();
@@ -55,7 +58,7 @@
 				$("#email2").prop("readonly", true);
 			} // end else
 		});
-	});
+	} // changeEmail
 	
     /*---------------주소검색 시작--------------------------------- */
 	var themeObj = {
@@ -153,28 +156,26 @@
 		 var email 		= email1 + "@" + email2;						       // 이메일조합
 		 $("#email").val(email);
 		var formData =  $("#formMypage").serialize();
+		
  		$.ajax({
 			type : "POST",
 			 url : "checkDupEmail.do", 
 			data : formData, 
 			dataType : "json",
 			success : function(jsonObj) {
-				
-				if(data.statusR==200 && data.codeR=='S00000') { 
+				if(jsonObj.dupResult==='SUCCESS') { 
                       alert("사용가능한 email입니다.");			
                       //이메일 중복체크 확인여부
                       $("#emailDupChkYn").val("Y");
-				} else if(data.statusR==400) {
-					alert("이미 사용중인 email입니다.");
 				} else {
-					alert(data.statusR+" : 관리자에게 문의하세요.");
-				}
+					alert("이미 사용중인 email입니다.");
+				} // end 
 			},
 			error:function(){
 				alert("관리자에게 문의하세요.");
 			}
-		});
- 	}
+		}); // ajax
+ 	} // fncEmlDupChk
  	
 	//개인정보 수정 API호출
  	function fncMyInfoUpdApi() {
@@ -198,8 +199,26 @@
 		 } // end else
 		 
 		 /*----------입력된 이메일 기입력된 이메일과 다를시 중복체크 실행체크 end--------------  */
+		 
+		 // 휴대폰번호
+		 var telFrstNo = $("#telFrstNo").val();
+		 var telMidNo = $("#telMidNo").val();
+		 var telIndNo = $("#telIndNo").val();
+		 var fullPhone = telFrstNo + "-" + telMidNo + "-" + telIndNo;
+		 		 
+		 // 영어 이름 체크
+		 if($("#eName1").val() == "" || $("#eName2").val() == "") {
+			 alert("영어 이름을 입력해주세요.");
+			 
+			 if($("#eName1").val() == "") {
+				 $("#eName1").focus();
+			 } else {
+				 $("#eName2").focus();
+			 } // end else
+			 return;
+		 } // end if
          
-        //주소 validation
+        // 주소 validation
         if($("#postcode").val() == "" || $("#address").val() == "" || $("#detailAddress").val() == "") {
             alert("주소를 입력해주세요.");
             $("#postcode").focus();
@@ -207,32 +226,40 @@
         } // end if
 		 
 		// 수정 클릭 시 ajax전송
-		var formData =  $("#formMypage").serialize();
  	 	$.ajax({
 			type : "POST",
-			url : "/mypage/myInfoUpdApi.do",
-			data : formData, 
+			url : "modifyMemberInfo.do",
+		 	contentType : "application/json",	
 			dataType : "json",
-			success : function(data) {
-				if(data.statusR==200 && data.codeR=='S00000') { 
+			data : JSON.stringify({
+				engLName : $("#eName1").val().trim(),
+      			engFName : $("#eName2").val().trim(),
+     			nationalCode : nationCode,
+     			phone : fullPhone,
+     			zipcode : $("#postcode").val(),
+     			address : $("#address").val(),
+     			addressDetail : $("#detailAddress").val(),
+     			email : email	
+			}), 
+			beforeSend: function() {
+				commonJs.showLoadingBar(); //로딩바 show
+			},
+			complete: function() {
+				commonJs.closeLoadingBar(); //로딩바 hide
+			},
+			success : function(jsonObj) {
+				if(jsonObj.resultCode == 'SUCCESS') { 
                     alert("회원정보가 수정되었습니다.");
                     location.href = "${pageContext.request.contextPath}/user/mypage.do";
 				} else{
-					alert(data.codeR + " : " + data.messageR);
+					alert("죄송합니다. 회원정보수정이 정상적으로 처리되지 않았습니다. 관리자에게 문의해 주세요.");
 				}
 			},
 			error: function() {
-				alert("관리자에게 문의하세요.");
+				alert("죄송합니다. 잠시 후 재시도 해주세요. 지속적으로 문제발생 시 관리자에게 문의해 주세요.");
 			}
 		});  
  	} 
- 	 
- 	/* //회원정보 수정페이지 이동
-	function fncMberUpdPage() {
-		$("#formMypage").attr("action", "myInfoForm.do");
-	    $("#formMypage").attr("method", "post");
-	    $("#formMypage").submit();	
-	} // fncMberUpdPage */
  	
  	// 휴대폰 인증번호 요청 ajax 및 번호 확인 창 동적 추가
  	function fncCheckRequestNum() {
@@ -242,17 +269,20 @@
  		var phonePattern = /^010([0-9]{4})([0-9]{4})$/;
  		
  		if(authName === '' || authName.length === 1) {
- 			alert("이름을 정확히 입력해주세요.");
+ 			alert("이름을 정확히 입력해 주세요.");
  			return;
 		} // end if
 		
-		if(authName !== defaultInfo.substring(0, defaultInfo.indexOf("/"))) {
+		console.log(authName);
+		console.log(defaultInfo.substring(0, defaultInfo.indexOf("/")));
+		
+		if(authName !== defaultInfo.substring(0, defaultInfo.indexOf("/")).trim()) {
 			alert("가입자와 동일한 이름이 아닙니다.");
 			return;
 		} // end if
 		
 		if(!phonePattern.test(authPhone)) {
-			alert("휴대폰번호 11자리를 정확히 입력해주세요.");
+			alert("휴대폰번호 11자리를 정확히 입력해 주세요.");
 			return;
 		} // end if
  		
@@ -274,7 +304,7 @@
 				var statusCode = jsonObj.statusCode;
 				
 				if(statusCode !== '2000') { // 문자 전송 실패
-					alert("죄송합니다. 잠시 후 다시 시도해주세요. 문제가 지속될 경우 관리자에게 문의주시기 바랍니다.");
+					alert("죄송합니다. 잠시 후 다시 시도해 주세요. 문제가 지속될 경우 관리자에게 문의주시기 바랍니다.");
 					console.log(statusMessage);
 					$(".dimmed").show();
 					return;
@@ -323,7 +353,7 @@
  			$("#telIndNo").val(telIndNo);
  			commonJs.popClose($('#layerPop2'));
  		} else {
- 			alert("본인인증에 실패하였습니다. 다시 시도해주세요.");
+ 			alert("본인인증에 실패하였습니다. 다시 시도해 주세요.");
  			location.reload();
  		} // end else
  	}

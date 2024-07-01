@@ -37,6 +37,8 @@
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain" alias="drd"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.RoomResVO" alias="roomResVO"/>
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.DiningResVO" alias="diningResVO"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.dashboard.model.domain.DashboardRoomChartDomain" alias="dashboardRoomChartDomain"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.dashboard.model.domain.DashboardDiningChartDomain" alias="dashboardDiningChartDomain"/> 
 
   		<!-- user -->
     	<typeAlias type="kr.co.sist.elysian.user.login.model.vo.UserVO" alias="uv"/> 
@@ -46,6 +48,7 @@
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain" alias="myPageDiningResDomain"/> 
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.vo.DiningResVO" alias="myPageDiningResVO"/>
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.MemberDomain" alias="myPageMemberDomain"/>
+  		<typeAlias type="kr.co.sist.elysian.user.mypage.model.vo.MemberVO" alias="myPageMemberVO"/>
       	<typeAlias type="kr.co.sist.elysian.user.room.model.vo.RoomResVO" alias="rrVO"/> 
       	<typeAlias type="kr.co.sist.elysian.user.room.model.domain.RoomListDomain" alias="urld"/> 
      	<typeAlias type="kr.co.sist.elysian.user.room.model.domain.MemberDomain" alias="umd"/> 

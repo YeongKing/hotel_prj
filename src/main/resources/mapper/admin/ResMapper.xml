@@ -44,7 +44,7 @@
 							from room_reservation rr
 							where ((rr.checkin < to_date(#{checkOut}, 'yyyy-mm-dd') and rr.checkout > to_date(#{checkIn}, 'yyyy-mm-dd'))
 							or (rr.checkin <= to_date(#{checkIn}, 'yyyy-mm-dd') and rr.checkout >= to_date(#{checkOut}, 'yyyy-mm-dd')))
-							AND room_res_status = 'RESERVED'
+							and room_res_status in ('RESERVED', 'CHECK IN')
 							)
 		and delete_status = 'N'
 		]]>

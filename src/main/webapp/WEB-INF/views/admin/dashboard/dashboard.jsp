@@ -39,7 +39,38 @@
 	        // 클릭된 요소에만 active 클래스 추가
 	        $(this).addClass("active");
 		});
+		
+		loadData();
 	}); // ready
+	
+	// 대시보드 데이터 부르는 ajax
+	function loadData() {
+		$.ajax({
+			url: 'dashboardData.do',
+			type: 'GET',
+			dataType: 'json',
+			data: '',
+			error: function(xhr) {
+				console.log(xhr.status);
+				alert("문제가 발생했습니다. 담당자에게 문의해주세요.");
+			},
+			success: function(data) {
+				// 상단 텍스트 데이터 설정
+				$("#todayRoomResCnt").text(data.todayRoomResCnt);
+				$("#oneMonthRoomResCnt").text(data.oneMonthRoomResCnt);
+				$("#allMemberCnt").text(data.allMemberCnt);
+				$("#todayJoinCnt").text(data.todayJoinCnt);
+				$("#expectedCheckinCnt").text(data.expectedCheckinCnt);
+				$("#checkinCnt").text(data.checkinCnt);
+				$("#expectedCheckoutCnt").text(data.expectedCheckoutCnt);
+				$("#checkoutCnt").text(data.checkoutCnt);
+				
+				// 차트데이터 로드
+				loadRoomChartData();
+				loadDiningChartData();
+			}
+		}); // ajax
+	} // loadData
 </script>
 </head>
 
@@ -78,7 +109,7 @@
 	                                </div>
 	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
 	                                    <h6 class="text-muted font-semibold">오늘 예약 건수</h6>
-	                                    <h6 class="font-extrabold mb-0">112.000</h6>
+	                                    <h6 class="font-extrabold mb-0"><span id="todayRoomResCnt"></span>건</h6>
 	                                </div>
 	                            </div> 
 	                        </div>
@@ -95,7 +126,7 @@
 	                                </div>
 	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
 	                                    <h6 class="text-muted font-semibold">이번 달 예약 건수</h6>
-	                                    <h6 class="font-extrabold mb-0">183.000</h6>
+	                                    <h6 class="font-extrabold mb-0"><span id="oneMonthRoomResCnt"></span>건</h6>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -112,7 +143,7 @@
 	                                </div>
 	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
 	                                    <h6 class="text-muted font-semibold">총 회원 수</h6>
-	                                    <h6 class="font-extrabold mb-0">80.000</h6>
+	                                    <h6 class="font-extrabold mb-0"><span id="allMemberCnt"></span>명</h6>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -129,7 +160,7 @@
 	                                </div>
 	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
 	                                    <h6 class="text-muted font-semibold">오늘 체크인</h6>
-	                                    <h6 class="font-extrabold mb-0">112</h6>
+	                                    <h6 class="font-extrabold mb-0"><span id="expectedCheckinCnt"></span>건(예정) / <span id="checkinCnt"></span>건(완료)</h6>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -146,7 +177,7 @@
 	                                </div>
 	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
 	                                    <h6 class="text-muted font-semibold">오늘 체크아웃</h6>
-	                                    <h6 class="font-extrabold mb-0">112</h6>
+	                                    <h6 class="font-extrabold mb-0"><span id="expectedCheckoutCnt"></span>건(예정) / <span id="checkoutCnt"></span>건(완료)</h6>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -163,7 +194,7 @@
 	                                </div>
 	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
 	                                    <h6 class="text-muted font-semibold">오늘의 가입자 수</h6>
-	                                    <h6 class="font-extrabold mb-0">112</h6>
+	                                    <h6 class="font-extrabold mb-0"><span id="todayJoinCnt"></span>명</h6>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -174,7 +205,7 @@
                		<div class="col-12 col-lg-6 col-md-12">
 	                    <div class="card">
 	                        <div class="card-header">
-	                            <h4>객실 주간 예약 현황</h4>
+	                            <h4>객실 주간 예약 현황(%)</h4>
 	                        </div>
 	                        <div class="card-body">
 	                            <div id="room-resv-weekly"></div>
@@ -184,7 +215,7 @@
                		<div class="col-12 col-lg-6 col-md-12">
 	                    <div class="card">
 	                        <div class="card-header">
-	                            <h4>다이닝 주간 예약 현황</h4>
+	                            <h4>다이닝 주간 예약 현황(%)</h4>
 	                        </div>
 	                        <div class="card-body">
 	                            <div id="dining-resv-weekly"></div>

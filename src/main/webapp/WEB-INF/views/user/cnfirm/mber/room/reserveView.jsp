@@ -291,7 +291,7 @@
 		
 		<div class="btnArea">
 			<a href="#none" onclick="fncList();" class="btnSC btnL">목록</a>
-			<c:if test="${roomResDomain.roomResStatus != 'CANCELED'}">
+			<c:if test="${roomResDomain.roomResStatus == 'RESERVED'}">
 				<a href="#none" class="btnSC btnL active" onclick="commonJs.popShow($('#layerPop2'))">예약취소</a>
 			</c:if>
 		</div>

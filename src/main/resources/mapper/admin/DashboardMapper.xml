@@ -3,18 +3,126 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.co.sist.elysian.test">
+<mapper namespace="kr.co.sist.elysian.admin.dashboard">
 
+	<select id="selectTodayRoomResCnt" resultType="int">
+		select count(*) todayRoomResCnt
+		from room_reservation
+		where to_char(room_res_date, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
+	</select>
+	
+	<select id="selectOneMonthRoomResCnt" resultType="int">
+		select count(*) oneMonthRoomResCnt
+	from room_reservation
+	where to_char(room_res_date, 'yyyy-mm') = to_char(sysdate, 'yyyy-mm')
+	</select>
+	
+	<select id="selectAllMemberCnt" resultType="int">
+		select count(*) allMemberCnt
+		from member
+		where exit_flag = 'N'
+	</select>
 
-	<!-- TEST   -->
-	<!-- 공통코드 테이블에서 CODE_NAME을 통하여 CODE_VAL의 값을 찾는 쿼리문 -->
-	<!-- DashboardDAO에 테스트용 메인 메서드가 존재합니다. 예시 확인해주세요! -->
-	 <select id="test" resultType="String" parameterType="String">
-	 select CODE_VAL
-	from COMMON_CODE
-	where CODE_NAME = #{ name }
-	 
+	<select id="selectTodayJoinCnt" resultType="int">
+		select count(*) todayJoinCnt
+		from member
+		where to_char(signup_date, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd') and exit_flag = 'N'
+	</select>
+	
+	<select id="selectExpectedCheckinCnt" resultType="int">
+		select count(*) expectedCheckinCnt
+		from room_reservation
+		where to_char(checkin, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd') and room_res_status = 'RESERVED'
+	</select>
 
-	 </select>
+	<select id="selectCheckinCnt" resultType="int">
+		select count(*) checkinCnt
+		from room_reservation
+		where to_char(checkin, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd') and room_res_status = 'CHECK IN'
+	</select>
 
+	<select id="selectExpectedCheckoutCnt" resultType="int">
+		select count(*) expectedCheckoutCnt
+		from room_reservation
+		where to_char(checkout, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd') and room_res_status = 'CHECK IN'
+	</select>
+
+	<select id="selectCheckOutCnt" resultType="int">
+		select count(*) checkoutCnt
+		from room_reservation
+		where to_char(checkout, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd') and room_res_status = 'CHECK OUT'
+	</select>
+	
+	<select id="selectRoomChartData" resultType="dashboardRoomChartDomain">
+		WITH dates AS (
+		    SELECT TRUNC(SYSDATE, 'iw') + LEVEL - 1 AS check_in_out_date
+		    FROM dual
+		    CONNECT BY LEVEL &lt; = 7
+		)
+		SELECT
+		    TO_CHAR(d.check_in_out_date, 'yyyy-mm-dd(dy)') AS checkoutDate,
+		    CASE
+		        WHEN nvl(allCheckoutCnt, 0) = 0 THEN '0.00'
+		        ELSE TO_CHAR((checkoutCnt / allCheckoutCnt) * 100, 'FM990.00')
+		    END AS checkoutRatio,
+		    TO_CHAR(d.check_in_out_date, 'yyyy-mm-dd(dy)') AS checkinDate,
+		    CASE
+		        WHEN nvl(allCheckinCnt, 0) = 0 THEN '0.00'
+		        ELSE TO_CHAR((checkinCnt / allCheckinCnt) * 100, 'FM990.00')
+		    END AS checkinRatio
+		FROM dates d
+		LEFT JOIN (
+		    SELECT
+		        TRUNC(checkout) AS checkout_date,
+		        COUNT(CASE WHEN room_res_status = 'CHECK OUT' THEN 1 END) AS checkoutCnt,
+		        COUNT(CASE WHEN room_res_status IN ('CHECK OUT', 'CHECK IN') THEN 1 END) AS allCheckoutCnt
+		    FROM room_reservation
+		    WHERE checkout BETWEEN TRUNC(SYSDATE, 'iw') AND TRUNC(SYSDATE, 'iw') + 5
+		    GROUP BY TRUNC(checkout)
+		) rr ON d.check_in_out_date = rr.checkout_date
+		LEFT JOIN (
+		    SELECT
+		        TRUNC(checkin) AS checkin_date,
+		        COUNT(CASE WHEN room_res_status = 'CHECK IN' THEN 1 END) AS checkinCnt,
+		        COUNT(CASE WHEN room_res_status IN ('CHECK IN', 'RESERVED') THEN 1 END) AS allCheckinCnt
+		    FROM room_reservation
+		    WHERE checkin BETWEEN TRUNC(SYSDATE, 'iw') AND TRUNC(SYSDATE, 'iw') + 5
+		    GROUP BY TRUNC(checkin)
+		) rr ON d.check_in_out_date = rr.checkin_date
+		ORDER BY d.check_in_out_date
+	</select>
+	
+	<select id="selectDiningChartData" resultType="dashboardDiningChartDomain">
+		WITH dates AS (
+			    SELECT TRUNC(SYSDATE, 'iw') + LEVEL - 1 AS visit_date
+			    FROM dual
+			    CONNECT BY LEVEL &lt; = 7
+			)
+			SELECT
+			    TO_CHAR(d.visit_date, 'yyyy-mm-dd(dy)') AS visitDate,
+			    CASE
+			        WHEN nvl(allReservedCnt, 0) = 0 THEN '0.00'
+			        ELSE TO_CHAR((confirmedCnt / allReservedCnt) * 100, 'FM990.00')
+			    END AS reservedRatio,
+			    CASE
+			        WHEN nvl(allReservedCnt, 0) = 0 THEN '0.00'
+			        ELSE TO_CHAR((canceledCnt / allReservedCnt) * 100, 'FM990.00')
+			    END AS canceledRatio
+			FROM dates d
+			LEFT JOIN (
+			    SELECT
+			        TRUNC(visit_datetime) AS reserve_date,
+			        COUNT(CASE WHEN dining_res_status = 'CONFIRMED' THEN 1 END) AS confirmedCnt,
+			        COUNT(CASE WHEN dining_res_status = 'CANCELED' THEN 1 END) AS canceledCnt,
+			        COUNT(CASE WHEN dining_res_status IN ('CONFIRMED', 'COMPLETED', 'CANCELED') THEN 1 END) AS allReservedCnt
+			    FROM
+			        dining_reservation
+			    WHERE
+			        visit_datetime BETWEEN TRUNC(SYSDATE, 'iw') AND TRUNC(SYSDATE, 'iw') + 5
+			    GROUP BY
+			        TRUNC(visit_datetime)
+			) dr ON d.visit_date = dr.reserve_date
+		ORDER BY d.visit_date
+	</select>
+	
 </mapper>

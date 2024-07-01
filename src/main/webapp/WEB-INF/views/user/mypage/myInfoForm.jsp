@@ -260,13 +260,6 @@
 			}
 		});  
  	} 
- 	 
- 	/* //회원정보 수정페이지 이동
-	function fncMberUpdPage() {
-		$("#formMypage").attr("action", "myInfoForm.do");
-	    $("#formMypage").attr("method", "post");
-	    $("#formMypage").submit();	
-	} // fncMberUpdPage */
  	
  	// 휴대폰 인증번호 요청 ajax 및 번호 확인 창 동적 추가
  	function fncCheckRequestNum() {

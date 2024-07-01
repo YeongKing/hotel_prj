@@ -17,7 +17,7 @@
 		from room_reservation rr
 		inner join room r
 		on r.room_id = rr.room_id
-		where rr.user_id = #{userId} and rr.room_res_status = 'RESERVED' and rr.checkin <= add_months(sysdate, 3)
+		where rr.user_id = #{userId} and rr.room_res_status in ('RESERVED') and rr.checkin <= add_months(sysdate, 3)
 		order by rr.pay_num
 		]]>
 	</select>
@@ -39,8 +39,14 @@
 			<when test="roomResStatus == 'CANCELED'">
 				<![CDATA[and rr.room_res_status = 'CANCELED']]>
 			</when>
+			<when test="roomResStatus == 'CHECK IN'">
+				<![CDATA[and rr.room_res_status = 'CHECK IN']]>
+			</when>
+			<when test="roomResStatus == 'CHECK OUT'">
+				<![CDATA[and rr.room_res_status = 'CHECK OUT']]>
+			</when>
 			<otherwise>
-				<![CDATA[and rr.room_res_status in ('RESERVED', 'CANCELED')]]>
+				<![CDATA[and rr.room_res_status in ('RESERVED', 'CANCELED', 'CHECK IN', 'CHECK OUT')]]>
 			</otherwise>
 		</choose>
 		<choose>
@@ -199,5 +205,4 @@
 		set exit_flag = 'Y'
 		where member_id = #{userId}
 	</update>
-	
 </mapper>

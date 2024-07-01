@@ -182,6 +182,8 @@
 						<option value="" ${selectedCategory == '' ? 'selected' : ''}>ALL</option>
 						<option value="RESERVED" ${selectedCategory == 'RESERVED' ? 'selected' : ''}>RESERVED</option>
 						<option value="CANCELED" ${selectedCategory == 'CANCELED' ? 'selected' : ''}>CANCELED</option>
+						<option value="CHECK IN" ${selectedCategory == 'CHECK IN' ? 'selected' : ''}>CHECK IN</option>
+						<option value="CHECK OUT" ${selectedCategory == 'CHECK OUT' ? 'selected' : ''}>CHECK OUT</option>
 					</select>
 				</div>
 			</div>

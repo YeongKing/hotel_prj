@@ -9,11 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DashboardDomain {
+public class DashboardRoomChartDomain {
 
-	private int todayRoomResCnt, oneMonthRoomResCnt,
-				expectedCheckinCnt, checkinCnt,
-				expectedCheckoutCnt, checkoutCnt,
-				allMemberCnt, todayJoinCnt;
+	private String checkinDate, checkinRatio, checkoutDate, checkoutRatio;
 	
 }//class

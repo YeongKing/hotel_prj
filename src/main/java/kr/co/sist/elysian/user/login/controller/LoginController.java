@@ -80,7 +80,7 @@ public class LoginController {
             String requestedURI = (String)session.getAttribute("requestedURI");
             String movePath = "index.do";
             if(requestedURI != null) {
-            	requestedURI.substring(requestedURI.lastIndexOf("/")+1);
+            	movePath = requestedURI.substring(requestedURI.lastIndexOf("/")+1);
             } // end if
             
             return "forward:"+movePath; //요청했던 페이지로 이동

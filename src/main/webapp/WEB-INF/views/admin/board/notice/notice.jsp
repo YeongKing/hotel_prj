@@ -520,6 +520,7 @@
 
 								</div>
 							</div>
+							<div class="modal-body">
 							<form id = "noticeDetailForm" action="#"  class="form px-5" data-parsley-validate>
 								<div class="row">
 									<div class="col-md-3 col-12">
@@ -605,6 +606,7 @@
 									<div style="height: 30px;"></div>
 								</div>
 							</form>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain;
 import kr.co.sist.elysian.admin.reservation.model.domain.RoomInfoDomain;
 import kr.co.sist.elysian.admin.reservation.model.domain.RoomResDomain;
-import kr.co.sist.elysian.admin.reservation.model.vo.DiningResVO;
 import kr.co.sist.elysian.admin.reservation.repository.ResDAO;
 
 @Service
@@ -271,10 +270,6 @@ public class ResService {
 		} // end catch
 		return diningResResponseDomain;
 	} // detailDiningRes
-	
-	public int modifyDiningRes(DiningResVO diningResVO) {
-		return 0;
-	} // modifyDiningRes
 	
 	/**
 	 * DAO에서 예약 수정 처리 후 결과 반환(결과가 1일 때만 true)

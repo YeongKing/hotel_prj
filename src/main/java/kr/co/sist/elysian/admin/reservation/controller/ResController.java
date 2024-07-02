@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -192,10 +191,6 @@ public class ResController {
 		DiningResDomain diningResDomain = resService.detailDiningRes(payNum);
 		return diningResDomain;
 	}//detailRoomRes
-	
-	public String modifyDiningRes(DiningResVO drVO, Model model) {
-		return "";
-	}//detailDiningRes
 	
 	/**
 	 * 예약 정보 수정

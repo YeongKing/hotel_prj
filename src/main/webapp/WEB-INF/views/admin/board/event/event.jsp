@@ -52,6 +52,11 @@
 	display: flex; 
 	padding-top: 15px;
 }
+
+.modal-body{
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
 </style>
 
 <script type="text/javascript">
@@ -237,6 +242,7 @@
 
 							</div>
 						</div>
+						<div class="modal-body">
 						<form id="eventDetailFormUpdate" action="#" class="form px-5"
 							data-parsley-validate>
 							<div class="row">
@@ -320,6 +326,7 @@
 								</div>
 							</div>
 						</form>
+						</div>
 					</div>
 				</div>
 </div>

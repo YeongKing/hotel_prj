@@ -36,127 +36,7 @@
 	<div class="skip"><a href="#container">본문 바로가기</a></div>
 	<div class="wrapper ">
 
-<script>
-/* 	jQuery(function(){
-		jQuery.ajax({
-			type : "GET",
-			url : "/massPromotion/get.json",
-			cache : false,
-			dataType : "json",
-			global : false,
-			beforeSend: function() {
-			},
-			complete: function() {
-			},
-			success : function(data){
-                var massPromtn = data.bean;
-                //조회 결과에 따라 랜더링
-                if(massPromtn != null && massPromtn != ""){
-                    var url = getMassPromtnUrl();
-                    var menuNm = massPromtn.promtnNm;
-                    var sysCode = massPromtn.sysCode;
-                    appendMassPromotionMenu(url, menuNm, sysCode);
-                }
-			},
-			error:function(r, s, e){
-			}
-		});
-	}); */
 
-/*     function getMassPromtnUrl(){
-        var url = "";
-        var sysCode = jQuery("#sysCode").val();
-
-        if(gfncIsApp()){
-            //앱일 경우
-            url = "/m/massPromotion/list.do";
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/m/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/m/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/m/massPromotion/list.do";
-                }
-            }
-        }else {
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/massPromotion/list.do";
-                }
-            }
-        }
-        return url;
-    } */
-
-/*     function appendMassPromotionMenu(url, menuNm, sysCode){
-        if(gfncIsApp()){
-            //앱일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-
-            var pathname = window.location.pathname;
-            if(pathname.indexOf("/app/main.do") == 0){
-                jQuery(".gnbArea ul.toggleList > li > .titArea:contains('패키지')").closest("ul").append(menuHtml);
-            }else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-
-            /*if(jQuery(".gnbArea ul.toggleList li:contains('패키지')").length > jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").length){
-                jQuery(".gnbArea ul.toggleList li:contains('패키지')").closest("ul").append(menuHtml);
-            } else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }*/
-
-/*         }else if(gfncIsMobile()){
-            //모바일일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-            jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-        }else{
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL" || sysCode == "JPY"){
-                //해당 페이지가 HUB거나 JPY일 경우
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".allMenu ul.menuDepth01 ul.menuDepth02 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }else {
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".headArea .utilMenu .gnbDepth1 .gnbDepth2 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-        } */
- /*    } */
- 
-</script>
-<!-- 
-<script>
-        //2022-05-23 조선라운지 추가
-        //헤더 메뉴 버튼 클릭 이벤트
-        jQuery(document).on("click",".headArea .btnMenu" ,function(){
-
-            //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-            if(jQuery(this).hasClass("menuOn")){
-                var expsrCount = 3;
-                var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
-                var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
-
-                $loungeList.addClass("hidden");
-                $loungeList.each(function(index){
-                    if(randomArray.indexOf(index) > -1){
-                        jQuery(this).removeClass("hidden");
-                    }
-                });
-            }
-        })
-</script>
-
-
-
- -->
 
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function() {
@@ -271,12 +151,15 @@ function payment(pg, pay_method, token){
             sendPaymentData(response, token);
         } else {
             alert('결제실패 : ' + response.error_msg);
-            commonJs.closeLoadingBar();
+
 			$(".btnArea").find("a").css({
 			    'pointer-events': '',
 			    'cursor': '',
 			    'opacity': ''
 			});
+			
+			commonJs.closeLoadingBar();
+
 			
             
         }
@@ -304,7 +187,14 @@ function sendPaymentData(paymentData, token) {
         error: function(err) {
             let errorMessage = "결제 데이터 전송 오류: " + err.status + " " + err.statusText + " - " + err.responseText;
             alert(errorMessage);
-            console.log("에러 상세: ", err);
+			$(".btnArea").find("a").css({
+			    'pointer-events': '',
+			    'cursor': '',
+			    'opacity': ''
+			});
+			
+			commonJs.closeLoadingBar();
+
         }
     });
 }
@@ -369,7 +259,20 @@ function insertPaymentInfo(paymentInfo) {
 			insertRoomRes(data.payNum);
 
             
+        },
+        error: function(err) {
+            let errorMessage = "결제 데이터 전송 오류: " + err.status + " " + err.statusText + " - " + err.responseText;
+            alert(errorMessage);
+			$(".btnArea").find("a").css({
+			    'pointer-events': '',
+			    'cursor': '',
+			    'opacity': ''
+			});
+			
+			commonJs.closeLoadingBar();
+
         }
+        
     });
 }
 
@@ -520,31 +423,7 @@ function fncResvReset(){
 
 function checkInputValid(){
 
-    /*
-		사용자 입력정보 VALIDATION 체크
-		data-valid 가 Y 인 경우에만 체크
-		해당 열  input, select 박스가 하나라도 미기재 된 경우 validation false
-	*/
-/* 
-    $(".intList li").each(function(){
 
-        var isValid = true;
-        var $this = $(this);
-        $(this).find("[data-valid='Y'], select").not("#emailType").each(function(){
-
-            if(jQuery(this).val() == ""){
-                isValid = false;
-            }
-        });
-
-        if(!isValid){
-            $this.addClass("error");
-            $this.find(".alertMessage").show();
-        }else {
-            $this.removeClass("error");
-            $this.find(".alertMessage").hide();
-        }
-    }) */
 
     if($(".error").length != 0){
         $(".error").first().attr("tabindex" , -1 ).focus();
@@ -649,8 +528,8 @@ function fncGoPay(){
 
         jQuery("#email").val(email);
 
-        alert(email);
-        alert(phone);
+        //alert(email);
+       // alert(phone);
 
         
         
@@ -757,60 +636,35 @@ function fncGoPay(){
 	<input type="hidden" name="night" id="night" value="${rrVO.night}" /> 					
 	<input type="hidden" name="roomCnt" id="roomCnt" value="1" />			
 	
-		<input type="hidden" name="adltCntArr" value="${rrVO.adultsNum}"/>						
+	<input type="hidden" name="adltCntArr" value="${rrVO.adultsNum}"/>						
 
 	
-		<input type="hidden" name="chldCntArr" value="${rrVO.kidsNum}"/>						
+	<input type="hidden" name="chldCntArr" value="${rrVO.kidsNum}"/>						
 					
 	
 	<input type="hidden" name="adltSum" id="adltSum" value="${rrVO.adultsNum}"/>				
 	<input type="hidden" name="chldSum" id="chldSum" value="${rrVO.kidsNum}"/>				
 	
-<!-- 		<input type="hidden" name="optAArr" value="BK"/>								
-	
-	
-		<input type="hidden" name="optCArr" value="CHBK"/>								
-	 -->
-	
-<!-- 		<input type="hidden" name="optEArr" value="0"/>		 -->						
-							
 
-		<input type="hidden" name="optAQtyArr" value="2"/>						
+
+	<input type="hidden" name="optAQtyArr" value="2"/>						
 	
 	
-<!-- 		<input type="hidden" name="optCQtyArr" value="0"/>						
+
 	
-	
-		<input type="hidden" name="optEQtyArr" value="0"/> -->						
-						
-	
-		<input type="hidden" name="email" id="email" value="" />												
-		<input type="hidden" name="phone" id="phone" value="" />												
+	<input type="hidden" name="email" id="email" value="" />												
+	<input type="hidden" name="phone" id="phone" value="" />												
 	
 	
 	
-		<input type="hidden" name="contArr" value=""/>								
+	<input type="hidden" name="contArr" value=""/>								
 	
-	<!-- 한글 이름 -->
-	<!-- 영문회원명(성)-->
-	<!-- 영문회원명(이름)-->
-	<!-- 대표카드번호  -->
-	<!-- 로그인ID -->
-	<!-- 국적코드 -->
-	<!-- 국가코드  -->
-	<!-- 국가코드  -->
-	<!-- 국가코드  -->
-	<!-- 전화국번호 -->
-	<!-- 전화중간번호 -->
-	<!-- 전화개별번호 --> 
-	<!-- String -->
-	<!-- 이메일 -->
-			
-			<input type="hidden" name="gender" value="${ umd.gender}" />
-			<input type="hidden" name="korNm" value="${ umd.name}" />
-			<input type="hidden" name="countryCode" value="${ umd.nationalCode}" />
-			<input type="hidden" name="lastName" value="${ umd.engLname}">
-			<input type="hidden" name="firstName" value="${umd.engFname}">
+
+	<input type="hidden" name="gender" value="${ umd.gender}" />
+	<input type="hidden" name="korNm" value="${ umd.name}" />
+	<input type="hidden" name="countryCode" value="${ umd.nationalCode}" />
+	<input type="hidden" name="lastName" value="${ umd.engLname}">
+	<input type="hidden" name="firstName" value="${umd.engFname}">
 	
 
 	<div id="container" class="container">
@@ -1625,81 +1479,7 @@ function fncGoPay(){
 	</div>
 	<!-- //wrapper -->
 
-<!-- 호텔 찾기 Layer -->
-<div id="hotelFindLayer" class="layerPop">
-	<div class="layerCont">
-		<div class="hotelFindPop">
-			<h2>호텔 찾기</h2>
-			<ul class="hotelSelect">
-								<li>
-					<a href="https://jpg.josunhotel.com/main.do" target="_blank" title="새창열림">		
-						<span class="hotelLogo palace">
-						</span>
-						<span class="hotelTit">조선 팰리스<!-- 조선 팰리스 --></span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selwi-the-westin-chosun-seoul" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo westinSeoul">
-						</span>
-						<span class="hotelTit">웨스틴 조선 서울</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/puswi-the-westin-chosun-busan" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo westinBusan">
-						</span>
-						<span class="hotelTit">웨스틴 조선 부산</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://gjb.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo grandBusan">
-						</span>
-						<span class="hotelTit">그랜드 조선 부산</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://gjj.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo grandJeju">
-						</span>
-						<span class="hotelTit">그랜드 조선 제주</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://lescapehotel.com/main" target="_blank" title="새창열림">
-						<span class="hotelLogo lescape">
-						</span>
-						<span class="hotelTit">레스케이프 호텔</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://grp.josunhotel.com/main.do" target="_blank" title="새창열림">
-						<span class="hotelLogo gravityPangyo">
-						</span>
-						<span class="hotelTit">그래비티 서울 판교</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selfp-four-points-seoul-namsan" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo sheratonSeoulstation">
-						</span>
-						<span class="hotelTit">포포인츠 바이 쉐라톤 조선 서울역</span>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.marriott.co.kr/hotels/travel/selfd-four-points-seoul-myeongdong" target="_blank" class="js-active" title="새창열림">
-						<span class="hotelLogo sheratonMyeongdong">
-						</span>
-						<span class="hotelTit">포포인츠 바이 쉐라톤 조선, 서울 명동</span>
-					</a>
-				</li>
-			</ul>
-		</div>
-		<button type="button" class="btnClose" onclick="commonJs.popClose($('#hotelFindLayer'))">닫기</button>
-	</div>
-</div>
-<!-- //호텔 찾기 Layer -->
+
 <div class="dimmed"></div>
 </body>
 </html>

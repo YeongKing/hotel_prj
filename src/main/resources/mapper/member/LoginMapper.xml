@@ -24,4 +24,13 @@
 	set password = #{ userPw, jdbcType=VARCHAR }
 	where member_id = #{ userId, jdbcType=VARCHAR }
   </select>
+  
+  
+  <!-- 최근 로그인 일자 변경 -->
+	<update id="updateLoginDate" parameterType="String">
+	  update member
+	  set LOGIN_DATE = sysdate
+	  where member_id = #{ userId }
+	</update>
+  
 </mapper>

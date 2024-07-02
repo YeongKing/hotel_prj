@@ -33,7 +33,7 @@ public class PaymentController {
 	
 	@ResponseBody
 	@PostMapping("/payment.do")
-	public Map<String, Object> payment(@RequestBody Map<String, Object> paymentData,Model model) {
+	public Map<String, Object> payment(@RequestBody Map<String, Object> paymentData) {
 		String impUid = (String)paymentData.get("imp_uid");
 		String token = (String)paymentData.get("token");
        
@@ -60,17 +60,14 @@ public class PaymentController {
         JSONObject data = new JSONObject();
 
         String payNum = "";
-//        System.out.println("pVO : " + pVO);
 
         boolean result = ps.insertPayInfo(pVO);
 
-//        System.out.println("result : " + result);
 
         if (result) {
             payNum = ps.selectPayNum(pVO.getImpUid());
         }
 
-//        System.out.println("리턴전 payNum :" + payNum);
 
         data.put("payNum", payNum); // JSON 객체에 payNum 추가
 

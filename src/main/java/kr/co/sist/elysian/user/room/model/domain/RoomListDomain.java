@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class RoomListDomain {
 
 
-	private String roomRankCode, roomRankName, viewCode, viewName,bedCode, bedName,deleteStatus;
 	private int  roomSize,roomBasicCapacity, roomMaxCapacity,roomBasicPrice,roomAddPrice, bedCnt;
+	private String roomRankCode, roomRankName, viewCode, viewName,bedCode, bedName,deleteStatus;
 
 }

@@ -54,6 +54,15 @@ public class UserDAO {
         mbDAO.closeHandler(ss);
         return result;
     }
+    
+    public void updateLoginDate(String userId) throws PersistenceException {
+
+        SqlSession ss = mbDAO.getMyBatisHandler(true);
+        ss.update("kr.co.sist.elysian.member.login.updateLoginDate", userId);
+        mbDAO.closeHandler(ss);
+    }
+    
+    
 
     
 }

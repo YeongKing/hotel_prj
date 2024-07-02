@@ -76,6 +76,9 @@ public class LoginController {
             model.addAttribute("userId", udm.getUserId());
             model.addAttribute("userName", udm.getUserName());
             
+            String userId = udm.getUserId();
+            ls.updateLoginDate(userId);
+            
             // 세션에 저장되어 있는 요청한 페이지 URI 가져오기 
             String requestedURI = (String)session.getAttribute("requestedURI");
             String movePath = "index.do";
@@ -178,6 +181,8 @@ public class LoginController {
 
 	        if (matchFlag) {
 	            session.setAttribute("userId", udm.getUserId());
+	            String userId = udm.getUserId();
+	            ls.updateLoginDate(userId);
 	            resultJson.put("result", "success");
 	        } else {
 	            resultJson.put("result", "fail");

@@ -16,7 +16,6 @@
 		<typeAlias type="kr.co.sist.elysian.admin.member.model.domain.MemberDomain" alias="md"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.room.model.domain.RoomListDomain" alias="rld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.room.model.domain.RoomDomain" alias="rd"/> 
-		<typeAlias type="kr.co.sist.elysian.admin.room.model.vo.UpdateRoomVO" alias="urVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.room.model.vo.RoomVO" alias="rVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.dining.model.domain.DiningListDomain" alias="dld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.dining.model.domain.DiningDomain" alias="dd"/> 

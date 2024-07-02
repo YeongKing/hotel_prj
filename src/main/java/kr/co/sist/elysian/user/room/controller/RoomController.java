@@ -32,21 +32,21 @@ public class RoomController {
 	@Autowired(required = false)
 	@Qualifier("userRoomService")
 	private RoomService rs;
-	
-	
-	
+
+
+
 	/**
 	 * 페이지 이동 메서드
 	 * @return
 	 */
 	@GetMapping("/room0.do")
 	public String step0() {
-		
+
 		return "user/resve/room/step0";
-		
+
 	} // step0
-	
-	
+
+
 	/**
 	 * 페이지 이동 메서드
 	 * @param rrVO 객실예약VO
@@ -56,19 +56,19 @@ public class RoomController {
 	 */
 	@PostMapping("/room1.do")
 	public String step1(@ModelAttribute RoomResVO rrVO, Model model, HttpSession session) {
-		
+
 		session.setAttribute("rrVO", rrVO);
-		
+
 		List<RoomListDomain> list = rs.searchRoomList(rrVO);
 
 		model.addAttribute("roomList",list);
-		
+
 		return "user/resve/room/step1";
-		
+
 	} // step1
-	
-	
-	
+
+
+
 	/** 
 	 * 페이지 이동 메서드
 	 * @param rrVO 객실예약VO
@@ -77,21 +77,21 @@ public class RoomController {
 	 */
 	@PostMapping("/room2.do")
 	public String step2(@ModelAttribute RoomResVO rrVO,HttpSession session) {
-		
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-        String currentDate = sdf.format(new Date());
-        session.setAttribute("currentDate", currentDate);
-        session.setAttribute("rrVO", rrVO);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+		String currentDate = sdf.format(new Date());
+		session.setAttribute("currentDate", currentDate);
+		session.setAttribute("rrVO", rrVO);
 
 
-		
+
 		return "user/resve/room/step2";
-		
+
 	} // step2
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * 페이지 이동 메서드
 	 * @param session
@@ -102,42 +102,32 @@ public class RoomController {
 	@PostMapping("/room3.do")
 	public String step3(HttpSession session,HttpServletRequest request,MemberDomain umd) {
 		RoomResVO rrVO = (RoomResVO)session.getAttribute("rrVO");
-		
+
 		String guestRequest = request.getParameter("contArr");
-		
+
 		rrVO.setGuestRequest(guestRequest);
 
+		String userId = session.getAttribute("userId").toString();
 
-		
-		 String userId = session.getAttribute("userId").toString();
-		
 		umd = rs.searchMember(userId); 
-		
-		
-		
 
-		
 		rrVO.setUserId(umd.getMemberId());
-		
 
-		
-		
-        
-        session.setAttribute("umd", umd);
-        session.setAttribute("rrVO", rrVO);
+		session.setAttribute("umd", umd);
+		session.setAttribute("rrVO", rrVO);
 
 
 
-		
+
 		return "user/resve/room/step3";
-		
-	} // step3
-	
-	
-	
-	
 
-	
+	} // step3
+
+
+
+
+
+
 	/**
 	 * 예약객실 검증 메서드
 	 * @param session 
@@ -148,26 +138,22 @@ public class RoomController {
 	@PostMapping(value="/resveValid.do", produces="application/json; charset=UTF-8")
 	public int resveValid(HttpSession session) {
 		RoomResVO rrVO = (RoomResVO)session.getAttribute("rrVO");
-		
-		
+
+
 		int roomId = rs.resveValid(rrVO);
 
 		rrVO.setRoomId(roomId);
 		session.setAttribute("rrVO", rrVO);
 
-	
-		
-		
-	     
 		return roomId;
 	}//resveValid
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 	/**
 	 * 객실예약 등록 메서드
 	 * @param requestData
@@ -178,78 +164,77 @@ public class RoomController {
 	@PostMapping(value="/insertRoomRes.do", produces="application/json; charset=UTF-8")
 	public boolean insertRoomRes(@RequestBody Map<String, Object> requestData,HttpSession session) {
 		RoomResVO rrVO = (RoomResVO)session.getAttribute("rrVO");
-		
+
 		String payNum = requestData.get("payNum").toString();
 		String roomResStatus = requestData.get("roomResStatus").toString();
 		String guestEmail = requestData.get("guestEmail").toString();
 		String guestPhone = requestData.get("guestPhone").toString();
 		String guestBirthday = requestData.get("guestBirthday").toString();
 
-		
 
-		
+
+
 		int roomId = Integer.parseInt(requestData.get("roomId").toString());
-		
+
 		rrVO.setPayNum(payNum);
 		rrVO.setRoomResStatus(roomResStatus);
 		rrVO.setGuestEmail(guestEmail);
 		rrVO.setGuestPhone(guestPhone);
 		rrVO.setGuestBirthday(guestBirthday);
 		rrVO.setRoomId(roomId);
-		
+
 		System.out.println(rrVO);
-		
-		
-		 boolean result = rs.insertRoomRes(rrVO); 
 
 
-		 session.setAttribute("rrVO", rrVO); 
+		boolean result = rs.insertRoomRes(rrVO); 
 
-	
+
+		session.setAttribute("rrVO", rrVO); 
+
+
 		return result;
 	}//insertRoomRes
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	/** 페이지 이동 메서드
 	 * @return
 	 */
 	@PostMapping("/room4.do")
 	public String step4() {
 
-		
 
 		return "user/resve/room/step4";
-		
+
 	} // step4		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 } // class

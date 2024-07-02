@@ -25,6 +25,12 @@ public class QnaController {
 	
 	
 	
+	/**
+	 * qna 페이지 리스트 검색 및 이동 메서드
+	 * @param qVO qnaVO
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/qna.do")
 	public String selectQnaList(@ModelAttribute QnaVO qVO,
             Model model) {
@@ -36,16 +42,11 @@ public class QnaController {
 			qVO.setPage(1);
 		}
 		
-//		System.out.println("============================================================================");
-//		System.out.println("============================================================================");
-//		System.out.println(qVO.getSearchCtgry());
-//		System.out.println("page : "+qVO.getPage()+"/// searchCtgry : " + qVO.getSearchCtgry() + "/// searchDataValue :" + qVO.getSearchDataValue());
-//		System.out.println("============================================================================");
-//		System.out.println("============================================================================");
+
 		
 		List<QnaDomain> list = qs.selectQnaList(qVO);
 		int page = qs.selectPage(qVO);
-//		System.out.println("totalPage  : "+ page);
+
 		
 		model.addAttribute("qnaList",list);
 		model.addAttribute("qVO",qVO);

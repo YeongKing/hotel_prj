@@ -28,30 +28,25 @@ public class NoticeController {
 	
 	
 	
+	/**
+	 * 공지사항 페이지 이동메서드
+	 * @param nVO 공지사항VO
+	 * @param model 
+	 * @return
+	 */
 	@GetMapping("/notice.do")
 	public String searchNoticeList(@ModelAttribute NoticeVO nVO,
             Model model) {
-		
-		/*
-		 * if(nVO.getSearchCtgry()!=null) { nVO.setSearchCtgry(
-		 * (nVO.getSearchCtgry()).substring(0, 3)); }
-		 */
+
 		
 		if(nVO.getPage()==0) {
 			nVO.setPage(1);
 		}
-		
-//		System.out.println("============================================================================");
-//		System.out.println("============================================================================");
-//		System.out.println(nVO.getSearchCtgry());
-//		System.out.println("page : "+nVO.getPage()+"/// searchCtgry : " + nVO.getSearchCtgry() + "/// searchDataValue :" + nVO.getSearchDataValue());
-//		System.out.println("============================================================================");
-//		System.out.println("============================================================================");
+
 		
 		List<NoticeDomain> list = ns.selectNoticeList(nVO);
 		int page = ns.selectPage(nVO);
-//		System.out.println("totalPage  : "+ page);
-		
+
 		model.addAttribute("noticeList",list);
 		model.addAttribute("nVO",nVO);
 		model.addAttribute("totalPage",page);
@@ -63,6 +58,15 @@ public class NoticeController {
 	} // searchNoticeList
 	
 	
+	/**
+	 * 공지사항 세부사항페이지 이동 메서드
+	 * @param nVO 공지사항VO
+	 * @param num 게시물 번호
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@GetMapping("/noticeDetail.do")
 	public String noticeDetail(@ModelAttribute NoticeVO nVO,@RequestParam(required = false)String num,
             Model model,HttpServletRequest request, HttpServletResponse response) {
@@ -117,51 +121,24 @@ public class NoticeController {
 
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		
 		
 		
 		if(nVO.getPage()==0) {
 			nVO.setPage(1);
 		}
-		
-//		System.out.println("============================================================================");
-//		System.out.println("============================================================================");
-//		System.out.println("page : "+nVO.getPage()+"/// searchCtgry : " + nVO.getSearchCtgry() + "/// searchDataValue :" + nVO.getSearchDataValue());
-//		System.out.println("============================================================================");
-//		System.out.println("============================================================================");
+
 		
 		NoticeDomain currentND = ns.selectNoticeDetail(nVO);
 		NoticeDomain prevND = ns.selectPrevNotice(nVO);
 		NoticeDomain nextND = ns.selectNextNotice(nVO);
 
-		
-//		System.out.println("============================================================================");
-//		System.out.println("============================================================================");
-		
-		
-//		System.out.println("nVO : " + nVO);
-//		System.out.println("prevND : " + prevND);
-//		System.out.println("nextND : " + nextND);
-//		System.out.println("noticeDomain : " + currentND);
-//		System.out.println("============================================================================");
-//		System.out.println("============================================================================");
+
+
 		int page = ns.selectPage(nVO);
-//		System.out.println("totalPage  : "+ page);
 		
+
 		model.addAttribute("nVO",nVO);
 		model.addAttribute("totalPage",page);
 		model.addAttribute("prevND",prevND);
@@ -169,15 +146,6 @@ public class NoticeController {
 		model.addAttribute("nextND",nextND);
 		model.addAttribute("num",num);
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		return "user/board/noticeDetail";

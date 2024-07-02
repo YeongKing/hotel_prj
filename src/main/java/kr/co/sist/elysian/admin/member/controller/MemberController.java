@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
-import org.springframework.web.bind.support.SessionStatus;
 
 import kr.co.sist.elysian.admin.member.model.domain.MemberDomain;
 import kr.co.sist.elysian.admin.member.model.domain.MemberListDomain;
@@ -42,7 +41,7 @@ public class MemberController {
 	
 	@ResponseBody
 	@PostMapping(value="/memberDetail.do", produces="application/json; charset=UTF-8")
-	public MemberDomain selectMemberDetail(@RequestBody Map<String, Object> requestData, Model model) {
+	public MemberDomain selectMemberDetail(@RequestBody Map<String, Object> requestData) {
 		 String memberId = (String) requestData.get("memberId");
 	     MemberDomain md = ms.searchMemberDetail(memberId);
 	     
@@ -54,18 +53,17 @@ public class MemberController {
 	
 	@ResponseBody
 	@PostMapping(value="/deleteMember.do", produces="application/json; charset=UTF-8")
-	public Boolean deleteMember(@RequestBody Map<String, Object> requestData, Model model) {
+	public Boolean deleteMember(@RequestBody Map<String, Object> requestData) {
 		 String memberId = (String) requestData.get("memberId");
 	     boolean result = ms.deleteMember(memberId);
 	     
-	     System.out.println("boolean result : " +result);
 	     
 		return result;
 	}//deleteMember
 	
 	@ResponseBody
 	@PostMapping(value="/updateMember.do", produces="application/json; charset=UTF-8")
-	public Boolean updateMember(@RequestBody MemberVO mVO, Model model) {
+	public Boolean updateMember(@RequestBody MemberVO mVO) {
 
 	     boolean result = ms.updateMember(mVO);
 	     
@@ -74,45 +72,9 @@ public class MemberController {
 	}//updateMember
 	
 	
-	
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	public String addFrm() {
-		return "";
-	}//addFrm
-	
-	
-	public String frmProcess(MemberVO mVO) {
-		return "";
-	}//frmProcess
-	
-	
 
-	
-	
-	public String modifyMember(MemberVO mVO, Model model) {
-		return "";
-	}//modifyMember
-	
-	
-
-	
-	
-	public String logout(SessionStatus ss) {
-		return "";
-	}//logout
-	
-	
-	
-	
 	
 	
 	

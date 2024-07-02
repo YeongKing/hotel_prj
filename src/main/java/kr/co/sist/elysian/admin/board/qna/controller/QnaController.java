@@ -26,9 +26,14 @@ public class QnaController {
 	@Autowired(required = false)
 	private QnaService qs;
 	
+	/**
+	 * qna탭 진입시 qna 리스트 호출 메서드
+	 * @param model 
+	 * @return
+	 */
 	@GetMapping("/qna.do")
 	public String searchQnaList(Model model) {
-		List<QnaListDomain> list = qs.searchEventList();
+		List<QnaListDomain> list = qs.searchQnaList();
 		model.addAttribute("qnaList",list);
 		
 		
@@ -36,9 +41,15 @@ public class QnaController {
 	}//searchQnaList
 
 
+	/**
+	 * qna 세부정보 호출 메서드
+	 * @param requestData
+	 * @param model
+	 * @return qna도메인
+	 */
 	@ResponseBody
 	@PostMapping(value="/qnaDetail.do", produces="application/json; charset=UTF-8")
-	public QnaDomain selectQnaDetail(@RequestBody Map<String, Object> requestData, Model model) {
+	public QnaDomain selectQnaDetail(@RequestBody Map<String, Object> requestData) {
 		 String qnaNum = (String) requestData.get("qnaNum");
 	     QnaDomain qd = qs.searchQnaDetail(qnaNum);
 
@@ -47,6 +58,11 @@ public class QnaController {
 	
 	
 	
+	/**
+	 * qna 세부사항 변경 메서드
+	 * @param qVO qnaVO
+	 * @return 성공 실패 유무
+	 */
 	@ResponseBody
 	@PostMapping(value="/updateQna.do", produces="application/json; charset=UTF-8")
 	public Boolean updateQna(@RequestBody QnaVO qVO) {
@@ -77,7 +93,7 @@ public class QnaController {
 	
 	/**
 	 * 자주 찾는 질문 게시글 등록
-	 * @param qVO
+	 * @param qVO qnaVO
 	 * @return
 	 */
 	@ResponseBody
@@ -89,42 +105,6 @@ public class QnaController {
 		return result;
 	}//insertQna
 	
-	
-	
-	
-	
-	
-	
 
-	public String addFrm() {
-		return "";
-	}//addFrm
-
-	public String frmProcess(QnaVO qVO) {
-		return "";
-	}//frmProcess
-
-	public String detailQna(int qnaNum , Model model) {
-		return "";
-	}//detailQna
-
-	public String modifyQna(QnaVO qVO , Model model) {
-		return "";
-	}//modifyQna
-
-	public String removeQna(int qnaNum , Model model) {
-		return "";
-	}//removeQna
-
-	
-	
-	public String logout(SessionStatus ss) {
-		return "";
-	}//logout
-
-			
-	
-	
-	
 	
 } // class

@@ -58,7 +58,7 @@ public class QnaDAO {
 		mbDAO.closeHandler(ss);
 		return result;
 		
-	}//selectRoomId
+	}//selectQnaNum
 	
 	
 	public int insertQna(QnaVO qVO) throws PersistenceException{

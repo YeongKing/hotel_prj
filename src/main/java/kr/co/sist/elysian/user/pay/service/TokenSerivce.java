@@ -33,31 +33,31 @@ public class TokenSerivce {
 	public static final String KEY = "0663051873408815";
 	//SCRET
 	public static final String SECRET = "WfXfbqE0o4UlTT8yHpqjfPxJ2H936gd5MEXvEpZQ5LMTi6s7rPSFeyTJlNz5l87xrQHJNr0MCas3XNO2";
-	
+
 	//아임포트 인증(토큰)을 받아주는 함수
 	public String getImportToken() {
 		String result = "";
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPost post = new HttpPost(IMPORT_TOKEN_URL);
-		 List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-	        urlParameters.add(new BasicNameValuePair("imp_key", KEY));
-	        urlParameters.add(new BasicNameValuePair("imp_secret", SECRET));
+		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+		urlParameters.add(new BasicNameValuePair("imp_key", KEY));
+		urlParameters.add(new BasicNameValuePair("imp_secret", SECRET));
 
-			try {
-				post.setEntity(new UrlEncodedFormEntity(urlParameters));
-				HttpResponse res = client.execute(post);
-				ObjectMapper mapper = new ObjectMapper();
-				String body = EntityUtils.toString(res.getEntity());
-				JsonNode rootNode = mapper.readTree(body);
-				JsonNode resNode = rootNode.get("response");
-				result = resNode.get("access_token").asText();
-			
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
+		try {
+			post.setEntity(new UrlEncodedFormEntity(urlParameters));
+			HttpResponse res = client.execute(post);
+			ObjectMapper mapper = new ObjectMapper();
+			String body = EntityUtils.toString(res.getEntity());
+			JsonNode rootNode = mapper.readTree(body);
+			JsonNode resNode = rootNode.get("response");
+			result = resNode.get("access_token").asText();
 
-
-			return result;
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
-	
+
+
+		return result;
+	}
+
 }

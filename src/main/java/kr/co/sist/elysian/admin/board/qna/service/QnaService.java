@@ -18,7 +18,13 @@ public class QnaService {
 	@Autowired(required = false)
 	private QnaDAO qDAO;
 	
-	public List<QnaListDomain> searchEventList(){
+	
+	
+	/**
+	 * qna리스트 호출 메서드
+	 * @return qna리스트
+	 */
+	public List<QnaListDomain> searchQnaList(){
 		List<QnaListDomain> list = null;
 		try {
 			list =qDAO.selectQnaList();
@@ -27,9 +33,16 @@ public class QnaService {
 			
 		}//end catch
 		return list;
-	}
+	}//searchQnaList
 		
 	
+	
+	
+	/**
+	 * qna 세부정보 검색메서드
+	 * @param qnaNum qna번호
+	 * @return qna도메인
+	 */
 	public QnaDomain searchQnaDetail(String qnaNum){
 		QnaDomain qd = null;
 		try {
@@ -42,6 +55,12 @@ public class QnaService {
 
 	}//searchQnaDetail
 	
+	
+	/**
+	 * qna 수정 메서드
+	 * @param qVO qnaVO
+	 * @return 성공 실패 유무
+	 */
 	public boolean updateQna(QnaVO qVO){
 		
 		try {
@@ -56,6 +75,11 @@ public class QnaService {
 	
 	
 	
+	
+	/**
+	 * 공지사항번호 호출 메서드
+	 * @return 공지사항번호
+	 */
 	public String selectQnaNum(){
 		String result = "";
 		
@@ -70,6 +94,12 @@ public class QnaService {
 	
 	
 	
+	
+	/**
+	 * qna 등록 메서드
+	 * @param qVO qnaVO
+	 * @return 성공 실패 유무
+	 */
 	public boolean insertQna(QnaVO qVO){
 		
 		try {

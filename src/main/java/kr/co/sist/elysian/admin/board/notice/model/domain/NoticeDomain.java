@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class NoticeDomain {
 
-	private String noticeNum, noticeTitle, noticeContent, adminId, noticeInputDate;
 	private int  noticeViewCount ;
+	private String noticeNum, noticeTitle, noticeContent, adminId, noticeInputDate;
 }

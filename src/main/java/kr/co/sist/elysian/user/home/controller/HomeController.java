@@ -1,7 +1,6 @@
 package kr.co.sist.elysian.user.home.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -10,7 +9,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping("/user")
 public class HomeController {
 	
-//	@GetMapping("/index.do")
 	@RequestMapping(value="/index.do",method= {GET,POST})
 	public String main() {
 

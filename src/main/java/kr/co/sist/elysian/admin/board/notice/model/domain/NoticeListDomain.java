@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class NoticeListDomain {
 
-	private String noticeNum, noticeTitle, adminId ;
 	private int noticeViewCount ;
+	private String noticeNum, noticeTitle, adminId ;
 	private Date noticeInputDate;
 }

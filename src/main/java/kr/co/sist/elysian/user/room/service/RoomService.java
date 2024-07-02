@@ -18,7 +18,7 @@ public class RoomService {
 
 	@Autowired(required = false)
 	private RoomDAO rDAO;
-	
+
 	/**
 	 * 객실리스트 검색 메서드
 	 * @param rrVO 객실예약VO
@@ -30,13 +30,13 @@ public class RoomService {
 			list =rDAO.selectRoomList(rrVO);
 		}catch(PersistenceException pe){
 			pe.printStackTrace();
-			
+
 		}//end catch
 		return list;
-		
-		
+
+
 	}//searchRoomList
-	
+
 	/**
 	 * 멤버 검색 메서드
 	 * @param userId 멤버id
@@ -48,15 +48,15 @@ public class RoomService {
 			umd =rDAO.selectMember(userId);
 		}catch(PersistenceException pe){
 			pe.printStackTrace();
-			
+
 		}//end catch
 		return umd;
-		
-		
+
+
 	}//searchMember
-	
-	
-	
+
+
+
 	/**
 	 * 객실예약 검증 메서드
 	 * @param rrVO 객실예약VO
@@ -68,17 +68,17 @@ public class RoomService {
 			roomId =rDAO.resveValid(rrVO);
 		}catch(PersistenceException pe){
 			pe.printStackTrace();
-			
+
 		}//end catch
 		return roomId;
-		
-		
+
+
 	}//resveValid
-	
-	
-	
-	
-	
+
+
+
+
+
 	/**
 	 * 객실예약 등록 메서드
 	 * @param rrVO 객실예약VO
@@ -90,22 +90,22 @@ public class RoomService {
 			result =rDAO.insertRoomRes(rrVO);
 		}catch(PersistenceException pe){
 			pe.printStackTrace();
-			
-		}//end catch
-		
-		
-		
-		return (result==1);
-		
-		
-	}//insertRoomRes
-	
-	
 
-	
-	
-	
-	
-	
-	
+		}//end catch
+
+
+
+		return (result==1);
+
+
+	}//insertRoomRes
+
+
+
+
+
+
+
+
+
 }

@@ -45,10 +45,6 @@ function getMemberSession() {
     }
 }
 
-
-
-
-
 </script>
 
 
@@ -57,14 +53,7 @@ function getMemberSession() {
 <!--E header  -->
 
 
-
         <!--(페이지 URL)-->
-
-
-
-
-
-
 
 
 <script type="text/javascript">
@@ -74,80 +63,6 @@ function getMemberSession() {
 			//체크인 체크아웃 날짜 html 주입
 			jQuery("#dateText").html(jQuery("#ckinDate").val() + "&nbsp;" + dUtils.getDateToDay(jQuery("#ckinDate").val()) +"&nbsp;-&nbsp;"+ jQuery("#ckoutDate").val() + "&nbsp;" + dUtils.getDateToDay(jQuery("#ckoutDate").val())+"<span>"+jQuery("#night").val()+"&nbsp;박</span>")
 			
-
-			
-			//옵션 추가, 감소 버튼 이벤트
-			jQuery("#optInfo .addOption button").on("click", function(){
-				var roomIdx = jQuery(this).closest("li").data("roomidx");	//객실 인덱스
-				var optType = jQuery(this).closest(".addOption").data("type");	//옵션 종류  ex) optA : 성인, optC : 어린이, optE : 엑스트라베드
-				var beforeCount = parseInt(jQuery(this).closest(".numPeople").find("span").text());	//현재 옵션 갯수
-				var afterCount;		//바뀔 카운트
-				var btnType = jQuery(this).data("btntype"); //버튼 타입  ex) up , down
-				if(btnType == "up"){
-					afterCount = beforeCount + 1;
-				}else if(btnType == "down" && beforeCount > 0){
-					afterCount = beforeCount - 1;
-				}
-				//성인 옵션 갯수 세팅
-				if(optType == "optA"){
-					var adultCnt = jQuery("[name='adltCntArr']:eq("+roomIdx+")").val();		//해당 객실 성인 수
-					if(adultCnt < afterCount){
-						afterCount = beforeCount;
-					}
-					
-					// 성인수와 옵션입력 개수가 같을 경우 추가 버튼 disabled
-					if(adultCnt == afterCount){
-						jQuery(this).closest(".addOption").find(".btnUp").attr("disabled", true);
-					}else{
-						jQuery(this).closest(".addOption").find(".btnUp").attr("disabled", false);
-					}
-					
-					jQuery(this).closest(".addOption").find("[name='optAQtyArr']").val(afterCount);
-					
-				//어린이 옵션 갯수 세팅
-				}else if(optType == "optC"){
-					var childCnt = jQuery("[name='chldCntArr']:eq("+roomIdx+")").val();		//해당 객실 어린이 수
-					if(childCnt < afterCount){
-						afterCount = beforeCount;
-					}
-					
-					// 어린이수와 옵션입력 개수가 같을 경우 추가 버튼 disabled
-					if(childCnt == afterCount){
-						jQuery(this).closest(".addOption").find(".btnUp").attr("disabled", true);
-					}else{
-						jQuery(this).closest(".addOption").find(".btnUp").attr("disabled", false);
-					}
-					
-					jQuery(this).closest(".addOption").find("[name='optCQtyArr']").val(afterCount);
-				//엑스트라베드 옵션 갯수 세팅
-				}else if(optType == "optE"){
-					if(afterCount > 1){
-						afterCount = 1;
-					}
-					
-					// 베드는 1개까지만 추가 가능 
-					if(afterCount == 1){
-						jQuery(this).closest(".addOption").find(".btnUp").attr("disabled", true);
-					}else{
-						jQuery(this).closest(".addOption").find(".btnUp").attr("disabled", false);
-					}
-					
-					jQuery(this).closest(".addOption").find("[name='optEQtyArr']").val(afterCount);
-				}
-				if(afterCount < 1){
-					jQuery(this).addClass("blank");
-				}else{
-					jQuery(this).removeClass("blank");
-				}
-				if(afterCount > 0){
-					jQuery(this).closest(".addOption").find(".btnDown").attr("disabled", false);
-				}else{
-					jQuery(this).closest(".addOption").find(".btnDown").attr("disabled", true);
-				}
-				jQuery(this).closest(".numPeople").find("span").text(afterCount);
-				
-				fncOptCalculate();		//전체 요금 계산
-			});
 		});
 	});
 	
@@ -174,198 +89,154 @@ function getMemberSession() {
 		jQuery("#step2Form").submit();
 	}
 </script>
-<form action="" name="step2Form" id="step2Form" method="post">
-	<input type="hidden" name="ckinDate" id="ckinDate" value="${rrVO.ckinDate}" /> 				
-	<input type="hidden" name="ckoutDate" id="ckoutDate" value="${rrVO.ckoutDate}" /> 			
-	<input type="hidden" name="night" id="night" value="${rrVO.night}" /> 						
-	<input type="hidden" name="roomCnt" id="roomCnt" value="1" />					
-	
-		<input type="hidden" name="adltCntArr" value="${rrVO.adultsNum}" />							
-	
-		<input type="hidden" name="chldCntArr" value="${rrVO.kidsNum}" />							
-	
-	
-	<%-- <input type="hidden" name="roomCode" id="roomCode" value="${rrVO.roomCode}" />				 --%>
-	<input type="hidden" name="adltSum" id="adltSum" value="${rrVO.adultsNum}" />					
-	<input type="hidden" name="chldSum" id="chldSum" value="${rrVO.kidsNum}" />					
-	
-	<div id="container" class="container">
-		<!-- 컨텐츠 S -->
-		<h1 class="hidden">예약</h1>
-		<div class="topArea">
-			<div class="topInner">
-				<h2 class="titDep1">Booking</h2>
-				<div class="stepWrap">
-					<ol>
-						<li class="prev">
-							<em>객실, 요금 선택</em>
-						</li>
-						<li class="on">
-							<span class="hidden">현재단계</span>
-							<em>옵션 선택</em>
-						</li>
-						<li>
-							<em>예약자 정보 입력</em>
-						</li>
-					</ol>
-				</div>
-			</div>
-		</div>
-		<!-- //topArea -->
-		<div class="selResult">
-			<div class="inner">
-				<div class="infoArea">
-					<dl class="dlType01">
-						<dt>HOTEL</dt>
-						<dd>엘리시안 서울</dd>
-					</dl>
-					<dl class="dlType02">
-						<dt>DATE</dt>
-						<dd id="dateText"></dd>
-					</dl>
-					<dl class="dlType03">
-						<dt>ROOMS</dt>
-						<dd>1</dd>
-					</dl>
-					<dl class="dlType03">
-						<dt>ADULTS</dt>
-						<dd>${rrVO.adultsNum}</dd>
-					</dl>
-					<dl class="dlType03">
-						<dt>CHILDREN</dt>
-						<dd>${rrVO.kidsNum}</dd>
-					</dl>
-				</div>
-				<a href="#none" class="btnSC btnM icoArr" onclick="fncResvReset();">객실 다시 검색</a>
-			</div>
-		</div>
-		<!-- //selResult -->
-		<div class="inner">
-			<!-- rsvRoomWrap -->
-			<div class="rsvRoomWrap">
-				<div class="lCont">
-					<h2 class="titDep2">ROOM ONLY</h2>
-					<p class="categoryTxt">
+		<form action="" name="step2Form" id="step2Form" method="post">
+			<input type="hidden" name="ckinDate" id="ckinDate"
+				value="${rrVO.ckinDate}" /> <input type="hidden" name="ckoutDate"
+				id="ckoutDate" value="${rrVO.ckoutDate}" /> <input type="hidden"
+				name="night" id="night" value="${rrVO.night}" /> <input
+				type="hidden" name="roomCnt" id="roomCnt" value="1" /> <input
+				type="hidden" name="adltCntArr" value="${rrVO.adultsNum}" /> <input
+				type="hidden" name="chldCntArr" value="${rrVO.kidsNum}" /> <input
+				type="hidden" name="adltSum" id="adltSum" value="${rrVO.adultsNum}" />
+			<input type="hidden" name="chldSum" id="chldSum"
+				value="${rrVO.kidsNum}" />
 
-						${rrVO.roomRankName} /	${rrVO.bedName}	/	${rrVO.viewName}	
-						
-
-					</p>
-					<ul class="toggleList rsvList roomRsv" id="optInfo">
-						
-							<li class="toggleOn" data-roomidx="0"><!-- 기본으로 펼쳐진 경우 toggleOn  추가 -->
-								<input type="hidden" name="bpArr" id="bpArr0" value="" />
-								<input type="hidden" name="bpNmArr" id="bpNmArr0" value="" />
-								<strong class="listTit">객실</strong>
-								<button type="button" class="btnToggle">
-									<span class="hidden">상세내용 보기</span>
-								</button>
-								<div class="toggleCont" style="display: block;">
-									<div class="toggleInner">
-
-										
-											
-                                                
-												
-											
-	
-											
-
-										
-										<h3 class="opTit">
-											<label for="request01">REQUESTS</label>
-										</h3>
-										<textarea name="contArr"  placeholder="호텔 이용 시 문의하실 사항이 있으시면 입력해 주세요." ></textarea>
-										<p class="txtGuide">전달해주신 요청사항을 최대한 반영하도록 최선을 다하겠습니다.<br/>다만, 부득이하게 반영되지 않을 수 있는 점, 양해 부탁드립니다.</p> 
-									</div>
-								</div>
-							</li>
-						
-					</ul>
-				</div>
-				<div class="rCont floating" style="margin-top: 378.6px;">
-					<ul class="toggleList rsvList" id="roomInfo">
-						
-						
-							
-							
-								
-									
-								
-								
-							
-							
-							<li class="toggleOn"> <!-- 기본으로 펼쳐진 경우 toggleOn  추가 -->
-								<strong class="listTit">
-									객실
-									<span class="price" id="roomAmount0"><em>${rrVO.payPrice}</em>KRW</span>
-								</strong>
-								<button type="button" class="btnToggle"><span class="hidden">상세내용 보기</span></button>
-								<div class="toggleCont" style="display: block;">
-									<div class="toggleInner">
-										<div class="optionTotal scrollWrap">
-											<ul class="infoData">
-												
-													
-													<li>
-														<span class="lfData"><fmt:formatNumber value="${rrVO.payPrice}" pattern="#,##0"/> KRW * ${rrVO.night} 박</span>
-													</li>
-												
-											</ul>
-											<ul class="infoData" id="roomOptInfo0" style="display:none;"></ul>
-
-										</div>
-									</div>
-								</div>
-							</li>	
-						
-					</ul>
-					<div class="totalCont">
-						<div class="totalPrice">
-							<span class="txt">총 예약금액</span>
-							
-
-
-							    <span class="price">
-							    	<em id="resvTotalAmount">
-							        	<fmt:formatNumber value="${rrVO.payPrice * rrVO.night}" pattern="#,##0"/>
-							    	</em> KRW
-							    </span>
-							</div>
-						<div class="btnArea">
-							
-							
-							
-<!-- 								<div>
-									<a href="#none" class="btnSC btnL active" onclick="fncGoStep3();">
-										회원 예약
-									</a>
-								</div> -->
-									<div>
-										<a href="#none" class="btnSC btnL active" onclick="getMemberSession()">
-												회원 예약
-										</a>
-									</div>
-							
+			<div id="container" class="container">
+				<!-- 컨텐츠 S -->
+				<h1 class="hidden">예약</h1>
+				<div class="topArea">
+					<div class="topInner">
+						<h2 class="titDep1">Booking</h2>
+						<div class="stepWrap">
+							<ol>
+								<li class="prev"><em>객실, 요금 선택</em></li>
+								<li class="on"><span class="hidden">현재단계</span> <em>옵션
+										선택</em></li>
+								<li><em>예약자 정보 입력</em></li>
+							</ol>
 						</div>
-
 					</div>
 				</div>
+				<!-- //topArea -->
+				<div class="selResult">
+					<div class="inner">
+						<div class="infoArea">
+							<dl class="dlType01">
+								<dt>HOTEL</dt>
+								<dd>엘리시안 서울</dd>
+							</dl>
+							<dl class="dlType02">
+								<dt>DATE</dt>
+								<dd id="dateText"></dd>
+							</dl>
+							<dl class="dlType03">
+								<dt>ROOMS</dt>
+								<dd>1</dd>
+							</dl>
+							<dl class="dlType03">
+								<dt>ADULTS</dt>
+								<dd>${rrVO.adultsNum}</dd>
+							</dl>
+							<dl class="dlType03">
+								<dt>CHILDREN</dt>
+								<dd>${rrVO.kidsNum}</dd>
+							</dl>
+						</div>
+						<a href="#none" class="btnSC btnM icoArr"
+							onclick="fncResvReset();">객실 다시 검색</a>
+					</div>
+				</div>
+				<!-- //selResult -->
+				<div class="inner">
+					<!-- rsvRoomWrap -->
+					<div class="rsvRoomWrap">
+						<div class="lCont">
+							<h2 class="titDep2">ROOM ONLY</h2>
+							<p class="categoryTxt">${rrVO.roomRankName}/${rrVO.bedName} /
+								${rrVO.viewName}</p>
+							<ul class="toggleList rsvList roomRsv" id="optInfo">
+
+								<li class="toggleOn" data-roomidx="0">
+									<!-- 기본으로 펼쳐진 경우 toggleOn  추가 --> <input type="hidden"
+									name="bpArr" id="bpArr0" value="" /> <input type="hidden"
+									name="bpNmArr" id="bpNmArr0" value="" /> <strong
+									class="listTit">객실</strong>
+									<button type="button" class="btnToggle">
+										<span class="hidden">상세내용 보기</span>
+									</button>
+									<div class="toggleCont" style="display: block;">
+										<div class="toggleInner">
+											<h3 class="opTit">
+												<label for="request01">REQUESTS</label>
+											</h3>
+											<textarea name="contArr"
+												placeholder="호텔 이용 시 문의하실 사항이 있으시면 입력해 주세요."></textarea>
+											<p class="txtGuide">
+												전달해주신 요청사항을 최대한 반영하도록 최선을 다하겠습니다.<br />다만, 부득이하게 반영되지 않을 수
+												있는 점, 양해 부탁드립니다.
+											</p>
+										</div>
+									</div>
+								</li>
+
+							</ul>
+						</div>
+						<div class="rCont floating" style="margin-top: 378.6px;">
+							<ul class="toggleList rsvList" id="roomInfo">
+
+								<li class="toggleOn">
+									<!-- 기본으로 펼쳐진 경우 toggleOn  추가 --> <strong class="listTit">
+										객실 <span class="price" id="roomAmount0"><em>${rrVO.payPrice}</em>KRW</span>
+								</strong>
+									<button type="button" class="btnToggle">
+										<span class="hidden">상세내용 보기</span>
+									</button>
+									<div class="toggleCont" style="display: block;">
+										<div class="toggleInner">
+											<div class="optionTotal scrollWrap">
+												<ul class="infoData">
+													<li><span class="lfData"><fmt:formatNumber
+																value="${rrVO.payPrice}" pattern="#,##0" /> KRW *
+															${rrVO.night} 박</span></li>
+												</ul>
+												<ul class="infoData" id="roomOptInfo0"
+													style="display: none;"></ul>
+
+											</div>
+										</div>
+									</div>
+								</li>
+
+							</ul>
+							<div class="totalCont">
+								<div class="totalPrice">
+									<span class="txt">총 예약금액</span> <span class="price"> <em
+										id="resvTotalAmount"> <fmt:formatNumber
+												value="${rrVO.payPrice * rrVO.night}" pattern="#,##0" />
+									</em> KRW
+									</span>
+								</div>
+								<div class="btnArea">
+									<div>
+										<a href="#none" class="btnSC btnL active"
+											onclick="getMemberSession()"> 회원 예약 </a>
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<!-- //rsvRoomWrap -->
+				</div>
+				<!-- //inner -->
+				<!-- 컨텐츠 E -->
 			</div>
-			<!-- //rsvRoomWrap -->
-		</div>
-		<!-- //inner -->
-		<!-- 컨텐츠 E -->
-	</div>
-
-	
-</form>
 
 
+		</form>
 
-
-
-<script>
+		<script>
  $(document).ready(function(){
     var userInputId = getLoginCookie("userInputId");//저장된 쿠기값 가져오기
     $("#frm_userid").val(userInputId); 
@@ -512,9 +383,6 @@ function getLoginCookie(cookieName) {
 		                    data: uVO,
 		                    dataType: "json",
 		                    beforeSend: function(xhr, settings) {
-		                        //commonJs.showLoadingBar();
-		                        // alert('before=>xhr:' + JSON.stringify(xhr));
-		                        // alert('before=>xhr:' + JSON.stringify(xhr) + "settings:" + JSON.stringify(settings));
 		                    },
 		                    success: function(result) {
 		                        commonJs.closeLoadingBar();
@@ -533,13 +401,11 @@ function getLoginCookie(cookieName) {
 		                    error: function(xhr, status, error) {
 		                        alert("로그인 수행중 서버 오류가 발생하였습니다.");
 
-
 		                    }
 		                });
 		            }
 		        }
 		    }
-			
 			,bindSnsLinkEvent : function() {
 				$('.snsLogin > a').each(
 					function() {
@@ -590,7 +456,6 @@ function getLoginCookie(cookieName) {
 		});
 		
 		function redirectNextPage(nextURL) {
-			//document.location.href = nextURL;
 		}
 		
 		function redirectPage() {

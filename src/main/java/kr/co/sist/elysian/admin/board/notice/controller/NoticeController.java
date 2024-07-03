@@ -36,8 +36,6 @@ public class NoticeController {
 		List<NoticeListDomain> list = ns.selectNoticeList();
 		model.addAttribute("noticeList",list);
 		
-		
-		
 		return "admin/board/notice/notice";
 	} //searchNoticeList
 	
@@ -50,7 +48,7 @@ public class NoticeController {
 	 */
 	@ResponseBody
 	@PostMapping(value="/noticeDetail.do", produces="application/json; charset=UTF-8")
-	public NoticeDomain selectNoticeDetail(@RequestBody Map<String, Object> requestData, Model model) {
+	public NoticeDomain selectNoticeDetail(@RequestBody Map<String, Object> requestData) {
 		 String noticeNum = (String) requestData.get("noticeNum");
 	     NoticeDomain nd = ns.selectNoticeDetail(noticeNum);
 
@@ -100,7 +98,6 @@ public class NoticeController {
 	@ResponseBody
 	@PostMapping(value="/insertNotice.do", produces="application/json; charset=UTF-8")
 	public boolean insertNotice(@RequestBody NoticeVO nVO) {
-		System.out.println(nVO);
 	    boolean result = ns.insertNotice(nVO);
 	    
 		return result;

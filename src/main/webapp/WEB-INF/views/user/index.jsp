@@ -617,23 +617,25 @@ function closeHubPopup(){
 				<button type="button" class="btnSwipe btnPrev"><span class="hidden">이전</span></button>
 				<div class="swipeWrap swipeGroup">
 					<ul class="swipeCont">
+						<c:forEach var="homeEvent" items="${homeEventlist}" varStatus="i">
 						<li class="swipeSlide">
 							<span class="thum">
-								<img src="/hotel_prj/util/file/img_event.jpg" alt="이미지 준비중">
+								<img src="${homeEvent.eventImgFullPath}" onerror="this.src='http://localhost/hotel_prj/util/event_img/img_event.jpg'">
 								<!-- 멤버십 전용 패키지인 경우 -->
 								<span class="hoverCont">
-									<a href="#" class="btnSC btnL">자세히 보기</a>
+									<a href="http://localhost/hotel_prj/user/event.do" class="btnSC btnL">자세히 보기</a>
 								</span>
 							</span>
-							<strong class="tit">2024 SUMMER ART FESTIVAL</strong>
-							<span class="txt">제 1회를 맞이한 엘리시안 서울만의 여름 시즌 시그니처 이벤트</span>
-							<span class="date">2024.07.01 - 2024.08.31</span>
+							<strong class="tit"><c:out value="${homeEvent.eventTitle}"/></strong>
+							<span class="txt"><c:out value="${homeEvent.eventContent}"/></span>
+							<span class="date"><c:out value="${homeEvent.eventStartDate}"/> - <c:out value="${homeEvent.eventEndDate}"/></span>
 						</li>
+						</c:forEach>
 									
-						<li class="swipeSlide">
+						<!-- <li class="swipeSlide">
 							<span class="thum">
 								<img src="/hotel_prj/util/file/%5BPC%5DGJB.jpg" alt="조선호텔앤리조트 Mindful Stay">
-								<!-- 멤버십 전용 패키지인 경우 -->
+								멤버십 전용 패키지인 경우
 								<span class="hoverCont">
 									<a href="/package/get.do?packageSn=2016242&searchSysCode=JOSUNHOTEL" class="btnSC btnL">자세히 보기</a>
 								</span>
@@ -646,7 +648,7 @@ function closeHubPopup(){
 						<li class="swipeSlide">
 							<span class="thum">
 								<img src="/hotel_prj/util/file/img_event.jpg" alt="이미지 준비중">
-								<!-- 멤버십 전용 패키지인 경우 -->
+								멤버십 전용 패키지인 경우
 								<span class="hoverCont">
 									<a href="#" class="btnSC btnL">자세히 보기</a>
 								</span>
@@ -659,7 +661,7 @@ function closeHubPopup(){
 						<li class="swipeSlide">
 							<span class="thum">
 								<img src="/hotel_prj/util/file/img_event.jpg" alt="이미지 준비중">
-								<!-- 멤버십 전용 패키지인 경우 -->
+								멤버십 전용 패키지인 경우
 								<span class="hoverCont">
 									<a href="#" class="btnSC btnL">자세히 보기</a>
 								</span>
@@ -672,7 +674,7 @@ function closeHubPopup(){
 						<li class="swipeSlide">
 							<span class="thum">
 								<img src="/hotel_prj/util/file/img_event.jpg" alt="이미지 준비중">
-								<!-- 멤버십 전용 패키지인 경우 -->
+								멤버십 전용 패키지인 경우
 								<span class="hoverCont">
 									<a href="#" class="btnSC btnL">자세히 보기</a>
 								</span>
@@ -680,7 +682,7 @@ function closeHubPopup(){
 							<strong class="tit">The Specialty, Summer</strong>
 							<span class="txt">싱그러운 날씨와 함께 찾아온 아리아의 새로운 시그니처 메뉴를 소개합니다.</span>
 							<span class="date">2024.06.01 - 2024.06.30</span>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 				<button type="button" class="btnSwipe btnNext"><span class="hidden">다음</span></button>
@@ -753,28 +755,28 @@ function closeHubPopup(){
 			
 			<div class="obList">
 				<ul>
-					<li class="obList03"><a href="#"><span class="hidden">RAMSEY</span></a></li> <!-- 마우스 오버 되면 on 클래스 추가 -->
+					<!-- <li class="obList03"><a href="#"><span class="hidden">RAMSEY</span></a></li> 마우스 오버 되면 on 클래스 추가
 					<li class="obList02"><a href="#"><span class="hidden">밍글스</span></a></li>
 					<li class="obList04"><a href="#"><span class="hidden">바오하우스</span></a></li>
 					<li class="obList05"><a href="#"><span class="hidden">오미자</span></a></li>
 					<li class="obList06"><a href="#"><span class="hidden">테라로사</span></a></li>
 					<li class="obList07"><a href="#"><span class="hidden">모모야마</span></a></li>
 					<li class="obList08"><a href="#"><span class="hidden">플로라</span></a></li>
-					<li class="obList09"><a href="#"><span class="hidden">스테이 헬스</span></a></li>
+					<li class="obList09"><a href="#"><span class="hidden">스테이 헬스</span></a></li> -->
 				</ul>
 			</div>
 		</div>
 		
 		<ul class="obBg">
 			<li class="bg01 on"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_03.jpg" alt="RAMSEY"></li> <!-- 상단 obList 와 매칭되는 li에 on 클래스 추가 -->
-			<li class="bg02"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_02.jpg" alt="밍글스"></li>
-			<!-- <li class="bg03"><img src="static/home/images/ko/pc/HUMA/bg_main03_01.jpg" alt="호경전 IN 뱅커스클럽"></li> -->
+			<!-- <li class="bg02"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_02.jpg" alt="밍글스"></li>
+			<li class="bg03"><img src="static/home/images/ko/pc/HUMA/bg_main03_01.jpg" alt="호경전 IN 뱅커스클럽"></li>
 			<li class="bg04"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_04.jpg" alt="바오하우스"></li>
 			<li class="bg05"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_05.jpg" alt="오미자"></li>
 			<li class="bg06"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_06.jpg" alt="테라로사"></li>
 			<li class="bg07"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_07.jpg" alt="모모야마"></li>
 			<li class="bg08"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_08.jpg" alt="플로라"></li>
-			<li class="bg09"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_09.jpg" alt="스테이 헬스"></li>
+			<li class="bg09"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_09.jpg" alt="스테이 헬스"></li> -->
 		</ul>
 	</div>
 	<!-- mainArea05 -->

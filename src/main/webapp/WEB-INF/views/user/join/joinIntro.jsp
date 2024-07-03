@@ -887,7 +887,7 @@
         var result = confirm("회원가입을 취소하시겠습니까?");
         if (result) {
 
-            jQuery("#formJoin").attr("action", "/intro.do");
+        	jQuery("#formJoin").attr("action", "/hotel_prj/user/index.do");
             jQuery("#formJoin").attr("method", "post");
             jQuery("#formJoin").submit();
         } else {

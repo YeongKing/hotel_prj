@@ -28,23 +28,16 @@
 				AND QNA_TYPE ='계정'
 			</if>
 			<if test="searchCtgry == 'F04'">
-				AND QNA_TYPE ='전환회원'
-			</if>
-			<if test="searchCtgry == 'F05'">
-				AND QNA_TYPE ='바우처'
-			</if>
-			<if test="searchCtgry == 'F06'">
 				AND QNA_TYPE ='기타'
 			</if>
+
 			
 			
 		</where>
 
 		)
 		<where>
-<!-- 			<if test="page == 0">
-				AND NUM >= 1 AND NUM &lt;= 10
-			</if> -->
+
 			<if test="page != 0">
 				AND NUM >= #{startRow} AND NUM &lt;= #{endRow}
 			</if>

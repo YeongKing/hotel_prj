@@ -16,7 +16,6 @@
 		<typeAlias type="kr.co.sist.elysian.admin.member.model.domain.MemberDomain" alias="md"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.room.model.domain.RoomListDomain" alias="rld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.room.model.domain.RoomDomain" alias="rd"/> 
-		<typeAlias type="kr.co.sist.elysian.admin.room.model.vo.UpdateRoomVO" alias="urVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.room.model.vo.RoomVO" alias="rVO"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.dining.model.domain.DiningListDomain" alias="dld"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.dining.model.domain.DiningDomain" alias="dd"/> 
@@ -37,6 +36,8 @@
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.domain.DiningResDomain" alias="drd"/> 
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.RoomResVO" alias="roomResVO"/>
 		<typeAlias type="kr.co.sist.elysian.admin.reservation.model.vo.DiningResVO" alias="diningResVO"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.dashboard.model.domain.DashboardRoomChartDomain" alias="dashboardRoomChartDomain"/> 
+		<typeAlias type="kr.co.sist.elysian.admin.board.dashboard.model.domain.DashboardDiningChartDomain" alias="dashboardDiningChartDomain"/> 
 
   		<!-- user -->
     	<typeAlias type="kr.co.sist.elysian.user.login.model.vo.UserVO" alias="uv"/> 
@@ -50,13 +51,21 @@
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain" alias="myPageDiningResDomain"/> 
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.vo.DiningResVO" alias="myPageDiningResVO"/>
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.MemberDomain" alias="myPageMemberDomain"/>
+  		<typeAlias type="kr.co.sist.elysian.user.mypage.model.vo.MemberVO" alias="myPageMemberVO"/>
       	<typeAlias type="kr.co.sist.elysian.user.room.model.vo.RoomResVO" alias="rrVO"/> 
       	<typeAlias type="kr.co.sist.elysian.user.room.model.domain.RoomListDomain" alias="urld"/> 
      	<typeAlias type="kr.co.sist.elysian.user.room.model.domain.MemberDomain" alias="umd"/> 
       	<typeAlias type="kr.co.sist.elysian.user.pay.model.vo.PayVO" alias="pVO"/>
       	<typeAlias type="kr.co.sist.elysian.user.board.qna.model.domain.QnaDomain" alias="mqd"/> 
   		<typeAlias type="kr.co.sist.elysian.user.board.qna.model.vo.QnaVO" alias="mqVO"/>
-
+      	<typeAlias type="kr.co.sist.elysian.user.board.notice.model.domain.NoticeDomain" alias="mnd"/> 
+  		<typeAlias type="kr.co.sist.elysian.user.board.notice.model.vo.NoticeVO" alias="mnVO"/>
+  		<typeAlias type="kr.co.sist.elysian.user.home.model.HomeDomain" alias="homeDomain"/>
+  		
+  		
+  		
+  		
+		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.NationalDomain" alias="nationalDomain"/>
   		
 	</typeAliases>
 
@@ -96,7 +105,8 @@
     <mapper resource="mapper/member/PayMapper.xml"/>
     <mapper resource="mapper/member/QnaMapper.xml"/>
     <mapper resource="mapper/member/DiningMapper.xml"/>
-
+    <mapper resource="mapper/member/NoticeMapper.xml"/>
+    <mapper resource="mapper/member/HomeMapper.xml"/>
     
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
 <!--     

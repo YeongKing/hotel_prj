@@ -1,4 +1,4 @@
-package kr.co.sist.elysian.admin.room.model.vo;
+package kr.co.sist.elysian.user.mypage.model.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UpdateRoomVO {
+public class NationalDomain {
+	
+	private String nationalCode, nationalName;
 
-	private int roomId , bedCnt;
-	private String bedCode, bedName;
-}
+} // class

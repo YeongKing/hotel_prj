@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import kr.co.sist.elysian.admin.room.model.domain.RoomDomain;
 import kr.co.sist.elysian.admin.room.model.domain.RoomListDomain;
 import kr.co.sist.elysian.admin.room.model.vo.RoomVO;
-import kr.co.sist.elysian.admin.room.model.vo.UpdateRoomVO;
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
 
 @Repository("adminRoomDAO")
@@ -19,6 +18,11 @@ public class RoomDAO {
 	@Autowired(required = false)
 	private MyBatisDAO mbDAO;
 	
+	/**
+	 * 객실 리스트 호출 메서드
+	 * @return 객실 리스트
+	 * @throws PersistenceException
+	 */
 	public List<RoomListDomain> selectRoomList() throws PersistenceException{
 		
 		List<RoomListDomain> list = null;
@@ -30,6 +34,13 @@ public class RoomDAO {
 		
 	}//selectRoomList
 	
+	
+	/**
+	 * 객실 세부정보 호출 메서드
+	 * @param roomId 객실번호 
+	 * @return 객실도메인
+	 * @throws PersistenceException
+	 */
 	public RoomDomain selectRoomDetail(int roomId) throws PersistenceException{
 		
 		RoomDomain rd = null;
@@ -41,15 +52,31 @@ public class RoomDAO {
 		
 	}//selectRoomDetail
 	
-	public int updateRoom(UpdateRoomVO urVO) throws PersistenceException{
+	
+	
+	/**
+	 * 객실정보 수정 메서드
+	 * @param urVO 객실VO
+	 * @return 1이면 성공 
+	 * @throws PersistenceException
+	 */
+	public int updateRoom(RoomVO rVO) throws PersistenceException{
 		
 		SqlSession ss= mbDAO.getMyBatisHandler(true);
-		int result = ss.update("kr.co.sist.elysian.admin.room.updateRoom",urVO);
+		int result = ss.update("kr.co.sist.elysian.admin.room.updateRoom",rVO);
 		mbDAO.closeHandler(ss);
 		return result;
 		
 	}//updateRoom
 	
+	
+	
+	/**
+	 * 객실번호 호출 메서드
+	 * @param selectedFloor 층수
+	 * @return 객실번호
+	 * @throws PersistenceException
+	 */
 	public int selectRoomId(int selectedFloor) throws PersistenceException{
 		
 		SqlSession ss= mbDAO.getMyBatisHandler(true);
@@ -60,6 +87,15 @@ public class RoomDAO {
 	}//selectRoomId
 	
 	
+	
+	
+	
+	/**
+	 * 객실등록메서드
+	 * @param rVO 객실VO
+	 * @return  1이면 성공
+	 * @throws PersistenceException
+	 */
 	public int insertRoom(RoomVO rVO) throws PersistenceException{
 		
 		SqlSession ss= mbDAO.getMyBatisHandler(true);

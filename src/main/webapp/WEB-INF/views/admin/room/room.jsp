@@ -1065,16 +1065,7 @@ function changePage(pageNumber) {
 										</div>
 									</div>					
 									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="updateAmenity"> </label> 
-											<input
-						                        type="button"
-						                        id="updateAmenity"
-						                        class="form-control"
-						                        name="updateAmenity"
-												value="어메니티"
-						                     />
-										</div>
+
 									</div>
 									<div class="col-md-6 col-12">
 									</div>

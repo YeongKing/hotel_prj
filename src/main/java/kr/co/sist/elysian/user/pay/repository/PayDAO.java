@@ -11,17 +11,18 @@ import kr.co.sist.elysian.user.pay.model.vo.PayVO;
 @Repository("userPayDAO")
 public class PayDAO {
 
-    @Autowired(required = false)
-    private MyBatisDAO mbDAO;
+	@Autowired(required = false)
+	private MyBatisDAO mbDAO;
 
 	public int insertPayInfo(PayVO pVO) throws PersistenceException{
-		
+
 		SqlSession ss= mbDAO.getMyBatisHandler(true);
 		int result = ss.insert("kr.co.sist.elysian.member.pay.insertPayInfo",pVO);
 		mbDAO.closeHandler(ss);
 		return result;
-		
+
 	}//insertPayInfo
+
 	
 	public int insertDiningPayInfo(PayVO pVO) throws PersistenceException{
 		
@@ -31,17 +32,16 @@ public class PayDAO {
 		return result;
 		
 	}//insertDiningPayInfo
-	
-	
+
 	public String selectPayNum(String impUid) throws PersistenceException{
-		
+
 		SqlSession ss= mbDAO.getMyBatisHandler(true);
 		String payNum = ss.selectOne("kr.co.sist.elysian.member.pay.selectPayNum",impUid);
 		mbDAO.closeHandler(ss);
 		return payNum;
-		
+
 	}//selectPayNum
-	
-	
-    
+
+
+
 }

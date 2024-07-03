@@ -22,14 +22,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
+import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
+import kr.co.sist.elysian.user.mypage.model.domain.NationalDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 import kr.co.sist.elysian.user.mypage.model.vo.DiningResVO;
+import kr.co.sist.elysian.user.mypage.model.vo.MemberVO;
 import kr.co.sist.elysian.user.mypage.service.MyPageService;
 
+@SessionAttributes("userId")
 @Controller("userMyPageController")
 @RequestMapping("/user")
 public class MyPageController {
@@ -41,7 +44,7 @@ public class MyPageController {
 	 * 마이페이지 메인 매핑
 	 * @return 마이페이지 view jsp
 	 */
-	@GetMapping("/mypage.do")
+	@RequestMapping(value="/mypage.do", method= {GET, POST})
 	public String main() {
 		return "user/mypage/main";
 	} // main
@@ -248,16 +251,16 @@ public class MyPageController {
 	} // modifyDiningResToCancel
 	
 	/**
-	 * 회원 정보 수정 비밀번호 확인 매핑
+	 * 회원 정보 수정 비밀번호 확인 페이지 매핑
 	 * @return 회원 정보 수정 비밀번호 확인 view jsp
 	 */
-	@GetMapping("/myInfoPwCfmForm.do")
+	@RequestMapping(value="/myInfoPwCfmForm.do", method= {GET, POST})
 	public String checkPwUserInfoForm() {
 		return "user/mypage/myInfoPwCfmForm";
 	} // checkPwUserInfoForm
 	
 	/**
-	 * 회원 정보 수정 진입 전 비밀번호 확인
+	 * 회원 정보 수정, 회원 탈퇴 진입 전 비밀번호 확인
 	 * @param session
 	 * @return 비밀번호 확인 결과
 	 */
@@ -276,30 +279,125 @@ public class MyPageController {
 		return jsonObj;
 	} // checkPwUserInfo
 	
+	/**
+	 * 로그인한 아이디의 회원정보수정 뷰와 상세 정보
+	 * @param session 로그인한 아이디
+	 * @param model 상세 정보
+	 * @return 회원정보수정 뷰
+	 */
 	@PostMapping("/myInfoForm.do")
-	public String detailUserInfo() {
+	public String detailUserInfo(HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		MemberDomain memberDomain = myPageService.selectMemberInfo(userId);
+		List<NationalDomain> allnationalInfo = myPageService.selectAllNationalInfo();
+		
+		model.addAttribute(memberDomain);
+		model.addAttribute("allnationalInfo", allnationalInfo);
 		return "user/mypage/myInfoForm";
 	} // detailUserInfo
-
+	
+	/**
+	 * 휴대폰 번호 변경을 위해 문자 인증 전송
+	 * @param requestData 입력한 휴대폰 번호
+	 * @return 문자 전송 정보
+	 */
+	@ResponseBody
+	@PostMapping(value="/send-one.do", produces="application/json; charset=UTF-8")
+	public String checkPhoneRequestNum(@RequestBody Map<String, Object> requestData) {
+		String phoneNumber = (String)requestData.get("authPhone");
+		String jsonObj = myPageService.checkPhoneRequestNum(phoneNumber);
+		return jsonObj;
+	} // checkPhoneRequestNum
+	
+	/**
+	 * 회원정보 수정 내 이메일 중복확인
+	 * @param userEmail
+	 * @return 이메일 중복확인 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/checkDupEmail.do", produces="application/json; charset=UTF-8")
+	public String checkDupEmail(@RequestParam String email) {
+		String jsonObj = myPageService.checkDupEmail(email);
+		return jsonObj;
+	} // checkDupEmail
+	
+	/**
+	 * 회원정보 변경
+	 * @param memberVO 회원정보
+	 * @param session
+	 * @return 수정 처리 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/modifyMemberInfo.do", produces="application/json; charset=UTF-8")
+	public String modifyMemberInfo(@RequestBody MemberVO memberVO, HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		memberVO.setId(userId);
+		
+		String jsonObj = myPageService.modifyMemberInfo(memberVO);
+		return jsonObj;
+	} // modifyMemberInfo
+	 
+	/**
+	 * 비밀번호 변경 페이지 view 매핑
+	 * @param session userId
+	 * @return 비밀번호 변경 페이지 view jsp
+	 */
 	@GetMapping("/pwChngForm.do")
-	public String modifyPw() {
-		
+	public String modifyPwForm(HttpSession session) {
 		return "user/mypage/pwChngForm";
-		
+	} // modifyPwForm
+	
+	/**
+	 * 비밀번호 변경
+	 * @param curLoginPassword 현재 비밀번호
+	 * @param loginPassword 새로 바꿀 비밀번호
+	 * @param session
+	 * @return 처리 결과
+	 */
+	@ResponseBody
+	@PostMapping(value="/modifyMemberpw.do", produces="application/json; charset=UTF-8")
+	public String modifyPw(@RequestParam(value="curLoginPassword")String curLoginPassword,
+							@RequestParam(value="newLoginPassword")String newLoginPassword,
+							HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("userId", userId);
+		paramMap.put("curLoginPassword", curLoginPassword);
+		paramMap.put("newLoginPassword", newLoginPassword);
+		String jsonObj = myPageService.modifyMemberPass(paramMap);
+		return jsonObj;
 	} // modifyPw
 	
+	/**
+	 * 회원 탈퇴 비밀번호 확인 페이지 매핑
+	 * @return 회원 탈퇴 비밀번호 확인 view jsp
+	 */
 	@GetMapping("/withdraPwCfmForm.do")
 	public String checkRemove() {
-		
 		return "user/mypage/withdraPwCfmForm";
-		
 	} // checkRemove
 
-	@GetMapping("/withdraCfmForm.do")
-	public String removeUserInfo() {
-		
+	/**
+	 * 회원 탈퇴 페이지 매핑
+	 * @return 회원 탈퇴 view jsp
+	 */
+	@PostMapping("/withdraCfmForm.do")
+	public String removeUserInfoForm() {
 		return "user/mypage/withdraCfmForm";
-		
+	} // removeUserInfoForm
+	
+	/**
+	 * 회원 탈퇴 요청
+	 * @param session 로그인한 아이디
+	 * @return 회원 탈퇴 결과 
+	 */
+	@ResponseBody
+	@PostMapping(value="/removeUserInfo.do", produces="application/json; charset=UTF-8")
+	public String removeUserInfo(HttpSession session) {
+		String userId = (String)session.getAttribute("userId");
+		String jsonObj = myPageService.removeMemberInfo(userId);
+		return jsonObj;
 	} // removeUserInfo
+	
 	
 } // class

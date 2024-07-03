@@ -17,7 +17,7 @@
 		from room_reservation rr
 		inner join room r
 		on r.room_id = rr.room_id
-		where rr.user_id = #{userId} and rr.room_res_status = 'RESERVED' and rr.checkin <= add_months(sysdate, 3)
+		where rr.user_id = #{userId} and rr.room_res_status in ('RESERVED') and rr.checkin <= add_months(sysdate, 3)
 		order by rr.pay_num
 		]]>
 	</select>
@@ -39,8 +39,14 @@
 			<when test="roomResStatus == 'CANCELED'">
 				<![CDATA[and rr.room_res_status = 'CANCELED']]>
 			</when>
+			<when test="roomResStatus == 'CHECK IN'">
+				<![CDATA[and rr.room_res_status = 'CHECK IN']]>
+			</when>
+			<when test="roomResStatus == 'CHECK OUT'">
+				<![CDATA[and rr.room_res_status = 'CHECK OUT']]>
+			</when>
 			<otherwise>
-				<![CDATA[and rr.room_res_status in ('RESERVED', 'CANCELED')]]>
+				<![CDATA[and rr.room_res_status in ('RESERVED', 'CANCELED', 'CHECK IN', 'CHECK OUT')]]>
 			</otherwise>
 		</choose>
 		<choose>
@@ -63,7 +69,7 @@
 			 rr.adults_num adultsNum, rr.kids_num kidsNum, to_char(rr.room_res_date, 'yyyy.mm.dd') roomResDate,
 			 p.pay_price payPrice, p.pay_price-r.room_basic_price addPrice, r.room_basic_price roomBasicPrice,
 			 m.eng_fname || ' ' || m.eng_lname engName, m.eng_fname engFName, m.eng_lname engLName,
-			 rr.guest_phone guestPhone, rr.guest_email guestEmail, c.code_name cardName, p.card_num cardNum
+			 rr.guest_phone guestPhone, rr.guest_email guestEmail, p.card_num cardNum
 		from room_reservation rr
 		inner join room r
 		on r.room_id = rr.room_id
@@ -71,8 +77,8 @@
 		on m.member_id = rr.user_id
 		inner join pay p
 		on p.pay_num = rr.pay_num
-		inner join common_code c
-		on substr(card_code, 0, instr(card_code, '_')-1) = c.code_type and substr(p.card_code, instr(p.card_code, '_')+1) = c.code_val
+		--inner join common_code c
+		--on substr(card_code, 0, instr(card_code, '_')-1) = c.code_type and substr(p.card_code, instr(p.card_code, '_')+1) = c.code_val
 		where rr.pay_num = #{payNum}
 		]]>
 	</select>
@@ -165,4 +171,38 @@
 		]]>
 	</select>
 	
+	<select id="selectAllNationalInfo" resultType="nationalDomain">
+		select code_val nationalCode, code_name nationalName
+		from common_code
+		where code_type = 10 and code_val != '000' and code_status = 'Y'
+		order by code_name
+	</select>
+	
+	<select id="selectAllEmail" resultType="myPageMemberDomain">
+		select email from member
+	</select>
+	
+	<update id="updateMemberInfo" parameterType="myPageMemberVO">
+		<![CDATA[
+		update member
+		set eng_lname = #{engLName}, eng_fname = #{engFName},
+			national_code = '10_' || #{nationalCode},
+			phone = #{phone}, zipcode = #{zipcode},
+			address = #{address}, addr_detail = #{addressDetail},
+			email = #{email}
+		where member_id = #{id}
+		]]> 
+	</update>
+	
+	<update id="updateMemberPw" parameterType="java.util.HashMap">
+		update member
+		set password = #{cipherNewPass}
+		where member_id = #{userId}
+	</update>
+	
+	<update id="removeMemberInfo" parameterType="String">
+		update member
+		set exit_flag = 'Y'
+		where member_id = #{userId}
+	</update>
 </mapper>

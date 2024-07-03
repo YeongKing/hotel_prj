@@ -18,7 +18,7 @@
 		where ROOM_ID = #{roomId}
 	</select>
 	 
-	<update id="updateRoom"  parameterType="urVO">
+	<update id="updateRoom"  parameterType="rVO">
 		update ROOM
 		set
 		BED_CODE = #{bedCode},

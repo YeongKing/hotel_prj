@@ -17,6 +17,7 @@
 <link rel="stylesheet" crossorigin href="/hotel_prj/admin/assets/compiled/css/app.css">
 <link rel="stylesheet" crossorigin href="/hotel_prj/admin/assets/compiled/css/app-dark.css">
 <link rel="stylesheet" crossorigin href="/hotel_prj/admin/assets/compiled/css/iconly.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <!-- template css E -->
 
 <!-- jQuery CDN S -->
@@ -38,7 +39,38 @@
 	        // 클릭된 요소에만 active 클래스 추가
 	        $(this).addClass("active");
 		});
+		
+		loadData();
 	}); // ready
+	
+	// 대시보드 데이터 부르는 ajax
+	function loadData() {
+		$.ajax({
+			url: 'dashboardData.do',
+			type: 'GET',
+			dataType: 'json',
+			data: '',
+			error: function(xhr) {
+				console.log(xhr.status);
+				alert("문제가 발생했습니다. 담당자에게 문의해주세요.");
+			},
+			success: function(data) {
+				// 상단 텍스트 데이터 설정
+				$("#todayRoomResCnt").text(data.todayRoomResCnt);
+				$("#oneMonthRoomResCnt").text(data.oneMonthRoomResCnt);
+				$("#allMemberCnt").text(data.allMemberCnt);
+				$("#todayJoinCnt").text(data.todayJoinCnt);
+				$("#expectedCheckinCnt").text(data.expectedCheckinCnt);
+				$("#checkinCnt").text(data.checkinCnt);
+				$("#expectedCheckoutCnt").text(data.expectedCheckoutCnt);
+				$("#checkoutCnt").text(data.checkoutCnt);
+				
+				// 차트데이터 로드
+				loadRoomChartData();
+				loadDiningChartData();
+			}
+		}); // ajax
+	} // loadData
 </script>
 </head>
 
@@ -64,307 +96,133 @@
 	
 	<div class="page-content mb-3"> 
 	    <section class="row">
-	        <div class="col-12 col-lg-9">
+	        <div class="col-12 col-lg-12">
 	            <div class="row">
-	                <div class="col-6 col-lg-3 col-md-6">
-	                    <div class="card">
-	                        <div class="card-body px-4 py-4-5">
-	                            <div class="row">
-	                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-	                                    <div class="stats-icon purple mb-2">
-	                                        <i class="iconly-boldShow"></i>
-	                                    </div>
-	                                </div>
-	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-	                                    <h6 class="text-muted font-semibold">Profile Views</h6>
-	                                    <h6 class="font-extrabold mb-0">112.000</h6>
-	                                </div>
-	                            </div> 
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="col-6 col-lg-3 col-md-6">
-	                    <div class="card"> 
-	                        <div class="card-body px-4 py-4-5">
-	                            <div class="row">
-	                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-	                                    <div class="stats-icon blue mb-2">
-	                                        <i class="iconly-boldProfile"></i>
-	                                    </div>
-	                                </div>
-	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-	                                    <h6 class="text-muted font-semibold">Followers</h6>
-	                                    <h6 class="font-extrabold mb-0">183.000</h6>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="col-6 col-lg-3 col-md-6">
-	                    <div class="card">
-	                        <div class="card-body px-4 py-4-5">
-	                            <div class="row">
-	                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-	                                    <div class="stats-icon green mb-2">
-	                                        <i class="iconly-boldAdd-User"></i>
-	                                    </div>
-	                                </div>
-	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-	                                    <h6 class="text-muted font-semibold">Following</h6>
-	                                    <h6 class="font-extrabold mb-0">80.000</h6>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="col-6 col-lg-3 col-md-6">
+		            <div class="col-6 col-lg-4 col-md-6">
 	                    <div class="card">
 	                        <div class="card-body px-4 py-4-5">
 	                            <div class="row">
 	                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
 	                                    <div class="stats-icon red mb-2">
-	                                        <i class="iconly-boldBookmark"></i>
+	                                        <i class="fas fa-calendar-plus"></i>
 	                                    </div>
 	                                </div>
 	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-	                                    <h6 class="text-muted font-semibold">Saved Post</h6>
-	                                    <h6 class="font-extrabold mb-0">112</h6>
+	                                    <h6 class="text-muted font-semibold">오늘 예약 건수</h6>
+	                                    <h6 class="font-extrabold mb-0"><span id="todayRoomResCnt"></span>건</h6>
 	                                </div>
-	                            </div>
+	                            </div> 
 	                        </div>
 	                    </div>
 	                </div>
-	            </div>
-	            <div class="row">
-	                <div class="col-12">
-	                    <div class="card">
-	                        <div class="card-header">
-	                            <h4>Profile Visit</h4>
-	                        </div>
-	                        <div class="card-body">
-	                            <div id="chart-profile-visit"></div>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="row">
-	                <div class="col-12 col-xl-4">
-	                    <div class="card">
-	                        <div class="card-header">
-	                            <h4>Profile Visit</h4>
-	                        </div>
-	                        <div class="card-body">
+	                <div class="col-6 col-lg-4 col-md-6">
+	                    <div class="card"> 
+	                        <div class="card-body px-4 py-4-5">
 	                            <div class="row">
-	                                <div class="col-7">
-	                                    <div class="d-flex align-items-center">
-	                                        <svg class="bi text-primary" width="32" height="32" fill="blue"
-	                                            style="width:10px">
-	                                           <use
-	                                               xlink:href="/hotel_prj/admin/assets/static/images/bootstrap-icons.svg#circle-fill" />
-	                                       </svg>
-	                                       <h5 class="mb-0 ms-3">Europe</h5>
-	                                   </div>
-	                               </div>
-	                               <div class="col-5">
-	                                   <h5 class="mb-0 text-end">862</h5>
-	                               </div>
-	                               <div class="col-12">
-	                                   <div id="chart-europe"></div>
-	                               </div>
-	                           </div>
-	                           <div class="row">
-	                               <div class="col-7">
-	                                   <div class="d-flex align-items-center">
-	                                       <svg class="bi text-success" width="32" height="32" fill="blue"
-	                                           style="width:10px">
-	                                           <use
-	                                               xlink:href="/hotel_prj/admin/assets/static/images/bootstrap-icons.svg#circle-fill" />
-	                                       </svg>
-	                                       <h5 class="mb-0 ms-3">America</h5>
-	                                   </div>
-	                               </div>
-	                               <div class="col-5">
-	                                   <h5 class="mb-0 text-end">375</h5>
-	                               </div>
-	                               <div class="col-12">
-	                                   <div id="chart-america"></div>
-	                               </div>
-	                           </div>
-	                           <div class="row">
-	                               <div class="col-7">
-	                                   <div class="d-flex align-items-center">
-	                                       <svg class="bi text-success" width="32" height="32" fill="blue"
-	                                           style="width:10px">
-	                                           <use
-	                                               xlink:href="/hotel_prj/admin/assets/static/images/bootstrap-icons.svg#circle-fill" />
-	                                       </svg>
-	                                       <h5 class="mb-0 ms-3">India</h5>
-	                                   </div>
-	                               </div>
-	                               <div class="col-5">
-	                                   <h5 class="mb-0 text-end">625</h5>
-	                               </div>
-	                               <div class="col-12">
-	                                   <div id="chart-india"></div>
-	                               </div>
-	                           </div>
-	                           <div class="row">
-	                               <div class="col-7">
-	                                   <div class="d-flex align-items-center">
-	                                       <svg class="bi text-danger" width="32" height="32" fill="blue"
-	                                           style="width:10px">
-	                                            <use
-	                                                xlink:href="/hotel_prj/admin/assets/static/images/bootstrap-icons.svg#circle-fill" />
-	                                        </svg>
-	                                        <h5 class="mb-0 ms-3">Indonesia</h5>
+	                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+	                                    <div class="stats-icon purple mb-2">
+	                                        <i class="fas fa-calendar-alt"></i>
 	                                    </div>
 	                                </div>
-	                                <div class="col-5">
-	                                    <h5 class="mb-0 text-end">1025</h5>
-	                                </div>
-	                                <div class="col-12">
-	                                    <div id="chart-indonesia"></div>
+	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+	                                    <h6 class="text-muted font-semibold">이번 달 예약 건수</h6>
+	                                    <h6 class="font-extrabold mb-0"><span id="oneMonthRoomResCnt"></span>건</h6>
 	                                </div>
 	                            </div>
 	                        </div>
 	                    </div>
 	                </div>
-	                <div class="col-12 col-xl-8">
+	                <div class="col-6 col-lg-4 col-md-6">
+	                    <div class="card">
+	                        <div class="card-body px-4 py-4-5">
+	                            <div class="row">
+	                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+	                                    <div class="stats-icon green mb-2">
+	                                        <i class="fas fa-user-friends"></i>
+	                                    </div>
+	                                </div>
+	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+	                                    <h6 class="text-muted font-semibold">총 회원 수</h6>
+	                                    <h6 class="font-extrabold mb-0"><span id="allMemberCnt"></span>명</h6>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="col-6 col-lg-4 col-md-6">
+	                    <div class="card">
+	                        <div class="card-body px-4 py-4-5">
+	                            <div class="row">
+	                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+	                                    <div class="stats-icon red mb-2">
+	                                        <i class="fas fa-check-square"></i>
+	                                    </div>
+	                                </div>
+	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+	                                    <h6 class="text-muted font-semibold">오늘 체크인</h6>
+	                                    <h6 class="font-extrabold mb-0"><span id="expectedCheckinCnt"></span>건(예정) / <span id="checkinCnt"></span>건(완료)</h6>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="col-6 col-lg-4 col-md-6">
+	                    <div class="card">
+	                        <div class="card-body px-4 py-4-5">
+	                            <div class="row">
+	                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+	                                    <div class="stats-icon blue mb-2">
+	                                        <i class="fas fa-minus-square"></i>
+	                                    </div>
+	                                </div>
+	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+	                                    <h6 class="text-muted font-semibold">오늘 체크아웃</h6>
+	                                    <h6 class="font-extrabold mb-0"><span id="expectedCheckoutCnt"></span>건(예정) / <span id="checkoutCnt"></span>건(완료)</h6>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="col-6 col-lg-4 col-md-6">
+	                    <div class="card">
+	                        <div class="card-body px-4 py-4-5">
+	                            <div class="row">
+	                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+	                                   	<div class="stats-icon red mb-2">
+	                                        <i class="iconly-boldAdd-User"></i>
+	                                    </div>
+	                                </div>
+	                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+	                                    <h6 class="text-muted font-semibold">오늘의 가입자 수</h6>
+	                                    <h6 class="font-extrabold mb-0"><span id="todayJoinCnt"></span>명</h6>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+               	<div class="row">
+               		<div class="col-12 col-lg-6 col-md-12">
 	                    <div class="card">
 	                        <div class="card-header">
-	                            <h4>Latest Comments</h4>
+	                            <h4>객실 주간 예약 현황(%)</h4>
 	                        </div>
 	                        <div class="card-body">
-	                            <div class="table-responsive">
-	                                <table class="table table-hover table-lg">
-	                                    <thead>
-	                                        <tr>
-	                                            <th>Name</th>
-	                                            <th>Comment</th>
-	                                        </tr>
-	                                    </thead>
-	                                    <tbody>
-	                                        <tr>
-	                                            <td class="col-3">
-	                                                <div class="d-flex align-items-center">
-	                                                    <div class="avatar avatar-md">
-	                                                        <img src="/hotel_prj/admin/assets/compiled/jpg/5.jpg">
-	                                                    </div>
-	                                                    <p class="font-bold ms-3 mb-0">Si Cantik</p>
-	                                                </div>
-	                                            </td>
-	                                            <td class="col-auto">
-	                                                <p class=" mb-0">Congratulations on your graduation!</p>
-	                                            </td>
-	                                        </tr>
-	                                        <tr>
-	                                            <td class="col-3">
-	                                                <div class="d-flex align-items-center">
-	                                                    <div class="avatar avatar-md">
-	                                                        <img src="/hotel_prj/admin/assets/compiled/jpg/2.jpg">
-	                                                    </div>
-	                                                    <p class="font-bold ms-3 mb-0">Si Ganteng</p>
-	                                                </div>
-	                                            </td>
-	                                            <td class="col-auto">
-	                                                <p class=" mb-0">Wow amazing design! Can you make another tutorial for
-	                                                    this design?</p>
-	                                            </td>
-	                                        </tr>
-	                                        <tr>
-	                                            <td class="col-3">
-	                                                <div class="d-flex align-items-center">
-	                                                    <div class="avatar avatar-md">
-	                                                        <img src="/hotel_prj/admin/assets/compiled/jpg/8.jpg">
-	                                                    </div>
-	                                                    <p class="font-bold ms-3 mb-0">Singh Eknoor</p>
-	                                                </div>
-	                                            </td>
-	                                            <td class="col-auto">
-	                                                <p class=" mb-0">What a stunning design! You are so talented and creative!</p>
-	                                            </td>
-	                                        </tr>
-	                                        <tr>
-	                                            <td class="col-3">
-	                                                <div class="d-flex align-items-center">
-	                                                    <div class="avatar avatar-md">
-	                                                        <img src="/hotel_prj/admin/assets/compiled/jpg/3.jpg">
-	                                                    </div>
-	                                                    <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
-	                                                </div>
-	                                            </td>
-	                                            <td class="col-auto">
-	                                                <p class=" mb-0">I love your design! It’s so beautiful and unique! How did you learn to do this?</p>
-	                                            </td>
-	                                        </tr>
-	                                    </tbody>
-	                                </table>
-	                            </div>
+	                            <div id="room-resv-weekly"></div>
 	                        </div>
 	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="col-12 col-lg-3">
-	            <div class="card">
-	                <div class="card-body py-4 px-4">
-	                    <div class="d-flex align-items-center">
-	                        <div class="avatar avatar-xl">
-	                            <img src="/hotel_prj/admin/assets/compiled/jpg/1.jpg" alt="Face 1">
+               		</div>
+               		<div class="col-12 col-lg-6 col-md-12">
+	                    <div class="card">
+	                        <div class="card-header">
+	                            <h4>다이닝 주간 예약 현황(%)</h4>
 	                        </div>
-	                        <div class="ms-3 name">
-	                            <h5 class="font-bold"><c:out value="${ requestScope.adminId }"/></h5>
-	                            <h6 class="text-muted mb-0"><c:out value="${ requestScope.adminAuthority }"/></h6>
+	                        <div class="card-body">
+	                            <div id="dining-resv-weekly"></div>
 	                        </div>
 	                    </div>
-	                </div>
-	            </div>
-	            <div class="card">
-	                <div class="card-header">
-	                    <h4>Recent Messages</h4>
-	                </div>
-	                <div class="card-content pb-4">
-	                    <div class="recent-message d-flex px-4 py-3">
-	                        <div class="avatar avatar-lg">
-	                            <img src="/hotel_prj/admin/assets/compiled/jpg/4.jpg">
-	                        </div>
-	                        <div class="name ms-4">
-	                            <h5 class="mb-1">Hank Schrader</h5>
-	                            <h6 class="text-muted mb-0">@johnducky</h6>
-	                        </div>
-	                    </div>
-	                    <div class="recent-message d-flex px-4 py-3">
-	                        <div class="avatar avatar-lg">
-	                            <img src="/hotel_prj/admin/assets/compiled/jpg/5.jpg">
-	                        </div>
-	                        <div class="name ms-4">
-	                            <h5 class="mb-1">Dean Winchester</h5>
-	                            <h6 class="text-muted mb-0">@imdean</h6>
-	                        </div>
-	                    </div>
-	                    <div class="recent-message d-flex px-4 py-3">
-	                        <div class="avatar avatar-lg">
-	                            <img src="/hotel_prj/admin/assets/compiled/jpg/1.jpg">
-	                        </div>
-	                        <div class="name ms-4">
-	                            <h5 class="mb-1">John Dodol</h5>
-	                            <h6 class="text-muted mb-0">@dodoljohn</h6>
-	                        </div>
-	                    </div>
-	                    <div class="px-4">
-	                        <button class='btn btn-block btn-xl btn-outline-primary font-bold mt-3'>Start Conversation</button>
-	                    </div>
-	                </div>
-	            </div> 
-	            <div class="card">
-	                <div class="card-header">
-	                    <h4>Visitors Profile</h4>
-	                </div>
-	                <div class="card-body">
-	                    <div id="chart-visitors-profile"></div>
-	                </div>
-	            </div>
-	            <c:out value="${requestScope.adminId }"/>님 나오세요...
+               		</div>
+                </div>
 	        </div>
 	    </section>
 	</div>
@@ -386,8 +244,9 @@
 <!-- 공통 필요 Script E -->
      
 <!-- Need: Apexcharts -->
+<script src="/hotel_prj/admin/assets/extensions/dayjs/dayjs.min.js"></script>
 <script src="/hotel_prj/admin/assets/extensions/apexcharts/apexcharts.min.js"></script>
-<script src="/hotel_prj/admin/assets/static/js/pages/dashboard.js"></script>
+<script src="/hotel_prj/admin/assets/static/js/pages/dashboard_custom.js"></script>
 
 </body>
 </html>

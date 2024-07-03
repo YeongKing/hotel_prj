@@ -191,7 +191,7 @@ function gfncUncomma(str) {
  */
 /*
 function gfncPatternCheck(str, min, max) {
-	var reg_pwd = /^.*(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+	var reg_pwd = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[~`!@#$%^&*()-_+={}[\]:;"'<>,.?/]).*$/;
 	
 	if(reg_pwd.test(str)){
 		if (str.length >= min && str.length <= max) {
@@ -676,4 +676,56 @@ function gfncPushDiningResveSeoData(hotel_property, dine_name, dine_detail ) {
 // app 외부 링크 열기
 function gfncOpenAppLink(link){
 	location.href = "josunhotel://outLink?link="+encodeURI(link);
+}
+
+// 연속된 동일한 문자열 개수
+function containsSameCharMaxCnt(src) {
+	let localMaxCnt = 0;
+	let globalMaxCnt = 0;
+	let dummy = '';
+	for(var i=0; i<src.length; i++) {
+		if(src[i] == dummy) {
+		localMaxCnt++;
+		globalMaxCnt = Math.max(globalMaxCnt, localMaxCnt);
+	} else {
+		localMaxCnt = 0;
+	}
+	dummy = src[i];
+		}
+	  return globalMaxCnt+1;
+}
+
+// 연속된 문자열 개수
+function containsContinuosCharMaxCnt(src) {
+	let checkTarget = [
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+	"abcdefghijklmnopqrstuvwxyz",
+	"01234567890"];
+
+	let localMaxCnt = 0;
+	let globalMaxCnt = 0;
+	let dummy = '';
+	let hasContinuos = false;
+
+	for(var i=0; i<src.length; i++) {
+		const currentChar = src[i];
+	for(var j=0; j<checkTarget.length; j++) {
+		const targetIndex =  checkTarget[j].indexOf(currentChar)
+		if(targetIndex > -1) {
+			if(dummy == checkTarget[j][targetIndex-1]) {
+				localMaxCnt++;
+				globalMaxCnt = Math.max(globalMaxCnt, localMaxCnt);
+				hasContinuos = true;
+				 continue;
+			}
+		}
+	}
+	
+	if(!hasContinuos) {
+		localMaxCnt = 0;
+	}
+	hasContinuos = false;
+	dummy = src[i];
+	}
+	return globalMaxCnt+1;
 }

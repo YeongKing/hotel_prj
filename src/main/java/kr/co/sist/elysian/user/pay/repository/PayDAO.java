@@ -23,6 +23,15 @@ public class PayDAO {
 
 	}//insertPayInfo
 
+	
+	public int insertDiningPayInfo(PayVO pVO) throws PersistenceException{
+		
+		SqlSession ss= mbDAO.getMyBatisHandler(true);
+		int result = ss.insert("kr.co.sist.elysian.member.pay.insertDiningPayInfo",pVO);
+		mbDAO.closeHandler(ss);
+		return result;
+		
+	}//insertDiningPayInfo
 
 	public String selectPayNum(String impUid) throws PersistenceException{
 

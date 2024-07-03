@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class EventVO {
 
-	private String eventNum, eventTitle,adminId, eventStartDate, eventEndDate , eventMainImg, eventSubImg,eventContent;
+	private String eventNum, eventTitle,eventSubTitle, adminId, eventStartDate, eventEndDate , eventMainImg, eventSubImg,eventContent;
 	
 	
 	

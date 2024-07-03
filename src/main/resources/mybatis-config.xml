@@ -42,6 +42,8 @@
     	<typeAlias type="kr.co.sist.elysian.user.login.model.vo.UserVO" alias="uv"/> 
 		<typeAlias type="kr.co.sist.elysian.user.login.model.domain.UserDomain" alias="ud"/>
   		<typeAlias type="kr.co.sist.elysian.user.dining.model.domain.DiningDomain" alias="dDomain"/> 
+  		<typeAlias type="kr.co.sist.elysian.user.dining.model.vo.DiningResVO" alias="drVO"/> 
+  		<typeAlias type="kr.co.sist.elysian.user.dining.model.vo.DiningSeatsVO" alias="dsVO"/> 
 
        <typeAlias type="kr.co.sist.elysian.user.dining.model.domain.DiningOptionDomain" alias="dOptionDomain"/> 
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain" alias="myPageRoomResDomain"/> 

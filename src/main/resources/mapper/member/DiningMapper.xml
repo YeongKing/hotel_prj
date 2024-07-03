@@ -2,42 +2,94 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
 <mapper namespace="kr.co.sist.elysian.member.dining">
 
 	<select id="randomDiningDetail" resultType="dDomain">
-    	SELECT DINING_ID diningId, DINING_NAME diningName, DINING_TYPE diningType, HALL_TABLE hallTable, ROOM_TABLE roomTable, OPEN_TIME openTime, CLOSE_TIME closeTime, LOCATION, DEPOSIT, DINING_IMG diningImg, DINING_COMMENT diningComment, MENU
-    	FROM DINING
-    	WHERE DELETE_STATUS = 'N'
-    	ORDER BY DBMS_RANDOM.VALUE
-    	FETCH FIRST 1 ROWS ONLY	
+		SELECT DINING_ID diningId, DINING_NAME diningName, DINING_TYPE diningType,
+		HALL_TABLE hallTable, ROOM_TABLE roomTable, OPEN_TIME openTime,
+		CLOSE_TIME closeTime, LOCATION, DEPOSIT, DINING_IMG diningImg,
+		DINING_COMMENT diningComment, MENU
+		FROM DINING
+		WHERE DELETE_STATUS = 'N'
+		ORDER BY DBMS_RANDOM.VALUE
+		FETCH FIRST 1 ROWS ONLY
 	</select>
-	
+
 	<select id="allDiningNameList" resultType="dOptionDomain">
-		SELECT DINING_ID diningId, DINING_NAME diningName
+		SELECT DINING_ID
+		diningId, DINING_NAME diningName
 		FROM DINING
 		WHERE DELETE_STATUS ='N'
 	</select>
-	
-	<select id="oneDiningDetail" resultType="dDomain" parameterType="String" >
-		SELECT DINING_ID diningId, DINING_NAME diningName, DINING_TYPE diningType, HALL_TABLE hallTable, ROOM_TABLE roomTable, OPEN_TIME openTime, CLOSE_TIME closeTime, LOCATION, DEPOSIT, DINING_IMG diningImg, DINING_COMMENT diningComment, MENU
-    	FROM DINING
-    	WHERE DELETE_STATUS = 'N' AND DINING_ID = #{diningId}
+
+	<select id="oneDiningDetail" resultType="dDomain" parameterType="String">
+		SELECT DINING_ID diningId, DINING_NAME
+		diningName, DINING_TYPE diningType, HALL_TABLE hallTable, ROOM_TABLE
+		roomTable, OPEN_TIME openTime, CLOSE_TIME closeTime, LOCATION,
+		DEPOSIT, DINING_IMG diningImg, DINING_COMMENT diningComment, MENU
+		FROM DINING
+		WHERE DELETE_STATUS = 'N' AND DINING_ID = #{diningId}
+	</select>
+
+	<select id="oneDiningSeatCnt" resultType="int" parameterType="map">
+		SELECT
+		<choose>
+			<when test="table == 'AVAILABLE_HALL_TABLE'">
+				AVAILABLE_HALL_TABLE
+			</when>
+			<when test="table == 'AVAILABLE_ROOM_TABLE'">
+				AVAILABLE_ROOM_TABLE
+			</when>
+		</choose>
+		FROM DINING_SEATS
+		WHERE DINING_ID = #{diningId, jdbcType=VARCHAR}
+		AND DINING_DATE = #{date, jdbcType=DATE}
+		AND DINING_TIME = #{part, jdbcType=INTEGER}
+	</select>
+
+	<select id="diningUserInfo" resultType="drVO" parameterType="String">
+		SELECT
+		#{userId} AS userId,
+		NAME,PHONE,EMAIL
+		FROM MEMBER
+		WHERE MEMBER_ID = #{userId, jdbcType=VARCHAR}
 	</select>
 	
-<select id="oneDiningSeatCnt" resultType="int" parameterType="map">
-    SELECT 
-        <choose>
-            <when test="table == 'AVAILABLE_HALL_TABLE'">
-                AVAILABLE_HALL_TABLE
-            </when>
-            <when test="table == 'AVAILABLE_ROOM_TABLE'">
-                AVAILABLE_ROOM_TABLE
-            </when>
-        </choose>
-    FROM DINING_SEATS
-    WHERE DINING_ID = #{diningId, jdbcType=VARCHAR} 
-    AND DINING_DATE = #{date, jdbcType=DATE}
-    AND DINING_TIME = #{part, jdbcType=INTEGER}
-</select>
+	<select id="reserveValid" resultType="int" parameterType="dsVO">
+	SELECT
+	  <choose>
+        <when test="table == 'AVAILABLE_HALL_TABLE'">
+            AVAILABLE_HALL_TABLE
+        </when>
+        <when test="table == 'AVAILABLE_ROOM_TABLE'">
+            AVAILABLE_ROOM_TABLE
+        </when>
+    </choose>
+	FROM DINING_SEATS
+	WHERE DINING_ID = #{diningId} AND DINING_TIME = #{diningTime} AND DINING_DATE = #{diningDate}
+	</select>
+	
+	<insert id="diningReservation" parameterType="drVO">
+    INSERT INTO DINING_RESERVATION
+    (USER_ID, DINING_ID, PAY_NUM, DINING_RES_STATUS, VISIT_DATETIME, VISIT_PEOPLE, DINING_RES_DATE, VISITOR_NAME, VISITOR_PHONE, VISITOR_REQUEST, ADULT_CNT, CHILD_CNT, BABY_CNT, VISITOR_EMAIL)
+    VALUES
+    (
+       #{userId, jdbcType=VARCHAR},
+        #{diningId, jdbcType=VARCHAR},
+        #{payNum, jdbcType=VARCHAR},
+        #{diningResStatus, jdbcType=VARCHAR},
+        TO_DATE(#{visitDate}||#{visitTime}, 'YYYY-MM-DD HH24:MI:SS'), 
+        #{visitPeople, jdbcType=INTEGER},
+        SYSDATE,
+        #{visitorName, jdbcType=VARCHAR},
+        #{phone, jdbcType=VARCHAR},
+        #{visitorRequest, jdbcType=VARCHAR},  <!-- CASE 구문을 제거 -->
+        #{adult, jdbcType=INTEGER},
+        #{child, jdbcType=INTEGER},
+        #{infant, jdbcType=INTEGER},
+        #{email, jdbcType=VARCHAR}
+    )
+</insert>
+	
 </mapper>

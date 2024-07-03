@@ -18,6 +18,18 @@
 	    )
 	</insert>
 	
+	<insert id="insertDiningPayInfo" parameterType="pVO">
+	    INSERT INTO pay (PAY_NUM, CARD_NUM, PAY_PRICE, PAY_STATUS, PAY_TIME, IMP_UID)
+	    VALUES (
+	        'D' || TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(ROOM_PAYMNET_SEQ.NEXTVAL, 5, '0'),
+	        #{cardNum},
+	        #{payPrice},
+	        #{payStatus},
+	        TO_DATE(#{payTime}, 'YYYY-MM-DD HH24:MI:SS'),
+	        #{impUid}
+	    )
+	</insert>
+	
     
 	 <select id="selectPayNum" resultType="String">
 		select PAY_NUM payNum

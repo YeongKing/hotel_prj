@@ -46,6 +46,9 @@
 			<exclude-mapping path="/user/room2.do"/>
 			<exclude-mapping path="/user/step1.do"/>
 			<exclude-mapping path="/user/step2.do"/>
+<!-- 			<exclude-mapping path="/user/dining.do"/>
+			<exclude-mapping path="/user/dining_step0.do"/>
+			<exclude-mapping path="/user/dining_step1.do"/> -->
 			<exclude-mapping path="/user/join.do"/>
 
 			<exclude-mapping path="/user/verify.do"/>

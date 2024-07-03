@@ -936,4 +936,3 @@ function fncGoPay(){
 <div class="dimmed"></div>
 </body>
 </html>
-

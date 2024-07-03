@@ -69,6 +69,7 @@ public class DiningDAO {
 		int diningId = 0;
 		SqlSession ss = mbDAO.getMyBatisHandler(true);
 		diningId = ss.insert("kr.co.sist.elysian.member.dining.diningReservation",drVO);
+
 		mbDAO.closeHandler(ss);
 		return diningId;
 	}

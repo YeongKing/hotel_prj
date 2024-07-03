@@ -42,6 +42,24 @@
                 });
             }
         });
+        
+        //select시 비동기 처리 ajax
+        function fncSelectDining(){
+       	 var selectedDiningId = $("#diningSel").val();
+       	 
+       	 $.ajax({
+       		 url: 'selectDining.do',
+       		 type: 'GET',
+       		 data: {diningId : selectedDiningId},
+       		 dataType: 'json',
+       		 success: function(response){
+       			 updateDiningInfo(response);
+       		 },
+       		 error: function(error){
+       			 console.erorr(error)
+       		 }
+       	 })
+        }
     </script>
 </head>
 <body>
@@ -78,21 +96,17 @@
                     <div class="lCont">
                         <div class="intInner duobuleSelect">
                             <div class="intArea selectWrap" style="width:508px">
-                                <select id="diningSel" name="diningCode" data-height="150px" data-direction="down" aria-required="true" onchange="fncSelectDining();">
-                                    <option value="001">THE NINTH GATE</option>
-                                    <option value="003" selected="selected">ARIA</option>
-                                    <option value="004">RUBRICA</option>
-                                    <option value="011">SUSHI CHO</option>
-                                    <option value="015">HONGYUAN</option>
-                                    <option value="099">LOUNGE &amp; BAR</option>
-                                    <option value="100">JOSUN DELI</option>
+                                <select id="diningSel" name="diningCode" data-height="150px" data-direction="down" aria-required="true" onchange="fncSelectDining()" >
+									<c:forEach var="dining" items="${requestScope.diningList}">
+        								<option value="${dining.diningId}">${dining.diningName}</option>
+    								</c:forEach>                             
                                 </select>
                             </div>
                         </div>
                         <div class="swipeWrapArea">
                             <div class="swipeWrap gallery">
-                                <ul class="swipeCont">
-                                    <li class="swipeSlide"><img src="http://localhost/hotel_prj/util/dining_img/라세느.png" alt="다이닝 이미지"></li>
+                                <ul class="swipeCont" id="dining-image-container">
+                                
                                 </ul>
                             </div>
                         </div>
@@ -101,54 +115,36 @@
                     <div class="rCont">
                         <div class="roomIntro">
                             <dl>
-                                <dt class="name">ARIA</dt>
-                                <dd class="txt">
-                                    오페라의 영혼을 셰프와 함께 실시간으로 느낄 수 있는 뷔페 레스토랑<br><br>
-                                    <div class="mainDiningHidden">
-                                        <p style="font-weight: bold;">가격 안내</p>
-                                        <p>[아침]</p>
-                                        <p>성인 70,000 KRW / 어린이 35,000 KRW</p>
-                                        <p>[주중 점심]</p>
-                                        <p>성인 165,000 KRW / 어린이 80,000 KRW</p>
-                                        <p>[주중 저녁]</p>
-                                        <p>성인 190,000 KRW / 어린이 80,000 KRW</p>
-                                        <p>[주말/공휴일]</p>
-                                        <p>성인 190,000 KRW / 어린이 80,000 KRW</p>
-                                        <p>*어린이: 37개월 이상 ~ 12세 이하 (초등학생까지)</p><br><br>
-                                    </div>
-                                    <div class="mainDiningHidden">
-                                        <p style="font-weight: bold;">콜키지 안내</p>
-                                        <p>- 테이블 당 1병 10만원 (와인 750ml 기준)</p>
-                                        <p>※ 규정 외 주류는 업장에 문의 부탁드립니다.</p><br><br>
-                                    </div>
-                                    <div class="mainDiningHidden">
-                                        <p style="font-weight: bold;">뷔페 상품권 안내</p>
-                                        <p>웨스틴 조선 서울 아리아에서 준비한 뷔페 상품권으로 소중한 분께 감사의 마음을 전하시기 바랍니다.</p>
-                                        <p>- 아리아 뷔페 1인 식사권</p>
-                                        <p>- 아리아 뷔페 2인 식사권</p>
-                                        <p>※ 갈라디너 등 이벤트일 및 12월 사용 시 추가 요금이 발생될 수 있습니다.</p>
-                                    </div>
-                                </dd>
+                                <dt class="name" id="diningName"></dt>
+                                <dd class="txt" id="diningComment"></dd>
+                                
                                 <dd class="info">
                                     <ul>
+                                        <li > 
+                                        	<em>메뉴<!-- 위치 --></em>
+                                            <span id="menu"></span>
+                                        </li>
+                                        <li > 
+                                        	<em>운영시간<!-- 시간 --></em>
+                                            <span id="openTime" style="margin-left: 10px;"></span>-<span id="closeTime"></span>
+                                        </li>
                                         <li>
                                             <em>위치<!-- 위치 --></em>
-                                            <span>웨스틴 조선 서울 저층 로비</span>
+                                            <span id="location"></span>
                                         </li>
+                                        <li id="seats"><!-- 좌석 --> </li>
                                         <li>
-                                            <em>문의<!-- 문의 --></em>
-                                            <span>02-317-0357</span>
+                                            <em>예약금<!-- 예약금 --></em>
+                                            <span id="deposit"></span>
                                         </li>
-                                        <li>
-                                            <em>좌석수<!-- 좌석수 --></em>
-                                            <span>총 240석 별실 3개(최대 10명 수용 가능) <br> * 별실 이용 시 룸 차지(50,000원) 부과</span>
-                                        </li>
+                                        
                                     </ul>
                                 </dd>
                             </dl>
                         </div>
-                        <form>
-                        <a href="http://localhost/hotel_prj/user/dining_step0.do"><button id="btnResve" type="button" class="btnSC btnL active" >예약하기</button></a>
+                        <form id="reservationForm" action="dining_step0.do" method="get">
+                        <input type="hidden" id="diningIdInput" name="diningId">
+                       	<button id="btnResve" type="button" class="btnSC btnL active" >예약하기</button>
                         </form>
                     </div>
                     <!-- //rCont -->
@@ -162,15 +158,52 @@
     <!-- //container -->
 
   	<script type="text/javascript">
-  	var diningData = JSON.parese('${diningJson}');
-  	alert(diningData);
+ 	
+  	$(function(){
+  		 $('#btnResve').click(function() {
+             $('#reservationForm').submit();
+         });
+  	})
+  	
+  	//JSON 데이터를 랜덤한 다이닝의 정보를 화면에 보여준다.
+  	var diningData = JSON.parse('${diningJson}');
+	function updateDiningInfo(diningData){
+		
+		 // 다이닝 정보 설정 
+		 $('#diningName').text(diningData.diningName);
+	  	 $("#diningComment").text(diningData.diningComment);
+         $('#location').text(diningData.location);
+         $("#menu").text(diningData.menu);
+         $("#openTime").text(diningData.openTime);
+         $("#closeTime").text(diningData.closeTime);
+         $('#deposit').text(diningData.deposit + ' KRW');
+         
+         
+         // 다이닝 이미지 설정
+         var imgHtml = '<li class="swipeSlide"><img src="http://localhost/hotel_prj/util/dining_img/' + diningData.diningImg + '" alt="다이닝 이미지"></li>';
+         $('#dining-image-container').html(imgHtml);
+        
+         //좌석수 설정
+         var seatsHtml =                
+         	'<em>좌석</em><span id="hallTable">홀 테이블 :' + diningData.hallTable +  '석</span><br/><span id="roomTable">룸 테이블 :' + diningData.roomTable + '석</span><br/>*별도의 단체예약은 호텔측으로 문의바랍니다';
+         $("#seats").html(seatsHtml);
+         
+         // hidden input의 value 업데이트
+         $('#diningIdInput').val(diningData.diningId);
+
+	}	
 	
-	$(function(){
-	  	alert(diningData);
-	  	 //$('#dining-name').text(diningData.diningName);
-        // $('#dining-type').text(diningData.diningType);
-         //$('#dining-id').text(diningData.diningId);
-	}) 	
+	updateDiningInfo(diningData);
+    
+	//다이닝 이름에 해당하는 select 옵션 선택
+     var diningName = diningData.diningName;
+     $('#diningSel option').each(function() {
+         if ($(this).text() === diningName) {
+             $(this).attr('selected', 'selected');
+         }
+     });
+
+   
   	</script>
 
     <!-- footer S -->

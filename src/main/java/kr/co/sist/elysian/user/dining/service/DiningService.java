@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import kr.co.sist.elysian.user.dining.model.domain.DiningDomain;
 import kr.co.sist.elysian.user.dining.model.domain.DiningOptionDomain;
+import kr.co.sist.elysian.user.dining.model.vo.DiningResVO;
+import kr.co.sist.elysian.user.dining.model.vo.DiningSeatsVO;
 import kr.co.sist.elysian.user.dining.repository.DiningDAO;
 
 @Service("userDiningService")
@@ -147,6 +149,57 @@ public class DiningService {
      
          return userDiningDAO.selectDiningSeatCnt(paramMap);
     }
+    
+    
+    //유저정보 찾는 메서드
+	public DiningResVO searchUserName(String userId) {
+		DiningResVO dResVO = null;
+		try {
+			dResVO = userDiningDAO.searchUserName(userId);
+		}catch(PersistenceException pe) {
+			pe.printStackTrace();
+		}
+		return dResVO;
+	}
+
+	
+	//예약 등록 메서드
+	public String saveDiningReservation(DiningResVO drVO) {
+		String resResult = "";
+		int diningId = 0;
+		try {
+			diningId = userDiningDAO.insertDiningReservation(drVO);
+		}catch(PersistenceException pe) {
+			pe.printStackTrace();
+		}
+		
+		if(diningId == 0) {
+			resResult = "등록에 실패하였습니다 다시 시도해주세요.";
+		}else {
+			resResult = "등록에 성공하였습니다 감사합니다.";
+		}
+		
+		return resResult;
+	}
+
+	public int reserveValid(DiningSeatsVO dsVO) {
+		int resultDining = 0;
+		boolean result = false;
+		try {
+			result = userDiningDAO.reserveValid(dsVO);
+		}catch(PersistenceException pe) {
+			pe.printStackTrace();
+		}
+		
+		if(result == false) {
+			resultDining = 0;
+		}else {
+			resultDining = 1;
+		}
+		
+		
+		return resultDining;
+	}
 
 
 }

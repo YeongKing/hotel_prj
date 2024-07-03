@@ -1225,7 +1225,7 @@ function fncGoPay(){
 								
 								
 								
-									<input type="text" id="moblphonTelno" name="moblphonTelno" data-valid="Y" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="${phonePart1}">
+								<input type="text" id="moblphonTelno" name="moblphonTelno" data-valid="Y" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="${phonePart1}">
 								</span>
 								<span class="dash"></span>
 								<span class="intArea">

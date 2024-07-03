@@ -78,6 +78,30 @@ public class PaymentController {
     
 	}//insertPayInfo
 	
+	@ResponseBody
+	@PostMapping(value="/insertDiningPayInfo.do", produces="application/json; charset=UTF-8")
+	public String insertDiningPayInfo(@RequestBody PayVO pVO) {
+		JSONObject data = new JSONObject();
+		
+		String payNum = "";
+		System.out.println("pVO : " + pVO);
+		
+		boolean result = ps.insertDiningPayInfo(pVO);
+		
+		System.out.println("result : " + result);
+		
+		if (result) {
+			payNum = ps.selectPayNum(pVO.getImpUid());
+		}
+		
+		System.out.println("리턴전 payNum :" + payNum);
+		
+		data.put("payNum", payNum); // JSON 객체에 payNum 추가
+		
+		return data.toJSONString(); // JSON 객체를 문자열로 변환하여 반환
+		
+	}//insertDiningPayInfo
+	
 	
 	
 	

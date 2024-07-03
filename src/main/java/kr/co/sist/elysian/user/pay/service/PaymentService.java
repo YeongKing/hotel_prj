@@ -114,6 +114,23 @@ public class PaymentService {
 	}//insertPayInfo
     
 	
+	public boolean insertDiningPayInfo(PayVO pVO){
+		int result = 0;
+		try {
+			result =pDAO.insertDiningPayInfo(pVO);
+		}catch(PersistenceException pe){
+			pe.printStackTrace();
+			
+		}//end catch
+		
+		
+		
+		return (result==1);
+		
+		
+	}//insertDiningPayInfo
+	
+	
 	
 	public String selectPayNum(String impUid){
 		String payNum  = null;

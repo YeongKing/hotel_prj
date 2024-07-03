@@ -158,33 +158,39 @@
 		    commonJs.initResvCalendar($("#diningCal"), $.datepicker.formatDate('yy.mm.dd', new Date()));
 		 
 		});
-		
+	
+
 	var selectedTime;
+	var selectedPart
     // 선택 정보 화면 함수및, 달력 클릭시 함수
     function fncSelectTime(timeHtml) {
     // 필요한 데이터 추출
     var date = $("#diningCal").val();
     var week = ['일', '월', '화', '수', '목', '금', '토'];
     var day = week[new Date(date.replaceAll('.', '/')).getDay()];
-    var ampm = $(timeHtml).attr("data-ampm") == 'am' ? '오전' : '오후';
     var time = $(timeHtml).next().html();
-    var visitTime = time;
+    var visitTime = $.trim(time);
     var visitDate = date + "(" + day + ")";
     
-    selectedTime = visitTime;
+  
+    selectedTime = visitTime;  //방문시간
+    partValue  = $(timeHtml).closest('li').data('value'); // 1부, 2부, 3부인지	alert(selectedPart);
+   	if(partValue  === 'timeOne'){
+   		selectedPart = 1;
+   	}else if(partValue  === 'timeTwo'){
+   		selectedPart = 2;
+   	}else if(partValue  === 'timeThree'){
+   		selectedPart = 3;
+   	}
     var table;
     var personCount = $("#personCountSelect").val();
-    var diningId = diningData.diningId;
+    var diningId = "${drVO.diningId}";
     if($("#roomhall").text() == "ROOM"){
 	    table  = "AVAILABLE_ROOM_TABLE";
     }else{
     	table  = "AVAILABLE_HALL_TABLE";
     }
-    
-    console.log("인원 수 : " + personCount);
-    console.log("방문시간 : " + visitTime);
-    console.log("방문날짜 : " + visitDate);
-    console.log("table : " + table);
+
     var personCnt = ("방문인원 총 " + personCount +"명")
     // visitTime과 visitDate 설정
     $("#visitTimeSpan").text(visitTime);
@@ -193,10 +199,10 @@
 	
     //hidden에 값넣기
     $("#diningId").val(diningId);
-	$("#personCount").val(personCount);
+	$("#visitPeople").val(personCount);
 	$("#visitTime").val(visitTime);
 	$("#visitDate").val(date);
-	
+	$("#diningTime").val(selectedPart);
     // selectInfoWrap 표시
     $("#selectInfoWrap").show();
     //달력에따른 ajax요청
@@ -207,7 +213,6 @@
     	async : true,
     	dataType : 'JSON',
     	data : {
-    		"diningId" : diningId,
     		"selectedDate" : date,
     		"table" : table,
     		"personCnt": personCount
@@ -251,7 +256,7 @@
         }
         var selectedDate = $("#diningCal").val();
         var personCnt =  $("#personCountSelect").val();
-		var diningId = diningData.diningId;
+		var diningId = "${drVO.diningId}";
         $.ajax({
         	type : 'POST',
         	url : "getTimeSlots.do",
@@ -276,11 +281,11 @@
                	 $(".timeWrap").empty();
                	 
                	 // 1부 시간대 생성
-                 createTimeSlotSection("1부 시간", partOneSeat, timeSlots1, requiredTables, "timeUlAm1", "timeOne");
+                 createTimeSlotSection("1부 시간", partOneSeat, timeSlots1, requiredTables, "timeUlAm1", "One");
                  // 2부 시간대 생성
-                 createTimeSlotSection("2부 시간", partTwoSeat, timeSlots2, requiredTables, "timeUlAm2", "timeTwo");
+                 createTimeSlotSection("2부 시간", partTwoSeat, timeSlots2, requiredTables, "timeUlAm2", "Two");
                  // 3부 시간대 생성
-                 createTimeSlotSection("3부 시간", partThreeSeat, timeSlots3, requiredTables, "timeUlAm3", "timeThree");
+                 createTimeSlotSection("3부 시간", partThreeSeat, timeSlots3, requiredTables, "timeUlAm3", "Three");
         	},
         	error : function(error){
         		console.log(error);
@@ -292,11 +297,11 @@
 	function createTimeSlotSection(title, partSeat, timeSlots, requiredTables, ulId, inputIdPrefix) {
 	    
 	    var sectionHtml = '<strong class="timeTit">' + title + '</strong>';
-	    sectionHtml += '<div class="timeSel one">';
+        sectionHtml += '<div class="timeSel ' + inputIdPrefix + '">';
 	    sectionHtml += '<ul class="frmList" id="' + ulId + '">';
 
 	    $.each(timeSlots, function(index, time) {
-	        sectionHtml += '<li class="frmRadio ">';
+	        sectionHtml += '<li class="frmRadio" data-value="' + inputIdPrefix + '">';
 	        if (partSeat < requiredTables) {
 	            sectionHtml += '<input type="radio" id="' + inputIdPrefix + index + '" name="frmRdo" data-ampm="am" disabled="disabled">';
 	        } else {
@@ -314,7 +319,12 @@
        
      
            async function fncGoStep2() {
-            	
+        	   // 방문 시간 선택이 되었는지 확인
+        	    if ($("#visitTimeSpan").text().trim() === '') {
+        	        alert("시간을 선택해주세요");
+        	        return;  // 시간 선택이 안된 경우 함수를 종료합니다.
+        	    }
+        	    
             	if($("#selectInfoWrap").is(':visible')){
                 $("#form").attr("action", "dining_step1.do");
                 $("#form").attr("method", "post");
@@ -325,31 +335,19 @@
             	}
             }
             		
-            	
+       	function fncGoStep0(){
+    		location.href = "http://localhost/hotel_prj/user/dining.do";
+    	}
 
-            function fncGoStep0() {
-                let searchSysCode = $("#searchSysCode").val();
-                let diningCode = $("#diningCode").val();
-                location.href = "resve/dining/step0";
-            }
         </script>
 
 
 		<form id="form" name="form">
-			 <input
-				type="hidden" id="diningId" name="diningId"
-				value="" /> 
-			<input type="hidden"
-				id="personCount" name="personCount" value="" />
-			 <input
-				type="hidden" id="availSlotToken" name="availSlotToken" value='' />
-			<input type="hidden" id="visitTime" name="visitTime" value='' />
-			<input
-				type="hidden" id="visitDate" name="visitDate" value='' /> 
-			<input
-				type="hidden" id="confirmReservationUseYn"
-				name="confirmReservationUseYn" value='' />
-
+			<input type="hidden" id="visitPeople" name="visitPeople" value="" />
+    		<input type="hidden" id="visitTime" name="visitTime" value="" />
+    		<input type="hidden" id="visitDate" name="visitDate" value="" />
+    		<input type="hidden" id="diningTime" name="diningTime" value="" />
+			
 			<div id="container" class="container">
 				<!-- 컨텐츠 S -->
 				<h1 class="hidden">날짜, 시간, 인원 선택</h1>
@@ -433,21 +431,21 @@
 									</div>
 									<div class="timeWrap">
 										<strong class="timeTit">1부 시간</strong>
-										<div class="timeSel one">
+										<div class="timeSel timeOne">
 											<ul class="frmList" id="timeUlAm1">
 												<c:set var="partOneSeat" value="${diningSeatsData.partSeatMap.partOneSeat}" />
 												<c:forEach var="time" items="${diningSeatsData.timeSlots1}"
 													varStatus="i">
-													<li class="frmRadio"><c:choose>
+													<li class="frmRadio"  data-value="timeOne"><c:choose>
 															<c:when test="${partOneSeat < diningSeatsData.requiredTables}">
 																<input type="radio" id="timeOne${i.index}" name="frmRdo"
-																	data-ampm="am" disabled="disabled">
+																	 disabled="disabled">
 																<label for="timeOne${i.index}">
 																<c:out value="${time}" />
 																</label>
 															</c:when>
 															<c:otherwise>
-																<input type="radio" id="timeOne${i.index}" name="frmRdo" data-ampm="am" onclick="fncSelectTime(this);">
+																<input type="radio" id="timeOne${i.index}"  name="frmRdo" onclick="fncSelectTime(this);">
 																<label for="timeOne${i.index}">
 																<c:out value="${time}" />
 																</label>
@@ -457,21 +455,21 @@
 											</ul>
 										</div>
 										<strong class="timeTit">2부 시간</strong>
-										<div class="timeSel one">
+										<div class="timeSel timeTwo">
 											<ul class="frmList" id="timeUlAm2">
 												<c:set var="partTwoSeat" value="${diningSeatsData.partSeatMap.partTwoSeat}" />
 												<c:forEach var="time" items="${diningSeatsData.timeSlots2}"
 													varStatus="i">
-													<li class="frmRadio"><c:choose>
+													<li class="frmRadio" data-value="timeTwo"><c:choose>
 															<c:when test="${partTwoSeat < diningSeatsData.requiredTables}">
 																<input type="radio" id="timeTwo${i.index}" name="frmRdo"
-																	data-ampm="am" disabled="disabled">
+																	 disabled="disabled"  >
 																<label for="timeTwo${i.index}">
 																<c:out value="${time}" />
 																</label>
 															</c:when>
 															<c:otherwise>
-																<input type="radio" id="timeTwo${i.index}" name="frmRdo" data-ampm="am" onclick="fncSelectTime(this);">
+																<input type="radio" id="timeTwo${i.index}" name="frmRdo"  onclick="fncSelectTime(this);">
 																<label for="timeTwo${i.index}">
 																<c:out value="${time}" />
 																</label>
@@ -481,21 +479,21 @@
 											</ul>
 										</div>
 										<strong class="timeTit">3부 시간</strong>
-										<div class="timeSel one">
+										<div class="timeSel timeThree">
 											<ul class="frmList" id="timeUlAm3">
 												<c:set var="partThreeSeat" value="${diningSeatsData.partSeatMap.partThreeSeat}" />
 												<c:forEach var="time" items="${diningSeatsData.timeSlots3}"
 													varStatus="i">
-													<li class="frmRadio"><c:choose>
+													<li class="frmRadio" data-value="timeThree"><c:choose>
 															<c:when test="${partThreeSeat < diningSeatsData.requiredTables}">
 																<input type="radio" id="timeThree${i.index}" name="frmRdo"
-																	data-ampm="am" disabled="disabled">
+																	 disabled="disabled" >
 																<label for="timeThree${i.index}">
 																<c:out value="${time}" />
 																</label>
 															</c:when>
 															<c:otherwise>
-																<input type="radio" id="timeThree${i.index}" name="frmRdo" data-ampm="am" onclick="fncSelectTime(this);">
+																<input type="radio" id="timeThree${i.index}" name="frmRdo"  onclick="fncSelectTime(this);">
 																<label for="timeThree${i.index}">
 																<c:out value="${time}" />
 																</label>

@@ -106,6 +106,7 @@
     <mapper resource="mapper/member/QnaMapper.xml"/>
     <mapper resource="mapper/member/RoomMapper.xml"/>
     <mapper resource="mapper/member/EventMapper.xml"/>
+    <mapper resource="mapper/member/JoinMapper.xml"/>
     
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
 <!--     

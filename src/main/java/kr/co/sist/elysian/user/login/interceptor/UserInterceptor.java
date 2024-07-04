@@ -14,7 +14,6 @@ public class UserInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		boolean flag = false;
-		System.out.println("1. preHandle");
 
 		//세션의 값 받기
 		Object userId = WebUtils.getSessionAttribute(request, "userId");

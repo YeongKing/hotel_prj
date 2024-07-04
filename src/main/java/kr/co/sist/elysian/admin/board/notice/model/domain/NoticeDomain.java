@@ -1,6 +1,7 @@
 package kr.co.sist.elysian.admin.board.notice.model.domain;
 
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

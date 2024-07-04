@@ -15,14 +15,14 @@
   <select id="searchPhone" resultType="ud" parameterType="uv">
     select member_id userId, name userName, password userPw
     from member
-    where trim(phone) = #{ userPhone }
+    where trim(phone) = #{ userPhone } and exit_flag = 'N'
   </select>
   
   <!-- 비밀번호 재설정 -->
   <select id="modifyPw" parameterType="uv">
 	update member
 	set password = #{ userPw, jdbcType=VARCHAR }
-	where member_id = #{ userId, jdbcType=VARCHAR }
+	where member_id = #{ userId, jdbcType=VARCHAR } and exit_flag = 'N'
   </select>
   
   

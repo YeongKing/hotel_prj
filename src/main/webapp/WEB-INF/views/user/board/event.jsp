@@ -1,188 +1,213 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    info=""%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+    info="이벤트 화면" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-<meta name="format-detection" content="telephone=no">
-
-<title>이벤트 - 이벤트 목록 | 엘리시안호텔</title>
-
-<!-- S head css -->
-<jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
-<!-- E head css -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>이벤트 이벤트 목록 | 엘리시안호텔</title>
+    <link rel="shortcut icon" type="image/x-icon" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
+    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/selectbox.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
+    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
     
-<!-- S head script -->
-<jsp:include page="/WEB-INF/views/user/common/head_script.jsp"></jsp:include>
-<!-- E head script -->
-    
-    <script>
-        //2022-05-23 조선라운지 추가
-        //헤더 메뉴 버튼 클릭 이벤트
-        jQuery(document).on("click", ".headArea .btnMenu", function() {
-            //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-            if (jQuery(this).hasClass("menuOn")) {
-                var expsrCount = 3;
-                var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
-                var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
-
-                $loungeList.addClass("hidden");
-                $loungeList.each(function(index) {
-                    if (randomArray.indexOf(index) > -1) {
-                        jQuery(this).removeClass("hidden");
-                    }
-                });
-            }
-        })
-    </script> 
+  
 </head>
-
-<body>
     <!-- S header -->
-	<jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
-	<!-- E header -->
-    <div class="wrapper ">
+    <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
+    <!-- E header -->
+<body>
+
+
+<div class="wrapper">
+
     <form id="form" name="form">
         <input type="hidden" id="page" name="page" value="1" />
         <input type="hidden" id="rowPerPage" name="rowPerPage" value="6" />
         <input type="hidden" id="totalCount" name="totalCount" value="20" />
         <input type="hidden" id="searchDataType" name="searchDataType" />
         <input type="hidden" id="eventSn" name="eventSn" value="" />
-        <input type="hidden" id="sysCode" value="JOSUNHOTEL" />
+        <input type="hidden" id="sysCode" value="JOSUNHOTEL"/>
+
         <div id="container" class="container">
+            <!-- 컨텐츠 S -->
             <h1 class="hidden">Promotion</h1>
             <div class="topArea">
                 <div class="topInner">
                     <h2 class="titDep1">Promotion</h2>
-                    <p class="pageGuide">엘리시안 호텔의 특별한 이벤트를 놓치지 마세요.</p>
+                    <p class="pageGuide">
+                        조선호텔앤리조트의 특별한 이벤트를 놓치지 마세요.    
+                    </p>
                 </div>
             </div>
-<!--             <div class="searchBox package"> -->
+            <!-- 이벤트 검색 박스 -->
+            <div class="searchBox package">
                 <div class="inner">
                     <div class="searchOp">
-                        <div class="selectWrap" style='width:296px;'>
-                        </div>
                         <div class="period">
                             <span class="hidden">날짜선택</span>
-                            <span class="intArea"><input type="text" value="" name="searchDataBeginDe" style='width:200px' placeholder="YYYY-MM-DD" title="검색 시작일" readonly id="datepickerFrom"></span>
+                            <span class="intArea">
+                                <input type="text" value="" name="searchDataBeginDe" style='width:200px' placeholder="YYYY-MM-DD" title="검색 시작일" readonly id="datepickerFrom">
+                            </span>
                             <span class="hBar">-</span>
-                            <span class="intArea"><input type="text" value="" name="searchDataEndDe" style='width:200px' placeholder="YYYY-MM-DD" title="검색 종료일" readonly id
-
-="datepickerTo"></span>
+                            <span class="intArea">
+                                <input type="text" value="" name="searchDataEndDe" style='width:200px' placeholder="YYYY-MM-DD" title="검색 종료일" readonly id="datepickerTo">
+                            </span>
                         </div>
                         <div class="intWord">
-                            <span class="intArea"><input type="text" style='width:376px' id="searchDataValue" name="searchDataValue" value="" title="검색어 입력" placeholder="검색어를 입력해주세요."></span>
+                            <span class="intArea">
+                                <input type="text" style='width:376px' id="searchDataValue" name="searchDataValue" value="" title="검색어 입력" placeholder="검색어를 입력해주세요.">
+                            </span>
                             <button type="button" class="btnSC btnM" onclick="fncSearch();">검색</button>
                         </div>
                     </div>
                 </div>
+            </div>
+            <!-- //searchBox -->
+
+            <!-- 이벤트 목록 -->
             <div class="inner">
- 
                 <ul class="boxtypeList parallaxUp eventType">
-                    <li>
-                        <dl>
-                            <dt>2024 Summer Art Festival</dt>
-                            <dd class="thum"><img src="/util/file/download.do?fileSn=2042194&sysCode=TWC" alt="2024 Summer Art Festival"></dd>
-                            <dd class="locationTag TWC">웨스틴 조선 서울 </dd>
-                            <dd class="txt">10회를 맞이한 웨스틴 조선 서울 시그니처 문화 컨텐츠 "Summer Art Festival" !! 
-                                8월 3일 토요일 "김필, 정은지"와 함께하는 여름 밤에 초대합니다. 
-                            </dd>
-                            <dd class="date">
-                                <div><span>기간</span><em>2024.08.03 - 2024.08.03</em></div>
-                                <div><span>대상자</span><em>2024 Summer Art Festival </em></div>
-                            </dd>
-                        </dl>
-                        <div class="btn">
-                            <a href="#" class="btnSC btnM active" id="event_see_detail" onclick="fncView('2037442');return false;">자세히 보기</a>
-                        </div>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>Sound Club Vol.2 | LIVE JAZZ BAR</dt>
-                            <dd class="thum"><img src="/util/file/download.do?fileSn=2053475&sysCode=LESCAPE" alt="마크다모르 재즈 바"></dd>
-                            <dd class="locationTag LESCAPE">레스케이프 </dd>
-                            <dd class="txt">로맨틱한 바와 어울리는 재즈 선율과 음악과 즐기기 좋은 위스키 그리고 월드 클래스 바텐더의 칵테일까지 잊을 수 없는 순간을 경험하세요. </dd>
-                            <dd class="date">
-                                <div><span>기간</span><em>2024.06.01 - 2024.12.31</em></div>
-                            </dd>
-                        </dl>
-                        <div class="btn">
-                            <a href="#" class="btnSC btnM active" id="event_see_detail" onclick="fncView('2053196');return false;">자세히 보기</a>
-                        </div>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>Palais de Chine '門' </dt>
-                            <dd class="thum"><img src="/util/file/download.do?fileSn=2055344&sysCode=LESCAPE" alt="팔레드 신 신메뉴 "></dd>
-                            <dd class="locationTag LESCAPE">레스케이프 </dd>
-                            <dd class="txt">"팔레드 신의 새로운 문을 열다" 
-                                모던 차이니즈 레스토랑 팔레드 신에서 
-                                익숙한 듯 새로운 신메뉴 4종을 선보입니다.  
-                            </dd>
-                            <dd class="date">
-                                <div><span>기간</span><em>2024.06.01 - 2024.12.31</em></div>
-                            </dd>
-                        </dl>
-                        <div class="btn">
-                            <a href="#" class="btnSC btnM active" id="event_see_detail" onclick="fncView('2055343');return false;">자세히 보기</a>
-                        </div>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>인스타그램 스토리 이벤트</dt>
-                            <dd class="thum"><img src="/util/file/download.do?fileSn=2058342&sysCode=JOSUNHOTEL" alt="그래비티 서울판교 부스트(VOOST), 조선델리(JOSUN DELI), 인증샷 스토리 이벤트"></dd>
-                            <dd class="locationTag JOSUNHOTEL">조선호텔앤리조트 </dd>
-                            <dd class="txt">그래비티 서울 판교에 새로 오픈한 루프탑 바 VOOST와 JOSUN DELI에 방문하고 인증샷을 스토리에 공유해 주세요. </dd>
-                            <dd class="date">
-                                <div><span>기간</span><em>2024.06.05 - 2024.07.07</em></div>
-                            </dd>
-                        </dl>
-                        <div class="btn">
-                            <a href="#" class="btnSC btnM active" id="event_see_detail" onclick="fncView('2058341');return false;">자세히 보기</a>
-                        </div>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>Summer Bingsu Delights</dt>
-                            <dd class="thum"><img src="/util/file/download.do?fileSn=2058419&sysCode=JOSUNHOTEL" alt="조선호텔앤리조트 빙수, 수박빙수, 애플망고빙수, 제주애플망고빙수, 제비집빙수"></dd>
-                            <dd class="locationTag JOSUNHOTEL">조선호텔앤리조트 </dd>
-                            <dd class="txt">새콤달콤한 풍미 가득한 제철과일이 듬뿍 올라간 조선호텔앤리조트 빙수로 다가오는 여름을 시원하게 즐겨보세요. </dd>
-                            <dd class="date">
-                                <div><span>기간</span><em>2024.06.03 - 2024.08.31</em></div>
-                            </dd>
-                        </dl>
-                        <div class="btn">
-                            <a href="#" class="btnSC btnM active" id="event_see_detail" onclick="fncView('2058418');return false;">자세히 보기</a>
-                        </div>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>Sweet Apple Mango Delight</dt>
-                            <dd class="thum"><img src="/util/file/download.do?fileSn=2046681&sysCode=TWC" alt="Sweet Apple Mango Delight"></dd>
-                            <dd class="locationTag TWC">웨스틴 조선 서울 </dd>
-                            <dd class="txt">라운지앤바와 조선델리에서 선보이는 달콤한 애플 망고 프로모션 </dd>
-                            <dd class="date">
-                                <div><span>기간</span><em>2024.05.27 - 2024.07.31</em></div>
-                            </dd>
-                        </dl>
-                        <div class="btn">
-                            <a href="#" class="btnSC btnM active" id="event_see_detail" onclick="fncView('2046680');return false;">자세히 보기</a>
-                        </div>
-                    </li>
+                    <!-- 이벤트 항목이 동적으로 추가됩니다. -->
                 </ul>
                 <div class="btnArea">
                     <a href="#" class="btnSC btnMore" id="btnMore">MORE</a>
                 </div>
             </div>
-		</div>
+            <!-- //inner -->
+        </div> <!-- container div의 닫는 태그 추가 -->
     </form>
-    <!-- footer -->
-        <jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
-    </div>
-    </body>
+
+    <!-- S footer -->
+    <jsp:include page="/WEB-INF/views/user/footer.jsp"></jsp:include>
+    <!-- E footer -->
+</div>
+<!-- //wrapper -->
+     <script>
+        $(document).ready(function() {
+        	var page = 1; // 페이지 갯수
+        	var size = 6; //한페이지에  6개 이벤트 
+        	
+        	//초기 로딩
+        	loadEvents(page, size);
+        	
+            // 이벤트 목록 더보기 버튼 클릭
+            $("#btnMore").on('click', function(e) {
+                $(".btnArea").hide();
+                e.preventDefault(); // 기본 동작 방지
+                loadEvents(++page, size); // AJAX를 통해 다음 페이지의 이벤트를 로드
+            });
+
+        function loadEvents(page,size) {
+            //ajax로 이벤트 리스트 비동기 형식으로 얻기
+            $.ajax({
+                type: "GET",
+                url: "eventList.do",
+                cache: false, 
+                data: {page : page, size : size},
+                dataType: "json",
+                global: false,
+                beforeSend: function() {
+                    commonJs.showLoadingBar();
+                },
+                complete: function() {
+                    commonJs.closeLoadingBar();
+                },
+                success: function(response) {
+                    var events = response.events;
+                    var totalCount = response.totalCount;
+                    var html = "";
+                    if (events.length > 0) {
+                    	events.forEach(function(event) {
+                            html += '<li style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">';
+                            html += '<dl>';
+                            html += '<dt>' + event.eventTitle + '</dt>';
+                            html += '<dd class="thum"><img src="http://localhost/hotel_prj/util/event_img/' + event.eventMainImg + '" alt="' + event.eventTitle + '"></dd>';
+                            html += '<dd class="txt">' + event.eventSubTitle + '</dd>';
+                            html += '<dd class="date">';
+                            html += '<div><span>기간</span><em>' + event.eventStartDate + ' - ' + event.eventEndDate + '</em></div>';
+                            html += '</dd>';
+                            html += '</dl>';
+                            html += '<div class="btn">';
+                            html += '<a href="#" class="btnSC btnM active" id="event_see_detail" onclick="fncView(\'' + event.eventNum + '\');return false;">자세히 보기</a>';
+                            html += '</div>';
+                            html += '</li>';
+                        });
+
+                        $(".boxtypeList.eventType").append(html);
+                    }
+					
+                    //페이지 * 사이즈가 리스트전체개수와
+                    if (page * size >= totalCount) {
+                        $(".btnArea").hide();
+                    } else {
+                        $(".btnArea").show();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('Status:', status);
+                    console.log('Error:', error);
+                    console.log('Response:', xhr.responseText);
+                    // 응답이 HTML일 경우, JSON으로 파싱할 수 없어서 오류가 발생할 수 있습니다.
+                    if (xhr.responseText.startsWith('<')) {
+                        console.log('HTML 응답이 반환되었습니다. 서버 측의 응답을 확인하세요.');
+                    }
+                    alert('이벤트 목록을 불러오는 중 오류가 발생했습니다.');
+                }
+            });
+        }
+
+        function fncView(eventNum) {
+            $("#eventSn").val(eventNum);
+            $("#form").attr("action", "/event/get.do");
+            $("#form").attr("method", "get");
+            $("#form").submit();
+        }
+
+        function fncSearch() {
+        	alert("fncSearch 호출");
+            fncPage("1");
+        }
+
+        function fncPage(page) {
+            var searchDataBeginDe = $("#datepickerFrom").val();
+            var searchDataEndDe = $("#datepickerTo").val();
+			alert("선택날짜 시작" + searchDataBeginDe);
+			alert("선택날짜 종료" + searchDataEndDe);
+			
+            if (searchDataBeginDe != "" && searchDataEndDe == "") {
+                alert("검색 종료일을 입력해 주세요.");
+                $("#datepickerTo").focus();
+                return;
+            }
+
+            if (searchDataBeginDe == "" && searchDataEndDe != "") {
+                alert("검색 시작일을 입력해 주세요.");
+                $("#datepickerFrom").focus();
+                return;
+            }
+
+            $("#page").val(page);
+            $("#form").attr("action", "/event/list.do");
+            $("#form").attr("method", "get");
+            $("#form").submit();
+        }
+    });
+    </script>
+
+</body>
 </html>

@@ -46,10 +46,13 @@
 			<exclude-mapping path="/user/room2.do"/>
 			<exclude-mapping path="/user/step1.do"/>
 			<exclude-mapping path="/user/step2.do"/>
-<!-- 			<exclude-mapping path="/user/dining.do"/>
-			<exclude-mapping path="/user/dining_step0.do"/>
-			<exclude-mapping path="/user/dining_step1.do"/> -->
+			
 			<exclude-mapping path="/user/join.do"/>
+			<exclude-mapping path="/user/chk_id.do"/>
+			<exclude-mapping path="/user/chk_email.do"/>
+			<exclude-mapping path="/user/joinInsert.do"/>
+			<exclude-mapping path="/user/joinComplete.do"/>
+			<exclude-mapping path="/user/sendSMS.do"/>
 
 			<exclude-mapping path="/user/verify.do"/>
 			<exclude-mapping path="/user//verifyPw.do"/>
@@ -60,6 +63,7 @@
 			<exclude-mapping path="/user/notice.do"/>
 			<exclude-mapping path="/user/qna.do"/>
 			<exclude-mapping path="/user/event.do"/>
+			<exclude-mapping path="/user/eventList.do"/>
 			<exclude-mapping path="/user/noticeDetail.do"/>
 
     

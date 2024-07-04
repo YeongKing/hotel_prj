@@ -480,58 +480,7 @@ function closeHubPopup(){
 							<span class="date"><c:out value="${homeEvent.eventStartDate}"/> - <c:out value="${homeEvent.eventEndDate}"/></span>
 						</li>
 						</c:forEach>
-									
-						<!-- <li class="swipeSlide">
-							<span class="thum">
-								<img src="/hotel_prj/util/file/%5BPC%5DGJB.jpg" alt="조선호텔앤리조트 Mindful Stay">
-								멤버십 전용 패키지인 경우
-								<span class="hoverCont">
-									<a href="/package/get.do?packageSn=2016242&searchSysCode=JOSUNHOTEL" class="btnSC btnL">자세히 보기</a>
-								</span>
-							</span>
-							<strong class="tit">Mindful Stay</strong>
-							<span class="txt">9개 호텔에서 선보이는 일상에 &#039;쉼&#039;을 선사하는 당신만의 마인드풀 스테이를 만나보세요.</span>
-							<span class="date">2024.04.22 -2024.11.30</span>
-						</li>
-									
-						<li class="swipeSlide">
-							<span class="thum">
-								<img src="/hotel_prj/util/file/img_event.jpg" alt="이미지 준비중">
-								멤버십 전용 패키지인 경우
-								<span class="hoverCont">
-									<a href="#" class="btnSC btnL">자세히 보기</a>
-								</span>
-							</span>
-							<strong class="tit">인스타그램 스토리 이벤트</strong>
-							<span class="txt">인증샷을 스토리에 공유해 주세요.</span>
-							<span class="date">2024.06.05 - 2024.07.07</span>
-						</li>
-									
-						<li class="swipeSlide">
-							<span class="thum">
-								<img src="/hotel_prj/util/file/img_event.jpg" alt="이미지 준비중">
-								멤버십 전용 패키지인 경우
-								<span class="hoverCont">
-									<a href="#" class="btnSC btnL">자세히 보기</a>
-								</span>
-							</span>
-							<strong class="tit">Sweet Apple Mango Delight</strong>
-							<span class="txt">부드러운 망고 시트에 국내산 애플망고를 듬뿍 넣어 새콤달콤이 살아있는 시즌 케이크를 소개합니다.</span>
-							<span class="date">2024.05.27 - 2024.07.31</span>
-						</li>
-										
-						<li class="swipeSlide">
-							<span class="thum">
-								<img src="/hotel_prj/util/file/img_event.jpg" alt="이미지 준비중">
-								멤버십 전용 패키지인 경우
-								<span class="hoverCont">
-									<a href="#" class="btnSC btnL">자세히 보기</a>
-								</span>
-							</span>
-							<strong class="tit">The Specialty, Summer</strong>
-							<span class="txt">싱그러운 날씨와 함께 찾아온 아리아의 새로운 시그니처 메뉴를 소개합니다.</span>
-							<span class="date">2024.06.01 - 2024.06.30</span>
-						</li> -->
+
 					</ul>
 				</div>
 				<button type="button" class="btnSwipe btnNext"><span class="hidden">다음</span></button>

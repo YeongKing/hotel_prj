@@ -6,7 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.co.sist.elysian.user.home.model.HomeDomain;
 import kr.co.sist.elysian.user.room.model.domain.MemberDomain;
+import kr.co.sist.elysian.user.room.model.domain.RoomDomain;
 import kr.co.sist.elysian.user.room.model.domain.RoomListDomain;
 import kr.co.sist.elysian.user.room.model.vo.RoomResVO;
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
@@ -76,6 +78,18 @@ public class RoomDAO {
 		return result;
 
 	}//insertPayInfo
+	
+	
+	/**
+	 * 메인 페이지에 들어갈 최근 등록된 이벤트 6가지 조회
+	 * @return 이벤트 리스트
+	 */
+	public List<RoomDomain> selectRoomEvent() throws PersistenceException {
+		SqlSession ss = mbDAO.getMyBatisHandler(false);
+		List<RoomDomain> roomEventList = ss.selectList("kr.co.sist.elysian.member.room.selectRoomEvent");
+		mbDAO.closeHandler(ss);
+		return roomEventList;
+	} // selectRoomEvent
 
 
 

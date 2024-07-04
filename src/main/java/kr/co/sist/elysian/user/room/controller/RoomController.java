@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.sist.elysian.user.home.model.HomeDomain;
 import kr.co.sist.elysian.user.room.model.domain.MemberDomain;
+import kr.co.sist.elysian.user.room.model.domain.RoomDomain;
 import kr.co.sist.elysian.user.room.model.domain.RoomListDomain;
 import kr.co.sist.elysian.user.room.model.vo.RoomResVO;
 import kr.co.sist.elysian.user.room.service.RoomService;
@@ -204,10 +206,21 @@ public class RoomController {
 	 * @return
 	 */
 	@PostMapping("/room4.do")
-	public String step4() {
+	public String step4(Model model) {
+		
+		
 
+		
+		List<RoomDomain> roomEventList = rs.selectRoomEvent();
+		model.addAttribute("roomEventlist", roomEventList);
+		
+		
+		
 
 		return "user/resve/room/step4";
+		
+
+		
 
 	} // step4		
 

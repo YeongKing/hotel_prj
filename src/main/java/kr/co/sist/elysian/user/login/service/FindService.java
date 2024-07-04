@@ -36,7 +36,6 @@ public class FindService {
         Message coolsms = new Message(api_key, api_secret);
 
         HashMap<String, String> params = new HashMap<String, String>();
-        System.out.println("Service : " + userPhone);
         params.put("to", userPhone);
         params.put("from", "01027345305");
         params.put("type", "SMS");
@@ -45,14 +44,10 @@ public class FindService {
 
         try {
             JSONObject obj = (JSONObject) coolsms.send(params);
-            System.out.println("Response: " + new String(obj.toJSONString().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8));
         } catch (CoolsmsException e) {
             String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-            System.out.println("CoolsmsException: " + errorMessage);
-            System.out.println("Error Code: " + e.getCode());
         } catch (Exception e) {
             String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-            System.out.println("Exception: " + errorMessage);
         }
     }
 
@@ -82,8 +77,6 @@ public class FindService {
     }
     
     public String modifyUserPw(UserVO uVO, String newLoginPassword) {
-    	System.out.println("Service received userId: " + uVO.getUserId());
-        System.out.println("Service received newLoginPassword: " + newLoginPassword);
     	
         JSONObject jsonObj = new JSONObject();
         String resultCode = "ERROR";

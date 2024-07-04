@@ -62,6 +62,35 @@ public class UserDAO {
         mbDAO.closeHandler(ss);
     }
     
+    //회원가입시 아이디 중복확인
+    public UserDomain selectUser(UserVO uVO) throws PersistenceException {
+    	UserDomain udm = null;
+        
+        SqlSession ss = mbDAO.getMyBatisHandler(false);
+        udm = ss.selectOne("kr.co.sist.elysian.member.join.searchUser", uVO);
+        mbDAO.closeHandler(ss);
+        return udm;
+    }
+    
+    //회원가입시 이메일 중복확인
+    public UserDomain selectEmail(UserVO uVO) throws PersistenceException {
+    	UserDomain udm = null;
+    	
+    	SqlSession ss = mbDAO.getMyBatisHandler(false);
+    	udm = ss.selectOne("kr.co.sist.elysian.member.join.searchEmail", uVO);
+    	mbDAO.closeHandler(ss);
+    	return udm;
+    }
+    
+    //회원가입
+    public int insertUserInfo(UserVO uVO) throws PersistenceException {
+    	
+    	SqlSession ss = mbDAO.getMyBatisHandler(true);
+    	int cnt = ss.insert("kr.co.sist.elysian.member.join.insertUser", uVO);
+    	mbDAO.closeHandler(ss);
+    	return cnt;
+    }
+    
     
 
     

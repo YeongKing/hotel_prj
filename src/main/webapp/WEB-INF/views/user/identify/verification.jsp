@@ -136,14 +136,12 @@ function removeHyphens(phone) {
 
 function gfncNameCert() {
     var phone = $("#frm_userPhone").val();
-    console.log("Phone number:", phone);  // Debugging line
     if (validateInput('#frm_userPhone', '.verifyPhoneFrm') && isValidPhoneFormat(phone)) {
         var sanitizedPhone = removeHyphens(phone);
-        console.log("Sanitized phone number:", sanitizedPhone);  // Debugging line
-        // sendSMS(sanitizedPhone); // 실제 SMS 전송 (추후 테스트 완료 후 사용)
+        sendSMS(sanitizedPhone); // 실제 SMS 전송 (추후 테스트 완료 후 사용)
 
         // SMS 전송 성공 시의 로직을 직접 호출합니다.
-        simulateSMSSuccess(sanitizedPhone); // 현재 테스트용 함수 사용
+        //simulateSMSSuccess(sanitizedPhone); // 테스트용 함수 사용
     } else {
         $('#frm_userPhone').closest('.verifyPhoneFrm').addClass('error');
     }
@@ -171,15 +169,12 @@ function verifyPopup() {
 
 // 회원 정보 조회 함수
 function fetchUserInfo(phone) {
-    console.log("Executing query with phone: " + phone); // Debugging line
     $.ajax({
         type: "GET",
         url: "/hotel_prj/user/getUserDetails.do?phone=" + phone, // 하이픈 포함된 전화번호를 사용
         cache: false,
         success: function(data) {
-            console.log("AJAX success, received data: ", data);
             if (data) {
-                console.log("User Data:", data); // 디버깅을 위해 콘솔에 데이터 출력
                 $("#userName").text(data.userName); // 회원 이름 표시
                 $("#userId").text(data.userId); // 회원 ID 표시
                 $("#userResult").css("display", "block"); // 결과 창 표시
@@ -191,7 +186,6 @@ function fetchUserInfo(phone) {
             }
         },
         error: function(xhr, status, error) {
-            console.error("AJAX Error: ", status, error); // AJAX 요청 실패 시 오류 메시지 출력
             alert("회원 정보를 가져오지 못했습니다."); // 회원 정보 조회 실패 시 알림
             $("#frm_userPhone").attr("readonly", false); // 휴대폰 번호 입력 필드 활성화
             $("#phoneChk").attr("disabled", false); // 인증번호 전송 버튼 활성화
@@ -230,15 +224,15 @@ function sendSMS(phone) {
     });
 }
 
-// SMS 전송 성공을 시뮬레이션하는 함수 (현재 테스트용)
+/* SMS 전송 성공을 시뮬레이션하는 함수 (현재 테스트용)
 function simulateSMSSuccess(phone) {
-    console.log("Simulating SMS success for phone:", phone);  // Debugging line
     alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오."); // 인증번호 발송 완료 알림
     $("#frm_userNum").attr("disabled", false); // 인증번호 입력 필드 활성화
     $("#frm_userPhone").attr("readonly", true); // 휴대폰 번호 입력 필드 읽기 전용으로 설정
     $("#phoneChk").attr("disabled", true); // 인증번호 전송 버튼 비활성화
     code2 = "123456"; // 테스트용 인증번호 설정
 }
+*/
 
 $(document).ready(function() {
     $('#frm_userPhone').on('focus', function() {

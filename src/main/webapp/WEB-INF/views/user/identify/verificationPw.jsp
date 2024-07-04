@@ -143,8 +143,8 @@ body {
         var phone = $("#frm_userPhone").val();
         if (validateInput('#frm_userPhone', '.verifyPhoneFrm') && isValidPhoneFormat(phone)) {
             var sanitizedPhone = removeHyphens(phone);
-            simulateSMSSuccess(sanitizedPhone); // 현재 테스트용 함수 사용
-         	// sendSMS(sanitizedPhone); // 실제 SMS 전송 (추후 테스트 완료 후 사용)
+         	sendSMS(sanitizedPhone); // 실제 SMS 전송
+            //simulateSMSSuccess(sanitizedPhone); // 테스트용 함수 사용
         } else {
             $('#frm_userPhone').closest('.verifyPhoneFrm').addClass('error');
         }
@@ -199,6 +199,7 @@ body {
         });
     }
 
+    /* 테스트용
     function simulateSMSSuccess(phone) {
         alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
         $("#frm_userNum").attr("disabled", false);
@@ -207,6 +208,7 @@ body {
         code2 = "123456";
         $("#userId").val(window.userId); // 추가: userId 설정
     }
+    */
     
     function sendSMS(phone) {
         $.ajax({
@@ -368,7 +370,6 @@ body {
             newLoginPassword: newLoginPassword
         });
 
-        console.log("Sending formData: ", formData);
         $.ajax({
             type: "POST",
             url: "modifyUserPw.do",
@@ -376,7 +377,6 @@ body {
             contentType: "application/json; charset=UTF-8",
             dataType: "json",
             success: function(response) {
-                console.log("Response from server: ", response);
                 if (response.resultCode === 'SUCCESS') {
                     alert('비밀번호가 변경되었습니다. 다시 로그인해주세요.');
                     window.opener.location.href = "/hotel_prj/user/login.do"; // 부모 페이지에서 리다이렉션

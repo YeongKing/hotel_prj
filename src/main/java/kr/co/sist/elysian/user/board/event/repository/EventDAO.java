@@ -28,7 +28,10 @@ public class EventDAO {
 	}
 
 	public int selectEventTotalCount() throws PersistenceException {
-		return 0;
+		int totalCount = 0;
+		SqlSession ss = mbDAO.getMyBatisHandler(false);
+		totalCount = ss.selectOne("kr.co.sist.elysian.member.board.event.eventCount");
+		return totalCount;
 	}
 
 	

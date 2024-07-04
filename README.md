@@ -38,8 +38,8 @@
 
 ## 📚 API
 - 포트원(결제) : [https://developers.portone.io/docs/ko/readme?v=v2](https://developers.portone.io/docs/ko/readme?v=v2)
-- Chart.js(차트) : [https://www.chartjs.org/docs/latest/](https://www.chartjs.org/docs/latest/)
-- SMS(인증) : [https://docs.coolsms.co.kr/development-kits/java](https://docs.coolsms.co.kr/development-kits/java)
+- Apexcharts.js(차트) : [https://apexcharts.com/](https://apexcharts.com/)
+- coolSMS(인증) : [https://docs.coolsms.co.kr/development-kits/java](https://docs.coolsms.co.kr/development-kits/java)
 
 ## 💾 Docs
 - [UseCase Diagram](https://github.com/YeongKing/hotel_prj/blob/temp/docs/UseCase.png)

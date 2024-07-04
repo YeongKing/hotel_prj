@@ -5,7 +5,7 @@
 
 <mapper namespace="kr.co.sist.elysian.admin.res">
 	<select id="roomResList" resultType="rrd">
-		select row_number() over(order by rr.pay_num) num,
+		select row_number() over(order by to_number(substr(rr.pay_num, 2, 8)) desc, substr(rr.pay_num, 3) asc) num,
 			 rr.pay_num payNum, rr.room_res_status roomResStatus,
 			 r.room_rank_name || ' | ' || r.bed_cnt || ' ' || r.bed_name || ' | ' || r.view_name room,
 			 rr.checkin checkIn, rr.checkout checkOut, rr.room_res_date roomResDate,
@@ -13,7 +13,6 @@
 		from room_reservation rr, room r, member m
 		where rr.room_id = r.room_id
 		and rr.user_id = m.member_id
-		order by payNum
 	</select>
 	
 	<select id="roomResDetail" resultType="rrd" parameterType="String">
@@ -39,13 +38,13 @@
 	<select id="roomInfoList" resultType="rid" parameterType="Map">
 		<![CDATA[
 		select room_id roomId, room_id || '호(' || room_rank_name || ' | ' || bed_cnt || ' ' || bed_name || ' | ' || view_name || ')' roomInfo
-		from room
-		where room_id not in (
-							select room_id
-							from room_reservation
-							where to_char(checkin, 'yyyy.mm.dd') = #{checkIn}
-							AND to_char(checkout, 'yyyy.mm.dd') = #{checkOut}
-							AND room_res_status = 'RESERVED'
+		from room r
+		where r.room_id not in (
+							select rr.room_id
+							from room_reservation rr
+							where ((rr.checkin < to_date(#{checkOut}, 'yyyy-mm-dd') and rr.checkout > to_date(#{checkIn}, 'yyyy-mm-dd'))
+							or (rr.checkin <= to_date(#{checkIn}, 'yyyy-mm-dd') and rr.checkout >= to_date(#{checkOut}, 'yyyy-mm-dd')))
+							and room_res_status in ('RESERVED', 'CHECK IN')
 							)
 		and delete_status = 'N'
 		]]>
@@ -80,7 +79,7 @@
 	</update>
 	
 	<select id="diningResList" resultType="drd">
-		select row_number() over(order by dr.pay_num) num,
+		select row_number() over(order by to_number(substr(dr.pay_num, 2, 8)) desc, substr(dr.pay_num, 3) asc) num,
 			 dr.pay_num payNum, dr.dining_res_status diningResStatus,
 			 d.dining_name diningName,
 			 dr.visit_datetime visitDateTime, dr.visit_people visitPeople, dr.visitor_name visitorName, dr.visitor_phone visitorPhone, dr.dining_res_date diningResDate

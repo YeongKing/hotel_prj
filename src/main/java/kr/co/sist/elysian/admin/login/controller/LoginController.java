@@ -5,6 +5,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.nio.file.spi.FileSystemProvider;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -50,7 +52,7 @@ public class LoginController {
 	private LoginService ls;
 	
 	@PostMapping("/set_session.do")
-	public String searchLogin(AdminVO aVO, Model model) {
+	public String searchLogin(AdminVO aVO, Model model, HttpSession session) {
 	    // 암호화 객체 생성
 	    PasswordEncoder pe = new BCryptPasswordEncoder();
 	    
@@ -71,6 +73,7 @@ public class LoginController {
 	    if (matchFlag) {
 	        model.addAttribute("adminId", adm.getAdminId());
 	        model.addAttribute("adminAuthority", adm.getAdminAuthority());
+	        session.setAttribute("adminAuthority", adm.getAdminAuthority());
 	        return "forward:dashboard.do";
 	    } else {
 	        model.addAttribute("error", "잘못된 비밀번호 입니다.");

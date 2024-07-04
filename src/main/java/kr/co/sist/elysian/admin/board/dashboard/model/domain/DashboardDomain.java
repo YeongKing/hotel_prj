@@ -11,16 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DashboardDomain {
 
-	
-	
-	private int todayRoomResCnt,
-				oneMonthRoomResCnt,
-				checkinCnt,
-				checkoutCnt,
-				allMemberCnt,
-				todayJoinCnt,
-				diningResCnt,
-				diningCancelCnt;
-	
+	private int todayRoomResCnt, oneMonthRoomResCnt,
+				expectedCheckinCnt, checkinCnt,
+				expectedCheckoutCnt, checkoutCnt,
+				allMemberCnt, todayJoinCnt;
 	
 }//class

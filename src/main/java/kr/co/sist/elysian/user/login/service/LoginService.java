@@ -28,4 +28,24 @@ public class LoginService{
 		
 	}
 
+	
+	public void updateLoginDate(String userId ) {
+
+		
+		try {
+			uDAO.updateLoginDate( userId );
+		}catch(PersistenceException pe) {
+			pe.printStackTrace();
+		}//end catch
+		
+		
+
+		
+	}//updateLoginDate
+	
+	
+	
+	
+	
+	
 }

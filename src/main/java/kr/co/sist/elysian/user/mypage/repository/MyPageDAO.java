@@ -156,7 +156,7 @@ public class MyPageDAO {
 	 * @return allnationalInfo
 	 * @throws PersistenceException
 	 */
-	public List<NationalDomain> selectAllNationlInfo() throws PersistenceException {
+	public List<NationalDomain> selectAllNationalInfo() throws PersistenceException {
 		SqlSession ss = myBatisDAO.getMyBatisHandler(false);
 		List<NationalDomain> allnationalInfo = ss.selectList("kr.co.sist.elysian.member.mypage.selectAllNationalInfo");
 		myBatisDAO.closeHandler(ss);

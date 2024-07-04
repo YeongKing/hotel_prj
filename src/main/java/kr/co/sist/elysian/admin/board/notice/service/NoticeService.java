@@ -17,6 +17,10 @@ public class NoticeService {
 	@Autowired(required = false)
 	private NoticeDAO nDAO;
 	
+	/**
+	 * 공지사항 리스트 호출 메서드
+	 * @return 공지사항 리스트
+	 */
 	public List<NoticeListDomain> selectNoticeList(){
 		List<NoticeListDomain> list = null;
 		try {
@@ -30,6 +34,11 @@ public class NoticeService {
 
 	
 	
+	/**
+	 * 공지사항 세부정보 호출 메서드
+	 * @param noticeNum 공지사항 번호
+	 * @return 공지사항도메인
+	 */
 	public NoticeDomain selectNoticeDetail(String noticeNum){
 		NoticeDomain nd = null;
 		try {
@@ -42,6 +51,11 @@ public class NoticeService {
 
 	}//searchNoticeDetail
 	
+	/**
+	 * 공지사항 세부정보 수정 메서드
+	 * @param nVO 공지사항VO
+	 * @return 성공실패유무
+	 */
 	public boolean updateNotice(NoticeVO nVO){
 		
 		try {
@@ -55,6 +69,10 @@ public class NoticeService {
 	
 	
 	
+	/**
+	 * 공지사항 번호 확인 메서드
+	 * @return 공지사항 번호
+	 */
 	public String selectNoticeNum(){
 		String result = "";
 		
@@ -68,6 +86,13 @@ public class NoticeService {
 	}//selectNoticeNum
 	
 	
+	
+	
+	/**
+	 * 공지사항 등록 메서드
+	 * @param nVO 공지사항VO
+	 * @return 성공실패유무
+	 */
 	public boolean insertNotice(NoticeVO nVO){
 		
 		try {

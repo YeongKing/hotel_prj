@@ -12,12 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.support.SessionStatus;
 
 import kr.co.sist.elysian.admin.room.model.domain.RoomDomain;
 import kr.co.sist.elysian.admin.room.model.domain.RoomListDomain;
 import kr.co.sist.elysian.admin.room.model.vo.RoomVO;
-import kr.co.sist.elysian.admin.room.model.vo.UpdateRoomVO;
 import kr.co.sist.elysian.admin.room.service.RoomService;
 
 @Controller("adminRoomController")
@@ -29,6 +27,11 @@ public class RoomController {
 	private RoomService rs;
 	
 	
+	/**
+	 *  객실탭 이동 메서드
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/room.do")
 	public String searchRoomList(Model model) {
 		List<RoomListDomain> list = rs.searchRoomList();
@@ -55,15 +58,15 @@ public class RoomController {
 	
 	/**
 	 * 객실 정보 변경
-	 * @param urVO
+	 * @param urVO 
 	 * @param model
 	 * @return
 	 */
 	@ResponseBody
 	@PostMapping(value="/updateRoom.do", produces="application/json; charset=UTF-8")
-	public Boolean updateRoom(@RequestBody UpdateRoomVO urVO) {
+	public Boolean updateRoom(@RequestBody RoomVO rVO) {
 
-	     boolean result = rs.updateRoom(urVO);
+	     boolean result = rs.updateRoom(rVO);
 	     
 		return result;
 	}//updateRoom
@@ -104,44 +107,8 @@ public class RoomController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public String addFrm() {
-		return "";
-	}//addFrm
-	
-	
-	public String frmProcess(RoomVO rVO) {
-		return "";
-	}//frmProcess
-	
-	
-	public String detailRoom(int roomId, Model model) {
-		return "";
-	}//detailRoom
-	
 
-	
-	
-	public String removeRoom(int roomId, Model model) {
-		return "";
-	}//removeRoom
-	
-	
-	public String logout(SessionStatus ss) {
-		return "";
-	}//logout
-	
-	
-	
-	
+
 	
 	
 } // class

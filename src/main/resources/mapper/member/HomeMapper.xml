@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.sist.elysian.member.home">
+
+	<select id="selectHomeEvent" resultType="homeDomain">
+		select eventTitle, eventContent, eventStartDate, eventEndDate, eventMainImg
+		from (
+			 select row_number() over(order by event_inputdate desc) num,
+			 event_title eventTitle, event_content eventContent, 
+			 to_char(event_startdate, 'yyyy.mm.dd') eventStartDate, to_char(event_enddate, 'yyyy.mm.dd') eventEndDate, 
+			 event_main_img eventMainImg
+			 from event
+			 )
+		where num between 1 and 6
+	</select>
+	
+</mapper>

@@ -152,7 +152,7 @@
 </script>
 
 <form id="formPwChng" >
-<input type="hidden" id="userId" value="${userId}">
+<input type="hidden" id="userId" value="${requestScope.userId}">
 <div id="container" class="container mypage">
  
 <script type="text/javascript">

@@ -17,6 +17,13 @@ public class QnaDAO {
 	@Autowired(required = false)
 	private MyBatisDAO mbDAO;
 	
+	/**
+	 * 
+	 * qna 리스트 검색 메서드
+	 * @param qVO qnaVO
+	 * @return qna도메인 리스트
+	 * @throws PersistenceException
+	 */
 	public List<QnaDomain> selectQnaList(QnaVO qVO) throws PersistenceException{
 		
 		List<QnaDomain> list = null;
@@ -30,6 +37,16 @@ public class QnaDAO {
 		
 	}//selectQnaList
 	
+	
+	
+	
+	
+	/**
+	 * 페이지 선택 메서드
+	 * @param qVO qnaVO
+	 * @return 페이지 번호
+	 * @throws PersistenceException
+	 */
 	public int selectPage(QnaVO qVO) throws PersistenceException{
 		
 		int page = 0;

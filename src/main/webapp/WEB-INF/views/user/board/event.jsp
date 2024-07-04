@@ -153,9 +153,9 @@
 					
                     //페이지 * 사이즈가 리스트전체개수와
                     if (page * size >= totalCount) {
-                       // $(".btnArea").hide();
+                        $(".btnArea").hide();
                     } else {
-                        //$(".btnArea").show();
+                        $(".btnArea").show();
                     }
                 },
                 error: function(xhr, status, error) {
@@ -179,13 +179,16 @@
         }
 
         function fncSearch() {
+        	alert("fncSearch 호출");
             fncPage("1");
         }
 
         function fncPage(page) {
             var searchDataBeginDe = $("#datepickerFrom").val();
             var searchDataEndDe = $("#datepickerTo").val();
-
+			alert("선택날짜 시작" + searchDataBeginDe);
+			alert("선택날짜 종료" + searchDataEndDe);
+			
             if (searchDataBeginDe != "" && searchDataEndDe == "") {
                 alert("검색 종료일을 입력해 주세요.");
                 $("#datepickerTo").focus();

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -37,7 +38,7 @@ public class DiningController {
 	private DiningService userDiningService;
 	
 	//화면접속시 랜덤한 다이닝 정보 가져오기 
-	@GetMapping("/dining.do")
+	@RequestMapping(value = "/dining.do" , method = {RequestMethod.GET, RequestMethod.POST})
 	public String searchRandomDiningDetail(Model model) {
 
 

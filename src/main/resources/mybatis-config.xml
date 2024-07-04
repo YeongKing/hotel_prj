@@ -60,6 +60,7 @@
       	<typeAlias type="kr.co.sist.elysian.user.board.notice.model.domain.NoticeDomain" alias="mnd"/> 
   		<typeAlias type="kr.co.sist.elysian.user.board.notice.model.vo.NoticeVO" alias="mnVO"/>
   		<typeAlias type="kr.co.sist.elysian.user.home.model.HomeDomain" alias="homeDomain"/>
+  		<typeAlias type="kr.co.sist.elysian.user.board.event.model.domain.EventDomain" alias="eDomain"/>
   		
 
   		
@@ -104,6 +105,8 @@
     <mapper resource="mapper/member/PayMapper.xml"/>
     <mapper resource="mapper/member/QnaMapper.xml"/>
     <mapper resource="mapper/member/RoomMapper.xml"/>
+    <mapper resource="mapper/member/EventMapper.xml"/>
+    <mapper resource="mapper/member/JoinMapper.xml"/>
     
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
 <!--     

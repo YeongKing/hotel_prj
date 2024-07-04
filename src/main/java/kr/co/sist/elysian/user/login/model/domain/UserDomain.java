@@ -11,6 +11,6 @@ import lombok.Setter;
 @Setter
 public class UserDomain {
 	
-	private String userId, userPw, userName;
+	private String userId, userPw, userName, email;
 
 }

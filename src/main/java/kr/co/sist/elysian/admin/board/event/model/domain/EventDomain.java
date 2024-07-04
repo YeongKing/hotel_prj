@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class EventDomain {
 
 
-	private String eventNum, adminId , eventTitle, eventStartDate, eventEndDate , eventMainImg, eventSubImg, eventContent, eventInputdate;
+	private String eventNum, adminId , eventTitle, eventSubTitle, eventStartDate, eventEndDate , eventMainImg, eventSubImg, eventContent, eventInputdate;
 	
 	
 	

@@ -7,7 +7,9 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.sist.elysian.user.home.model.HomeDomain;
 import kr.co.sist.elysian.user.room.model.domain.MemberDomain;
+import kr.co.sist.elysian.user.room.model.domain.RoomDomain;
 import kr.co.sist.elysian.user.room.model.domain.RoomListDomain;
 import kr.co.sist.elysian.user.room.model.vo.RoomResVO;
 import kr.co.sist.elysian.user.room.repository.RoomDAO;
@@ -18,6 +20,7 @@ public class RoomService {
 
 	@Autowired(required = false)
 	private RoomDAO rDAO;
+	private final String uploadPath = "http://localhost/hotel_prj/util/event_img/";
 
 	/**
 	 * 객실리스트 검색 메서드
@@ -100,7 +103,36 @@ public class RoomService {
 
 	}//insertRoomRes
 
-
+	
+	
+	/**
+	 * DAO에서 셀렉해온 최근 이벤트 리스트 6개를 전달
+	 * @return 최근 이벤트 리스트 6개
+	 */
+	public List<RoomDomain> selectRoomEvent() {
+		
+		List<RoomDomain> roomEventList = null;
+		
+		try {
+			roomEventList = rDAO.selectRoomEvent();
+			
+			String eventFullPath = "img_event.jpg";
+			String eventSubFullPath = "img_event.jpg";
+			
+			for(RoomDomain roomEvent : roomEventList) {
+				eventFullPath = uploadPath + roomEvent.getEventMainImg();
+				eventSubFullPath = uploadPath + roomEvent.getEventSubImg();
+				
+				roomEvent.setEventImgFullPath(eventFullPath);
+				roomEvent.setEventSubImgFullPath(eventSubFullPath);
+			} // end for
+			
+		} catch (PersistenceException pe) {
+			pe.printStackTrace();
+		} // end catch
+		
+		return roomEventList;	
+	} // selectHomeEvent
 
 
 

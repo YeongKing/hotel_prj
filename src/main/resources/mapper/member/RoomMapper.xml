@@ -77,6 +77,19 @@
 </insert>
     
     
+	<select id="selectRoomEvent" resultType="urd">
+		select eventTitle, eventContent, eventStartDate, eventEndDate, eventMainImg, eventSubImg, eventNum
+		from (
+			 select row_number() over(order by event_inputdate desc) num,
+			 event_title eventTitle, event_content eventContent, 
+			 to_char(event_startdate, 'yyyy.mm.dd') eventStartDate, to_char(event_enddate, 'yyyy.mm.dd') eventEndDate, 
+			 event_main_img eventMainImg, EVENT_SUB_IMG eventSubImg , EVENT_NUM eventNum
+			 
+			 from event
+			 )
+		where num between 1 and 6
+	</select>
+    
     
     
     

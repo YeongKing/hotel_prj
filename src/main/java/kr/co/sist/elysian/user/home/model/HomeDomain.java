@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class HomeDomain {
 
-	private String eventTitle, eventStartDate, eventEndDate, eventContent, eventMainImg, eventSubImg, eventImgFullPath;
+	private String eventTitle, eventStartDate, eventEndDate, eventContent, eventMainImg, eventSubImg, eventImgFullPath,eventSubImgFullPath;
 	
 } // class

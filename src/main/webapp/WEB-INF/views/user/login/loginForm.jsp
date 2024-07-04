@@ -637,12 +637,16 @@ function getLoginCookie(cookieName) {
 			<div class="inner">
 				<ul class="tabType01 tabType02">
 					<li class="on"><a href="#">
-					아이디 로그인<!-- 아이디 로그인 -->
+					엘리시안 회원 로그인<!-- 아이디 로그인 -->
 					</a></li>
-					<li><a href="javascript:return false;" target="_self"
+					<!-- 비회원 block
+					<li>
+						<a href="javascript:return false;" target="_self"
 						onclick="noMbrLoginPage()">
-						비회원 예약확인<!-- 비회원 예약확인 -->
-						</a></li>
+						비회원 예약확인<!-- 비회원 예약확인
+						</a>
+					</li>
+						 -->
 				</ul>
 				<!-- tabCont(아이디 로그인) -->
 				<div id="tab01" class="tabCont" style="display: block">
@@ -665,9 +669,10 @@ function getLoginCookie(cookieName) {
 								<input type="password" id="frm_userpw" placeholder="비밀번호" aria-required="true" onkeydown="javascript:if(event.keyCode == 13){PageScript.fncLogin('ID');}" /><!-- 비밀번호 -->
 							</p>
 							<!-- 20200528 수정 : 아이디저장(추가) -->
+							<!-- 아이디 저장 block 
 							<span class="frm"> 
 								<input type="checkbox" id="idSaveCheck">
-								<label for="idSaveCheck">아이디 저장<!-- 아이디 저장 --></label>
+								<label for="idSaveCheck">아이디 저장</label>
 							</span>
 							<!-- //20200528 수정 : 아이디저장(추가) -->
 							<button type="button" class="btnSC btnL active btnFull" onclick="PageScript.fncLogin('ID'); return false;">로그인<!-- 로그인 --></button>

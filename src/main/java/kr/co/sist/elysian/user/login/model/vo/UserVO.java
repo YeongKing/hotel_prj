@@ -13,6 +13,8 @@ import lombok.ToString;
 @ToString
 public class UserVO {
 	
-	private String userId, userPw, userName, userPhone;
+	private String userId, userName, eName1, eName2, userPhone, userPw, 
+					genderCode, postcode, nationCode, userBirth, address, 
+					detailAddress, email, loginMethod;
 
 }

@@ -16,7 +16,7 @@
 	<!-- 이벤트 상세 조회 쿼리 -->
 	<select id="eventDetail" resultType="ed" parameterType="String">
 		select
-		EVENT_NUM eventNum, ADMIN_ID adminId, EVENT_TITLE eventTitle,
+		EVENT_NUM eventNum, ADMIN_ID adminId, EVENT_TITLE eventTitle, EVENT_SUB_TITLE eventSubTitle,
 		to_char(EVENT_STARTDATE,'yyyy-MM-dd') eventStartDate,
 		to_char(EVENT_ENDDATE,'yyyy-MM-dd') eventEndDate, EVENT_MAIN_IMG
 		eventMainImg, EVENT_SUB_IMG eventSubImg, EVENT_CONTENT eventContent,
@@ -39,6 +39,7 @@
 		#{eventNum, jdbcType=VARCHAR},
 		#{adminId, jdbcType=VARCHAR},
 		#{eventTitle, jdbcType=VARCHAR},
+		#{eventSubTitle, jdbcType=VARCHAR},
 		#{eventStartDate, jdbcType=DATE},
 		#{eventEndDate, jdbcType=DATE},
 		#{eventMainImg, jdbcType=VARCHAR},
@@ -52,6 +53,7 @@
 		UPDATE EVENT
 		SET
 		EVENT_TITLE = #{eVO.eventTitle, jdbcType=VARCHAR},
+		EVENT_SUB_TITLE = #{eVO.eventSubTitle, jdbcType=VARCHAR},
 		EVENT_STARTDATE = #{eVO.eventStartDate, jdbcType=DATE},
 		EVENT_ENDDATE = #{eVO.eventEndDate, jdbcType=DATE},
 		EVENT_MAIN_IMG = #{eVO.eventMainImg, jdbcType=VARCHAR},

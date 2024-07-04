@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.sist.elysian.member.join">
+
+  <!-- 회원 아이디 중복 확인 -->
+  <select id="searchUser" resultType="ud" parameterType="uv">
+    select member_id userId
+    from member
+    where member_id = #{ userId }
+  </select>
+  
+  <!-- 회원 이메일 중복 확인 -->
+  <select id="searchEmail" resultType="ud" parameterType="uv">
+    select email
+	from member
+	where email = #{ email }
+  </select>
+  
+  <!-- 회원 가입 -->
+    <select id="insertUser" parameterType="uv">
+    INSERT INTO member (MEMBER_ID, NAME, ENG_LNAME, ENG_FNAME, PHONE, PASSWORD,
+	GENDER, ZIPCODE, NATIONAL_CODE, BIRTHDAY, 
+	ADDRESS, ADDR_DETAIL, EMAIL, LOGIN_METHOD)
+	VALUES 
+	(#{ userId }, #{ userName }, #{ eName1 }, #{ eName2 }, #{ userPhone }, #{ userPw },
+	#{ genderCode }, #{ postcode }, #{ nationCode }, #{ userBirth }, 
+	#{ address }, #{ detailAddress }, #{ email }, #{ loginMethod })
+  	</select>
+</mapper>

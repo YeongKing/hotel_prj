@@ -347,7 +347,7 @@ public class MyPageService{
 	public List<NationalDomain> selectAllNationalInfo() {
 		List<NationalDomain> allnationalInfo = null;
 		try {
-			allnationalInfo = myPageDAO.selectAllNationlInfo();
+			allnationalInfo = myPageDAO.selectAllNationalInfo();
 		} catch(PersistenceException pe) {
 			pe.printStackTrace();
 		} // end catch

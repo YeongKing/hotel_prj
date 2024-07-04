@@ -43,6 +43,9 @@
     	<typeAlias type="kr.co.sist.elysian.user.login.model.vo.UserVO" alias="uv"/> 
 		<typeAlias type="kr.co.sist.elysian.user.login.model.domain.UserDomain" alias="ud"/>
   		<typeAlias type="kr.co.sist.elysian.user.dining.model.domain.DiningDomain" alias="dDomain"/> 
+        <typeAlias type="kr.co.sist.elysian.user.dining.model.domain.DiningOptionDomain" alias="dOptionDomain"/> 
+  		<typeAlias type="kr.co.sist.elysian.user.dining.model.vo.DiningResVO" alias="drVO"/> 
+  		<typeAlias type="kr.co.sist.elysian.user.dining.model.vo.DiningSeatsVO" alias="dsVO"/> 
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain" alias="myPageRoomResDomain"/> 
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain" alias="myPageDiningResDomain"/> 
   		<typeAlias type="kr.co.sist.elysian.user.mypage.model.vo.DiningResVO" alias="myPageDiningResVO"/>
@@ -56,9 +59,10 @@
   		<typeAlias type="kr.co.sist.elysian.user.board.qna.model.vo.QnaVO" alias="mqVO"/>
       	<typeAlias type="kr.co.sist.elysian.user.board.notice.model.domain.NoticeDomain" alias="mnd"/> 
   		<typeAlias type="kr.co.sist.elysian.user.board.notice.model.vo.NoticeVO" alias="mnVO"/>
+  		<typeAlias type="kr.co.sist.elysian.user.home.model.HomeDomain" alias="homeDomain"/>
+  		<typeAlias type="kr.co.sist.elysian.user.board.event.model.domain.EventDomain" alias="eDomain"/>
   		
-  		
-  		
+
   		
 		<typeAlias type="kr.co.sist.elysian.user.mypage.model.domain.NationalDomain" alias="nationalDomain"/>
   		
@@ -82,23 +86,27 @@
   <mappers>
   	<!-- admin -->
     <mapper resource="mapper/admin/DashboardMapper.xml"/>
-    <mapper resource="mapper/admin/MemberMapper.xml"/>
-    <mapper resource="mapper/admin/RoomMapper.xml"/>
     <mapper resource="mapper/admin/DiningMapper.xml"/>
 	<mapper resource="mapper/admin/EventMapper.xml"/>
-	<mapper resource="mapper/admin/QnaMapper.xml"/>
-	<mapper resource="mapper/admin/NoticeMapper.xml"/>
-	
     <mapper resource="mapper/admin/LoginMapper.xml"/>
+    <mapper resource="mapper/admin/MemberMapper.xml"/>
+	<mapper resource="mapper/admin/NoticeMapper.xml"/>
+	<mapper resource="mapper/admin/QnaMapper.xml"/>
     <mapper resource="mapper/admin/ResMapper.xml"/>
+    <mapper resource="mapper/admin/RoomMapper.xml"/>
+	
     
     <!-- user -->
+    <mapper resource="mapper/member/DiningMapper.xml"/>
+    <mapper resource="mapper/member/HomeMapper.xml"/>
     <mapper resource="mapper/member/LoginMapper.xml"/>
     <mapper resource="mapper/member/MypageMapper.xml"/>
-    <mapper resource="mapper/member/RoomMapper.xml"/>
+    <mapper resource="mapper/member/NoticeMapper.xml"/>
     <mapper resource="mapper/member/PayMapper.xml"/>
     <mapper resource="mapper/member/QnaMapper.xml"/>
-    <mapper resource="mapper/member/NoticeMapper.xml"/>
+    <mapper resource="mapper/member/RoomMapper.xml"/>
+    <mapper resource="mapper/member/EventMapper.xml"/>
+    <mapper resource="mapper/member/JoinMapper.xml"/>
     
     <!-- 매퍼 추가되면 활성화 시켜주세요! -->
 <!--     

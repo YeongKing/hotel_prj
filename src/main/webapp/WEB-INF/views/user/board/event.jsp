@@ -31,7 +31,124 @@
     <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
     <!-- E header -->
 <body>
+<script type="text/javascript">
+	
+	var page = 1; // 페이지 초기 값
+	var size = 6; // 한 페이지에 6개 이벤트
 
+	
+    $(document).ready(function() {
+        var searchDataBeginDe = "";
+        var searchDataEndDe = "";
+        var searchText = "";
+    	//초기 로딩
+    	loadEvents(page, size,searchDataBeginDe,searchDataEndDe,searchText);
+        // 이벤트 목록 더보기 버튼 클릭
+        $("#btnMore").on('click', function(e) {
+            $(".btnArea").hide();
+            e.preventDefault(); // 기본 동작 방지
+            loadEvents(++page, size,searchDataBeginDe,searchDataEndDe,searchText); // AJAX를 통해 다음 페이지의 이벤트를 로드
+        });
+        
+	});//ready
+    
+    
+	function fncSearch() {
+		page = 1;
+    	fncPage(page);
+	}
+
+    function fncPage(page) {
+        var searchDataBeginDe = $("#datepickerFrom").val();
+        var searchDataEndDe = $("#datepickerTo").val();
+        var searchText = $("#searchDataValue").val();
+		if (searchDataBeginDe != "" && searchDataEndDe == "") {
+            alert("검색 종료일을 입력해 주세요.");
+            $("#datepickerTo").focus();
+            return;
+        }
+
+        if (searchDataBeginDe == "" && searchDataEndDe != "") {
+            alert("검색 시작일을 입력해 주세요.");
+            $("#datepickerFrom").focus();
+            return;
+        }
+		
+        loadEvents(page, size, searchDataBeginDe, searchDataEndDe,searchText);
+  
+    }
+    
+    function loadEvents(page,size,startDate, endDate,searchText) {
+        //ajax로 이벤트 리스트 비동기 형식으로 얻기
+        $.ajax({
+            type: "GET",
+            url: "eventList.do",
+            cache: false, 
+            data: {
+            	page : page,
+            	size : size,
+            	startDate : startDate,
+            	endDate : endDate,
+            	searchText : searchText}
+            ,
+            dataType: "json",
+            global: false,
+            beforeSend: function() {
+                commonJs.showLoadingBar();
+            },
+            complete: function() {
+                commonJs.closeLoadingBar();
+            },
+            success: function(response) {
+                var events = response.events;
+                var totalCount = response.totalCount;
+                var html = "";
+                
+                // 페이지 초기화 시 기존 내용을 지움
+                if (page === 1) {
+                    $(".boxtypeList.eventType").empty();
+                }
+                
+                if (events.length > 0) {
+                	events.forEach(function(event) {
+                        html += '<li style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">';
+                        html += '<dl>';
+                        html += '<dt>' + event.eventTitle + '</dt>';
+                        html += '<dd class="thum"><img src="http://localhost/hotel_prj/util/event_img/' + event.eventMainImg + '" alt="' + event.eventTitle + '"></dd>';
+                        html += '<dd class="txt">' + event.eventSubTitle + '</dd>';
+                        html += '<dd class="date">';
+                        html += '<div><span>기간</span><em>' + event.eventStartDate + ' - ' + event.eventEndDate + '</em></div>';
+                        html += '</dd>';
+                        html += '</dl>';
+                        html += '<div class="btn">';
+                        html += '<a href="http://localhost/hotel_prj/user/eventDetail.do?eventNum=' + event.eventNum + '" class="btnSC btnM active" id="event_see_detail" ">자세히 보기</a>';
+                        html += '</div>';
+                        html += '</li>';
+                    });
+
+                    $(".boxtypeList.eventType").append(html);
+                }
+				
+                //페이지 * 사이즈가 리스트전체개수와
+                if (page * size >= totalCount) {
+                    $(".btnArea").hide();
+                } else {
+                    $(".btnArea").show();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+                // 응답이 HTML일 경우, JSON으로 파싱할 수 없어서 오류가 발생할 수 있습니다.
+                if (xhr.responseText.startsWith('<')) {
+                    console.log('HTML 응답이 반환되었습니다. 서버 측의 응답을 확인하세요.');
+                }
+                alert('이벤트 목록을 불러오는 중 오류가 발생했습니다.');
+            }
+        });
+    }
+</script>
 
 <div class="wrapper">
 
@@ -97,117 +214,7 @@
     <!-- E footer -->
 </div>
 <!-- //wrapper -->
-     <script>
-        $(document).ready(function() {
-        	var page = 1; // 페이지 갯수
-        	var size = 6; //한페이지에  6개 이벤트 
-        	
-        	//초기 로딩
-        	loadEvents(page, size);
-        	
-            // 이벤트 목록 더보기 버튼 클릭
-            $("#btnMore").on('click', function(e) {
-                $(".btnArea").hide();
-                e.preventDefault(); // 기본 동작 방지
-                loadEvents(++page, size); // AJAX를 통해 다음 페이지의 이벤트를 로드
-            });
 
-        function loadEvents(page,size) {
-            //ajax로 이벤트 리스트 비동기 형식으로 얻기
-            $.ajax({
-                type: "GET",
-                url: "eventList.do",
-                cache: false, 
-                data: {page : page, size : size},
-                dataType: "json",
-                global: false,
-                beforeSend: function() {
-                    commonJs.showLoadingBar();
-                },
-                complete: function() {
-                    commonJs.closeLoadingBar();
-                },
-                success: function(response) {
-                    var events = response.events;
-                    var totalCount = response.totalCount;
-                    var html = "";
-                    if (events.length > 0) {
-                    	events.forEach(function(event) {
-                            html += '<li style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">';
-                            html += '<dl>';
-                            html += '<dt>' + event.eventTitle + '</dt>';
-                            html += '<dd class="thum"><img src="http://localhost/hotel_prj/util/event_img/' + event.eventMainImg + '" alt="' + event.eventTitle + '"></dd>';
-                            html += '<dd class="txt">' + event.eventSubTitle + '</dd>';
-                            html += '<dd class="date">';
-                            html += '<div><span>기간</span><em>' + event.eventStartDate + ' - ' + event.eventEndDate + '</em></div>';
-                            html += '</dd>';
-                            html += '</dl>';
-                            html += '<div class="btn">';
-                            html += '<a href="#" class="btnSC btnM active" id="event_see_detail" onclick="fncView(\'' + event.eventNum + '\');return false;">자세히 보기</a>';
-                            html += '</div>';
-                            html += '</li>';
-                        });
-
-                        $(".boxtypeList.eventType").append(html);
-                    }
-					
-                    //페이지 * 사이즈가 리스트전체개수와
-                    if (page * size >= totalCount) {
-                        $(".btnArea").hide();
-                    } else {
-                        $(".btnArea").show();
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.log('Status:', status);
-                    console.log('Error:', error);
-                    console.log('Response:', xhr.responseText);
-                    // 응답이 HTML일 경우, JSON으로 파싱할 수 없어서 오류가 발생할 수 있습니다.
-                    if (xhr.responseText.startsWith('<')) {
-                        console.log('HTML 응답이 반환되었습니다. 서버 측의 응답을 확인하세요.');
-                    }
-                    alert('이벤트 목록을 불러오는 중 오류가 발생했습니다.');
-                }
-            });
-        }
-
-        function fncView(eventNum) {
-            $("#eventSn").val(eventNum);
-            $("#form").attr("action", "/event/get.do");
-            $("#form").attr("method", "get");
-            $("#form").submit();
-        }
-
-        function fncSearch() {
-        	alert("fncSearch 호출");
-            fncPage("1");
-        }
-
-        function fncPage(page) {
-            var searchDataBeginDe = $("#datepickerFrom").val();
-            var searchDataEndDe = $("#datepickerTo").val();
-			alert("선택날짜 시작" + searchDataBeginDe);
-			alert("선택날짜 종료" + searchDataEndDe);
-			
-            if (searchDataBeginDe != "" && searchDataEndDe == "") {
-                alert("검색 종료일을 입력해 주세요.");
-                $("#datepickerTo").focus();
-                return;
-            }
-
-            if (searchDataBeginDe == "" && searchDataEndDe != "") {
-                alert("검색 시작일을 입력해 주세요.");
-                $("#datepickerFrom").focus();
-                return;
-            }
-
-            $("#page").val(page);
-            $("#form").attr("action", "/event/list.do");
-            $("#form").attr("method", "get");
-            $("#form").submit();
-        }
-    });
-    </script>
 
 </body>
 </html>

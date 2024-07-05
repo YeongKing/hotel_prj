@@ -33,6 +33,42 @@
             EVENT_INPUTDATE,
             ROW_NUMBER() OVER (ORDER BY EVENT_ENDDATE DESC) AS RNUM
         FROM EVENT
+        WHERE EVENT_TITLE LIKE '%'||#{searchText}||'%' 
+        
+    )
+    WHERE RNUM BETWEEN #{offset} + 1 AND #{offset} + #{size}
+	</select>
+	
+	<!-- 검색된 이벤트 종료날짜 내림차순대로 6개씩 가져오는 쿼리문  -->
+	<select id="searchEventList" resultType="eDomain" parameterType="map">
+     SELECT 
+        EVENT_NUM AS eventNum,
+        ADMIN_ID AS adminId,
+        EVENT_TITLE AS eventTitle,
+        EVENT_SUB_TITLE AS eventSubTitle,
+        EVENT_STARTDATE AS eventStartDate,
+        EVENT_ENDDATE AS eventEndDate,
+        EVENT_MAIN_IMG AS eventMainImg,
+        EVENT_SUB_IMG AS eventSubImg,
+        EVENT_CONTENT AS eventContent,
+        EVENT_INPUTDATE AS eventInputDate,
+        RNUM
+    FROM (
+        SELECT 
+            EVENT_NUM,
+            ADMIN_ID,
+            EVENT_TITLE,
+            EVENT_SUB_TITLE,
+            EVENT_STARTDATE,
+            EVENT_ENDDATE,
+            EVENT_MAIN_IMG,
+            EVENT_SUB_IMG,
+            EVENT_CONTENT,
+            EVENT_INPUTDATE,
+            ROW_NUMBER() OVER (ORDER BY EVENT_ENDDATE DESC) AS RNUM
+        FROM EVENT
+         WHERE EVENT_ENDDATE BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')
+         AND EVENT_TITLE LIKE '%'||#{searchText}||'%'        
     )
     WHERE RNUM BETWEEN #{offset} + 1 AND #{offset} + #{size}
 	</select>
@@ -41,4 +77,9 @@
 	<select id="eventCount" resultType="int">
 	SELECT COUNT(*) FROM EVENT
 	</select>
+	
+	<!-- 검섹된 이벤트 갯수 가져오는 쿼리문 -->
+	<select id="searchEventCount" resultType="int" parameterType="map">
+	SELECT COUNT(*) FROM EVENT
+	WHERE EVENT_ENDDATE BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')	</select>
 </mapper>

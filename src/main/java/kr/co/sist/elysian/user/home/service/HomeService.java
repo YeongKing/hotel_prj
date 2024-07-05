@@ -26,11 +26,16 @@ public class HomeService {
 		
 		try {
 			homeEventList = homeDAO.selectHomeEvent();
+			
 			String eventFullPath = "img_event.jpg";
+			String eventSubFullPath = "img_event.jpg";
 			
 			for(HomeDomain homeEvent : homeEventList) {
 				eventFullPath = uploadPath + homeEvent.getEventMainImg();
+				eventSubFullPath = uploadPath + homeEvent.getEventSubImg();
+				
 				homeEvent.setEventImgFullPath(eventFullPath);
+				homeEvent.setEventSubImgFullPath(eventSubFullPath);
 			} // end for
 			
 		} catch (PersistenceException pe) {

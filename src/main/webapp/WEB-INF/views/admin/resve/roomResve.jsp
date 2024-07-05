@@ -262,8 +262,10 @@
 			} // end if
 			
 			// select option이 변경될 때
-			// 검색 값 초기화
+			// 검색 입력값, 날짜 입력값 초기화
 			table.search('').columns().search('').draw();
+			$("#toDate").val('');
+			$("#fromDate").val('');
 			// 테이블 길이를 기본값(10)으로 설정
 			table.page.len(10).draw();
 			// 테이블 데이터 다시 로드

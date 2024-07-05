@@ -492,15 +492,16 @@ function getLoginCookie(cookieName) {
 								<a href="http://localhost/hotel_prj/user/findIdentifyIntro.do" class="btnS icoArr">아이디 / 비밀번호 찾기<!-- 아이디 / 비밀번호 찾기 --></a>
 							</div>
 						</div>
-						<div class="snsLogin">
-							<a href="javascript:void(0);" class="google">구글 로그인<!-- 구글 로그인 --></a>
-							<a href="javascript:void(0);" class="facebook">페이스북 로그인<!-- 페이스북 로그인 --></a>
+
+<!-- 						<div class="snsLogin">
+							<a href="javascript:void(0);" class="google">구글 로그인구글 로그인</a>
+							<a href="javascript:void(0);" class="facebook">페이스북 로그인페이스북 로그인</a>
 							
-								<a href="javascript:void(0);" class="naver">네이버 로그인<!-- 네이버 로그인 --></a>
-								<a href="javascript:void(0);" class="kakao">카카오톡 로그인<!-- 카카오톡 로그인 --></a>
+								<a href="javascript:void(0);" class="naver">네이버 로그인네이버 로그인</a>
+								<a href="javascript:void(0);" class="kakao">카카오톡 로그인카카오톡 로그인</a>
 							
-							<a href="javascript:void(0);" class="apple">애플 로그인<!-- 애플 로그인 --></a><!-- 20200528 수정 : 애플로그인(추가) -->
-						</div>
+							<a href="javascript:void(0);" class="apple">애플 로그인애플 로그인</a>20200528 수정 : 애플로그인(추가)
+						</div> -->
 					</div>
 				</div>
 			</div>

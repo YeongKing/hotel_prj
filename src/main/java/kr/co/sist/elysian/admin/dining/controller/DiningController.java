@@ -33,7 +33,11 @@ public class DiningController {
 	@Autowired(required = false)
 	private DiningService adminDiningService;
 	
-	//다이닝 리스트 가져오는 메서드
+	/**
+	 * 다이닝 리스트 가져오는 메서드
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/dining.do")
 	public String searchDiningList(Model model) {
 		List<DiningListDomain> list = adminDiningService.searchDiningList();
@@ -45,7 +49,12 @@ public class DiningController {
 
 
 	
-	//다이닝 상세 조회 메서드
+	/**
+	 * 다이닝 상세 조회 메서드
+	 * @param requestData
+	 * @param model
+	 * @return
+	 */
 	@ResponseBody
 	@PostMapping(value="/diningDetail.do", produces="application/json; charset=UTF-8")
 	public DiningDomain selectDiningDetail(@RequestBody Map<String, Object> requestData, Model model) {
@@ -56,7 +65,10 @@ public class DiningController {
 	}//selectDiningDetail
 	
 	
-	//다이닝 등록버튼 클릭시 마지막아이디가져오기 메서드
+	/**
+	 * 다이닝 등록버튼 클릭시 마지막아이디가져오기 메서드
+	 * @return
+	 */
 	@ResponseBody
 	@GetMapping("/addDiningModal.do")
 	public String selectLastDiningId() {
@@ -65,7 +77,14 @@ public class DiningController {
 	}//addDining
 	
 	
-	//다이닝 등록 메서드
+	/**
+	 * 다이닝 등록 메서드
+	 * @param dVO
+	 * @param model
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
 	@PostMapping("/addDining.do")
 	@ResponseBody
 	public boolean addDining(DiningVO dVO, Model model, HttpServletRequest request) throws IOException {
@@ -102,6 +121,15 @@ public class DiningController {
 		return isInserted;
 	}//addDining
 	
+	
+	/**
+	 * 
+	 * @param dVO
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws IOException
+	 */
 	@PostMapping("/updateDining.do")
 	@ResponseBody
 	public boolean updateDining(DiningVO dVO, HttpServletRequest request, Model model) throws IOException {
@@ -131,6 +159,7 @@ public class DiningController {
 		            .openTime(mr.getParameter("openTime"))
 		            .closeTime(mr.getParameter("closeTime"))
 		            .location(mr.getParameter("location"))
+		            .deposit(Integer.parseInt(mr.getParameter("depost")))
 		            .diningImg(updateDiningImg)
 		            .diningComment(mr.getParameter("diningComment"))
 		            .menu(mr.getParameter("menu"))
@@ -149,7 +178,12 @@ public class DiningController {
 		return isUpdated;
 	}//updateDining
 	
-	//다이닝 삭제 메서드
+	/**
+	 * 다이닝 삭제 메서드
+	 * @param diningId
+	 * @param model
+	 * @return
+	 */
 	@ResponseBody
 	@GetMapping("deleteDining.do")
 	public boolean deleteDining(@RequestParam("diningId") String diningId, Model model) {

@@ -54,6 +54,8 @@
       	<typeAlias type="kr.co.sist.elysian.user.room.model.vo.RoomResVO" alias="rrVO"/> 
       	<typeAlias type="kr.co.sist.elysian.user.room.model.domain.RoomListDomain" alias="urld"/> 
      	<typeAlias type="kr.co.sist.elysian.user.room.model.domain.MemberDomain" alias="umd"/> 
+     	<typeAlias type="kr.co.sist.elysian.user.room.model.domain.RoomDomain" alias="urd"/> 
+     	
       	<typeAlias type="kr.co.sist.elysian.user.pay.model.vo.PayVO" alias="pVO"/>
       	<typeAlias type="kr.co.sist.elysian.user.board.qna.model.domain.QnaDomain" alias="mqd"/> 
   		<typeAlias type="kr.co.sist.elysian.user.board.qna.model.vo.QnaVO" alias="mqVO"/>

@@ -653,8 +653,8 @@ function getLoginCookie(cookieName) {
 					<h3 class="hidden">
 					아이디 로그인<!-- 아이디 로그인 -->
 					</h3>
-					<div class="loginBox">
-						<div class="membersLogin">
+					<div class="loginBox" style="position: relative; height: 50vh; width: 100%;"> <!-- 소셜 로그인 추가 시 style 제거 -->
+						<div class="membersLogin" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"> <!-- 소셜 로그인 추가 시 style 제거 -->
 							<p class="loginFrm">
 								<!-- 필수입력서식에 미입력 발생 시, error 클래스 추가 alertMessage 노출, 포커스가 가면 error 클래스 제거 -->
 								<span class="alertMessage">

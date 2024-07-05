@@ -33,7 +33,8 @@
 }
 
 .mainWrapper .header.gnbOn .logo, .mainWrapper .header.type02 .logo {
-    background-position: 0 -60px
+    background-position: 0 -60px;
+    background: url(../../../images/ko/pc/common/bg_logo_header_main.png) no-repeat 0 0
 }
 
 .mainWrapper .header.gnbOn .topUtil .hotelFind:after {

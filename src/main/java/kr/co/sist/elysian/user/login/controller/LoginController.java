@@ -91,7 +91,7 @@ public class LoginController {
             	} // end if
             } // end if
             
-            return "forward:"+movePath; //요청했던 페이지로 이동
+            return "redirect:"+movePath; //요청했던 페이지로 이동
         } else {
             model.addAttribute("error", "잘못된 비밀번호 입니다.");
             return "user/login/loginForm"; //로그인 페이지로 이동

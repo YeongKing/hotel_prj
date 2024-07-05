@@ -12,7 +12,6 @@ import lombok.ToString;
 @Builder
 @ToString
 public class DiningVO {
-
 	private  int hallTable,roomTable, deposit;
 	private  String diningId, diningName, diningType, openTime, closeTime, location, diningImg, diningComment, menu;
 	

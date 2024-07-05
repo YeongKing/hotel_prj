@@ -472,7 +472,7 @@ function closeHubPopup(){
 								<img src="${homeEvent.eventImgFullPath}" onerror="this.src='http://localhost/hotel_prj/util/event_img/img_event.jpg'" alt="${homeEvent.eventSubImgFullPath}">
 								<!-- 멤버십 전용 패키지인 경우 -->
 								<span class="hoverCont">
-									<a href="http://localhost/hotel_prj/user/event.do" class="btnSC btnL">자세히 보기</a>
+									<a href="http://localhost/hotel_prj/user/event.do?eventNum=${homeEvent.eventNum}" class="btnSC btnL">자세히 보기</a>
 								</span>
 							</span>
 							<strong class="tit"><c:out value="${homeEvent.eventTitle}"/></strong>

@@ -684,27 +684,23 @@ function getLoginCookie(cookieName) {
 						</div>
 						<div class="snsLogin">
                             
-                            
-							<a href="javascript:void(0);" class="google">구글 로그인<!-- 구글 로그인 --></a> 
-							<a href="javascript:void(0);" class="facebook">페이스북 로그인<!-- 페이스북 로그인 --></a> 
+                            <!-- 소셜 로그인 
+							<a href="javascript:void(0);" class="google">구글 로그인</a> 
+							<a href="javascript:void(0);" class="facebook">페이스북 로그인</a> 
 							
-								<a href="javascript:void(0);" class="naver">네이버 로그인<!-- 네이버 로그인 --></a>
-                                <!-- 싱크 추가로 주석처리 -->
+								<a href="javascript:void(0);" class="naver">네이버 로그인</a>
                                 
-								<a href="javascript:void(0);" class="kakao">카카오톡 로그인<!-- 카카오톡 로그인 --></a>
+								<a href="javascript:void(0);" class="kakao">카카오톡 로그인</a>
 							
-							<a href="javascript:void(0);" class="apple">애플 로그인<!-- 애플 로그인 --></a>
+							<a href="javascript:void(0);" class="apple">애플 로그인</a>
 							<!-- 20200528 수정 : 애플로그인(추가) -->
 						</div>
 					</div>
 				</div>
 				<ul class="txtGuide">
-					<li>이용자 비밀번호 5회 연속 오류시 계정이 잠기게 됩니다.<!-- 이용자 비밀번호 5회 연속 오류시 계정이 잠기게 됩니다. --></li>
-					<li>오프라인 회원의 경우 온라인 회원가입 후 계정연동 가능합니다.<!-- 오프라인 회원의 경우 온라인 회원가입 후 계정연동 가능합니다. --></li>
+					<li>오프라인 회원의 경우 온라인 회원가입 후 이용이 가능합니다.<!-- 오프라인 회원의 경우 온라인 회원가입 후 계정연동 가능합니다. --></li>
                     <li>유선 혹은 여행사를 통한 예약은 온라인 조회가 불가하오니 예약실로 문의 부탁드립니다.<!--유선 혹은 여행사를 통한 예약은 온라인 조회가 불가하오니 예약실로 문의 부탁드립니다. --></li>
-					<li>메리어트 호텔에서 예약하신 경우, 메리어트 사이트에서만 예약 확인이 가능합니다.<!-- 메리어트 호텔에서 예약하신 경우, 메리어트 사이트에서만 예약 확인이 가능합니다. --></li>
                     
-                        <li>카카오페이 간편가입 및 신세계 면세점 동시가입 회원은 '계정활성화' 버튼을 통해 서비스 이용이 가능합니다.<!-- 카카오페이 간편가입 및 신세계 면세점 동시가입 회원은 '계정활성화' 버튼을 통해 서비스 이용이 가능합니다.--></li>
                     
                     
                     

@@ -3,6 +3,17 @@
  info="" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<script type="text/javascript">
+function confirmLogout() {
+    if (confirm("로그아웃 하시겠습니까?")) {
+        alert("정상적으로 로그아웃 되었습니다.");
+        window.location.href = "http://localhost/hotel_prj/user/logout.do";
+    }
+    return false;
+}
+</script>
+
+
 <div class="header">
 <!-- header type02 추가 되는 경우 mainArea02, mainArea03, mainArea05  -->
 	<div class="headArea">
@@ -55,7 +66,8 @@
 		<ul>
 		<c:choose>
             <c:when test="${not empty userId}">
-                <li><a href="http://localhost/hotel_prj/user/logout.do" id="logout">로그아웃</a></li>
+                <!-- <li><a href="http://localhost/hotel_prj/user/logout.do" id="logout">로그아웃</a></li>  -->
+                <li><a href="#" id="logout" onclick="return confirmLogout();">로그아웃</a></li>
             </c:when>
             <c:otherwise>
                 <li><a href="http://localhost/hotel_prj/user/login.do" id="login">로그인</a></li>

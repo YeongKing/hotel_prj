@@ -282,7 +282,7 @@ function getLoginCookie(cookieName) {
 					</p>
 				</div>
 			</div>
-			<div class="inner">
+			<div class="inner" style="width: 50%"> <!-- 소셜 로그인 추가 시 style 제거 -->
 				<ul class="tabType01 tabType02">
 					<li class="on"><a href="#">
 					엘리시안 회원 로그인<!-- 아이디 로그인 -->

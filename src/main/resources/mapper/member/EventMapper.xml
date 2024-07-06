@@ -81,5 +81,37 @@
 	<!-- 검섹된 이벤트 갯수 가져오는 쿼리문 -->
 	<select id="searchEventCount" resultType="int" parameterType="map">
 	SELECT COUNT(*) FROM EVENT
-	WHERE EVENT_ENDDATE BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')	</select>
+	WHERE EVENT_ENDDATE BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')	
+	</select>
+	
+	<!-- 이벤트 상세조회 쿼리문 -->
+	<select  id="searchEventDetail" resultType="eDomain" parameterType="String">
+	    SELECT 
+            EVENT_NUM AS eventNum,
+            ADMIN_ID AS adminId,
+            EVENT_TITLE AS eventTitle,
+            EVENT_SUB_TITLE AS eventSubTitle,
+            EVENT_STARTDATE AS eventStartDate,
+            EVENT_ENDDATE AS eventEndDate,
+            EVENT_MAIN_IMG AS eventMainImg,
+            EVENT_SUB_IMG AS eventSubImg,
+            EVENT_CONTENT AS eventContent,
+            EVENT_INPUTDATE AS eventInputdate
+        FROM EVENT
+        WHERE EVENT_NUM = #{eventNum}
+	</select>
+	<!-- 추천이벤트 조회 쿼리문 -->
+	<select id="sugEventLists" resultType="eDomain">
+		select eventNum,eventTitle, eventContent, eventStartDate, eventEndDate, eventMainImg, eventSubImg
+		from (
+			 select row_number() over(order by event_inputdate desc) num,
+			 event_num eventNum, event_title eventTitle, event_content eventContent, 
+			 to_char(event_startdate, 'yyyy.mm.dd') eventStartDate, to_char(event_enddate, 'yyyy.mm.dd') eventEndDate, 
+			 event_main_img eventMainImg, EVENT_SUB_IMG eventSubImg
+			 
+			 from event
+			 )
+		where num between 1 and 6
+	</select>
+	
 </mapper>

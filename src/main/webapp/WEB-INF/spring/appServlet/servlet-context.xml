@@ -63,6 +63,7 @@
 			<exclude-mapping path="/user/notice.do"/>
 			<exclude-mapping path="/user/qna.do"/>
 			<exclude-mapping path="/user/event.do"/>
+			<exclude-mapping path="/user/eventDetail.do"/>
 			<exclude-mapping path="/user/eventList.do"/>
 			<exclude-mapping path="/user/noticeDetail.do"/>
 			<exclude-mapping path="/user/aboutUs.do"/>

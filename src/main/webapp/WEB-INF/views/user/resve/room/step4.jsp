@@ -183,16 +183,11 @@
 						</li>
 						</c:forEach>
 							
-							
-							
-							
-							
-							
-							
+
 							
 							<c:forEach var="roomEvent" items="${roomEventlist}" varStatus="i">
 								<li class="swipeSlide">
-								<a href="http://localhost/hotel_prj/user/eventDetail.do?eventNum=${roomEvent.eventNum}" ></a>
+								<a href="http://localhost/hotel_prj/user/eventDetail.do?eventNum=${roomEvent.eventNum}" >
 								<br/>
 									    <p class="txt">${roomEvent.eventTitle}</p>
 										<p class="date">

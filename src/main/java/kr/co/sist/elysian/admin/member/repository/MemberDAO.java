@@ -47,7 +47,6 @@ public class MemberDAO {
 		SqlSession ss= mbDAO.getMyBatisHandler(true);
 		int result = ss.update("kr.co.sist.elysian.admin.member.deleteMember",memberId);
 		mbDAO.closeHandler(ss);
-		System.out.println("result : " + result);
 		return result;
 		
 	}//deleteMember

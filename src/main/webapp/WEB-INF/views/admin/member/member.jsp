@@ -130,7 +130,6 @@ $(document).ready(function() {
     function deleteAction() {
         console.log('삭제 동작 수행');
         var memberId = $('#memberId').val()
-        alert(memberId);
         $.ajax({
         	url:'deleteMember.do',
         	type:'POST',
@@ -157,18 +156,6 @@ $(document).ready(function() {
         
         
 
-        // 서버로 삭제 요청 보내기
-        // $.ajax({
-        //     url: 'delete_url',
-        //     method: 'POST',
-        //     data: { id: itemId },
-        //     success: function(response) {
-        //         console.log('삭제 성공');
-        //     },
-        //     error: function(error) {
-        //         console.log('삭제 실패', error);
-        //     }
-        // });
     }
 
     function updateAction() {
@@ -255,29 +242,7 @@ $(document).ready(function() {
         });//ajax
     }//updateAction
 
-    function registerAction() {
-        console.log('등록 동작 수행');
-        // 서버로 등록 요청 보내기
-        // $.ajax({
-        //     url: 'register_url',
-        //     method: 'POST',
-        //     data: { data: newData },
-        //     success: function(response) {
-        //         console.log('등록 성공');
-        //     },
-        //     error: function(error) {
-        //         console.log('등록 실패', error);
-        //     }
-        // });
-    }
 
-    // 등록 버튼 클릭 시
-    $('#chkAddBtn').on('click', function() {
-        showModal('등록 확인', '등록하시겠습니까?', '예', function() {
-            registerAction();
-            alert('등록 동작 수행');
-        });
-    });
 
     // 삭제 버튼 클릭 시
     $('#chkDeleteBtn').on('click', function() {

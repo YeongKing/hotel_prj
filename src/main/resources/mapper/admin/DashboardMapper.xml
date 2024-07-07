@@ -77,7 +77,7 @@
 		        COUNT(CASE WHEN room_res_status = 'CHECK OUT' THEN 1 END) AS checkoutCnt,
 		        COUNT(CASE WHEN room_res_status IN ('CHECK OUT', 'CHECK IN') THEN 1 END) AS allCheckoutCnt
 		    FROM room_reservation
-		    WHERE checkout BETWEEN TRUNC(SYSDATE, 'iw') AND TRUNC(SYSDATE, 'iw') + 5
+		    WHERE checkout BETWEEN TRUNC(SYSDATE, 'iw') AND TRUNC(SYSDATE, 'iw') + 7
 		    GROUP BY TRUNC(checkout)
 		) rr ON d.check_in_out_date = rr.checkout_date
 		LEFT JOIN (
@@ -86,7 +86,7 @@
 		        COUNT(CASE WHEN room_res_status = 'CHECK IN' THEN 1 END) AS checkinCnt,
 		        COUNT(CASE WHEN room_res_status IN ('CHECK IN', 'RESERVED') THEN 1 END) AS allCheckinCnt
 		    FROM room_reservation
-		    WHERE checkin BETWEEN TRUNC(SYSDATE, 'iw') AND TRUNC(SYSDATE, 'iw') + 5
+		    WHERE checkin BETWEEN TRUNC(SYSDATE, 'iw') AND TRUNC(SYSDATE, 'iw') + 7
 		    GROUP BY TRUNC(checkin)
 		) rr ON d.check_in_out_date = rr.checkin_date
 		ORDER BY d.check_in_out_date
@@ -118,7 +118,7 @@
 			    FROM
 			        dining_reservation
 			    WHERE
-			        visit_datetime BETWEEN TRUNC(SYSDATE, 'iw') AND TRUNC(SYSDATE, 'iw') + 5
+			        visit_datetime BETWEEN TRUNC(SYSDATE, 'iw') AND TRUNC(SYSDATE, 'iw') + 7
 			    GROUP BY
 			        TRUNC(visit_datetime)
 			) dr ON d.visit_date = dr.reserve_date

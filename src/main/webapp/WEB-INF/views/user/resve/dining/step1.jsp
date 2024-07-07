@@ -410,9 +410,11 @@
 										<!-- 명 -->
 										<option value="10">10명</option>
 										<!-- 명 -->
-										<option value="callResve">11명 이상</option>
 										<!-- 11명 이상 -->
 									</select>
+									<div style="font-size: 15px; opacity: 0.5">
+										*11명 이상의 예약은 호텔 측으로 연락 부탁드립니다.
+									</div>
 								</div>
 								<div class="allTimeSwitch">
 									<fieldset>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
 import kr.co.sist.elysian.user.board.event.model.domain.EventDomain;
+import kr.co.sist.elysian.user.home.model.HomeDomain;
 
 @Repository("userEventDAO")
 public class EventDAO {
@@ -67,6 +68,27 @@ public class EventDAO {
 		SqlSession ss = mbDAO.getMyBatisHandler(false);
 		totalCount = ss.selectOne("kr.co.sist.elysian.member.board.event.searchEventCount",param);
 		return totalCount;
+	}
+	
+	/**
+	 * 이벤트 상세정보 조회 메서드
+	 * @param eventNum
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public EventDomain selectEventDetail(String eventNum)throws PersistenceException {
+		EventDomain eDomain = null; 
+		SqlSession ss = mbDAO.getMyBatisHandler(false);
+		eDomain = ss.selectOne("kr.co.sist.elysian.member.board.event.searchEventDetail",eventNum);
+		return eDomain;
+	}
+
+	public List<EventDomain> selectSugEventLists() {
+		List<EventDomain> EventDomain = null;
+		SqlSession ss = mbDAO.getMyBatisHandler(false);
+		EventDomain = ss.selectList("kr.co.sist.elysian.member.board.event.sugEventLists");
+		mbDAO.closeHandler(ss);
+		return EventDomain;
 	}
 	
 

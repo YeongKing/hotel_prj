@@ -64,117 +64,108 @@
             var selectAll = (agresLength == checkedLength);
             $mberAllChk.prop('checked', selectAll); // 모든 항목이 선택된 경우 전체 선택 체크박스도 선택
         });//개별동의 change
-        
-        
-      
 
         $("#nationCode").on("change", function () {
             updateUserNameField();
             validateUserName();
         });//change
-        
+
         $("#eName1, #eName2").on("input", function () {
             updateUserNameField();
         });
 
-
         $("#userName").on("input", function () {
-            validateUserName();
+            var $this = $(this);
+            setTimeout(function () {
+                validateUserName();
+            }, 0);
         });//input
-		
+
         // 초기 상태 설정
-       // updateUserNameField();
-        
-        
+        // updateUserNameField();
+
         // 이메일 유형 선택 시 처리 ///////////////////////////////////
         $("#emailType").on("change", function () {
-		    var value = $(this).val();
-		    if (value == "") {
-		        $("#email2").val("");
-		        $("#email2").prop("readonly", false);
-		    } else {
-		        $("#email2").val(value);
-		        $("#email2").prop("readonly", true);
-		    }
-		});//change
-
+            var value = $(this).val();
+            if (value == "") {
+                $("#email2").val("");
+                $("#email2").prop("readonly", false);
+            } else {
+                $("#email2").val(value);
+                $("#email2").prop("readonly", true);
+            }
+        });//change
 
         // 아이디 영문, 숫자만 입력하도록 처리 //////////////////////////////
-		$("#userId").on("keyup", function (e) {
-		    if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
-		        var inputVal = $(this).val();
-		        $(this).val(inputVal.replace(/[^a-z0-9]/gi, ''));
-		    }
-		});//keyup
+        $("#userId").on("keyup", function (e) {
+            if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
+                var inputVal = $(this).val();
+                $(this).val(inputVal.replace(/[^a-z0-9]/gi, ''));
+            }
+        });//keyup
 
-        
         //문자인증 및 인증번호 확인 기능 /////////////////////////////////////
-		$("#phoneChk").click(function() {
-		    gfncNameCert();
-		});//click
+        $("#phoneChk").click(function() {
+            gfncNameCert();
+        });//click
 
-		$("#phoneChk2").click(function() {
-		    verifyPopup();
-		});//click
-        
-		
-		//전화번호 입력 시 포맷팅 ///////////////////////////////////////////
-		$('#userPhone').on('focus', function() {
-		    $(this).closest('.verifyPhoneFrm').removeClass('error');
-		});//focus
-		
-		$('#userPhoneVerify').on('focus', function() {
-		    $(this).closest('.verifyNumFrm').removeClass('error');
-		});//focus
+        $("#phoneChk2").click(function() {
+            verifyPopup();
+        });//click
 
-		$('#userPhone').on('input', function() {
-		    var input = $(this).val().replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
-		    var formatted = '';
+        //전화번호 입력 시 포맷팅 ///////////////////////////////////////////
+        $('#userPhone').on('focus', function() {
+            $(this).closest('.verifyPhoneFrm').removeClass('error');
+        });//focus
 
-		    if (input.length > 3) {
-		        formatted += input.substr(0, 3) + '-';
-		        input = input.substr(3);
-		    }//end if
+        $('#userPhoneVerify').on('focus', function() {
+            $(this).closest('.verifyNumFrm').removeClass('error');
+        });//focus
 
-		    if (input.length > 4) {
-		        formatted += input.substr(0, 4) + '-';
-		        input = input.substr(4);
-		    }//end if
+        $('#userPhone').on('input', function() {
+            var input = $(this).val().replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+            var formatted = '';
 
-		    formatted += input;
-		    $(this).val(formatted);
+            if (input.length > 3) {
+                formatted += input.substr(0, 3) + '-';
+                input = input.substr(3);
+            }//end if
 
-		    if (formatted.length >= 13) {
-		        $(this).val(formatted.substr(0, 13)); // 최대 길이 제한
-		    }//end if
-		});//input
-		
-		//생년월일////////////////////////////////////
-		$("#userBirth").on("input", function() {
-	        formatBirthDate(this);
-	    }).on("blur", function() {
-	        validateBirthDate(this);
-	    });
-        
+            if (input.length > 4) {
+                formatted += input.substr(0, 4) + '-';
+                input = input.substr(4);
+            }//end if
+
+            formatted += input;
+            $(this).val(formatted);
+
+            if (formatted.length >= 13) {
+                $(this).val(formatted.substr(0, 13)); // 최대 길이 제한
+            }//end if
+        });//input
+
+        //생년월일////////////////////////////////////
+        $("#userBirth").on("input", function() {
+            formatBirthDate(this);
+        }).on("blur", function() {
+            validateBirthDate(this);
+        });
+
     });//ready
-    
-    var natFlag=false;
+
+    var natFlag = false;
     // 국가 코드 변경 시 처리 /////////////////////////////////////////////
     function updateUserNameField() {
-    	
         var selectedCountry = $("#nationCode").val();
         if (selectedCountry !== "KR") {
-            //$("#userNameField").hide(); // 필드를 숨김
             var eName1 = $("#eName1").val().toUpperCase();
             var eName2 = $("#eName2").val().toUpperCase();
             $("#userName").val(eName2 + " " + eName1);
-            //$("#userName").val($("#eName2").val()+" "+$("#eName1").val()); //한국이름을 영어 이름 조합으로 설정
-            $("#userName").attr("readonly",true)
-            natFlag=false;    
-        } else{ 
-        	natFlag=true;
-        	//alert("한국이름")
-            $("#userName").attr("readonly",false)
+            $("#userName").attr("readonly", true);
+            natFlag = false;
+        } else {
+            natFlag = true;
+            $("#userName").attr("readonly", false);
         }
     }//updateUserNameField
 
@@ -222,9 +213,8 @@
         var loginMethod = jQuery.trim(jQuery("#loginMethod").val()); //로그인 방법 일반으로 고정
         jQuery("#email").val(email);  // 이메일 조합형 hidden 세팅
         jQuery("#nationCodeH").val(nationCode);  // 국가코드 설정
-		
-        
-     	// 약관 동의 체크
+
+        // 약관 동의 체크
         if (!$('#frmChk01').is(':checked')) {
             alert("이용 약관에 동의해 주세요.");
             return;
@@ -242,7 +232,7 @@
             }
         });
         $('#mberAgreArrH').val(chkArray);
-        
+
         /*
         사용자 입력정보 VALIDATION 체크
         해당 열 input, select 박스가 하나라도 미기재 된 경우 validation false
@@ -341,8 +331,8 @@
             jQuery("#eName2").focus();
             return;
         }
-        
-     	// 한글이름 형식 검증
+
+        // 한글이름 형식 검증
         if (userName.length === 0) {  // 이름이 비어 있는 경우 경고 메시지 표시
             alert('이름은 필수 입력값 입니다.');
             jQuery("#userName").focus();
@@ -355,7 +345,7 @@
             jQuery("#userPw").focus();
             return;
         }
-        
+
         // 비밀번호2 형식 검증
         if (!gfncPatternCheck(userPwRe)) {
             alert('비밀번호는 영문/숫자/특수문자 조합 8~12자리까지 입력 가능합니다.');
@@ -369,8 +359,8 @@
             jQuery("#userPwRe").focus();
             return;
         }
-        
-     	// 전화번호 유효성 검사 추가
+
+        // 전화번호 유효성 검사 추가
         var userPhone = jQuery.trim(jQuery("#userPhone").val());
         if (userPhone.length < 1) {
             alert("전화번호를 입력해주세요.");
@@ -410,8 +400,8 @@
             jQuery("#detailAddress").focus();
             return;
         }
-        
-     	// 생년월일 유효성 검사
+
+        // 생년월일 유효성 검사
         if (!isValidDate(userBirth)) {
             alert("유효하지 않은 생년월일입니다");
             jQuery("#userBirth").focus();
@@ -424,8 +414,8 @@
             jQuery("#email1").focus();
             return;
         }
-        
-     	// 인증번호 확인 버튼이 비활성화 상태인지 확인
+
+        // 인증번호 확인 버튼이 비활성화 상태인지 확인
         if (!$("#phoneChk2").prop("disabled")) {
             alert("인증번호 확인을 완료해 주세요");
             return;
@@ -434,20 +424,18 @@
         //이메일,아이디 중복체크 여부
         var emailDupChkYn = jQuery("#emailDupChkYn").val();
         var idDupChkYn = jQuery("#idDupChkYn").val();
-        
+
         if (idDupChkYn != 'Y') {
             alert("아이디 중복체크가 필요합니다");
             return;
         }
-        
+
         if (emailDupChkYn != 'Y') {
             alert("이메일 중복체크가 필요합니다");
             return;
         }
-        
 
         if (!registFlag) {
-
             registFlag = true;
 
             //회원가입 요청
@@ -461,12 +449,9 @@
                 global: false,
                 success: function (data) {
                     if (data.statusR == 200) {
-                        //전달받은 멤버십번호가 존재할 경우 완료페이지
                         goJoinComplete();
                     } else {
                         registFlag = false;
-                        //alert("관리자에게 문의하세요.");
-                        //alert(data.messageR + "(" + data.statusR + " : " + data.codeR + ")");
                         alert(data.statusR + " : " + data.codeR + " : " + data.messageR);
                         return;
                     }
@@ -486,33 +471,27 @@
         jQuery("#formJoin").attr("method", "post");
         jQuery("#formJoin").submit();
     }
-    
-  	//한글 이름
-    function fncUserNameChk() {
 
-        //전화번호 입력여부 확인alert
+    //한글 이름
+    function fncUserNameChk() {
         var userName = jQuery.trim(jQuery("#userName").val());
-        if (id.length < 1) {
+        if (userName.length < 1) {
             alert("입력된 이름이 없습니다.");
             return false;
         }
-  	}
-        
+    }
+
     //아이디 중복체크
     function fncIdDupChk() {
-
-        //아이디 입력여부 확인alert
         var id = jQuery.trim(jQuery("#userId").val());
         if (id.length < 1) {
             alert("입력된 아이디가 없습니다.");
             return false;
         }
 
-        var userId = jQuery.trim(jQuery("#userId").val());// 아이디 입력
-        //사용자아이디 소문자변환
+        var userId = jQuery.trim(jQuery("#userId").val());
         jQuery("#userId").val(userId.toLowerCase());
 
-        //아이디 유효성 체크
         function chkId(userId) {
             var id = userId;
             var num = id.search(/[0-9]/g);
@@ -535,7 +514,6 @@
             }
         }
 
-        //아이디 유효성 체크
         if (!chkId(userId)) {
             jQuery("#userId").focus();
             return;
@@ -550,10 +528,8 @@
             dataType: "json",
             global: false,
             success: function (data) {
-
                 if (data.statusR == 200 && data.codeR == 'S00000') {
                     alert("사용가능한 ID입니다.");
-                    //아이디중복체크 확인여부
                     jQuery("#idDupChkYn").val("Y");
                 } else if (data.statusR == 400) {
                     alert("이미 사용중인 ID입니다.");
@@ -566,23 +542,19 @@
             }
         });
     }
-    
- 	// 생년월일 입력 형식 처리
+
+    // 생년월일 입력 형식 처리
     function formatBirthDate(input) {
-        // 숫자와 '-'만 남기기
         var value = input.value.replace(/[^0-9]/g, '');
 
-        // 년도 처리
         if (value.length > 4) {
             value = value.slice(0, 4) + '-' + value.slice(4);
         }
 
-        // 월 처리
         if (value.length > 7) {
             value = value.slice(0, 7) + '-' + value.slice(7);
         }
 
-        // 최대 길이 제한
         if (value.length > 10) {
             value = value.slice(0, 10);
         }
@@ -590,9 +562,7 @@
         input.value = value;
     }
 
-    // 생년월일 유효성 검사 함수
     function isValidDate(dateString) {
-        // 날짜 형식 확인 (YYYY-MM-DD)
         var regex = /^\d{4}-\d{2}-\d{2}$/;
         if (!regex.test(dateString)) return false;
 
@@ -601,24 +571,20 @@
         var month = parseInt(parts[1], 10);
         var day = parseInt(parts[2], 10);
 
-        // 년도 범위 확인
         var currentYear = new Date().getFullYear();
         if (year < 1900 || year > currentYear) return false;
 
-        // 월 범위 확인
         if (month < 1 || month > 12) return false;
 
-        // 일 범위 확인
         var monthDays = [31, (year % 4 === 0 && year % 100 !== 0 || year % 400 === 0) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         if (day < 1 || day > monthDays[month - 1]) return false;
 
         return true;
     }
 
-    // 생년월일 유효성 검사 후 경고 메시지 표시
     function validateBirthDate(input) {
         var value = input.value;
-        var alertMessage = input.nextElementSibling; // alertMessage 요소
+        var alertMessage = input.nextElementSibling;
 
         if (!isValidDate(value)) {
             alertMessage.style.display = 'block';
@@ -628,17 +594,12 @@
         }
     }
 
-
-
- 	// 이메일 중복체크
     function fncEmlDupChk() {
-        // 이메일 데이터 조합
-        var email1 = jQuery.trim(jQuery("#email1").val()); // 이메일1 입력
-        var email2 = jQuery.trim(jQuery("#email2").val()); // 이메일2 입력
-        var email = email1 + "@" + email2; // 이메일 조합
+        var email1 = jQuery.trim(jQuery("#email1").val());
+        var email2 = jQuery.trim(jQuery("#email2").val());
+        var email = email1 + "@" + email2;
         jQuery("#email").val(email);
 
-        // 이메일 입력여부 확인
         if (email1.length < 1 || email2.length < 1) {
             alert("입력된 이메일이 없습니다.");
             return false;
@@ -649,13 +610,12 @@
             type: "POST",
             url: "/hotel_prj/user/chk_email.do",
             cache: false,
-            data: { email: email }, // 이메일 파라미터를 명시적으로 포함
+            data: { email: email },
             dataType: "json",
             global: false,
             success: function (data) {
                 if (data.statusR == 200 && data.codeR == 'S00000') {
                     alert("사용가능한 email입니다.");
-                    // 이메일 중복체크 확인여부
                     jQuery("#emailDupChkYn").val("Y");
                 } else if (data.statusR == 400) {
                     alert("이미 사용중인 email입니다.");
@@ -667,20 +627,13 @@
         });
     }
 
-    /**
-     * 이메일 형식 체크
-     * @param str    검증 문자열
-     * @returns {Boolean}
-     */
     function gfncEmailCheck(str) {
         var regExp = /[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
 
-        //입력을 안했으면
-        if (str.lenght == 0) {
+        if (str.length == 0) {
             return false;
         }
 
-        //이메일 형식에 맞지않으면
         if (str.match(regExp)) {
             return true;
         }
@@ -688,127 +641,87 @@
         return false;
     }
 
-    /*---------------주소검색 시작--------------------------------- */
     var themeObj = {
-        bgColor: "#162525", //바탕 배경색
-        searchBgColor: "#162525", //검색창 배경색
-        contentBgColor: "#162525", //본문 배경색(검색결과,결과없음,첫화면,검색서제스트)
-        pageBgColor: "#162525", //페이지 배경색
-        textColor: "#FFFFFF", //기본 글자색
-        queryTextColor: "#FFFFFF", //검색창 글자색
-        //postcodeTextColor: "", //우편번호 글자색
-        //emphTextColor: "", //강조 글자색
-        outlineColor: "#444444" //테두리
+        bgColor: "#162525",
+        searchBgColor: "#162525",
+        contentBgColor: "#162525",
+        pageBgColor: "#162525",
+        textColor: "#FFFFFF",
+        queryTextColor: "#FFFFFF",
+        outlineColor: "#444444"
     };
 
-    //신주소 입력
     function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function (data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-                // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+                var addr = '';
+                var extraAddr = '';
 
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
-
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                if (data.userSelectedType === 'R') {
                     addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                } else {
                     addr = data.jibunAddress;
                 }
 
-
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
                 if (data.userSelectedType === 'R') {
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
                     if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
                         extraAddr += data.bname;
                     }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
                     if (data.buildingName !== '' && data.apartment === 'Y') {
                         extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                     }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
                     if (extraAddr !== '') {
                         extraAddr = ' (' + extraAddr + ')';
                     }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
-                    //document.getElementById("sample2_extraAddress").value = extraAddr;
-
-                } else {
-                    //document.getElementById("sample2_extraAddress").value = '';
                 }
 
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('postcode').value = data.zonecode;
                 document.getElementById("address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
                 document.getElementById("detailAddress").focus();
             }
         }).open();
     }
 
-    // 우편번호 찾기 화면을 넣을 element
     var element_layer = document.getElementById('layer');
 
     function closeDaumPostcode() {
-        // iframe을 넣은 element를 안보이게 한다.
         element_layer.style.display = 'none';
     }
 
-
-    // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
-    // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
-    // 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
     function initLayerPosition() {
-        var width = 300; //우편번호서비스가 들어갈 element의 width
-        var height = 400; //우편번호서비스가 들어갈 element의 height
-        var borderWidth = 5; //샘플에서 사용하는 border의 두께
+        var width = 300;
+        var height = 400;
+        var borderWidth = 5;
 
-        // 위에서 선언한 값들을 실제 element에 넣는다.
         element_layer.style.width = width + 'px';
         element_layer.style.height = height + 'px';
         element_layer.style.border = borderWidth + 'px solid';
-        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
         element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + 'px';
         element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + 'px';
     }
 
-    /*---------------주소검색 종료--------------------------------- */
-
-    //회원가입 취소버튼 클릭시
     function fncCancel() {
         var result = confirm("회원가입을 취소하시겠습니까?");
         if (result) {
-
-        	jQuery("#formJoin").attr("action", "/hotel_prj/user/index.do");
+            jQuery("#formJoin").attr("action", "/hotel_prj/user/index.do");
             jQuery("#formJoin").attr("method", "post");
             jQuery("#formJoin").submit();
         } else {
             return;
         }
-
     }
 
-    //아이디수정시 중복체크여부 초기화(N)
     function idDupInit() {
         jQuery("#idDupChkYn").val("N");
     }
 
-    //이메일수정시 중복체크여부 초기화(N)
     function emailDupInit() {
         jQuery("#emailDupChkYn").val("N");
     }
- 	
-    
-    //문자인증 관련
-	var code2; //인증번호 저장 변수
-    
-	function isValidPhoneFormat(phone) {
+
+    var code2;
+
+    function isValidPhoneFormat(phone) {
         var phonePattern = /^\d{3}-\d{4}-\d{4}$/;
         return phonePattern.test(phone);
     }
@@ -839,16 +752,16 @@
             type: "POST",
             url: "/hotel_prj/user/sendSMS.do",
             data: { userPhone: phone },
-            success: function(response) {
+            success: function (response) {
                 if (response.status === "success") {
                     alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
                     $("#userPhoneVerify").attr("disabled", false);
-                    code2 = response.code; // 서버에서 받은 인증번호를 저장
+                    code2 = response.code;
                 } else {
                     alert("문자 전송에 실패했습니다. 관리자에게 문의하세요.");
                 }
             },
-            error: function() {
+            error: function () {
                 alert("문자 전송에 실패했습니다. 관리자에게 문의하세요.");
             }
         });
@@ -859,24 +772,15 @@
             alert("인증번호가 일치합니다.");
             $("#userPhoneVerify").attr("disabled", true);
             $("#phoneChk").attr("disabled", true);
-            $("#phoneChk2").attr("disabled", true); // phoneChk2 버튼 비활성화
-            $("#userPhone").attr("readonly", true); // userPhone 필드 읽기 전용
+            $("#phoneChk2").attr("disabled", true);
+            $("#userPhone").attr("readonly", true);
         } else {
             alert("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
             $('#userPhoneVerify').closest('.verifyNumFrm').addClass('error');
         }
     }
-
-	/* 테스트용
-    function simulateSMSSuccess(phone) {
-        console.log("Simulating SMS success for phone:", phone);
-        alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
-        $("#userPhoneVerify").attr("disabled", false);
-        code2 = "123456"; // 테스트용 인증번호 설정
-    }
-	*/
-    
 </script>
+
 
 <form id="formJoin" name="formJoin">
 	<!-- 이메일 조합용 -->

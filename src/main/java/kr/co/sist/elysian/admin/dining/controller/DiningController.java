@@ -108,6 +108,7 @@ public class DiningController {
 		            .openTime(mr.getParameter("openTime"))
 		            .closeTime(mr.getParameter("closeTime"))
 		            .location(mr.getParameter("location"))
+		            .deposit(Integer.parseInt(mr.getParameter("deposit")))
 		            .diningImg(updateDiningImg)
 		            .diningComment(mr.getParameter("diningComment"))
 		            .menu(mr.getParameter("menu"))

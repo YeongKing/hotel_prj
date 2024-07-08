@@ -55,7 +55,7 @@
 			<exclude-mapping path="/user/sendSMS.do"/>
 
 			<exclude-mapping path="/user/verify.do"/>
-			<exclude-mapping path="/user//verifyPw.do"/>
+			<exclude-mapping path="/user/verifyPw.do"/>
 			<exclude-mapping path="/user/phoneCheck.do"/>
 			<exclude-mapping path="/user/getUserDetails.do"/>
 			<exclude-mapping path="/user/modifyUserPw.do"/>
@@ -63,8 +63,11 @@
 			<exclude-mapping path="/user/notice.do"/>
 			<exclude-mapping path="/user/qna.do"/>
 			<exclude-mapping path="/user/event.do"/>
+			<exclude-mapping path="/user/eventDetail.do"/>
 			<exclude-mapping path="/user/eventList.do"/>
 			<exclude-mapping path="/user/noticeDetail.do"/>
+			<exclude-mapping path="/user/aboutUs.do"/>
+			<exclude-mapping path="/user/location.do"/>
 
     
     

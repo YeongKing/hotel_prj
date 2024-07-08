@@ -472,7 +472,7 @@ function closeHubPopup(){
 								<img src="${homeEvent.eventImgFullPath}" onerror="this.src='http://localhost/hotel_prj/util/event_img/img_event.jpg'" alt="${homeEvent.eventSubImgFullPath}">
 								<!-- 멤버십 전용 패키지인 경우 -->
 								<span class="hoverCont">
-									<a href="http://localhost/hotel_prj/user/event.do" class="btnSC btnL">자세히 보기</a>
+									<a href="http://localhost/hotel_prj/user/eventDetail.do?eventNum=${homeEvent.eventNum}" class="btnSC btnL">자세히 보기</a>
 								</span>
 							</span>
 							<strong class="tit"><c:out value="${homeEvent.eventTitle}"/></strong>
@@ -548,7 +548,7 @@ function closeHubPopup(){
 		<div class="contBox" data-parallax="self-down">
 			<div class="txtArea">
 				<strong class="titDep1">Dining</strong>
-				<p class="txt">엘레시안호텔의 라이프 스타일 브랜드<br>호스피탈리티 전문성을 바탕으로 확장한 라이프 스타일 브랜드를 소개합니다.</p>
+				<p class="txt">엘리시안호텔의 라이프 스타일 브랜드<br>호스피탈리티 전문성을 바탕으로 확장한 라이프 스타일 브랜드를 소개합니다.</p>
 			</div>
 			
 			<div class="obList">
@@ -567,14 +567,7 @@ function closeHubPopup(){
 		
 		<ul class="obBg">
 			<li class="bg01 on"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_03.jpg" alt="RAMSEY"></li> <!-- 상단 obList 와 매칭되는 li에 on 클래스 추가 -->
-			<!-- <li class="bg02"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_02.jpg" alt="밍글스"></li>
-			<li class="bg03"><img src="static/home/images/ko/pc/HUMA/bg_main03_01.jpg" alt="호경전 IN 뱅커스클럽"></li>
-			<li class="bg04"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_04.jpg" alt="바오하우스"></li>
-			<li class="bg05"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_05.jpg" alt="오미자"></li>
-			<li class="bg06"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_06.jpg" alt="테라로사"></li>
-			<li class="bg07"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_07.jpg" alt="모모야마"></li>
-			<li class="bg08"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_08.jpg" alt="플로라"></li>
-			<li class="bg09"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_09.jpg" alt="스테이 헬스"></li> -->
+
 		</ul>
 	</div>
 	<!-- mainArea05 -->

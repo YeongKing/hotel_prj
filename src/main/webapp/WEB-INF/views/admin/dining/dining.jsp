@@ -508,14 +508,14 @@
                      data: formData,
                      success: function(response) {
                     	 if(response){
-                         alert('등록을 성공적으로 마쳤습니다');
+                         alert('등록을 성공적으로 마쳤습니다.');
 						 window.location.reload();     
                     	 }else{
-                    		 alert('등록에 실패하였씁니다');
+                    		 alert('등록에 실패하였습니다.');
                     	 }
                      },
                      error: function(error) {
-                    	 alert('문제가 발생했습니다', error);
+                    	 alert('등록에 문제가 발생했습니다.', error);
                      }
                  });
             }

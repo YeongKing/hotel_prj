@@ -80,6 +80,12 @@
         <property name="url" value="${connectionURL}"/>
         <property name="username" value="${username}"/>
         <property name="password" value="${password}"/>
+        
+        <!-- Connection pool settings -->
+        <property name="poolMaximumActiveConnections" value="100"/>
+        <property name="poolMaximumIdleConnections" value="20"/>
+        <property name="poolMaximumCheckoutTime" value="30000"/>
+        <property name="poolTimeToWait" value="30000"/>
       </dataSource>
     </environment>
   </environments>

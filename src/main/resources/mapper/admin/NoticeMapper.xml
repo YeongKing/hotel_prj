@@ -9,6 +9,7 @@
 	 <select id="selectNoticeList" resultType="nld">
 		select NOTICE_NUM noticeNum, NOTICE_TITLE noticeTitle, to_char(NOTICE_INPUTDATE,'yyyy-MM-dd') noticeInputDate, ADMIN_ID adminId, NOTICE_VIEWCNT noticeViewCount 
 		from NOTICE
+		order by noticeInputDate DESC
 	 </select>
 	 
 	 <select id="selectNoticeDetail" resultType="nd" parameterType="String">

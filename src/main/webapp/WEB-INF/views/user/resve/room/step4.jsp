@@ -57,7 +57,7 @@
 							<span class="txt"> 서울특별시 강남구 테헤란로 132(역삼동) 한독약품빌딩 8층
 								엘리시안호텔 </span> <span class="thum"> <img
 								src="http://localhost/hotel_prj/static/home/images/ko/pc/HOTEL/img_visual_jjchosun.png"
-								alt="그랜드 조선 제주 전경 이미지">
+								alt="엘리시안 서울">
 							</span>
 						</dd>
 					</dl>
@@ -129,10 +129,7 @@
 											<ul class="infoData">
 												<li><span class="lfData"></span> <span class="rtData"></span>
 												</li>
-												<!-- <li>
-														<span class="lfData">봉사료(10%)</span>
-														<span class="rtData"></span>
-													</li> -->
+
 											</ul>
 										</dd>
 
@@ -186,16 +183,11 @@
 						</li>
 						</c:forEach>
 							
-							
-							
-							
-							
-							
-							
+
 							
 							<c:forEach var="roomEvent" items="${roomEventlist}" varStatus="i">
 								<li class="swipeSlide">
-								<a href="http://localhost/hotel_prj/user/event.do?eventNum=${roomEvent.eventNum}" />
+								<a href="http://localhost/hotel_prj/user/eventDetail.do?eventNum=${roomEvent.eventNum}" >
 								<br/>
 									    <p class="txt">${roomEvent.eventTitle}</p>
 										<p class="date">

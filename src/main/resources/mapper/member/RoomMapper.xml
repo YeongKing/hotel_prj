@@ -16,9 +16,9 @@
 		    WHERE R.ROOM_ID NOT IN (
 		        SELECT RR.ROOM_ID
 		        FROM ROOM_RESERVATION RR
-		        WHERE (RR.CHECKIN &lt; TO_DATE(#{ckoutDate}, 'YYYY-MM-DD') AND RR.CHECKOUT > TO_DATE(#{ckinDate}, 'YYYY-MM-DD'))
-		           OR (RR.CHECKIN &lt;= TO_DATE(#{ckinDate}, 'YYYY-MM-DD') AND RR.CHECKOUT >= TO_DATE(#{ckoutDate}, 'YYYY-MM-DD'))
-		    )
+			    WHERE RR.CHECKIN &lt; TO_DATE(#{ckoutDate}, 'YYYY-MM-DD')
+			    AND RR.CHECKOUT > TO_DATE(#{ckinDate}, 'YYYY-MM-DD') AND ROOM_RES_STATUS != 'CANCELED'
+		    ) and R.ROOM_MAX_CAPACITY >= #{adultsNum}+#{kidsNum}
 		) Subquery
 		WHERE rn = 1
 
@@ -54,8 +54,8 @@
 		    WHERE R.ROOM_ID NOT IN (
 		        SELECT RR.ROOM_ID
 		        FROM ROOM_RESERVATION RR
-		        WHERE (RR.CHECKIN &lt; TO_DATE(#{ckoutDate}, 'YYYY-MM-DD') AND RR.CHECKOUT > TO_DATE(#{ckinDate}, 'YYYY-MM-DD'))
-		           OR (RR.CHECKIN &lt;= TO_DATE(#{ckinDate}, 'YYYY-MM-DD') AND RR.CHECKOUT >= TO_DATE(#{ckoutDate}, 'YYYY-MM-DD'))
+			    WHERE RR.CHECKIN &lt; TO_DATE(#{ckoutDate}, 'YYYY-MM-DD')
+			    AND RR.CHECKOUT > TO_DATE(#{ckinDate}, 'YYYY-MM-DD') AND ROOM_RES_STATUS != 'CANCELED'
 		    )
 		) Subquery
 		WHERE rn = 1

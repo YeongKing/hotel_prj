@@ -265,13 +265,7 @@
         var visitorEmail = "";
         visitorPhone = $("#inp_phone").val()+"-"+$("#inp_phone1").val()+"-"+$("#inp_phone2").val();
         visitorName = $("#inp_visitorName").val();
-        alert("isDiffVisitorBooker : " +  isDiffVisitorBooker);
-        alert("bookerEmail : " + bookerEmail);
-        alert("bookerName : " + bookerName);
-        alert("visitorName : " + visitorName);
-		alert("bookerPhone  :" + bookerPhone );
-        alert("visitorPhone : " + visitorPhone);
-		alert("email : " +email);
+
             // 전화번호 입력 검증
             if (moblphoneTelno == '' || moblphoneTelno1 == '' || moblphoneTelno2 == '') {
                 alert("예약자 전화번호를 입력해 주세요."); // 예약자 전화번호는 필수 입니다
@@ -387,7 +381,6 @@
     //결제 함수
     function payment(pg, pay_method, token){
     var totalPrice = $("#totalPrice").val(); // 총 결제 금액을 가져옴
-    alert("totalPrice : " + totalPrice);
     IMP.init('imp25425801');
     IMP.request_pay({
         pg: pg,
@@ -502,7 +495,7 @@ function generateRandomNumber(length) {
 function insertDiningRes(payNumber) {
  var payNum = payNumber;
  var roomId = 0;
- var diningResStatus = 'CONFRIMED';
+ var diningResStatus = 'CONFIRMED';
  var guestName = jQuery("#visitorName").val();
  var guestPhone =  jQuery("#visitorPhone").val();
  var bookerName =  jQuery("#bookerName").val();
@@ -551,7 +544,6 @@ function insertDiningRes(payNumber) {
                  dataType: "json",
                  contentType: "application/json; charset=utf-8",
                  success: function(response) {
-                	alert(response.result)
                 	location.href="http://localhost/hotel_prj/user/complete.do";
                  },
                  error: function(xhr, status, error) {

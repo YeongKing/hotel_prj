@@ -329,7 +329,7 @@ jQuery(function(){
 					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
 					html += "                                            <dl data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
 					html += "                                                <dt data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">VIEW</dt>";
-					html += "                                                <dd data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">스탠다드, 가든뷰, 풀사이드뷰</dd>";
+					html += "                                                <dd data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">시티뷰, 가든뷰, 풀사이드뷰</dd>";
 					html += "                                            </dl>";
 					html += "                                        </li>";
 					html += "                                        <li data-gtm-vis-has-fired36519946_61=\"1\" style=\"user-select: auto !important;\">";
@@ -446,145 +446,6 @@ jQuery(function(){
 	} 
 
 
-	/*
-		패키지 혜택 상세보기 레이어 팝업 오픈
-	*/
-	function fncOpenPackBenefit(packageSn, hotlSysCode){
-		
-		var param = {
-			"searchSysCode" : hotlSysCode
-			,"packageSn" : packageSn
-		};
-		
-		jQuery.ajax({
-			type : "POST",
-			url : "/package/getPackageInfo.json",
-			cache : false,
-			dataType : "json",
-			data : param,
-			global : false,
-			success : function(data){
-				var resultCode = data.resultCode;
-				var resultMsg = data.resultMsg;
-				
-				if(resultCode == "SUCCESS"){
-					var packageInfo = data.packageInfo;
-					var kwrdList = data.kwrdList;
-					var roomInfoList = data.roomInfoList;
-					var bnefList = data.bnefList;
-					var packageHtml = "";
-					var dayCodeList = data.dayCodeList;
-					var dayMkCodeList = data.dayMkCodeList;
-					
-					packageHtml += "<div class=\"layerCont\">";
-					packageHtml += "	<h2 class=\"compTit\">"+packageInfo.operaGoodsNm+"</h2>";
-					packageHtml += "	<div class=\"detailCont h750\">";
-					packageHtml += "		<div class=\"scrollWrap\">";
-					packageHtml += "			<div class=\"topViewCont\">";
-					packageHtml += "				<div class=\"txtCont\">";
-					packageHtml += "					<p class=\"txt\">"+packageInfo.operaGoodsDc+"</p>";
-					if(kwrdList.length > 0){
-						packageHtml += "				<div class=\"category\">";
-						for(var i = 0; i < kwrdList.length; i++){
-							packageHtml += "<span>"+kwrdList[i].kwrdNm+"</span>";	
-						}
-						packageHtml += "				</div>";	
-					}
-					packageHtml += "				</div>";
-					packageHtml += "			</div>";
-					packageHtml += "			<div class=\"inner\">";
-					packageHtml += "				<h2 class=\"titDep2\">객실별 패키지 구성</h2>";
-					packageHtml += "				<ul class=\"packageCont01\">";
-					for(var j = 0; j < roomInfoList.length; j++){
-						var roomInfo = roomInfoList[j];
-						packageHtml += "				<li>";
-						packageHtml += "					<strong class=\"tit\">"+roomInfo.roomNm+"</strong>";
-						packageHtml += "					<div class=\"priceInfor\">";
-						
-						for(var k = 0; k < roomInfo.dayInfoList.length; k++){
-							var dayInfo = roomInfo.dayInfoList[k];
-							
-							var day1Code = dayCodeList.filter(function(item){    
-								return item.code === dayInfo.day1;
-							});
-							
-							
-							packageHtml += "					<div>";
-							packageHtml += "						<strong class=\"day\">";
-							packageHtml += " 					"+ day1Code[0].codeNm +"";
-							if(dayInfo.mark != ""){
-								var day2Code = dayCodeList.filter(function(item){    
-									return item.code === dayInfo.day2;
-								});
-								var markCode = dayMkCodeList.filter(function(item){    
-									return item.code === dayInfo.mark;
-								});
-								packageHtml += "				"+ markCode[0].codeNm +"";
-								packageHtml += "				"+ day2Code[0].codeNm +"";
-							}
-							packageHtml += "						</strong>";
-							packageHtml += "						<span class=\"price\"><em>"+ fncComma(dayInfo.amt) +"</em>KRW ~</span>";
-							packageHtml += "					</div>";
-
-						}
-						packageHtml += "					</div>";
-						packageHtml += "					<div class=\"guideTxt\">";
-						packageHtml += "						<div class=\"listDep1\">";
-						packageHtml += "							"+roomInfo.roomGuideCn.replace(/\n/gi,"<br>");
-						packageHtml += "						</div>";
-						packageHtml += "					</div>";
-						packageHtml += "				</li>";
-					}
-					packageHtml += "				</ul>";
-					packageHtml += "				<h2 class=\"titDep2\">주요 혜택</h2>"; 
-					packageHtml += "				<ul class=\"packageCont22\">";
-					for(var z = 0; z < bnefList.length; z++){
-						var bnefInfo = bnefList[z];
-						packageHtml += "				<li>";
-						packageHtml += "					<dl>";
-						packageHtml += "						<dt>"+bnefInfo.bnefNm+"</dt>";
-						packageHtml += "						<dd class=\"txtArea\">";
-						packageHtml += "						<p class=\"txt\">"+bnefInfo.detailDc.replace(/\n/gi,"<br>")+"</p>"
-						if(bnefInfo.linkButtonNm != "" && bnefInfo.linkUrl != ""){
-							packageHtml += "						<div class=\"btnArea\"><a href=\""+bnefInfo.linkUrl+"\" class=\"btnSC btnL active\" target=\"_blank\" title=\""+bnefInfo.linkButtonNm+"\">"+bnefInfo.linkButtonNm+"</a></div>";
-						}
-						packageHtml += "						</dd>";
-						packageHtml += "					</dl>";
-						packageHtml += "				</li>";
-					}
-					packageHtml += "				</ul>";
-					packageHtml += "				<div class=\"noticeArea\">";
-					packageHtml += "					<h3 class=\"titDep3\">유의사항</h3>"; 
-					packageHtml += "					<div class=\"listDep1\">";
-					packageHtml += "						"+packageInfo.noticeCn.replace(/\n/gi,"<br>");
-					packageHtml += "					</div>";
-					packageHtml += "					<div class=\"revInquiry\">";
-					packageHtml += "						<h3 class=\"titDep3\">예약 문의</h3>"; 
-					packageHtml += "						<span>유선 문의<em>"+packageInfo.inquiryTelno+"</em></span>"; 
-					packageHtml += "						<span>이메일 문의<em><a href=\"mailto:"+packageInfo.inqryEmailAdres+"\">"+packageInfo.inqryEmailAdres+"</a></em></span>"; 
-					packageHtml += "					</div>";
-					packageHtml += "				</div>";
-					packageHtml += "			</div>";
-					packageHtml += "		</div>";
-					packageHtml += "	</div>"; 
-					packageHtml += "	<button type=\"button\" class=\"btnClose\" onclick=\"commonJs.popClose(jQuery('#layerPop3'));\">닫기</button>"; 
-					packageHtml += "</div>";
-					
-					jQuery("#layerPop3").html(packageHtml);
-					commonJs.popShow(jQuery('#layerPop3'));
-					commonJs.initDesignScroll(jQuery('.scrollWrap'));
-					
-				}else{
-					alert(resultMsg);
-					return false;
-				}
-			},
-			error:function(r, s, e){
-				alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
-				return false;
-			}
-		});
-	}
 
 </script>
 		<form action="" name="step1Form" id="step1Form" method="post">
@@ -752,7 +613,7 @@ jQuery(function(){
 										<dd class="keyword">
 											<span>ROOM</span>
 										</dd>
-										<dd class="roomBenefit">${room.viewName}|
+										<dd class="roomBenefit">${room.viewName} |
 											${room.roomSize}㎡</dd>
 										<dd class="btnView">
 											<a href="#none" class="btnS icoArr"

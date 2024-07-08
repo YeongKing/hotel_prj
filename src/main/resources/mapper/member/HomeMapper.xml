@@ -5,7 +5,7 @@
 <mapper namespace="kr.co.sist.elysian.member.home">
 
 	<select id="selectHomeEvent" resultType="homeDomain">
-		select eventTitle, eventContent, eventStartDate, eventEndDate, eventMainImg, eventSubImg
+		select eventNum, eventTitle, eventContent, eventStartDate, eventEndDate, eventMainImg, eventSubImg
 		from (
 			 select row_number() over(order by event_inputdate desc) num,
 			 event_num eventNum, event_title eventTitle, event_content eventContent, 

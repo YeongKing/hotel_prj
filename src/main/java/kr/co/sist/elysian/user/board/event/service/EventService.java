@@ -136,5 +136,51 @@ public class EventService{
 
         return formattedEvents;
     }
+
+
+    /**
+     * 이벤트 상세 정보 가져오는 메서드
+     * @param eventNum
+     * @return
+     */
+	public EventDomain searchEventDetail(String eventNum) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		EventDomain eDomain = null;
+		try {
+			eDomain = eventDAO.selectEventDetail(eventNum);
+		}catch(PersistenceException pe) {
+			pe.printStackTrace();
+		}
+		
+		try {
+			if (eDomain.getEventStartDate() != null) {
+                Date startDate = inputFormat.parse(eDomain.getEventStartDate());
+                eDomain.setEventStartDate(outputFormat.format(startDate));
+            }
+            if (eDomain.getEventEndDate() != null) {
+                Date endDate = inputFormat.parse(eDomain.getEventEndDate());
+                eDomain.setEventEndDate(outputFormat.format(endDate));
+            }
+		}catch(ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return eDomain;
 	}
+
+
+
+	public List<EventDomain> selectSugEvent() {
+        List<EventDomain> eDomain = null;
+        try {
+        	eDomain = eventDAO.selectSugEventLists();
+            eDomain = formatEventDates(eDomain);
+        }catch(PersistenceException pe) {
+        	pe.printStackTrace();
+        }
+        return eDomain;
+	}
+}
 	

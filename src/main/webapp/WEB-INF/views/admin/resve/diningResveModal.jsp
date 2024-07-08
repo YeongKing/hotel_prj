@@ -81,7 +81,7 @@
 				</div>
                             
 				<div class="form-group mt-3">
-					<label>예약자 정보</label>
+					<label>방문자 정보</label>
 					<div class="table-responsive">
 						<table class="table table-bordered modal-table">
 							<tr>

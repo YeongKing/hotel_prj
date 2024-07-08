@@ -548,7 +548,7 @@ function closeHubPopup(){
 		<div class="contBox" data-parallax="self-down">
 			<div class="txtArea">
 				<strong class="titDep1">Dining</strong>
-				<p class="txt">엘레시안호텔의 라이프 스타일 브랜드<br>호스피탈리티 전문성을 바탕으로 확장한 라이프 스타일 브랜드를 소개합니다.</p>
+				<p class="txt">엘리시안호텔의 라이프 스타일 브랜드<br>호스피탈리티 전문성을 바탕으로 확장한 라이프 스타일 브랜드를 소개합니다.</p>
 			</div>
 			
 			<div class="obList">

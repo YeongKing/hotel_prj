@@ -46,7 +46,7 @@ public class EventController {
 	//이벤트 상세 조회 메서드
 	@ResponseBody
 	@PostMapping(value="/eventDetail.do", produces="application/json; charset=UTF-8")
-	public EventDomain selectEvnetDetail(@RequestBody Map<String, Object> requestData, Model model) {
+	public EventDomain searchEvnetDetail(@RequestBody Map<String, Object> requestData, Model model) {
 		 String eventNum = (String) requestData.get("eventNum");
 	     EventDomain ed = es.searchEventDetail(eventNum);
 
@@ -125,8 +125,8 @@ public class EventController {
 		if(mainImg == null && existingMainImg != null) {
 			 mainImg = existingMainImg;
 		 }
-		if(mainImg == null && existingSubImg != null) {
-			 mainImg = existingSubImg;
+		if(subImg == null && existingSubImg != null) {
+			subImg = existingSubImg;
 		 }
 		
 	    eVO = EventVO.builder()

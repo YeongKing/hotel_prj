@@ -140,7 +140,7 @@ public class DiningController {
 	
 	
 	 @PostMapping("/dining_step1.do")
-	 String diningBookingStep1(
+	 public String diningBookingStep1(
 		        @ModelAttribute DiningResVO drVO1, 
 		        @ModelAttribute DiningSeatsVO dsVO1,
 		        Model model,

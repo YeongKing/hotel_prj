@@ -1,6 +1,5 @@
 package kr.co.sist.elysian.user.dining.repository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +53,7 @@ public class DiningDAO {
 		
 		SqlSession ss = mbDAO.getMyBatisHandler(false);
 		cnt = ss.selectOne("kr.co.sist.elysian.member.dining.oneDiningSeatCnt",paramMap);
+		
 		mbDAO.closeHandler(ss);
 		return cnt;
 	}

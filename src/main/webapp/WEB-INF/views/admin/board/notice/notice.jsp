@@ -275,19 +275,13 @@
             });
         });
 
-/*         // 삭제 버튼 클릭 시
-        $('#chkDeleteBtn').on('click', function() {
-            showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
-                deleteAction();
-                alert('삭제 동작 수행');
-            });
-        }); */
+
 
         // 수정 버튼 클릭 시
         $('#chkUpdateBtn').on('click', function() {
             showModal('수정 확인', '수정하시겠습니까?', '예', function() {
                 updateAction();
-                alert('수정 동작 수행');
+              
             });
         });
         

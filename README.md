@@ -9,19 +9,19 @@
 
 ## 👫 멤버 소개 및 업무 분장
 - 김무영 📍[github](https://github.com/YeongKing)  
-  ✔ 사용자 : 객실 예약, 결제, 공지사항, 자주찾는질문
-  ✔ 관리자 : 객실 관리, 사용자 관리, 공지사항 관리, 자주찾는질문,
-- 손지민 📍[github](https://github.com/iuiwiff)  
-  ✔ 사용자 : 로그인, ID/PW찾기, 회원가입  
-  ✔ 관리자 : 로그인  
-- 윤웅찬 📍[github](https://github.com/dbsdndcks)   
-  ✔ 사용자 : 다이닝 예약, 결제, 이벤트  
-  ✔ 관리자 : 다이닝 관리, 이벤트 관리   
-- 이주희 📍[github](https://github.com/ljhee92)  
-  ✔ 사용자 : MY페이지(예약 내역 확인, 회원정보수정, PW변경, 회원탈퇴), 대시보드 
-  ✔ 관리자 : 예약 관리  
-- 공통  
-  ✔ 기타 : DB 설계, 형상 관리, UI 설계, PPT 제작, 발표 등
+  ✔ 사용자 : 객실 예약, 결제, 공지사항, 자주찾는질문<br/>
+  ✔ 관리자 : 객실 관리, 사용자 관리, 공지사항 관리, 자주찾는질문<br/>
+- 손지민 📍[github](https://github.com/iuiwiff)  <br/>
+  ✔ 사용자 : 로그인, ID/PW찾기, 회원가입  <br/>
+  ✔ 관리자 : 로그인  <br/>
+- 윤웅찬 📍[github](https://github.com/dbsdndcks)   <br/>
+  ✔ 사용자 : 다이닝 예약, 결제, 이벤트  <br/>
+  ✔ 관리자 : 다이닝 관리, 이벤트 관리   <br/>
+- 이주희 📍[github](https://github.com/ljhee92)  <br/>
+  ✔ 사용자 : MY페이지(예약 내역 확인, 회원정보수정, PW변경, 회원탈퇴), 대시보드 <br/>
+  ✔ 관리자 : 예약 관리  <br/>
+- 공통  <br/>
+  ✔ 기타 : DB 설계, 형상 관리, UI 설계, PPT 제작, 발표 등<br/>
 
 ## ⚙️ 개발 환경
 - Version : Java 11

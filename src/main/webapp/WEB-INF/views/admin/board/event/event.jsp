@@ -386,9 +386,7 @@ $(document).ready(function() {
 	})
 	
 	 // 테이블의 이벤트 번호 클릭시
-    $(".eventNumber").click( function(){
-
-    	
+	 $(document).on('click', '.eventNumber', function() {
     	var eventNum = $(this).text();
     	
         $.ajax({

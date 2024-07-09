@@ -392,7 +392,7 @@
             
       
             // 테이블의 다이닝 번호 클릭 시
-            $(".diningNumber").click(function() {
+   			 $(document).on('click', '.diningNumber', function() {
             	var diningId = $(this).text();
             	
                 $.ajax({

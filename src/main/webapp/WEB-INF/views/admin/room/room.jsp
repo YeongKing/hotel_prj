@@ -387,23 +387,6 @@ $('#addViewName').change(function() {
         confirmModal.show();
     }
 
-/*     function deleteAction() {
-        console.log('삭제 동작 수행');
-        // 서버로 삭제 요청 보내기
-        // $.ajax({
-        //     url: 'delete_url',
-        //     method: 'POST',
-        //     data: { id: itemId },
-        //     success: function(response) {
-        //         console.log('삭제 성공');
-        //     },
-        //     error: function(error) {
-        //         console.log('삭제 실패', error);
-        //     }
-        // });
-    }
- */
- 
  
  
  function updateAction() {
@@ -564,14 +547,7 @@ $('#addViewName').change(function() {
         });
     });
 
-/*     // 삭제 버튼 클릭 시
-    $('#chkDeleteBtn').on('click', function() {
-        showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
-            deleteAction();
-            alert('삭제 동작 수행');
-        });
-    });
- */
+\
     // 수정 버튼 클릭 시
     $('#chkUpdateBtn').on('click', function() {
         showModal('수정 확인', '수정하시겠습니까?', '예', function() {
@@ -607,7 +583,7 @@ $('#addViewName').change(function() {
 });//ready
 
 
-// 페이지 변경을 시뮬레이션하는 예제 함수
+//* / 페이지 변경을 시뮬레이션하는 예제 함수
 function changePage(pageNumber) {
     // 새로운 페이지 내용을 로드하는 로직
     // 여기서는 시연을 위해 tbody의 내용을 변경합니다.
@@ -626,7 +602,7 @@ function changePage(pageNumber) {
         </tr>`;
         tbody.append(row);
     }
-}
+} */
 </script>
 
 

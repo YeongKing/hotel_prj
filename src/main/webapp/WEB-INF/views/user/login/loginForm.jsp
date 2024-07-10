@@ -34,7 +34,9 @@
  <!--E header  -->
 <!--(페이지 URL)-->
 
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script> <!-- 카카오 -->
 <script>
+Kakao.init('${kakaoAppKey}'); // 카카오 앱 키
 
  $(document).ready(function(){
 	 
@@ -64,6 +66,7 @@
         }
     });
     
+    window.PageScript = new PageScript();
 });
  
 function setLoginCookie(cookieName, value, exdays){
@@ -92,170 +95,160 @@ function getLoginCookie(cookieName) {
     }
     return unescape(cookieValue);
 }
-</script>
 
-<script type="text/javascript">
- 
-	// document.domain = "josunhotel.com"; // 로컬 환경에서는 필요 없음
-	
-	var PageScript = function() {
-		this.init();
-	}
+var PageScript = function() {
+    this.init();
+}
 
-	PageScript.prototype = {
-		init : function() {
-			this.bindSnsLinkEvent();
-		}
-		,validate:function(){
-			var bResult = true;
-			var frstIdx = "";
-			$(".membersLogin p").each(function(){
-				var $this = $(this);
-				$this.find("input[type='text'],input[type='password']").each(function(idx){
-					var validYn = true;
-					var value = jQuery(this).val();
-					var id = jQuery(this).attr("id");
-					if(value == "" && id != "emailType"){
-						validYn = false;
-						if(frstIdx == ""){
-							frstIdx = jQuery(this);
-						}
-					}
-					if(!validYn){
-						$this.addClass("error");
-						$this.find(".alertMessage").show();
-					}else{
-						$this.removeClass("error");
-						$this.find(".alertMessage").hide();
-					}
-				});
-
-			});
-			if(frstIdx != ""){
-				bResult = false;
-				frstIdx.focus();
-				return false;
-			}
-			return bResult;
-		}	
-		,fncLogin:function(param_loginSeCode) {
-			console.log("fncLogin 호출됨"); // 디버깅 로그
-			var frm_userid = "";
-			var frm_userpw = "";
-			var param_nextUrl = decodeURIComponent("/intro.do");
-
-			// 아이디 로그인시
-			if (param_loginSeCode != "SNS") {
-
-				if(PageScript.validate()){
-					console.log("유효성 검사 통과"); // 디버깅 로그
-
-					frm_userid = jQuery("#frm_userid").val(); // 입력된 아이디
-					frm_userpw = jQuery("#frm_userpw").val(); // 입력된 비밀번호
-
-					// form 데이터 설정
-					jQuery("#loginId").val(frm_userid);
-					jQuery("#loginPassword").val(frm_userpw);
-					jQuery("#loginSeCode").val(param_loginSeCode);
-					jQuery("#nextURL").val(param_nextUrl);
-
-					// 폼 제출
-					console.log("폼 제출"); // 디버깅 로그
-					jQuery("#form").submit();
-				} else {
-					console.log("유효성 검사 실패"); // 디버깅 로그
-				}         
-			}
-		}
-		,bindSnsLinkEvent : function() {
-			$('.snsLogin > a').each(function() {
-				$(this).bind('click', function() {
-					var lnkType = $(this).attr('class');
-					var winSize = '';
-					var lnkUrl = '';
-					switch (lnkType) {
-						case "google":
-							winSize = 'width=750,height=850';
-							lnkUrl = "/sns/googleLogin.do?fromPageType=LOGIN";
-							break;
-						case "facebook":
-							winSize = 'width=750,height=850';
-							lnkUrl = "/sns/facebookLogin.do?fromPageType=LOGIN";
-							break;
-						case "naver":
-							winSize = 'width=750,height=850';
-							lnkUrl = "/sns/naverLogin.do?callbackType=login&fromPageType=LOGIN";
-							break;
-						case "kakao":
-							winSize = 'width=750,height=850';
-							lnkUrl = "/sns/kakaoLogin.do?callbackType=login&fromPageType=LOGIN";
-							break;
-						case "apple":
-							winSize = 'width=750,height=850';
-							lnkUrl = "/sns/appleLogin.do?fromPageType=LOGIN";
-							break;
-						default:
-							break;
-					}
-
-					window.open(lnkUrl,'popupSnsLoginWin',winSize+ ',scrollbars=no,toolbar=no,menubar=no');
-				});
-			});
-		}
-	}
-
-	$(document).ready(function() {
-		window.PageScript = new PageScript();
-	});
-	
-	function redirectNextPage(nextURL) {
-		window.location.href = nextURL;
-	}
-	
-	function redirectPage() {
-		var nextURL = decodeURIComponent("/intro.do");
-		
-		if (nextURL != '') {
-			window.location.href = nextURL;
-		} else {
-			window.location.href = 'main.do';
-		}
-	}
-
-	function noMbrLoginPage() {
-		$('#form').attr('action', "/login/noMbrLoginForm.do");
-		$('#form').attr('target', "_self");
-		$('#form').attr('method', "post");
-		$('#form').submit();
-	}
-	
-    function checkOrigin(origin){
-        const josunhotelDomain = "https://josunhotel.com";
-        const josunhotelwwwDomain = "https://www.josunhotel.com";
-        const appDomain = "https://app.josunhotel.com";
-
-        if(origin === josunhotelDomain
-            || origin === josunhotelwwwDomain
-            || origin === appDomain){
-            return true;
+PageScript.prototype = {
+    init: function() {
+        this.bindSnsLinkEvent();
+    },
+    validate: function() {
+        var bResult = true;
+        var frstIdx = "";
+        $(".membersLogin p").each(function() {
+            var $this = $(this);
+            $this.find("input[type='text'],input[type='password']").each(function(idx) {
+                var validYn = true;
+                var value = jQuery(this).val();
+                var id = jQuery(this).attr("id");
+                if (value == "" && id != "emailType") {
+                    validYn = false;
+                    if (frstIdx == "") {
+                        frstIdx = jQuery(this);
+                    }
+                }
+                if (!validYn) {
+                    $this.addClass("error");
+                    $this.find(".alertMessage").show();
+                } else {
+                    $this.removeClass("error");
+                    $this.find(".alertMessage").hide();
+                }
+            });
+        });
+        if (frstIdx != "") {
+            bResult = false;
+            frstIdx.focus();
+            return false;
         }
-        return false;
-    }
+        return bResult;
+    },
+    fncLogin: function(param_loginSeCode) {
+        console.log("fncLogin 호출됨"); // 디버깅 로그
+        var frm_userid = "";
+        var frm_userpw = "";
+        var param_nextUrl = decodeURIComponent("/intro.do");
 
-    window.addEventListener('message', function(e) {
-		if(typeof e.data == "string"){
-			if(checkOrigin(e.origin)){
-				if(e.data == ""){
-                    redirectPage();
-				}else {
-                    redirectNextPage(e.data);
-				}
-			}else {
-                alert("허용되지 않은 도메인");
-			}
-		}
-	})
+        // 아이디 로그인시
+        if (param_loginSeCode != "SNS") {
+            if (PageScript.validate()) {
+                console.log("유효성 검사 통과"); // 디버깅 로그
+
+                frm_userid = jQuery("#frm_userid").val(); // 입력된 아이디
+                frm_userpw = jQuery("#frm_userpw").val(); // 입력된 비밀번호
+
+                // form 데이터 설정
+                jQuery("#loginId").val(frm_userid);
+                jQuery("#loginPassword").val(frm_userpw);
+                jQuery("#loginSeCode").val(param_loginSeCode);
+                jQuery("#nextURL").val(param_nextUrl);
+
+                // 폼 제출
+                console.log("폼 제출"); // 디버깅 로그
+                jQuery("#form").submit();
+            } else {
+                console.log("유효성 검사 실패"); // 디버깅 로그
+            }         
+        }
+    },
+    bindSnsLinkEvent: function() {
+        $('.snsLogin > a').each(function() {
+            $(this).bind('click', function() {
+                var lnkType = $(this).attr('class');
+                switch (lnkType) {
+                    case "google":
+                    	window.location.href = 'https://accounts.google.com/o/oauth2/auth?client_id=540622652015-mhtf329rjo58t00he69h3au7gr5uk8s8.apps.googleusercontent.com&redirect_uri=http://localhost/hotel_prj/user/googleLogin.do&response_type=code&scope=email profile openid&prompt=login';
+                        break;
+                    case "facebook":
+                        window.open('/sns/facebookLogin.do?fromPageType=LOGIN', 'popupSnsLoginWin', 'width=750,height=850,scrollbars=no,toolbar=no,menubar=no');
+                        break;
+                    case "naver":
+                        window.open('/sns/naverLogin.do?callbackType=login&fromPageType=LOGIN', 'popupSnsLoginWin', 'width=750,height=850,scrollbars=no,toolbar=no,menubar=no');
+                        break;
+                    case "kakao":
+                        Kakao.Auth.authorize({
+                            redirectUri: 'http://localhost/hotel_prj/user/kakaoLogin.do',
+                            prompts: 'login' //자동 로그인 방지
+                        });
+                        break;
+                    case "apple":
+                        window.open('/sns/appleLogin.do?fromPageType=LOGIN', 'popupSnsLoginWin', 'width=750,height=850,scrollbars=no,toolbar=no,menubar=no');
+                        break;
+                    default:
+                        break;
+                }
+            });
+        });
+    }
+}
+
+$(document).ready(function() {
+    window.PageScript = new PageScript();
+});
+
+function redirectNextPage(nextURL) {
+    window.location.href = nextURL;
+}
+
+function redirectPage() {
+    var nextURL = decodeURIComponent("/intro.do");
+    
+    if (nextURL != '') {
+        window.location.href = nextURL;
+    } else {
+        window.location.href = 'main.do';
+    }
+}
+
+function noMbrLoginPage() {
+    $('#form').attr('action', "/login/noMbrLoginForm.do");
+    $('#form').attr('target', "_self");
+    $('#form').attr('method', "post");
+    $('#form').submit();
+}
+
+function checkOrigin(origin) {
+    const josunhotelDomain = "https://josunhotel.com";
+    const josunhotelwwwDomain = "https://www.josunhotel.com";
+    const appDomain = "https://app.josunhotel.com";
+
+    if (origin === josunhotelDomain
+        || origin === josunhotelwwwDomain
+        || origin === appDomain) {
+        return true;
+    }
+    return false;
+}
+
+window.addEventListener('message', function(e) {
+    if (typeof e.data == "string") {
+        if (checkOrigin(e.origin)) {
+            if (e.data == "") {
+                redirectPage();
+            } else {
+                redirectNextPage(e.data);
+            }
+        } else {
+            alert("허용되지 않은 도메인");
+        }
+    }
+})
 </script>
+
+
+
 
 
 <!-- 휴면해제 본인인증 page form -->
@@ -282,7 +275,7 @@ function getLoginCookie(cookieName) {
 					</p>
 				</div>
 			</div>
-			<div class="inner" style="width: 50%"> <!-- 소셜 로그인 추가 시 style 제거 -->
+			<div class="inner"> <!-- 소셜 로그인 추가 시 style 제거 -->
 				<ul class="tabType01 tabType02">
 					<li class="on"><a href="#">
 					엘리시안 회원 로그인<!-- 아이디 로그인 -->
@@ -301,8 +294,8 @@ function getLoginCookie(cookieName) {
 					<h3 class="hidden">
 					아이디 로그인<!-- 아이디 로그인 -->
 					</h3>
-					<div class="loginBox" style="position: relative; height: 50vh; width: 100%;"> <!-- 소셜 로그인 추가 시 style 제거 -->
-						<div class="membersLogin" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"> <!-- 소셜 로그인 추가 시 style 제거 -->
+					<div class="loginBox"> <!-- 소셜 로그인 추가 시 style 제거 -->
+						<div class="membersLogin"> <!-- 소셜 로그인 추가 시 style 제거 -->
 							<p class="loginFrm">
 								<!-- 필수입력서식에 미입력 발생 시, error 클래스 추가 alertMessage 노출, 포커스가 가면 error 클래스 제거 -->
 								<span class="alertMessage">
@@ -332,7 +325,7 @@ function getLoginCookie(cookieName) {
 						</div>
 						<div class="snsLogin">
                             
-                            <!-- 소셜 로그인 
+                            <!-- 소셜 로그인 -->
 							<a href="javascript:void(0);" class="google">구글 로그인</a> 
 							<a href="javascript:void(0);" class="facebook">페이스북 로그인</a> 
 							
@@ -382,4 +375,3 @@ function getLoginCookie(cookieName) {
 <div class="dimmed"></div>
 </body>
 </html>
-

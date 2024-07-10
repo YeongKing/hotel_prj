@@ -50,6 +50,10 @@
             display: flex; 
             padding-top: 30px;
         }
+        .modal-body{
+		    max-height: calc(100vh - 200px);
+		    overflow-y: auto;
+		}
     </style>
 
     <script type="text/javascript">
@@ -252,6 +256,7 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="modal-body">
                         <form id="diningDetailFormUpdate" enctype="multipart/form-data" class="form px-5" data-parsley-validate>
                             <div class="row">
                                 <div class="col-12 col-lg-6">
@@ -335,6 +340,7 @@
                                 </div>
                             </div>
                         </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -386,7 +392,7 @@
             
       
             // 테이블의 다이닝 번호 클릭 시
-            $(".diningNumber").click(function() {
+   			 $(document).on('click', '.diningNumber', function() {
             	var diningId = $(this).text();
             	
                 $.ajax({
@@ -502,14 +508,14 @@
                      data: formData,
                      success: function(response) {
                     	 if(response){
-                         alert('등록을 성공적으로 마쳤습니다');
+                         alert('등록을 성공적으로 마쳤습니다.');
 						 window.location.reload();     
                     	 }else{
-                    		 alert('등록에 실패하였씁니다');
+                    		 alert('등록에 실패하였습니다.');
                     	 }
                      },
                      error: function(error) {
-                    	 alert('문제가 발생했습니다', error);
+                    	 alert('등록에 문제가 발생했습니다.', error);
                      }
                  });
             }

@@ -387,23 +387,6 @@ $('#addViewName').change(function() {
         confirmModal.show();
     }
 
-/*     function deleteAction() {
-        console.log('삭제 동작 수행');
-        // 서버로 삭제 요청 보내기
-        // $.ajax({
-        //     url: 'delete_url',
-        //     method: 'POST',
-        //     data: { id: itemId },
-        //     success: function(response) {
-        //         console.log('삭제 성공');
-        //     },
-        //     error: function(error) {
-        //         console.log('삭제 실패', error);
-        //     }
-        // });
-    }
- */
- 
  
  
  function updateAction() {
@@ -564,14 +547,7 @@ $('#addViewName').change(function() {
         });
     });
 
-/*     // 삭제 버튼 클릭 시
-    $('#chkDeleteBtn').on('click', function() {
-        showModal('삭제 확인', '삭제하시겠습니까?', '예', function() {
-            deleteAction();
-            alert('삭제 동작 수행');
-        });
-    });
- */
+
     // 수정 버튼 클릭 시
     $('#chkUpdateBtn').on('click', function() {
         showModal('수정 확인', '수정하시겠습니까?', '예', function() {
@@ -607,26 +583,7 @@ $('#addViewName').change(function() {
 });//ready
 
 
-// 페이지 변경을 시뮬레이션하는 예제 함수
-function changePage(pageNumber) {
-    // 새로운 페이지 내용을 로드하는 로직
-    // 여기서는 시연을 위해 tbody의 내용을 변경합니다.
-    var tbody = $("#table1 tbody");
-    tbody.empty(); // 기존 행을 지웁니다.
 
-    // 선택된 페이지에 맞는 새로운 행을 시뮬레이션하여 로드합니다.
-    for (var i = 1; i <= 5; i++) {
-        var row = `<tr>
-            <th>${(pageNumber - 1) * 5 + i}</th>
-            <td class="roomId">아이디${(pageNumber - 1) * 5 + i}</td>
-            <td>email${(pageNumber - 1) * 5 + i}@example.com</td>
-            <td>전화번호${(pageNumber - 1) * 5 + i}</td>
-            <td>가입일자${(pageNumber - 1) * 5 + i}</td>
-            <td><span class="badge bg-success">Active</span></td>
-        </tr>`;
-        tbody.append(row);
-    }
-}
 </script>
 
 
@@ -1065,16 +1022,7 @@ function changePage(pageNumber) {
 										</div>
 									</div>					
 									<div class="col-md-6 col-12">
-										<div class="form-group">
-											<label for="updateAmenity"> </label> 
-											<input
-						                        type="button"
-						                        id="updateAmenity"
-						                        class="form-control"
-						                        name="updateAmenity"
-												value="어메니티"
-						                     />
-										</div>
+
 									</div>
 									<div class="col-md-6 col-12">
 									</div>

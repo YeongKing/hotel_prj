@@ -29,124 +29,9 @@
 <div class="wrapper mainWrapper topBanner">
 <!-- mass promotion 메뉴 동적 노출 -->
 
-<!-- <script>
-	jQuery(function(){
-		
-		
-		jQuery.ajax({
-			type : "GET",
-			url : "/massPromotion/get.json",
-			cache : false,
-			dataType : "json",
-			global : false,
-			beforeSend: function() {
-			},
-			complete: function() {
-			},
-			success : function(data){
-                var massPromtn = data.bean;
-                //조회 결과에 따라 랜더링
-                if(massPromtn != null && massPromtn != ""){
-                    var url = getMassPromtnUrl();
-                    var menuNm = massPromtn.promtnNm;
-                    var sysCode = massPromtn.sysCode;
-                    appendMassPromotionMenu(url, menuNm, sysCode);
-                }
-			},
-			error:function(r, s, e){
-			}
-		});
-	});
 
-    function getMassPromtnUrl(){
-        var url = "";
-        var sysCode = jQuery("#sysCode").val();
 
-        if(gfncIsApp()){
-            //앱일 경우
-            url = "/m/massPromotion/list.do";
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/m/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/m/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/m/massPromotion/list.do";
-                }
-            }
-        }else {
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL"){
-                url = "/massPromotion/list.do";
-            }else {
-                if(gfncIsDevServer()){
-                    url = "http://dev.josunhotel.com/massPromotion/list.do";
-                }else {
-                    url = "https://www.josunhotel.com/massPromotion/list.do";
-                }
-            }
-        }
-        return url;
-    }
 
-    function appendMassPromotionMenu(url, menuNm, sysCode){
-        if(gfncIsApp()){
-            //앱일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-
-            var pathname = window.location.pathname;
-            if(pathname.indexOf("/app/main.do") == 0){
-                jQuery(".gnbArea ul.toggleList > li > .titArea:contains('패키지')").closest("ul").append(menuHtml);
-            }else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-
-            /*if(jQuery(".gnbArea ul.toggleList li:contains('패키지')").length > jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").length){
-                jQuery(".gnbArea ul.toggleList li:contains('패키지')").closest("ul").append(menuHtml);
-            } else {
-                jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }*/
-
-        }else if(gfncIsMobile()){
-            //모바일일 경우
-            var menuHtml = '<div class="titArea"><li><a href="'+url+'">'+menuNm+'</a></li></div>';
-            jQuery(".gnbArea ul.toggleList li:contains('PACKAGE')").closest("ul").append(menuHtml);
-        }else{
-            //pc일 경우
-            if(sysCode == "JOSUNHOTEL" || sysCode == "JPY"){
-                //해당 페이지가 HUB거나 JPY일 경우
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".allMenu ul.menuDepth01 ul.menuDepth02 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }else {
-                var menuHtml = '<li><a href="'+url+'">'+menuNm+'</a></li>';
-                jQuery(".headArea .utilMenu .gnbDepth1 .gnbDepth2 li:contains('PACKAGE')").closest("ul").append(menuHtml);
-            }
-        }
-    }
-</script> -->
-
-<!-- <script>
-        //2022-05-23 조선라운지 추가
-        //헤더 메뉴 버튼 클릭 이벤트
-        jQuery(document).on("click",".headArea .btnMenu" ,function(){
-
-            //메뉴 펼쳐질때 라운지 list 3가지 무작위 노출
-            if(jQuery(this).hasClass("menuOn")){
-                var expsrCount = 3;
-                var $loungeList = jQuery(".menuDepth-add .gnb-thum li");
-                var randomArray = generateRandomNumberArray(expsrCount, $loungeList.length);
-
-                $loungeList.addClass("hidden");
-                $loungeList.each(function(index){
-                    if(randomArray.indexOf(index) > -1){
-                        jQuery(this).removeClass("hidden");
-                    }
-                });
-            }
-        })
-</script> -->
 
  <!--S header  -->
 <jsp:include page="/WEB-INF/views/user/header.jsp"></jsp:include>
@@ -175,15 +60,7 @@ jQuery(function(){
 
 	jQuery(document).ready(function(){
 
-/* 		// 해상도 팝업 닫기 버튼 이벤트
-		jQuery("#deviceCloseBtn").on("click", function(){
-			var sysCode = jQuery("#sysCode").val();
-			var isTodayClose = jQuery("#fnc02").is(":checked");
-			if(isTodayClose){
-				setCookie(sysCode+"_device","done", 1);
-			}
-			jQuery(".deviceCheck").remove();
-		}); */
+
 
 		jQuery("[name='selectVal']").prop('selectedIndex', 0).seletMenuUpdate(); // 페이지 로딩시 예약바 room 선택되도록
 		//getCookie('JOSUNHOTEL_banner'); //오늘 하루 열지않기 여부 확인
@@ -237,32 +114,10 @@ jQuery(function(){
 				/* 그랜드 조선 제주 티져 오픈 날짜 대응 */
 				var today = new Date(); //오늘 날짜
 
-/* 				if(hotlSysCode == "GJJ"){
-					//인원수 안내 문구 변경
-					jQuery("#ageTxtGuide").closest("ul").removeClass("gjb");
-					jQuery("#ageTxtGuide").text('어린이 기준 : 37개월 ~ 12세');
 
-					//오늘날짜가 티져 오픈일 보다 빠를때
-					if(today < gjjOpenDate){
-						fncSetCalendarDate(gjjOpenDate);
-					}
-				}else if(hotlSysCode == "GJB"){
-					//인원수 안내 문구 변경
-					jQuery("#ageTxtGuide").closest("ul").addClass("gjb");
-					jQuery("#ageTxtGuide").text('어린이 기준 : 1세 ~ 12세');
-
-					fncSetCalendarDate(today);
-				} */
 			}
 		});
 
-		/*
-		프로모션 타입 수정 이벤트
-		*/
-/* 		jQuery("#promoType").on("change", function(){
-			var value = jQuery(this).val();
-			jQuery("#promoCode").attr("name", value);
-		}); */
 
 		/**
 		성인,어린이 인원 수 추가/감소 Click Event
@@ -539,13 +394,7 @@ function fncSearchList(resveType){
 		$('#adultsNum').val($("#adultCntText").text());
 		$('#kidsNum').val($("#childCntText").text());
 		
-		
-		
-/* 		alert("선택된 호텔코드 : "+$("#hotlSysCode").val() + "\n" + 
-				"체크인 날짜 : " +$("#ckinDate").val() + "\n" +
-				"체크아웃 날짜 : " + $("#ckoutDate").val() + "\n" +
-				"어른 : " +  $("#adultsNum").val() + "\n" +
-				"어린이 : " +  $("#kidsNum").val()); */
+
 		if(jQuery("#hotlSysCode").val() == ""){
 			// 호텔 시스템 코드 없음
 			alert("호텔을 선택해주세요."); 
@@ -617,70 +466,21 @@ function closeHubPopup(){
 				<button type="button" class="btnSwipe btnPrev"><span class="hidden">이전</span></button>
 				<div class="swipeWrap swipeGroup">
 					<ul class="swipeCont">
+						<c:forEach var="homeEvent" items="${homeEventlist}" varStatus="i">
 						<li class="swipeSlide">
 							<span class="thum">
-								<img src="/hotel_prj/util/file/img_event.jpg" alt="이미지 준비중">
+								<img src="${homeEvent.eventImgFullPath}"  alt="${homeEvent.eventSubImgFullPath}">
 								<!-- 멤버십 전용 패키지인 경우 -->
 								<span class="hoverCont">
-									<a href="#" class="btnSC btnL">자세히 보기</a>
+									<a href="http://localhost/hotel_prj/user/eventDetail.do?eventNum=${homeEvent.eventNum}" class="btnSC btnL">자세히 보기</a>
 								</span>
 							</span>
-							<strong class="tit">2024 SUMMER ART FESTIVAL</strong>
-							<span class="txt">제 1회를 맞이한 엘리시안 서울만의 여름 시즌 시그니처 이벤트</span>
-							<span class="date">2024.07.01 - 2024.08.31</span>
+							<strong class="tit"><c:out value="${homeEvent.eventTitle}"/></strong>
+							<span class="txt"><c:out value="${homeEvent.eventContent}"/></span>
+							<span class="date"><c:out value="${homeEvent.eventStartDate}"/> - <c:out value="${homeEvent.eventEndDate}"/></span>
 						</li>
-									
-						<li class="swipeSlide">
-							<span class="thum">
-								<img src="/hotel_prj/util/file/%5BPC%5DGJB.jpg" alt="조선호텔앤리조트 Mindful Stay">
-								<!-- 멤버십 전용 패키지인 경우 -->
-								<span class="hoverCont">
-									<a href="/package/get.do?packageSn=2016242&searchSysCode=JOSUNHOTEL" class="btnSC btnL">자세히 보기</a>
-								</span>
-							</span>
-							<strong class="tit">Mindful Stay</strong>
-							<span class="txt">9개 호텔에서 선보이는 일상에 &#039;쉼&#039;을 선사하는 당신만의 마인드풀 스테이를 만나보세요.</span>
-							<span class="date">2024.04.22 -2024.11.30</span>
-						</li>
-									
-						<li class="swipeSlide">
-							<span class="thum">
-								<img src="/hotel_prj/util/file/img_event.jpg" alt="이미지 준비중">
-								<!-- 멤버십 전용 패키지인 경우 -->
-								<span class="hoverCont">
-									<a href="#" class="btnSC btnL">자세히 보기</a>
-								</span>
-							</span>
-							<strong class="tit">인스타그램 스토리 이벤트</strong>
-							<span class="txt">인증샷을 스토리에 공유해 주세요.</span>
-							<span class="date">2024.06.05 - 2024.07.07</span>
-						</li>
-									
-						<li class="swipeSlide">
-							<span class="thum">
-								<img src="/hotel_prj/util/file/img_event.jpg" alt="이미지 준비중">
-								<!-- 멤버십 전용 패키지인 경우 -->
-								<span class="hoverCont">
-									<a href="#" class="btnSC btnL">자세히 보기</a>
-								</span>
-							</span>
-							<strong class="tit">Sweet Apple Mango Delight</strong>
-							<span class="txt">부드러운 망고 시트에 국내산 애플망고를 듬뿍 넣어 새콤달콤이 살아있는 시즌 케이크를 소개합니다.</span>
-							<span class="date">2024.05.27 - 2024.07.31</span>
-						</li>
-										
-						<li class="swipeSlide">
-							<span class="thum">
-								<img src="/hotel_prj/util/file/img_event.jpg" alt="이미지 준비중">
-								<!-- 멤버십 전용 패키지인 경우 -->
-								<span class="hoverCont">
-									<a href="#" class="btnSC btnL">자세히 보기</a>
-								</span>
-							</span>
-							<strong class="tit">The Specialty, Summer</strong>
-							<span class="txt">싱그러운 날씨와 함께 찾아온 아리아의 새로운 시그니처 메뉴를 소개합니다.</span>
-							<span class="date">2024.06.01 - 2024.06.30</span>
-						</li>
+						</c:forEach>
+
 					</ul>
 				</div>
 				<button type="button" class="btnSwipe btnNext"><span class="hidden">다음</span></button>
@@ -748,33 +548,26 @@ function closeHubPopup(){
 		<div class="contBox" data-parallax="self-down">
 			<div class="txtArea">
 				<strong class="titDep1">Dining</strong>
-				<p class="txt">엘레시안호텔의 라이프 스타일 브랜드<br>호스피탈리티 전문성을 바탕으로 확장한 라이프 스타일 브랜드를 소개합니다.</p>
+				<p class="txt">엘리시안호텔의 라이프 스타일 브랜드<br>호스피탈리티 전문성을 바탕으로 확장한 라이프 스타일 브랜드를 소개합니다.</p>
 			</div>
 			
 			<div class="obList">
 				<ul>
-					<li class="obList03"><a href="#"><span class="hidden">RAMSEY</span></a></li> <!-- 마우스 오버 되면 on 클래스 추가 -->
+					<!-- <li class="obList03"><a href="#"><span class="hidden">RAMSEY</span></a></li> 마우스 오버 되면 on 클래스 추가
 					<li class="obList02"><a href="#"><span class="hidden">밍글스</span></a></li>
 					<li class="obList04"><a href="#"><span class="hidden">바오하우스</span></a></li>
 					<li class="obList05"><a href="#"><span class="hidden">오미자</span></a></li>
 					<li class="obList06"><a href="#"><span class="hidden">테라로사</span></a></li>
 					<li class="obList07"><a href="#"><span class="hidden">모모야마</span></a></li>
 					<li class="obList08"><a href="#"><span class="hidden">플로라</span></a></li>
-					<li class="obList09"><a href="#"><span class="hidden">스테이 헬스</span></a></li>
+					<li class="obList09"><a href="#"><span class="hidden">스테이 헬스</span></a></li> -->
 				</ul>
 			</div>
 		</div>
 		
 		<ul class="obBg">
 			<li class="bg01 on"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_03.jpg" alt="RAMSEY"></li> <!-- 상단 obList 와 매칭되는 li에 on 클래스 추가 -->
-			<li class="bg02"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_02.jpg" alt="밍글스"></li>
-			<!-- <li class="bg03"><img src="static/home/images/ko/pc/HUMA/bg_main03_01.jpg" alt="호경전 IN 뱅커스클럽"></li> -->
-			<li class="bg04"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_04.jpg" alt="바오하우스"></li>
-			<li class="bg05"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_05.jpg" alt="오미자"></li>
-			<li class="bg06"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_06.jpg" alt="테라로사"></li>
-			<li class="bg07"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_07.jpg" alt="모모야마"></li>
-			<li class="bg08"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_08.jpg" alt="플로라"></li>
-			<li class="bg09"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main03_09.jpg" alt="스테이 헬스"></li>
+
 		</ul>
 	</div>
 	<!-- mainArea05 -->

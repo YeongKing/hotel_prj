@@ -12,12 +12,24 @@ import kr.co.sist.elysian.admin.board.notice.model.domain.NoticeListDomain;
 import kr.co.sist.elysian.admin.board.notice.model.vo.NoticeVO;
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
 
+/**
+ * @author user
+ *
+ */
 @Repository
 public class NoticeDAO {
 	
 	@Autowired(required = false)
 	private MyBatisDAO mbDAO;
 	
+	
+	
+	
+	/**
+	 * 공지사항 탭 클릭시 공지사항 리스트 선택 메서드
+	 * @return 공지사항 리스트
+	 * @throws PersistenceException
+	 */
 	public List<NoticeListDomain> selectNoticeList() throws PersistenceException{
 		
 		List<NoticeListDomain> list = null;
@@ -29,6 +41,14 @@ public class NoticeDAO {
 		
 	}//selectNoticeList
 	
+	
+	
+	/**
+	 * 공지사항 제목 클릭시 공지사항 세부정보 호출 메서드
+	 * @param noticeNum 공지사항 번호
+	 * @return 공지사항도메인 
+	 * @throws PersistenceException
+	 */
 	public NoticeDomain selectNoticeDetail(String noticeNum) throws PersistenceException{
 		
 		NoticeDomain nd = null;
@@ -40,6 +60,14 @@ public class NoticeDAO {
 		
 	}//selectNoticeDetail
 	
+	
+	
+	/**
+	 * 공지사항 세부정보 수정 메서드
+	 * @param nVO 공지사항 세부정보 VO
+	 * @return 1이 반환되면 성공
+	 * @throws PersistenceException
+	 */
 	public int updateNotice(NoticeVO nVO) throws PersistenceException{
 		
 		SqlSession ss= mbDAO.getMyBatisHandler(true);
@@ -50,6 +78,11 @@ public class NoticeDAO {
 	}//updateNotice
 	
 	
+	/**
+	 * 공지사항 번호 호출 메서드
+	 * @return 공지사항 번호
+	 * @throws PersistenceException
+	 */
 	public String selectNoticeNum() throws PersistenceException{
 		
 		SqlSession ss= mbDAO.getMyBatisHandler(false);
@@ -62,6 +95,13 @@ public class NoticeDAO {
 	
 
 
+	
+	/**
+	 * 공지사항 등록 메서드
+	 * @param nVO 공지사항VO
+	 * @return 1이 반환되면 성공
+	 * @throws PersistenceException
+	 */
 	public int insertNotice(NoticeVO nVO) throws PersistenceException{
 		
 		SqlSession ss= mbDAO.getMyBatisHandler(true);

@@ -59,7 +59,7 @@
 		DEPOSIT = #{dVO.deposit, jdbcType=INTEGER},
 		DINING_IMG = #{dVO.diningImg, jdbcType=VARCHAR},
 		DINING_COMMENT = #{dVO.diningComment, jdbcType=VARCHAR},
-		MENU = #{dVO.menu, jdbcType=VARCHAR},
+		MENU = #{dVO.menu, jdbcType=VARCHAR}
 		WHERE DINING_ID = #{diningId, jdbcType=VARCHAR}
 	</update>
 	

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MemberVO {
 	
-	private String password, engLName, engFName, nationalCode, 
+	private String id, password, engLName, engFName, nationalCode, 
 					phone, zipcode, address, addressDetail, email;
 
 } // class

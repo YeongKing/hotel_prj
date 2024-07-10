@@ -46,15 +46,33 @@
 			<exclude-mapping path="/user/room2.do"/>
 			<exclude-mapping path="/user/step1.do"/>
 			<exclude-mapping path="/user/step2.do"/>
+			
 			<exclude-mapping path="/user/join.do"/>
+			<exclude-mapping path="/user/chk_id.do"/>
+			<exclude-mapping path="/user/chk_email.do"/>
+			<exclude-mapping path="/user/joinInsert.do"/>
+			<exclude-mapping path="/user/joinComplete.do"/>
+			<exclude-mapping path="/user/sendSMS.do"/>
+			
+			<exclude-mapping path="/user/kakaoLogin.do"/>
+			<exclude-mapping path="/user/googleLogin.do"/>
+			<exclude-mapping path="/user/socialJoin.do"/>
+			<exclude-mapping path="/user/socialComplete.do"/>
 
 			<exclude-mapping path="/user/verify.do"/>
+			<exclude-mapping path="/user/verifyPw.do"/>
 			<exclude-mapping path="/user/phoneCheck.do"/>
-			<exclude-mapping path="/user/getUserDetails.do"/>          
+			<exclude-mapping path="/user/getUserDetails.do"/>
+			<exclude-mapping path="/user/modifyUserPw.do"/>
+			          
 			<exclude-mapping path="/user/notice.do"/>
 			<exclude-mapping path="/user/qna.do"/>
 			<exclude-mapping path="/user/event.do"/>
+			<exclude-mapping path="/user/eventDetail.do"/>
+			<exclude-mapping path="/user/eventList.do"/>
 			<exclude-mapping path="/user/noticeDetail.do"/>
+			<exclude-mapping path="/user/aboutUs.do"/>
+			<exclude-mapping path="/user/location.do"/>
 
     
     

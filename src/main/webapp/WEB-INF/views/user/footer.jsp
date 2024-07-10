@@ -3,14 +3,14 @@
  info="" %>
 <div class="footer">
 	<div class="footArea">
-		<span class="logo"><a href="/hotel_prj/index.jsp">ELYSIAN HOTEL</a></span>
+		<span class="logo"><a href="http://localhost/hotel_prj/user/index.do">ELYSIAN HOTEL</a></span>
 		
 		<div class="footCenter">
 			<div class="infoPolicy">
-				<a href="#">고객센터</a>
-				<a href="#">웹사이트 이용약관</a>
-				<a href="#" class="pointColor">개인정보처리방침</a>
-				<a href="#">이메일무단수집금지</a>
+				<a href="http://localhost/hotel_prj/user/index.do">고객센터</a>
+				<a href="http://localhost/hotel_prj/user/index.do">웹사이트 이용약관</a>
+				<a href="http://localhost/hotel_prj/user/index.do" class="pointColor">개인정보처리방침</a>
+				<a href="http://localhost/hotel_prj/user/index.do">이메일무단수집금지</a>
 				<a href="http://localhost/hotel_prj/admin/login_frm.do">관리자사이트</a>
 			</div>
 			

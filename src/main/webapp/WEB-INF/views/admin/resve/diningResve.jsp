@@ -262,6 +262,16 @@
 				// 테이블 갱신
 				table.draw();
 			} // end if
+			
+			// select option이 변경될 때
+			// 검색 입력값, 날짜 입력값 초기화
+			table.search('').columns().search('').draw();
+			$("#toDate").val('');
+			$("#fromDate").val('');
+			// 테이블 길이를 기본값(10)으로 설정
+			table.page.len(10).draw();
+			// 테이블 데이터 다시 로드
+			table.ajax.reload(null, false); // false로 페이징 유지
 		});
 		
 		// select이 날짜 관련(체크인, 체크아웃, 예약일)일 때 실행되는 함수

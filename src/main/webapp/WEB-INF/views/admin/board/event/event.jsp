@@ -52,6 +52,11 @@
 	display: flex; 
 	padding-top: 15px;
 }
+
+.modal-body{
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
 </style>
 
 <script type="text/javascript">
@@ -177,8 +182,12 @@
                                 <input type="text" class="form-control" id="addEventNum" name="eventNum" placeholder="event" disabled>
                             </div>
                             <div class="form-group">
-                                <label for="addEventTitle">이벤트명</label>
+                                <label for="addEventTitle">이벤트제목</label>
                                 <input type="text" class="form-control" id="addEventTitle" name="eventTitle" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label for="addEventSubTitle">이벤트부제목</label>
+                                <input type="text" class="form-control" id="addEventSubTitle" name="eventSubTitle" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="openTime">이벤트 시작일</label>
@@ -237,6 +246,7 @@
 
 							</div>
 						</div>
+						<div class="modal-body">
 						<form id="eventDetailFormUpdate" action="#" class="form px-5"
 							data-parsley-validate>
 							<div class="row">
@@ -247,9 +257,13 @@
 											disabled>
 									</div>
 									<div class="form-group">
-										<label for="updateEventTitle">이벤트명</label> <input type="text"
+										<label for="updateEventTitle">이벤트 제목</label> <input type="text"
 											class="form-control" id="updateEventTitle" name="eventTitle" placeholder="">
 									</div>
+									<div class="form-group">
+                                	<label for="updateEventSubTitle">이벤트 부제목</label>
+                                	<input type="text" class="form-control" id="updateEventSubTitle" name="eventSubTitle" placeholder="">
+                            		</div>
 									<div class="form-group">
 										<label for="updateEventStartDate">이벤트 시작일</label> <input type="text"
 											class="form-control" id="updateEventStartDate" name="eventStartDate" placeholder="00:00">
@@ -320,6 +334,7 @@
 								</div>
 							</div>
 						</form>
+						</div>
 					</div>
 				</div>
 </div>
@@ -371,9 +386,7 @@ $(document).ready(function() {
 	})
 	
 	 // 테이블의 이벤트 번호 클릭시
-    $(".eventNumber").click( function(){
-
-    	
+	 $(document).on('click', '.eventNumber', function() {
     	var eventNum = $(this).text();
     	
         $.ajax({
@@ -390,6 +403,7 @@ $(document).ready(function() {
         		
         		$("#updateEventNum").val(jsonObj.eventNum);
         		$("#updateEventTitle").val(jsonObj.eventTitle);
+        		$("#updateEventSubTitle").val(jsonObj.eventSubTitle);
         		$("#updateEventStartDate").val(jsonObj.eventStartDate);
         		$("#updateEventEndDate").val(jsonObj.eventEndDate);
         		$("#updateEventContent").val(jsonObj.eventContent);

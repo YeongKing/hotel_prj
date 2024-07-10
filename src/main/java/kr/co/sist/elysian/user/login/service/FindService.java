@@ -1,12 +1,15 @@
 package kr.co.sist.elysian.user.login.service;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.nio.charset.StandardCharsets;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.co.sist.elysian.user.login.model.domain.UserDomain;
@@ -28,12 +31,11 @@ public class FindService {
     
     @Value("${sms.api.secret.key}")
     private String api_secret;
-
+    
     public void certifiedPhoneNumber(String userPhone, int randomNumber) {
         Message coolsms = new Message(api_key, api_secret);
 
         HashMap<String, String> params = new HashMap<String, String>();
-        System.out.println("Service : " + userPhone);
         params.put("to", userPhone);
         params.put("from", "01027345305");
         params.put("type", "SMS");
@@ -42,14 +44,10 @@ public class FindService {
 
         try {
             JSONObject obj = (JSONObject) coolsms.send(params);
-            System.out.println("Response: " + new String(obj.toJSONString().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8));
         } catch (CoolsmsException e) {
             String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-            System.out.println("CoolsmsException: " + errorMessage);
-            System.out.println("Error Code: " + e.getCode());
         } catch (Exception e) {
             String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-            System.out.println("Exception: " + errorMessage);
         }
     }
 
@@ -77,4 +75,38 @@ public class FindService {
     public String sanitizePhoneNumber(String userPhone) {
         return userPhone.replaceAll("-", "");  // 하이픈 제거
     }
+    
+    public String modifyUserPw(UserVO uVO, String newLoginPassword) {
+    	
+        JSONObject jsonObj = new JSONObject();
+        String resultCode = "ERROR";
+        PasswordEncoder pwEncoder = new BCryptPasswordEncoder();
+        
+        try {
+            UserDomain userDomain = userDAO.selectLogin(uVO);
+            if (userDomain != null) {
+                String encryptedPw = userDomain.getUserPw();
+                String encodedNewPw = pwEncoder.encode(newLoginPassword);
+                
+                // 새 비밀번호가 기존 비밀번호와 동일한지 확인
+                if (pwEncoder.matches(newLoginPassword, encryptedPw)) {
+                    resultCode = "SAMEASCUR";
+                } else {
+                    uVO.setUserPw(encodedNewPw);
+                    int updateResult = userDAO.updateUserPw(uVO);
+                    if (updateResult > 0) {
+                        resultCode = "SUCCESS";
+                    }
+                }
+            } else {
+                resultCode = "USERNOTFOUND";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        jsonObj.put("resultCode", resultCode);
+        return jsonObj.toString();
+    }
+
 }

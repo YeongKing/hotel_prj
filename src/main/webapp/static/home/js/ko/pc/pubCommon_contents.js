@@ -240,6 +240,10 @@ commonJs.initResvCalendar = function (calendarEl) {
     if (!calendarEl.length) {
         return;
     }
+    
+    var today = new Date();
+    var maxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30); // 오늘로부터 30일 후
+
     var option = {};
     calendarEl.empty();
 
@@ -248,8 +252,8 @@ commonJs.initResvCalendar = function (calendarEl) {
         var promotionDate = [];
 
         option = {
-            defaultDate: new Date(2020, 7, 25),
-            tDay: new Date(2020, 7, 25),
+            defaultDate: today,  // 오늘 날짜로 설정
+            tDay: today,  // 오늘 날짜로 설정
             chkInTitle: '선택 됨',
             numberOfMonths: 1,
             showMonthAfterYear: true,
@@ -276,12 +280,7 @@ commonJs.initResvCalendar = function (calendarEl) {
                 "FRI",
                 "SAT"
             ],
-            // minDate: 0,
-            minDate: new Date(2020, 7, 25),
             dateFormat: 'yy.mm.dd',
-            onChangeMonthYear: function (year, month, inst) {
-                setPromotionDate(year, month);
-            },
             beforeShowDay: function (date) {
                 var calDate = dUtils.getToDate(date);
                 // select
@@ -297,7 +296,6 @@ commonJs.initResvCalendar = function (calendarEl) {
                 if (promotionDate.indexOf(calDate) != -1) {
                     return [true, 'promotion'];
                 }
-
                 return [true];
             },
             onSelect: function (date, inst) {
@@ -306,6 +304,7 @@ commonJs.initResvCalendar = function (calendarEl) {
                 $('.default').removeClass('default');
             }
         };
+
         function setPromotionDate(year, month) {
             //date push
             promotionDate = [];
@@ -316,51 +315,42 @@ commonJs.initResvCalendar = function (calendarEl) {
                 i++;
             }
         }
+
         calendarEl.datepicker(option);
-        //초기 프로모션 데이트 설정
+
+        // 달력의 날짜 범위 설정
+        commonJs.setCalendarChkInOutDate(calendarEl, today, maxDate); // 이 부분 추가
+
+        // 초기 프로모션 데이트 설정
         setPromotionDate(
             calendarEl.datepicker('getDate').getFullYear(),
             calendarEl.datepicker('getDate').getMonth() + 1
         );
         calendarEl.datepicker('refresh');
     } else {
-        var chkInDate = commonJs
-            .calendarMgr
-            ._getChkInDate();
-        var chkOutDate = commonJs
-            .calendarMgr
-            ._getChkOutDate();
+        var chkInDate = commonJs.calendarMgr._getChkInDate();
+        var chkOutDate = commonJs.calendarMgr._getChkOutDate();
         var clickCnt = 0;
         var resved = false;
         var isOneday = calendarEl.hasClass('oneDay');
         var unSelectableDate = [];
 
-        var startDate = new Date();
+        var startDate = today;
 
-        /*if (jQuery("#hotlSysCode").length > 0 && jQuery("#hotlSysCode").val() == "GJJ") {
-            //제주 [오픈날짜 하드코딩]
-            startDate = new Date(2021, 00, 08);
-        } else if (jQuery("#hotlSysCode").length > 0 && jQuery("#hotlSysCode").val() == "GRP") {
-            //판교 [오픈날짜 하드코딩]
-            startDate = new Date(2020, 11, 30);
-        }*/
-
-        //강남 [오픈날짜 하드코딩]
-        if(jQuery("#hotlSysCode").length > 0 && jQuery("#hotlSysCode").val() == "JPY") {
-
+        // 강남 [오픈날짜 하드코딩]
+        if (jQuery("#hotlSysCode").length > 0 && jQuery("#hotlSysCode").val() == "JPY") {
             var jpyOpenDate = new Date(2021, 04, 25);
-            if(jpyOpenDate > startDate){
+            if (jpyOpenDate > startDate) {
                 startDate = jpyOpenDate;
             }
         }
 
-
-        var endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 12, 0);
+        var endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30); // 이 부분 추가
 
         calendarEl.on('refresh', function () {
             clickCnt = 0;
             resved = false;
-        })
+        });
         //checkInOut calendar
         option = {
             defaultDate: startDate,

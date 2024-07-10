@@ -16,9 +16,9 @@
 		    WHERE R.ROOM_ID NOT IN (
 		        SELECT RR.ROOM_ID
 		        FROM ROOM_RESERVATION RR
-		        WHERE (RR.CHECKIN &lt; TO_DATE(#{ckoutDate}, 'YYYY-MM-DD') AND RR.CHECKOUT > TO_DATE(#{ckinDate}, 'YYYY-MM-DD'))
-		           OR (RR.CHECKIN &lt;= TO_DATE(#{ckinDate}, 'YYYY-MM-DD') AND RR.CHECKOUT >= TO_DATE(#{ckoutDate}, 'YYYY-MM-DD'))
-		    )
+			    WHERE RR.CHECKIN &lt; TO_DATE(#{ckoutDate}, 'YYYY-MM-DD')
+			    AND RR.CHECKOUT > TO_DATE(#{ckinDate}, 'YYYY-MM-DD') AND ROOM_RES_STATUS != 'CANCELED'
+		    ) and R.ROOM_MAX_CAPACITY >= #{adultsNum}+#{kidsNum}
 		) Subquery
 		WHERE rn = 1
 
@@ -54,8 +54,8 @@
 		    WHERE R.ROOM_ID NOT IN (
 		        SELECT RR.ROOM_ID
 		        FROM ROOM_RESERVATION RR
-		        WHERE (RR.CHECKIN &lt; TO_DATE(#{ckoutDate}, 'YYYY-MM-DD') AND RR.CHECKOUT > TO_DATE(#{ckinDate}, 'YYYY-MM-DD'))
-		           OR (RR.CHECKIN &lt;= TO_DATE(#{ckinDate}, 'YYYY-MM-DD') AND RR.CHECKOUT >= TO_DATE(#{ckoutDate}, 'YYYY-MM-DD'))
+			    WHERE RR.CHECKIN &lt; TO_DATE(#{ckoutDate}, 'YYYY-MM-DD')
+			    AND RR.CHECKOUT > TO_DATE(#{ckinDate}, 'YYYY-MM-DD') AND ROOM_RES_STATUS != 'CANCELED'
 		    )
 		) Subquery
 		WHERE rn = 1
@@ -76,6 +76,19 @@
          SYSDATE)
 </insert>
     
+    
+	<select id="selectRoomEvent" resultType="urd">
+		select eventTitle, eventContent, eventStartDate, eventEndDate, eventMainImg, eventSubImg, eventNum
+		from (
+			 select row_number() over(order by event_inputdate desc) num,
+			 event_title eventTitle, event_content eventContent, 
+			 to_char(event_startdate, 'yyyy.mm.dd') eventStartDate, to_char(event_enddate, 'yyyy.mm.dd') eventEndDate, 
+			 event_main_img eventMainImg, EVENT_SUB_IMG eventSubImg , EVENT_NUM eventNum
+			 
+			 from event
+			 )
+		where num between 1 and 6
+	</select>
     
     
     

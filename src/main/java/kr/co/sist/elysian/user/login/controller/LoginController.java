@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,9 @@ import kr.co.sist.elysian.user.login.service.LoginService;
 @Controller("userLoginController")
 @RequestMapping("/user")
 public class LoginController {
+	
+	@Value("${kakao.app.key}")
+    private String kakaoAppKey;
     
     @Autowired(required = false)
     @Qualifier("userLoginService")
@@ -42,7 +46,8 @@ public class LoginController {
     
     /* 로그인 화면 이동 */
     @GetMapping("/login.do")
-    public String loginFrm() {
+    public String loginFrm(Model model) {
+    	model.addAttribute("kakaoAppKey", kakaoAppKey);
         return "user/login/loginForm";
     } // loginFrm
     

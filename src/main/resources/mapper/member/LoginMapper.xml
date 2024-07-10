@@ -11,6 +11,13 @@
     where member_id = #{ userId } and exit_flag = 'N'
   </select>
   
+  <!-- 소셜 로그인 시 해당 회원이 테이블에 존재하는 지 -->
+  <select id="socialLogin" resultType="ud" parameterType="uv">
+    select member_id userId, password userPw, name userName, email
+    from member
+    where member_id = #{ userId } and email = #{ email } and exit_flag = 'N'
+  </select>
+  
   <!-- 회원 아이디/비번 찾기 시 해당 회원 정보가 존재하는 지 -->
   <select id="searchPhone" resultType="ud" parameterType="uv">
     select member_id userId, name userName, password userPw

@@ -45,3 +45,5 @@
 
 ## 💾 Docs
 - [UseCase Diagram](https://github.com/YeongKing/hotel_prj/blob/temp/docs/UseCase.png)
+- [Class Diagram](https://github.com/YeongKing/hotel_prj/blob/main/docs/ClassDiagram.jpg)
+- [ERD](https://github.com/YeongKing/hotel_prj/blob/main/docs/ERD.png)

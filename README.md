@@ -1,6 +1,13 @@
 # Elysian Hotel Project
-쌍용교육센터 살려조 3차 프로젝트 - 호텔 예약 시스템 사이트 구현
 
+![image](https://github.com/YeongKing/hotel_prj/assets/105940648/590a4820-6590-4127-b1ed-41f55fac36ef)
+<hr>
+
+
+
+
+
+쌍용교육센터 살려조 3차 프로젝트 - 호텔 예약 시스템 사이트 구현
 ## 🏝 프로젝트 소개
 꿈꾸던 이상향에서의 완벽한 휴식, 5성급 호텔 엘리시안의 객실과 다이닝 예약 및 결제를 제공하는 웹 사이트
 
@@ -30,9 +37,6 @@
 
 ## 🛠 기술 스택
 <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=black"/> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/> <img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jQuery&logoColor=black"/> <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"/> <img src="https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=Oracle&logoColor=white"/> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"/> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"/> <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=Bootstrap&logoColor=white"/>
-
-## 📌 주요 기능
-- 추가 예정
 
 ## 📚 API
 - 포트원(결제) : [https://developers.portone.io/docs/ko/readme?v=v2](https://developers.portone.io/docs/ko/readme?v=v2)

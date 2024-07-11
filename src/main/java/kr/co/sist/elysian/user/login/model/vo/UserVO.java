@@ -15,6 +15,6 @@ public class UserVO {
 	
 	private String userId, userName, eName1, eName2, userPhone, userPw, 
 					genderCode, postcode, nationCode, userBirth, address, 
-					detailAddress, email, loginMethod;
+					detailAddress, email, loginMethod, socialId, linkedSocial;
 
 }

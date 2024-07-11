@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kr.co.sist.elysian.common.dao.MyBatisDAO;
+import kr.co.sist.elysian.user.login.model.domain.UserDomain;
+import kr.co.sist.elysian.user.login.model.vo.UserVO;
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.NationalDomain;
@@ -213,5 +215,33 @@ public class MyPageDAO {
 		myBatisDAO.closeHandler(ss);
 		return result;
 	} // removeMemberInfo
+	
+	
+	//////////////////////////////////소셜 로그인 추가//////////////////////////////////////////
+	/**
+	 * MyBatis와 매핑하여 로그인한 아이디의 소셜 로그인 정보
+	 * @param userId 로그인한 아이디
+	 * @return 연동된 소셜 로그인 정보
+	 * @throws PersistenceException
+	 */
+	public MemberDomain selectSocialLogin(String userId) throws PersistenceException {
+		SqlSession ss = myBatisDAO.getMyBatisHandler(false);
+		MemberDomain mdm = ss.selectOne("kr.co.sist.elysian.member.mypage.selectSocialLogin", userId);
+		myBatisDAO.closeHandler(ss);
+		return mdm;
+	}//selectSocialLogin
+	
+	/**
+     * 로그인한 아이디의 소셜 로그인 연동 해제 처리
+     * @param uVO 연동된 소셜 로그인 정보
+     * @return 연동 해제 처리 결과
+     * @throws PersistenceException
+     */
+    public int updateSocialUnlink(UserVO uVO) throws PersistenceException {
+        SqlSession ss = myBatisDAO.getMyBatisHandler(true);
+        int result = ss.update("kr.co.sist.elysian.member.mypage.updateSocialUnlink", uVO);
+        myBatisDAO.closeHandler(ss);
+        return result;
+    }//updateSocialLogin
 
 } // class

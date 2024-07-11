@@ -1,6 +1,7 @@
 package kr.co.sist.elysian.user.mypage.service;
 
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import kr.co.sist.elysian.user.login.model.domain.UserDomain;
+import kr.co.sist.elysian.user.login.model.vo.UserVO;
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.NationalDomain;
@@ -466,5 +469,45 @@ public class MyPageService{
 		jsonObj.put("resultCode", resultCode);
 		return jsonObj.toJSONString();
 	} // removeMemberInfo
+	
+	////////////////////소셜 로그인 추가//////////////////////
+	public MemberDomain selectSocialLogin(String userId) {
+		MemberDomain mdm = null;
+		try {
+			mdm = myPageDAO.selectSocialLogin(userId);
+		}catch(PersistenceException pe) {
+			pe.printStackTrace();
+		}//end catch
+		return mdm;
+	}//selectSocialLogin
+	
+	/**
+     * 사용자의 소셜 연동을 해제하는 메소드
+     * @param userId 사용자의 ID
+     * @param linkedSocial 소셜 타입 (kakao, naver, google 중 하나)
+     * @return 처리 결과를 담은 Map 객체
+     */
+	public Map<String, Object> updateSocialUnlink(String userId, String linkedSocial) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            UserVO userVO = new UserVO();
+            userVO.setUserId(userId);
+            userVO.setLinkedSocial(linkedSocial);
+
+            int result = myPageDAO.updateSocialUnlink(userVO);
+
+            if (result > 0) {
+                response.put("success", true);
+                response.put("message", "연동이 해제되었습니다.");
+            } else {
+                response.put("success", false);
+                response.put("message", "연동 해제에 실패했습니다.");
+            }
+        } catch (PersistenceException pe) {
+            response.put("success", false);
+            response.put("message", "오류가 발생했습니다. 관리자에게 문의하세요.");
+        }
+        return response;
+    }
 	
 } // class

@@ -22,7 +22,43 @@
 <jsp:include page="/WEB-INF/views/user/common/head_script.jsp"></jsp:include>
 <!-- E head script -->
 </head>
+<style type="text/css">
+	.myContents .frmList.snsLogin .frmCheck label:before {
+    display: none; /* 기본 상태에서는 숨기기 */
+}
 
+.myContents .frmList.snsLogin .frmCheck label:after {
+    display: none; /* 기본 상태에서는 숨기기 */
+}
+
+.myContents .frmList.snsLogin .frmCheck input[type=checkbox]:checked + label:before {
+    content: ''; /* 체크된 상태에서 밑줄 표시 */
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 34px;
+    width: 54px;
+    height: 1px;
+    background: #000;
+}
+
+.myContents .frmList.snsLogin .frmCheck input[type=checkbox]:checked + label:after {
+    content: '해지하기'; /* 체크된 상태에서 '해지하기' 표시 */
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 33px;
+    width: 56px;
+    height: 24px;
+    font: 14px notokrL;
+    letter-spacing: -0.025em;
+    background: transparent;
+    font-size: 14px;
+}
+	
+</style>
 <body>
 
 <div class="skip"><a href="#container">본문 바로가기</a></div>
@@ -358,6 +394,87 @@
  		} // end else
  	}
 </script>
+<script>
+    /////////////////////소셜 로그인 연동 & 연동 해제 추가/////////////////
+    // JSP에서 JavaScript로 변수 전달
+    var kakaoId = "${kakao_id}";
+    var naverId = "${naver_id}";
+    var googleId = "${google_id}";
+
+    // JavaScript로 체크박스 체크 및 비활성화
+    window.onload = function() {
+        var kakaoCheckbox = document.getElementById("snsChk-kakao");
+        var naverCheckbox = document.getElementById("snsChk-naver");
+        var googleCheckbox = document.getElementById("snsChk-google");
+
+        if (kakaoId) {
+            kakaoCheckbox.checked = true;
+        } else {
+            kakaoCheckbox.disabled = true;
+        }
+
+        if (naverId) {
+            naverCheckbox.checked = true;
+        } else {
+            naverCheckbox.disabled = true;
+        }
+
+        if (googleId) {
+            googleCheckbox.checked = true;
+        } else {
+            googleCheckbox.disabled = true;
+        }
+
+        // 이벤트 리스너 추가
+        kakaoCheckbox.addEventListener("change", function() {
+            handleUnlink("kakao", this);
+        });
+        naverCheckbox.addEventListener("change", function() {
+            handleUnlink("naver", this);
+        });
+        googleCheckbox.addEventListener("change", function() {
+            handleUnlink("google", this);
+        });
+    }
+
+    function handleUnlink(socialType, checkbox) {
+        if (!checkbox.checked) { // 체크 해제 시
+            if (confirm("연동을 해제하시겠습니까?")) {
+                var userId = "${sessionScope.userId}"; // 세션에서 userId를 가져옴
+                var params = {
+                    userId: userId,
+                    linkedSocial: socialType.toUpperCase()
+                };
+
+                // AJAX 요청
+                fetch('/hotel_prj/user/unlinkSocial.do', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(params)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("연동이 해제되었습니다.");
+                        checkbox.disabled = true; // 성공 시 체크박스를 비활성화
+                    } else {
+                        alert("연동 해제에 실패했습니다.");
+                        checkbox.checked = true; // 실패 시 체크박스를 다시 체크 상태로 되돌림
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("오류가 발생했습니다. 관리자에게 문의하세요.");
+                    checkbox.checked = true; // 오류 발생 시 체크박스를 다시 체크 상태로 되돌림
+                });
+            } else {
+                checkbox.checked = true; // 취소 시 체크박스를 다시 체크 상태로 되돌림
+            }
+        }
+    }
+</script>
 
 <c:set var="mDomain" value="${memberDomain}"/>
  
@@ -552,6 +669,19 @@
 		</ul>
 	</div>
 	<!-- //필수정보수정 -->
+    <!-- SNS 연동 로그인 -->
+    <h4 class="titDep3"><!-- SNS 연동 로그인 -->SNS 연동 로그인</h4>
+    <ul class="frmList snsLogin">
+        <li class="frmCheck google"><input type="checkbox" id="snsChk-google" name="snsChk-google"   ><label for="snsChk-google">구글<!-- 구글 --></label></li>
+        <li class="frmCheck naver"><input type="checkbox" id="snsChk-naver" name="snsChk-naver"  ><label for="snsChk-naver">네이버<!-- 네이버 --></label></li>
+        <li class="frmCheck kakao"><input type="checkbox" id="snsChk-kakao" name="snsChk-kakao"  ><label for="snsChk-kakao">카카오톡<!-- 카카오톡 --></label></li>
+    </ul>
+    <ul class="txtGuide">
+    <li>SNS 계정을 연동하시면, 로그인 시 해당 채널로 소셜 로그인 하실 수 있습니다. (소셜 로그인)</li>
+    <li>로그인 연동은 Google, Naver, Kakao Talk에 복수 연결이 가능합니다.</li>
+    <li>SNS 계정 연결을 끊으시려면, 위에 연결된 채널의 버튼을 클릭하시면 연동이 해제됩니다.</li>
+    </ul>                    
+    <!-- //SNS 연동 로그인 -->
                   
 	<div class="btnArea">
 		<button type="button" class="btnSC btnL active" onclick="fncMyInfoUpdApi();return false;"><!-- 저장 -->저장</button>

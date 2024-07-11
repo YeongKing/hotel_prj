@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,11 +60,20 @@ public class RoomController {
 	@PostMapping("/room1.do")
 	public String step1(@ModelAttribute RoomResVO rrVO, Model model, HttpSession session) {
 
-		session.setAttribute("rrVO", rrVO);
+		try {
+			session.setAttribute("rrVO", rrVO);
 
-		List<RoomListDomain> list = rs.searchRoomList(rrVO);
+			List<RoomListDomain> list = rs.searchRoomList(rrVO);
 
-		model.addAttribute("roomList",list);
+			model.addAttribute("roomList",list);
+
+		} catch (Exception e) {
+
+			return "forward:/WEB-INF/views/error/err_500.html";
+		}
+
+
+
 
 		return "user/resve/room/step1";
 
@@ -83,7 +93,15 @@ public class RoomController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 		String currentDate = sdf.format(new Date());
 		session.setAttribute("currentDate", currentDate);
-		session.setAttribute("rrVO", rrVO);
+
+		try {
+			session.setAttribute("rrVO", rrVO);
+
+
+		} catch (Exception e) {
+
+			return "forward:/WEB-INF/views/error/err_500.html";
+		}
 
 
 
@@ -103,20 +121,29 @@ public class RoomController {
 	 */
 	@PostMapping("/room3.do")
 	public String step3(HttpSession session,HttpServletRequest request,MemberDomain umd) {
-		RoomResVO rrVO = (RoomResVO)session.getAttribute("rrVO");
 
-		String guestRequest = request.getParameter("contArr");
+		try {
+			RoomResVO rrVO = (RoomResVO)session.getAttribute("rrVO");
 
-		rrVO.setGuestRequest(guestRequest);
+			String guestRequest = request.getParameter("contArr");
 
-		String userId = session.getAttribute("userId").toString();
+			rrVO.setGuestRequest(guestRequest);
 
-		umd = rs.searchMember(userId); 
+			String userId = session.getAttribute("userId").toString();
 
-		rrVO.setUserId(umd.getMemberId());
+			umd = rs.searchMember(userId); 
 
-		session.setAttribute("umd", umd);
-		session.setAttribute("rrVO", rrVO);
+			rrVO.setUserId(umd.getMemberId());
+
+			session.setAttribute("umd", umd);
+			session.setAttribute("rrVO", rrVO);
+
+		} catch (Exception e) {
+
+			return "forward:/WEB-INF/views/error/err_500.html";
+		}
+
+
 
 
 
@@ -139,13 +166,29 @@ public class RoomController {
 	@ResponseBody
 	@PostMapping(value="/resveValid.do", produces="application/json; charset=UTF-8")
 	public int resveValid(HttpSession session) {
-		RoomResVO rrVO = (RoomResVO)session.getAttribute("rrVO");
+
+		int roomId = 0;
 
 
-		int roomId = rs.resveValid(rrVO);
+		try {
 
-		rrVO.setRoomId(roomId);
-		session.setAttribute("rrVO", rrVO);
+			RoomResVO rrVO = (RoomResVO)session.getAttribute("rrVO");
+
+
+
+			roomId = rs.resveValid(rrVO);
+
+			rrVO.setRoomId(roomId);
+			session.setAttribute("rrVO", rrVO);
+
+		} catch (Exception e) {
+
+		}
+
+
+
+
+
 
 		return roomId;
 	}//resveValid
@@ -165,33 +208,51 @@ public class RoomController {
 	@ResponseBody
 	@PostMapping(value="/insertRoomRes.do", produces="application/json; charset=UTF-8")
 	public boolean insertRoomRes(@RequestBody Map<String, Object> requestData,HttpSession session) {
-		RoomResVO rrVO = (RoomResVO)session.getAttribute("rrVO");
-
-		String payNum = requestData.get("payNum").toString();
-		String roomResStatus = requestData.get("roomResStatus").toString();
-		String guestEmail = requestData.get("guestEmail").toString();
-		String guestPhone = requestData.get("guestPhone").toString();
-		String guestBirthday = requestData.get("guestBirthday").toString();
 
 
+		Boolean result = false;
 
 
-		int roomId = Integer.parseInt(requestData.get("roomId").toString());
-
-		rrVO.setPayNum(payNum);
-		rrVO.setRoomResStatus(roomResStatus);
-		rrVO.setGuestEmail(guestEmail);
-		rrVO.setGuestPhone(guestPhone);
-		rrVO.setGuestBirthday(guestBirthday);
-		rrVO.setRoomId(roomId);
-
-		System.out.println(rrVO);
+		try {
 
 
-		boolean result = rs.insertRoomRes(rrVO); 
+			RoomResVO rrVO = (RoomResVO)session.getAttribute("rrVO");
+
+			String payNum = requestData.get("payNum").toString();
+			String roomResStatus = requestData.get("roomResStatus").toString();
+			String guestEmail = requestData.get("guestEmail").toString();
+			String guestPhone = requestData.get("guestPhone").toString();
+			String guestBirthday = requestData.get("guestBirthday").toString();
 
 
-		session.setAttribute("rrVO", rrVO); 
+
+
+			int roomId = Integer.parseInt(requestData.get("roomId").toString());
+
+
+
+			rrVO.setPayNum(payNum);
+			rrVO.setRoomResStatus(roomResStatus);
+			rrVO.setGuestEmail(guestEmail);
+			rrVO.setGuestPhone(guestPhone);
+			rrVO.setGuestBirthday(guestBirthday);
+			rrVO.setRoomId(roomId);
+
+
+
+
+			result = rs.insertRoomRes(rrVO); 
+
+
+			session.setAttribute("rrVO", rrVO); 
+
+
+		} catch (Exception e) {
+
+		}
+
+
+
 
 
 		return result;
@@ -207,45 +268,22 @@ public class RoomController {
 	 */
 	@PostMapping("/room4.do")
 	public String step4(Model model) {
-		
-		
 
-		
+
+
+
 		List<RoomDomain> roomEventList = rs.selectRoomEvent();
 		model.addAttribute("roomEventlist", roomEventList);
-		
-		
-		
+
+
+
 
 		return "user/resve/room/step4";
-		
 
-		
+
+
 
 	} // step4		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

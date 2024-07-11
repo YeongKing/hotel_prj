@@ -32,7 +32,11 @@ public class EventController {
 	@Autowired(required = false)
 	private EventService es;
 	
-	//이벤트 목록 조회메서드
+	/**
+	 * 이벤트 목록 조회메서드
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/event.do")
 	public String searchEventList(Model model) {
 		List<EventListDomain> list = es.searchEventList();
@@ -42,7 +46,12 @@ public class EventController {
 		return "admin/board/event/event";
 	}//searchEventList
 	
-	
+	/**
+	 * 
+	 * @param requestData
+	 * @param model
+	 * @return
+	 */
 	//이벤트 상세 조회 메서드
 	@ResponseBody
 	@PostMapping(value="/eventDetail.do", produces="application/json; charset=UTF-8")
@@ -53,7 +62,11 @@ public class EventController {
 		return ed;
 	}//selectEvnetDetail
 	
-	//이벤트 마지막번호 + 1 메서드
+	
+	/**
+	 * 이벤트 마지막번호 + 1 메서드
+	 * @return
+	 */
 	@ResponseBody
 	@GetMapping("/addEventModal.do")
 	public String selectLastDiningNum() {
@@ -62,7 +75,13 @@ public class EventController {
 	}//selectLastDiningNum
 	
 	
-	//이벤트 등록 메서드
+	/**
+	 * 이벤트 등록 메서드
+	 * @param eVO
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
 	@PostMapping("/addEvent.do")
 	@ResponseBody
 	public boolean addEvent(EventVO eVO,HttpServletRequest request) throws IOException {
@@ -103,6 +122,14 @@ public class EventController {
 		return isInserted;
 	}//addEvent
 	
+	
+	/**
+	 * 이벤트 수정 메서드
+	 * @param eVO
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
 	@ResponseBody
 	@PostMapping("/updateEvent.do")
 	public boolean updateEvent(EventVO eVO ,HttpServletRequest request) throws IOException {

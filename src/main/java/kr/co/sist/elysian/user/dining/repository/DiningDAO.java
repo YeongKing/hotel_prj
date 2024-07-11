@@ -20,6 +20,11 @@ public class DiningDAO {
 	@Autowired(required = false)
 	private MyBatisDAO mbDAO;
 	
+	/**
+	 * DB에서 랜덤한 다이닝의 상세정보를 가져오는 
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public DiningDomain selectRandomDiningDetail()throws PersistenceException {
 		
 		DiningDomain dDomain = null;
@@ -30,6 +35,13 @@ public class DiningDAO {
 		return dDomain;
 	}
 
+	
+	
+	/**
+	 * DB에서 모든 다이닝번호와 이름을 가져오는
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public List<DiningOptionDomain> selectAllDiningName()throws PersistenceException {
 		List<DiningOptionDomain> dOptionDomain = null;
 		
@@ -39,6 +51,14 @@ public class DiningDAO {
 		return dOptionDomain;
 	}
 
+	
+	
+	/**
+	 * DB에서 SELECT한 다이닝의 상세정보를 가져오는
+	 * @param diningId
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public DiningDomain selectOneDiningDetail(String diningId) throws PersistenceException {
 		DiningDomain dDomain = null;
 		
@@ -48,6 +68,14 @@ public class DiningDAO {
 		return dDomain;
 	}
 
+	
+	
+	/**
+	 * DB에서 선택 다이닝의 남은 좌석수를 가져오는
+	 * @param paramMap
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public int selectDiningSeatCnt(Map<String, Object>paramMap) throws PersistenceException{
 		int cnt = 0;
 		
@@ -58,6 +86,13 @@ public class DiningDAO {
 		return cnt;
 	}
 
+	
+	/**
+	 * DB에서 유저 정보를 가져오는
+	 * @param userId
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public DiningResVO searchUserName(String userId) throws PersistenceException{
 		SqlSession ss = mbDAO.getMyBatisHandler(false);
 		DiningResVO dResVO = ss.selectOne("kr.co.sist.elysian.member.dining.diningUserInfo",userId);
@@ -65,6 +100,13 @@ public class DiningDAO {
 		return dResVO;
 	}
 
+	
+	/**
+	 * DB에서 다이닝 예약
+	 * @param drVO
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public int insertDiningReservation(DiningResVO drVO) throws PersistenceException{
 		int diningId = 0;
 		SqlSession ss = mbDAO.getMyBatisHandler(true);
@@ -74,6 +116,13 @@ public class DiningDAO {
 		return diningId;
 	}
 
+	
+	/**
+	 * DB에서 다이닝 예약중 유효성 검사
+	 * @param dsVO
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public boolean reserveValid(DiningSeatsVO dsVO) throws PersistenceException{
 		boolean result = false;
 		int resultDining = 0;

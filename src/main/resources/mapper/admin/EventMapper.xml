@@ -33,6 +33,7 @@
 		ORDER BY EVENT_NUM DESC
 	</select>
 
+	<!-- 이벤트 등록 쿼리 -->
 	<insert id="addEvent" parameterType="eVO">
 		INSERT INTO EVENT
 		VALUES(
@@ -49,6 +50,7 @@
 		)
 	</insert>
 
+	<!-- 이벤트 수정 쿼리 -->
 	<update id="updateEvent" parameterType="HashMap">
 		UPDATE EVENT
 		SET
@@ -61,7 +63,8 @@
 		EVENT_CONTENT = #{eVO.eventContent, jdbcType=VARCHAR}
 		WHERE EVENT_NUM = #{eventNum, jdbcType=VARCHAR}
 	</update>
-
+	
+	<!-- 이벤트삭제 쿼리 -->
 	<delete id="deleteEvent" parameterType="String">
 		DELETE FROM EVENT
 		WHERE EVENT_NUM = #{eventNum}

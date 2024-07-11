@@ -53,6 +53,11 @@
 			<exclude-mapping path="/user/joinInsert.do"/>
 			<exclude-mapping path="/user/joinComplete.do"/>
 			<exclude-mapping path="/user/sendSMS.do"/>
+			
+			<exclude-mapping path="/user/kakaoLogin.do"/>
+			<exclude-mapping path="/user/googleLogin.do"/>
+			<exclude-mapping path="/user/socialJoin.do"/>
+			<exclude-mapping path="/user/socialComplete.do"/>
 
 			<exclude-mapping path="/user/verify.do"/>
 			<exclude-mapping path="/user/verifyPw.do"/>

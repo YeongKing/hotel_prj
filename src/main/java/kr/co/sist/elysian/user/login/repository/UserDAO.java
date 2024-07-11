@@ -25,6 +25,20 @@ public class UserDAO {
         return udm;
     }
     
+    //소셜 로그인 > 로그인
+    public UserDomain selectSocialLogin(String userId, String email) {
+        UserDomain udm = null;
+        
+        SqlSession ss = mbDAO.getMyBatisHandler(false);
+        UserVO uVO = new UserVO();
+        uVO.setUserId(userId);
+        uVO.setEmail(email);
+        
+        udm = ss.selectOne("kr.co.sist.elysian.member.login.socialLogin", uVO);
+        mbDAO.closeHandler(ss);
+        return udm;
+    }
+    
     public UserDomain selectPhone(UserVO uVO) throws PersistenceException {
         SqlSession ss = mbDAO.getMyBatisHandler(false);
 

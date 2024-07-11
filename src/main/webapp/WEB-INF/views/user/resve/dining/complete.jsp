@@ -36,7 +36,6 @@
 
 <div class="wrapper ">
 <script>
-        //2022-05-23 조선라운지 추가
         //헤더 메뉴 버튼 클릭 이벤트
         jQuery(document).on("click",".headArea .btnMenu" ,function(){
 

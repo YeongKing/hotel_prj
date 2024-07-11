@@ -36,8 +36,13 @@ public class DiningController {
 
 	@Autowired(required = false)
 	private DiningService userDiningService;
+
 	
-	//화면접속시 랜덤한 다이닝 정보 가져오기 
+	/**
+	 * 화면접속시 랜덤한 다이닝 정보 가져오기 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/dining.do" , method = {RequestMethod.GET, RequestMethod.POST})
 	public String searchRandomDiningDetail(Model model) {
 
@@ -57,9 +62,15 @@ public class DiningController {
 		
 		return "user/resve/dining/step0";
 		
-	} // searchAllDiningList
+	}//searchAllDiningList
 	
-	//select 요소에 해당하는 다이닝 정보 가져오기
+	
+	
+	/**
+	 * select 요소에 해당하는 다이닝 정보 가져오기
+	 * @param diningId
+	 * @return
+	 */
 	@ResponseBody
 	@GetMapping("/selectDining.do")
 	public String searchOneDiningDetail(@RequestParam("diningId")String diningId) {
@@ -76,10 +87,19 @@ public class DiningController {
 		
 		
 		return diningJson;
-	}
+	}//searchOneDiningDetail
 	
 	
 	
+	/**
+	 * reserve/dining/step1.jsp의 초기화면 로드에 필요한 데이터를 가져오는 메서드
+	 * 해당시간, 인원, 날짜에 좌석이 있는 유무를 판단한다.
+	 * @param drVO
+	 * @param table
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/dining_step0.do")
 	public String diningBookingStep0(@ModelAttribute DiningResVO drVO,
 			@RequestParam(name = "table", defaultValue =  "AVAILABLE_HALL_TABLE" )String table ,
@@ -100,7 +120,6 @@ public class DiningController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
 	
 
 	   session.setAttribute("drVO", drVO);
@@ -114,11 +133,18 @@ public class DiningController {
         model.addAttribute("closeTime",dDomain.getCloseTime());
         model.addAttribute("diningSeatsData",diningData);
         return "user/resve/dining/step1";
-	} // diningBookingStep0
+	}//diningBookingStep0
 	
 	
 	
-	// AJAX 요청을 처리하는 메소드
+	/**
+	 * AJAX 요청을 처리하는 메소드
+	 * @param strSelectedDate
+	 * @param table
+	 * @param strPersonCnt
+	 * @param session
+	 * @return
+	 */
     @PostMapping("/getTimeSlots.do")
     @ResponseBody
     public Map<String, Object> getTimeSlots(
@@ -134,11 +160,19 @@ public class DiningController {
        String rpStrSelectedDate = strSelectedDate.replace('.', '-');
        LocalDate selectedDate =  LocalDate.parse(rpStrSelectedDate,DateTimeFormatter.ISO_DATE);
     	return userDiningService.setDiningData(diningId, selectedDate,table,personCnt);
-    }
+   
+    }//getTimeSlots
     
      
 	
-	
+	 /**
+	  * reserve/dining/step2.jsp 화면 로드에 필요한 데이터를 가져오는 메서드
+	  * @param drVO1
+	  * @param dsVO1
+	  * @param model
+	  * @param session
+	  * @return
+	  */
 	 @PostMapping("/dining_step1.do")
 	 public String diningBookingStep1(
 		        @ModelAttribute DiningResVO drVO1, 
@@ -193,6 +227,12 @@ public class DiningController {
 	
 	 
 	 
+	 /**
+	  * 입력된 예약정보을 가져와 예약진행하는 메서드
+	  * @param requestData
+	  * @param session
+	  * @return
+	  */
 	 @ResponseBody
 	 @PostMapping(value="/insertDiningRes.do")
 	 public String insertDiningRes( @RequestBody Map<String, String> requestData,
@@ -255,8 +295,18 @@ public class DiningController {
 
 			// 저장된 예약 ID 반환
 	        return jsonObj.toJSONString();
-	 }
 	 
+	 }//insertDiningRes
+	 
+	 
+	 
+	 /**
+	  * 예약 유효성 검사 메서드
+	  * @param table
+	  * @param session
+	  * @param model
+	  * @return
+	  */
 	 @ResponseBody
 	 @PostMapping(value="/diningResveValid.do", produces="application/json; charset=UTF-8")
 	 public int resveValid(@RequestParam("table")String table,HttpSession session, Model model) {
@@ -286,13 +336,20 @@ public class DiningController {
 		 int resultDining =  userDiningService.reserveValid(dsVO);
 		 
 		 return resultDining;
-	 }
 	 
+	 }//resveValid
+	 
+	 
+	 
+	 /**
+	  * 예약완료 후 예약결과 페이지 이동하는 메서드
+	  * @return
+	  */
 	 @GetMapping("/complete.do")
 	 public String complete() {
 		 
 		 return "user/resve/dining/complete";
-	 }
+	 }//complete
 	 
 
 	

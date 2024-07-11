@@ -22,6 +22,10 @@ public class DiningService {
 	@Autowired(required = false)
 	private DiningDAO userDiningDAO;
 
+	/**
+	 * 화면접속시 랜덤한 다이닝 정보 가져오기
+	 * @return
+	 */
 	public DiningDomain searchRandomDiningDetail() {
 		DiningDomain dDomain = null;
 		try {
@@ -30,8 +34,14 @@ public class DiningService {
 			pe.printStackTrace();
 		}
 		return dDomain;
-	}
+	}//searchRandomDiningDetail
+	
+	
 
+	/**
+	 * 모든 다이닝의 이름과 아이디를 가져오는 메서드
+	 * @return
+	 */
 	public List<DiningOptionDomain> searchAllDiningName() {
 		List<DiningOptionDomain> dOptionDomain = null;
 		try {
@@ -41,8 +51,15 @@ public class DiningService {
 		}
 
 		return dOptionDomain;
-	}
+	}//searchAllDiningName
+	
+	
 
+	/**
+	 * select된 다이닝의 상세정보를 가져오는 메서드
+	 * @param diningId
+	 * @return
+	 */
 	public DiningDomain searchOneDiningDetail(String diningId) {
 		DiningDomain dDomain = null;
 		try {
@@ -52,8 +69,19 @@ public class DiningService {
 		}
 
 		return dDomain;
-	}
+	}//searchOneDiningDetail
+	
+	
 
+	/**
+	 * step1의 초기화면 로드를 위해 데이터를 가져오는 메서드 
+	 * 해당시간, 인원, 날짜에 좌석이 있는 유무를 판단한다.
+	 * @param diningId
+	 * @param date
+	 * @param table
+	 * @param personCnt
+	 * @return
+	 */
 	public Map<String, Object> setDiningData(String diningId, LocalDate date, String table,int personCnt) {
 		
         Map<String, Object> model = new HashMap<>();
@@ -138,8 +166,19 @@ public class DiningService {
      	model.put("requiredTables", requiredTables);
         
      	return model;
-	}
+	}//setDiningData
 	
+	
+	
+	
+	/**
+	 * 해당 시간대, 인원 ,날짜에 대한 남은 좌석수를 가져오는 메서드
+	 * @param diningId
+	 * @param date
+	 * @param table
+	 * @param part
+	 * @return
+	 */
     private int getSeatCountForPart(String diningId,LocalDate date, String table, int part) {
     	 Map<String, Object> paramMap = new HashMap<>();
          paramMap.put("diningId", diningId);
@@ -148,10 +187,15 @@ public class DiningService {
          paramMap.put("part", part);
      
          return userDiningDAO.selectDiningSeatCnt(paramMap);
-    }
+    }//getSeatCountForPart
     
     
-    //유저정보 찾는 메서드
+    
+    /**
+     * 유저정보 찾는 메서드
+     * @param userId
+     * @return
+     */
 	public DiningResVO searchUserName(String userId) {
 		DiningResVO dResVO = null;
 		try {
@@ -160,10 +204,14 @@ public class DiningService {
 			pe.printStackTrace();
 		}
 		return dResVO;
-	}
+	}//searchUserName
 
 	
-	//예약 등록 메서드
+	/**
+	 * 예약 등록 메서드
+	 * @param drVO
+	 * @return
+	 */
 	public String saveDiningReservation(DiningResVO drVO) {
 		String resResult = "";
 		int diningId = 0;
@@ -180,8 +228,14 @@ public class DiningService {
 		}
 		
 		return resResult;
-	}
-
+	}//saveDiningReservation
+	
+	
+	/**
+	 * 예약 유효성 검사 메서드
+	 * @param dsVO
+	 * @return
+	 */
 	public int reserveValid(DiningSeatsVO dsVO) {
 		int resultDining = 0;
 		boolean result = false;
@@ -199,7 +253,8 @@ public class DiningService {
 		
 		
 		return resultDining;
-	}
+	}//reserveValid
+	
 
 
 }

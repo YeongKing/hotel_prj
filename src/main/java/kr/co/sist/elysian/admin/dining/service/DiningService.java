@@ -19,7 +19,11 @@ public class DiningService{
 	@Autowired(required = false)
 	private DiningDAO adminDiningDAO;
 
-	//다이닝 상세조회
+	/**
+	 * 다이닝 상세조회 메서드
+	 * @param diningId
+	 * @return
+	 */
 	public DiningDomain searchDiningDetail(String diningId) {
 		DiningDomain dd = null;
 		try {
@@ -31,7 +35,12 @@ public class DiningService{
 		return dd;
 	}//searchDiningDetail
 
-	//다이닝 목록 조회
+	
+	
+	/**
+	 * 다이닝 목록 조회 메서드
+	 * @return
+	 */
 	public List<DiningListDomain> searchDiningList() {
 		List<DiningListDomain> list = null;
 		try {
@@ -43,7 +52,11 @@ public class DiningService{
 		return list;
 	}//searchDiningList
 	
-	//다이닝 마지막번호+1 메서드
+	
+	/**
+	 * 다이닝 마지막번호+1 메서드
+	 * @return
+	 */
 	public String searchLastDiningId() {
 		String nextDiningId = "";
 		try {
@@ -64,7 +77,12 @@ public class DiningService{
 	}//searchLastDiningId
 	
 	
-	//다이닝 등록 메서드
+	
+	/**
+	 * 다이닝 등록 메서드
+	 * @param dVO
+	 * @return
+	 */
 	public boolean registerDining(DiningVO dVO) {
 		try {
 			adminDiningDAO.insertDining(dVO);
@@ -75,7 +93,13 @@ public class DiningService{
 		}
 	}//registerDining
 	
-	//다이닝 수정 메서드
+	
+	
+	/**
+	 * 다이닝 수정 메서드
+	 * @param param
+	 * @return
+	 */
 	public boolean modifyDining(HashMap<String, Object>param) {
 		try {
 			adminDiningDAO.updateDining(param);
@@ -86,7 +110,12 @@ public class DiningService{
 		}
 	}//modifyDining
 
-	//다이닝 삭제 메서드
+	
+	/**
+	 * 다이닝 삭제 메서드
+	 * @param diningId
+	 * @return
+	 */
 	public boolean removeDining(String diningId) {
 		try {
 			adminDiningDAO.deleteDining(diningId);

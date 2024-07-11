@@ -19,7 +19,10 @@ public class EventService {
 	@Autowired(required = false)
 	private EventDAO eDAO;
 	
-	//이벤트 목록 조회 메서드
+	/**
+	 * 이벤트 목록 조회 메서드
+	 * @return
+	 */
 	public List<EventListDomain> searchEventList(){
 		List<EventListDomain> list = null;
 		try {
@@ -34,7 +37,11 @@ public class EventService {
 	}//searchEventList
 	
 	
-	//이벤트 상제 조회 메서드
+	/**
+	 * 이벤트 상제 조회 메서드
+	 * @param eventNum
+	 * @return
+	 */
 	public EventDomain searchEventDetail(String eventNum){
 		EventDomain ed = null;
 		try {
@@ -48,7 +55,10 @@ public class EventService {
 	}//searchEventDetail
 
 
-	//이벤트 마지막 번호 + 1 메서드
+	/**
+	 * 이벤트 마지막 번호 + 1 메서드
+	 * @return
+	 */
 	public String searchLastEventNum() {
 		String nextEventNum = "";
 		try {
@@ -69,7 +79,11 @@ public class EventService {
 	}//searchLastEventNum
 
 
-	//이벤트 등록 메서드
+	/**
+	 * 이벤트 등록 메서드
+	 * @param eVO
+	 * @return
+	 */
 	public boolean registerEvent(EventVO eVO) {
 		try {
 			eDAO.insertEvent(eVO);
@@ -80,7 +94,11 @@ public class EventService {
 		}
 	}//registerEvent
 
-	//이벤트 수정 메서드
+	/**
+	 * 이벤트 수정 메서드
+	 * @param param
+	 * @return
+	 */
 	public boolean modifyEvent(HashMap<String, Object> param) {
 		try {
 			eDAO.updateEvent(param);

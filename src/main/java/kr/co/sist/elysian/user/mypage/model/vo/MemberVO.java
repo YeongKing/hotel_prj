@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class MemberVO {
 	
 	private String id, password, engLName, engFName, nationalCode, 
-					phone, zipcode, address, addressDetail, email;
+					phone, zipcode, address, addressDetail, email, linkedSocial;
 
 } // class

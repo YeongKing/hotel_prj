@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import kr.co.sist.elysian.user.login.model.domain.UserDomain;
+import kr.co.sist.elysian.user.login.model.vo.UserVO;
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.NationalDomain;
@@ -279,8 +282,9 @@ public class MyPageController {
 		return jsonObj;
 	} // checkPwUserInfo
 	
+	/////////////////////////소셜 로그인 추가//////////////////
 	/**
-	 * 로그인한 아이디의 회원정보수정 뷰와 상세 정보
+	 * 로그인한 아이디의 회원정보수정 뷰와 상세 정보 + 소셜 로그인 연동 정보
 	 * @param session 로그인한 아이디
 	 * @param model 상세 정보
 	 * @return 회원정보수정 뷰
@@ -288,9 +292,23 @@ public class MyPageController {
 	@PostMapping("/myInfoForm.do")
 	public String detailUserInfo(HttpSession session, Model model) {
 		String userId = (String)session.getAttribute("userId");
+		System.out.println(userId);
 		MemberDomain memberDomain = myPageService.selectMemberInfo(userId);
 		List<NationalDomain> allnationalInfo = myPageService.selectAllNationalInfo();
 		
+		// SNS ID 조회
+	    MemberDomain udm = myPageService.selectSocialLogin(userId);
+	    
+	    if(udm == null) {
+	    	model.addAttribute("kakao_id", null);
+	    	model.addAttribute("naver_id", null);
+	    	model.addAttribute("google_id", null);
+	    }else {
+	    	model.addAttribute("kakao_id", udm.getKakaoId());
+	    	model.addAttribute("naver_id", udm.getNaverId());
+	    	model.addAttribute("google_id", udm.getGoogleId());
+	    }//end if
+	    
 		model.addAttribute(memberDomain);
 		model.addAttribute("allnationalInfo", allnationalInfo);
 		return "user/mypage/myInfoForm";
@@ -399,5 +417,26 @@ public class MyPageController {
 		return jsonObj;
 	} // removeUserInfo
 	
+	////////////////////소셜 로그인 연동 해제/////////////////////
+	/**
+	 * 소셜 연동 해제
+	 * @param params 요청 파라미터
+	 * @param session 세션 객체
+	 * @return 처리 결과
+	 */
+	@PostMapping("/unlinkSocial.do")
+	public ResponseEntity<Map<String, Object>> updateSocialLogin(@RequestBody Map<String, String> params, HttpSession session) {
+	    Map<String, Object> response = new HashMap<>();
+	    try {
+	        String userId = (String) session.getAttribute("userId");
+	        String linkedSocial = params.get("linkedSocial");
+
+	        response = myPageService.updateSocialUnlink(userId, linkedSocial);
+	    } catch (Exception e) {
+	        response.put("success", false);
+	        response.put("message", "오류가 발생했습니다. 관리자에게 문의하세요.");
+	    }
+	    return ResponseEntity.ok(response);
+	}//updateSocialLogin
 	
 } // class

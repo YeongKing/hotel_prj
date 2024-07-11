@@ -205,4 +205,28 @@
 		set exit_flag = 'Y'
 		where member_id = #{userId}
 	</update>
+	
+	<!-- SNS연동 mapper -->
+	<select id="selectSocialLogin" parameterType="String" resultType="myPageMemberDomain">
+		select kakao_id kakaoId, naver_id naverId, google_id googleId
+		from member
+		where member_id = #{ userId }
+	</select>
+	
+	<!-- sns연동 해제 mapper -->
+	<update id="updateSocialUnlink" parameterType="myPageMemberVO">
+	    update member
+	    <set>
+	        <if test="linkedSocial == 'KAKAO'">
+	            kakao_id = NULL
+	        </if>
+	        <if test="linkedSocial == 'GOOGLE'">
+	            google_id = NULL
+	        </if>
+	        <if test="linkedSocial == 'NAVER'">
+	            naver_id = NULL
+	        </if>
+	    </set>
+	    where member_id = #{userId}
+	</update>
 </mapper>

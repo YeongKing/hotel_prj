@@ -175,7 +175,7 @@ PageScript.prototype = {
                         window.open('/sns/facebookLogin.do?fromPageType=LOGIN', 'popupSnsLoginWin', 'width=750,height=850,scrollbars=no,toolbar=no,menubar=no');
                         break;
                     case "naver":
-                        window.open('/sns/naverLogin.do?callbackType=login&fromPageType=LOGIN', 'popupSnsLoginWin', 'width=750,height=850,scrollbars=no,toolbar=no,menubar=no');
+                        window.open('https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=j5rWH8NrB0CABORlvyXa&redirect_uri=http://localhost/hotel_prj/user/naverLogin.do&prompt=login');
                         break;
                     case "kakao":
                         Kakao.Auth.authorize({

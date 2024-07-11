@@ -56,8 +56,10 @@
 			
 			<exclude-mapping path="/user/kakaoLogin.do"/>
 			<exclude-mapping path="/user/googleLogin.do"/>
+			<exclude-mapping path="/user/naverLogin.do"/>
 			<exclude-mapping path="/user/socialJoin.do"/>
 			<exclude-mapping path="/user/socialComplete.do"/>
+			<exclude-mapping path="/user/socialConnect.do"/>
 
 			<exclude-mapping path="/user/verify.do"/>
 			<exclude-mapping path="/user/verifyPw.do"/>

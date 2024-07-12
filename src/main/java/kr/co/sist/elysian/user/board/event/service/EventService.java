@@ -12,7 +12,7 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kotlinx.serialization.descriptors.StructureKind.MAP;
+//import kotlinx.serialization.descriptors.StructureKind.MAP;
 import kr.co.sist.elysian.user.board.event.model.domain.EventDomain;
 import kr.co.sist.elysian.user.board.event.repository.EventDAO;
 

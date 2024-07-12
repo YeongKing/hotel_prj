@@ -331,7 +331,7 @@ function closeHubPopup(){
 	<!--  mainArea01  -->
 	
 	<!--  mainArea04  -->
-	<div class="mainArea04">
+	<div class="mainArea04" style="background-image: url('/hotel_prj/static/home/images/ko/pc/HUMA/flower.jpg'); background-size: cover; background-position: center;">
 		<h2 class="hidden">OFFERS</h2>
 		<div class="inner">
 			<a href="http://localhost/hotel_prj/user/event.do" id="goToOffers" class="icoArr">GO TO EVENT</a>

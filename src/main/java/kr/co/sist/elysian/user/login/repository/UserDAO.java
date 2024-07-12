@@ -15,6 +15,7 @@ public class UserDAO {
     @Autowired(required = false)
     private MyBatisDAO mbDAO;
     
+    //일반 로그인
     public UserDomain selectLogin(UserVO uVO) throws PersistenceException {
         
         UserDomain udm = null;
@@ -23,6 +24,25 @@ public class UserDAO {
         udm = ss.selectOne("kr.co.sist.elysian.member.login.searchLogin", uVO);
         mbDAO.closeHandler(ss);
         return udm;
+    }
+
+    //소셜 로그인
+    public UserDomain selectSocialLogin(UserVO uVO) {
+    	UserDomain udm = null;
+    	
+    	SqlSession ss = mbDAO.getMyBatisHandler(false);
+    	
+    	udm = ss.selectOne("kr.co.sist.elysian.member.login.socialLogin", uVO);
+    	mbDAO.closeHandler(ss);
+    	return udm;
+    }
+    
+    //소셜 로그인 연동
+    public int updateSocialId(UserVO uVO) throws PersistenceException {
+        SqlSession ss = mbDAO.getMyBatisHandler(true);
+        int result = ss.update("kr.co.sist.elysian.member.login.socialConnect", uVO);
+        mbDAO.closeHandler(ss);
+        return result;
     }
     
     public UserDomain selectPhone(UserVO uVO) throws PersistenceException {
@@ -46,9 +66,6 @@ public class UserDAO {
     }
     
     public int updateUserPw(UserVO uVO) throws PersistenceException {
-    	System.out.println("DAO received userId: " + uVO.getUserId());
-        System.out.println("DAO received newPassword: " + uVO.getUserPw());
-    	
         SqlSession ss = mbDAO.getMyBatisHandler(true);
         int result = ss.update("kr.co.sist.elysian.member.login.modifyPw", uVO);
         mbDAO.closeHandler(ss);
@@ -60,6 +77,15 @@ public class UserDAO {
         SqlSession ss = mbDAO.getMyBatisHandler(true);
         ss.update("kr.co.sist.elysian.member.login.updateLoginDate", userId);
         mbDAO.closeHandler(ss);
+    }
+    
+    //소셜로그인 후 최근접속일자와 로그인방법 변경
+    public int updateSocialLoginDate(UserVO uVO) throws PersistenceException {
+
+        SqlSession ss = mbDAO.getMyBatisHandler(true);
+        int result = ss.update("kr.co.sist.elysian.member.login.updateSocialLoginDate", uVO);
+        mbDAO.closeHandler(ss);
+		return result;
     }
     
     //회원가입시 아이디 중복확인

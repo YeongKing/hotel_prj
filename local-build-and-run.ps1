@@ -30,7 +30,7 @@ if ($LASTEXITCODE -eq 0) {
 
     Start-Sleep -Seconds 10  # Wait 10 seconds for the container to fully start
 
-    Write-Host "7. Application is running at http://localhost:80/hotel_prj/index.html" -ForegroundColor Green
+    Write-Host "7. Application is running at http://stu14.sist.co.kr:80/hotel_prj/index.html" -ForegroundColor Green
     
     # Check container status
     $containerStatus = docker inspect -f '{{.State.Status}}' my-java-app-container

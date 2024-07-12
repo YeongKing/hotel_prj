@@ -318,7 +318,7 @@ function closeHubPopup(){
 		<h2 class="hidden">HOME</h2>
 		<div class="contents01">
 			<div class="mainBg"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main01.jpg" alt="Rest in utopia"></div>
-			<div class="mainTxt"><strong>Rest in utopia</strong></div>
+			<div class="mainTxt"><strong>TEST in utopia</strong></div>
 			<!-- scroll icon -->
 			<div class="icon-scroll">
 				<span class="txt-scroll" style="">SCROLL</span>

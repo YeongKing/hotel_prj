@@ -14,6 +14,6 @@ public class MemberDomain {
 	private String password, name, birthday, gender, engLName, engFName,
 					nationalCode, phone, zipcode, address, addressDetail, email,
 					firstPhoneNum, secondPhoneNum, lastPhoneNum,
-					firstEmail, lastEmail;
+					firstEmail, lastEmail, kakaoId, googleId, naverId;
 
 } // class

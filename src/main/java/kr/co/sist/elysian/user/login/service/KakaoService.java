@@ -94,29 +94,34 @@ public class KakaoService {
      * @return 리다이렉트 URL
      * @throws Exception 예외 발생 시
      */
-    public String handleKakaoUserInfo(Map<String, Object> userInfo, HttpSession session) throws Exception {
+    public String handleKakaoUserInfo(Map<String, Object> userInfo, HttpSession session, String loginMethod) throws Exception {
         // 사용자 정보에서 ID와 이메일을 추출
-        String kakaoId = userInfo.get("id").toString();
-        String kakaoEmail = ((Map<String, Object>) userInfo.get("kakao_account")).get("email").toString();
+        String socialId = userInfo.get("id").toString();
+        System.out.println(socialId);
 
+        UserVO uVO = new UserVO();
+        uVO.setSocialId(socialId);
+        uVO.setLoginMethod(loginMethod);
+        
         // DB에서 사용자 정보 확인
-        UserDomain existingUser = uDAO.selectSocialLogin(kakaoId, kakaoEmail);
-
+        UserDomain existingUser = uDAO.selectSocialLogin(uVO);
+        
         if (existingUser != null) {
             // 사용자 정보가 이미 존재하면 로그인 페이지로 리다이렉트
             // 세션에 사용자 정보 저장
             session.setAttribute("userId", existingUser.getUserId());
-            session.setAttribute("userName", existingUser.getUserName());
+            session.setAttribute("loginMethod", loginMethod);
             
-            //로그인 날짜 갱신
-            ls.updateLoginDate(existingUser.getUserId());
+            // 로그인 날짜 갱신
+            ls.updateSocialLoginDate(uVO);
             
             return "/user/index.do";
         } else {
             // 사용자 정보가 없으면 회원가입 페이지로 리다이렉트
             // 요청 파라미터로 사용자 정보 전달
-        	return "/user/socialJoin.do?userId=" + kakaoId + "&email=" + kakaoEmail + "&loginMethod=kakao";
+            return "/user/socialJoin.do?socialId=" + socialId + "&loginMethod=" + loginMethod;
         }
     }
+
 
 }

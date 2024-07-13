@@ -57,7 +57,7 @@ jobs:
       - name: Pull Docker image from Docker Hub
         run: |
           IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/elysian:latest"
-          if [ "$(docker inspect "$IMAGE_NAME" > /dev/null 2>&1; echo $?)" -eq 0 ]; then
+          if docker inspect "$IMAGE_NAME" > /dev/null 2>&1; then
               echo "Image exists. Removing..."
               docker rmi -f "$IMAGE_NAME"
           fi

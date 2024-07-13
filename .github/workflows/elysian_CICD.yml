@@ -48,6 +48,7 @@ jobs:
           docker tag elysian ${{ secrets.DOCKER_USERNAME }}/elysian:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/elysian:latest
 
+
   run_docker_container:
     needs: build_and_deploy
     runs-on: self-hosted  # self-hosted 러너에서 실행
@@ -55,12 +56,12 @@ jobs:
     steps:
       - name: Pull Docker image from Docker Hub
         run: |
-          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/elysian:latest"
-          if docker inspect "$IMAGE_NAME" > /dev/null; then
-              echo "이미지가 존재합니다. 제거 중..."
+          $IMAGE_NAME = "${{ secrets.DOCKER_USERNAME }}/elysian:latest"
+          if (docker inspect "$IMAGE_NAME" > $null) {
+              Write-Output "이미지가 존재합니다. 제거 중..."
               docker rmi -f "$IMAGE_NAME"
-          fi
-          echo "이미지 다운로드 중..."
+          }
+          Write-Output "이미지 다운로드 중..."
           docker pull "$IMAGE_NAME"
 
       - name: Check if Docker container exists and is running

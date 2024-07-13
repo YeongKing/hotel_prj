@@ -51,7 +51,7 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker tag my-java-app ${{ secrets.DOCKER_USERNAME }}/elysian:latest
+          docker tag elysian ${{ secrets.DOCKER_USERNAME }}/elysian:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/elysian:latest
 
   additional_tasks:

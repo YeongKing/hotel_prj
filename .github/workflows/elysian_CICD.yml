@@ -7,60 +7,60 @@ on:
     types: [closed]
 
 jobs:
-  build_and_upload_image:
+  build_and_deploy:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout 코드 저장소
         uses: actions/checkout@v2
         
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-      
+          node-version: '20'  # Node.js 버전을 적절히 조정
+
       - name: Set up Maven
         uses: stCarolas/setup-maven@v5
         with:
           maven-version: '3.8.2'
-      
+
       - name: Verify Maven installation
         run: mvn -version
-      
+
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
+          java-version: '11'  # 사용할 JDK 버전을 선택
           distribution: 'adopt'  # Example distribution, adjust as needed
-      
+
       - name: Build Docker image
         run: docker build -t elysian .
-      
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      
+
       - name: Push Docker image to Docker Hub
         run: |
           docker tag elysian ${{ secrets.DOCKER_USERNAME }}/elysian:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/elysian:latest
 
-  run_docker_image:
-    needs: build_and_upload_image
+  run_docker_container:
+    needs: build_and_deploy
     runs-on: self-hosted  # self-hosted 러너에서 실행
 
     steps:
       - name: Pull Docker image from Docker Hub
         run: |
           IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/elysian:latest"
-          if (docker inspect "$IMAGE_NAME" > $null) {
-              Write-Output "이미지가 존재합니다. 제거 중..."
+          if docker inspect "$IMAGE_NAME" > /dev/null; then
+              echo "이미지가 존재합니다. 제거 중..."
               docker rmi -f "$IMAGE_NAME"
-          }
-          Write-Output "이미지 다운로드 중..."
+          fi
+          echo "이미지 다운로드 중..."
           docker pull "$IMAGE_NAME"
 
       - name: Check if Docker container exists and is running

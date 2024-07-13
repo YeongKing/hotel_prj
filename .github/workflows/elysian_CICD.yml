@@ -7,9 +7,9 @@ on:
     types: [closed]
 
 jobs:
-  build_and_upload_image:
+  run_docker_image:
     if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
+    runs-on: self-hosted  # self-hosted 러너에서 실행
 
     steps:
       - name: Checkout repository
@@ -48,11 +48,6 @@ jobs:
           docker tag elysian ${{ secrets.DOCKER_USERNAME }}/elysian:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/elysian:latest
 
-  run_docker_image:
-    needs: build_and_upload_image
-    runs-on: self-hosted  # self-hosted 러너에서 실행
-
-    steps:
       - name: Pull Docker image from Docker Hub
         run: |
           IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/elysian:latest"

@@ -1,0 +1,90 @@
+name: Docker Image and Container Management
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # 매 5분마다 실행
+
+jobs:
+  build_and_run_docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: '3.8.2'
+
+      - name: Verify Maven installation
+        run: mvn -version
+      
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'  # Example distribution, adjust as needed
+
+      - name: Check if Docker image exists
+        id: check_docker_image
+        run: |
+          if docker inspect elysian > /dev/null 2>&1; then
+            echo "::set-output name=image_exists::true"
+          else
+            echo "::set-output name=image_exists::false"
+          fi
+
+      - name: Remove Docker image if exists
+        if: steps.check_docker_image.outputs.image_exists == 'true'
+        run: docker rmi elysian
+
+      - name: Build Docker image
+        run: docker build -t elysian .
+
+      - name: Check if Docker container exists and is running
+        id: check_docker_container
+        run: |
+          container_id=$(docker ps -qf "name=elysian-container")
+          if [ -z "$container_id" ]; then
+            echo "::set-output name=container_running::false"
+            echo "::set-output name=container_exists::false"
+          else
+            echo "::set-output name=container_exists::true"
+            container_running=$(docker inspect -f '{{.State.Running}}' "$container_id")
+            if [ "$container_running" == "true" ]; then
+              echo "::set-output name=container_running::true"
+            else
+              echo "::set-output name=container_running::false"
+            fi
+          fi
+
+      - name: Stop and remove Docker container if running
+        if: steps.check_docker_container.outputs.container_running == 'true'
+        run: |
+          docker stop elysian-container
+          docker rm elysian-container
+
+      - name: Remove Docker container if exists (not running)
+        if: steps.check_docker_container.outputs.container_exists == 'true' && steps.check_docker_container.outputs.container_running == 'false'
+        run: docker rm elysian-container
+
+      - name: Run Docker container if not exists
+        if: steps.check_docker_container.outputs.container_exists == 'false'
+        run: docker run -d -p 80:8080 --name elysian-container elysian
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker tag elysian ${{ secrets.DOCKER_USERNAME }}/elysian:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/elysian:latest

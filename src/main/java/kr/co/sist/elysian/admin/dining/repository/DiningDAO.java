@@ -19,7 +19,11 @@ public class DiningDAO {
 	@Autowired(required = false)
 	private MyBatisDAO mbDAO;
 	
-	//DB에서 다이닝 리스트 조회
+	/**
+	 * DB에서 다이닝 리스트 조회
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public List<DiningListDomain> selectDiningList() throws PersistenceException{
 		
 		List<DiningListDomain> list = null;
@@ -31,7 +35,13 @@ public class DiningDAO {
 		
 	}//selectDiningList
 	
-	//DB에서 다이닝 상세조회
+	
+	/**
+	 * DB에서 다이닝 상세조회
+	 * @param diningId
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public DiningDomain selectDiningDetail(String diningId) throws PersistenceException{
 		
 		DiningDomain dD = null;
@@ -43,7 +53,13 @@ public class DiningDAO {
 		
 	}//selectMemeberDetail
 	
-	//DB에서 마지막다이닝 번호 조회
+	
+	
+	/**
+	 * DB에서 마지막다이닝 번호 조회
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public String selectLastDiningId()throws PersistenceException{
 		String lastDiningId = "";
 		SqlSession ss = mbDAO.getMyBatisHandler(false);
@@ -52,21 +68,38 @@ public class DiningDAO {
 		return lastDiningId;
 	}//selectLastDiningId
 
-	//DB에 다이닝 INSERT
+	
+	
+	/**
+	 * DB에 다이닝 INSERT
+	 * @param dVO
+	 * @throws PersistenceException
+	 */
 	public void insertDining(DiningVO dVO)throws PersistenceException {
 		SqlSession ss = mbDAO.getMyBatisHandler(true);
 		ss.insert("kr.co.sist.elysian.admin.dining.addDining",dVO);
 		mbDAO.closeHandler(ss);
 	}//insertDining
 	
-	//DB에 다이닝 UPDATE
+	
+	
+	/**
+	 * DB에 다이닝 UPDATE
+	 * @param param
+	 * @throws PersistenceException
+	 */
 	public void updateDining(HashMap<String, Object> param)throws PersistenceException{
 		SqlSession ss = mbDAO.getMyBatisHandler(true);
 		ss.update("kr.co.sist.elysian.admin.dining.updateDining",param);
 		mbDAO.closeHandler(ss);
 	}//updateDining
 	
-	//DB에 다이닝 DELETE
+	
+	
+	/**
+	 * DB에 다이닝 DELETE
+	 * @param diningId
+	 */
 	public void deleteDining(String diningId) {
 		
 		SqlSession ss = mbDAO.getMyBatisHandler(true);

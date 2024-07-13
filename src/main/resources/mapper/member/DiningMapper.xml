@@ -4,7 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.sist.elysian.member.dining">
-
+	
+	<!-- 랜덤한 다이닝 정보 가져오는 쿼리 -->
 	<select id="randomDiningDetail" resultType="dDomain">
 		SELECT DINING_ID diningId, DINING_NAME diningName, DINING_TYPE diningType,
 		HALL_TABLE hallTable, ROOM_TABLE roomTable, OPEN_TIME openTime,
@@ -16,6 +17,7 @@
 		FETCH FIRST 1 ROWS ONLY
 	</select>
 
+	<!-- 모든 다이닝 번호와 이름 가져오는 쿼리  -->
 	<select id="allDiningNameList" resultType="dOptionDomain">
 		SELECT DINING_ID
 		diningId, DINING_NAME diningName
@@ -23,6 +25,7 @@
 		WHERE DELETE_STATUS ='N'
 	</select>
 
+	<!-- 선택 다이닝 상세 정보 가져오는 쿼리 -->
 	<select id="oneDiningDetail" resultType="dDomain" parameterType="String">
 		SELECT DINING_ID diningId, DINING_NAME
 		diningName, DINING_TYPE diningType, HALL_TABLE hallTable, ROOM_TABLE
@@ -32,6 +35,7 @@
 		WHERE DELETE_STATUS = 'N' AND DINING_ID = #{diningId}
 	</select>
 
+	<!-- 룸,홀 잔여 좌석 확인하는 쿼리 -->
 	<select id="oneDiningSeatCnt" resultType="int" parameterType="map">
 		SELECT
 		<choose>
@@ -48,6 +52,7 @@
 		AND DINING_TIME = #{part, jdbcType=INTEGER}
 	</select>
 
+	<!-- 유저정보 가져오는 쿼리  -->
 	<select id="diningUserInfo" resultType="drVO" parameterType="String">
 		SELECT
 		#{userId} AS userId,
@@ -56,6 +61,7 @@
 		WHERE MEMBER_ID = #{userId, jdbcType=VARCHAR}
 	</select>
 	
+	<!-- 예약중 유효성 검사 쿼리  -->
 	<select id="reserveValid" resultType="int" parameterType="dsVO">
 	SELECT
 	  <choose>
@@ -70,6 +76,8 @@
 	WHERE DINING_ID = #{diningId} AND DINING_TIME = #{diningTime} AND DINING_DATE = #{diningDate}
 	</select>
 	
+	
+	<!-- 다이닝 예약 쿼리  -->
 	<insert id="diningReservation" parameterType="drVO">
     INSERT INTO DINING_RESERVATION
     (USER_ID, DINING_ID, PAY_NUM, DINING_RES_STATUS, VISIT_DATETIME, VISIT_PEOPLE, DINING_RES_DATE, VISITOR_NAME, VISITOR_PHONE, VISITOR_REQUEST, ADULT_CNT, CHILD_CNT, BABY_CNT, VISITOR_EMAIL)
@@ -84,7 +92,7 @@
         SYSDATE,
         #{visitorName, jdbcType=VARCHAR},
         #{phone, jdbcType=VARCHAR},
-        #{visitorRequest, jdbcType=VARCHAR},  <!-- CASE 구문을 제거 -->
+        #{visitorRequest, jdbcType=VARCHAR},
         #{adult, jdbcType=INTEGER},
         #{child, jdbcType=INTEGER},
         #{infant, jdbcType=INTEGER},

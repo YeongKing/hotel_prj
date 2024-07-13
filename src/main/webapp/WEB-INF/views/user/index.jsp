@@ -257,135 +257,8 @@ function fncSetCalendarDate(startDate){
 	jQuery("#night").val(dUtils.dateDiff(setCkinDate, setCkoutDate));
 }
 
-function fncSelectHotel(){
-	var searchSysCode = jQuery("#hotelSel").val();
-	jQuery("#searchSysCode").val(searchSysCode);
-	jQuery.ajax({
-		type : "GET",
-		url : "/dining/getResveAbleList.json",
-		cache : false,
-		dataType : "json",
-		async : false,
-		data : {
-			"searchSysCode" : searchSysCode
-		},
-		global : false,
-		beforeSend: function() {
-			commonJs.showLoadingBar(); //로딩바 show
-     	},
-        complete: function() {
-			commonJs.closeLoadingBar(); //로딩바 hide
-        },
-		success : function(data){
-			var diningCodeList = data.diningCodeList;
-
-			//선택 호텔의 다이닝이 없을 경우, 이전 호텔의 값을 유지
-			if(data.errMsg != null){
-				alert(data.errMsg); //선택하신 호텔은 예약 가능한 다이닝이 없습니다.
-				jQuery("#searchSysCode").val(jQuery("#prevSearchSysCode").val());
-				jQuery("#hotelSel").val(jQuery("#prevSearchSysCode").val());
-				jQuery("#hotelSel").seletMenuUpdate();
-				return false;
-			}
-            searchSysCode = data.searchSysCode;
-			jQuery("#prevSearchSysCode").val(searchSysCode);
-
-			jQuery("#selectDiningCode>option").remove();
-
-			var html = "";
-			for(var i=0; i < diningCodeList.length; i++){
-				if(i != 0){
-					html += '<option value='+diningCodeList[i].diningCode+'>'+ diningCodeList[i].diningNm +'</option>';
-				}else {
-					html += '<option value='+diningCodeList[i].diningCode+' selected>'+ diningCodeList[i].diningNm +'</option>';
-				}
-			}
-			jQuery("#selectDiningCode").append(html);
-			//select box 업데이트
-			jQuery("#selectDiningCode").seletMenuUpdate();
-
-			jQuery("#digningHotlNm").text(jQuery("select[name='searchSysCode'] option[value='"+searchSysCode+"']").text());
-			fncSelectDining();
-
-		},
-		error:function(r, s, e){
-			alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
-		}
-
-	})
-}
 
 //다이닝 선택
-function fncSelectDining(){
-	var searchSysCode = jQuery("#hotelSel").val();
-	var diningCode = jQuery("#selectDiningCode").val();
-	jQuery("#diningCode").val(diningCode);
-	jQuery.ajax({
-		type : "GET",
-		url : "/dining/get.json",
-		cache : false,
-		dataType : "json",
-		async : false,
-		data : {
-			"searchSysCode" : searchSysCode,
-			"diningCode" : diningCode
-		},
-		global : false,
-		beforeSend: function() {
-			commonJs.showLoadingBar(); //로딩바 show
-     	},
-        complete: function() {
-			commonJs.closeLoadingBar(); //로딩바 hide
-        },
-		success : function(data){
-
-			var diningInfoBean = data.diningInfoBean;
-			var imgList = data.imgList;
-			var diningCode = data.vo.diningCode;
-			var searchSysCode = data.vo.searchSysCode;
-
-			if(diningInfoBean != null){
-				var imgHtml = '<img src="/hotel_prj/util/file/download.do?fileSn='+diningInfoBean.imgSn+'&sysCode='+diningInfoBean.sysCode +'" alt="'+diningInfoBean.imgDc+'">';
-				jQuery("#diningImg").html(imgHtml);
-
-				var diningInfoHtml = "";
-				jQuery("#diningInfo").children().remove();
-
-				diningInfoHtml += '<dl class=\"roomIntro\">';
-				diningInfoHtml += '<dt class="name">'+ diningInfoBean.diningNm +'</dt>';
-				diningInfoHtml += '<dd class="txt">' + diningInfoBean.intrcnDc +' </dd>';
-				diningInfoHtml += '<dd class="info">';
-				diningInfoHtml += '	<ul>';
-				diningInfoHtml += '		<li>';
-				diningInfoHtml += '			<em>위치</em>';/* 위치 */
-				diningInfoHtml += '			<span>' + diningInfoBean.adres + '</span>';
-				diningInfoHtml += '		</li>';
-				diningInfoHtml += '		<li>';
-				diningInfoHtml += '			<em>문의</em>';/* 문의  */
-				diningInfoHtml += '			<span>'+diningInfoBean.inquiryTelno+'</span>';
-				diningInfoHtml += '		</li>';
-				diningInfoHtml += '		<li>';
-				diningInfoHtml += '			<em>좌석수<!-- 좌석수 --></em>';/* 좌석수 */
-				diningInfoHtml += '			<span>'+diningInfoBean.seatDc+'</span>';
-				diningInfoHtml += '		</li>';
-				diningInfoHtml += '	</ul>';
-				diningInfoHtml += '</dd>';
-				diningInfoHtml += '</dl>';
-
-				jQuery("#diningInfo").append(diningInfoHtml);
-				jQuery("#diningNm").html(diningInfoBean.diningNm);
-
-				//2021-02-01 추가
-				//다이닝 소개문구에 가격/시간 정보 있을 시 hidden처리
-				jQuery(".mainDiningHidden").addClass("hidden");
-			}
-			var buttonHtml = "";
-		},
-		error:function(r, s, e){
-			alert('Ajax 통신중 에러가 발생하였습니다\nError Code : \"{1}\"\nError : \"{2}\"'.replace("{1}", r.status).replace("{2}", r.responseText));
-		}
-	})
-}
 
 function fncSearchList(resveType){
 	//validation check
@@ -445,7 +318,7 @@ function closeHubPopup(){
 		<h2 class="hidden">HOME</h2>
 		<div class="contents01">
 			<div class="mainBg"><img src="/hotel_prj/static/home/images/ko/pc/HUMA/bg_main01.jpg" alt="Rest in utopia"></div>
-			<div class="mainTxt"><strong>Rest in utopia</strong></div>
+			<div class="mainTxt"><strong>TEST in utopia</strong></div>
 			<!-- scroll icon -->
 			<div class="icon-scroll">
 				<span class="txt-scroll" style="">SCROLL</span>
@@ -458,7 +331,7 @@ function closeHubPopup(){
 	<!--  mainArea01  -->
 	
 	<!--  mainArea04  -->
-	<div class="mainArea04">
+	<div class="mainArea04" style="background-image: url('/hotel_prj/static/home/images/ko/pc/HUMA/flower.jpg'); background-size: cover; background-position: center;">
 		<h2 class="hidden">OFFERS</h2>
 		<div class="inner">
 			<a href="http://localhost/hotel_prj/user/event.do" id="goToOffers" class="icoArr">GO TO EVENT</a>
@@ -590,7 +463,6 @@ function closeHubPopup(){
 			<div class="selectWrap" style="width:205px;">
 				<select data-height="150px" data-direction="up" name="selectVal">
 					<option selected="selected" value="R">ROOM</option>
-					<option value="D">DINING</option>
 				</select>
 			</div>
 		</div>
@@ -693,58 +565,6 @@ function closeHubPopup(){
 						<!-- //mainRoom -->
 					</div>
 					<button type="button" class="btnSC btnSearch" onclick="fncSearchList('R');">SEARCH</button>
-				</div>
-			</form>
-
-			<!-- //ROOM 선택 일 경우 -->
-			<form id="mainDiningForm" name="mainDiningForm" method="post" >
-				<div class="selectDining" role="area">
-					<div class="diningBar">
-						<a href="#none">
-							<strong class="tit">HOTEL / DINNIG</strong>
-							<div class="diningInfor">
-								<span id="digningHotlNm">엘리시안 서울</span>
-								<span id="diningNm">RAMSEY</span>
-							</div>
-						</a>
-								
-						<div class="diningSelection clearCont">
-							<div class="diningSelectCont">
-								<div class="lCont">
-									<div class="intInner duobuleSelect">
-										<div class="intArea selectWrap" style="width:385px">
-											<input type="hidden" id="prevSearchSysCode" value="TWC"/> 
-											<select id="hotelSel" name="searchSysCode" data-height="150px" data-direction="down" aria-required="true" onchange="fncSelectHotel();">
-												<option value="ELS" selected='selected' >엘리시안 서울</option>
-											</select>
-										</div>
-												
-										<div class="intArea selectWrap" style="width:385px">
-											<select id="selectDiningCode" name="diningCode" data-height="150px" data-direction="down" aria-required="true" onchange="fncSelectDining();">
-												<option value="001" selected="selected">RAMSEY</option>
-												<option value="002" >밍글스</option>
-												<option value="003" >바오하우스</option>
-												<option value="004" >오미자</option>
-												<option value="005" >테라로사</option>
-												<option value="006" >모모야마</option>
-												<option value="007" >플로라</option>
-												<option value="008" >스테이 헬스</option>
-												<option value="009" >라 메르</option>
-											</select>
-										</div>
-									</div>
-									
-									<div class="imgArea" id="diningImg">
-										<img src="util/file/download.do?fileSn=263788&sysCode=TWC" alt="아리아 이미지">
-									</div>
-								</div>
-								<!-- //lCont -->
-							</div>
-							<button type="button" class="btnClose">닫기</button>
-						</div>
-								
-						<button type="button" class="btnSC btnSearch" onclick="fncSearchList('D');">SEARCH</button>
-					</div>
 				</div>
 			</form>
 			<!-- //DINING 선택 일 경우 -->

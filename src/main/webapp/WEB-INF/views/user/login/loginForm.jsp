@@ -171,20 +171,14 @@ PageScript.prototype = {
                     case "google":
                     	window.location.href = 'https://accounts.google.com/o/oauth2/auth?client_id=540622652015-mhtf329rjo58t00he69h3au7gr5uk8s8.apps.googleusercontent.com&redirect_uri=http://localhost/hotel_prj/user/googleLogin.do&response_type=code&scope=email profile openid&prompt=login';
                         break;
-                    case "facebook":
-                        window.open('/sns/facebookLogin.do?fromPageType=LOGIN', 'popupSnsLoginWin', 'width=750,height=850,scrollbars=no,toolbar=no,menubar=no');
-                        break;
                     case "naver":
-                        window.open('/sns/naverLogin.do?callbackType=login&fromPageType=LOGIN', 'popupSnsLoginWin', 'width=750,height=850,scrollbars=no,toolbar=no,menubar=no');
+                        window.open('https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=j5rWH8NrB0CABORlvyXa&redirect_uri=http://localhost/hotel_prj/user/naverLogin.do&prompt=login');
                         break;
                     case "kakao":
                         Kakao.Auth.authorize({
                             redirectUri: 'http://localhost/hotel_prj/user/kakaoLogin.do',
                             prompts: 'login' //자동 로그인 방지
                         });
-                        break;
-                    case "apple":
-                        window.open('/sns/appleLogin.do?fromPageType=LOGIN', 'popupSnsLoginWin', 'width=750,height=850,scrollbars=no,toolbar=no,menubar=no');
                         break;
                     default:
                         break;
@@ -327,14 +321,10 @@ window.addEventListener('message', function(e) {
                             
                             <!-- 소셜 로그인 -->
 							<a href="javascript:void(0);" class="google">구글 로그인</a> 
-							<a href="javascript:void(0);" class="facebook">페이스북 로그인</a> 
 							
-								<a href="javascript:void(0);" class="naver">네이버 로그인</a>
+							<a href="javascript:void(0);" class="naver">네이버 로그인</a>
                                 
-								<a href="javascript:void(0);" class="kakao">카카오톡 로그인</a>
-							
-							<a href="javascript:void(0);" class="apple">애플 로그인</a>
-							<!-- 20200528 수정 : 애플로그인(추가) -->
+							<a href="javascript:void(0);" class="kakao">카카오톡 로그인</a>
 						</div>
 					</div>
 				</div>

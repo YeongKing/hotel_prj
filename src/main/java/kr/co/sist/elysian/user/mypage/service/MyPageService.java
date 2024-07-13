@@ -1,6 +1,7 @@
 package kr.co.sist.elysian.user.mypage.service;
 
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,17 +15,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import kr.co.sist.elysian.user.login.model.domain.UserDomain;
+import kr.co.sist.elysian.user.login.model.vo.UserVO;
 import kr.co.sist.elysian.user.mypage.model.domain.DiningResDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.MemberDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.NationalDomain;
 import kr.co.sist.elysian.user.mypage.model.domain.RoomResDomain;
 import kr.co.sist.elysian.user.mypage.model.vo.MemberVO;
 import kr.co.sist.elysian.user.mypage.repository.MyPageDAO;
-import net.nurigo.sdk.NurigoApp;
-import net.nurigo.sdk.message.model.Message;
-import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
-import net.nurigo.sdk.message.response.SingleMessageSentResponse;
-import net.nurigo.sdk.message.service.DefaultMessageService;
+//import net.nurigo.sdk.NurigoApp;
+//import net.nurigo.sdk.message.model.Message;
+//import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
+//import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+//import net.nurigo.sdk.message.service.DefaultMessageService;
 
 @Service
 @PropertySource("classpath:auth.properties")
@@ -33,11 +36,11 @@ public class MyPageService{
 	@Autowired(required = false)
 	private MyPageDAO myPageDAO;
 	
-	final DefaultMessageService messageService;
+//	final DefaultMessageService messageService;
 	
 	public MyPageService(@Value("${api.key}") String key,  @Value("${api.secret.key}") String secretKey) {
 		// 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
-		this.messageService = NurigoApp.INSTANCE.initialize(key, secretKey, "https://api.coolsms.co.kr");
+//		this.messageService = NurigoApp.INSTANCE.initialize(key, secretKey, "https://api.coolsms.co.kr");
 	} // MyPageService
 
 	/**
@@ -316,11 +319,11 @@ public class MyPageService{
 	 */
 	public String checkPhoneRequestNum(String phoneNumber) {
 		JSONObject jsonObj = new JSONObject();
-		Message message = new Message();
+//		Message message = new Message();
 		
 		// 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-        message.setFrom("01039299258");
-        message.setTo(phoneNumber);
+//        message.setFrom("01039299258");
+//        message.setTo(phoneNumber);
         
         SecureRandom secureRandom = new SecureRandom();
         int randomNum = secureRandom.nextInt((int)Math.pow(10, 6));
@@ -328,14 +331,14 @@ public class MyPageService{
         StringBuilder smsMessage = new StringBuilder();
         smsMessage.append("[Eysian호텔] SMS인증번호는 ").append(formattedNum).append("입니다. 정확히 입력해주세요.");
         
-        message.setText(smsMessage.toString());
+//        message.setText(smsMessage.toString());
         
-        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
-        System.out.println(response);
+//        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+//        System.out.println(response);
         
         jsonObj.put("randomNum", formattedNum);
-        jsonObj.put("statusMessage", response.component5());
-        jsonObj.put("statusCode", response.component8());
+//        jsonObj.put("statusMessage", response.component5());
+//        jsonObj.put("statusCode", response.component8());
 		
 		return jsonObj.toJSONString();
 	} // checkPhoneRequestNum
@@ -466,5 +469,45 @@ public class MyPageService{
 		jsonObj.put("resultCode", resultCode);
 		return jsonObj.toJSONString();
 	} // removeMemberInfo
+	
+	////////////////////소셜 로그인 추가//////////////////////
+	public MemberDomain selectSocialLogin(String userId) {
+		MemberDomain mdm = null;
+		try {
+			mdm = myPageDAO.selectSocialLogin(userId);
+		}catch(PersistenceException pe) {
+			pe.printStackTrace();
+		}//end catch
+		return mdm;
+	}//selectSocialLogin
+	
+	/**
+     * 사용자의 소셜 연동을 해제하는 메소드
+     * @param userId 사용자의 ID
+     * @param linkedSocial 소셜 타입 (kakao, naver, google 중 하나)
+     * @return 처리 결과를 담은 Map 객체
+     */
+	public Map<String, Object> updateSocialUnlink(String userId, String linkedSocial) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            UserVO userVO = new UserVO();
+            userVO.setUserId(userId);
+            userVO.setLinkedSocial(linkedSocial);
+
+            int result = myPageDAO.updateSocialUnlink(userVO);
+
+            if (result > 0) {
+                response.put("success", true);
+                response.put("message", "연동이 해제되었습니다.");
+            } else {
+                response.put("success", false);
+                response.put("message", "연동 해제에 실패했습니다.");
+            }
+        } catch (PersistenceException pe) {
+            response.put("success", false);
+            response.put("message", "오류가 발생했습니다. 관리자에게 문의하세요.");
+        }
+        return response;
+    }
 	
 } // class

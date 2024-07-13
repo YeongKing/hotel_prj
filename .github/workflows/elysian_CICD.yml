@@ -10,6 +10,8 @@ jobs:
   build_and_upload_image:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    permissions:
+      sudo: true  # 관리자 권한 부여
 
     steps:
       - name: Checkout repository
@@ -56,11 +58,11 @@ jobs:
       - name: Pull Docker image from Docker Hub
         run: |
           IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/elysian:latest"
-          if ((docker inspect "$IMAGE_NAME" > $null) -eq $true) {
-              Write-Output "Image exists. Removing..."
+          if [ "$(sudo docker inspect "$IMAGE_NAME" > /dev/null 2>&1; echo $?)" -eq 0 ]; then
+              echo "Image exists. Removing..."
               sudo docker rmi -f "$IMAGE_NAME"
-          }
-          Write-Output "Pulling image..."
+          fi
+          echo "Pulling image..."
           sudo docker pull "$IMAGE_NAME"
 
       - name: Check if Docker container exists and is running

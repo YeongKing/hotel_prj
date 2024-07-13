@@ -1,9 +1,6 @@
 name: Main Branch Workflow
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -17,18 +14,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      
+        
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '14'
-          ignore_warnings: true  # 또는 ignore_warnings 등의 비슷한 파라미터 사용
+            node-version: '20'
 
       - name: Set up Maven
-        uses: stCarolas/setup-maven@v4
+        uses: stCarolas/setup-maven@v5
         with:
-          maven-version: '3.8.3'
-          ignore_warnings: true  # 또는 ignore_warnings 등의 비슷한 파라미터 사용
+          maven-version: '3.8.2'
 
       - name: Verify Maven installation
         run: mvn -version
@@ -43,8 +38,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t my-java-app .
-          docker run -d -p 80:8080 my-java-app
+          docker build -t elysian .
+          docker run -d -p 80:8080 elysian
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -55,8 +50,8 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker tag my-java-app ${{ secrets.DOCKER_USERNAME }}/my-java-app:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/my-java-app:latest
+          docker tag my-java-app ${{ secrets.DOCKER_USERNAME }}/elysian:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/elysian:latest
 
   additional_tasks:
     runs-on: ubuntu-latest

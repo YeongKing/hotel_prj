@@ -55,8 +55,7 @@ jobs:
     steps:
       - name: Pull Docker image from Docker Hub
         run: |
-          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/elysian:latest"
-          $IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/elysian:latest"
+          $IMAGE_NAME = "${{ secrets.DOCKER_USERNAME }}/elysian:latest"
           if ((docker inspect "$IMAGE_NAME" > $null) -eq $true) {
               Write-Output "Image exists. Removing..."
               docker rmi -f "$IMAGE_NAME"
@@ -67,12 +66,12 @@ jobs:
       - name: Check if Docker container exists and is running
         id: check_docker_container
         run: |
-          container_id=$(docker ps -aqf "name=elysian-container")
+          $container_id = $(docker ps -aqf "name=elysian-container")
           if [ -z "$container_id" ]; then
             echo "container_exists=false" >> $GITHUB_ENV
           else
             echo "container_exists=true" >> $GITHUB_ENV
-            container_running=$(docker inspect -f '{{.State.Running}}' "$container_id")
+            $container_running = $(docker inspect -f '{{.State.Running}}' "$container_id")
             if [ "$container_running" == "true" ]; then
               echo "container_running=true" >> $GITHUB_ENV
             else
@@ -92,7 +91,7 @@ jobs:
 
       - name: Check and remove containers using port 80
         run: |
-          containersUsingPort=$(docker ps -aq --filter "publish=80")
+          $containersUsingPort = $(docker ps -aq --filter "publish=80")
           if [ -n "$containersUsingPort" ]; then
             docker stop $containersUsingPort
             docker rm $containersUsingPort

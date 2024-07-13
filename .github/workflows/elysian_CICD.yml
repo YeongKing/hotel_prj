@@ -56,29 +56,29 @@ jobs:
     steps:
       - name: Pull Docker image from Docker Hub
         run: |
-          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/elysian:latest"
-          if sudo docker inspect "$IMAGE_NAME" > /dev/null 2>&1; then
-              echo "Image exists. Removing..."
+          $IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/elysian:latest"
+          if (docker inspect "$IMAGE_NAME" > $null) {
+              Write-Output "Image exists. Removing..."
               sudo docker rmi -f "$IMAGE_NAME"
-          fi
-          echo "Pulling image..."
+          }
+          Write-Output "Pulling image..."
           sudo docker pull "$IMAGE_NAME"
 
       - name: Check if Docker container exists and is running
         id: check_docker_container
         run: |
-          container_id=$(sudo docker ps -aqf "name=elysian-container")
-          if [ -z "$container_id" ]; then
-            echo "container_exists=false" >> $GITHUB_ENV
-          else
-            echo "container_exists=true" >> $GITHUB_ENV
-            container_running=$(sudo docker inspect -f '{{.State.Running}}' "$container_id")
-            if [ "$container_running" == "true" ]; then
-              echo "container_running=true" >> $GITHUB_ENV
-            else
-              echo "container_running=false" >> $GITHUB_ENV
-            fi
-          fi
+          $container_id = $(sudo docker ps -aqf "name=elysian-container")
+          if (-not [string]::IsNullOrWhiteSpace($container_id)) {
+            Write-Output "container_exists=true" >> $env:GITHUB_ENV
+            $container_running = $(sudo docker inspect -f '{{.State.Running}}' "$container_id")
+            if ($container_running -eq "true") {
+              Write-Output "container_running=true" >> $env:GITHUB_ENV
+            } else {
+              Write-Output "container_running=false" >> $env:GITHUB_ENV
+            }
+          } else {
+            Write-Output "container_exists=false" >> $env:GITHUB_ENV
+          }
 
       - name: Stop and remove Docker container if running
         if: env.container_running == 'true'
@@ -92,11 +92,11 @@ jobs:
 
       - name: Check and remove containers using port 80
         run: |
-          containersUsingPort=$(sudo docker ps -aq --filter "publish=80")
-          if [ -n "$containersUsingPort" ]; then
+          $containersUsingPort = $(sudo docker ps -aq --filter "publish=80")
+          if (-not [string]::IsNullOrWhiteSpace($containersUsingPort)) {
             sudo docker stop $containersUsingPort
             sudo docker rm $containersUsingPort
-          fi
+          }
 
       - name: Run Docker container
         run: sudo docker run -d -p 80:8080 --name elysian-container ${{ secrets.DOCKER_USERNAME }}/elysian:latest

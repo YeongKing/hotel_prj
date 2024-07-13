@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Set up Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           
@@ -31,6 +31,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
+          distribution: 'adopt'  # Example distribution, adjust as needed
           
       - name: Set JAVA_HOME
         run: |

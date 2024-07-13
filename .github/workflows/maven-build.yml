@@ -45,5 +45,5 @@ jobs:
       
       - name: Build and run Docker container
         run: |
-          docker build -t my-java-app .
-          docker run -d -p 80:8080 my-java-app
+          docker build -t elysian
+          docker run -d -p 80:8080 elysian

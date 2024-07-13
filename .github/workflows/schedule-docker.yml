@@ -22,11 +22,13 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
+          ignore_warnings: true  # 또는 ignore_warnings 등의 비슷한 파라미터 사용
 
       - name: Set up Maven
         uses: stCarolas/setup-maven@v4
         with:
           maven-version: '3.8.3'
+          ignore_warnings: true  # 또는 ignore_warnings 등의 비슷한 파라미터 사용
 
       - name: Verify Maven installation
         run: mvn -version

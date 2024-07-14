@@ -62,7 +62,6 @@ jobs:
           }
           Write-Output "이미지 다운로드 중..."
           docker pull $IMAGE_NAME
-        shell: pwsh
 
       - name: Check if Docker container exists and is running
         id: check_docker_container
@@ -79,19 +78,16 @@ jobs:
               Write-Output "container_running=false" | Out-File -FilePath $env:GITHUB_ENV -Append
             }
           }
-        shell: pwsh
 
       - name: Stop and remove Docker container if running
         if: env.container_running == 'true'
         run: |
           docker stop elysian-container
           docker rm elysian-container
-        shell: pwsh
 
       - name: Remove Docker container if exists (not running)
         if: env.container_exists == 'true' && env.container_running == 'false'
         run: docker rm elysian-container
-        shell: pwsh
 
       - name: Check and remove containers using port 80
         run: |
@@ -99,9 +95,6 @@ jobs:
           if ($containersUsingPort) {
             docker stop $containersUsingPort
             docker rm $containersUsingPort
-          }
-        shell: pwsh
 
       - name: Run Docker container
         run: docker run -d -p 80:8080 --name elysian-container ${{ secrets.DOCKER_USERNAME }}/elysian:latest
-        shell: pwsh

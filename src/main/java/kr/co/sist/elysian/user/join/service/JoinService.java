@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import kr.co.sist.elysian.user.login.model.domain.UserDomain;
 import kr.co.sist.elysian.user.login.model.vo.UserVO;
 import kr.co.sist.elysian.user.login.repository.UserDAO;
-//import net.nurigo.java_sdk.api.Message;
-//import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Service
 public class JoinService{
@@ -90,7 +90,7 @@ public class JoinService{
 	
 	//회원가입 문자 인증
 	private void certifiedPhoneNumber(String userPhone, int randomNumber) {
-//        Message coolsms = new Message(api_key, api_secret);
+        Message coolsms = new Message(api_key, api_secret);
         
         HashMap<String, String> params = new HashMap<String, String>();
         System.out.println("Service : " + userPhone);
@@ -101,15 +101,15 @@ public class JoinService{
         params.put("app_version", "test app 1.2");
 
         try {
-//            JSONObject obj = (JSONObject) coolsms.send(params);
-//            System.out.println("Response: " + new String(obj.toJSONString().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8));
-//        } catch (CoolsmsExcepteion e) {
-//            String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-//            System.out.println("CoolsmsException: " + errorMessage);
-//            System.out.println("Error Code: " + e.getCode());
+            JSONObject obj = (JSONObject) coolsms.send(params);
+            System.out.println("Response: " + new String(obj.toJSONString().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8));
+        } catch (CoolsmsException e) {
+            String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+            System.out.println("CoolsmsException: " + errorMessage);
+            System.out.println("Error Code: " + e.getCode());
         } catch (Exception e) {
-//            String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-//            System.out.println("Exception: " + errorMessage);
+            String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+            System.out.println("Exception: " + errorMessage);
         }
     }
 

@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 import kr.co.sist.elysian.user.login.model.domain.UserDomain;
 import kr.co.sist.elysian.user.login.model.vo.UserVO;
 import kr.co.sist.elysian.user.login.repository.UserDAO;
-//import net.nurigo.java_sdk.api.Message;
-//import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.apache.ibatis.exceptions.PersistenceException;
 
 @Service
@@ -33,7 +33,7 @@ public class FindService {
     private String api_secret;
     
     public void certifiedPhoneNumber(String userPhone, int randomNumber) {
-//        Message coolsms = new Message(api_key, api_secret);
+        Message coolsms = new Message(api_key, api_secret);
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("to", userPhone);
@@ -43,9 +43,9 @@ public class FindService {
         params.put("app_version", "test app 1.2");
 
         try {
-//            JSONObject obj = (JSONObject) coolsms.send(params);
-//        } catch (CoolsmsException e) {
-//            String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+            JSONObject obj = (JSONObject) coolsms.send(params);
+        } catch (CoolsmsException e) {
+            String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
         } catch (Exception e) {
             String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
         }

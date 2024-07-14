@@ -48,7 +48,6 @@ jobs:
           docker tag elysian ${{ secrets.DOCKER_USERNAME }}/elysian:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/elysian:latest
 
-
   run_docker_container:
     needs: build_and_deploy
     runs-on: self-hosted  # self-hosted 러너에서 실행
@@ -57,46 +56,52 @@ jobs:
       - name: Pull Docker image from Docker Hub
         run: |
           $IMAGE_NAME = "${{ secrets.DOCKER_USERNAME }}/elysian:latest"
-          if (docker inspect "$IMAGE_NAME" > $null) {
+          if (docker inspect $IMAGE_NAME -ErrorAction SilentlyContinue) {
               Write-Output "이미지가 존재합니다. 제거 중..."
-              docker rmi -f "$IMAGE_NAME"
+              docker rmi -f $IMAGE_NAME
           }
           Write-Output "이미지 다운로드 중..."
-          docker pull "$IMAGE_NAME"
+          docker pull $IMAGE_NAME
+        shell: pwsh
 
       - name: Check if Docker container exists and is running
         id: check_docker_container
         run: |
-          container_id=$(docker ps -aqf "name=elysian-container")
-          if [ -z "$container_id" ]; then
-            echo "container_exists=false" >> $GITHUB_ENV
-          else
-            echo "container_exists=true" >> $GITHUB_ENV
-            container_running=$(docker inspect -f '{{.State.Running}}' "$container_id")
-            if [ "$container_running" == "true" ]; then
-              echo "container_running=true" >> $GITHUB_ENV
-            else
-              echo "container_running=false" >> $GITHUB_ENV
-            fi
-          fi
+          $container_id = docker ps -aqf "name=elysian-container"
+          if (-not $container_id) {
+            Write-Output "container_exists=false" | Out-File -FilePath $env:GITHUB_ENV -Append
+          } else {
+            Write-Output "container_exists=true" | Out-File -FilePath $env:GITHUB_ENV -Append
+            $container_running = docker inspect -f '{{.State.Running}}' $container_id
+            if ($container_running -eq "true") {
+              Write-Output "container_running=true" | Out-File -FilePath $env:GITHUB_ENV -Append
+            } else {
+              Write-Output "container_running=false" | Out-File -FilePath $env:GITHUB_ENV -Append
+            }
+          }
+        shell: pwsh
 
       - name: Stop and remove Docker container if running
         if: env.container_running == 'true'
         run: |
           docker stop elysian-container
           docker rm elysian-container
+        shell: pwsh
 
       - name: Remove Docker container if exists (not running)
         if: env.container_exists == 'true' && env.container_running == 'false'
         run: docker rm elysian-container
+        shell: pwsh
 
       - name: Check and remove containers using port 80
         run: |
-          containersUsingPort=$(docker ps -aq --filter "publish=80")
-          if [ -n "$containersUsingPort" ]; then
+          $containersUsingPort = docker ps -aq --filter "publish=80"
+          if ($containersUsingPort) {
             docker stop $containersUsingPort
             docker rm $containersUsingPort
-          fi
+          }
+        shell: pwsh
 
       - name: Run Docker container
         run: docker run -d -p 80:8080 --name elysian-container ${{ secrets.DOCKER_USERNAME }}/elysian:latest
+        shell: pwsh

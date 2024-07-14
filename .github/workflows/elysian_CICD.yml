@@ -95,6 +95,7 @@ jobs:
           if ($containersUsingPort) {
             docker stop $containersUsingPort
             docker rm $containersUsingPort
+          }
 
       - name: Run Docker container
         run: docker run -d -p 80:8080 --name elysian-container ${{ secrets.DOCKER_USERNAME }}/elysian:latest

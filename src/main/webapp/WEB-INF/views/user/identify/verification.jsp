@@ -138,9 +138,8 @@ function gfncNameCert() {
     var phone = $("#frm_userPhone").val();
     if (validateInput('#frm_userPhone', '.verifyPhoneFrm') && isValidPhoneFormat(phone)) {
         var sanitizedPhone = removeHyphens(phone);
-        sendSMS(sanitizedPhone); // 실제 SMS 전송 (추후 테스트 완료 후 사용)
-
-        // SMS 전송 성공 시의 로직을 직접 호출합니다.
+        $("#phoneChk").attr("disabled", true); // 인증번호 전송 버튼 비활성화
+        sendSMS(sanitizedPhone); // 실제 SMS 전송
         //simulateSMSSuccess(sanitizedPhone); // 테스트용 함수 사용
     } else {
         $('#frm_userPhone').closest('.verifyPhoneFrm').addClass('error');
@@ -203,23 +202,24 @@ function moveToLogin() {
 function sendSMS(phone) {
     $.ajax({
         type: "GET",
-        url: "/hotel_prj/user/phoneCheck.do?phone=" + phone, // 하이픈이 제거된 전화번호를 사용
+        url: "/hotel_prj/user/phoneCheck.do?phone=" + phone,
         cache: false,
         success: function(data) {
             if (data === "error") {
-                alert("가입된 회원이 아닙니다. 회원가입을 먼저 진행해 주세요."); // DB에 저장된 회원이 아니면 알림
-                window.opener.location.href = "/hotel_prj/user/join.do"; // 부모 페이지에서 리다이렉션
-                window.close(); // 팝업 창 닫기
+                alert("가입된 회원이 아닙니다. 회원가입을 먼저 진행해 주세요.");
+                window.opener.location.href = "/hotel_prj/user/join.do";
+                window.close();
             } else {
-                alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오."); // 인증번호 발송 완료 알림
-                $("#frm_userNum").attr("disabled", false); // 인증번호 입력 필드 활성화
-                $("#frm_userPhone").attr("readonly", true); // 휴대폰 번호 입력 필드 읽기 전용으로 설정
-                $("#phoneChk").attr("disabled", true); // 인증번호 전송 버튼 비활성화
-                code2 = data; // 전송된 인증번호 저장
+                alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
+                $("#frm_userNum").attr("disabled", false);
+                $("#frm_userPhone").attr("readonly", true);
+                $("#phoneChk").attr("disabled", true); // 인증번호 전송 버튼 비활성화 유지
+                code2 = data;
             }
         },
         error: function(xhr, status, error) {
-            console.error("AJAX Error: ", status, error); // AJAX 요청 실패 시 오류 메시지 출력
+            console.error("AJAX Error: ", status, error);
+            $("#phoneChk").attr("disabled", false); // 인증번호 전송 버튼 활성화
         }
     });
 }

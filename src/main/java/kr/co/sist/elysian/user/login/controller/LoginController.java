@@ -82,7 +82,8 @@ public class LoginController {
             model.addAttribute("userName", udm.getUserName());
             
             String userId = udm.getUserId();
-            ls.updateLoginDate(userId);
+            uVO.setLoginMethod("일반");
+            ls.updateSocialLoginDate(uVO);
             
             // 세션에 저장되어 있는 요청한 페이지 URI 가져오기 
             String requestedURI = (String)session.getAttribute("requestedURI");

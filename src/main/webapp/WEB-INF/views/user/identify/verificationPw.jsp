@@ -143,8 +143,8 @@ body {
         var phone = $("#frm_userPhone").val();
         if (validateInput('#frm_userPhone', '.verifyPhoneFrm') && isValidPhoneFormat(phone)) {
             var sanitizedPhone = removeHyphens(phone);
-         	sendSMS(sanitizedPhone); // 실제 SMS 전송
-            //simulateSMSSuccess(sanitizedPhone); // 테스트용 함수 사용
+            $("#phoneChk").attr("disabled", true); // 인증번호 전송 버튼 비활성화
+            sendSMS(sanitizedPhone); // 실제 SMS 전송
         } else {
             $('#frm_userPhone').closest('.verifyPhoneFrm').addClass('error');
         }
@@ -224,12 +224,13 @@ body {
                     alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
                     $("#frm_userNum").attr("disabled", false);
                     $("#frm_userPhone").attr("readonly", true);
-                    $("#phoneChk").attr("disabled", true);
+                    $("#phoneChk").attr("disabled", true); // 인증번호 전송 버튼 비활성화 유지
                     code2 = data;
                 }
             },
             error: function(xhr, status, error) {
                 console.error("AJAX Error: ", status, error);
+                $("#phoneChk").attr("disabled", false); // 인증번호 전송 버튼 활성화
             }
         });
     }

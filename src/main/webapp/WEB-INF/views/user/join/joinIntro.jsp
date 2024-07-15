@@ -740,6 +740,7 @@
 
         if (isValidPhoneFormat(phone)) {
             var sanitizedPhone = removeHyphens(phone);
+            $("#phoneChk").attr("disabled", true); // 인증번호 전송 버튼 비활성화
             sendSMSToServer(sanitizedPhone);
         } else {
             alert("올바른 전화번호를 입력해 주세요.");
@@ -759,10 +760,12 @@
                     code2 = response.code;
                 } else {
                     alert("문자 전송에 실패했습니다. 관리자에게 문의하세요.");
+                    $("#phoneChk").attr("disabled", false); // 인증번호 전송 버튼 활성화
                 }
             },
             error: function () {
                 alert("문자 전송에 실패했습니다. 관리자에게 문의하세요.");
+                $("#phoneChk").attr("disabled", false); // 인증번호 전송 버튼 활성화
             }
         });
     }
@@ -771,7 +774,7 @@
         if ($("#userPhoneVerify").val() == code2) {
             alert("인증번호가 일치합니다.");
             $("#userPhoneVerify").attr("disabled", true);
-            $("#phoneChk").attr("disabled", true);
+            $("#phoneChk").attr("disabled", true); // 인증번호 전송 버튼 비활성화 유지
             $("#phoneChk2").attr("disabled", true);
             $("#userPhone").attr("readonly", true);
         } else {
@@ -779,6 +782,7 @@
             $('#userPhoneVerify').closest('.verifyNumFrm').addClass('error');
         }
     }
+
 </script>
 
 

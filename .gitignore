@@ -318,6 +318,7 @@ $RECYCLE.BIN/
 /database.properties
 /application.properties
 /auth.properties
+/memberAuth.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,intellij,eclipse,java,visualstudiocode,vuejs
 /build/

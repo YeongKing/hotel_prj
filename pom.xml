@@ -205,14 +205,6 @@
 		    <artifactId>sdk</artifactId>
 		    <version>4.3.0</version>
 		</dependency>
-
-
- 		<dependency>
-			<groupId>net.nurigo</groupId>
-			<artifactId>javasdk</artifactId>
-			<version>2.2</version>
-		</dependency> 
-		
 		
 		<dependency>
 		    <groupId>com.jayway.jsonpath</groupId>

@@ -105,19 +105,19 @@ public class JoinController {
 	    return resultMap;
 	}//addUser
 	
-	//회원 가입 문자 인증
 	@PostMapping("/sendSMS.do")
 	public ResponseEntity<Map<String, String>> sendSMS(@RequestParam String userPhone) {
-        Map<String, String> response = new HashMap<>();
-        try {
-            String randomNumber = js.sendSMS(userPhone);
-            response.put("status", "success");
-            response.put("code", randomNumber);
-        } catch (Exception e) {
-            response.put("status", "fail");
-        }
-        return ResponseEntity.ok(response);
-    }
+	    Map<String, String> response = new HashMap<>();
+	    try {
+	        String randomNumber = js.sendSMS(userPhone);
+	        response.put("status", "success");
+	        response.put("code", randomNumber);
+	    } catch (Exception e) {
+	        response.put("status", "fail");
+	        response.put("message", e.getMessage());
+	    }
+	    return ResponseEntity.ok(response);
+	}
 	
 	//회원 가입 완료 페이지로 이동
 	@PostMapping("/joinComplete.do")

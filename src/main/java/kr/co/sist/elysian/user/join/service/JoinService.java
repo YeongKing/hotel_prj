@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import kr.co.sist.elysian.user.login.model.domain.UserDomain;
 import kr.co.sist.elysian.user.login.model.vo.UserVO;
 import kr.co.sist.elysian.user.login.repository.UserDAO;
-import net.nurigo.java_sdk.api.Message;
-import net.nurigo.java_sdk.exceptions.CoolsmsException;
+//import net.nurigo.java_sdk.api.Message;
+//import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Service
 public class JoinService{
@@ -89,39 +89,39 @@ public class JoinService{
 	}//addUser
 	
 	//회원가입 문자 인증
-	private void certifiedPhoneNumber(String userPhone, int randomNumber) {
-        Message coolsms = new Message(api_key, api_secret);
-        
-        HashMap<String, String> params = new HashMap<String, String>();
-        System.out.println("Service : " + userPhone);
-        params.put("to", userPhone);
-        params.put("from", "01027345305");
-        params.put("type", "SMS");
-        params.put("text", "[Elysian] 인증번호는" + "[" + randomNumber + "]" + "입니다.");
-        params.put("app_version", "test app 1.2");
-
-        try {
-            JSONObject obj = (JSONObject) coolsms.send(params);
-            System.out.println("Response: " + new String(obj.toJSONString().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8));
-        } catch (CoolsmsException e) {
-            String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-            System.out.println("CoolsmsException: " + errorMessage);
-            System.out.println("Error Code: " + e.getCode());
-        } catch (Exception e) {
-            String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-            System.out.println("Exception: " + errorMessage);
-        }
-    }
-
-	private int generateRandomNumber() {
-        return (int)((Math.random() * (999999 - 100000 + 1)) + 100000); // 6자리 난수 생성
-    }
-
-	public String sendSMS(String userPhone) {
-        int randomNumber = generateRandomNumber();
-        certifiedPhoneNumber(userPhone, randomNumber);
-        return Integer.toString(randomNumber);
-    }
+//	private void certifiedPhoneNumber(String userPhone, int randomNumber) {
+//        Message coolsms = new Message(api_key, api_secret);
+//
+//        HashMap<String, String> params = new HashMap<String, String>();
+//        System.out.println("Service : " + userPhone);
+//        params.put("to", userPhone);
+//        params.put("from", "01027345305");
+//        params.put("type", "SMS");
+//        params.put("text", "[Elysian] 인증번호는" + "[" + randomNumber + "]" + "입니다.");
+//        params.put("app_version", "test app 1.2");
+//
+//        try {
+//            JSONObject obj = (JSONObject) coolsms.send(params);
+//            System.out.println("Response: " + new String(obj.toJSONString().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8));
+//        } catch (CoolsmsException e) {
+//            String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+//            System.out.println("CoolsmsException: " + errorMessage);
+//            System.out.println("Error Code: " + e.getCode());
+//        } catch (Exception e) {
+//            String errorMessage = new String(e.getMessage().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+//            System.out.println("Exception: " + errorMessage);
+//        }
+//    }
+//
+//	private int generateRandomNumber() {
+//        return (int)((Math.random() * (999999 - 100000 + 1)) + 100000); // 6자리 난수 생성
+//    }
+//
+//	public String sendSMS(String userPhone) {
+//        int randomNumber = generateRandomNumber();
+//        certifiedPhoneNumber(userPhone, randomNumber);
+//        return Integer.toString(randomNumber);
+//    }
 	
 	
 	

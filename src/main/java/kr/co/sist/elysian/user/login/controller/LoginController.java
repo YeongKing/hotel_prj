@@ -122,18 +122,18 @@ public class LoginController {
     }
     
     /* 본인인증 하기 */
-    @GetMapping("/phoneCheck.do")
-    @ResponseBody
-    public String sendSMS(@RequestParam("phone") String userPhone) {
-        System.out.println("Received phone number: " + userPhone);
-
-        UserDomain user = findService.getUserDetails(userPhone);
-        if (user != null) {
-            return findService.sendSMS(userPhone);
-        } else {
-            return "error";
-        }
-    }
+//    @GetMapping("/phoneCheck.do")
+//    @ResponseBody
+//    public String sendSMS(@RequestParam("phone") String userPhone) {
+//        System.out.println("Received phone number: " + userPhone);
+//
+//        UserDomain user = findService.getUserDetails(userPhone);
+//        if (user != null) {
+//            return findService.sendSMS(userPhone);
+//        } else {
+//            return "error";
+//        }
+//    }
     
     /* 본인인증 시 회원 정보 가져오기 */
     @GetMapping("/getUserDetails.do")

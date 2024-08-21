@@ -9,21 +9,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
     <title>이벤트 이벤트 상세 | 엘리시안호텔</title>
-    <link rel="shortcut icon" type="image/x-icon" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
-    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
-    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
-    <link href="http://localhost/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css">
-    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/selectbox.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="http://localhost:8080/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
+    <link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost:8080/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/selectbox.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/home.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <meta property="og:url" content="http://localhost/hotel_prj/user/eventDetail.do?eventNum=<c:out value='${eDomain.eventNum}'/>">
+    <meta property="og:url" content="http://localhost:8080/hotel_prj/user/eventDetail.do?eventNum=<c:out value='${eDomain.eventNum}'/>">
 
 </head>
 
@@ -41,7 +41,7 @@
             <h1 class="hidden">Promotion</h1>
             <div class="topViewCont">
                 <div class="img">
-                    <img src="http://localhost/hotel_prj/util/event_img/${eDomain.eventSubImg}" >
+                    <img src="http://localhost:8080/hotel_prj/util/event_img/${eDomain.eventSubImg}" >
                 </div>
                 <div class="txtCont">
                     <strong class="tit">${eDomain.eventTitle}</strong>
@@ -68,7 +68,7 @@
                         <dl>
                             <dt>${eDomain.eventTitle }</dt>
                             <dd class="thum">
-                                <img src="http://localhost/hotel_prj/util/event_img/${eDomain.eventMainImg}" >
+                                <img src="http://localhost:8080/hotel_prj/util/event_img/${eDomain.eventMainImg}" >
                             </dd>
                             <dd class="txtArea">
                                 ${eDomain.eventContent}
@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="btnArea">
-                    <a href="http://localhost/hotel_prj/user/event.do" class="btnSC btnL">목록</a>
+                    <a href="http://localhost:8080/hotel_prj/user/event.do" class="btnSC btnL">목록</a>
                 </div>
 
                 <div class="promotion">
@@ -105,7 +105,7 @@
                                                 <span><em>기간</em><c:out value="${event.eventStartDate}" /> - <c:out value="${event.eventEndDate}" /></span>
                                             </p>
                                             <span class="thum">
-                                                <img src="http://localhost/hotel_prj/util/event_img/${event.eventMainImg}" alt="<c:out value='${event.eventTitle}'/>">
+                                                <img src="http://localhost:8080/hotel_prj/util/event_img/${event.eventMainImg}" alt="<c:out value='${event.eventTitle}'/>">
                                             </span>
                                         </a>
                                     </li>
@@ -137,7 +137,7 @@
         var imageUrl = document.querySelector('meta[property="og:image"]').getAttribute('content');
 
         function shareKakao() {
-            var imageUrl = "http://localhost/hotel_prj/util/event_img/<c:out value="${eDomain.eventMainImg}"/>";
+            var imageUrl = "http://localhost:8080/hotel_prj/util/event_img/<c:out value="${eDomain.eventMainImg}"/>";
             fetch(imageUrl)
                 .then(response => response.blob())
                 .then(blob => {
@@ -154,16 +154,16 @@
                                 description: '<c:out value="${eDomain.eventTitle}"/>',
                                 imageUrl: response.infos.original.url,
                                 link: {
-                                    mobileWebUrl: 'http://localhost/hotel_prj/user/eventDetail.do?eventNum=<c:out value="${eDomain.eventNum}"/>',
-                                    webUrl: 'http://localhost/hotel_prj/user/eventDetail.do?eventNum=<c:out value="${eDomain.eventNum}"/>'
+                                    mobileWebUrl: 'http://localhost:8080/hotel_prj/user/eventDetail.do?eventNum=<c:out value="${eDomain.eventNum}"/>',
+                                    webUrl: 'http://localhost:8080/hotel_prj/user/eventDetail.do?eventNum=<c:out value="${eDomain.eventNum}"/>'
                                 }
                             },
                             buttons: [
                                 {
                                     title: '자세히 보기',
                                     link: {
-                                        mobileWebUrl: 'http://localhost/hotel_prj/user/eventDetail.do?eventNum=<c:out value="${eDomain.eventNum}"/>',
-                                        webUrl: 'http://localhost/hotel_prj/user/eventDetail.do?eventNum=<c:out value="${eDomain.eventNum}"/>'
+                                        mobileWebUrl: 'http://localhost:8080/hotel_prj/user/eventDetail.do?eventNum=<c:out value="${eDomain.eventNum}"/>',
+                                        webUrl: 'http://localhost:8080/hotel_prj/user/eventDetail.do?eventNum=<c:out value="${eDomain.eventNum}"/>'
                                     }
                                 }
                             ],

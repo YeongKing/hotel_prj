@@ -17,7 +17,7 @@
 
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
 <!-- E head css -->
 <style>
 .listTit{
@@ -80,7 +80,7 @@
                 <dt>${drInfoVO.diningName}</dt>
                 <dd>
                     <span class="txt">엘리시안 호텔 ${drInfoVO.location}</span>
-                    <span class="thum"><img src="http://localhost/hotel_prj/util/dining_img/${drInfoVO.diningImg}"></span>
+                    <span class="thum"><img src="http://localhost:8080/hotel_prj/util/dining_img/${drInfoVO.diningImg}"></span>
                 </dd>
             </dl>
             <dl class="commlist">
@@ -118,9 +118,9 @@
             </dl>
         </div>
         <div class="btnArea">
-            <a href="http://localhost/hotel_prj/user/index.do" class="btnSC btnL">메인 </a>
+            <a href="http://localhost:8080/hotel_prj/user/index.do" class="btnSC btnL">메인 </a>
             
-                <a href="http://localhost/hotel_prj/user/diningResList.do" class="btnSC btnL active">예약내역 확인<!-- 예약내역 확인 --></a>
+                <a href="http://localhost:8080/hotel_prj/user/diningResList.do" class="btnSC btnL active">예약내역 확인<!-- 예약내역 확인 --></a>
             
             
         </div>

@@ -16,10 +16,10 @@
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
 <link
-	href="http://localhost/hotel_prj/static/home/css/ko/pc/common_new.css"
+	href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/common_new.css"
 	rel="stylesheet" type="text/css">
 <link
-	href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css"
+	href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css"
 	rel="stylesheet" type="text/css">
 <!-- E head css -->
 
@@ -65,7 +65,7 @@ jQuery(function(){
 	*/
 	function fncResvReset(){
 		if(confirm("다시 검색하시겠습니까?")){ 
-			location.href = "http://localhost/hotel_prj/user/room0.do";
+			location.href = "http://localhost:8080/hotel_prj/user/room0.do";
 			return false;
 		}
 	}
@@ -109,7 +109,7 @@ jQuery(function(){
 		
 		jQuery("#payPrice").val(payPrice);
 		
-		jQuery("#step1Form").attr("action", "http://localhost/hotel_prj/user/room2.do");
+		jQuery("#step1Form").attr("action", "http://localhost:8080/hotel_prj/user/room2.do");
 		jQuery("#step1Form").submit();
 	}
 	
@@ -226,26 +226,26 @@ jQuery(function(){
  			roomType = "STANDARD";
  			roomSize = "25"
  			bedOption = "킹 1 또는 더블 2"
- 	 	 	img2 = "http://localhost/hotel_prj/util/file/STANDARD_2.jpg"
+ 	 	 	img2 = "http://localhost:8080/hotel_prj/util/file/STANDARD_2.jpg"
  			if (roomCode==="STK"){
  				alt = "스탠다드 킹"
- 	 	 		img1 = "http://localhost/hotel_prj/util/file/STANDARD_KING_2.jpg"
+ 	 	 		img1 = "http://localhost:8080/hotel_prj/util/file/STANDARD_KING_2.jpg"
  			}else if (roomCode ==="STT"){
  				alt = "스탠다드 트윈"
- 	 	 		img1 = "http://localhost/hotel_prj/util/file/STANDARD_TWIN_2.jpg"
+ 	 	 		img1 = "http://localhost:8080/hotel_prj/util/file/STANDARD_TWIN_2.jpg"
  			}
  			
  		} else if (roomCode === "DSK" || roomCode === "DST") {
  		    roomType = "DELUXE";
  			roomSize = "35"
  	 		bedOption = "킹 1 또는 더블 2"
- 	 		img2 = "http://localhost/hotel_prj/util/file/DELUXE_2.jpg"
+ 	 		img2 = "http://localhost:8080/hotel_prj/util/file/DELUXE_2.jpg"
  	 		if (roomCode==="DSK"){
  	 			alt = "디럭스 킹"	
- 	 			img1 = "http://localhost/hotel_prj/util/file/DELUXE_KING_2.jpg"
+ 	 			img1 = "http://localhost:8080/hotel_prj/util/file/DELUXE_KING_2.jpg"
  	 		}else if (roomCode ==="DST"){
  	 			alt = "디럭스 트윈"			
- 	 			img1 = "http://localhost/hotel_prj/util/file/DELUXE_TWIN_2.jpg"
+ 	 			img1 = "http://localhost:8080/hotel_prj/util/file/DELUXE_TWIN_2.jpg"
  	 				
  	 		}
  	 		
@@ -253,13 +253,13 @@ jQuery(function(){
  		    roomType = "SUITE";
  			roomSize = "55"
  	 		bedOption = "킹 2 또는 더블 4"
- 	 	 	img2 = "http://localhost/hotel_prj/util/file/SUITE_2.jpg"
+ 	 	 	img2 = "http://localhost:8080/hotel_prj/util/file/SUITE_2.jpg"
  	 		if (roomCode==="SWK"){
  	 			alt = "스위트 킹"	
- 	 	 		img1 = "http://localhost/hotel_prj/util/file/SUITE_KING_2.jpg"
+ 	 	 		img1 = "http://localhost:8080/hotel_prj/util/file/SUITE_KING_2.jpg"
  	 		}else if (roomCode ==="SWT"){
  	 			alt = "스위트 트윈"	
- 	 	 		img1 = "http://localhost/hotel_prj/util/file/SUITE_TWIN_2.jpg"
+ 	 	 		img1 = "http://localhost:8080/hotel_prj/util/file/SUITE_TWIN_2.jpg"
  	 				
  	 		}
  		}
@@ -571,37 +571,37 @@ jQuery(function(){
 									<c:when
 										test="${room.roomRankCode == '30_001' && room.bedCode == '50_003'}">
 										<c:set var="img"
-											value="http://localhost/hotel_prj/util/file/DELUXE_KING_2.jpg" />
+											value="http://localhost:8080/hotel_prj/util/file/DELUXE_KING_2.jpg" />
 										<c:set var="roomCode" value="DSK" />
 									</c:when>
 									<c:when
 										test="${room.roomRankCode == '30_001' && room.bedCode == '50_002'}">
 										<c:set var="img"
-											value="http://localhost/hotel_prj/util/file/DELUXE_TWIN_2.jpg" />
+											value="http://localhost:8080/hotel_prj/util/file/DELUXE_TWIN_2.jpg" />
 										<c:set var="roomCode" value="DST" />
 									</c:when>
 									<c:when
 										test="${room.roomRankCode == '30_002' && room.bedCode == '50_003'}">
 										<c:set var="img"
-											value="http://localhost/hotel_prj/util/file/STANDARD_KING_2.jpg" />
+											value="http://localhost:8080/hotel_prj/util/file/STANDARD_KING_2.jpg" />
 										<c:set var="roomCode" value="STK" />
 									</c:when>
 									<c:when
 										test="${room.roomRankCode == '30_002' && room.bedCode == '50_002'}">
 										<c:set var="img"
-											value="http://localhost/hotel_prj/util/file/STANDARD_TWIN_2.jpg" />
+											value="http://localhost:8080/hotel_prj/util/file/STANDARD_TWIN_2.jpg" />
 										<c:set var="roomCode" value="STT" />
 									</c:when>
 									<c:when
 										test="${room.roomRankCode == '30_003' && room.bedCode == '50_003'}">
 										<c:set var="img"
-											value="http://localhost/hotel_prj/util/file/SUITE_KING_2.jpg" />
+											value="http://localhost:8080/hotel_prj/util/file/SUITE_KING_2.jpg" />
 										<c:set var="roomCode" value="SWK" />
 									</c:when>
 									<c:when
 										test="${room.roomRankCode == '30_003' && room.bedCode == '50_002'}">
 										<c:set var="img"
-											value="http://localhost/hotel_prj/util/file/SUITE_TWIN_2.jpg" />
+											value="http://localhost:8080/hotel_prj/util/file/SUITE_TWIN_2.jpg" />
 										<c:set var="roomCode" value="SWT" />
 									</c:when>
 								</c:choose>

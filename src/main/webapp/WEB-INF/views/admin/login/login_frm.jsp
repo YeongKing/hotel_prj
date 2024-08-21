@@ -42,13 +42,13 @@
     <div class="col-lg-5 col-12">
         <div id="auth-left">
             <div class="auth-logo mb-3">
-                <a href="http://localhost/hotel_prj/admin/login_frm.do">
+                <a href="http://localhost:8080/hotel_prj/admin/login_frm.do">
                 <img src="/hotel_prj/admin/assets/static/images/logo/logo.png" alt="Logo"></a>
             </div>
             <h1 class="auth-title">Log in</h1>
             <p class="auth-subtitle mb-5">엘리시안 관리자 사이트 이용을 위해 로그인해주세요.</p>
 
-            <form action="http://localhost/hotel_prj/admin/set_session.do"  class="mb-5" method="post">
+            <form action="http://localhost:8080/hotel_prj/admin/set_session.do"  class="mb-5" method="post">
                 <div class="form-group position-relative has-icon-left mb-4">
                     <input type="text" class="form-control form-control-xl" placeholder="id" name="adminId" id="adminId">
                     <div class="form-control-icon">
@@ -64,7 +64,7 @@
                 <button class="btn btn-outline-warning btn-block btn-lg shadow-lg mt-5">Log in</button>
             </form>
 	        <div class="d-flex align-items-center justify-content-center">
-	        <a href="http://localhost/hotel_prj/user/index.do" class="btn btn-outline-secondary btn-block">엘리시안 호텔 홈페이지 바로가기</a>
+	        <a href="http://localhost:8080/hotel_prj/user/index.do" class="btn btn-outline-secondary btn-block">엘리시안 호텔 홈페이지 바로가기</a>
 	        </div>
         </div>
     </div>

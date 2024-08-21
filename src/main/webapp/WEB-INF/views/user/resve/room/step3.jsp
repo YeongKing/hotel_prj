@@ -23,7 +23,7 @@
 
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
 <!-- E head css -->
 
 <!-- S head script -->
@@ -120,7 +120,7 @@ $(document).ready(function() {
 
 function getTokenAndPayment(pg, pay_method){
     $.ajax({
-        url: "http://localhost/hotel_prj/user/getToken.do",
+        url: "http://localhost:8080/hotel_prj/user/getToken.do",
         method: 'GET',
         success: function(response) {
             payment(pg, pay_method, response); // 토큰을 받은 후 결제 호출
@@ -165,7 +165,7 @@ function sendPaymentData(paymentData, token) {
     const impUid = paymentData.imp_uid;
     $.ajax({
         type: "POST",
-        url: "http://localhost/hotel_prj/user/payment.do",
+        url: "http://localhost:8080/hotel_prj/user/payment.do",
         data: JSON.stringify({
             imp_uid: impUid,
             payment_data: paymentData,
@@ -215,7 +215,7 @@ function insertPaymentInfo(paymentInfo) {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost/hotel_prj/user/insertPayInfo.do",
+        url: "http://localhost:8080/hotel_prj/user/insertPayInfo.do",
         data: JSON.stringify({
         	cardNum : cardNum,
         	payPrice : payPrice,
@@ -272,7 +272,7 @@ function insertRoomRes(payNumber) {
     
     jQuery.ajax({
         type: "POST",
-        url: "http://localhost/hotel_prj/user/resveValid.do",
+        url: "http://localhost:8080/hotel_prj/user/resveValid.do",
         cache: false,
         dataType: "json",
         global: false,
@@ -294,7 +294,7 @@ function insertRoomRes(payNumber) {
                 // 예약 가능한 객실이 있을 경우
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost/hotel_prj/user/insertRoomRes.do",
+                    url: "http://localhost:8080/hotel_prj/user/insertRoomRes.do",
                     data: JSON.stringify({
                         payNum: payNum,
                         roomId: roomId,
@@ -306,7 +306,7 @@ function insertRoomRes(payNumber) {
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function(result) {
-                		jQuery("#step3Form").attr("action", "http://localhost/hotel_prj/user/room4.do");
+                		jQuery("#step3Form").attr("action", "http://localhost:8080/hotel_prj/user/room4.do");
                 		jQuery("#step3Form").submit();
                         
                         
@@ -384,7 +384,7 @@ jQuery(function(){
 */
 function fncResvReset(){
 	if(confirm("다시 검색하시겠습니까?")){ 
-		location.href = "http://localhost/hotel_prj/resve/room/step0.do";
+		location.href = "http://localhost:8080/hotel_prj/resve/room/step0.do";
 		return false;
 	}
 }
@@ -504,7 +504,7 @@ function fncGoPay(){
 	
 	jQuery.ajax({
 		type : "POST",
-		url : "http://localhost/hotel_prj/user/resveValid.do",
+		url : "http://localhost:8080/hotel_prj/user/resveValid.do",
 		cache : false,
 		dataType : "json",
 		global : false,

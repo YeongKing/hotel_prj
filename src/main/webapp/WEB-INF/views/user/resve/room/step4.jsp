@@ -16,7 +16,7 @@
 
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
 <!-- E head css -->
 
 <!-- S head script -->
@@ -56,7 +56,7 @@
 						<dd>
 							<span class="txt"> 서울특별시 강남구 테헤란로 132(역삼동) 한독약품빌딩 8층
 								엘리시안호텔 </span> <span class="thum"> <img
-								src="http://localhost/hotel_prj/static/home/images/ko/pc/HOTEL/img_visual_jjchosun.png"
+								src="http://localhost:8080/hotel_prj/static/home/images/ko/pc/HOTEL/img_visual_jjchosun.png"
 								alt="엘리시안 서울">
 							</span>
 						</dd>
@@ -154,9 +154,9 @@
 					</div>
 				</div>
 				<div class="btnArea">
-					<a href="http://localhost/hotel_prj/user/index.do"
+					<a href="http://localhost:8080/hotel_prj/user/index.do"
 						class="btnSC btnL"> 메인 </a> <a
-						href="http://localhost/hotel_prj/user/roomResList.do"
+						href="http://localhost:8080/hotel_prj/user/roomResList.do"
 						class="btnSC btnL active"> 예약내역 확인 </a>
 				</div>
 				<div class="promotion">
@@ -171,10 +171,10 @@
 							<c:forEach var="homeEvent" items="${homeEventlist}" varStatus="i">
 						<li class="swipeSlide">
 							<span class="thum">
-								<img src="${homeEvent.eventImgFullPath}" onerror="this.src='http://localhost/hotel_prj/util/event_img/img_event.jpg'" alt="${homeEvent.eventSubImgFullPath}">
+								<img src="${homeEvent.eventImgFullPath}" onerror="this.src='http://localhost:8080/hotel_prj/util/event_img/img_event.jpg'" alt="${homeEvent.eventSubImgFullPath}">
 								<!-- 멤버십 전용 패키지인 경우 -->
 								<span class="hoverCont">
-									<a href="http://localhost/hotel_prj/user/event.do" class="btnSC btnL">자세히 보기</a>
+									<a href="http://localhost:8080/hotel_prj/user/event.do" class="btnSC btnL">자세히 보기</a>
 								</span>
 							</span>
 							<strong class="tit"><c:out value="${homeEvent.eventTitle}"/></strong>
@@ -187,7 +187,7 @@
 							
 							<c:forEach var="roomEvent" items="${roomEventlist}" varStatus="i">
 								<li class="swipeSlide">
-								<a href="http://localhost/hotel_prj/user/eventDetail.do?eventNum=${roomEvent.eventNum}" >
+								<a href="http://localhost:8080/hotel_prj/user/eventDetail.do?eventNum=${roomEvent.eventNum}" >
 								<br/>
 									    <p class="txt">${roomEvent.eventTitle}</p>
 										<p class="date">
@@ -195,7 +195,7 @@
 										
 										</p> 
 										<span class="thum"> 
-										<img src="${roomEvent.eventImgFullPath}" onerror="this.src='http://localhost/hotel_prj/util/event_img/img_event.jpg'" alt="${roomEvent.eventSubImgFullPath}">
+										<img src="${roomEvent.eventImgFullPath}" onerror="this.src='http://localhost:8080/hotel_prj/util/event_img/img_event.jpg'" alt="${roomEvent.eventSubImgFullPath}">
 										</span>
 								</a>
 								</li>

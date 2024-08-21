@@ -16,7 +16,7 @@
 
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
 <!-- E head css -->
 
 <!-- S head script -->
@@ -75,7 +75,7 @@ function getMemberSession() {
 	*/
 	function fncResvReset(){
 		if(confirm("다시 검색하시겠습니까?")){ 
-			location.href = "http://localhost/hotel_prj/user/room0.do";
+			location.href = "http://localhost:8080/hotel_prj/user/room0.do";
 		}
 	}
 
@@ -85,7 +85,7 @@ function getMemberSession() {
 	function fncGoStep3(){
 		
 		
-		jQuery("#step2Form").attr("action", "http://localhost/hotel_prj/user/room3.do");
+		jQuery("#step2Form").attr("action", "http://localhost:8080/hotel_prj/user/room3.do");
 		jQuery("#step2Form").submit();
 	}
 </script>
@@ -378,7 +378,7 @@ function getLoginCookie(cookieName) {
 		                    }; 
 
 		                $.ajax({
-		                    url: "http://localhost/hotel_prj/user/searchPopupLogin.do",
+		                    url: "http://localhost:8080/hotel_prj/user/searchPopupLogin.do",
 		                    type: "POST",
 		                    data: uVO,
 		                    dataType: "json",
@@ -488,8 +488,8 @@ function getLoginCookie(cookieName) {
 							<!-- //20200528 수정 : 아이디저장(추가) -->
 							<button type="button" class="btnSC btnL active btnFull" onclick= "PageScript.fncLogin('ID'); return false;" >로그인<!-- 로그인 --></button>
 							<div class="loginLink">
-								<a href="http://localhost/hotel_prj/user/join.do" class="btnS icoArr">회원가입<!-- 회원가입 --></a>
-								<a href="http://localhost/hotel_prj/user/findIdentifyIntro.do" class="btnS icoArr">아이디 / 비밀번호 찾기<!-- 아이디 / 비밀번호 찾기 --></a>
+								<a href="http://localhost:8080/hotel_prj/user/join.do" class="btnS icoArr">회원가입<!-- 회원가입 --></a>
+								<a href="http://localhost:8080/hotel_prj/user/findIdentifyIntro.do" class="btnS icoArr">아이디 / 비밀번호 찾기<!-- 아이디 / 비밀번호 찾기 --></a>
 							</div>
 						</div>
 

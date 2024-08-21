@@ -19,7 +19,7 @@ public class AdminInterceptor implements HandlerInterceptor {
 		Object adminId = WebUtils.getSessionAttribute(request, "adminId");
 		flag = adminId != null; //세션이 있다면 true, 없다면 false
 		if( !flag ) { //세션이 없으면 로그인 폼으로 이동
-			response.sendRedirect("http://localhost/hotel_prj/admin/login_frm.do");
+			response.sendRedirect("http://localhost:8080/hotel_prj/admin/login_frm.do");
 		}//end if
 
 		return flag; //true - 다음으로 진행, false - 멈춰

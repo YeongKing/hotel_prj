@@ -15,7 +15,7 @@
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
 <link
-	href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css"
+	href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css"
 	rel="stylesheet" type="text/css">
 <!-- E head css -->
 
@@ -79,7 +79,7 @@ function fncKeyEvent(){
 
 function fncPage(page){
     jQuery("#page").val(page);
-    jQuery("#form").attr("action", "http://localhost/hotel_prj/user/notice.do");
+    jQuery("#form").attr("action", "http://localhost:8080/hotel_prj/user/notice.do");
     jQuery("#form").attr("method", "get");
     jQuery("#form").submit();	
 }
@@ -88,7 +88,7 @@ function fncPage(page){
 function fncGoView(noticeNum,num){
     jQuery("#noticeNum").val(noticeNum);
     jQuery("#num").val(num);
-    jQuery("#form").attr("action", "http://localhost/hotel_prj/user/noticeDetail.do");
+    jQuery("#form").attr("action", "http://localhost:8080/hotel_prj/user/noticeDetail.do");
     jQuery("#form").attr("method", "get");
     jQuery("#form").submit();	
 
@@ -97,12 +97,12 @@ function fncGoView(noticeNum,num){
 function fncSearch(ctgry) {
     jQuery("#page").val(1);
     jQuery("#searchCtgry").val(ctgry);
-    jQuery("#form").attr("action", "http://localhost/hotel_prj/user/notice.do");
+    jQuery("#form").attr("action", "http://localhost:8080/hotel_prj/user/notice.do");
     jQuery("#form").attr("method", "get");
     jQuery("#form").submit();	
 }
 </script>
-		<form action="http://localhost/hotel_prj/user/notice.do" method="get"
+		<form action="http://localhost:8080/hotel_prj/user/notice.do" method="get"
 			id="form">
 
 			<input type="hidden" name="noticeNum" id="noticeNum" /> <input

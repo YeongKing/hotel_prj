@@ -31,7 +31,7 @@
 <link href="/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
 <link href="/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css"> 
 <link href="/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css"> 
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
 <!-- E head css -->
 
   <script type="text/javascript" src="/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>

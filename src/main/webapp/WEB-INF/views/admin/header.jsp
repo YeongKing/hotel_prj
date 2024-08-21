@@ -6,7 +6,7 @@
 function confirmLogout() {
     if (confirm("로그아웃 하시겠습니까?")) {
         alert("정상적으로 로그아웃 되었습니다.");
-        window.location.href = "http://localhost/hotel_prj/admin/logout.do";
+        window.location.href = "http://localhost:8080/hotel_prj/admin/logout.do";
     }
     return false;
 }

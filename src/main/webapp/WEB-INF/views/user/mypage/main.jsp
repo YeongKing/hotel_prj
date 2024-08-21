@@ -15,7 +15,7 @@
 
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
 <!-- E head css -->
 
 <!-- S head script -->
@@ -32,7 +32,7 @@
 <!--E header  -->
 
 <!--(페이지 URL)-->
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script> 
+<script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/home.js"></script>
  
 <div id="container" class="container mypage">
 
@@ -63,7 +63,7 @@
 					
 					$.each(jsonObj.data, function(index, res) {
 						var li  = $('<li></li>');
-						var a = $('<a></a>').attr('href', 'http://localhost/hotel_prj/user/roomResView.do?payNum='+res.payNum);
+						var a = $('<a></a>').attr('href', 'http://localhost:8080/hotel_prj/user/roomResView.do?payNum='+res.payNum);
 						var myReserveInfo = $('<div></div>').addClass('myReserveInfo');
 						var dl = $('<dl></dl>');
 						var dt = $('<dt></dt>').text('[' + res.payNum + '] ' + res.roomInfo);

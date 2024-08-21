@@ -14,34 +14,34 @@
 <meta name="format-detection" content="telephone=no">
 <title>다이닝 - 다이닝 예약 | 엘리시안호텔</title>
 <link rel="shortcut icon" type="text/css"
-	href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
+	href="http://localhost:8080/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
 <link
-	href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css"
+	href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/common_josunhotel.css"
 	rel="stylesheet" type="text/css">
 <link
-	href="http://localhost/hotel_prj/static/home/bluewaves/css/pc/contents.css"
+	href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css"
 	rel="stylesheet" type="text/css">
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/swiper.css"
+<link
+	href="http://localhost:8080/hotel_prj/static/home/bluewaves/css/pc/contents.css"
+	rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/swiper.css"
 	rel="stylesheet" type="text/css">
 <script type="text/javascript"
-	src="http://localhost/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
+	src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
 <script type="text/javascript"
-	src="http://localhost/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
+	src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
 <script type="text/javascript"
-	src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script>
+	src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script>
 <script type="text/javascript"
-	src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script>
+	src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script>
 <script type="text/javascript"
-	src="http://localhost/hotel_prj/static/home/js/ko/pc/selectbox.js"></script>
+	src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/selectbox.js"></script>
 <script type="text/javascript"
-	src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script>
+	src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script>
 <script type="text/javascript"
-	src="http://localhost/hotel_prj/static/home/js/home.js"></script>
+	src="http://localhost:8080/hotel_prj/static/home/js/home.js"></script>
 <script type="text/javascript"
-	src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
+	src="http://localhost:8080/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
 <style type="text/css">
 .ui-state-default default .btnSC btnL .frmRadio .ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget
 	{
@@ -336,7 +336,7 @@
             }
             		
        	function fncGoStep0(){
-    		location.href = "http://localhost/hotel_prj/user/dining.do";
+    		location.href = "http://localhost:8080/hotel_prj/user/dining.do";
     	}
 
         </script>

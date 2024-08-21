@@ -11,19 +11,19 @@
 	content="width=device-width, initial-scale=1, user-scalable=no">
 <meta name="format-detection" content="telephone=no">
 <title>다이닝 - 다이닝 예약 | 엘리시안호텔</title>
-<link rel="shortcut icon" type="text/css" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
-<link href="http://localhost/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css">
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script>
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script>
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/selectbox.js"></script>
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script>
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
-<script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
+<link rel="shortcut icon" type="text/css" href="http://localhost:8080/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
+<link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
+<script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script>
+<script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script>
+<script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/selectbox.js"></script>
+<script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script>
+<script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/home.js"></script>
+<script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
 <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.7.js"></script> <!-- I'mport library -->
 <script>
     
@@ -366,7 +366,7 @@
  	 
     function getTokenAndPayment(pg, pay_method){
         $.ajax({
-            url: "http://localhost/hotel_prj/user/getToken.do",
+            url: "http://localhost:8080/hotel_prj/user/getToken.do",
             method: 'GET',
             success: function(response) {
                 payment(pg, pay_method, response); // 토큰을 받은 후 결제 호출
@@ -414,7 +414,7 @@ function sendPaymentData(paymentData, token) {
     const impUid = paymentData.imp_uid;
     $.ajax({
         type: "POST",
-        url: "http://localhost/hotel_prj/user/payment.do",
+        url: "http://localhost:8080/hotel_prj/user/payment.do",
         data: JSON.stringify({
             imp_uid: impUid,
             payment_data: paymentData,
@@ -459,7 +459,7 @@ function insertPaymentInfo(paymentInfo) {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost/hotel_prj/user/insertDiningPayInfo.do",
+        url: "http://localhost:8080/hotel_prj/user/insertDiningPayInfo.do",
         data: JSON.stringify({
         	cardNum : cardNum,
         	payPrice : totalPrice,
@@ -529,7 +529,7 @@ function insertDiningRes(payNumber) {
          if (diningId != 0) {
              $.ajax({
                  type: "POST",
-                 url: "http://localhost/hotel_prj/user/insertDiningRes.do",
+                 url: "http://localhost:8080/hotel_prj/user/insertDiningRes.do",
                  data: JSON.stringify({
                      payNum: payNumber,
                      diningResStatus: diningResStatus,
@@ -544,7 +544,7 @@ function insertDiningRes(payNumber) {
                  dataType: "json",
                  contentType: "application/json; charset=utf-8",
                  success: function(response) {
-                	location.href="http://localhost/hotel_prj/user/complete.do";
+                	location.href="http://localhost:8080/hotel_prj/user/complete.do";
                  },
                  error: function(xhr, status, error) {
                      alert("다이닝 예약에 실패했습니다: " + error);/////////////////////////////
@@ -573,7 +573,7 @@ function insertDiningRes(payNumber) {
 }
 
 	function fncGoStep0(){
-		location.href = "http://localhost/hotel_prj/user/dining.do";
+		location.href = "http://localhost:8080/hotel_prj/user/dining.do";
 	}
 
 </script>

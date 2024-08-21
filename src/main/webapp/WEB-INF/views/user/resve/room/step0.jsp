@@ -18,7 +18,7 @@
 <link href="/hotel_prj/static/home/css/ko/pc/common_new.css"
 	rel="stylesheet" type="text/css">
 <link
-	href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css"
+	href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css"
 	rel="stylesheet" type="text/css">
 <!-- E head css -->
 
@@ -383,7 +383,7 @@
 				}
 				commonJs.showLoadingBar();
 				jQuery("#step0Form").attr("action",
-						"http://localhost/hotel_prj/user/room1.do");
+						"http://localhost:8080/hotel_prj/user/room1.do");
 				//alert("선택된 호텔코드 : "+$("#hotlSysCode").val() + "\n" + 
 				"체크인 날짜 : " + $("#ckinDate").val() + "\n" + "체크아웃 날짜 : "
 						+ $("#ckoutDate").val() + "\n" + "어른 : "

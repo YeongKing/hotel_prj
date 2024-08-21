@@ -5,7 +5,7 @@
 	<div class="sidebar-header position-relative">
 		<div class="d-flex align-items-center flex-column text-center">
 			<div class="logo mb-3">
-				<a href="http://localhost/hotel_prj/admin/dashboard.do">
+				<a href="http://localhost:8080/hotel_prj/admin/dashboard.do">
 				<img src="/hotel_prj/admin/assets/static/images/logo/logo.png" alt="Logo"></a>
 			</div>
 	        
@@ -49,14 +49,14 @@
 			<li class="sidebar-title">Menu</li>
 			
 			<li class="sidebar-item db ">
-			<a href="http://localhost/hotel_prj/admin/dashboard.do" class='sidebar-link'>
+			<a href="http://localhost:8080/hotel_prj/admin/dashboard.do" class='sidebar-link'>
 				<i class="bi bi-grid-fill"></i>
 				<span>DashBoard</span>
 			</a>
 			</li>
 			
 			<li class="sidebar-item mm ">
-			<a href="http://localhost/hotel_prj/admin/member.do" class='sidebar-link'>
+			<a href="http://localhost:8080/hotel_prj/admin/member.do" class='sidebar-link'>
 				<i class="bi bi-people-fill"></i>
 				<span>회원 관리</span>
 			</a>
@@ -70,13 +70,13 @@
 			
 			<ul class="submenu ">
 				<li class="submenu-item rrm ">
-				<a href="http://localhost/hotel_prj/admin/roomResve.do" class="submenu-link">
+				<a href="http://localhost:8080/hotel_prj/admin/roomResve.do" class="submenu-link">
 				<i class="bi bi-dot"></i>
 				객실 예약 관리</a>
 				</li>
 				
 				<li class="submenu-item drm ">
-				<a href="http://localhost/hotel_prj/admin/diningResve.do" class="submenu-link">
+				<a href="http://localhost:8080/hotel_prj/admin/diningResve.do" class="submenu-link">
 				<i class="bi bi-dot"></i>
 				다이닝 예약 관리</a>
 				</li>
@@ -84,35 +84,35 @@
 			</li>
 			
 			<li class="sidebar-item rm ">
-			<a href="http://localhost/hotel_prj/admin/room.do" class='sidebar-link'>
+			<a href="http://localhost:8080/hotel_prj/admin/room.do" class='sidebar-link'>
 				<i class="bi bi-house-door-fill"></i>
 				<span>객실 관리</span>
 			</a>
 			</li>
 
 			<li class="sidebar-item dm ">
-			<a href="http://localhost/hotel_prj/admin/dining.do" class='sidebar-link'>
+			<a href="http://localhost:8080/hotel_prj/admin/dining.do" class='sidebar-link'>
 				<i class="bi bi-cup-hot-fill"></i>
 				<span>다이닝 관리</span>
 			</a>
 			</li>
 			
 			<li class="sidebar-item em ">
-			<a href="http://localhost/hotel_prj/admin/event.do" class='sidebar-link'>
+			<a href="http://localhost:8080/hotel_prj/admin/event.do" class='sidebar-link'>
 				<i class="bi bi-balloon-fill"></i>
 				<span>이벤트 관리</span>
 			</a>
 			</li>
 			
 			<li class="sidebar-item qm ">
-			<a href="http://localhost/hotel_prj/admin/qna.do" class='sidebar-link'>
+			<a href="http://localhost:8080/hotel_prj/admin/qna.do" class='sidebar-link'>
 				<i class="bi bi-bookmark-check-fill"></i>
 				<span>자주찾는질문</span>
 			</a>
 			</li>
 			
 			<li class="sidebar-item nm ">
-			<a href="http://localhost/hotel_prj/admin/notice.do" class='sidebar-link'>
+			<a href="http://localhost:8080/hotel_prj/admin/notice.do" class='sidebar-link'>
 				<i class="bi bi-clipboard-minus-fill"></i>
 				<span>공지사항 관리</span>
 			</a>

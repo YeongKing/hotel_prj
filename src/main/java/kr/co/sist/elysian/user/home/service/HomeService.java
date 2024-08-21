@@ -14,7 +14,7 @@ public class HomeService {
 	
 	@Autowired
 	private HomeDAO homeDAO;
-	private final String uploadPath = "http://localhost/hotel_prj/util/event_img/";
+	private final String uploadPath = "http://localhost:8080/hotel_prj/util/event_img/";
 	
 	/**
 	 * DAO에서 셀렉해온 최근 이벤트 리스트 6개를 전달

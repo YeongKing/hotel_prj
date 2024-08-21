@@ -20,7 +20,7 @@ public class RoomService {
 
 	@Autowired(required = false)
 	private RoomDAO rDAO;
-	private final String uploadPath = "http://localhost/hotel_prj/util/event_img/";
+	private final String uploadPath = "http://localhost:8080/hotel_prj/util/event_img/";
 
 	/**
 	 * 객실리스트 검색 메서드

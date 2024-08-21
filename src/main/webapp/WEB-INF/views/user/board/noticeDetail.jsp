@@ -15,7 +15,7 @@
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
 <link
-	href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css"
+	href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css"
 	rel="stylesheet" type="text/css">
 <!-- E head css -->
 
@@ -43,7 +43,7 @@
 function fncGoList(ctgry){
 	jQuery("#_method").val("list");
 	jQuery("#searchCtgry").val(ctgry);
-    jQuery("#form").attr("action", "http://localhost/hotel_prj/user/notice.do");
+    jQuery("#form").attr("action", "http://localhost:8080/hotel_prj/user/notice.do");
     jQuery("#form").attr("method", "get");
     jQuery("#form").submit();
 }
@@ -53,7 +53,7 @@ function fncGoView(noticeNum,num){
     
     jQuery("#page").val(Math.ceil(num / 10));
     jQuery("#num").val(num);
-    jQuery("#form").attr("action", "http://localhost/hotel_prj/user/noticeDetail.do");
+    jQuery("#form").attr("action", "http://localhost:8080/hotel_prj/user/noticeDetail.do");
     jQuery("#form").attr("method", "get");
     jQuery("#form").submit();
 }

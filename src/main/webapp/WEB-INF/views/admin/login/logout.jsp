@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0;http://localhost/hotel_prj/admin/login_frm.do"/>
+<meta http-equiv="refresh" content="0;http://localhost:8080/hotel_prj/admin/login_frm.do"/>
 <script type = "text/javascript">
 	$(function() {
 	}); // ready

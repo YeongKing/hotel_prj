@@ -15,7 +15,7 @@
 
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
 <!-- E head css -->
 
 <!-- S head script -->
@@ -163,7 +163,7 @@
 
 	<div class="visualBox">
 	<div class="inner">
-		<img src="http://localhost/hotel_prj/util/file/img_visual_about01_01.jpg" alt="로비">
+		<img src="http://localhost:8080/hotel_prj/util/file/img_visual_about01_01.jpg" alt="로비">
 	</div>
 	</div>
 	<!-- //visualBox -->
@@ -192,14 +192,14 @@
 			<li>
 				<div class="info">
 				<strong class="hidden">세로형</strong>
-					<span class="ciImg"><img src="http://localhost/hotel_prj/util/file/logo_Elysian.png" alt=""></span>
+					<span class="ciImg"><img src="http://localhost:8080/hotel_prj/util/file/logo_Elysian.png" alt=""></span>
 				</div>
 			</li>
 			
  			<li>
 				<div class="info">
 				<strong class="hidden">가로형</strong>
-				<span class="ciImg"><img src="http://localhost/hotel_prj/util/file/logo_Elysian2.png" alt=""></span>
+				<span class="ciImg"><img src="http://localhost:8080/hotel_prj/util/file/logo_Elysian2.png" alt=""></span>
 				</div>
 			</li>
 		</ul>            

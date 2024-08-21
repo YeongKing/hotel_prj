@@ -15,8 +15,8 @@
 
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_new.css" rel="stylesheet" type="text/css">
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/common_new.css" rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
 <!-- E head css -->
 
 <!-- S head script -->
@@ -326,8 +326,8 @@ function getLoginCookie(cookieName) {
 							<button type="button" class="btnSC btnL active btnFull" onclick="PageScript.fncLogin('ID'); return false;">로그인<!-- 로그인 --></button>
 							
 							<div class="loginLink">
-							    <a href="http://localhost/hotel_prj/user/join.do" class="btnS icoArr">회원가입<!-- 회원가입 --></a>
-							    <a href="http://localhost/hotel_prj/user/findIdentifyIntro.do" class="btnS icoArr">아이디 / 비밀번호 찾기<!-- 아이디 / 비밀번호 찾기 --></a>
+							    <a href="http://localhost:8080/hotel_prj/user/join.do" class="btnS icoArr">회원가입<!-- 회원가입 --></a>
+							    <a href="http://localhost:8080/hotel_prj/user/findIdentifyIntro.do" class="btnS icoArr">아이디 / 비밀번호 찾기<!-- 아이디 / 비밀번호 찾기 --></a>
 							</div>
 						</div>
 						<div class="snsLogin">

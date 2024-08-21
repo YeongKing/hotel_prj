@@ -11,19 +11,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
     <title>다이닝 - 다이닝 목록 | 엘리시안호텔</title>
-    <link rel="shortcut icon" type="text/css" href="http://localhost/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
-    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
-    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
-    <link href="http://localhost/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css">
-    <link href="http://localhost/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/selectbox.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/js/home.js"></script>
-    <script type="text/javascript" src="http://localhost/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
+    <link rel="shortcut icon" type="text/css" href="http://localhost:8080/hotel_prj/static/home/images/ko/pc/common/favicon.ico">
+    <link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/common_josunhotel.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost:8080/hotel_prj/static/home/bluewaves/css/pc/contents.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/swiper.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/pubPlugin.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/pubCommon_contents.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/pubCommon_josunhotel.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/selectbox.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/ko/pc/swiper.min.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/js/home.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/hotel_prj/static/home/bluewaves/js/pc/bw_contents.js"></script>
 
     <script>
         // 헤더 메뉴 버튼 클릭 이벤트
@@ -180,7 +180,7 @@
          
          
          // 다이닝 이미지 설정
-         var imgHtml = '<li class="swipeSlide"><img src="http://localhost/hotel_prj/util/dining_img/' + diningData.diningImg + '" alt="다이닝 이미지"></li>';
+         var imgHtml = '<li class="swipeSlide"><img src="http://localhost:8080/hotel_prj/util/dining_img/' + diningData.diningImg + '" alt="다이닝 이미지"></li>';
          $('#dining-image-container').html(imgHtml);
         
          //좌석수 설정

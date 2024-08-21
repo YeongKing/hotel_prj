@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-location.href="http://localhost/hotel_prj/user/index.do";
+location.href="http://localhost:8080/hotel_prj/user/index.do";
 </script>
 </head>
 <body>

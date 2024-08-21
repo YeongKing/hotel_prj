@@ -407,7 +407,7 @@ function fncSearchList(resveType){
 			return false;
 		}
 
-		jQuery("#mainResveForm").attr("action", "http://localhost/hotel_prj/user/room1.do");
+		jQuery("#mainResveForm").attr("action", "http://localhost:8080/hotel_prj/user/room1.do");
 		jQuery("#mainResveForm").submit();
 	}else if(resveType == "D"){
 		jQuery("#mainDiningForm").attr("action", "/hotel_prj/user/resve/dining/step0.jsp");
@@ -461,7 +461,7 @@ function closeHubPopup(){
 	<div class="mainArea04">
 		<h2 class="hidden">OFFERS</h2>
 		<div class="inner">
-			<a href="http://localhost/hotel_prj/user/event.do" id="goToOffers" class="icoArr">GO TO EVENT</a>
+			<a href="http://localhost:8080/hotel_prj/user/event.do" id="goToOffers" class="icoArr">GO TO EVENT</a>
 			<div class="swipeWrapArea">
 				<button type="button" class="btnSwipe btnPrev"><span class="hidden">이전</span></button>
 				<div class="swipeWrap swipeGroup">
@@ -469,10 +469,10 @@ function closeHubPopup(){
 						<c:forEach var="homeEvent" items="${homeEventlist}" varStatus="i">
 						<li class="swipeSlide">
 							<span class="thum">
-								<img src="${homeEvent.eventImgFullPath}" onerror="this.src='http://localhost/hotel_prj/util/event_img/img_event.jpg'" alt="${homeEvent.eventSubImgFullPath}">
+								<img src="${homeEvent.eventImgFullPath}" onerror="this.src='http://localhost:8080/hotel_prj/util/event_img/img_event.jpg'" alt="${homeEvent.eventSubImgFullPath}">
 								<!-- 멤버십 전용 패키지인 경우 -->
 								<span class="hoverCont">
-									<a href="http://localhost/hotel_prj/user/eventDetail.do?eventNum=${homeEvent.eventNum}" class="btnSC btnL">자세히 보기</a>
+									<a href="http://localhost:8080/hotel_prj/user/eventDetail.do?eventNum=${homeEvent.eventNum}" class="btnSC btnL">자세히 보기</a>
 								</span>
 							</span>
 							<strong class="tit"><c:out value="${homeEvent.eventTitle}"/></strong>
@@ -514,7 +514,7 @@ function closeHubPopup(){
 									<strong class="tit">Meet Elysian Hotel</strong>
 									<span class="sTit">REST IN UTOPIA</span>
 									<ul class="hList lg11">
-										<li class="hType01"><a href="http://localhost/hotel_prj/user/aboutUs.do">엘리시안 서울</a></li>
+										<li class="hType01"><a href="http://localhost:8080/hotel_prj/user/aboutUs.do">엘리시안 서울</a></li>
 									</ul>
 								</div>
 							</div>
@@ -530,7 +530,7 @@ function closeHubPopup(){
 									<p class="txt02">일상의 번잡함에서 벗어나, 이상향 속에서의 여유로운 휴식을 제공합니다.<br>
 													우아하게 디자인된 객실에서 숨 막히는 전경과 함께 최고의 안락함을 만끽하세요.<br>
 													엘리시안 호텔에서의 모든 순간은 당신을 위한 완벽한 휴식을 위해 준비되어 있습니다.</p>
-									<a href="http://localhost/hotel_prj/user/aboutUs.do" class="btnSC btnM">VIEW MORE</a>
+									<a href="http://localhost:8080/hotel_prj/user/aboutUs.do" class="btnSC btnM">VIEW MORE</a>
 								</div>
 							</div>
 						</li>

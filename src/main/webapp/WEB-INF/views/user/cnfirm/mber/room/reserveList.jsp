@@ -15,7 +15,7 @@
 
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
-<link href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css" rel="stylesheet" type="text/css">
 <!-- E head css -->
 
 <!-- S head script -->
@@ -112,8 +112,8 @@
 	<div class="myContents">
 		<h3 class="titDep2">예약확인</h3>
 		<ul class="tabType01 tabType02">
-			<li class="on"><a href="http://localhost/hotel_prj/user/roomResList.do">객실</a></li>
-			<li><a href="http://localhost/hotel_prj/user/diningResList.do">다이닝</a></li>
+			<li class="on"><a href="http://localhost:8080/hotel_prj/user/roomResList.do">객실</a></li>
+			<li><a href="http://localhost:8080/hotel_prj/user/diningResList.do">다이닝</a></li>
 		</ul>
 		
 		<!-- tab01 -->

@@ -15,7 +15,7 @@
 <!-- S head css -->
 <jsp:include page="/WEB-INF/views/user/common/head_css.jsp"></jsp:include>
 <link
-	href="http://localhost/hotel_prj/static/home/css/ko/pc/contents.css"
+	href="http://localhost:8080/hotel_prj/static/home/css/ko/pc/contents.css"
 	rel="stylesheet" type="text/css">
 <!-- E head css -->
 
@@ -73,7 +73,7 @@
 															$(this).attr("id"));
 													jQuery("#form")
 															.attr("action",
-																	"http://localhost/hotel_prj/user/qna.do");
+																	"http://localhost:8080/hotel_prj/user/qna.do");
 													jQuery("#form").attr(
 															"method", "get");
 													jQuery("#form").submit();
@@ -101,7 +101,7 @@
 			function fncPage(page) {
 				jQuery("#page").val(page);
 				jQuery("#form").attr("action",
-						"http://localhost/hotel_prj/user/qna.do");
+						"http://localhost:8080/hotel_prj/user/qna.do");
 				jQuery("#form").attr("method", "get");
 				jQuery("#form").submit();
 
@@ -112,13 +112,13 @@
 				jQuery("#searchCtgry").val($("#searchCtgry").val());
 				jQuery("#page").val(1);
 				jQuery("#form").attr("action",
-						"http://localhost/hotel_prj/user/qna.do");
+						"http://localhost:8080/hotel_prj/user/qna.do");
 				jQuery("#form").attr("method", "get");
 				jQuery("#form").submit();
 
 			}
 		</script>
-		<form action="http://localhost/hotel_prj/user/qna.do" method="get"
+		<form action="http://localhost:8080/hotel_prj/user/qna.do" method="get"
 			id="form">
 			<input type="hidden" name="page" id="page" value="1">
 			<div id="container" class="container mypage ctmService">
@@ -136,9 +136,9 @@
 					<div class="lnbArea">
 						<ul class="lnb ctmType">
 							<li class="on"><a
-								href="http://localhost/hotel_prj/user/notice.do">공지사항</a></li>
+								href="http://localhost:8080/hotel_prj/user/notice.do">공지사항</a></li>
 							<li class="on"><a
-								href="http://localhost/hotel_prj/user/qna.do">QNA</a></li>
+								href="http://localhost:8080/hotel_prj/user/qna.do">QNA</a></li>
 						</ul>
 					</div>
 					<div class="myContents">
